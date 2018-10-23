@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
-import com.smerp.HomeController;
 import com.smerp.util.RequestContext;
 
 import freemarker.template.Configuration;
@@ -20,7 +19,7 @@ import freemarker.template.Template;
 @Component
 public abstract class EmailerGenerator implements Emailer {
 	
-	private static final Logger logger = LogManager.getLogger(HomeController.class);
+	private static final Logger logger = LogManager.getLogger(EmailerGenerator.class);
 
 	@Value(value = "${domain}")
 	private static String domain;

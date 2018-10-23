@@ -8,8 +8,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.util.Context;
 import com.smerp.util.RequestContext;
 
@@ -25,16 +29,16 @@ public class RequestContextFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		Context ctx = new Context();
-		RequestContext.set(ctx);
-		// TODO Auto-generated method stub
-		
+	//	System.out.println("hiiii-----------iiiiiiiiii");
 		try {
 			chain.doFilter(request, response);
 		}catch(Exception e){
-			e.printStackTrace();
+			
+			/* ErrorResponse errorResponse = new ErrorResponse("token expired","401");
+			 HttpServletResponse res=(HttpServletResponse) response;
+			 res.getWriter().write(convertObjectToJson(errorResponse));*/
 		} finally {
-			RequestContext.remove();
+			//RequestContext.remove();
 		}
 		
 	}
@@ -44,5 +48,6 @@ public class RequestContextFilter implements Filter {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
 }

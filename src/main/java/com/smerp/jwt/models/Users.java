@@ -1,11 +1,13 @@
 package com.smerp.jwt.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.smerp.admin.model.Role;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+
 public class Users {
 
     @Id

@@ -1,18 +1,27 @@
-package com.smerp.jwt.models;
+package com.smerp.admin.model;
 
 import javax.persistence.*;
 
-@Entity
-public class Role {
+import com.smerp.master.model.AuditModel;
 
-    @Id
+@Entity
+@Table(name="tbl_admin_role")
+public class Role extends AuditModel {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @Column(name="role_id", nullable = false, unique=true)
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    @Column
+    @Column(name="role_name")
     private String name;
 
-    @Column
+    @Column(name="description")
     private String description;
 
     public long getId() {

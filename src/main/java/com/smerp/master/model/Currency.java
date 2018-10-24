@@ -28,11 +28,7 @@ public class Currency extends AuditModel {
     @Column(name="description")
     private String description;
     
-    @Column(name="created_uid")
-    private Integer createUserId;
-    
-    @Column(name="updated_uid")
-    private Integer updatedUserId;
+   
         
     @Column(name="is_active")
     private Boolean isActive;
@@ -68,25 +64,7 @@ public class Currency extends AuditModel {
     }
 
 
-    public Integer getCreateUserId() {
-        return createUserId;
-    }
-
-
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
-    }
-
-
-    public Integer getUpdatedUserId() {
-        return updatedUserId;
-    }
-
-
-    public void setUpdatedUserId(Integer updatedUserId) {
-        this.updatedUserId = updatedUserId;
-    }
-
+   
 
     public Boolean getIsActive() {
         return isActive;
@@ -96,13 +74,14 @@ public class Currency extends AuditModel {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+
+
+	@Override
+	public String toString() {
+		return "Currency [id=" + id + ", name=" + name + ", description=" + description + ", isActive=" + isActive
+				+ "]";
+	}
     
-    
-    @Override
-    public String toString() {
-        return "Currency [id=" + id + ", name=" + name + ", description=" + description + ", createUserId="
-                + createUserId + ", updatedUserId=" + updatedUserId + ", isActive=" + isActive + "]";
-    }
-    
+   
 
 }

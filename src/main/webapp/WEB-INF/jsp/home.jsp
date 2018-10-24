@@ -14,9 +14,9 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-	<%@include file="topmenubar.jsp"%>
+	<%@include file="header.jsp"%>
 
-	<%@include file="sidemenubar.jsp"%>
+	<%@include file="sidebar.jsp"%>
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -48,15 +48,8 @@
 
 	<footer class="footer footer-static footer-light navbar-border">
 		<div class="row">
-			<div class="col-md-6">
-				<div class="footer_error_validation">validation</div>
-				<div class="footer_error_validation">validation</div>
-			</div>
-			<div class="col-md-5">
-				<div class="footer_error_validation">validation</div>
-				<div class="footer_error_validation">validation</div>
-			</div>
-			<div class="col-md-1">
+			
+			<div class="col-md-12">
 				<div class="footer_logo">
 					<img src="/resources/images/footer_logo.png">
 				</div>

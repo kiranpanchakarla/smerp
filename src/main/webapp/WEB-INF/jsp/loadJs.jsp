@@ -21,4 +21,29 @@
       //$('.menu-shadow').find('.sub_menu').addClass('collapse');
     });
   });
+  
+  
+
+  function deleteUser(id){
+  	if (confirm("Are you Sure Want to delete!")) {
+       //"You pressed OK!";
+  		var url="/currency/delete"
+  		var dataString  = "id="+id;
+  			 $.ajax({
+  				 type:"POST",
+  				 url: url, 
+  				 data : dataString,
+  				 success: function(result){
+  					 location.reload(); 
+  					 
+  			    }});
+       
+      } else {
+      /// "You pressed Cancel!";
+      }
+  }
+
+  
+  
+  
 </script>

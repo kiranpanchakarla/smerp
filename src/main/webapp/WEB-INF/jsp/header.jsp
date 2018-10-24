@@ -6,7 +6,7 @@
 			<li class="nav-item hidden-sm-down toggle_sidemenu_icon"><a
 				class="nav-link nav-menu-main menu-toggle hidden-xs"><i
 					class="icon-menu5"> </i></a></li>
-			<li><a>File</a>
+			<!-- <li><a>File</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -69,7 +69,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>Edit</a>
+			<!-- <li><a>Edit</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -132,7 +132,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>View</a>
+			<!-- <li><a>View</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -195,7 +195,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>Data</a>
+			<!-- <li><a>Data</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -258,7 +258,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>Go To</a>
+			<!-- <li><a>Go To</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -331,24 +331,24 @@
 							<li class="has_sub"><a>Admin Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
-									<li><a>Company</a></li>
-									<li><a>Users</a></li>
-									<li><a>Vendors</a></li>
-									<li><a>Roles</a></li>
-									<li><a>Departments</a></li>
-									<li><a>Designation</a></li>
+									<li ><a href="<c:url value ="/currency/list"/>">Company</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Users</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Vendors</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Roles</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Departments</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Designation</a></li>
 								</ul></li>
 								
 							<li class="has_sub"><a>Global Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
-									<li><a>Countries</a></li>
-									<li><a>Currencies</a></li>
-									<li><a>Languages</a></li>
-									<li><a>Timezones</a></li>
-									<li><a>States</a></li>
-									<li><a>Hsn Code</a></li>
-									<li><a>Sac Code</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Countries</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Languages</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Timezones</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">States</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Hsn Code</a></li>
+									<li><a href="<c:url value ="/currency/list"/>">Sac Code</a></li>
 								</ul></li>
 						</ul></li>
 					 
@@ -381,7 +381,7 @@
 						</ul></li>
 					  
 				</ul></li>
-			<li><a>Tools</a>
+			<!-- <li><a>Tools</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -444,7 +444,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>Window</a>
+			<!-- <li><a>Window</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -507,7 +507,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><a>Help</a>
+			<!-- <li><a>Help</a> -->
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i

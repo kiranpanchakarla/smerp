@@ -1,0 +1,108 @@
+package com.smerp.master.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tbl_currencies_master")
+public class Currency extends AuditModel {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    
+    
+    @Id
+    @Column(name="currencies_id" , nullable= false, unique=true)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
+    
+    @Column(name="name")
+    private String name;
+    
+    @Column(name="description")
+    private String description;
+    
+    @Column(name="created_uid")
+    private Integer createUserId;
+    
+    @Column(name="updated_uid")
+    private Integer updatedUserId;
+        
+    @Column(name="is_active")
+    private Boolean isActive;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public Integer getCreateUserId() {
+        return createUserId;
+    }
+
+
+    public void setCreateUserId(Integer createUserId) {
+        this.createUserId = createUserId;
+    }
+
+
+    public Integer getUpdatedUserId() {
+        return updatedUserId;
+    }
+
+
+    public void setUpdatedUserId(Integer updatedUserId) {
+        this.updatedUserId = updatedUserId;
+    }
+
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return "Currency [id=" + id + ", name=" + name + ", description=" + description + ", createUserId="
+                + createUserId + ", updatedUserId=" + updatedUserId + ", isActive=" + isActive + "]";
+    }
+    
+
+}

@@ -1,12 +1,13 @@
-package com.smerp.admin.model;
+package com.smerp.model.admin;
 
-import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
-import com.smerp.master.model.AuditModel;
+import com.smerp.model.master.AuditModel;
 
 
 @Entity
@@ -29,6 +30,7 @@ public class User extends AuditModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="user_id", nullable= false, unique=true )
 	private Integer userId;
 	
@@ -41,9 +43,7 @@ public class User extends AuditModel {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="login_date")
-	private Date loginDate;
-	
+
 	private Boolean enabled = true;
 	
 	@Column(name="first_name")
@@ -59,7 +59,7 @@ public class User extends AuditModel {
 	@Column(name="conform_password")
 	private String confirmPassword;
 	//email activation 
-	@Column(name="activation_id")
+	@Column(name="activation_id",nullable= false)
 	private String activationId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -81,11 +81,11 @@ public class User extends AuditModel {
 	private Integer reportingManagerId;
 	
 	
-	@Column(name="plant")
+	@Column(name="plant",nullable= false)
 	private String plant;
 	
 	
-	@Column(name="image")
+	@Column(name="image",nullable= false)
 	private String image;
 	
 	  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -126,13 +126,6 @@ public class User extends AuditModel {
 		this.password = password;
 	}
 
-	public Date getLoginDate() {
-		return loginDate;
-	}
-
-	public void setLoginDate(Date loginDate) {
-		this.loginDate = loginDate;
-	}
 
 	public Boolean getEnabled() {
 		return enabled;
@@ -245,21 +238,12 @@ public class User extends AuditModel {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", password="
-				+ password + ", loginDate=" + loginDate + ", enabled=" + enabled + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", mobileNo=" + mobileNo + ", confirmPassword=" + confirmPassword
-				+ ", activationId=" + activationId + ", company=" + company + ", department=" + department
-				+ ", desigination=" + desigination + ", reportingManagerId=" + reportingManagerId + ", plant=" + plant
-				+ ", image=" + image + ", roles=" + roles + "]";
+				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", mobileNo=" + mobileNo + ", confirmPassword=" + confirmPassword + ", activationId=" + activationId
+				+ ", company=" + company + ", department=" + department + ", desigination=" + desigination
+				+ ", reportingManagerId=" + reportingManagerId + ", plant=" + plant + ", image=" + image + ", roles="
+				+ roles + "]";
 	}
-	
-	
-	
 
-
-	
-	
-	
-	
-	
 
 }

@@ -1,8 +1,8 @@
-package com.smerp.admin.model;
+package com.smerp.model.admin;
 
 import javax.persistence.*;
 
-import com.smerp.master.model.AuditModel;
+import com.smerp.model.master.AuditModel;
 
 @Entity
 @Table(name="tbl_admin_role")

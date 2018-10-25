@@ -1,8 +1,5 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,13 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.smerp.admin.model.Company;
 
 @Entity
 @Table(name="tbl_country_master")
@@ -30,8 +21,8 @@ public class Country extends AuditModel {
 	
 	
 	@Id
-	@Column(name="country_id" , nullable = false, unique = true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="country_id" , nullable = false, unique = true)
 	private Integer id;
 	
 	@Column(name="country_code")
@@ -106,6 +97,20 @@ public class Country extends AuditModel {
 		return serialVersionUID;
 	}
 
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [id=" + id + ", countryCode=" + countryCode + ", name=" + name + ", phoneCode=" + phoneCode
+				+ ", isActive=" + isActive + ", currency=" + currency + "]";
+	}
+
 	/*public Set<TimeZone> getTimeZone() {
 		return timeZone;
 	}
@@ -122,13 +127,8 @@ public class Country extends AuditModel {
 		this.states = states;
 	}*/
 
-	/*@Override
-	public String toString() {
-		return "Country [id=" + id + ", countryCode=" + countryCode + ", name=" + name + ", phoneCode=" + phoneCode
-				+ ", isActive=" + isActive + ", currency=" + currency + ", timeZone=" + timeZone + ", states=" + states
-				+ "]";
-	}
-*/
+
+
 	
 	
 	

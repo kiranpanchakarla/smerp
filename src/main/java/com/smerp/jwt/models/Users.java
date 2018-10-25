@@ -1,7 +1,7 @@
 package com.smerp.jwt.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.smerp.admin.model.Role;
+import com.smerp.model.admin.Role;
 
 import javax.persistence.*;
 import java.util.Set;

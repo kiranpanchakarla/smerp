@@ -1,4 +1,4 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 /*package com.smerp.model;
 
 import java.io.Serializable;

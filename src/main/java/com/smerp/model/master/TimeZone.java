@@ -1,8 +1,5 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,17 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.smerp.admin.model.Company;
-
 @Entity
-@Table(name="tbl_states_master")
-public class States extends AuditModel {
+@Table(name="tbl_timezones_master")
+public class TimeZone extends AuditModel {
+	
 	
 	/**
 	 * 
@@ -29,23 +21,19 @@ public class States extends AuditModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="states_id" , nullable=false, unique = true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="timezone_id", nullable= false, unique= true)
 	private Integer id;
-	
-	@Column(name="code")
-	private String code;
 	
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="diff_from_utc")
+	private String diffFromUtc;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="country_id")
 	private Country country;
-	
-	
-	@OneToMany( mappedBy="states")
-	private Set<Company>  company;
 
 	public Integer getId() {
 		return id;
@@ -53,14 +41,6 @@ public class States extends AuditModel {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getName() {
@@ -71,6 +51,14 @@ public class States extends AuditModel {
 		this.name = name;
 	}
 
+	public String getDiffFromUtc() {
+		return diffFromUtc;
+	}
+
+	public void setDiffFromUtc(String diffFromUtc) {
+		this.diffFromUtc = diffFromUtc;
+	}
+
 	public Country getCountry() {
 		return country;
 	}
@@ -79,8 +67,11 @@ public class States extends AuditModel {
 		this.country = country;
 	}
 
+	@Override
+	public String toString() {
+		return "TimeZone [id=" + id + ", name=" + name + ", diffFromUtc=" + diffFromUtc + ", country=" + country + "]";
+	}
 	
-
 	
 	
 

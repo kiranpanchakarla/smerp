@@ -1,16 +1,23 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 @Entity
 @Table(name="tbl_hsn_codes_master")
 public class HSNCode extends AuditModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="hsn_id" , nullable=false, unique= true)
 	private Integer id;
 	

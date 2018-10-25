@@ -1,4 +1,4 @@
-package com.smerp.admin.model;
+package com.smerp.model.admin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,69 +9,88 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 
-import com.smerp.master.model.AuditModel;
-import com.smerp.master.model.Country;
-import com.smerp.master.model.Currency;
-import com.smerp.master.model.States;
+import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.Country;
+import com.smerp.model.master.Currency;
+import com.smerp.model.master.States;
 
 @Entity
-@Table(name="tbl_admin_company")
+@Table(name = "tbl_admin_company")
 public class Company extends AuditModel {
-	
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(name="company_id" , nullable = false, unique = true)
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "company_id", nullable = false, unique = true)
 	private Integer id;
-	
-	@Column(name="company_name")
+
+	@Column(name = "company_name")
 	private String name;
-	
-	@Column(name="company_tag_line")
+
+	@Column(name = "company_tag_line")
 	private String companyTagLine;
-	
-	@Column(name="gstin_vat")
-	private Integer gstinVat;
-	
-	@Column(name="pan_num") 
-	private Integer panNum;
-	
-	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name="currencies_id")
+
+	@Column(name = "gstin_vat")
+	private String gstinVat;
+
+	@Column(name = "pan_num")
+	private String panNum;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "currencies_id")
 	private Currency currency;
-	
-	@Column(name="street1")
+
+	@Column(name = "street1")
 	private String street1;
-	
-	@Column(name="street2")
+
+	@Column(name = "street2")
 	private String street2;
-	
-	@Column(name="phone_num")
+
+	@Column(name = "phone_num")
+	@Max(value=15)
 	private Integer phoneNum;
-	
-	@Column(name="fax_num")
+
+	@Column(name = "fax_num")
+	@Max(value=15)
 	private Integer faxNum;
-	
-	@Column(name="city")
+
+	@Column(name = "city")
 	private String city;
-	
-	@Column(name="email_id")
+
+	@Column(name = "email_id")
 	private String emailId;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="states_id")
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "states_id")
 	private States states;
-	
-	@Column(name="zip_code")
+
+	@Column(name = "zip_code")
+	@Max(value=15)
 	private Integer zipCode;
-	
-	@Column(name="web_site")
+
+	@Column(name = "web_site")
 	private String webSite;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="country_id")
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "country_id")
 	private Country country;
+	
+	@Column(name="logi_file_path")
+    private String logo;
+    
+	
+	@Column(name="tax_id")
+	private String taxId;
+	
+	@Column(name="company_registory")
+	private String companyRegisrory;
+  
 
 	public Integer getId() {
 		return id;
@@ -97,19 +116,21 @@ public class Company extends AuditModel {
 		this.companyTagLine = companyTagLine;
 	}
 
-	public Integer getGstinVat() {
+	public String getGstinVat() {
 		return gstinVat;
 	}
 
-	public void setGstinVat(Integer gstinVat) {
+	public void setGstinVat(String gstinVat) {
 		this.gstinVat = gstinVat;
 	}
 
-	public Integer getPanNum() {
+	
+
+	public String getPanNum() {
 		return panNum;
 	}
 
-	public void setPanNum(Integer panNum) {
+	public void setPanNum(String panNum) {
 		this.panNum = panNum;
 	}
 
@@ -208,10 +229,5 @@ public class Company extends AuditModel {
 				+ ", phoneNum=" + phoneNum + ", faxNum=" + faxNum + ", city=" + city + ", emailId=" + emailId
 				+ ", states=" + states + ", zipCode=" + zipCode + ", webSite=" + webSite + ", country=" + country + "]";
 	}
-	
-	
-	
-	
-	
 
 }

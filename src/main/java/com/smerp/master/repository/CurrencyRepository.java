@@ -5,7 +5,7 @@ package com.smerp.master.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.smerp.master.model.Currency;
+import com.smerp.model.master.Currency;
 
 
 @Repository

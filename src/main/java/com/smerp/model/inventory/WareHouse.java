@@ -29,7 +29,7 @@ public class WareHouse extends AuditModel {
 	@Column(name="warehouse_id", nullable = false, unique=true)
 	private Integer id;
 	
-	@Column(name="warehouse_id")
+	@Column(name="warehouse_name")
 	private String wareHouseName;
 	
 	@Column(name="address1")

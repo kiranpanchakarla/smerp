@@ -9,18 +9,20 @@ public class Context {
 	
 	private String tokenId;
 	
-	private String message;
+	private String errorMessage;
 	
 	
 	
 	
 
-	public String getMessage() {
-		return message;
+	
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 	public String getTokenId() {
@@ -41,9 +43,10 @@ public class Context {
 
 	@Override
 	public String toString() {
-		return "Context [configMap=" + configMap + ", tokenId=" + tokenId + ", message=" + message + "]";
+		return "Context [configMap=" + configMap + ", tokenId=" + tokenId + ", errorMessage=" + errorMessage + "]";
 	}
 
+	
 	
 	
 	

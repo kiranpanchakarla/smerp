@@ -1,4 +1,4 @@
-package com.smerp.master.service;
+package com.smerp.service.master;
 
 import java.util.List;
 

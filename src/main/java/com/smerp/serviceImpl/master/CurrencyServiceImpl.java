@@ -1,4 +1,4 @@
-package com.smerp.master.serviceImpl;
+package com.smerp.serviceImpl.master;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smerp.master.repository.CurrencyRepository;
-import com.smerp.master.service.CurrencyServices;
 import com.smerp.model.master.Currency;
+import com.smerp.repository.master.CurrencyRepository;
+import com.smerp.service.master.CurrencyServices;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyServices {

@@ -1,8 +1,8 @@
 package com.smerp.jwt.models;
 
 public class UserDto {
-
-    private String username;
+	
+	private String username;
     private String password;
     private int age;
     private int salary;
@@ -38,4 +38,13 @@ public class UserDto {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+	@Override
+	public String toString() {
+		return "UserDto [username=" + username + ", password=" + password + ", age=" + age + ", salary=" + salary + "]";
+	}
+    
+    
+	
+
 }

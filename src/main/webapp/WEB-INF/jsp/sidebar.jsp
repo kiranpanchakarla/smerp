@@ -4,7 +4,8 @@
     <ul class="side_main_menu">
       <li><a href="index.html"><i class="icon-android-home left"></i><span class="menu_text">DASHBOARD</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/users/4"/>">Users</a></li>
+         <%--  <li class="has_sub"><a href="<c:url value ="/users/4"/>">Users</a></li> --%>
+         <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li>
          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
         </ul>
       </li>

@@ -29,22 +29,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			throws IOException, ServletException {
 		String username = null;
 		String authToken = null;
+		boolean flag;
 
 		HttpSession session = req.getSession(false);
 		if (session != null && session.getAttribute("tokenId") != null) {
 			authToken = (String) session.getAttribute("tokenId");
 		}
 
-		logger.info("authToken---->" + authToken);
+		//logger.info("authToken---->" + authToken);
 		if (authToken != null) {
 			try {
-				username = jwtTokenUtil.getUsernameFromToken(authToken);
+				if(jwtTokenUtil.isTokenExpired(authToken)) {
+					res.sendRedirect("/logout");
+				}
 			} catch (IllegalArgumentException e) {
 				logger.error("an error occured during getting username from token", e);
 
 			} catch (ExpiredJwtException e) {
 				logger.warn("the token is expired and not valid anymore", e);
-				res.sendRedirect("/logout");
+				res.sendRedirect("/error");
 			} catch (SignatureException e) {
 				logger.error("Authentication Failed. Username or Password not valid.");
 			} catch (Exception e) {

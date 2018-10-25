@@ -14,8 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 import com.smerp.model.master.AuditModel;
@@ -54,6 +54,7 @@ public class User extends AuditModel {
 	
 	@Column(name="mobile_no")
 	private String mobileNo;
+	
 	@Transient
 	@NotEmpty(message = "Confirm Password cannot be empty")
 	@Column(name="conform_password")

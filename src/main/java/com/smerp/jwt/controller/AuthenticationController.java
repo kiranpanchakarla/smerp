@@ -52,7 +52,7 @@ public class AuthenticationController {
 		}
 
 		if (logout != null) {
-			model.addObject("errorMsg", "You've been logged out successfully.");
+			model.addObject("msg", "You've been logged out successfully.");
 		}
 		
 		

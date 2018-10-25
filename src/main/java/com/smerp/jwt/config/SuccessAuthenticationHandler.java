@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.smerp.jwt.models.Users;
+import com.smerp.model.admin.User;
+
+
 
 
 
@@ -26,10 +28,10 @@ public class SuccessAuthenticationHandler implements AuthenticationSuccessHandle
 			Authentication authentication) throws IOException, ServletException {
 		
 			    HttpSession session = request.getSession(); 
-			    Users user =   (Users)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+			    User user =   (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
 			    String redirect = ""; 
 			    if(user != null){
-			        session.setAttribute("username", user.getUsername());
+			        session.setAttribute("username", user.getUserName());
 			        if(((Authentication) user).getAuthorities().contains(new   SimpleGrantedAuthority("ROLE_ADMIN")) 
 			                || ((Authentication) user).getAuthorities().contains(new   SimpleGrantedAuthority("ROLE_SUPER_ADMIN")))
 			            redirect = "admin/"; 

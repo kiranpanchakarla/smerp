@@ -16,33 +16,31 @@ import com.smerp.model.master.AuditModel;
 
 import antlr.collections.List;
 
-
 @Entity
-@Table(name="tbl_inventory_uom")
+@Table(name = "tbl_inventory_uom")
 public class Uom extends AuditModel {
-	
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="uom_id", nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "uom_id", nullable = false, unique = true)
 	private Integer id;
-	
-	@Column(name="uom_name")
+
+	@Column(name = "uom_name")
 	private String uomName;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="uom_category_id")
-	private  Set<UomCategory> uomCategory;
-	
-	@Column(name="rounding_precision")
+	@JoinColumn(name = "uom_category_id")
+	private Set<UomCategory> uomCategory;
+
+	@Column(name = "rounding_precision")
 	private String roundingPrecision;
-	
-	@Column(name="type")
+
+	@Column(name = "type")
 	private String type;
 
 	public Integer getId() {
@@ -60,8 +58,6 @@ public class Uom extends AuditModel {
 	public void setUomName(String uomName) {
 		this.uomName = uomName;
 	}
-
-	
 
 	public Set<UomCategory> getUomCategory() {
 		return uomCategory;
@@ -92,8 +88,5 @@ public class Uom extends AuditModel {
 		return "Uom [id=" + id + ", uomName=" + uomName + ", uomCategory=" + uomCategory + ", roundingPrecision="
 				+ roundingPrecision + ", type=" + type + "]";
 	}
-
-	
-	
 
 }

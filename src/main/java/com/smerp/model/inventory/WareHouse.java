@@ -19,6 +19,8 @@ import com.smerp.model.master.States;
 public class WareHouse extends AuditModel {
 	
 	
+	
+	
 	/**
 	 * 
 	 */

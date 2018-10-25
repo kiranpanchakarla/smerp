@@ -1,4 +1,4 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tbl_timezones_master")
-public class TimeZone extends AuditModel {
-	
+@Table(name="tbl_states_master")
+public class States extends AuditModel {
 	
 	/**
 	 * 
@@ -21,19 +20,21 @@ public class TimeZone extends AuditModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="timezone_id", nullable= false, unique= true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="states_id" , nullable=false, unique = true)
 	private Integer id;
+	
+	@Column(name="code")
+	private String code;
 	
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="diff_from_utc")
-	private String diffFromUtc;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="country_id")
 	private Country country;
+	
+
 
 	public Integer getId() {
 		return id;
@@ -41,6 +42,14 @@ public class TimeZone extends AuditModel {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {
@@ -51,14 +60,6 @@ public class TimeZone extends AuditModel {
 		this.name = name;
 	}
 
-	public String getDiffFromUtc() {
-		return diffFromUtc;
-	}
-
-	public void setDiffFromUtc(String diffFromUtc) {
-		this.diffFromUtc = diffFromUtc;
-	}
-
 	public Country getCountry() {
 		return country;
 	}
@@ -67,11 +68,8 @@ public class TimeZone extends AuditModel {
 		this.country = country;
 	}
 
-	@Override
-	public String toString() {
-		return "TimeZone [id=" + id + ", name=" + name + ", diffFromUtc=" + diffFromUtc + ", country=" + country + "]";
-	}
 	
+
 	
 	
 

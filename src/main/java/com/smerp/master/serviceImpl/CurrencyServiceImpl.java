@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smerp.master.model.Currency;
 import com.smerp.master.repository.CurrencyRepository;
 import com.smerp.master.service.CurrencyServices;
+import com.smerp.model.master.Currency;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyServices {

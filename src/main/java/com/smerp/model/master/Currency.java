@@ -1,4 +1,4 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +18,8 @@ public class Currency extends AuditModel {
     
     
     @Id
-    @Column(name="currencies_id" , nullable= false, unique=true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="currencies_id" , nullable= false, unique=true)
     private Integer id;
     
     @Column(name="name")

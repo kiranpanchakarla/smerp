@@ -1,12 +1,19 @@
-package com.smerp.master.model;
+package com.smerp.model.master;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -19,15 +26,15 @@ public abstract class AuditModel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
     private Date createdAt;
 
+	@UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
     private Date updatedAt;
     
     @Column(name="created_uid")
@@ -36,6 +43,7 @@ public abstract class AuditModel implements Serializable {
     @Column(name="updated_uid")
     private Integer updatedBy;
 
+    
     public Date getCreatedAt() {
         return createdAt;
     }

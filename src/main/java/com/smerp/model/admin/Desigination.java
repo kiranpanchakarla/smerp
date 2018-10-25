@@ -1,4 +1,4 @@
-package com.smerp.admin.model;
+package com.smerp.model.admin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 
-import com.smerp.master.model.AuditModel;
+import com.smerp.model.master.AuditModel;
 
 
 @Entity
@@ -25,8 +26,8 @@ public class Desigination extends AuditModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="desigination_id" , nullable = false , unique = true)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="desigination_id" , nullable = false , unique = true)
 	private Integer id;
 	
 	@Column(name="desigination")
@@ -41,6 +42,7 @@ public class Desigination extends AuditModel {
 	private Department department;
 	
 	@Column(name="expected_employees")
+	@Max(value=5)
 	private Integer expectedEmployees;
 	
 	@Column(name="description")

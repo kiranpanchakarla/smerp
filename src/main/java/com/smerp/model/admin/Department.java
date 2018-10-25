@@ -1,4 +1,4 @@
-package com.smerp.admin.model;
+package com.smerp.model.admin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.smerp.master.model.AuditModel;
+import com.smerp.model.master.AuditModel;
 
 
 @Entity
-@Table(name="tbl_department_admin")
+@Table(name="tbl_admin_department")
 public class Department extends AuditModel {
 	
 	
@@ -24,8 +24,8 @@ public class Department extends AuditModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="department_id" , nullable = false , unique = true)
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	@Column(name="department_id" , nullable = false , unique = true)
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -38,9 +38,9 @@ public class Department extends AuditModel {
 	@Column(name="note")
 	private String note;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	private User user;
+	
+	@Column(name="user_id")
+	private Integer userId;
 
 	public Integer getId() {
 		return id;
@@ -74,20 +74,24 @@ public class Department extends AuditModel {
 		this.note = note;
 	}
 
-	public User getUser() {
-		return user;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", company=" + company + ", name=" + name + ", note=" + note + ", user=" + user
-				+ "]";
+		return "Department [id=" + id + ", company=" + company + ", name=" + name + ", note=" + note + ", userId="
+				+ userId + "]";
 	}
+
 	
+	
+
+
 	
 	
 	

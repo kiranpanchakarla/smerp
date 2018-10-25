@@ -1,4 +1,4 @@
-package com.smerp.master.repository;
+package com.smerp.repository.master;
 
 
 

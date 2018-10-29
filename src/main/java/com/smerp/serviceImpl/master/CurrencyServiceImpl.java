@@ -17,8 +17,8 @@ public class CurrencyServiceImpl implements CurrencyServices {
 	CurrencyRepository currencyRepository;
 
 	public Currency save(Currency currency) {
-		currency.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		currency.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+		/*currency.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		currency.setUpdatedAt(new Timestamp(System.currentTimeMillis()));*/
 		currencyRepository.save(currency);
 		return currency;
 	}

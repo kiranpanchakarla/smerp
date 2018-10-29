@@ -45,7 +45,6 @@ public class CurrencyController {
 
 	@PostMapping(value = "/delete")
 	public String delete(String id) {
-		System.out.println("currencyDelete");
 		currencyServices.delete(Integer.parseInt(id));
 		return "redirect:list";
 	}

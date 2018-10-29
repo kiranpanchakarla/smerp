@@ -34,6 +34,12 @@ public class UserController {
     	return "user/create";
     }
     
+    @RequestMapping(value="/save", method = RequestMethod.POST)
+    public User saveUser(@RequestBody UserDto user){
+        return userService.save(user);
+    }
+    
+    
 
     //@Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,14 +58,6 @@ public class UserController {
         return "home";
     }
 
-
-    @RequestMapping(value="/create", method = RequestMethod.POST)
-    public User saveUser(@RequestBody UserDto user){
-        return userService.save(user);
-    }
-
-    
-  
 
 
 }

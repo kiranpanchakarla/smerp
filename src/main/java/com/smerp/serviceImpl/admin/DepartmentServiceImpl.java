@@ -1,19 +1,19 @@
-package com.smerp.serviceImpl;
+package com.smerp.serviceImpl.admin;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smerp.master.repository.DepartmentDao;
 import com.smerp.model.admin.Department;
-import com.smerp.service.master.DepartmentService;
+import com.smerp.repository.admin.DepartmentRepository;
+import com.smerp.service.admin.DepartmentService;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
-	DepartmentDao departmentDao;
+	DepartmentRepository departmentDao;
 	
 	@Override
 	public List<Department> findAll() {

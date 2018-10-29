@@ -53,11 +53,9 @@ public class Company extends AuditModel {
 	private String street2;
 
 	@Column(name = "phone_num")
-	@Max(value=15)
-	private Integer phoneNum;
+	private String phoneNum;
 
 	@Column(name = "fax_num")
-	@Max(value=15)
 	private Integer faxNum;
 
 	@Column(name = "city")
@@ -71,7 +69,6 @@ public class Company extends AuditModel {
 	private States states;
 
 	@Column(name = "zip_code")
-	@Max(value=15)
 	private Integer zipCode;
 
 	@Column(name = "web_site")
@@ -91,6 +88,32 @@ public class Company extends AuditModel {
 	@Column(name="company_registory")
 	private String companyRegisrory;
   
+	
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public String getCompanyRegisrory() {
+		return companyRegisrory;
+	}
+
+	public void setCompanyRegisrory(String companyRegisrory) {
+		this.companyRegisrory = companyRegisrory;
+	}
+
+	
 
 	public Integer getId() {
 		return id;
@@ -158,13 +181,7 @@ public class Company extends AuditModel {
 		this.street2 = street2;
 	}
 
-	public Integer getPhoneNum() {
-		return phoneNum;
-	}
-
-	public void setPhoneNum(Integer phoneNum) {
-		this.phoneNum = phoneNum;
-	}
+	
 
 	public Integer getFaxNum() {
 		return faxNum;
@@ -222,12 +239,24 @@ public class Company extends AuditModel {
 		this.country = country;
 	}
 
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + ", companyTagLine=" + companyTagLine + ", gstinVat=" + gstinVat
 				+ ", panNum=" + panNum + ", currency=" + currency + ", street1=" + street1 + ", street2=" + street2
 				+ ", phoneNum=" + phoneNum + ", faxNum=" + faxNum + ", city=" + city + ", emailId=" + emailId
-				+ ", states=" + states + ", zipCode=" + zipCode + ", webSite=" + webSite + ", country=" + country + "]";
+				+ ", states=" + states + ", zipCode=" + zipCode + ", webSite=" + webSite + ", country=" + country
+				+ ", logo=" + logo + ", taxId=" + taxId + ", companyRegisrory=" + companyRegisrory + "]";
 	}
 
+	
+	
+	
 }

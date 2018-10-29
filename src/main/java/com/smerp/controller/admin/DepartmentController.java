@@ -1,4 +1,4 @@
-package com.smerp.controller.master;
+package com.smerp.controller.admin;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.smerp.model.admin.Department;
-import com.smerp.service.master.DepartmentService;
+import com.smerp.service.admin.DepartmentService;
 
 @Controller
 @RequestMapping("/department")

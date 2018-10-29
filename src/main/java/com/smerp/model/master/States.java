@@ -68,6 +68,11 @@ public class States extends AuditModel {
 		this.country = country;
 	}
 
+	@Override
+	public String toString() {
+		return "States [id=" + id + ", code=" + code + ", name=" + name + ", country=" + country + "]";
+	}
+
 	
 
 	

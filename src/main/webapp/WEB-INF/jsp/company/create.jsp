@@ -33,14 +33,14 @@
 							
 				<div class="content-body"><!-- Basic form layout section start -->
 		
-      <form:form method="POST" action="/company/create" modelAttribute="company" onsubmit="return register()" >
+      <form:form method="POST" action="/company/save" modelAttribute="company"  >
       <section id="basic-form-layouts">
         <div class="row match-height">
 
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Company/Create</h4>
+													<h4 class="card-title" id="basic-layout-icons">Company/Create1</h4>
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
@@ -77,8 +77,14 @@
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>State Code</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter State Code' path="states" value="" />
+																		<form:select path="states" id="selectSubcat" cssClass="form-control">
+																	   
+																	<c:forEach  items="${stateList}" var="stateList">
+																	   
+																	   <form:option value="${stateList.id}">${stateList.name}</form:option>
+																	 </c:forEach>  
+																	   
+																	   </form:select>
 																	</div>
 																</div>
 
@@ -88,7 +94,7 @@
 																	<div class="col-sm-6 form-group">
 																		<label>LOGO</label>
 																		<form:input type="file" cssClass="form-control"
-																			placeholder='File' path="" value="" />
+																			placeholder='File' path="logo" value="" />
 																	</div>
 																</div>
 
@@ -100,8 +106,7 @@
 													</div>
 												</div>
 
-											</div>
-										</div>
+										
 										
 										
 										<div class="col-md-12">
@@ -117,7 +122,7 @@
 
 												<div class="card-body collapse in">
 													<div class="card-block">
-														<form class="form">
+														
 															<div class="form-body">
 
 
@@ -154,7 +159,7 @@
 																	<div class="col-sm-6 form-group">
 																		<label>City</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter City' path="" value="" />
+																			placeholder='Enter City' path="city" value="" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Email</label>
@@ -166,8 +171,14 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>State</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter State' path="" value="" />
+																		<form:select path="states" id="selectSubcat" cssClass="form-control">
+																	   
+																	<c:forEach  items="${stateList}" var="stateList">
+																	   
+																	   <form:option value="${stateList.id}">${stateList.name}</form:option>
+																	 </c:forEach>  
+																	   
+																	   </form:select>
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Website</label>
@@ -181,53 +192,65 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Tax ID</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Tax ID' path="gstinVat" value="" />
+																			placeholder='Enter Tax ID' path="taxId" value="" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Country</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Country' path="" value="" />
+																	   <form:select path="country" id="selectSubcat" cssClass="form-control">
+																	   
+																	<c:forEach  items="${countryList}" var="countryList">
+																	   
+																	   <form:option value="${countryList.id}">${countryList.name}</form:option>
+																	 </c:forEach>  
+																	   
+																	   </form:select>
+																			
+																			
 																	</div>
 																</div>
 																
 																
 																<div class="row">
 																	<div class="col-sm-6 form-group">
-																		<label>Currency</label>
+																		<label>ZIP Code</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Currency' path="" value="" />
+																			placeholder='Enter ZIP Code' path="zipCode" value="" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Company Registry</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Company Registry' path="states" value="" />
+																			placeholder='Enter Company Registry' path="companyRegisrory" value="" />
 																	</div>
 																</div>
 															
 															</div>
 															
 															
-					<div class="form-actions center">
-                     <a  href="/company/create"> <button type="button" class="btn btn-warning mr-1"> <i class="icon-cross2"></i> Cancel </button></a>
-                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save </button>
-                    </div>
+					
 
 
 
-														</form>
+														
 													</div>
 												</div>
 
 											</div>
 										</div>
 										
-										
+									</div>	</div>
 										
 									</div>
+									
+									<div class="form-actions center">
+                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save </button>
+                    </div>
       </section>
      
+     
+     
+     
         </form:form>
-     <a class="btn btn-primary" href="/users/4">Back</a>
+        <a class="btn btn-primary" href="/users/4">Back</a>
       <br>
        
       <br>
@@ -265,6 +288,9 @@
 	</footer>
 	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<%@include file="../loadJs.jsp"%>
+	
+	
+	
 </body>
 <script>
 $(document).ready(function(){

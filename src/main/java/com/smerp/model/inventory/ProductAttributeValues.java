@@ -2,9 +2,12 @@ package com.smerp.model.inventory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.master.AuditModel;
@@ -28,8 +31,11 @@ public class ProductAttributeValues extends AuditModel {
 	private String attributeValue;
 	
 	
-	@Column(name="create_varient")
-	private Boolean createVarient;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="product_attributes_id")
+	private ProductAttributes productAttributes;
+	
+	
 
 
 	public Integer getId() {
@@ -42,21 +48,33 @@ public class ProductAttributeValues extends AuditModel {
 	}
 
 
-	public Boolean getCreateVarient() {
-		return createVarient;
+	public String getAttributeValue() {
+		return attributeValue;
 	}
 
 
-	public void setCreateVarient(Boolean createVarient) {
-		this.createVarient = createVarient;
+	public void setAttributeValue(String attributeValue) {
+		this.attributeValue = attributeValue;
+	}
+
+
+	public ProductAttributes getProductAttributes() {
+		return productAttributes;
+	}
+
+
+	public void setProductAttributes(ProductAttributes productAttributes) {
+		this.productAttributes = productAttributes;
 	}
 
 
 	@Override
 	public String toString() {
-		return "ProductAttributeValues [id=" + id + ", attributeValue=" + attributeValue + ", createVarient="
-				+ createVarient + "]";
+		return "ProductAttributeValues [id=" + id + ", attributeValue=" + attributeValue + ", productAttributes="
+				+ productAttributes + "]";
 	}
+
+
 	
 	
 	

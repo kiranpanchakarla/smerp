@@ -29,7 +29,9 @@ public class Currency extends AuditModel {
     private String description;
     
    
-        
+    @Column(name="image_path")
+    private String image;    
+    
     @Column(name="is_active")
     private Boolean isActive;
 

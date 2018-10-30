@@ -10,11 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.master.AuditModel;
-
-import antlr.collections.List;
 
 @Entity
 @Table(name = "tbl_inventory_uom")
@@ -33,10 +32,12 @@ public class Uom extends AuditModel {
 	@Column(name = "uom_name")
 	private String uomName;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uom_category_id")
-	private Set<UomCategory> uomCategory;
+	private UomCategory uomCategory;
 
+
+	
 	@Column(name = "rounding_precision")
 	private String roundingPrecision;
 
@@ -59,11 +60,13 @@ public class Uom extends AuditModel {
 		this.uomName = uomName;
 	}
 
-	public Set<UomCategory> getUomCategory() {
+	
+
+	public UomCategory getUomCategory() {
 		return uomCategory;
 	}
 
-	public void setUomCategory(Set<UomCategory> uomCategory) {
+	public void setUomCategory(UomCategory uomCategory) {
 		this.uomCategory = uomCategory;
 	}
 
@@ -83,10 +86,15 @@ public class Uom extends AuditModel {
 		this.type = type;
 	}
 
+	
+	
+
 	@Override
 	public String toString() {
 		return "Uom [id=" + id + ", uomName=" + uomName + ", uomCategory=" + uomCategory + ", roundingPrecision="
 				+ roundingPrecision + ", type=" + type + "]";
 	}
+
+	
 
 }

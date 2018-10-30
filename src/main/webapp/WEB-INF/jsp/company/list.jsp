@@ -10,15 +10,13 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-</head>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+</head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
+	<c:import url="../header.jsp" />
 
-
-	<c:import url="/WEB-INF/jsp/header.jsp" />
-
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="../sidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -36,8 +34,8 @@
 							<div class="content-wrapper">
 								<div class="content-header row">
 									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Currency</h2>
-										<a class="btn btn-primary" href="/currency/create">Create</a>
+										<h2 class="content-header-title">Company</h2>
+										<a class="btn btn-primary" href="/company/create">Create</a>
 									</div>
 									<div
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -47,7 +45,7 @@
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
-												<li class="breadcrumb-item active">Currency</li>
+												<li class="breadcrumb-item active">Company</li>
 											</ol>
 										</div>
 									</div>
@@ -58,7 +56,7 @@
 
 										<div class="card">
 											<div class="card-header">
-												<h4 class="card-title">Currency Database</h4>
+												<h4 class="card-title">Company List</h4>
 												<a class="heading-elements-toggle"><i
 													class="icon-ellipsis font-medium-3"></i></a>
 											</div>
@@ -70,20 +68,31 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																	<th> Currency Name</th>
-																	<th>Currency Description</th>
+																	<th>Company Name</th>
+																	<th>Company TagLine</th>
+																	<th>GSTN</th>
+																	<th>PhoneNumber</th>
+																	<th>City</th>
+																	<th>ZipCode</th>
+																	<th>WebSite</th>
+																	<th>TaxId</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
 															<tbody>
-															<c:forEach items="${currencyList}" var="currency">
+															<c:forEach items="${companyList}" var="companyList">
 																<tr>
-																	<td>${currency.name}</td>
-																	<td>${currency.description}</td> 
-																	<td>
-																 <a class="btn btn-primary" href="<c:url value="/currency/getInfo?currencyId=${currency.id}"/>"> <i class="icon-edit left"></i></a>
-																	<a class="btn btn-warning mr-1" href="#" onclick="deleteUser('<c:out value="${currency.id}"/>')"><i class="icon-bin left"></i></a></td>
-																
+																	<td>${companyList.name}</td>
+																	<td>${companyList.companyTagLine}</td>
+																	<td>${companyList.gstinVat}</td>
+																	<td>${companyList.phoneNum}</td>
+																	<td>${companyList.city}</td>
+																	<td>${companyList.zipCode}</td>
+																	<td>${companyList.webSite}</td>
+																	<td>${companyList.taxId}</td>
+																	<td style="width:14%">
+																	 <a class ="btn btn-primary" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>"><i class="icon-edit left"></i></a> | 
+																	<a  class ="btn btn-warning" href="#"  onclick="deleteCompanyId('<c:out value="${companyList.id}"/>')"><i class="icon-bin left"></i></a></td>
 																</tr>
 																</c:forEach>
 															</tbody>
@@ -100,30 +109,13 @@
 							</div>
 					</div>
 					</div>
+</div></div></div>
+				<footer class="footer footer-static footer-light navbar-border">
+  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
+</footer>
 
-						<footer class="footer footer-static footer-light navbar-border">
-		<div class="row">
-			
-			<div class="col-md-12">
-				<div class="footer_logo">
-					<img src="/resources/images/footer_logo.png">
-				</div>
-			</div>
-		</div>
-	</footer>
-
-						<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+<c:import url="../loadJs.jsp" />
 </body>
-<script>
-	$(document).ready(function() {
-		/*  console.log("hiiiii");
-		var x=$('#tokenId').val();
-		console.log("token id"+x);
-		document.cookie="tokenId=" + x;
-		
-		console.log("document cookie"+document.cookie);   */
-	});
-</script>
-
+	
 </html>
 

@@ -1,3 +1,9 @@
+h1, h2, h3, h4, h5, h6 {
+	color: #106570;
+}
+a{
+	color: #1ea3b5;
+}
 .main-menu .main-menu-content{
 	overflow: initial !important;
 }
@@ -89,7 +95,7 @@
     margin: 0px;
 }
 .main-menu.menu-fixed{
-	height: 85%;
+	height: 100%;
 }
 .side_main_menu li{
 	border-bottom: 1px dotted #666;
@@ -103,8 +109,8 @@
     position: relative;
 }
 .side_main_menu li:hover a{
-	background-color: #ccc;
-	color: #000;
+	background-color: #178796;
+	color: #fff;
 }
 .side_main_menu li a i{
 	position: absolute;
@@ -134,12 +140,12 @@
     top: 0px;
 }
 .side_main_menu .sub_menu li a{
-	background-color: #369;
+	background-color: #178796;
 	color: #fff;
 }
 .side_main_menu .sub_menu li a:hover{
-	background-color: #ccc;
-	color: #000;
+	background-color: #1ea3b5;
+	color: #fff;
 }
 .side_main_menu .sub_menu .super_sub{
 	display: none;
@@ -150,7 +156,7 @@
 .side_main_menu .sub_menu .has_sub:hover> .super_sub{
 	display: block;
 }
-.footer{
+/*.footer{
 	margin: 0 !important;
     position: fixed;
     bottom: 0;
@@ -164,6 +170,30 @@
 	padding: 1px;
 	margin-top: 2px;
 }
-.collapse_sub{
+*/.collapse_sub{
 	left: 60px !important;
 }
+.card{
+	border: 1px solid #bbb;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(163,158,163,1);
+	-moz-box-shadow: 0px 2px 3px 0px rgba(163,158,163,1);
+	box-shadow: 0px 2px 3px 0px rgba(163,158,163,1);
+}
+.main-menu.menu-dark {
+    color: #dcdcdc;
+    background: #1ea3b5;
+}
+form label{
+	color: #ee6f30;
+}
+footer{
+position: fixed;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    
+}
+.table_padding_custom th, .table_padding_custom td  {
+	padding: 0.75rem !important;
+}
+    

@@ -6,7 +6,15 @@
 <script src="/resources/js/core/app-menu.js" type="text/javascript"></script> 
 <script src="/resources/js/core/app.js" type="text/javascript"></script> 
 <script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <script>
+
+
+
+
+
   $(document).ready(function(){
     $('.icon-menu5').click(function(){
       if($('.menu-shadow').find('.sub_menu').hasClass('collapse_sub')){
@@ -20,12 +28,22 @@
       }
       //$('.menu-shadow').find('.sub_menu').addClass('collapse');
     });
+    
+    
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+    
+    
   });
   
   
 
   function deleteUser(id){
-  	if (confirm("Are you Sure Want to delete!")) {
+  	if (confirm("Are you Sure Want to delete Currency!")) {
        //"You pressed OK!";
   		var url="/currency/delete"
   		var dataString  = "id="+id;
@@ -44,6 +62,26 @@
   }
 
   
-  
+  function deleteCompanyId(id){
+	  	if (confirm("Are you Sure Want to delete Company!")) {
+	       //"You pressed OK!";
+	  		var dataString  = "companyId="+id;
+	  			 $.ajax({
+	  				 type:"POST",
+	  				 url: "<c:url value='/company/delete'/>",
+	  				 data : dataString,
+	  				 success: function(result){
+	  					 location.reload(); 
+	  			    }});
+	       
+	      } else {
+	      /// "You pressed Cancel!";
+	      }
+	  }
+
+  function goBack() {
+      window.history.back();
+  }
+ 
   
 </script>

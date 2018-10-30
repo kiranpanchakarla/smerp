@@ -49,8 +49,8 @@ public class AuthenticationController {
 		}
 
 		if (logout != null) {
+			session.removeAttribute("tokenId");
 			session.invalidate();
-			//session.removeAttribute("tokenId");
 			model.addObject("errorMsg", "You've been logged out successfully.");
 		}
 		

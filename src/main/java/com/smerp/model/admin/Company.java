@@ -56,7 +56,7 @@ public class Company extends AuditModel {
 	private String phoneNum;
 
 	@Column(name = "fax_num")
-	private Integer faxNum;
+	private String faxNum;
 
 	@Column(name = "city")
 	private String city;
@@ -69,7 +69,7 @@ public class Company extends AuditModel {
 	private States states;
 
 	@Column(name = "zip_code")
-	private Integer zipCode;
+	private String zipCode;
 
 	@Column(name = "web_site")
 	private String webSite;
@@ -114,6 +114,22 @@ public class Company extends AuditModel {
 	}
 
 	
+
+	public String getFaxNum() {
+		return faxNum;
+	}
+
+	public void setFaxNum(String faxNum) {
+		this.faxNum = faxNum;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 
 	public Integer getId() {
 		return id;
@@ -183,13 +199,7 @@ public class Company extends AuditModel {
 
 	
 
-	public Integer getFaxNum() {
-		return faxNum;
-	}
-
-	public void setFaxNum(Integer faxNum) {
-		this.faxNum = faxNum;
-	}
+	
 
 	public String getCity() {
 		return city;
@@ -215,13 +225,7 @@ public class Company extends AuditModel {
 		this.states = states;
 	}
 
-	public Integer getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(Integer zipCode) {
-		this.zipCode = zipCode;
-	}
+	
 
 	public String getWebSite() {
 		return webSite;

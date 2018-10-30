@@ -16,6 +16,29 @@
 
 
   $(document).ready(function(){
+	 
+	// allow only numerics
+	   var specialKeys = new Array();
+	   specialKeys.push(8); //Backspace
+	   $(".numericwithoutdecimal").bind("keypress", function (e) {
+	     var keyCode = e.which ? e.which : e.keyCode
+	     var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+	     return ret;
+	   });
+	   // allow only numerics with .dot
+	   $(".numericwithdecimal").on("keypress keyup blur",function (event) {
+	        $(this).val($(this).val().replace(/[^0-9\.]/g,''));
+	         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)){
+	             event.preventDefault();
+	         }
+	   });
+	   $(".numericwithoutdecimal, .numericwithdecimal").bind("paste", function (e) {
+	     return false;
+	   });
+	   $(".numericwithoutdecimal, .numericwithdecimal").bind("drop", function (e) {
+	     return false;
+	   });
+	  
     $('.icon-menu5').click(function(){
       if($('.menu-shadow').find('.sub_menu').hasClass('collapse_sub')){
         $('.menu-shadow').find('.sub_menu').removeClass('collapse_sub');
@@ -30,12 +53,12 @@
     });
     
     
-    $('#example').DataTable( {
+   /*  $('#example').DataTable( {
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
-    } );
+    } ); */
     
     
   });
@@ -78,6 +101,30 @@
 	      /// "You pressed Cancel!";
 	      }
 	  }
+  
+  
+  function deleteProductId(id){
+	  	if (confirm("Are you Sure Want to delete Product!")) {
+	       //"You pressed OK!";
+	  		//var id  = "productId="+id;
+	  		alert(id);
+	  			 $.ajax({
+	  				 type:"POST",
+	  				url : "<c:url value="/inventory/delete/"/>?id="
+					+ id,
+	  				
+	  				 success: function(result){
+	  					 location.reload(); 
+	  			    }});
+	       
+	      } else {
+	      /// "You pressed Cancel!";
+	      }
+	  }
+  
+  
+  
+  
 
   function goBack() {
       window.history.back();

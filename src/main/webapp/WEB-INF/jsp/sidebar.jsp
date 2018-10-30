@@ -17,6 +17,18 @@
          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Users</a></li>
         </ul>
       </li>
+       <li><a href="index.html"><i class="icon-android-home left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+        <ul class="sub_menu">
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Warehouse</a></li>
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product UOM Category</a></li>
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Unit Of Measure</a></li>
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Attributes</a></li>
+          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Attribute Values</a></li>
+         <li class="has_sub"><a href="<c:url value ="/inventory/productList"/>">Product</a></li>
+         <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Inventory Adjustment</a></li>
+        </ul>
+      </li>
       
       
       <li><a href="form-layout-basic.html"><i class="icon-wpforms left"></i><span class="menu_text">Settings</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>

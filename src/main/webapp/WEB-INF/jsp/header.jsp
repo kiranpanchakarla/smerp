@@ -1,4 +1,6 @@
-
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
+<!-- END Custom CSS-->
 <div class="first_strip"
 	style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
 	<div>
@@ -584,7 +586,7 @@
 						class="icon-clipboard2"></i> Task</a> <a href="#"
 						class="dropdown-item"><i class="icon-calendar5"></i> Calender</a>
 					<div class="dropdown-divider"></div>
-					<a href="<c:url value ="/logout"/>" class="dropdown-item"><i
+					<a href="<c:url value ='/logout'/>" class="dropdown-item"><i
 						class="icon-power3"></i> Logout</a>
 				</div>
 			</li>

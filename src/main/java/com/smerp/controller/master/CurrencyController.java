@@ -15,7 +15,6 @@ import com.smerp.model.master.Currency;
 import com.smerp.service.master.CurrencyServices;
 
 @Controller
-
 @RequestMapping("/currency")
 public class CurrencyController {
 
@@ -24,7 +23,7 @@ public class CurrencyController {
 
 	@GetMapping(value = "/list")
 	public String list(Model model) {
-		List<Currency> currencyList = currencyServices.currencyList();
+		List<Currency> currencyList = currencyServices.findAll();
 		model.addAttribute("currencyList", currencyList);
 		return "masters/currency/list";
 	}
@@ -35,7 +34,7 @@ public class CurrencyController {
 		return "masters/currency/create";
 	}
 
-	@GetMapping(value = "/GetInfo")
+	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String currencyId) {
 		Currency currencyObj = currencyServices.findById(Integer.parseInt(currencyId));
 		model.addAttribute("currencyObj", currencyObj);

@@ -1,4 +1,5 @@
 <!-- main menu-->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow"> 
   <div class="main-menu-content">
     <ul class="side_main_menu">
@@ -12,7 +13,7 @@
       
        <li><a href="index.html"><i class="icon-android-home left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/company/create"/>">Companies</a></li>
+          <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Users</a></li>
         </ul>
       </li>

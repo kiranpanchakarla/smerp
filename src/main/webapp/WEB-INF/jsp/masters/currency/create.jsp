@@ -10,13 +10,14 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-<%@include file="../../loadcss.jsp"%>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-	<%@include file="../../header.jsp"%>
+<c:import url="../../loadcss.jsp" />
 
-	<%@include file="../../sidebar.jsp"%>
+	<c:import url="../../header.jsp" />
+
+	<c:import url="../../sidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -127,7 +128,8 @@
 		</div>
 	</footer>
 	
-	<%@include file="../../loadJs.jsp"%>
+	
+<c:import url="../../loadJs.jsp" />
 </body>
 <script>
 $(document).ready(function(){

@@ -17,14 +17,16 @@ public class CurrencyServiceImpl implements CurrencyServices {
 	CurrencyRepository currencyRepository;
 
 	public Currency save(Currency currency) {
-		/*currency.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		currency.setUpdatedAt(new Timestamp(System.currentTimeMillis()));*/
+		/*
+		 * currency.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		 * currency.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+		 */
 		currencyRepository.save(currency);
 		return currency;
 	}
 
 	@Override
-	public List<Currency> currencyList() {
+	public List<Currency> findAll() {
 		return currencyRepository.findAll();
 	}
 

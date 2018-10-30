@@ -10,14 +10,13 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-<%@include file="../loadcss.jsp"%>
+<c:import url="../loadcss.jsp" />
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-	<%@include file="../header.jsp"%>
+	<c:import url="../header.jsp" />
 
-	<%@include file="../sidebar.jsp"%>
-
+     <c:import url="../sidebar.jsp" />
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
@@ -40,31 +39,31 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Company/Create1</h4>
+													<h4 class="card-title" id="basic-layout-icons">Company/Create</h4>
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
 
-												<input type="hidden" id="id" class="form-control" name="id"
-													value="">
+												
 
 												<div class="card-body collapse in">
 													<div class="card-block">
-														<form class="form">
+													
 															<div class="form-body">
 
-
+ 													<input type="hidden" id="id" class="form-control"  name="id" value="${company.id}">
+ 
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>Company Name</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Company Name' path="name" value="" />
+																			placeholder='Company Name' path="name"  value="${company.name}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Company Tagline</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Company TagLine' path="companyTagLine"
-																			value="" />
+																			value="${company.companyTagLine}" />
 																	</div>
 																</div>
 
@@ -73,7 +72,7 @@
 																	<div class="col-sm-6 form-group">
 																		<label>VAT</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='VAT' path="gstinVat" value="" />
+																			placeholder='VAT' path="gstinVat" value="${company.gstinVat}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>State Code</label>
@@ -94,31 +93,20 @@
 																	<div class="col-sm-6 form-group">
 																		<label>LOGO</label>
 																		<form:input type="file" cssClass="form-control"
-																			placeholder='File' path="logo" value="" />
+																			placeholder='File' path="logo" value="${company.id}" />
 																	</div>
 																</div>
 
 
-
-															</div>
-
-														</form>
-													</div>
-												</div>
-
-										
-										
-										
-										<div class="col-md-12">
-											<div class="card">
+											<!-- <div class="col-md-12">
+											<div class="card"> -->
 												<div class="card-header">
 													<h4 class="card-title" id="basic-layout-icons">Address</h4>
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
 
-												<input type="hidden" id="id" class="form-control" name="id"
-													value="">
+												
 
 												<div class="card-body collapse in">
 													<div class="card-block">
@@ -130,13 +118,13 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Address</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='street1' path="street1" value="" />
+																			placeholder='street1' path="street1" value="${company.street1}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Phone</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Enter Phone No' path="phoneNum"
-																			value="" />
+																			value="${company.phoneNum}" />
 																	</div>
 																</div>
 
@@ -145,12 +133,12 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Address</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Street2' path="street2" value="" />
+																			placeholder='Street2' path="street2" value="${company.street2}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Fax</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter fax Num' path="faxNum" value="" />
+																			placeholder='Enter fax Num' path="faxNum" value="${company.faxNum}" />
 																	</div>
 																</div>
 																
@@ -159,12 +147,12 @@
 																	<div class="col-sm-6 form-group">
 																		<label>City</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter City' path="city" value="" />
+																			placeholder='Enter City' path="city" value="${company.city}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Email</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Email' path="emailId" value="" />
+																			placeholder='Enter Email' path="emailId" value="${company.emailId}" />
 																	</div>
 																</div>
 																
@@ -183,7 +171,7 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Website</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Website' path="webSite" value="" />
+																			placeholder='Enter Website' path="webSite" value="${company.webSite}" />
 																	</div>
 																</div>
 																
@@ -192,7 +180,7 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Tax ID</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Tax ID' path="taxId" value="" />
+																			placeholder='Enter Tax ID' path="taxId" value="${company.taxId}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Country</label>
@@ -214,12 +202,12 @@
 																	<div class="col-sm-6 form-group">
 																		<label>ZIP Code</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter ZIP Code' path="zipCode" value="" />
+																			placeholder='Enter ZIP Code' path="zipCode" value="${company.zipCode}" />
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Company Registry</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Enter Company Registry' path="companyRegisrory" value="" />
+																			placeholder='Enter Company Registry' path="companyRegisrory" value="${company.companyRegisrory}" />
 																	</div>
 																</div>
 															
@@ -227,30 +215,60 @@
 															
 															
 					
-
+												<div  style="text-align: center;">
+								                     <a  href="/company/list"> <button type="button" class="btn btn-warning mr-1"> <i class="icon-cross2"></i> Cancel </button></a>
+									
+									 <c:if test = "${company.name!=null}">  
+                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update </button>
+                      </c:if>
+                      
+                       <c:if test = "${company.name==null}">  
+                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save </button>
+                      </c:if>
+									
+						 </div>		
 
 
 														
 													</div>
 												</div>
 
-											</div>
-										</div>
+											<!-- </div>
+										</div> -->
+
+
+
+
+
+
+
+															</div>
+
+														
+													</div>
+												</div>
+
+										
+										
+										
+										
 										
 									</div>	</div>
 										
 									</div>
+										
 									
-									<div class="form-actions center">
-                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save </button>
-                    </div>
+                    <div>
+                       <a href="#" onclick="goBack()"
+					class="btn btn-primary" style=" float: left;"> Back</a> 
+                   </div>
       </section>
      
      
      
      
         </form:form>
-        <a class="btn btn-primary" href="/users/4">Back</a>
+     
       <br>
        
       <br>
@@ -276,19 +294,11 @@
 		</div>
 	</div>
 
-	<footer class="footer footer-static footer-light navbar-border">
-		<div class="row">
-			
-			<div class="col-md-12">
-				<div class="footer_logo">
-					<img src="/resources/images/footer_logo.png">
-				</div>
-			</div>
-		</div>
-	</footer>
+		<footer class="footer footer-static footer-light navbar-border">
+  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
+</footer>
 	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	<%@include file="../loadJs.jsp"%>
-	
+	<c:import url="../loadJs.jsp" />
 	
 	
 </body>

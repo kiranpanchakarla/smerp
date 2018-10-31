@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class RequestContextFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 	//	System.out.println("hiiii-----------iiiiiiiiii");
+		
+		HttpServletRequest 	req=(HttpServletRequest) request; 
+		
+		String contextPath = req.getContextPath();
+		
+		
 		try {
 			chain.doFilter(request, response);
 		}catch(Exception e){

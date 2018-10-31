@@ -13,11 +13,11 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-<c:import url="../../loadcss.jsp" />
+<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-	<c:import url="../../header.jsp" />
+	<c:import url="/WEB-INF/jsp/header.jsp" />
 
-	<c:import url="../../sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -128,21 +128,8 @@
 		</div>
 	</footer>
 	
-	
-<c:import url="../../loadJs.jsp" />
+<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
-<script>
-$(document).ready(function(){
-	/*  console.log("hiiiii");
-	var x=$('#tokenId').val();
-	console.log("token id"+x);
-	document.cookie="tokenId=" + x;
-	
-	console.log("document cookie"+document.cookie);   */
-});
 
-
-
-</script>
 </html>
 

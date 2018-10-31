@@ -55,10 +55,10 @@ public class User extends AuditModel {
 	@Column(name="mobile_no")
 	private String mobileNo;
 	
-	@Transient
-	@NotEmpty(message = "Confirm Password cannot be empty")
+	//@Transient
+	//@NotEmpty(message = "Confirm Password cannot be empty")
 	@Column(name="conform_password")
-	private String confirmPassword;
+	private transient String confirmPassword;
 	//email activation 
 	@Column(name="activation_id",nullable= false)
 	private String activationId;

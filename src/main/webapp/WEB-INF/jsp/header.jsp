@@ -576,8 +576,8 @@
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
 					class="avatar avatar-online"> <img
-						src="/resources/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i>
-				</span> <span class="user-name">Super Admin</span>
+						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"><i></i>
+				</span> <span class="user-name">MANUH</span>
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>

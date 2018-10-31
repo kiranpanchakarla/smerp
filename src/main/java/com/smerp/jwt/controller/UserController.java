@@ -57,6 +57,12 @@ public class UserController {
     	model.addAttribute("data", userService.findById(id));
         return "home";
     }
+    
+    
+    @GetMapping(value = {"/dashboard"})
+    public String getHome() {
+        return "home";
+    }
 
 
 

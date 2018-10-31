@@ -11,11 +11,19 @@ public class Context {
 	
 	private String errorMessage;
 	
-	
+	private String contextPath;
 	
 	
 
 	
+
+	public String getContextPath() {
+		return contextPath;
+	}
+
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
 
 	public String getErrorMessage() {
 		return errorMessage;

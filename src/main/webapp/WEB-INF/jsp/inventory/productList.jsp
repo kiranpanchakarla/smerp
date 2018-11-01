@@ -85,7 +85,7 @@
 																	<td>${productList.description}</td>
 																	<td style="width:14%">
 																	 <a class ="btn btn-primary" href="<c:url value="/inventory/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteProductId('<c:out value="${productList.id}"/>')"><i class="icon-bin left"></i></a></td>
+																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/inventory/delete')"><i class="icon-bin left"></i></a></td>
 																</tr>
 																</c:forEach>
 															</tbody>

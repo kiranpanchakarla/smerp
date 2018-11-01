@@ -196,9 +196,10 @@
 <script>
 $(document).ready(function() {
  // alert("hiii");
+ 
    $("#department").change(function(){
-	   alert("The text has been changed."+$("#department").val());
-		
+	   //alert("The text has been changed."+$("#department").val());
+	$("#desigination").html('<option>Select</option>');
 	   $.ajax({
            type : "GET",
            url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),

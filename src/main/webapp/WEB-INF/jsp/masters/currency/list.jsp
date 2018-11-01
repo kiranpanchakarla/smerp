@@ -82,7 +82,7 @@
 																	<td>${currency.description}</td> 
 																	<td>
 																 <a class="btn btn-primary" href="<c:url value="/currency/getInfo?currencyId=${currency.id}"/>"> <i class="icon-edit left"></i></a>
-																	<a class="btn btn-warning mr-1" href="#" onclick="deleteUser('<c:out value="${currency.id}"/>')"><i class="icon-bin left"></i></a></td>
+																	<a class="btn btn-warning mr-1" href="#" onclick="deleteById('<c:out value="${currency.id}"/>','/currency/delete')"><i class="icon-bin left"></i></a></td>
 																
 																</tr>
 																</c:forEach>

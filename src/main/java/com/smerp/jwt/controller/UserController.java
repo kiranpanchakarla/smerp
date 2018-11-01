@@ -117,6 +117,9 @@ public class UserController {
 		return map;
 	}
 
-	
+	@RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
+    public String getHome() {
+        return "home";
+    }
 
 }

@@ -66,14 +66,35 @@
 																	<span class="scl-form-error-container" id="1_errorContainer"></span>
 																		
 																</div>
-																<div class="col-sm-6 form-group">
-																	<label>Company Tagline</label>
-																	<form:input type="text" cssClass="form-control"
-																		placeholder='Company TagLine' path="companyTagLine"
-																		value="${company.companyTagLine}"
-																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#2_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="2_errorContainer"></span>
+																
+																<div class="col-sm-2 form-group">
+																	<label>LOGO</label>${message}
+																	 <%-- <form:input type="file" cssClass="form-control"  accept="image/*" onchange="loadFile(event)" 
+																		path="logo" value="${company.logo}" /> --%>
+																		
+																<p>
+																<input type="file"   name="file" id="file" value="${company.logo}"  onchange="loadFile(event)" style="display: none;"
+			                                         data-bv-notempty="true" data-bv-notempty-message="Required"  data-bv-file="true" data-bv-file-message="Required"  data-bv-file-maxsize="2"   data-bv-container="#100_errorContainer" />
+
+																<span class="scl-form-error-container" id="100_errorContainer"></span>
+																<form:input  type="hidden" path="logo" value="${company.logo}" />
+																</p>
+															<p style="margin-top: -28px;"><label for="file" style="cursor: pointer;"><img src="../../../resources/images/company/cameraIcon.png"></label></p>
 																</div>
+																<div class="col-sm-4 form-group">
+																<c:if test="${filePath==null}">
+																			<p><img src="../../../resources/images/company/noImageUploaded.png" alt="See" id="output" width="100" height="70" /></p>
+																</c:if>
+																
+																<c:if test="${filePath!=null}">
+																			<p><img src="${filePath}" alt="See" id="output" width="100" height="70" /></p>
+																</c:if>
+																	
+																</div>
+																
+																
+																
+																
 															</div>
 
 
@@ -86,17 +107,17 @@
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#3_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="3_errorContainer"></span>
 																</div>
+																
 																<div class="col-sm-6 form-group">
-																	<label>State Code</label>
-																	<form:select path="states.id" id="selectSubcat"
-																		cssClass="form-control">
-																		<form:option value="0">--Select--</form:option>
-																		<c:forEach items="${stateList}" var="stateList">
-
-																			<form:option value="${stateList.id}">${stateList.name}</form:option>
-																		</c:forEach>
-																	</form:select>
+																	<label>Company Tagline</label>
+																	<form:input type="text" cssClass="form-control"
+																		placeholder='Company TagLine' path="companyTagLine"
+																		value="${company.companyTagLine}"
+																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#2_errorContainer" data-bv-stringlength-message="between-string-length"/>
+																		<span class="scl-form-error-container" id="2_errorContainer"></span>
 																</div>
+																
+																
 															</div>
 															
 															
@@ -129,22 +150,17 @@
 
 
 															<div class="row">
-																<div class="col-sm-2 form-group">
-																	<label>LOGO</label>${message}
-																	 <%-- <form:input type="file" cssClass="form-control"  accept="image/*" onchange="loadFile(event)" 
-																		path="logo" value="${company.logo}" /> --%>
-																		
-																<p>
-																<input type="file"   name="file" id="file" value="${company.logo}"  onchange="loadFile(event)" style="display: none;"
-			                                         data-bv-notempty="true" data-bv-notempty-message="Required"  data-bv-file="true" data-bv-file-message="Required"  data-bv-file-maxsize="2"   data-bv-container="#100_errorContainer" />
+																
+																<div class="col-sm-6 form-group">
+																	<label>State Code</label>
+																	<form:select path="states.id" id="selectSubcat"
+																		cssClass="form-control">
+																		<form:option value="0">--Select--</form:option>
+																		<c:forEach items="${stateList}" var="stateList">
 
-																<span class="scl-form-error-container" id="100_errorContainer"></span>
-																<form:input  type="hidden" path="logo" value="${company.logo}" />
-																</p>
-															<p><label for="file" style="cursor: pointer;"><img src="../../../resources/images/company/cameraIcon.png"></label></p>
-																</div>
-																<div class="col-sm-4 form-group">
-																	<p><img src="${filePath}"  id="output" width="100" /></p>
+																			<form:option value="${stateList.id}">${stateList.name}</form:option>
+																		</c:forEach>
+																	</form:select>
 																</div>
 																
 																<div class="col-sm-6 form-group">

@@ -99,8 +99,8 @@ public class CompanyController {
 	}
 
 	@PostMapping(value = "/delete")
-	public String delete(String companyId) {
-		companyServices.delete(Integer.parseInt(companyId));
+	public String delete(String id) {
+		companyServices.delete(Integer.parseInt(id));
 		return "redirect:list";
 	}
 

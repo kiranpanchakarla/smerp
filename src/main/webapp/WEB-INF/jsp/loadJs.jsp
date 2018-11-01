@@ -6,6 +6,13 @@
 <script src="/resources/js/core/app-menu.js" type="text/javascript"></script> 
 <script src="/resources/js/core/app.js" type="text/javascript"></script> 
 <script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script> 
+<!-- alertifyjs -->
+<link rel="stylesheet" href="/resources/components/alertifyjs/css/alertify.css" />
+<link rel="stylesheet" href="/resources/components/alertifyjs/css/themes/default.css" />
+<!-- alertifyjs -->
+<!-- alertfy-->
+<script type="text/javascript" src="/resources/components/alertifyjs/alertify.min.js"></script>
+<!-- alertfy-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
@@ -52,78 +59,29 @@
       //$('.menu-shadow').find('.sub_menu').addClass('collapse');
     });
     
-    
-   /*  $('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } ); */
-    
-    
   });
   
   
-
-  function deleteUser(id){
-  	if (confirm("Are you Sure Want to delete Currency!")) {
-       //"You pressed OK!";
-  		var url="/currency/delete"
-  		var dataString  = "id="+id;
-  			 $.ajax({
-  				 type:"POST",
-  				 url: url, 
-  				 data : dataString,
-  				 success: function(result){
-  					 location.reload(); 
-  					 
-  			    }});
-       
-      } else {
-      /// "You pressed Cancel!";
-      }
-  }
-
-  
-  function deleteCompanyId(id){
-	  	if (confirm("Are you Sure Want to delete Company!")) {
-	       //"You pressed OK!";
-	  		var dataString  = "companyId="+id;
+  function deleteById(id,url){
+	  alertify.confirm('Are you Sure Want to Delete', function(){
+	      //alertify.success('Ok');
+			//"You pressed OK!";
+	  		var dataString  = "id="+id;
 	  			 $.ajax({
 	  				 type:"POST",
-	  				 url: "<c:url value='/company/delete'/>",
+	  				 url: url,
 	  				 data : dataString,
 	  				 success: function(result){
-	  					 location.reload(); 
+	  					 alertify.success('Deleted successfully');
+	  					 setTimeout(function(){
+	  						 location.reload();
+	  					 }, 800);
 	  			    }});
-	       
-	      } else {
-	      /// "You pressed Cancel!";
-	      }
-	  }
-  
-  
-  function deleteProductId(id){
-	  	if (confirm("Are you Sure Want to delete Product!")) {
-	       //"You pressed OK!";
-	  		//var id  = "productId="+id;
-	  		alert(id);
-	  			 $.ajax({
-	  				 type:"POST",
-	  				url : "<c:url value="/inventory/delete/"/>?id="
-					+ id,
-	  				
-	  				 success: function(result){
-	  					 location.reload(); 
-	  			    }});
-	       
-	      } else {
-	      /// "You pressed Cancel!";
-	      }
-	  }
-  
-  
-  
+	  			 
+	          }, function(){
+	      alertify.error('Cancel')
+	   });
+   }
   
 
   function goBack() {

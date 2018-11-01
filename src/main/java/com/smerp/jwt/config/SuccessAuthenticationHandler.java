@@ -31,7 +31,7 @@ public class SuccessAuthenticationHandler implements AuthenticationSuccessHandle
 			    User user =   (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
 			    String redirect = ""; 
 			    if(user != null){
-			        session.setAttribute("username", user.getUserName());
+			        session.setAttribute("username", user.getUsername());
 			        if(((Authentication) user).getAuthorities().contains(new   SimpleGrantedAuthority("ROLE_ADMIN")) 
 			                || ((Authentication) user).getAuthorities().contains(new   SimpleGrantedAuthority("ROLE_SUPER_ADMIN")))
 			            redirect = "admin/"; 

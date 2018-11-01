@@ -13,11 +13,23 @@ import com.smerp.service.admin.DesignationService;
 public class DesignationServiceImpl implements DesignationService {
 
 	@Autowired
-	DesiginationRepository desiginationDao;
+	DesiginationRepository desiginationRepository;
 	
 	@Override
 	public List<Desigination> findAll() {
-		return null;
+		return desiginationRepository.findAll();
+	}
+
+	@Override
+	public List<Desigination> findDesignationsByCompanyId(Integer id) {
+		// TODO Auto-generated method stub
+		return desiginationRepository.findDesignationsByCompanyId(id);
+	}
+
+	@Override
+	public List<Desigination> findByDepartmentId(int id) {
+		// TODO Auto-generated method stub
+		return desiginationRepository.findByDepartmentId(id);
 	}
 
 }

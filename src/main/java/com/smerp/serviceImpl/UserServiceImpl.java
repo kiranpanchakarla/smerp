@@ -4,33 +4,48 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.smerp.dao.UserDao;
-import com.smerp.jwt.models.UserDto;
+import com.smerp.model.admin.Company;
+import com.smerp.model.admin.Role;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
+import com.smerp.service.master.RoleService;
+import com.smerp.util.RandomUtil;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
+	
+	
+	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	RoleService roleService;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userDao.findByUserName(username);
+		User user = userDao.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				getAuthority(user));
 	}
 
@@ -57,7 +72,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	@Override
 	public User findOne(String username) {
-		return userDao.findByUserName(username);
+		return userDao.findByUsername(username);
 	}
 
 	@Override
@@ -66,10 +81,48 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public User save(UserDto user) {
-		User newUser = new User();
-		newUser.setUserName(user.getUsername());
-		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		return userDao.save(newUser);
+	
+	public User save(User user) {
+		try {
+		logger.info("inside userservice impl save method");
+		user.setActivationId("InActive");
+		user.setImage("test");
+		user.setPlant("test");
+	    user.setPassword(bcryptEncoder.encode("Welcome"));
+		user.setCompany(getComapnyIdFromSession());
+		user.setUsername(RandomUtil.referenceId());
+		String roleId=user.getRolesDt();
+		Role role=roleService.findById(Long.parseLong(roleId));
+		Set<Role> roles=new HashSet<>();
+		roles.add(role);
+		user.setRoles(roles);
+		userDao.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userDao.save(user);
 	}
+
+	@Override
+	public List<User> findByUsersByCompany(Company company) {
+		// TODO Auto-generated method stub
+		return userDao.findByCompanyId(company.getId());
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userDao.findByUsername(username);
+	}
+
+	
+	private Company getComapnyIdFromSession() {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+		User user=findByUsername(username);
+		return user.getCompany();
+	}
+
+
+	
 }

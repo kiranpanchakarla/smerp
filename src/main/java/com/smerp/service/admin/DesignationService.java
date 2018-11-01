@@ -8,4 +8,8 @@ public interface DesignationService {
 
 	List<Desigination> findAll();
 
+	List<Desigination> findDesignationsByCompanyId(Integer id);
+
+	List<Desigination> findByDepartmentId(int id);
+
 }

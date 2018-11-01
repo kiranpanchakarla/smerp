@@ -14,9 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-
-import org.springframework.data.annotation.Transient;
 
 import com.smerp.model.master.AuditModel;
 
@@ -35,7 +32,7 @@ public class User extends AuditModel {
 	private Integer userId;
 	
 	@Column(name="user_name")
-	private String userName;
+	private String username;
 	
 	@Column(name="user_email")
 	private String userEmail;
@@ -58,9 +55,9 @@ public class User extends AuditModel {
 	//@Transient
 	//@NotEmpty(message = "Confirm Password cannot be empty")
 	@Column(name="conform_password")
-	private transient String confirmPassword;
+	private transient  String confirmPassword;
 	//email activation 
-	@Column(name="activation_id",nullable= false)
+	@Column(name="activation_id")
 	private String activationId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -82,18 +79,33 @@ public class User extends AuditModel {
 	private Integer reportingManagerId;
 	
 	
-	@Column(name="plant",nullable= false)
+	@Column(name="plant")
 	private String plant;
 	
 	
-	@Column(name="image",nullable= false)
+	@Column(name="image")
 	private String image;
 	
-	  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	    @JoinTable(name = "user_roles", joinColumns = {
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(name = "user_roles", joinColumns = {
 	            @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 	            @JoinColumn(name = "role_id") })
-    private Set<Role> roles;
+   private Set<Role> roles;
+  
+ 
+  
+	private transient String rolesDt;
+	
+	
+
+
+	public String getRolesDt() {
+		return rolesDt;
+	}
+
+	public void setRolesDt(String rolesDt) {
+		this.rolesDt = rolesDt;
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -103,12 +115,14 @@ public class User extends AuditModel {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
+	
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getUserEmail() {
@@ -238,13 +252,21 @@ public class User extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", password="
+		return "User [userId=" + userId + ", username=" + username + ", userEmail=" + userEmail + ", password="
 				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", mobileNo=" + mobileNo + ", confirmPassword=" + confirmPassword + ", activationId=" + activationId
 				+ ", company=" + company + ", department=" + department + ", desigination=" + desigination
 				+ ", reportingManagerId=" + reportingManagerId + ", plant=" + plant + ", image=" + image + ", roles="
-				+ roles + "]";
+				+ roles + ", rolesDt=" + rolesDt + "]";
 	}
+
+
+	
+
+	
+
+	
+	
 
 
 }

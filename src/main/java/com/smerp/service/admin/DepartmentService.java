@@ -10,4 +10,6 @@ public interface DepartmentService {
 
 	List<Department> findAll();
 
+	List<Department> findDepartmentsByCompanyId(Integer id);
+
 }

@@ -13,11 +13,16 @@ import com.smerp.service.admin.DepartmentService;
 public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
-	DepartmentRepository departmentDao;
+	DepartmentRepository departmentRepository;
 	
 	@Override
 	public List<Department> findAll() {
-		return departmentDao.findAll();
+		return departmentRepository.findAll();
+	}
+	
+	@Override
+	public List<Department> findDepartmentsByCompanyId(Integer id) {
+		return departmentRepository.findDepartmentsByCompanyId(id);
 	}
 
 }

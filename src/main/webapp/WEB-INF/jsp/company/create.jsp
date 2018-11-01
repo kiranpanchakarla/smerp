@@ -63,7 +63,7 @@
 																		placeholder='Company Name' path="name"
 																		value="${company.name}" 
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#1_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="1_errorContainer"></span>
+																	<span class="scl-form-error-container" id="1_errorContainer"></span>
 																		
 																</div>
 																<div class="col-sm-6 form-group">

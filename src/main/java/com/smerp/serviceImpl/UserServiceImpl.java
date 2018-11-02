@@ -2,7 +2,9 @@ package com.smerp.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.smerp.dao.UserDao;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Role;
@@ -26,14 +29,12 @@ import com.smerp.util.RandomUtil;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
-	
-	
-	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
+	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	RoleService roleService;
 
@@ -76,27 +77,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public User findById(Long id) {
-		return userDao.findById(id).get();
-	}
 
-	@Override
-	
 	public User save(User user) {
 		try {
-		logger.info("inside userservice impl save method");
-		user.setActivationId("InActive");
-		user.setImage("test");
-		user.setPlant("test");
-	    user.setPassword(bcryptEncoder.encode("Welcome"));
-		user.setCompany(getComapnyIdFromSession());
-		user.setUsername(RandomUtil.referenceId());
-		String roleId=user.getRolesDt();
-		Role role=roleService.findById(Long.parseLong(roleId));
-		Set<Role> roles=new HashSet<>();
-		roles.add(role);
-		user.setRoles(roles);
-		userDao.save(user);
+			logger.info("inside userservice impl save method");
+			user.setActivationId("InActive");
+			user.setImage("test");
+			user.setPlant("test");
+			user.setPassword(bcryptEncoder.encode("Welcome"));
+			user.setCompany(getComapnyIdFromSession());
+			//user.setUsername(RandomUtil.referenceId());
+			String roleId = user.getRolesDt();
+			Role role = roleService.findById(Long.parseLong(roleId));
+			Set<Role> roles = new HashSet<>();
+			roles.add(role);
+			user.setRoles(roles);
+			userDao.save(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,14 +111,43 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		return userDao.findByUsername(username);
 	}
 
-	
 	private Company getComapnyIdFromSession() {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
-		User user=findByUsername(username);
+		User user = findByUsername(username);
 		return user.getCompany();
 	}
 
+	@Override
+	public void delete(int id) {
+		logger.info("Inside userserviceimpl delete method" + id);
+		User user = userDao.findByUserId(id);
+		user.setEnabled(false);
+		userDao.save(user);
+	}
 
+	@Override
+	public User findById(int id) {
+		User user=userDao.findByUserId(id);
+		return user;
+	}
+
+	@Override
+	public Map<Long, String> rolesMap(Set<Role> set) {
+		 Map<Long, String> map=new LinkedHashMap<>();
+		 for (Role role : set) {
+			 map.put(role.getId(), role.getName());
+		}
+		List<Role> list=roleService.findAll();
+		for (Role role : list) {
+			if(!map.containsKey(role.getId())) {
+				map.put(role.getId(), role.getName());
+			}
+		}
+		logger.info("map---------->"+map);
+		return map;
+	}
 	
+	
+
 }

@@ -44,9 +44,13 @@
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
-
-												<%--                <input type="hidden" id="id" class="form-control"  name="id" value="${currencyObj.id}">
- --%>
+												
+     							<input type="hidden" id="designationValue" class="form-control"  name="id" value="${user.desigination.desigination}">
+     							<input type="hidden" id="designationKey" class="form-control"  name="id" value="${user.desigination.id}">
+     							  
+     							  <c:if test = "${user.userId!=null}">  
+     					 				<form:input type="hidden" cssClass="form-control"  path="userId"  />
+								  </c:if>
 												<div class="card-body collapse in">
 													<div class="card-block">
 														<form class="form">
@@ -62,6 +66,22 @@
 																		<label>Last Name</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Lat Name' path="lastname"  />
+																	</div>
+																</div>
+																
+																<div class="row">
+																	<div class="col-sm-6 form-group">
+																		<label>User Name</label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='User Name' path="username"
+																			value="" />
+																	</div>
+																	
+																	<div class="col-sm-6 form-group">
+																		<%-- <label>Mobile Number </label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='Mobile Number' path="mobileNo"
+																			value="" /> --%>
 																	</div>
 																</div>
 																
@@ -84,7 +104,7 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label> Department </label>
-																		<form:select path="department"  cssClass="form-control">
+																		<form:select  id="department" path="department.id"  cssClass="form-control">
 																		     <form:option  value="">Select</form:option>
 																		   	 <form:options items="${department}"></form:options>
 																	   </form:select>
@@ -92,9 +112,10 @@
 																
 																	<div class="col-sm-6 form-group">
 																		<label> Designation </label>
-																		<form:select path="desigination"  cssClass="form-control">
-																			  <form:option  value="">Select</form:option> 
-																			 <%-- <form:options items="${desigination}"></form:options> --%>
+																		<form:select id="desigination"  path="desigination.id"  cssClass="form-control">
+																		 <c:if test = "${user.username==null}">  
+																		  	<form:option  value="">Select</form:option> 
+																		</c:if>
 																	   </form:select>
 																	</div>
 																</div>
@@ -103,7 +124,7 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label> Reporting Manager  </label>
-																		<form:select path="reportingManagerId"  cssClass="form-control">
+																	<form:select path="reportingManagerId"  cssClass="form-control">
 																	<c:forEach  items="${usersList}" var="usersList">
 																	   <form:option value="${usersList.userId}">${usersList.firstname}</form:option>
 																	 </c:forEach>  
@@ -113,18 +134,9 @@
 																
 																<div class="col-sm-6 form-group">
 																		<label> Roles </label>
-																		
-																		
-					<%-- 	<form:select path="roles" multiple="true"  required="required"
-								class="form-control selectpicker" data-live-search="true">
-								<form:options items="${roles}" />
-							</form:select>  --%>
-																		
-																	<form:select path="rolesDt"  cssClass="form-control">
-																	<c:forEach  items="${rolesList}" var="rolesList">
-																	   <form:option value="${rolesList.id}">${rolesList.name}</form:option>
-																	 </c:forEach>  
-																	 </form:select>
+																       <form:select   path="rolesDt"  cssClass="form-control">
+																		   	 <form:options items="${rolesList}"></form:options>
+																	   </form:select>
 																	</div> 
 																</div>
 
@@ -136,15 +148,15 @@
 																	</button>
 																</a>
 
-																<%--  <c:if test = "${currencyObj.name!=null}">  
-                     <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update </button>
-                      </c:if>  --%>
+															 <c:if test = "${user.username!=null}">  
+                  													   <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update </button>
+                   										   </c:if> 
 
-																<%--   <c:if test = "${currencyObj.name==null}">   --%>
+																  <c:if test = "${user.username==null}">  
 																<button type="submit" class="btn btn-primary">
 																	<i class="icon-check2"></i> Save
 																</button>
-																<%--   </c:if> --%>
+																  </c:if> 
 
 
 															</div>
@@ -163,16 +175,7 @@
 						</div>
 
 
-						<%-- <div class="col-xl-12 col-lg-12">
-						<div class="card">
-							<div class="card-body">
-								 <div>token:${token}</div>
-								<input type="text"  id="tokenId"  value="${tokenId}"/> 
-								<div>data:${data}</div>
-							</div>
-							<div class="card-footer">Footer</div>
-						</div>
-					</div> --%>
+					
 					</div>
 					<!--/ project charts -->
 					<br>
@@ -195,23 +198,36 @@
 </body>
 <script>
 $(document).ready(function() {
- // alert("hiii");
+ 
+
+	
+	if (typeof $("#userId").val() != 'undefined'){
+		designationLoadForUpdate();
+	}
+	
+	
+	
  
    $("#department").change(function(){
-	   //alert("The text has been changed."+$("#department").val());
-	$("#desigination").html('<option>Select</option>');
+	  // alert("The text has been changed."+$("#department").val());
+	   designationLoad(); 
+	});
+   
+   function designationLoad(){
+	  // alert("hiii");
+	   $("#desigination").html('<option>Select</option>');
 	   $.ajax({
            type : "GET",
            url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
            success : function(response) {
-        	   console.log(response);
-          // 	alert("response"+JSON.stringify(response));
+        	//   console.log(response);
+    		//	alert("response"+JSON.stringify(response));
                if (response == undefined) {
-                  // alert("response");
+                //  alert("response");
                    return false;
                } else {
             	   $.each(response, function(key, value) {
-            		  // alert(key+"  "+value);
+            		// alert(key+"  "+value);
             			$("#desigination").append($("<option></option>").attr("value",key).text(value)); 
             		});
                }
@@ -222,10 +238,38 @@ $(document).ready(function() {
            }
        });
 	   
+   }
+	
+   
+ function designationLoadForUpdate(){
+	   var id=$('#designationValue').val();
+		// alert(id);
+	   $.ajax({
+           type : "GET",
+           url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
+           success : function(response) {
+        	   console.log(response);
+       //	alert("response"+JSON.stringify(response));
+               if (response == undefined) {
+                  // alert("response");
+                   return false;
+               } else {
+            	   $("#desigination").append($("<option></option>").attr("value",$('#designationKey').val()).text($('#designationValue').val())); 
+            	   $.each(response, function(key, value) {
+            		   if(key!=$('#designationKey').val()){
+            			   $("#desigination").append($("<option></option>").attr("value",key).text(value)); 
+            		   }
+            		});
+            	
+               }
+           },
+           error : function(e) {
+               alert("error" + JSON.stringify(e))
+
+           }
+       }); 
 	   
-	   
-	});
-		
+   }
 });
 </script>
 </html>

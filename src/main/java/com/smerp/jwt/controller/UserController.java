@@ -1,6 +1,5 @@
 package com.smerp.jwt.controller;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Desigination;
+import com.smerp.model.admin.Role;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
 import com.smerp.service.admin.CompanyServices;
@@ -59,20 +60,52 @@ public class UserController {
 		try {
 			Company company = getComapnyIdFromSession();
 			model.addAttribute("user", new User());
-			model.addAttribute("department", departmentMap());
-			model.addAttribute("desigination", desiganationMap());
-			model.addAttribute("usersList", userService.findByUsersByCompany(company));
-			model.addAttribute("rolesList", roleService.findAll());
+			model.addAttribute("rolesList",rolesMap());
+			usercreationdependencymodules(model, company);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// model.addAttribute("company", companyServices.findAll() );
 		return "user/create";
 	}
+
+	private void usercreationdependencymodules(Model model, Company company) {
+		model.addAttribute("department", departmentMap());
+		model.addAttribute("desigination", desiganationMap());
+		model.addAttribute("usersList", userService.findByUsersByCompany(company));
+	}
+
+	@GetMapping("/list")
+	private String list(Model model) {
+		logger.info("inside list method");
+		List<User> list = userService.findAll();
+		if (list.isEmpty()) {
+			return "redirect:/user/create";
+		} else {
+			model.addAttribute("list", list);
+			return "user/list";
+		}
+	}
 	
 	
+	@PostMapping(value = "/delete")
+	public String delete(String id) {
+		logger.info("Inside delete method");
+		userService.delete(Integer.parseInt(id));
+	   return "redirect:list";
+	}
 	
-	
+	@GetMapping(value = "/view")
+	public String view(String id,Model model) {
+		logger.info("Inside delete method");
+		Company company = getComapnyIdFromSession();
+		usercreationdependencymodules(model, company);
+		User user=userService.findById(Integer.parseInt(id));
+		Map<Long,String> map=userService.rolesMap(user.getRoles());
+		model.addAttribute("rolesList", map);
+		model.addAttribute("user", user);
+		return "user/create";
+	}
 	
 
 	private Company getComapnyIdFromSession() {
@@ -86,18 +119,18 @@ public class UserController {
 	public String saveUser(User user) {
 		logger.info("Inside user controller save method" + user);
 		userService.save(user);
-		return "user/create";
+		return "redirect:list";
 	}
 
 	@RequestMapping(value = "/getdeginations", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<Integer, Object> getDesignationsList(@RequestParam("id") String id) {
-		logger.info("Inside getDesignationsList method "+id);
+		logger.info("Inside getDesignationsList method " + id);
 		List<Desigination> list = designationService.findByDepartmentId(Integer.parseInt(id));
 		Map<Integer, Object> map = list.stream()
 				.collect(Collectors.toMap(Desigination::getId, Desigination::getDesigination));
-		
-		logger.info("length  "+list.size());
+
+		logger.info("length  " + list.size());
 		return map;
 	}
 
@@ -116,10 +149,14 @@ public class UserController {
 				.collect(Collectors.toMap(Department::getId, Department::getName));
 		return map;
 	}
-
-	@RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
-    public String getHome() {
-        return "home";
-    }
+	
+	//
+	
+	public Map<Long, Object> rolesMap() {
+		Map<Long, Object> map = roleService.findAll().stream()
+				.collect(Collectors.toMap(Role::getId, Role::getName));
+		return map;
+	}
+	
 
 }

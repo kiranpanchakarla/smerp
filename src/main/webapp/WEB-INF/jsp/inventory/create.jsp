@@ -89,7 +89,7 @@
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
                                                                                     <label>UOM Group</label>
-                                                                                    <form:select path="uomCategory.id" class="form-control">
+                                                                                    <form:select path="uomCategory.id" id="uomCategoryId" class="form-control">
                                                                                     <form:option value="">--Select--</form:option>
                                                                                      <c:forEach  items="${uomCategoryList}" var="uomCategoryList">
 																					   <form:option value="${uomCategoryList.id}">${uomCategoryList.uomCategoryName}</form:option>
@@ -117,8 +117,8 @@
 
                                                                                         <div class="input-group">
                                                                                             <!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="product" value="service" /> Service
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="product" value="product" /> Product
+                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProducr" value="service" /> Service
+                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProducr" value="product" /> Product
 
                                                                                         </div>
                                                                                     </div>
@@ -375,23 +375,45 @@
                     }
                 }
             });
-            $('.icon-menu5').click(function() {
-                if ($('.menu-shadow').find('.sub_menu').hasClass('collapse_sub')) {
-                    $('.menu-shadow').find('.sub_menu').removeClass('collapse_sub');
-                    $('.menu_text').css('display', 'block');
-                    $('.menu_text_pad').css('display', 'none');
-                } else {
-                    $('.menu-shadow').find('.sub_menu').addClass('collapse_sub');
-                    $('.menu_text').css('display', 'none');
-                    $('.menu_text_pad').css('display', 'block');
-                }
-                //$('.menu-shadow').find('.sub_menu').addClass('collapse');
+
+            
+            $("#uomCategoryId").change(function(){
+         	    var id=$('#uomCategoryId').val();
+         		 alert(id);
+         	 /*  $.ajax({
+                    type : "GET",
+                    url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
+                    success : function(response) {
+                 	   console.log(response);
+                //	alert("response"+JSON.stringify(response));
+                        if (response == undefined) {
+                           // alert("response");
+                            return false;
+                        } else {
+                     	   $("#desigination").append($("<option></option>").attr("value",$('#designationKey').val()).text($('#designationValue').val())); 
+                     	   $.each(response, function(key, value) {
+                     		   if(key!=$('#designationKey').val()){
+                     			   $("#desigination").append($("<option></option>").attr("value",key).text(value)); 
+                     		   }
+                     		});
+                     	
+                        }
+                    },
+                    error : function(e) {
+                        alert("error" + JSON.stringify(e))
+
+                    }
+                });  */
+         	   
             });
             
             
-          
-
+            
         });
+        
+        
+        
+        
     </script>
 
     </html>

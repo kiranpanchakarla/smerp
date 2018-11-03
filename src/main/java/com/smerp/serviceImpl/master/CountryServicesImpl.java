@@ -24,8 +24,13 @@ public class CountryServicesImpl implements CountryServices{
 		return countryRepository.findAll();
 	}
 	
+	public Country findById(int countryId){
+		return countryRepository.findById(countryId);
+	}
+	
 	public List<States> stateList(int countryId){
 		return stateRepository.findBycountryId(countryId);
 	}
+	
 	
 }

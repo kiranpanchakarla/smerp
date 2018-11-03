@@ -33,6 +33,14 @@ public class ProductServiceImpl  implements ProductService {
 		
 		return productRepository.findAll();
 	}
+	
+	
+	@Override
+	public List<Product> findByIsActive(Boolean isActive) {
+		
+		return productRepository.findByIsActive(isActive);
+	}
+
 
 
 	@Override

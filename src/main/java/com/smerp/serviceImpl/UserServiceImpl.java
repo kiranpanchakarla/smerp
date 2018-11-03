@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		try {
 			logger.info("inside userservice impl save method");
 			user.setActivationId("InActive");
-			user.setImage("test");
 			user.setPlant("test");
 			user.setPassword(bcryptEncoder.encode("Welcome"));
 			user.setCompany(getComapnyIdFromSession());

@@ -1,5 +1,5 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- 
+ <%@ page import="java.security.Principal" %> 
 <!-- END Custom CSS-->
 <div class="first_strip"
 	style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
@@ -577,7 +577,7 @@
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
 					class="avatar avatar-online"> <img
 						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"><i></i>
-				</span> <span class="user-name">MANUH</span>
+				</span> <span class="user-name">${pageContext.request.userPrincipal.name}</span>
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>

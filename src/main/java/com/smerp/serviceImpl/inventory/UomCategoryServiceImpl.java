@@ -23,5 +23,6 @@ public class UomCategoryServiceImpl implements UomCatergoryService {
 		
 		return uomCategoryRepository.findAll();
 	}
+	
 
 }

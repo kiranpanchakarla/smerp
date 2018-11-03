@@ -2,6 +2,8 @@ package com.smerp.controller.inventory;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.smerp.controller.admin.CompanyController;
 import com.smerp.model.inventory.Product;
 import com.smerp.service.inventory.ProductCategoryService;
 import com.smerp.service.inventory.ProductService;
@@ -47,18 +50,21 @@ public class ProductController {
 	@Autowired
 	ProductTypeService productTypeService;
 	
+	private static final Logger logger = LogManager.getLogger(ProductController.class);
+
+	
 	@GetMapping(value = "/create")
 	public String productCreate(Model model) {
 		
-		System.out.println("fdsfs");
+		logger.info("create");
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("uomList", uomService.findAll());
 		model.addAttribute("hsnList", HsnSevice.findAll());
 		model.addAttribute("sacList", sacService.findAll());
 		model.addAttribute("productCategoryList", productCategoryService.findAll());
 		model.addAttribute("productTypeList", productTypeService.findAll());
-		System.out.println("uomCategoryList");
-		System.out.println("uomList");
+		logger.info("uomCategoryList");
+		logger.info("uomList");
 		model.addAttribute("product", new Product());
 		return "inventory/create";
 	}
@@ -66,16 +72,9 @@ public class ProductController {
 
 	@PostMapping(value = "/save")
 	public String save( Product product,Model model,BindingResult result) {
-		System.out.println(product);
+		logger.info(product);
 		productService.save(product);
-		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
-		model.addAttribute("uomList", uomService.findAll());
-		model.addAttribute("hsnList", HsnSevice.findAll());
-		model.addAttribute("sacList", sacService.findAll());
-		model.addAttribute("productCategoryList", productCategoryService.findAll());
-		model.addAttribute("productTypeList", productTypeService.findAll());
-		model.addAttribute("product", new Product());
-		return "inventory/create";
+		return "redirect:productList";
 	}
 	
 	
@@ -90,7 +89,7 @@ public class ProductController {
 	
 	@GetMapping(value = "/productList")
 	public String list(Model model) {
-		List<Product> productList = productService.productList();
+		List<Product> productList = productService.findByIsActive(true);
 		model.addAttribute("productList", productList);
 		return "inventory/productList";
 	}
@@ -119,12 +118,9 @@ public class ProductController {
 	@PostMapping(value = "/delete")
 	public String deleteProduct(@RequestParam("id") int id) {
 		
-		System.out.println(id);
-		
+		logger.info("Delete msg");
 		productService.delete(id);
-		
-		
-		return "inventory/productList";
+		return "redirect:list";
 	}
 
 }

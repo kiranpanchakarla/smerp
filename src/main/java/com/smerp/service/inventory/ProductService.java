@@ -9,6 +9,9 @@ public interface ProductService {
 	Product save(Product product);
 
 	List<Product> productList();
+	
+	List<Product> findByIsActive(Boolean isActive);
+	
 
 	Product getInfo(int id);
 

@@ -1,12 +1,16 @@
 package com.smerp.jwt.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.smerp.jwt.models.Constants;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Desigination;
@@ -29,6 +35,8 @@ import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.admin.DesignationService;
 import com.smerp.service.master.CurrencyServices;
 import com.smerp.service.master.RoleService;
+import com.smerp.util.ContextUtil;
+import com.smerp.util.FilePathUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -36,7 +44,14 @@ public class UserController {
 
 	private static final Logger logger = LogManager.getLogger(UserController.class);
 
-	@Autowired
+	
+	private static String logoUploadedPath;
+    @Value(value = "${file.upload.path}")
+    public void setProp(String prop) {
+       this.logoUploadedPath= prop;
+    }
+    
+    @Autowired
 	private UserService userService;
 
 	@Autowired
@@ -96,12 +111,13 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/view")
-	public String view(String id,Model model) {
+	public String view(String id,Model model,HttpServletRequest request) {
 		logger.info("Inside delete method");
 		Company company = getComapnyIdFromSession();
 		usercreationdependencymodules(model, company);
 		User user=userService.findById(Integer.parseInt(id));
 		Map<Long,String> map=userService.rolesMap(user.getRoles());
+		model.addAttribute("filePath", ContextUtil.populateContext(request) +"/"+user.getImage());
 		model.addAttribute("rolesList", map);
 		model.addAttribute("user", user);
 		return "user/create";
@@ -116,10 +132,20 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveUser(User user) {
+	public String saveUser(@RequestParam(value = "file", required = false ,defaultValue = "")  MultipartFile file,User user)throws IOException  {
 		logger.info("Inside user controller save method" + user);
+		if(file.getOriginalFilename()!=null && !file.getOriginalFilename().equals("")) {
+			Map<String, String> path= FilePathUtil.getFilePath(file, logoUploadedPath, Constants.USERFOLDER);
+			 String pathToSave=path.get("pathToSave");
+			 String fullPath=path.get("fullPath");
+				logger.info("fullPath--> "+fullPath);
+				logger.info("pathToSave-->"+pathToSave);
+			 
+			 FilePathUtil.saveFile(file, fullPath);
+			 user.setImage(pathToSave);
+			}
 		userService.save(user);
-		return "redirect:list";
+		 return "redirect:list";
 	}
 
 	@RequestMapping(value = "/getdeginations", method = RequestMethod.GET)
@@ -157,6 +183,12 @@ public class UserController {
 				.collect(Collectors.toMap(Role::getId, Role::getName));
 		return map;
 	}
+	
+	@RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
+    public String getHome() {
+        return "home";
+    }
+	
 	
 
 }

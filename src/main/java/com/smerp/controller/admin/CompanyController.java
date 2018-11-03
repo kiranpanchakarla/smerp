@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smerp.jwt.models.Constants;
 import com.smerp.model.admin.Company;
 import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.master.CountryServices;
@@ -58,10 +59,7 @@ public class CompanyController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
-		
-		
-		
-		model.addAttribute("countryList", countryServices.countryList());
+		model.addAttribute("country", countryServices.findById(1)); // for india
 		model.addAttribute("stateList", countryServices.stateList(1)); // for india
 		model.addAttribute("company", new Company());
 		return "company/create";
@@ -72,9 +70,16 @@ public class CompanyController {
 		
 		Company company = companyServices.getInfo(Integer.parseInt(companyId));
 		model.addAttribute("company",company );
-		model.addAttribute("countryList", countryServices.countryList());
-		model.addAttribute("stateList", countryServices.stateList(1));
+		model.addAttribute("country", countryServices.findById(1)); // for india
+		model.addAttribute("stateList", countryServices.stateList(1)); // for india
 		model.addAttribute("filePath", ContextUtil.populateContext(request) +"/"+company.getLogo());
+		return "company/create";
+	}
+	
+	@GetMapping(value = "/isValidCompanyName")
+	public String isValidCompanyName(String companyName) {
+		
+		
 		return "company/create";
 	}
 
@@ -82,8 +87,9 @@ public class CompanyController {
 	public String save(@RequestParam(value = "file", required = false ,defaultValue = "")  MultipartFile file,Company company, Model model, BindingResult result)throws IOException  {
 		logger.info("save Company--> ");
 		company.setCurrency(company.getCountry().getCurrency());
+		
 		if(file.getOriginalFilename()!=null && !file.getOriginalFilename().equals("")) {
-		Map<String, String> path= FilePathUtil.getFilePath(file, logoUploadedPath, "logo");
+		Map<String, String> path= FilePathUtil.getFilePath(file, logoUploadedPath, Constants.COMPANYFOLDER);
 		 String pathToSave=path.get("pathToSave");
 		 String fullPath=path.get("fullPath");
 			logger.info("fullPath--> "+fullPath);

@@ -44,7 +44,15 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Company/Create</h4>
+												<c:if test="${company.name==null}">
+											<h4 class="card-title" id="basic-layout-icons">Company/Create</h4>
+											   </c:if>
+												
+												<c:if test="${company.name!=null}">
+											<h4 class="card-title" id="basic-layout-icons">Company/Update</h4>
+											   </c:if>
+											   
+													
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
@@ -55,13 +63,13 @@
 													<div class="card-block">
 														<div class="form-body">
 															<input type="hidden" id="id" class="form-control"
-																name="id" value="${company.id}">
+																name="id" >
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Company Name</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company Name' path="name"
-																		value="${company.name}" 
+																		
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#1_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																	<span class="scl-form-error-container" id="1_errorContainer"></span>
 																		
@@ -79,11 +87,12 @@
 																<span class="scl-form-error-container" id="100_errorContainer"></span>
 																<form:input  type="hidden" path="logo" value="${company.logo}" />
 																</p>
-															<p style="margin-top: -28px;"><label for="file" style="cursor: pointer;"><img src="../../../resources/images/company/cameraIcon.png"></label></p>
+															<p style="margin-top: -28px;"><label for="file" style="cursor: pointer;"><img src="${contextPath}/resources/images/company/cameraIcon.png"></label></p>
 																</div>
 																<div class="col-sm-4 form-group">
 																<c:if test="${filePath==null}">
-																			<p><img src="../../../resources/images/company/noImageUploaded.png" alt="See" id="output" width="100" height="70" /></p>
+																			<p><img src="${contextPath}/resources/images/company/noImageUploaded.png" alt="See" id="output" width="100" height="70" /></p>
+																<%-- <img src="<c:url value="${contextPath}"/>"/> --%>
 																</c:if>
 																
 																<c:if test="${filePath!=null}">
@@ -103,7 +112,6 @@
 																	<label>VAT</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='VAT' path="gstinVat"
-																		value="${company.gstinVat}"
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#3_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="3_errorContainer"></span>
 																</div>
@@ -112,7 +120,6 @@
 																	<label>Company Tagline</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company TagLine' path="companyTagLine"
-																		value="${company.companyTagLine}"
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#2_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="2_errorContainer"></span>
 																</div>
@@ -126,7 +133,6 @@
 																				<label>Tax ID</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter Tax ID' path="taxId"
-																					value="${company.taxId}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#12_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="12_errorContainer"></span>
 																			</div>
@@ -138,7 +144,6 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter Company Registry'
 																					path="companyRegisrory"
-																					value="${company.companyRegisrory}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#14_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="14_errorContainer"></span>
 																			</div>
@@ -167,7 +172,6 @@
 																	<label>Pan Number</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Enter Pan Number' path="panNum"
-																		value="${company.panNum}" 
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#4_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="4_errorContainer"></span>
 																</div>
@@ -191,7 +195,6 @@
 																				<label>Street-1</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='street1' path="street1"
-																					value="${company.street1}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#5_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="5_errorContainer"></span>
 																			</div>
@@ -199,7 +202,6 @@
 																				<label>Phone</label>
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
 																					placeholder='Enter Phone No' path="phoneNum"
-																					value="${company.phoneNum}" 
 																					 data-bv-notempty="true" data-bv-notempty-message="Required"  data-bv-container="#6_errorContainer" />
 																		<span class="scl-form-error-container" id="6_errorContainer"></span>
 																			</div>
@@ -211,7 +213,6 @@
 																				<label>Street-2</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Street2' path="street2"
-																					value="${company.street2}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#7_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="7_errorContainer"></span>
 																			</div>
@@ -219,7 +220,6 @@
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
 																					placeholder='Enter fax Num' path="faxNum"
-																					value="${company.faxNum}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#8_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="8_errorContainer"></span>
 																			</div>
@@ -231,7 +231,6 @@
 																				<label>City</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter City' path="city"
-																					value="${company.city}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#9_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="9_errorContainer"></span>
 																			</div>
@@ -239,7 +238,6 @@
 																				<label>Email</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter Email' path="emailId"
-																					value="${company.emailId}" 
 																				data-bv-notempty="true" data-bv-notempty-message="Required" 	data-bv-emailaddress="true"   data-bv-emailaddress-message="The value is not a valid email address"  data-bv-container="#10_errorContainer" />
 																		<span class="scl-form-error-container" id="10_errorContainer"></span>
 																			</div>
@@ -259,15 +257,14 @@
 																			</div>
 																			<div class="col-sm-6 form-group">
 																				<label>Country</label>
-																				<form:select path="country.id" id="selectSubcat"
+																				 <form:select path="country" id="selectSubcat"
 																					cssClass="form-control">
-																					<form:option value="0">--Select--</form:option>
-																					<c:forEach items="${countryList}" var="countryList">
-																						<form:option value="${countryList.id}">${countryList.name}</form:option>
-																					</c:forEach>
-
-																				</form:select>
-
+																						<form:option value="${country.id}">${country.name}</form:option>
+																				</form:select> 
+																				
+																				 <!-- <select class="form-control">
+																					<option value="1">INDIA</option>  
+																				</select> -->
 																			</div>
 																		</div>
 
@@ -278,7 +275,6 @@
 																				<label>ZIP Code</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter ZIP Code' path="zipCode"
-																					value="${company.zipCode}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#13_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="13_errorContainer"></span>
 																			</div>
@@ -287,7 +283,6 @@
 																				<label>Website</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter Website' path="webSite"
-																					value="${company.webSite}" 
 																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#11_errorContainer" data-bv-stringlength-message="between-string-length"/>
 																		<span class="scl-form-error-container" id="11_errorContainer"></span>
 																			</div>
@@ -308,7 +303,7 @@
 																		</a>
 
 																		<c:if test="${company.name!=null}">
-																			<button type="submit" name="submitUpdate" class="btn btn-primary">
+																			<button type="submit" name="submitUpdate" class="btn btn-primary" onclick="">
 																				<i class="icon-check2"></i> Update
 																			</button>
 																		</c:if>

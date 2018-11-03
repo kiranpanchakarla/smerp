@@ -6,5 +6,6 @@ import com.smerp.model.master.States;
 
 public interface CountryServices {
 	List<Country> countryList();
+	Country findById(int countryId);
 	List<States> stateList(int countryId);
 }

@@ -53,7 +53,7 @@
                         <label for="remember-me"> Remember Me</label>
                       </fieldset>
                     </div>
-                    <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
+                    <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" class="card-link">Forgot Password?</a></div>
                   </fieldset>
                   <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
                 </form>
@@ -61,8 +61,8 @@
             </div>
             <div class="card-footer">
               <div class="">
-                <p class="float-sm-left text-xs-center m-0"><a href="recover-password.html" class="card-link">Recover password</a></p>
-                <p class="float-sm-right text-xs-center m-0">New to SMERP? <a href="register-simple.html" class="card-link">Sign Up</a></p>
+                <p class="float-sm-left text-xs-center m-0"><a href="#" class="card-link">Recover password</a></p>
+                <p class="float-sm-right text-xs-center m-0">New to SMERP? <a href="#" class="card-link">Sign Up</a></p>
               </div>
             </div>
           </div>

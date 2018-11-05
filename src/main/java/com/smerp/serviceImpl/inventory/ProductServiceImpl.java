@@ -2,6 +2,8 @@ package com.smerp.serviceImpl.inventory;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,26 @@ public class ProductServiceImpl  implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
 	@Override
 	public Product save(Product product) {
 		try {
+			if(product!=null && product.getserviceOrProduct().equals("service")) {
+				product.setHsnCode(null);
+				product.setProductType("");
+				product.setProductTaxCategory("");
+				product.setManageProductBy("");
+			}else {
+				product.setSacCode(null);
+				product.setServiceType("");
+				product.setTaxCategory("");
+			}
+			
+			logger.info("product-->"+product);
 			productRepository.save(product);
 		}catch(Exception ex) {
+			ex.printStackTrace();
 			System.out.println("error-->" +ex.getMessage());
 		}
 		return product;
@@ -40,6 +56,13 @@ public class ProductServiceImpl  implements ProductService {
 		
 		return productRepository.findByIsActive(isActive);
 	}
+
+	
+	@Override
+	public List<Product> findAll() {
+		return productRepository.findAll();
+	}
+	
 
 
 
@@ -73,6 +96,6 @@ public class ProductServiceImpl  implements ProductService {
 		product.setIsActive(false);;
 		productRepository.save(product);
 		
-		return null;
+		return product;
 	}
 }

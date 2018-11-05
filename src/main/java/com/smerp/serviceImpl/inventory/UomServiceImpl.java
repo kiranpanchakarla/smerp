@@ -23,6 +23,11 @@ public class UomServiceImpl implements UomService {
 	}
 
 	
+	public List<Uom> uomList(int id) {
+		return uomRepository.findByuomCategoryId(id);
+	}
+
+	
 	/*public List<Uom> findById(Integer id) {
 		
 		return uomRepository.findById(id);

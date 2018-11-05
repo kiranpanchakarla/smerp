@@ -40,7 +40,18 @@
                                                     <div class="col-md-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h4 class="card-title" id="basic-layout-icons">Product/Create</h4>
+                                                             <c:if test = "${product.id!=null}">  
+												   <h4 class="card-title" id="basic-layout-icons">Product/Update</h4>
+     					 									<form:input type="hidden" cssClass="form-control"  path="id"  />
+								 				 </c:if>
+								 				 
+								 				  <c:if test = "${product.id==null}">  
+												   <h4 class="card-title" id="basic-layout-icons">Product/Create</h4>
+								 				 </c:if>
+                                                            
+                                                             
+                                                                
+                                                                
                                                                 <a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
                                                             </div>
@@ -49,7 +60,7 @@
 
                                                             <div class="card-body collapse in">
                                                                 <div class="card-block">
-                                                                    <form class="form">
+                                                                   
                                                                         <div class="form-body">
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
@@ -117,8 +128,8 @@
 
                                                                                         <div class="input-group">
                                                                                             <!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProducr" value="service" /> Service
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProducr" value="product" /> Product
+                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" value="service" /> Service
+                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" value="product" /> Product
 
                                                                                         </div>
                                                                                     </div>
@@ -127,6 +138,7 @@
                                                                                     <div class="col-sm-6 form-group">
                                                                                         <form:checkbox path="gst" value="gst" id="gstcategory" /> GST
                                                                                     </div>
+                                                                        <input type="hidden" id="gstValue" class="form-control"  name="gstValue" value="${product.gst}">
                                                                                 </div>
                                                                                 <div id="service-gst-div" style="display: none;">
                                                                                     <div class="row">
@@ -138,7 +150,7 @@
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6 form-group">
                                                                                             <label>SAC:</label>
-                                                                                            <form:select path="sacCode" class="form-control">
+                                                                                            <form:select path="sacCode.id" class="form-control">
                                                                                               <form:option value="">--Select--</form:option>
                                                                                                     <c:forEach  items="${sacList}" var="sacList">
 																	  							 <form:option value="${sacList.id}">${sacList.sacCoe}</form:option>
@@ -173,7 +185,7 @@
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6 form-group">
                                                                                             <label>HSN:</label>
-                                                                                            <form:select path="hsnCode" class="form-control">
+                                                                                            <form:select path="hsnCode.id" class="form-control">
                                                                                               <form:option value="">--Select--</form:option>
                                                                                                <c:forEach  items="${hsnList}" var="hsnList">
 
@@ -195,16 +207,13 @@
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-sm-6 form-group">
-                                                                                            <label>Tax Category:</label>
-                                                                                            <div class="col-sm-4">
+                                                                                            <label>Manage ProductBy</label>
                                                                                                 <form:select path="manageProductBy" class="form-control">
                                                                                                     <form:option value="">--Select--</form:option>
                                                                                                     <form:option value="None">None</form:option>
                                                                                                     <form:option value="Serial Numbers">Serial Numbers</form:option>
                                                                                                     <form:option value="Batches">Batches</form:option>
-
                                                                                                 </form:select>
-                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -229,6 +238,10 @@
 
                                                                                         </form:select>
                                                                                     </div>
+                                                                                    
+                                                                                    <input type="hidden" id="purchasingUomValue" class="form-control"  name="id" value="${product.purchasingUom.uomName}">
+     																				<input type="hidden" id="purchasingUomKey" class="form-control"  name="id" value="${product.purchasingUom.id}">
+                                                                                
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6 form-group">
@@ -248,6 +261,9 @@
 
                                                                                         </form:select>
                                                                                     </div>
+                                                                                      <input type="hidden" id="packingUomValue" class="form-control"  name="id" value="${product.packingUom.uomName}">
+     																				<input type="hidden" id="packingUomKey" class="form-control"  name="id" value="${product.packingUom.id}">
+                                                                                    
                                                                                 </div>
 
                                                                                 <div class="row">
@@ -264,6 +280,7 @@
                                                                                     <div class="col-sm-6 form-group">
                                                                                         <label>Inventory UoM:</label>
                                                                                         <form:select path="inventoryUom" class="form-control">
+                                                                                         <form:option value="">--Select--</form:option>
                                                                                             <c:forEach  items="${uomList}" var="uomList">
 
 																	   <form:option value="${uomList.id}">${uomList.uomName}</form:option>
@@ -272,6 +289,8 @@
 
                                                                                         </form:select>
                                                                                     </div>
+                                                                                     <input type="hidden" id="inventoryUomValue" class="form-control"  name="id" value="${product.inventoryUom.uomName}">
+     																				<input type="hidden" id="inventoryUomKey" class="form-control"  name="id" value="${product.inventoryUom.id}">
                                                                                 </div>
 
                                                                                 <div class="row">
@@ -309,10 +328,30 @@
                                                                         </div>
                                                                 </div>
 
-						<div class="form-actions center">
-                      <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save </button>
-                    </div>
-                                                                </form>
+						
+                    
+                    
+                    <div class="form-actions right">
+																<a href="/inventory/productList">
+																	<button type="button" class="btn btn-warning mr-1">
+																		<i class="icon-cross2"></i> Cancel
+																	</button>
+																</a>
+
+ 																 <c:if test = "${product.id==null}">  
+																<button type="submit" class="btn btn-primary">
+																	<i class="icon-check2"></i> Save
+																</button>
+																  </c:if> 
+
+
+															  <c:if test = "${product.id!=null}">  
+                  													   <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update </button>
+                   										   </c:if> 
+
+															</div>
+                    
+                                                               
                                                             </div>
                                                         </div>
 
@@ -323,6 +362,7 @@
                                     </section>
 
                                     </form:form>
+                                     <a href="#" onclick="goBack()" class="btn btn-primary"> Back</a> 
                                      </div>
                                    <!--  <a class="btn btn-primary" href="/users/4">Back</a> -->
                                     <br>
@@ -353,6 +393,40 @@
     </body>
     <script>
         $(document).ready(function() {
+        	
+        	if ($("#id").val()!=''){
+        		uomSubCategoryLoadForUpdate();
+        	}
+        	
+        	if (typeof $("#gstValue").val() != 'undefined'){
+        		  $("#service-gst-div").hide();
+                  $("#product-gst-div").hide();
+                  if ($('#gstcategory').is(":checked") == true) {
+                      var productcategory = $("input[class='product-category']:checked").val();
+                      if (productcategory == 'service') {
+                          $("#service-gst-div").show();
+                      } else {
+                          $("#product-gst-div").show();
+                      }
+                  }
+        	}
+        	
+        	if ($("#serviceOrProduct").val() != ''){
+      		    var statusOfSP =$("#serviceOrProduct").val();
+        		
+      		  if (statusOfSP == 'service' && $('#gstcategory').is(":checked") == true) {
+                  $("#service-gst-div").show();
+                  $("#product-gst-div").hide();
+              }
+              if (statusOfSP == 'product' && $('#gstcategory').is(":checked") == true) {
+                  $("#product-gst-div").show();
+                  $("#service-gst-div").hide();
+              }
+      	}
+        	
+        	
+        	
+        	
             $(".product-category").click(function() {
                 if ($(this).val() == 'service' && $('#gstcategory').is(":checked") == true) {
                     $("#service-gst-div").show();
@@ -379,10 +453,13 @@
             
             $("#uomCategoryId").change(function(){
          	    var id=$('#uomCategoryId').val();
-         		 alert(id);
-         	 /*  $.ajax({
+         		// alert(id);
+         		 $("#purchasingUom").html('<option>Select</option>');
+         		 $("#packingUom").html('<option>Select</option>');
+         		 $("#inventoryUom").html('<option>Select</option>');
+         	   $.ajax({
                     type : "GET",
-                    url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
+                    url : "<c:url value="/inventory/getUOMList/"/>?id="+$('#uomCategoryId').val(),
                     success : function(response) {
                  	   console.log(response);
                 //	alert("response"+JSON.stringify(response));
@@ -390,24 +467,71 @@
                            // alert("response");
                             return false;
                         } else {
-                     	   $("#desigination").append($("<option></option>").attr("value",$('#designationKey').val()).text($('#designationValue').val())); 
+                     	  // $("#purchasingUom").append($("<option></option>").attr("value",$('#designationKey').val()).text($('#designationValue').val())); 
                      	   $.each(response, function(key, value) {
-                     		   if(key!=$('#designationKey').val()){
-                     			   $("#desigination").append($("<option></option>").attr("value",key).text(value)); 
-                     		   }
+                     		  // if(key!=$('#designationKey').val()){
+                     			   $("#purchasingUom").append($("<option></option>").attr("value",key).text(value)); 
+                     			   $("#packingUom").append($("<option></option>").attr("value",key).text(value)); 
+                     			   $("#inventoryUom").append($("<option></option>").attr("value",key).text(value)); 
+                     			   
+                     		 //  }
                      		});
-                     	
                         }
                     },
                     error : function(e) {
                         alert("error" + JSON.stringify(e))
 
                     }
-                });  */
+                });  
          	   
             });
             
             
+            
+                     			  function uomSubCategoryLoadForUpdate(){
+                     				 $("#purchasingUom").html('');
+                             		 $("#packingUom").html('');
+                             		 $("#inventoryUom").html('');
+                     				   var id=$('#id').val();
+                     					// alert("updatePage"+id);
+                     				   $.ajax({
+                     			           type : "GET",
+                     			           url : "<c:url value="/inventory/getUOMList/"/>?id="+$("#uomCategoryId").val(),
+                     			           success : function(response) {
+                     			        	  // alert(response);
+                     			       //	alert("response"+JSON.stringify(response));
+                     			               if (response == undefined) {
+                     			                  // alert("response");
+                     			                   return false;
+                     			               } else {
+                     			            	   $("#purchasingUom").append($("<option></option>").attr("value",$('#purchasingUomKey').val()).text($('#purchasingUomValue').val())); 
+            	                     			   $("#packingUom").append($("<option></option>").attr("value",$('#packingUomKey').val()).text($('#packingUomValue').val())); 
+            	                     			   $("#inventoryUom").append($("<option></option>").attr("value",$('#inventoryUomKey').val()).text($('#inventoryUomValue').val())); 
+                     			            	   
+                     			            	   
+                     			            	   $.each(response, function(key, value) {
+                     			            		   if(key!=$('#purchasingUomKey').val()){
+                     			            			  $("#purchasingUom").append($("<option></option>").attr("value",key).text(value)); 
+                     			            		   }
+                     			            		   
+                     			            		  if(key!=$('#packingUomKey').val()){
+                     	                     			   $("#packingUom").append($("<option></option>").attr("value",key).text(value)); 
+                     			            		   }
+                     			            		  
+                     			            		 if(key!=$('#inventoryUomKey').val()){
+                    	                     			   $("#inventoryUom").append($("<option></option>").attr("value",key).text(value)); 
+                    			            		   }
+                     			            		});
+                     			            	
+                     			               }
+                     			           },
+                     			           error : function(e) {
+                     			               alert("error" + JSON.stringify(e))
+
+                     			           }
+                     			       }); 
+                     				   
+                     			   }
             
         });
         

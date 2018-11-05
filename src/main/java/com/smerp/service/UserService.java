@@ -18,7 +18,7 @@ public interface UserService {
 	void delete(long id);
 
 	User findOne(String username);
-
+	
 	//User findById(Long id);
 
 	List<User>  findByUsersByCompany(Company company);

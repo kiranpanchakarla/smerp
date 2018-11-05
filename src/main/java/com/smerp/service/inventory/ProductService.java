@@ -12,6 +12,7 @@ public interface ProductService {
 	
 	List<Product> findByIsActive(Boolean isActive);
 	
+	List<Product> findAll();
 
 	Product getInfo(int id);
 

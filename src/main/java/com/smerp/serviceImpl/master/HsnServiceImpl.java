@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.smerp.model.master.HSNCode;
 import com.smerp.repository.master.HsnRepository;
-import com.smerp.service.master.HsnSevice;
+import com.smerp.service.master.HsnService;
 
 @Service
-public class HsnServiceImpl implements HsnSevice {
+public class HsnServiceImpl implements HsnService {
 	
 	
 	@Autowired

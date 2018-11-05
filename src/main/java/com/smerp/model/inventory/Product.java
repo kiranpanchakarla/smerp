@@ -30,7 +30,7 @@ public class Product extends AuditModel {
 	@Column(name="product_id", nullable= false, unique=true)
 	private Integer id;
 	
-	@Column(name="onventory_product")
+	@Column(name="inventory_product")
 	private String inventoryProduct;
 	
 	@Column(name="purchase_product")
@@ -57,8 +57,8 @@ public class Product extends AuditModel {
 	@Column(name="with_old_tax_labiles")
 	private String withOldTaxLiable;
 	
-	@Column(name="service")
-	private String serviceOrProducr;
+	@Column(name="service_product_type")
+	private String serviceOrProduct;
 	
 	@Column(name="gst")
 	private String gst;
@@ -360,12 +360,12 @@ public class Product extends AuditModel {
 		this.inventoryUom = inventoryUom;
 	}
 
-	public String getServiceOrProducr() {
-		return serviceOrProducr;
+	public String getserviceOrProduct() {
+		return serviceOrProduct;
 	}
 
-	public void setServiceOrProducr(String serviceOrProducr) {
-		this.serviceOrProducr = serviceOrProducr;
+	public void setserviceOrProduct(String serviceOrProduct) {
+		this.serviceOrProduct = serviceOrProduct;
 	}
 	
 	
@@ -383,7 +383,7 @@ public class Product extends AuditModel {
 		return "Product [id=" + id + ", inventoryProduct=" + inventoryProduct + ", purchaseProduct=" + purchaseProduct
 				+ ", productNo=" + productNo + ", description=" + description + ", productCategory=" + productCategory
 				+ ", uomCategory=" + uomCategory + ", barCode=" + barCode + ", withOldTaxLiable=" + withOldTaxLiable
-				+ ", serviceOrProducr=" + serviceOrProducr + ", gst=" + gst + ", product=" + product + ", serviceType="
+				+ ", serviceOrProduct=" + serviceOrProduct + ", gst=" + gst + ", product=" + product + ", serviceType="
 				+ serviceType + ", sacCode=" + sacCode + ", taxCategory=" + taxCategory + ", productType=" + productType
 				+ ", hsnCode=" + hsnCode + ", productTaxCategory=" + productTaxCategory + ", manageProductBy="
 				+ manageProductBy + ", preferredVendor=" + preferredVendor + ", purchasingUom=" + purchasingUom

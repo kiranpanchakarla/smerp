@@ -81,7 +81,9 @@
 																	<div class="col-sm-6 form-group">
 																		<label>User Name</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='User Name' path="username" />
+																			 onchange="isValidName('username','/user/isValidUserName','1_userName')" placeholder='User Name' path="username" />
+																<span style="color: red" class="scl-form-error-container" id="1_userName"></span>
+																	
 																	</div>
 
 																	<div class="col-sm-2 form-group">

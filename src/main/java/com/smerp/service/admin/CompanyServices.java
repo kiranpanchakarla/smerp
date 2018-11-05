@@ -14,4 +14,6 @@ public interface CompanyServices {
 	
 	List<Company> findAll();
 	
+	Company findByName(String name);
+	
 }

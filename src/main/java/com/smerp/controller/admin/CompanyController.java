@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smerp.jwt.models.Constants;
@@ -76,11 +77,29 @@ public class CompanyController {
 		return "company/create";
 	}
 	
+	
+	@GetMapping(value = "/view")
+	public String view(String companyId, Model model,HttpServletRequest request) {
+		
+		Company company = companyServices.getInfo(Integer.parseInt(companyId));
+		model.addAttribute("company",company );
+		model.addAttribute("country", countryServices.findById(1)); // for india
+		model.addAttribute("stateList", countryServices.stateList(1)); // for india
+		model.addAttribute("filePath", ContextUtil.populateContext(request) +"/"+company.getLogo());
+		return "company/view";
+	}
+	
 	@GetMapping(value = "/isValidCompanyName")
-	public String isValidCompanyName(String companyName) {
-		
-		
-		return "company/create";
+	@ResponseBody
+	public String isValidCompanyName(String name) {
+		logger.info("companyName" + name);
+		Company company  = companyServices.findByName(name);
+		if(company!=null) {
+			logger.info("Company Name  Already Exits!");
+			return "true";
+		}else {
+			return "false";
+		}
 	}
 
 	@PostMapping(value = "/save")
@@ -99,7 +118,7 @@ public class CompanyController {
 		company.setLogo(pathToSave);
 		}
 		 
-		companyServices.save(company);
+	   companyServices.save(company);
 		 
 		return "redirect:list";
 	}

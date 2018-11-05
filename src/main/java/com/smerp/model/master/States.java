@@ -30,6 +30,9 @@ public class States extends AuditModel {
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="state_code")
+	private String stateCode;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="country_id")
 	private Country country;
@@ -67,6 +70,15 @@ public class States extends AuditModel {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
+
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+	
 
 	@Override
 	public String toString() {

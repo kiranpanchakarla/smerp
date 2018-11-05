@@ -71,13 +71,27 @@ public class CompanyServicesImpl implements CompanyServices {
 	public List<Company> findAll() {
 		return companyRepository.findAll();
 	}
+	
+	public Company findByName(String name) {
+		return companyRepository.findByName(name);
+	}
+	
 
 	public Company getInfo(int companyId) {
 		return companyRepository.findById(companyId);
 	}
 
 	public void delete(int companyId) {
-		companyRepository.deleteById(companyId);
+		
+		Company company = companyRepository.findById(companyId);
+		company.setIsActive(false);
+		companyRepository.save(company);
+		List<User> users = userDao.findByCompanyId(companyId);
+		for(User user:users) {
+			user.setEnabled(false);
+			userDao.save(user);
+		}
+		//companyRepository.deleteById(companyId);
 	}
 
 }

@@ -49,6 +49,7 @@
 											   </c:if>
 												
 												<c:if test="${company.name!=null}">
+					<form:input type="hidden" cssClass="form-control"  path="id"  />
 											<h4 class="card-title" id="basic-layout-icons">Company/Update</h4>
 											   </c:if>
 											   
@@ -62,16 +63,14 @@
 												<div class="card-body collapse in">
 													<div class="card-block">
 														<div class="form-body">
-															<input type="hidden" id="id" class="form-control"
-																name="id" >
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Company Name</label>
 																	<form:input type="text" cssClass="form-control"
-																		placeholder='Company Name' path="name"
+																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer')"
 																		
 																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#1_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																	<span class="scl-form-error-container" id="1_errorContainer"></span>
+																	<span style="color: red" class="scl-form-error-container" id="1_errorContainer"></span>
 																		
 																</div>
 																
@@ -158,12 +157,12 @@
 																
 																<div class="col-sm-6 form-group">
 																	<label>State Code</label>
-																	<form:select path="states.id" id="selectSubcat"
+																	<form:select path="statesCode.id" id="selectSubcat"
 																		cssClass="form-control">
 																		<form:option value="0">--Select--</form:option>
 																		<c:forEach items="${stateList}" var="stateList">
 
-																			<form:option value="${stateList.id}">${stateList.name}</form:option>
+																			<form:option value="${stateList.id}">${stateList.stateCode} | ${stateList.name}</form:option>
 																		</c:forEach>
 																	</form:select>
 																</div>

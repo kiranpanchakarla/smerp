@@ -44,14 +44,14 @@ public class UserController {
 
 	private static final Logger logger = LogManager.getLogger(UserController.class);
 
-	
 	private static String logoUploadedPath;
-    @Value(value = "${file.upload.path}")
-    public void setProp(String prop) {
-       this.logoUploadedPath= prop;
-    }
-    
-    @Autowired
+
+	@Value(value = "${file.upload.path}")
+	public void setProp(String prop) {
+		this.logoUploadedPath = prop;
+	}
+
+	@Autowired
 	private UserService userService;
 
 	@Autowired
@@ -75,7 +75,7 @@ public class UserController {
 		try {
 			Company company = getComapnyIdFromSession();
 			model.addAttribute("user", new User());
-			model.addAttribute("rolesList",rolesMap());
+			model.addAttribute("rolesList", rolesMap());
 			usercreationdependencymodules(model, company);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,28 +101,56 @@ public class UserController {
 			return "user/list";
 		}
 	}
-	
-	
+
+	@GetMapping(value = "/view")
+	public String show(String id, Model model) {
+		try {
+			User user = userService.findById(Integer.parseInt(id));
+			Integer managerId = user.getReportingManagerId();
+			User userDt = userService.findById(managerId);
+			// model.addAttribute("managername",userDt.getFirstname()+"
+			// "+user.getLastname());
+			model.addAttribute("user", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "user/view";
+	}
+
 	@PostMapping(value = "/delete")
 	public String delete(String id) {
 		logger.info("Inside delete method");
 		userService.delete(Integer.parseInt(id));
-	   return "redirect:list";
+		return "redirect:list";
 	}
 	
-	@GetMapping(value = "/view")
-	public String view(String id,Model model,HttpServletRequest request) {
+	
+	@GetMapping(value = "/isValidUserName")
+	@ResponseBody
+	public String isValidCompanyName(String name) {
+		User user  = userService.findOne(name);
+		if(user!=null) {
+			logger.info("User Name  Already Exits!");
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
+
+	@GetMapping(value = "/edit")
+	public String view(String id, Model model, HttpServletRequest request) {
 		logger.info("Inside delete method");
 		Company company = getComapnyIdFromSession();
 		usercreationdependencymodules(model, company);
-		User user=userService.findById(Integer.parseInt(id));
-		Map<Long,String> map=userService.rolesMap(user.getRoles());
-		model.addAttribute("filePath", ContextUtil.populateContext(request) +"/"+user.getImage());
+		User user = userService.findById(Integer.parseInt(id));
+		Map<Long, String> map = userService.rolesMap(user.getRoles());
+		model.addAttribute("filePath", ContextUtil.populateContext(request) + "/" + user.getImage());
 		model.addAttribute("rolesList", map);
 		model.addAttribute("user", user);
 		return "user/create";
 	}
-	
 
 	private Company getComapnyIdFromSession() {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -132,20 +160,21 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveUser(@RequestParam(value = "file", required = false ,defaultValue = "")  MultipartFile file,User user)throws IOException  {
+	public String saveUser(@RequestParam(value = "file", required = false, defaultValue = "") MultipartFile file,
+			User user) throws IOException {
 		logger.info("Inside user controller save method" + user);
-		if(file.getOriginalFilename()!=null && !file.getOriginalFilename().equals("")) {
-			Map<String, String> path= FilePathUtil.getFilePath(file, logoUploadedPath, Constants.USERFOLDER);
-			 String pathToSave=path.get("pathToSave");
-			 String fullPath=path.get("fullPath");
-				logger.info("fullPath--> "+fullPath);
-				logger.info("pathToSave-->"+pathToSave);
-			 
-			 FilePathUtil.saveFile(file, fullPath);
-			 user.setImage(pathToSave);
-			}
+		if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+			Map<String, String> path = FilePathUtil.getFilePath(file, logoUploadedPath, Constants.USERFOLDER);
+			String pathToSave = path.get("pathToSave");
+			String fullPath = path.get("fullPath");
+			logger.info("fullPath--> " + fullPath);
+			logger.info("pathToSave-->" + pathToSave);
+
+			FilePathUtil.saveFile(file, fullPath);
+			user.setImage(pathToSave);
+		}
 		userService.save(user);
-		 return "redirect:list";
+		return "redirect:list";
 	}
 
 	@RequestMapping(value = "/getdeginations", method = RequestMethod.GET)
@@ -175,20 +204,17 @@ public class UserController {
 				.collect(Collectors.toMap(Department::getId, Department::getName));
 		return map;
 	}
-	
+
 	//
-	
+
 	public Map<Long, Object> rolesMap() {
-		Map<Long, Object> map = roleService.findAll().stream()
-				.collect(Collectors.toMap(Role::getId, Role::getName));
+		Map<Long, Object> map = roleService.findAll().stream().collect(Collectors.toMap(Role::getId, Role::getName));
 		return map;
 	}
-	
-	@RequestMapping(value = {"/dashboard"}, method = RequestMethod.GET)
-    public String getHome() {
-        return "home";
-    }
-	
-	
+
+	@RequestMapping(value = { "/dashboard" }, method = RequestMethod.GET)
+	public String getHome() {
+		return "home";
+	}
 
 }

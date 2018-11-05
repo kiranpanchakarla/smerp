@@ -118,15 +118,14 @@
 	</div>
 
 	<footer class="footer footer-static footer-light navbar-border">
-		<div class="row">
-			
-			<div class="col-md-12">
-				<div class="footer_logo">
-					<img src="/resources/images/footer_logo.png">
-				</div>
-			</div>
-		</div>
-	</footer>
+			<p class="clearfix text-muted text-sm-center mb-0 px-2">
+				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
+					&copy; 2018 <a href="#" target="_blank"
+					class="text-bold-800 grey darken-2">SMERP </a>, All rights
+					reserved.
+				</span>
+			</p>
+		</footer>
 	
 <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>

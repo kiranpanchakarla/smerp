@@ -93,8 +93,10 @@
 																	<c:if test="${list.enabled eq false}">InActive</c:if>
 																	</th>
 																	<td>
-																	 <a class ="btn btn-primary" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a></td>
+																	 <a class ="btn btn-primary" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a> | 
+																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>|
+														    		<a class ="btn btn-primary" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
+									                               </td>							
 																</tr>
 																</c:forEach>
 															</tbody>

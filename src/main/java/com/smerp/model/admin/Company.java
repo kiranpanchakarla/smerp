@@ -67,6 +67,11 @@ public class Company extends AuditModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "states_id")
 	private States states;
+	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "states_code")
+	private States statesCode;
 
 	@Column(name = "zip_code")
 	private String zipCode;
@@ -87,6 +92,9 @@ public class Company extends AuditModel {
 	
 	@Column(name="company_registory")
 	private String companyRegisrory;
+	
+	@Column(name="isActive")
+	private Boolean isActive = true;
   
 	
 	public String getLogo() {
@@ -197,9 +205,13 @@ public class Company extends AuditModel {
 		this.street2 = street2;
 	}
 
-	
+	public Boolean getIsActive() {
+		return isActive;
+	}
 
-	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public String getCity() {
 		return city;
@@ -250,17 +262,24 @@ public class Company extends AuditModel {
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
+	
+	public States getStatesCode() {
+		return statesCode;
+	}
+
+	public void setStatesCode(States statesCode) {
+		this.statesCode = statesCode;
+	}
 
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + ", companyTagLine=" + companyTagLine + ", gstinVat=" + gstinVat
 				+ ", panNum=" + panNum + ", currency=" + currency + ", street1=" + street1 + ", street2=" + street2
 				+ ", phoneNum=" + phoneNum + ", faxNum=" + faxNum + ", city=" + city + ", emailId=" + emailId
-				+ ", states=" + states + ", zipCode=" + zipCode + ", webSite=" + webSite + ", country=" + country
-				+ ", logo=" + logo + ", taxId=" + taxId + ", companyRegisrory=" + companyRegisrory + "]";
+				+ ", states=" + states + ", statesCode=" + statesCode + ", zipCode=" + zipCode + ", webSite=" + webSite
+				+ ", country=" + country + ", logo=" + logo + ", taxId=" + taxId + ", companyRegisrory="
+				+ companyRegisrory + "]";
 	}
 
-	
-	
 	
 }

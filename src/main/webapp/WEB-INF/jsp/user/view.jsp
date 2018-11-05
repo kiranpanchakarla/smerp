@@ -38,8 +38,8 @@
 							<div class="content-wrapper">
 								<div class="content-header row">
 									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Product</h2>
-										<a class="btn btn-primary" href="/inventory/create">Create</a>
+										<h2 class="content-header-title">User</h2>
+										<a class="btn btn-primary" href="<c:url value="/user/edit?id=${user.userId}"/>">Edit</a>
 									</div>
 									<div
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -49,7 +49,7 @@
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
-												<li class="breadcrumb-item active">Product</li>
+												<li class="breadcrumb-item active">User</li>
 											</ol>
 										</div>
 									</div>
@@ -60,50 +60,77 @@
 
 										<div class="card">
 											<div class="card-header">
-												<h4 class="card-title">Product List</h4>
+												<h4 class="card-title">User View</h4>
 												<a class="heading-elements-toggle"><i
 													class="icon-ellipsis font-medium-3"></i></a>
 											</div>
-											<div class="card-body collapse in">
-												<div class="card-block card-dashboard">
-													 
-													<div class="table-responsive">
-														<table id="example" class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
-															style="width: 100%">
-															<thead>
-																<tr>
-																	<th>Product Name</th>
-																	<th>product Group</th>
-																	<th>Uom Group</th>
-																	<th>Description</th>
-																	<th>isActive</th>
-																	<th>Actions</th>
-																	
-																</tr>
-															</thead>
-															<tbody>
-															<c:forEach items="${productList}" var="productList">
-																<tr>
-																	<td>${productList.productNo}</td>
-																	<td>${productList.productCategory.name}</td>
-																	<td>${productList.uomCategory.uomCategoryName}</td>
-																	<td>${productList.description}</td>
-																	<th><c:if test="${productList.isActive eq true}">Active</c:if>
-																	<c:if test="${productList.isActive eq false}">InActive</c:if></th>
-																	<td style="width:14%">
-																	 <a class ="btn btn-primary" href="<c:url value="/inventory/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/inventory/delete')"><i class="icon-bin left"></i></a>
-				                                                    <a  class ="btn btn-primary" href="<c:url value="/inventory/view?productId=${productList.id}"/>"><i class="icon-eye3 left"></i></a>
-																	</td>
-																</tr>
-																</c:forEach>
-															</tbody>
-														
-														</table>
-													</div>
-												</div>
-											</div>
+											
+											
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body collapse in">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+
+                        <tr>
+                            <th style="width: 40%;"> Name</th>
+                            <td>${user.firstname}  ${user.lastname}</td>
+                        </tr>
+                        <tr>
+                            <th >Email</th>
+                            <td>${user.userEmail}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile No</th>
+                            <td>${user.mobileNo}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>${user.department.name}</td>
+                        </tr>
+                        
+                         <tr>
+                            <th>Designation</th>
+                            <td>${user.desigination.desigination}</td>
+                        </tr>
+                        
+                        <%--  <tr>
+                            <th>Reporting Manager</th>
+                            <td>${managername}</td>
+                        </tr>
+                        
+                        
+                         <tr>
+                            <th>Phone</th>
+                            <td>${company.phoneNum}</td>
+                        </tr>
+                        
+                        
+                         <tr>
+                            <th>City</th>
+                            <td>${company.city}</td>
+                        </tr> --%>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+											
+											
+											
+											
+											
+											
 										</div>
+										
+										
+										<div>
+										<a href="#" onclick="goBack()" class="btn btn-primary"
+											style="float: left;"> Back</a>
+									</div>
 										
 									</div>
 									<br>
@@ -117,19 +144,7 @@
 </footer>
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" />
-<script type="text/javascript">
 
-$(document).ready(function() {
-	  $('#example').DataTable( {
-	       
-	    } );
-} );
-
-</script>
-
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script> 
 </body>
 	
 </html>

@@ -7,4 +7,5 @@ import com.smerp.model.admin.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	Company findById(int id);
+	Company findByName(String name);
 }

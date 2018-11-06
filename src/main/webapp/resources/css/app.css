@@ -5,8 +5,8 @@
 html {
   height: 100%; }
   html body {
-    height: 100%;
-    background-color: #F3F3F3;
+     
+    background-color: #ffffff;
     direction: ltr; }
     html body.fixed-navbar {
       padding-top: 4rem; }

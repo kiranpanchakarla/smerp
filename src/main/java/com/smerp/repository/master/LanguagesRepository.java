@@ -2,10 +2,10 @@ package com.smerp.repository.master;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.smerp.model.master.SACCode;
+import com.smerp.model.master.Languages;
 
 @Repository
-public interface SacRepository extends JpaRepository<SACCode, Integer> {
+public interface LanguagesRepository extends JpaRepository<Languages, Integer>{
 
-	SACCode findById(int id);
+	Languages findById(int id);
 }

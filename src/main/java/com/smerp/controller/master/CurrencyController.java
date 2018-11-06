@@ -2,6 +2,8 @@ package com.smerp.controller.master;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.smerp.model.master.Currency;
 import com.smerp.service.master.CurrencyServices;
 
@@ -54,4 +55,10 @@ public class CurrencyController {
 		return "redirect:list";
 	}
 
+	@GetMapping(value = "/view")
+	public String view(String currencyId, Model model,HttpServletRequest request) {
+		Currency currencyObj = currencyServices.getInfo(Integer.parseInt(currencyId));
+		model.addAttribute("currencyObj", currencyObj); 
+		return "masters/currency/view";
+	}
 }

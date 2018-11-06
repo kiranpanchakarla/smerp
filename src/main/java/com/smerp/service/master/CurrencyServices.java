@@ -10,7 +10,9 @@ public interface CurrencyServices {
 
 	List<Currency> findAll();
 
-	Currency findById(int id);
+	Currency findById(int currencyId);
 
-	void delete(int id);
+	void delete(int currencyId);
+	
+	Currency getInfo(int currencyId);
 }

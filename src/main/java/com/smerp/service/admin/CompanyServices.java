@@ -14,6 +14,10 @@ public interface CompanyServices {
 	
 	List<Company> findAll();
 	
+	List<Company> findByIsActive();
+	
 	Company findByName(String name);
+	
+	Company findByEmailId(String emailId);
 	
 }

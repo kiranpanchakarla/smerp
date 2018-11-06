@@ -11,6 +11,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script> -->
+
+<script src="/resources/components/bootstrap-validator/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resources/components/bootstrap-validator/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/resources/components/bootstrap-validator/js/validator.min.js" type="text/javascript"></script>
+
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -37,7 +46,7 @@
 							<!-- Basic form layout section start -->
 
 							<form:form method="POST" action="/company/save"  enctype="multipart/form-data"
-								modelAttribute="company" id="form-company" class="bv-form">
+								modelAttribute="company"  data-toggle="validator" role="form"  class="bv-form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
@@ -52,13 +61,9 @@
 					<form:input type="hidden" cssClass="form-control"  path="id"  />
 											<h4 class="card-title" id="basic-layout-icons">Company/Update</h4>
 											   </c:if>
-											   
-													
 													<a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a>
 												</div>
-
-
 
 												<div class="card-body collapse in">
 													<div class="card-block">
@@ -68,26 +73,25 @@
 																	<label>Company Name</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer')"
-																		
-																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#1_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																	<span style="color: red" class="scl-form-error-container" id="1_errorContainer"></span>
-																		
+																	required="true" oninvalid="this.setCustomValidity('Please Enter Company Name')"	oninput="setCustomValidity('')"/>
+																		<div style="color:red;" id="1_errorContainer"  class="help-block with-errors"></div>
 																</div>
 																
 																<div class="col-sm-2 form-group">
-																	<label>LOGO</label>${message}
+																	<label>LOGO</label>
 																	 <%-- <form:input type="file" cssClass="form-control"  accept="image/*" onchange="loadFile(event)" 
 																		path="logo" value="${company.logo}" /> --%>
 																		
 																<p>
-																<input type="file"   name="file" id="file" value="${company.logo}"  onchange="loadFile(event)" style="display: none;"
-			                                         data-bv-notempty="true" data-bv-notempty-message="Required"  data-bv-file="true" data-bv-file-message="Required"  data-bv-file-maxsize="2"   data-bv-container="#100_errorContainer" />
+																<input type="file"   name="file" id="file" value="${company.logo}"  onchange="return fileValidation(event)" style="display: none;"
+			                                                            required="true" oninvalid="this.setCustomValidity('Please Upload Image')"	oninput="setCustomValidity('')"   />
 
-																<span class="scl-form-error-container" id="100_errorContainer"></span>
 																<form:input  type="hidden" path="logo" value="${company.logo}" />
 																</p>
 															<p style="margin-top: -28px;"><label for="file" style="cursor: pointer;"><img src="${contextPath}/resources/images/company/cameraIcon.png"></label></p>
+																<div style="color:red;" id="3_errorContainer"  class="help-block with-errors"></div>
 																</div>
+																
 																<div class="col-sm-4 form-group">
 																<c:if test="${filePath==null}">
 																			<p><img src="${contextPath}/resources/images/company/noImageUploaded.png" alt="See" id="output" width="100" height="70" /></p>
@@ -108,71 +112,45 @@
 
 															<div class="row">
 																<div class="col-sm-6 form-group">
-																	<label>VAT</label>
+																	<label>GSTIN</label>
 																	<form:input type="text" cssClass="form-control"
-																		placeholder='VAT' path="gstinVat"
-																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#3_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="3_errorContainer"></span>
+																		placeholder='GSTIN' path="gstinVat"
+																		required="true"  pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  oninvalid="this.setCustomValidity('Please Enter Valid GSTIN Number Ex:22AABCE2207R1Z6')"	oninput="setCustomValidity('')"/>
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																</div>
 																
 																<div class="col-sm-6 form-group">
 																	<label>Company Tagline</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company TagLine' path="companyTagLine"
-																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#2_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="2_errorContainer"></span>
+																		required="true"  oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																</div>
 																
 																
 															</div>
-															
-															
-															<div class="row">
-															<div class="col-sm-6 form-group">
-																				<label>Tax ID</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter Tax ID' path="taxId"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#12_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="12_errorContainer"></span>
-																			</div>
-																			
-																			
-																			
-																			<div class="col-sm-6 form-group">
-																				<label>Company Registry</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter Company Registry'
-																					path="companyRegisrory"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#14_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="14_errorContainer"></span>
-																			</div>
-															
-															
-															</div>
-															
-
-
 
 															<div class="row">
 																
 																<div class="col-sm-6 form-group">
 																	<label>State Code</label>
 																	<form:select path="statesCode.id" id="selectSubcat"
-																		cssClass="form-control">
-																		<form:option value="0">--Select--</form:option>
+																		cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select State ')"	oninput="setCustomValidity('')">
+																		<form:option value="">--Select--</form:option>
 																		<c:forEach items="${stateList}" var="stateList">
 
 																			<form:option value="${stateList.id}">${stateList.stateCode} | ${stateList.name}</form:option>
 																		</c:forEach>
 																	</form:select>
+																	<div style="color:red;"  class="help-block with-errors"></div>
 																</div>
 																
 																<div class="col-sm-6 form-group">
 																	<label>Pan Number</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Enter Pan Number' path="panNum"
-																		data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#4_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="4_errorContainer"></span>
+																		required="true" maxlength="10" oninvalid="this.setCustomValidity('Please Enter PAN Number')"	oninput="setCustomValidity('')" />
+																<div style="color:red;"  class="help-block with-errors"></div>
 																</div>
 																
 															</div>
@@ -194,33 +172,34 @@
 																				<label>Street-1</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='street1' path="street1"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#5_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="5_errorContainer"></span>
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Street1')"	oninput="setCustomValidity('')" />
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			<div class="col-sm-6 form-group">
-																				<label>Phone</label>
-																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
-																					placeholder='Enter Phone No' path="phoneNum"
-																					 data-bv-notempty="true" data-bv-notempty-message="Required"  data-bv-container="#6_errorContainer" />
-																		<span class="scl-form-error-container" id="6_errorContainer"></span>
+																				<label>Street-2</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Street2' path="street2"
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Street2')"	oninput="setCustomValidity('')" />
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 
 
 																		<div class="row">
+																			
 																			<div class="col-sm-6 form-group">
-																				<label>Street-2</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Street2' path="street2"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#7_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="7_errorContainer"></span>
+																				<label>Phone</label>
+																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
+																					placeholder='Enter Phone No' path="phoneNum" pattern="[0-9]+$"
+																					required="true"  maxlength="10" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
+																	<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			<div class="col-sm-6 form-group">
 																				<label>Fax</label>
-																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
+																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter fax Num' path="faxNum"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#8_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="8_errorContainer"></span>
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
+																	<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 
@@ -230,15 +209,15 @@
 																				<label>City</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter City' path="city"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#9_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="9_errorContainer"></span>
+																					required="true" oninvalid="this.setCustomValidity('Please Enter City')"	oninput="setCustomValidity('')"/>
+																	<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			<div class="col-sm-6 form-group">
 																				<label>Email</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter Email' path="emailId"
-																				data-bv-notempty="true" data-bv-notempty-message="Required" 	data-bv-emailaddress="true"   data-bv-emailaddress-message="The value is not a valid email address"  data-bv-container="#10_errorContainer" />
-																		<span class="scl-form-error-container" id="10_errorContainer"></span>
+																				<form:input type="email" cssClass="form-control"  onchange="isValidName('emailId','/company/isValidEmailId','2_errorContainer')"
+																				 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Enter Email' path="emailId"
+																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
+																		<div style="color:red;" id="2_errorContainer"  class="help-block with-errors" ></div>
 																			</div>
 																		</div>
 
@@ -246,13 +225,14 @@
 																			<div class="col-sm-6 form-group">
 																				<label>State</label>
 																				<form:select path="states.id" id="selectSubcat"
-																					cssClass="form-control">
-																					<form:option value="0">--Select--</form:option>
+																					cssClass="form-control" required="true"   oninvalid="this.setCustomValidity('Please Select State')"	oninput="setCustomValidity('')">
+																					<form:option value="">--Select--</form:option>
 																					<c:forEach items="${stateList}" var="stateList">
 
 																						<form:option value="${stateList.id}">${stateList.name}</form:option>
 																					</c:forEach>
 																				</form:select>
+																				<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			<div class="col-sm-6 form-group">
 																				<label>Country</label>
@@ -272,18 +252,18 @@
 																			
 																			<div class="col-sm-6 form-group">
 																				<label>ZIP Code</label>
-																				<form:input type="text" cssClass="form-control"
+																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
 																					placeholder='Enter ZIP Code' path="zipCode"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#13_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="13_errorContainer"></span>
+																					required="true" maxlength="6"  oninvalid="this.setCustomValidity('Please ZIP Code')"	oninput="setCustomValidity('')" />
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			<div class="col-sm-6 form-group">
 																				<label>Website</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter Website' path="webSite"
-																					data-bv-notempty="true" data-bv-notempty-message="Required" data-bv-stringlength="true" data-bv-stringlength-min="0" data-bv-stringlength-max="255" data-bv-container="#11_errorContainer" data-bv-stringlength-message="between-string-length"/>
-																		<span class="scl-form-error-container" id="11_errorContainer"></span>
+																					placeholder='Enter Website' path="webSite" id="instmanageformid"
+																					required="true"  oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
+																	<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			
@@ -350,54 +330,36 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-		<script src="/resources/js/common-form-elements.js" type="text/javascript"></script> 
-		<script src="/resources/components/bootstrap-validator/js/bootstrap-validator.bundle.js" type="text/javascript"></script> 
-		<link href="/resources/components/bootstrap-validator/css/bootstrap-validator.min.css" rel="stylesheet" type="text/css" >
+		
+		
+		
 </body>
-	<style type="text/css">
-	.has-error .help-block,
-	.has-error .control-label {
-	  color: #b94a48;
-	}
 	
-	.has-error .form-control {
-	  border-color: #b94a48;
-	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	}
-	
-	.has-error .form-control:focus {
-	  border-color: #953b39;
-	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
-	          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
-	}
-	
-	.has-error .input-group-addon {
-	  color: #b94a48;
-	  background-color: #f2dede;
-	  border-color: #b94a48;
-	}
-	</style>
 <script>
 
-$(function() {
-    $( "#form-company" ).submit(function( event ) {
-        event.preventDefault();
-        var a=$('#form-company').serialize();
-        var isValid = commonBootStrapValidations($( "#form-company" ));
-        if(isValid){
-            //alert(isValid);
-            this.submit();
-        }
-       });
-});
-var loadFile = function(event) {
+
+/* var loadFile = function(event) {
 	var image = document.getElementById('output');
 	image.src = URL.createObjectURL(event.target.files[0]);
-};
+}; */
 
-		
-		
+function fileValidation(event){
+    var fileInput = document.getElementById('file');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if(!allowedExtensions.exec(filePath)){
+        //alert();
+        alertify.alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+        fileInput.value = '';
+        return false;
+    }else{
+    	var image = document.getElementById('output');
+    	image.src = URL.createObjectURL(event.target.files[0]);
+    }
+}	
+
+
+
 	
 </script>
 </html>

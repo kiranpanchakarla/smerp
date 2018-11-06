@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -7,6 +6,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -33,7 +35,7 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<form:form method="POST" action="/user/save" enctype="multipart/form-data" modelAttribute="user" >
+							<form:form method="POST" action="/user/save" enctype="multipart/form-data" modelAttribute="user"   data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
@@ -43,7 +45,7 @@
 												
 												 <c:if test = "${user.userId!=null}">  
 												 <h4 class="card-title" id="basic-layout-icons">Update</h4>
-     					 				<form:input type="hidden" cssClass="form-control"  path="userId"  />
+     					 				<form:input type="hidden" cssClass="form-control"  path="userId"   />
 								 				 </c:if>
 								 				 
 								 				  <c:if test = "${user.userId==null}">  
@@ -67,23 +69,25 @@
 																	<div class="col-sm-6 form-group">
 																		<label>First Name</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='First Name' path="firstname"  />
+																			placeholder='First Name' id="name" path="firstname" required="true"   />
+																			<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
 																		<label>Last Name</label>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Lat Name' path="lastname"  />
+																			placeholder='Lat Name' path="lastname" required="true"   />
+																			<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																</div>
 
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>User Name</label>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control"  required="true"
 																			 onchange="isValidName('username','/user/isValidUserName','1_userName')" placeholder='User Name' path="username" />
 																<span style="color: red" class="scl-form-error-container" id="1_userName"></span>
-																	
+																	<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 
 																	<div class="col-sm-2 form-group">
@@ -92,21 +96,15 @@
 																		path="logo" value="${company.logo}" /> --%>
 
 																		<p>
-																			<input type="file" name="file" id="file" value=""
-																				onchange="loadFile(event)" style="display: none;"
-																				data-bv-notempty="true"
-																				data-bv-notempty-message="Required"
-																				data-bv-file="true" data-bv-file-message="Required"
-																				data-bv-file-maxsize="2"
-																				data-bv-container="#100_errorContainer" /> <span
-																				class="scl-form-error-container"
-																				id="100_errorContainer"></span>
-																			<form:input type="hidden" path="image" value="" />
+																			<input type="file"   name="file" id="file" value="${user.image}"  onchange="return fileValidation(event)" style="display: none;"
+			                                                            required="true"   />
+																			<form:input type="hidden" path="image" value="${user.image}" />
 																		</p>
 																		<p style="margin-top: -28px;">
 																			<label for="file" style="cursor: pointer;"><img
 																				src="${contextPath}/resources/images/company/cameraIcon.png"></label>
 																		</p>
+																		<div style="color:red;" id="3_errorContainer"  class="help-block with-errors"></div>
 																	</div>
 																	<div class="col-sm-4 form-group">
 																		<c:if test="${filePath==null}">
@@ -130,35 +128,39 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>Email </label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Email Id' path="userEmail"
+																		<form:input type="text" cssClass="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+																			placeholder='Email Id' path="userEmail"  required="true"
 																			value="" />
+																			 	<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
 																		<label>Mobile Number </label>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control numericwithoutdecimal" pattern="[0-9]+$"  maxlength="10"
 																			placeholder='Mobile Number' path="mobileNo"
-																			value="" />
+																			value="" required="true" />
+																			<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																</div>
 																
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label> Department </label>
-																		<form:select  id="department" path="department.id"  cssClass="form-control">
+																		<form:select  id="department" path="department.id" required="true"  cssClass="form-control">
 																		     <form:option  value="">Select</form:option>
 																		   	 <form:options items="${department}"></form:options>
 																	   </form:select>
+																	  	<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																
 																	<div class="col-sm-6 form-group">
 																		<label> Designation </label>
-																		<form:select id="desigination"  path="desigination.id"  cssClass="form-control">
+																		<form:select id="desigination"  path="desigination.id" required="true"  cssClass="form-control">
 																		 <c:if test = "${user.username==null}">  
 																		  	<form:option  value="">Select</form:option> 
 																		</c:if>
 																	   </form:select>
+																	   	<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																</div>
 																
@@ -166,20 +168,23 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label> Reporting Manager  </label>
-																	<form:select path="reportingManagerId"  cssClass="form-control">
+																	<form:select path="reportingManagerId"  required="true"   cssClass="form-control">
 																	<c:forEach  items="${usersList}" var="usersList">
+																	   <form:option  value="">Select</form:option>
 																	   <form:option value="${usersList.userId}">${usersList.firstname}</form:option>
 																	 </c:forEach>  
 																	   </form:select>
-																	 
+																	 	<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																
 																<div class="col-sm-6 form-group">
 																		<label> Roles </label>
-																       <form:select   path="rolesDt"  cssClass="form-control">
+																       <form:select   path="rolesDt"  required="true"   cssClass="form-control">
+																     		  <form:option  value="">Select</form:option>
 																		   	 <form:options items="${rolesList}"></form:options>
 																	   </form:select>
 																	</div> 
+																<div style="color:red;" class="help-block with-errors"></div>
 																</div>
 
 															</div>
@@ -259,7 +264,7 @@ $(document).ready(function() {
    
    function designationLoad(){
 	  // alert("hiii");
-	   $("#desigination").html('<option>Select</option>');
+	   $("#desigination").html('<option value="">Select</option>');
 	   $.ajax({
            type : "GET",
            url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
@@ -287,7 +292,7 @@ $(document).ready(function() {
    
  function designationLoadForUpdate(){
 	   var id=$('#designationValue').val();
-		// alert(id);
+		alert(id);
 	   $.ajax({
            type : "GET",
            url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),
@@ -316,10 +321,19 @@ $(document).ready(function() {
    }
 });
 
-            		   var loadFile = function(event) {
-            				var image = document.getElementById('output');
-            				image.src = URL.createObjectURL(event.target.files[0]);
-            			};
+            		   function fileValidation(event){
+            			    var fileInput = document.getElementById('file');
+            			    var filePath = fileInput.value;
+            			    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            			    if(!allowedExtensions.exec(filePath)){
+            			        //alert();
+            			        alertify.alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+            			        fileInput.value = '';
+            			        return false;
+            			    }else{
+            			    	var image = document.getElementById('output');
+            			    	image.src = URL.createObjectURL(event.target.files[0]);
+            			    }
+            			}
 </script>
 </html>
-

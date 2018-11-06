@@ -120,7 +120,7 @@
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6 form-group">
                                                                                         <!-- <label>With old Tax Liable</label> -->
-                                                                                        <form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" /> With Old Tax Liable
+                                                                                        <form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" /> Withholding Tax Liable
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="row">
@@ -205,7 +205,11 @@
                                                                                             </form:select>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="row">
+                                                                                   
+                                                                                </div>
+                                                                                
+                                                                                <p class="card-title">Serial and Batch Numbers</p>
+                                                                                 <div class="row">
                                                                                         <div class="col-sm-6 form-group">
                                                                                             <label>Manage ProductBy</label>
                                                                                                 <form:select path="manageProductBy" class="form-control">
@@ -216,7 +220,8 @@
                                                                                                 </form:select>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                
+                                                                                
                                                                             </div>
                                                                             <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                                                                 <br>

@@ -84,17 +84,16 @@
    }
   
   function isValidName(nameId,url,displayId){
-	  
 	  var dataString  ="name="+$('#'+nameId).val();
 	  $.ajax({
 			 type:"GET",
 			 url: url,
 			 data : dataString,
 			 success: function(result){
-				 if(result=='true'){
-					 alertify.success('Name Already Exist');
+				 if(result==true){
+					 alertify.success('Field Already Exist');
 					 $('#'+nameId).val('');
-					 $('#'+displayId).html('Name Already Exist');
+					 $('#'+displayId).html('Field Already Exist');
 				 }else {
 					 $('#'+displayId).html(''); 
 				 }

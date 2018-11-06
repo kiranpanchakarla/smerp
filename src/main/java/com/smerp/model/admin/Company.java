@@ -85,18 +85,26 @@ public class Company extends AuditModel {
 	
 	@Column(name="logi_file_path")
     private String logo;
-    
-	
-	@Column(name="tax_id")
-	private String taxId;
-	
-	@Column(name="company_registory")
-	private String companyRegisrory;
 	
 	@Column(name="isActive")
 	private Boolean isActive = true;
+	
+   private transient String path;
+   
   
 	
+	public String getPath() {
+	return path;
+}
+
+public void setPath(String path) {
+	this.path = path;
+}
+
+public static long getSerialversionuid() {
+	return serialVersionUID;
+}
+
 	public String getLogo() {
 		return logo;
 	}
@@ -105,22 +113,7 @@ public class Company extends AuditModel {
 		this.logo = logo;
 	}
 
-	public String getTaxId() {
-		return taxId;
-	}
-
-	public void setTaxId(String taxId) {
-		this.taxId = taxId;
-	}
-
-	public String getCompanyRegisrory() {
-		return companyRegisrory;
-	}
-
-	public void setCompanyRegisrory(String companyRegisrory) {
-		this.companyRegisrory = companyRegisrory;
-	}
-
+	
 	
 
 	public String getFaxNum() {
@@ -277,9 +270,12 @@ public class Company extends AuditModel {
 				+ ", panNum=" + panNum + ", currency=" + currency + ", street1=" + street1 + ", street2=" + street2
 				+ ", phoneNum=" + phoneNum + ", faxNum=" + faxNum + ", city=" + city + ", emailId=" + emailId
 				+ ", states=" + states + ", statesCode=" + statesCode + ", zipCode=" + zipCode + ", webSite=" + webSite
-				+ ", country=" + country + ", logo=" + logo + ", taxId=" + taxId + ", companyRegisrory="
-				+ companyRegisrory + "]";
+				+ ", country=" + country + ", logo=" + logo + ", isActive=" + isActive + "]";
 	}
+
+	
+
+	
 
 	
 }

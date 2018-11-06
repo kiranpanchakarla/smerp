@@ -23,7 +23,7 @@ public class SACCode extends AuditModel {
 	private Integer id;
 	
 	@Column(name="sac_code")
-	private String sacCoe;
+	private String sacCode;
 	
 	@Column(name="description")
 	private String description;
@@ -39,12 +39,12 @@ public class SACCode extends AuditModel {
 		this.id = id;
 	}
 
-	public String getSacCoe() {
-		return sacCoe;
+	public String getSacCode() {
+		return sacCode;
 	}
 
-	public void setSacCoe(String sacCoe) {
-		this.sacCoe = sacCoe;
+	public void setSacCode(String sacCode) {
+		this.sacCode = sacCode;
 	}
 
 	public String getDescription() {
@@ -65,7 +65,7 @@ public class SACCode extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "SACCode [id=" + id + ", sacCoe=" + sacCoe + ", description=" + description + ", rate=" + rate + "]";
+		return "SACCode [id=" + id + ", sacCode=" + sacCode + ", description=" + description + ", rate=" + rate + "]";
 	}
 	
 	

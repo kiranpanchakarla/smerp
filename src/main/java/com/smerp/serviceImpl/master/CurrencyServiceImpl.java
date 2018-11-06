@@ -1,11 +1,9 @@
 package com.smerp.serviceImpl.master;
 
-import java.sql.Timestamp;
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.smerp.model.master.Currency;
 import com.smerp.repository.master.CurrencyRepository;
 import com.smerp.service.master.CurrencyServices;
@@ -17,10 +15,6 @@ public class CurrencyServiceImpl implements CurrencyServices {
 	CurrencyRepository currencyRepository;
 
 	public Currency save(Currency currency) {
-		/*
-		 * currency.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		 * currency.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-		 */
 		currencyRepository.save(currency);
 		return currency;
 	}
@@ -30,13 +24,19 @@ public class CurrencyServiceImpl implements CurrencyServices {
 		return currencyRepository.findAll();
 	}
 
-	public Currency findById(int id) {
-		return currencyRepository.findById(id);
+	public Currency findById(int currencyId) {
+		return currencyRepository.findById(currencyId);
 	}
 
 	@Override
-	public void delete(int id) {
-		currencyRepository.deleteById(id);
+	public void delete(int currencyId) {
+		currencyRepository.deleteById(currencyId);
+	}
+
+	@Override
+	public Currency getInfo(int currencyId) {
+		 
+		return currencyRepository.findById(currencyId);
 	}
 
 }

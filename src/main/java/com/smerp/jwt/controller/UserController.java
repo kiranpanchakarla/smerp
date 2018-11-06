@@ -128,13 +128,13 @@ public class UserController {
 	
 	@GetMapping(value = "/isValidUserName")
 	@ResponseBody
-	public String isValidCompanyName(String name) {
+	public boolean isValidCompanyName(String name) {
 		User user  = userService.findOne(name);
 		if(user!=null) {
 			logger.info("User Name  Already Exits!");
-			return "true";
+			return true;
 		}else {
-			return "false";
+			return false;
 		}
 	}
 	
@@ -146,7 +146,11 @@ public class UserController {
 		usercreationdependencymodules(model, company);
 		User user = userService.findById(Integer.parseInt(id));
 		Map<Long, String> map = userService.rolesMap(user.getRoles());
-		model.addAttribute("filePath", ContextUtil.populateContext(request) + "/" + user.getImage());
+		if (company.getLogo() != null && !company.getLogo().equals("")) {
+			model.addAttribute("filePath", ContextUtil.populateContext(request) + "/" + user.getImage());
+		} else {
+			model.addAttribute("filePath", null);
+		}
 		model.addAttribute("rolesList", map);
 		model.addAttribute("user", user);
 		return "user/create";

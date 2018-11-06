@@ -79,7 +79,6 @@
 																	<th>City</th>
 																	<th>ZipCode</th>
 																	<th>WebSite</th>
-																	<th>isActive</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -93,8 +92,6 @@
 																	<td>${companyList.city}</td>
 																	<td>${companyList.zipCode}</td>
 																	<td>${companyList.webSite}</td>
-																	<th><c:if test="${companyList.isActive eq true}">Active</c:if>
-																	<c:if test="${companyList.isActive eq false}">InActive</c:if></th>
 																	<td >
 																	 <a class ="btn btn-primary" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>"><i class="icon-edit left"></i></a> | 
 																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')"><i class="icon-bin left"></i></a>|

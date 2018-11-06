@@ -90,10 +90,6 @@
                             <td>${company.emailId}</td>
                         </tr>
                         
-                         <tr>
-                            <th>TaxId</th>
-                            <td>${company.taxId}</td>
-                        </tr>
                         
                          <tr>
                             <th>State</th>

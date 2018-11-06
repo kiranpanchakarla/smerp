@@ -42,7 +42,7 @@ public class CompanyServicesImpl implements CompanyServices {
 			User user = new User();
 			logger.info("inside userservice impl save method");
 			user.setCompany(company);
-			user.setUsername(company.getName());
+			user.setUsername(company.getEmailId());
 			user.setActivationId("InActive");
 			user.setPlant("test");
 			user.setPassword(bcryptEncoder.encode("Welcome"));
@@ -72,8 +72,19 @@ public class CompanyServicesImpl implements CompanyServices {
 		return companyRepository.findAll();
 	}
 	
+	
+	public List<Company> findByIsActive() {
+		return companyRepository.findByIsActive(true);
+	}
+	
+	
+	
 	public Company findByName(String name) {
 		return companyRepository.findByName(name);
+	}
+	
+	public Company findByEmailId(String emailId) {
+		return companyRepository.findByEmailId(emailId);
 	}
 	
 

@@ -60,17 +60,17 @@ public class User extends AuditModel {
 	@Column(name="activation_id")
 	private String activationId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="company_id")
 	private Company company;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="department_id")
 	private Department department;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="desigination_id")
 	private Desigination desigination;
 	

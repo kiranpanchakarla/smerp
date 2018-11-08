@@ -2,6 +2,7 @@ package com.smerp.jwt.config;
 
 import static com.smerp.jwt.models.Constants.SIGNING_KEY;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,8 +10,12 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Component;
 import com.smerp.jwt.models.Constants;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -35,26 +41,35 @@ public class TokenProvider implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LogManager.getLogger(TokenProvider.class);
+	
+	 @Autowired
+	 private HttpServletRequest request;
+
+	 @Autowired
+	 private HttpServletResponse response;
+	
 
 	public String getUsernameFromToken(String token) throws Exception {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
-	public Date getExpirationDateFromToken(String token) throws io.jsonwebtoken.ExpiredJwtException {
+	public Date getExpirationDateFromToken(String token) throws io.jsonwebtoken.ExpiredJwtException, IOException {
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver)
-			throws io.jsonwebtoken.ExpiredJwtException {
+			throws io.jsonwebtoken.ExpiredJwtException, IOException {
 		final Claims claims = getAllClaimsFromToken(token);
 		return claimsResolver.apply(claims);
 	}
 
-	private Claims getAllClaimsFromToken(String token) throws io.jsonwebtoken.ExpiredJwtException {
-		return Jwts.parser().setSigningKey(Constants.SIGNING_KEY).parseClaimsJws(token).getBody();
+	private Claims getAllClaimsFromToken(String token) throws io.jsonwebtoken.ExpiredJwtException, IOException {
+		Claims claims=null;
+	    claims=Jwts.parser().setSigningKey(Constants.SIGNING_KEY).parseClaimsJws(token).getBody();
+		return claims;
 	}
 
-	public boolean isTokenExpired(String token) {
+	public boolean isTokenExpired(String token) throws ExpiredJwtException, IOException {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(new Date());
 	}
@@ -64,7 +79,7 @@ public class TokenProvider implements Serializable {
 				.collect(Collectors.joining(","));
 		// logger.info("issued at"+System.currentTimeMillis());
 		logger.info("issued  at   " + new Date(System.currentTimeMillis()));
-		logger.info("expired   at  " + System.currentTimeMillis() + Constants.ACCESS_TOKEN_VALIDITY_SECONDS * 10);
+		logger.info("expired   at  " + new Date(System.currentTimeMillis() + Constants.ACCESS_TOKEN_VALIDITY_SECONDS * 10));
 		return Jwts.builder().setSubject(authentication.getName()).claim(Constants.AUTHORITIES_KEY, authorities)
 				.signWith(SignatureAlgorithm.HS256, Constants.SIGNING_KEY)
 				.setIssuedAt(new Date(System.currentTimeMillis()))

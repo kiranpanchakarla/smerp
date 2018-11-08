@@ -1,4 +1,4 @@
-package com.smerp.jwt.controller;
+/*package com.smerp.jwt.controller;
 
 import java.io.IOException;
 
@@ -81,7 +81,7 @@ public class AuthenticationController {
 		}
 	}
 
-	/*@RequestMapping(value="/logoutDt", method = RequestMethod.GET)
+	@RequestMapping(value="/logoutDt", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		logger.info("logout method");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,8 +89,9 @@ public class AuthenticationController {
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
 	    return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
-	}*/
+	}
 
 	
 
 }
+*/

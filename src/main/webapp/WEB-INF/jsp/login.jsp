@@ -25,9 +25,10 @@
           <div class="card border-grey border-lighten-3 m-0">
           <c:if test="${not empty errorMsg}">
 							<div class="alert alert-danger">
-								Login failed. <b>${errorMsg}</b>
+							 <b>${errorMsg}</b>
 							</div>
 			</c:if>
+			
             <div class="card-header no-border">
               <div class="card-title text-xs-center">
                 <div class="p-1"><img src="/resources/images/logo.png" style="width: 150px;" alt="branding logo"></div>
@@ -37,7 +38,7 @@
             <div class="card-body collapse in">
               <div class="card-block">
                 <c:url value="/loginDetails" var="generateToken" />
-                  <form name='f' class="login-form" role="form" method="POST" action="${generateToken}" >
+                  <form name='f' class="login-form" role="form" method="POST" action="<c:url value="login"/>" >
                   <fieldset class="form-group position-relative has-icon-left mb-0">
                     <input type="text" class="form-control form-control-lg input-lg" name="username" id="user-name" placeholder="Your Username" required>
                     <div class="form-control-position"> <i class="icon-head"></i> </div>

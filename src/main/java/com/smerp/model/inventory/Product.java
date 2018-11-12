@@ -43,11 +43,11 @@ public class Product extends AuditModel {
 	private String description;
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="product_category_id")
 	private ProductCategory productCategory;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="uom_category_id")
 	private UomCategory uomCategory;
 	
@@ -69,7 +69,7 @@ public class Product extends AuditModel {
 	@Column(name="service_type")
 	private String serviceType;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sac_id")
 	private SACCode sacCode;
 	
@@ -79,7 +79,7 @@ public class Product extends AuditModel {
 	@Column(name="product_type")
 	private String productType;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="hsn_id")
 	private HSNCode hsnCode;
 	
@@ -92,14 +92,14 @@ public class Product extends AuditModel {
 	@Column(name="prefered_vendor")
 	private String preferredVendor;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "purchase_uom_id", referencedColumnName = "uom_id" )
 	private Uom purchasingUom;
 	
 	@Column(name="product_per_purchase_unit")
 	private String produtPerPurchaseUnit;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "packing_uom_id", referencedColumnName = "uom_id")
 	private Uom packingUom;
 	
@@ -107,7 +107,7 @@ public class Product extends AuditModel {
 	private String qualityPerPackage;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "inventory_uom_id", referencedColumnName = "uom_id")
 	private Uom inventoryUom;
 	

@@ -1,4 +1,4 @@
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ page import="java.security.Principal" %> 
 <!-- END Custom CSS-->
 <div class="first_strip"
@@ -260,9 +260,11 @@
 			<li class="dropdown dropdown-user nav-item" style="float: right;">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
-					class="avatar avatar-online"> <img
-						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"><i></i>
-				</span> <%-- <span class="user-name">${pageContext.request.userPrincipal.name}</span> --%>
+					class="avatar avatar-online">
+					<img src="<c:url value="/resources/images/portrait/logo/manuh_logo.jpg"/>"/>
+					 <!-- <img
+						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
+				</span>  <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span> 
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>
@@ -275,6 +277,7 @@
 						class="icon-power3"></i> Logout</a>
 				</div>
 			</li>
+			
 		</ul>
 		<div style="clear: both;"></div>
 	</div>

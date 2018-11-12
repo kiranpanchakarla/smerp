@@ -38,7 +38,8 @@
 								<div class="content-header row">
 									<div class="content-header-left col-md-6 col-xs-12 mb-1">
 										<h2 class="content-header-title">Users</h2>
-										<a class="btn btn-primary" href="/user/create">Create</a>
+										<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
+										
 									</div>
 								<!-- 	<div
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -60,8 +61,7 @@
 										<div class="card">
 											<div class="card-header">
 												<h4 class="card-title">Users List</h4>
-												<a class="heading-elements-toggle"><i
-													class="icon-ellipsis font-medium-3"></i></a>
+												
 											</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">

@@ -61,8 +61,7 @@
 										<div class="card">
 											<div class="card-header">
 												<h4 class="card-title">Currency View</h4>
-												<a class="heading-elements-toggle"><i
-													class="icon-ellipsis font-medium-3"></i></a>
+												
 											</div>
 											
 											

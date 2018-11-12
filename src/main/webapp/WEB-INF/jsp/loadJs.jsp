@@ -1,17 +1,36 @@
-<script src="/resources/js/core/libraries/jquery.min.js" type="text/javascript"></script> 
-<script src="/resources/js/core/libraries/bootstrap.min.js" type="text/javascript"></script> 
-<!-- <script src="vendors/js/ui/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>  -->
-<script src="/resources/vendors/js/ui/unison.min.js" type="text/javascript"></script> 
-<script src="/resources/vendors/js/charts/chart.min.js" type="text/javascript"></script> 
-<script src="/resources/js/core/app-menu.js" type="text/javascript"></script> 
-<script src="/resources/js/core/app.js" type="text/javascript"></script> 
-<script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
+
+
+
+<script src=<c:url value="/resources/js/core/libraries/jquery.min.js"/> type="text/javascript"></script>
+
+<script src=<c:url value="/resources/js/core/libraries/bootstrap.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/vendors/js/ui/unison.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/vendors/js/charts/chart.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/core/app-menu.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/core/app.js"/> type="text/javascript"></script> 
+<!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>   -->
+
+
+
+
 <!-- alertifyjs -->
-<link rel="stylesheet" href="/resources/components/alertifyjs/css/alertify.css" />
-<link rel="stylesheet" href="/resources/components/alertifyjs/css/themes/default.css" />
+
+<link href="<c:url value="/resources/components/alertifyjs/css/alertify.css"/>"
+    rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/resources/components/alertifyjs/css/themes/default.css"/>"
+    rel="stylesheet" type="text/css" />
+
+<!-- <link rel="stylesheet" href="/resources/components/alertifyjs/css/alertify.css" />
+<link rel="stylesheet" href="/resources/components/alertifyjs/css/themes/default.css" /> -->
 <!-- alertifyjs -->
 <!-- alertfy-->
-<script type="text/javascript" src="/resources/components/alertifyjs/alertify.min.js"></script>
+
+<script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
+<!-- <script type="text/javascript" src="/resources/components/alertifyjs/alertify.min.js"></script> -->
 <!-- alertfy-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 

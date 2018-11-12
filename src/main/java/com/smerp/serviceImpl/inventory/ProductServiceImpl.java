@@ -12,8 +12,8 @@ import com.smerp.repository.inventory.ProductRepository;
 import com.smerp.service.inventory.ProductService;
 
 @Service
-public class ProductServiceImpl  implements ProductService {
-	
+public class ProductServiceImpl implements ProductService {
+
 	@Autowired
 	private ProductRepository productRepository;
 
@@ -22,80 +22,72 @@ public class ProductServiceImpl  implements ProductService {
 	@Override
 	public Product save(Product product) {
 		try {
-			if(product!=null && product.getserviceOrProduct().equals("service")) {
+			if (product != null && product.getserviceOrProduct().equals("service")) {
 				product.setHsnCode(null);
-				product.setProductType("");
-				product.setProductTaxCategory("");
-				product.setManageProductBy("");
-			}else {
+				
+			} else {
 				product.setSacCode(null);
-				product.setServiceType("");
-				product.setTaxCategory("");
+				
 			}
-			
-			logger.info("product-->"+product);
+
+			logger.info("product-->" + product);
 			productRepository.save(product);
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("error-->" +ex.getMessage());
+			System.out.println("error-->" + ex.getMessage());
 		}
 		return product;
 
-}
-
+	}
 
 	@Override
 	public List<Product> productList() {
-		
+
 		return productRepository.findAll();
 	}
-	
-	
+
 	@Override
 	public List<Product> findByIsActive(Boolean isActive) {
-		
+
 		return productRepository.findByIsActive(isActive);
 	}
 
-	
 	@Override
 	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
-	
-
-
 
 	@Override
 	public Product getInfo(int id) {
-		
+
 		Product obj = productRepository.findById(id).get();
-		
+
 		return obj;
 	}
-
-
-	
-
 
 	@Override
 	public Product update(Product product) {
 		try {
 			productRepository.save(product);
-		}catch(Exception ex) {
-			System.out.println("error-->" +ex.getMessage());
+		} catch (Exception ex) {
+			System.out.println("error-->" + ex.getMessage());
 		}
 		return product;
 	}
 
-
 	@Override
 	public Product delete(int id) {
-		
-		Product product=productRepository.findById(id).get();
-		product.setIsActive(false);;
+
+		Product product = productRepository.findById(id).get();
+		product.setIsActive(false);
 		productRepository.save(product);
-		
+
 		return product;
+	}
+
+	@Override
+	public Product findByProductNo(String productNo) {
+
+		return productRepository.findByProductNo(productNo);
 	}
 }

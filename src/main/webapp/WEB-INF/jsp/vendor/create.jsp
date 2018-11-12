@@ -22,7 +22,7 @@
                     <div class="content-wrapper">
                         <div class="content-header row">
                             <div class="col-md-6">
-                                <h4>Product</h4>
+                                <h4>Vendor</h4>
                             </div>
                         </div>
                         <div class="content-body">
@@ -33,27 +33,26 @@
                                     <div class="content-body">
                                         <!-- Basic form layout section start -->
 
-                                        <form:form method="POST" action="/inventory/save" modelAttribute="product" onsubmit="return register()">
+                                        <form:form method="POST" action="/vendor/save" modelAttribute="vendor" onsubmit="return register()">
                                             <section id="basic-form-layouts">
                                                 <div class="row match-height">
 
                                                     <div class="col-md-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                             <c:if test = "${product.id!=null}">  
-												   <h4 class="card-title" id="basic-layout-icons">Product/Update</h4>
+                                                             <c:if test = "${vendor.id!=null}">  
+												   <h4 class="card-title" id="basic-layout-icons">Vendor/Update</h4>
      					 									<form:input type="hidden" cssClass="form-control"  path="id"  />
 								 				 </c:if>
 								 				 
-								 				  <c:if test = "${product.id==null}">  
-												   <h4 class="card-title" id="basic-layout-icons">Product/Create</h4>
+								 				  <c:if test = "${vendor.id==null}">  
+												   <h4 class="card-title" id="basic-layout-icons">Vendor/Create</h4>
 								 				 </c:if>
                                                             
                                                              
                                                                 
                                                                 
-                                                                <a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a>
+                                                              
                                                             </div>
 
                                                             <input type="hidden" id="id" class="form-control" name="id" value="">
@@ -64,166 +63,66 @@
                                                                         <div class="form-body">
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
-                                                                                    <label>Product No</label>
-                                                                                    <form:input type="text" class="form-control" placeholder='productNo' path="productNo" value="" />
+                                                                                    <label>Vendor Code</label>
+                                                                                    <form:input type="text" class="form-control" placeholder='vendorCode' path="vendorCode" value="" />
                                                                                 </div>
-                                                                                <div class="col-sm-6 form-group">
-                                                                                    <div style="margin-top: 38px">
-                                                                                        <form:checkbox path="inventoryProduct" value="inventoryProduct" /> Inventory Product
-                                                                                    </div>
-                                                                                </div>
+                                                                               
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
                                                                                     <label>Description</label>
-                                                                                    <form:input type="text" class="form-control" placeholder='description' path="description" value="" />
-                                                                                </div>
-                                                                                <div class="col-sm-6 form-group">
-                                                                                    <div style="margin-top: 38px">
-                                                                                        <form:checkbox path="purchaseProduct" value="purchaseProduct" /> Purchase Product
-                                                                                    </div>
+                                                                                    <form:input type="text" class="form-control" placeholder='name' path="name" value="" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
-                                                                                    <label>Product Group</label>
-                                                                                     <form:select path="productCategory.id" class="form-control">
-                                                                                       <form:option value="">--Select--</form:option>
-                                                                                     <c:forEach  items="${productCategoryList}" var="productCategoryList">
-
-																	   <form:option value="${productCategoryList.id}">${productCategoryList.name}</form:option>
-																	 </c:forEach>  
-                                                                                                
-                                                                                            </form:select>
+                                                                                    <label>Group</label>
+                                                                                     <form:input type="text" class="form-control" placeholder='groupName' path="groupName" value="" />
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-6 form-group">
-                                                                                    <label>UOM Group</label>
-                                                                                    <form:select path="uomCategory.id" id="uomCategoryId" class="form-control">
-                                                                                    <form:option value="">--Select--</form:option>
-                                                                                     <c:forEach  items="${uomCategoryList}" var="uomCategoryList">
-																					   <form:option value="${uomCategoryList.id}">${uomCategoryList.uomCategoryName}</form:option>
-																					 </c:forEach>  
-                                                                                    </form:select>
-                                                                                </div>
-                                                                            </div>
+                                                                            
                                                                         </div>
                                                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                                            <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a></li>
-                                                                            <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Purchasing</a></li>
-                                                                            <li class="nav-item"><a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Inventory</a></li>
+                                                                            <li class="nav-item"><a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a></li>
+                                                                            <li class="nav-item"><a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="false">Address</a></li>
+                                                                            <li class="nav-item"><a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment Terms</a></li>
                                                                         </ul>
                                                                         <div class="tab-content">
-                                                                            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                                            <div class="tab-pane active" id="general" role="tabpanel" aria-labelledby="general-tab">
                                                                                 <br>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6 form-group">
-                                                                                        <!-- <label>With old Tax Liable</label> -->
-                                                                                        <form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" /> Withholding Tax Liable
-                                                                                    </div>
+                                                                                            <label>Movile No</label>
+                                                                                            <form:input path="mobileNo" placeholder='mobileNo' type="text" class="form-control" />
+                                                                                        </div>
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6 form-group">
-
-                                                                                        <div class="input-group">
-                                                                                            <!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" value="service" /> Service
-                                                                                            <form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" value="product" /> Product
-
+                                                                                            <label>Fax</label>
+                                                                                            <form:input path="fax" placeholder='fax' type="text" class="form-control" />
                                                                                         </div>
-                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="row">
-                                                                                    <div class="col-sm-6 form-group">
-                                                                                        <form:checkbox path="gst" value="gst" id="gstcategory" /> GST
-                                                                                    </div>
-                                                                        <input type="hidden" id="gstValue" class="form-control"  name="gstValue" value="${product.gst}">
+                                                                                <div class="col-md-6 form-group">
+                                                                                <label>Email</label>
+                                                                                <form:input path="emailId" placeholder='emailId' type="text" class="form-control" />
                                                                                 </div>
-                                                                                <div id="service-gst-div" style="display: none;">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>Service Type:</label>
-                                                                                            <form:input path="serviceType" type="text" class="form-control" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>SAC:</label>
-                                                                                            <form:select path="sacCode.id" class="form-control">
-                                                                                              <form:option value="">--Select--</form:option>
-                                                                                                    <c:forEach  items="${sacList}" var="sacList">
-																	  							 <form:option value="${sacList.id}">${sacList.sacCoe}</form:option>
-																									 </c:forEach>  
-                                                                                            </form:select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>Tax Category</label>
-                                                                                            <form:select path="taxCategory" class="form-control">
-                                                                                              <form:option value="">--Select--</form:option>
-                                                                                                <form:option value="Regular ">Regular </form:option>
-                                                                                                <form:option value="Nil Rated  ">Nil Rated  </form:option>
-                                                                                                <form:option value="Exempt ">Exempt </form:option>
-                                                                                            </form:select>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 </div>
-                                                                                <div id="product-gst-div" style="display: none;">
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>Product Type</label>
-                                                                                            <form:select path="productType" class="form-control">
+                                                                                <div class="row">
+                                                                                	<div class="col-md-6 form-group">
+                                                                                		<label>Business Type</label>
+                                                                                		<form:select path="businessPartnerType" class="form-control">
                                                                                               <form:option value="">--Select--</form:option>
-                                                                                                <form:option value="Raw material">Raw material</form:option>
-                                                                                                <form:option value="Capital Goods ">Capital Goods </form:option>
-                                                                                                <form:option value="Finished Goods ">Finished Goods </form:option>
+                                                                                                <form:option value="Company">Company</form:option>
+                                                                                                <form:option value="Private">Private</form:option>
+                                                                                                <form:option value="Employee">Employee</form:option>
                                                                                             </form:select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>HSN:</label>
-                                                                                            <form:select path="hsnCode.id" class="form-control">
-                                                                                              <form:option value="">--Select--</form:option>
-                                                                                               <c:forEach  items="${hsnList}" var="hsnList">
-
-																	   <form:option value="${hsnList.id}">${hsnList.hsnCode}</form:option>
-																	 </c:forEach>  
-                                                                                            </form:select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>TaxCategory </label>
-                                                                                            <form:select path="productTaxCategory" class="form-control">
-                                                                                              <form:option value="">--Select--</form:option>
-                                                                                                <form:option value="Regular">Regular</form:option>
-                                                                                                <form:option value="Nil Rated">Nil Rated</form:option>
-                                                                                                <form:option value="Exempt">Exempt</form:option>
-                                                                                            </form:select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                   
+                                                                                	</div>
                                                                                 </div>
-                                                                                
-                                                                                <p class="card-title">Serial and Batch Numbers</p>
-                                                                                 <div class="row">
-                                                                                        <div class="col-sm-6 form-group">
-                                                                                            <label>Manage ProductBy</label>
-                                                                                                <form:select path="manageProductBy" class="form-control">
-                                                                                                    <form:option value="">--Select--</form:option>
-                                                                                                    <form:option value="None">None</form:option>
-                                                                                                    <form:option value="Serial Numbers">Serial Numbers</form:option>
-                                                                                                    <form:option value="Batches">Batches</form:option>
-                                                                                                </form:select>
-                                                                                        </div>
-                                                                                    </div>
                                                                                 
                                                                                 
                                                                             </div>
-                                                                            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                                            <div class="tab-pane" id="address" role="tabpanel" aria-labelledby="address-tab">
                                                                                 <br>
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6 form-group">
@@ -278,7 +177,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                                                                            <div class="tab-pane" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                                                                 <br>
 
                                                                                 <div class="row">
@@ -332,12 +231,9 @@
 
                                                                         </div>
                                                                 </div>
-
-						
                     
-                    
-                    <div class="form-actions right">
-																<a href="/inventory/productList">
+                   										 <div class="form-actions right">
+																<a href="<c:url value ="/inventory/productList"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
 																	</button>

@@ -40,7 +40,7 @@
 								<div class="content-header-left col-md-6 col-xs-12 mb-1">
 									<h2 class="content-header-title">Product </h2>
 									<a class="btn btn-primary"
-										href="<c:url value="/inventory/getInfo?productId=${product.id}"/>">Edit</a>
+										href="<c:url value="/product/getInfo?productId=${product.id}"/>">Edit</a>
 								</div>
 								<div
 									class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -62,8 +62,7 @@
 									<div class="card">
 										<div class="card-header">
 											<h4 class="card-title">Product View</h4>
-											<a class="heading-elements-toggle"><i
-												class="icon-ellipsis font-medium-3"></i></a>
+											
 										</div>
 
 
@@ -81,11 +80,6 @@
 															<tr>
 																<th>Description</th>
 																<td>${product.description}</td>
-															</tr>
-
-															<tr>
-																<th>Purchase Product</th>
-																<td>${product.purchaseProduct}</td>
 															</tr>
 
 															<tr>

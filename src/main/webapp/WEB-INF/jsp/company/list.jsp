@@ -15,6 +15,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
+<%-- <link href="<c:url value="/resources/css/style.css"/>"
+    rel="stylesheet" type="text/css" /> --%>
+
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -39,7 +42,7 @@
 								<div class="content-header row">
 									<div class="content-header-left col-md-6 col-xs-12 mb-1">
 										<h2 class="content-header-title">Company</h2>
-										<a class="btn btn-primary" href="/company/create">Create</a>
+										<a class="btn btn-primary" href="<c:url value="/company/create"/>">Create</a>
 									</div>
 									<div
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -61,8 +64,7 @@
 										<div class="card">
 											<div class="card-header">
 												<h4 class="card-title">Company List</h4>
-												<a class="heading-elements-toggle"><i
-													class="icon-ellipsis font-medium-3"></i></a>
+												
 											</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
@@ -72,6 +74,7 @@
 															style="width: 100%">
 															<thead>
 																<tr>
+																    <th>SNO</th>
 																	<th>Company Name</th>
 																	<th>Company TagLine</th>
 																	<th>GSTN</th>
@@ -85,6 +88,8 @@
 															<tbody>
 															<c:forEach items="${companyList}" var="companyList">
 																<tr>
+																<td><c:set var="count" value="${count + 1}" scope="page" />
+                                                                     <c:out value="${count}" />  </td>
 																	<td>${companyList.name}</td>
 																	<td>${companyList.companyTagLine}</td>
 																	<td>${companyList.gstinVat}</td>
@@ -123,7 +128,7 @@
 
 $(document).ready(function() {
 	  $('#example').DataTable( {
-	       
+		  "scrollX": true
 	    } );
 } );
 

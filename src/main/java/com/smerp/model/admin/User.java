@@ -79,8 +79,9 @@ public class User extends AuditModel {
 	private Integer reportingManagerId;
 	
 	
-	@Column(name="plant")
-	private String plant;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="plant_id")
+	private Plant plant;
 	
 	
 	@Column(name="image")
@@ -222,11 +223,13 @@ public class User extends AuditModel {
 		this.reportingManagerId = reportingManagerId;
 	}
 
-	public String getPlant() {
+
+
+	public Plant getPlant() {
 		return plant;
 	}
 
-	public void setPlant(String plant) {
+	public void setPlant(Plant plant) {
 		this.plant = plant;
 	}
 
@@ -254,11 +257,12 @@ public class User extends AuditModel {
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", userEmail=" + userEmail + ", password="
 				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", mobileNo=" + mobileNo + ", confirmPassword=" + confirmPassword + ", activationId=" + activationId
-				+ ", company=" + company + ", department=" + department + ", desigination=" + desigination
-				+ ", reportingManagerId=" + reportingManagerId + ", plant=" + plant + ", image=" + image + ", roles="
-				+ roles + ", rolesDt=" + rolesDt + "]";
+				+ ", mobileNo=" + mobileNo + ", activationId=" + activationId + ", company=" + company + ", department="
+				+ department + ", desigination=" + desigination + ", reportingManagerId=" + reportingManagerId
+				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + "]";
 	}
+
+	
 
 
 	

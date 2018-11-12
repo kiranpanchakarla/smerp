@@ -34,6 +34,7 @@ import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.admin.DesignationService;
 import com.smerp.service.master.CurrencyServices;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.master.RoleService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.FilePathUtil;
@@ -68,14 +69,18 @@ public class UserController {
 
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	PlantService plantService;
 
 	@GetMapping("/create")
-	private String createPage(Model model) {
+	private String createPage(Model model , User user) {
 		logger.info("Inside UserController createPage Method");
 		try {
 			Company company = getComapnyIdFromSession();
 			model.addAttribute("user", new User());
 			model.addAttribute("rolesList", rolesMap());
+			model.addAttribute("plantList", plantService.findAll());
 			usercreationdependencymodules(model, company);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,6 +113,7 @@ public class UserController {
 			User user = userService.findById(Integer.parseInt(id));
 			Integer managerId = user.getReportingManagerId();
 			User userDt = userService.findById(managerId);
+			model.addAttribute("plantList", plantService.findAll());
 			// model.addAttribute("managername",userDt.getFirstname()+"
 			// "+user.getLastname());
 			model.addAttribute("user", user);
@@ -146,21 +152,20 @@ public class UserController {
 		usercreationdependencymodules(model, company);
 		User user = userService.findById(Integer.parseInt(id));
 		Map<Long, String> map = userService.rolesMap(user.getRoles());
-		if (company.getLogo() != null && !company.getLogo().equals("")) {
+		if (user.getImage()!= null && !user.getImage().equals("")) {
 			model.addAttribute("filePath", ContextUtil.populateContext(request) + "/" + user.getImage());
 		} else {
 			model.addAttribute("filePath", null);
 		}
 		model.addAttribute("rolesList", map);
+		model.addAttribute("plantList", plantService.findAll());
 		model.addAttribute("user", user);
 		return "user/create";
 	}
 
 	private Company getComapnyIdFromSession() {
-		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = loggedInUser.getName();
-		User user = userService.findByUsername(username);
-		return user.getCompany();
+		User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getCompany();
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)

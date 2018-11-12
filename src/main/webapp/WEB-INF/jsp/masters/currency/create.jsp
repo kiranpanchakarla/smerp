@@ -49,8 +49,8 @@
 											<div class="card">
 												<div class="card-header">
 													<h4 class="card-title" id="basic-layout-icons">Currency/Create</h4>
-													<a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a>
+													<!-- <a class="heading-elements-toggle"><i
+														class="icon-ellipsis font-medium-3"></i></a> -->
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

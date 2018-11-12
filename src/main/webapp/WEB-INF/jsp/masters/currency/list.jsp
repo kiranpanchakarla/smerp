@@ -44,7 +44,7 @@
 										<div class="card-header">
 											<div class="row">
 												<div class="col-md-9">
-													<a class="btn btn-primary" href="/currency/create">Currency/Create</a>
+												<a class="btn btn-primary" href="<c:url value="/currency/create"/>">Create</a>
 												</div>
 												<div class="col-md-3">
 													<ol class="breadcrumb">
@@ -56,13 +56,12 @@
 													</ol>
 												</div>
 											</div>
-											<a class="heading-elements-toggle"><i
-												class="icon-ellipsis font-medium-3"></i></a>
+										
 										</div>
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
 
-												<div class="table-responsive">
+												<div class="">
 													<table id="example"
 														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
 														style="width: 100%">
@@ -116,7 +115,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#example').DataTable({
-
+				"scrollX": true;
 			});
 		});
 	</script>

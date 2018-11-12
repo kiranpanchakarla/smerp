@@ -38,11 +38,7 @@
             $.app.menu.change();
         });
 
-        // Tooltip Initialization
-        $('[data-toggle="tooltip"]').tooltip({
-            container:'body'
-        });
-
+        
         // Collapsible Card
         $('a[data-action="collapse"]').on('click',function(e){
             e.preventDefault();
@@ -91,11 +87,11 @@
         });
 
         // Match the height of each card in a row
-        setTimeout(function(){
+        /*setTimeout(function(){
             $('.row.match-height').each(function() {
                 $(this).find('.card').not('.card .card').matchHeight(); // Not .card .card prevents collapsible cards from taking height
             });
-        },500);
+        },500);*/
 
 
         $('.card .heading-elements a[data-action="collapse"]').on('click',function(){

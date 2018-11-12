@@ -16,11 +16,11 @@ public interface ProductService {
 
 	Product getInfo(int id);
 
-
-
 	Product update(Product product);
 
 	Product delete(int id);
+
+	Product findByProductNo(String productNo);
 
 	/*void delete(int parseInt);*/
 

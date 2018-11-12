@@ -7,7 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP | Home</title>
-<%@include file="loadcss.jsp"%>
+<%-- <%@include file="loadcss.jsp"%> --%>
+<c:import url="/WEB-INF/jsp/loadcss.jsp"/>
 <style>
 .form-control-position i{
         line-height: 3.5em;
@@ -31,7 +32,10 @@
 			
             <div class="card-header no-border">
               <div class="card-title text-xs-center">
-                <div class="p-1"><img src="/resources/images/logo.png" style="width: 150px;" alt="branding logo"></div>
+                <div class="p-1">
+                <img style="width: 150px;"  src="<c:url value="/resources/images/logo.png"/>"/>
+                <!-- <img src="/resources/images/logo.png" style="width: 150px;" alt="branding logo"> -->
+                </div>
               </div>
               <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login Here</span></h6>
             </div>
@@ -73,6 +77,7 @@
   </div>
 </div>
 <!-- ////////////////////////////////////////////////////////////////////////////--> 
-<%@include file="loadJs.jsp"%>
+<%-- <%@include file="loadJs.jsp"%> --%>
+<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
 </html>

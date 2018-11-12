@@ -31,10 +31,10 @@
 
       init: function() {
         var scroll_theme = ($('.main-menu').hasClass('menu-dark')) ? 'light' : 'dark';
-        this.obj = $(".main-menu-content").perfectScrollbar({
+        /*this.obj = $(".main-menu-content").perfectScrollbar({
           suppressScrollX: true,
           theme: scroll_theme
-        });
+        });*/
       },
 
       update: function() {
@@ -54,7 +54,7 @@
                 $('.main-menu').data('scroll-to-active', 'false');
               },300);
           }
-          $(".main-menu-content").perfectScrollbar('update');
+          //$(".main-menu-content").perfectScrollbar('update');
         }
       },
 
@@ -64,7 +64,7 @@
 
       disable: function() {
         if (this.obj) {
-          $('.main-menu-content').perfectScrollbar('destroy');
+          //$('.main-menu-content').perfectScrollbar('destroy');
         }
       },
 
@@ -661,9 +661,9 @@
           'max-height': popOutMenuHeight,
         });
 
-        $('.main-menu-content > ul.menu-content').perfectScrollbar({
+        /*$('.main-menu-content > ul.menu-content').perfectScrollbar({
           theme:scroll_theme,
-        });
+        });*/
       }
     },
 

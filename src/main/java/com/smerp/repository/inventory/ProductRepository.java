@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.smerp.model.inventory.Product;
 
-
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+
 	List<Product> findByIsActive(Boolean isActive);
+
+	Product findByProductNo(String productNo);
 }

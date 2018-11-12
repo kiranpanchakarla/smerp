@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Autowired
 	RoleService roleService;
 
-	@Autowired
-	private BCryptPasswordEncoder bcryptEncoder;
+	//@Autowired
+	//private BCryptPasswordEncoder bcryptEncoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDao.findByUsername(username);
@@ -82,8 +82,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		try {
 			logger.info("inside userservice impl save method");
 			user.setActivationId("InActive");
-			user.setPlant("test");
-			user.setPassword(bcryptEncoder.encode("Welcome"));
+			//user.setPlant("test");
+			//user.setPassword(bcryptEncoder.encode("Welcome"));
 			user.setCompany(getComapnyIdFromSession());
 			//user.setUsername(RandomUtil.referenceId());
 			String roleId = user.getRolesDt();

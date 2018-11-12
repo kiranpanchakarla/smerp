@@ -3,7 +3,7 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow"> 
   <div class="main-menu-content">
     <ul class="side_main_menu">
-      <li><a href="/user/dashboard"><i class="icon-android-home left"></i><span class="menu_text">DASHBOARD</span><span class="menu_text_pad">&nbsp;</span></a>
+      <li><a href="<c:url value ="/user/dashboard"/>"><i class="icon-android-home left"></i><span class="menu_text">DASHBOARD</span><span class="menu_text_pad">&nbsp;</span></a>
         <ul class="sub_menu">
          <%--  <li class="has_sub"><a href="<c:url value ="/users/4"/>">Users</a></li> --%>
          <%-- <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li> --%>
@@ -15,11 +15,12 @@
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
          <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
+          <li class="has_sub"><a href="<c:url value ="/vendor/create"/>">Vendor</a></li>
         </ul>
       </li>
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/inventory/productList"/>">Product</a></li>
+          <li class="has_sub"><a href="<c:url value ="/product/productList"/>">Product</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product UOM Category</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Unit Of Measure</a></li>

@@ -50,8 +50,7 @@
 														</div>
 													</div>
 
-													<a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a>
+													
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

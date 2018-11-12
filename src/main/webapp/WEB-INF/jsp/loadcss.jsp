@@ -1,16 +1,25 @@
- 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="shortcut icon" type="image/png" href="images/favicon-32.png">
-<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="/resources/fonts/icomoon.css">
-<link rel="stylesheet" type="text/css" href="/resources/fonts/flag-icon-css/css/flag-icon.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-extended.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/app.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/colors.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/core/menu/menu-types/vertical-menu.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- //<link rel="shortcut icon" type="image/png" href="images/favicon-32.png"> -->
+<link href="<c:url value="images/favicon-32.png"/>" rel="shortcut" />
+<link href="<c:url value="/resources/css/bootstrap.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/fonts/icomoon.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/fonts/flag-icon-css/css/flag-icon.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/app.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/colors.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/core/menu/menu-types/vertical-menu.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet" type="text/css" />
+
+
+
+
+
+    
+    
 
 <!-- END Custom CSS-->
 
- 

@@ -7,15 +7,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%-- <c:set var="contextPath" value="${pageContext.request.contextPath}" /> --%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-<%@include file="loadcss.jsp"%>
+<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
     class="vertical-layout vertical-menu 2-columns">
-    <%@include file="header.jsp"%>
-    <%@include file="sidebar.jsp"%>
+    <c:import url="/WEB-INF/jsp/header.jsp" />
+    <c:import url="/WEB-INF/jsp/sidebar.jsp" />
+    <%-- <%@include file="header.jsp"%>
+    <%@include file="sidebar.jsp"%> --%>
     <%-- <div class="app-content content container-fluid"
         style="margin-top: 40px;">
         <div class="content-wrapper">
@@ -200,7 +202,7 @@
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">Recent Invoices</h4>
-              <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+              
             </div>
             <div class="card-body">
               <div class="card-block">
@@ -255,15 +257,17 @@
             
             <div class="col-md-12">
                 <div class="footer_logo">
-                    <img src="/resources/images/footer_logo.png">
+                    <img <c:url value="images/favicon-32.png"/>">
+                    <%-- <link href="<c:url value="images/favicon-32.png"/>" rel="shortcut" /> --%>
                 </div>
             </div>
         </div>
     </footer>
-    
-    <%@include file="loadJs.jsp"%>
+    <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
+<script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script>
 <script>
+
 $(document).ready(function(){
     /*  console.log("hiiiii");
     var x=$('#tokenId').val();

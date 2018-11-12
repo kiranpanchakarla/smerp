@@ -12,9 +12,6 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script> -->
 
 <script src="/resources/components/bootstrap-validator/js/jquery.min.js" type="text/javascript"></script>
 <script src="/resources/components/bootstrap-validator/js/bootstrap.min.js" type="text/javascript"></script>
@@ -61,8 +58,8 @@
 					<form:input type="hidden" cssClass="form-control"  path="id"  />
 											<h4 class="card-title" id="basic-layout-icons">Company/Update</h4>
 											   </c:if>
-													<a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a>
+												<!-- 	<a class="heading-elements-toggle"><i
+														class="icon-ellipsis font-medium-3"></i></a> -->
 												</div>
 
 												<div class="card-body collapse in">
@@ -72,7 +69,7 @@
 																<div class="col-sm-6 form-group">
 																	<label>Company Name</label>
 																	<form:input type="text" cssClass="form-control"
-																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer')"
+																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer','Company Name Already Exists')"
 																	required="true" oninvalid="this.setCustomValidity('Please Enter Company Name')"	oninput="setCustomValidity('')"/>
 																		<div style="color:red;" id="1_errorContainer"  class="help-block with-errors"></div>
 																</div>
@@ -157,8 +154,7 @@
 														
 															<div class="card-header">
 																<h4 class="card-title" id="basic-layout-icons">Address</h4>
-																<a class="heading-elements-toggle"><i
-																	class="icon-ellipsis font-medium-3"></i></a>
+																
 															</div>
 
 															<div class="card-body collapse in">
@@ -214,7 +210,7 @@
 																			</div>
 																			<div class="col-sm-6 form-group">
 																				<label>Email</label>
-																				<form:input type="email" cssClass="form-control"  onchange="isValidName('emailId','/company/isValidEmailId','2_errorContainer')"
+																				<form:input type="email" cssClass="form-control"  onchange="isValidName('emailId','/company/isValidEmailId','2_errorContainer','Company Email Already Exists')"
 																				 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Enter Email' path="emailId"
 																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
 																		<div style="color:red;" id="2_errorContainer"  class="help-block with-errors" ></div>
@@ -316,6 +312,7 @@
 					<br>
 				</div>
 			</div>
+		</div>
 		</div>
 
 		<footer class="footer footer-static footer-light navbar-border">

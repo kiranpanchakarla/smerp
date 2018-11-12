@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP | Home</title>
 <%@include file="loadJsCss.jsp"%>
+//<c:import url="/WEB-INF/jsp/loadJs.jsp"/>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
 <!-- ////////////////////////////////////////////////////////////////////////////-->

@@ -40,7 +40,7 @@
 										<div class="card-header">
 										<div class="row">
 												<div class="col-md-9">
-													<a class="btn btn-primary" href="/saccode/create">SAC Code/Create</a>
+													<a class="btn btn-primary" href="<c:url value="/saccode/create"/>">Create</a>
 												</div>
 												<div class="col-md-3">
 													<ol class="breadcrumb">

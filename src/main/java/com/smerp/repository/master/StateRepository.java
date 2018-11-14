@@ -6,4 +6,6 @@ import com.smerp.model.master.States;
 
 public interface StateRepository extends JpaRepository<States, Integer> {
 	List<States> findBycountryId(int contryId);
+
+	States findById(int id);
 }

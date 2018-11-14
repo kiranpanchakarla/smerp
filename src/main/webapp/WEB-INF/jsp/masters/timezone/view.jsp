@@ -21,35 +21,37 @@
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
-
 	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
+			 
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
 					<div class="large-12 columns">
+
 						<div class="content-wrapper">
 							<%-- <div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Currency</h2>
-										<a class="btn btn-primary" href="<c:url value="/currency/getInfo?currencyId=${currencyObj.id}"/>">Edit</a>
+								<div class="content-header-left col-md-6 col-xs-12 mb-1">
+									<h2 class="content-header-title">Timezone</h2>
+									<a class="btn btn-primary"
+										href="<c:url value="/timezone/getInfo?timezoneId=${timezoneObj.id}"/>">Edit</a>
+								</div>
+								<div
+									class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+									<div class="breadcrumb-wrapper col-xs-12">
+										<ol class="breadcrumb">
+											<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+											</li>
+											<li class="breadcrumb-item"><a href="#">Administration</a>
+											</li>
+											<li class="breadcrumb-item active">Timezone</li>
+										</ol>
 									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Currency</li>
-											</ol>
-										</div>
-									</div>
-								</div> --%>
+								</div>
+							</div> --%>
 							<div>
 								<div class="content-body">
 									<!-- Basic Tables start -->
@@ -58,12 +60,12 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-2">
-													<h4 class="content-header-title" style="width: 180px;">Currency
-														View</h4>
+													<h4 class="content-header-title" style="width: 180px;">Timezone View</h4>
 												</div>
 												<div class="col-md-6">
 													<a class="btn btn-primary"
-														href="<c:url value="/currency/getInfo?currencyId=${currencyObj.id}"/>">Edit</a>
+														href="<c:url value="/timezone/getInfo?timezoneId=${timezoneObj.id}"/>"
+														style="margin-left: 30px;">Edit</a>
 												</div>
 
 												<div class="col-md-4">
@@ -72,46 +74,53 @@
 														</li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-														<li class="breadcrumb-item active">Currency</li>
+														<li class="breadcrumb-item active">Timezone</li>
 													</ol>
 												</div>
 											</div>
 										</div>
+										
+												<div class="card-body collapse in">
+													<div class="table-responsive">
+														<table class="table table-bordered mb-0">
 
-										<div class="card-body collapse in">
-											<div class="table-responsive">
-												<table class="table table-bordered mb-0">
+															<tr>
+																<th style="width: 40%;">Name</th>
+																<td>${timezoneObj.name}</td>
+															</tr>
 
-													<tr>
-														<th style="width: 40%;">Currency Name</th>
-														<td>${currencyObj.name}</td>
-													</tr>
+															<tr>
+																<th style="width: 40%;">Difference From UTC</th>
+																<td>${timezoneObj.diffFromUtc}</td>
+															</tr>
+															
+															<tr>
+																<th style="width: 40%;">Country</th>
+																<td>${timezoneObj.country.name}</td>
+															</tr>
 
-													<tr>
-														<th style="width: 40%;">Description</th>
-														<td>${currencyObj.description}</td>
-													</tr>
 
-												</table>
+														</table>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
+
+
+									<div>
+										<a href="#" onclick="goBack()" class="btn btn-primary"
+											style="float: left;">Back</a>
+									</div>
+
 								</div>
+								<br>
 							</div>
-
-
-							<div>
-								<a href="#" onclick="goBack()" class="btn btn-primary"
-									style="float: left;">Back</a>
-							</div>
-
 						</div>
-						<br>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+	
 	<footer class="footer footer-static footer-light navbar-border">
 		<p class="clearfix text-muted text-sm-center mb-0 px-2">
 			<span class="float-md-right d-xs-block d-md-inline-block">Copyright

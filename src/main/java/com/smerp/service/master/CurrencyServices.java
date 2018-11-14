@@ -1,7 +1,6 @@
 package com.smerp.service.master;
 
 import java.util.List;
-
 import com.smerp.model.master.Currency;
 
 public interface CurrencyServices {

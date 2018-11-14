@@ -37,19 +37,24 @@
 							<div>
 								<div class="content-body">
 									<div class="card">
-										<div class="card-header">
+										<div class="card-header" style="height: 60px;">
 											<div class="row">
-												<div class="col-md-9">
-													<a class="btn btn-primary" href="<c:url value="/languages/create"/>">Create</a>
+												<div class="col-md-2">
+													<h2 class="content-header-title">Languages</h2>
+													 
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-6">
+													<a class="btn btn-primary"
+														href="<c:url value="/languages/create"/>">Create</a>
+												</div>
+												<div class="col-md-4">
 													<ol class="breadcrumb">
-											<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-											</li>
-											<li class="breadcrumb-item"><a href="#">Administration</a>
-											</li>
-											<li class="breadcrumb-item active">Languages</li>
-										</ol>
+														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+														</li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Languages</li>
+													</ol>
 												</div>
 											</div>
 
@@ -79,7 +84,7 @@
 																		href="<c:url value="/languages/getInfo?languagesId=${languages.id}"/>">
 																			<i class="icon-edit left"></i>
 																	</a> <a class="btn btn-warning mr-1" href="#"
-																		onclick="deleteLanguage('<c:out value="${languages.id}"/>')"><i
+																		onclick="deleteById('<c:out value="${languages.id}"/>','/languages/delete')"><i
 																			class="icon-bin left"></i></a>
 																			<a  class ="btn btn-primary" href="<c:url value="/languages/view?languagesId=${languages.id}"/>"><i class="icon-eye3 left"></i></a></td>
 

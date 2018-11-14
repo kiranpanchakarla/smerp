@@ -21,11 +21,12 @@ public class SacCodeController {
 
 	@Autowired
 	SacService sacService;
-	
+
 	private static final Logger logger = LogManager.getLogger(SacCodeController.class);
-	
+
 	@GetMapping(value = "/list")
 	public String list(Model model) {
+		logger.info("Inside SacCodeController List Method");
 		List<SACCode> saccodeList = sacService.findAll();
 		model.addAttribute("saccodeList", saccodeList);
 		return "masters/saccode/list";
@@ -33,12 +34,14 @@ public class SacCodeController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
+		logger.info("Inside SacCodeController create Method");
 		model.addAttribute("saccode", new SACCode());
 		return "masters/saccode/create";
 	}
 
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String saccodeId) {
+		logger.info("Inside SacCodeController GetInfo Method");
 		SACCode saccodeObj = sacService.findById(Integer.parseInt(saccodeId));
 		model.addAttribute("saccodeObj", saccodeObj);
 		model.addAttribute("saccode", new SACCode());
@@ -46,20 +49,24 @@ public class SacCodeController {
 	}
 
 	@PostMapping(value = "/delete")
-	public String delete(String saccodeId) {
-		sacService.delete(Integer.parseInt(saccodeId));
+	public String delete(String id) {
+		logger.info("Inside SacCodeController delete Method");
+		sacService.delete(Integer.parseInt(id));
 		return "redirect:list";
 	}
 
 	@PostMapping(value = "/save")
 	public String save(@ModelAttribute("saccode") SACCode saccode, BindingResult result) {
+		logger.info("Inside SacCodeController save Method");
 		sacService.save(saccode);
 		return "redirect:list";
 	}
+
 	@GetMapping(value = "/view")
-	public String view(String saccodeId, Model model,HttpServletRequest request) {
+	public String view(String saccodeId, Model model, HttpServletRequest request) {
+		logger.info("Inside SacCodeController view Method");
 		SACCode saccodeObj = sacService.getInfo(Integer.parseInt(saccodeId));
-		model.addAttribute("saccodeObj", saccodeObj);  
+		model.addAttribute("saccodeObj", saccodeObj);
 		return "masters/saccode/view";
 	}
 }

@@ -28,21 +28,17 @@
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6">
-					 
-				</div>
-			</div>
+			 
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
+								<!-- <div class="content-header row">
 									<div class="content-header-left col-md-6 col-xs-12 mb-1">
 										<h2 class="content-header-title">Company</h2>
-										<a class="btn btn-primary" href="<c:url value="/company/create"/>">Create</a>
+										
 									</div>
 									<div
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
@@ -56,16 +52,32 @@
 											</ol>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">Company List</h4>
-												
+											<div class="card-header" style="height: 60px;">
+											<div class="row">
+												<div class="col-md-2">
+													<h2 class="content-header-title">Company</h2>
+												</div>
+												<div class="col-md-6">
+													<a class="btn btn-primary" href="<c:url value="/company/create"/>">Create</a>
+												</div>
+												<div class="col-md-4">
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+														</li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Company</li>
+													</ol>
+												</div>
 											</div>
+
+										</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
 													 

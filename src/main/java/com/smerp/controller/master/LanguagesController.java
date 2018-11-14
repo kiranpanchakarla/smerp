@@ -1,9 +1,8 @@
 package com.smerp.controller.master;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +18,14 @@ import com.smerp.service.master.LanguagesService;
 @RequestMapping("/languages")
 public class LanguagesController {
 
+	private static final Logger logger = LogManager.getLogger(LanguagesController.class);
+
 	@Autowired
 	LanguagesService languagesService;
 
 	@GetMapping(value = "/list")
 	public String list(Model model) {
+		logger.info("Inside LanguagesController List Method");
 		List<Languages> languagesList = languagesService.findAll();
 		model.addAttribute("languagesList", languagesList);
 		return "masters/languages/list";
@@ -31,12 +33,14 @@ public class LanguagesController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
+		logger.info("Inside LanguagesController create Method");
 		model.addAttribute("languages", new Languages());
 		return "masters/languages/create";
 	}
 
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String languagesId) {
+		logger.info("Inside LanguagesController GetInfo Method");
 		Languages languagesObj = languagesService.findById(Integer.parseInt(languagesId));
 		model.addAttribute("languagesObj", languagesObj);
 		model.addAttribute("languages", new Languages());
@@ -44,19 +48,22 @@ public class LanguagesController {
 	}
 
 	@PostMapping(value = "/delete")
-	public String delete(String languagesId) {
-		languagesService.delete(Integer.parseInt(languagesId));
+	public String delete(String id) {
+		logger.info("Inside LanguagesController delete Method");
+		languagesService.delete(Integer.parseInt(id));
 		return "redirect:list";
 	}
 
 	@PostMapping(value = "/save")
 	public String save(@ModelAttribute("languages") Languages languages, BindingResult result) {
+		logger.info("Inside LanguagesController save Method");
 		languagesService.save(languages);
 		return "redirect:list";
 	}
-	
+
 	@GetMapping(value = "/view")
 	public String view(String languagesId, Model model) {
+		logger.info("Inside LanguagesController view Method");
 		Languages languagesObj = languagesService.getInfo(Integer.parseInt(languagesId));
 		model.addAttribute("languagesObj", languagesObj);
 		return "masters/languages/view";

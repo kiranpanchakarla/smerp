@@ -35,10 +35,10 @@
       <li><a href="#"><i class="icon-android-settings left"></i><span class="menu_text">Settings</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
-         <li><a href="<c:url value ="#"/>">Countries</a></li>
+         <li><a href="<c:url value ="/country/list"/>">Countries</a></li>
           <li><a href="<c:url value ="/languages/list"/>">Languages</a></li>
-           <li><a href="<c:url value ="#"/>">Timezones</a></li>
-            <li><a href="<c:url value ="#"/>">States</a></li>
+           <li><a href="<c:url value ="/timezone/list"/>">Timezones</a></li>
+            <li><a href="<c:url value ="/states/list"/>">States</a></li>
             <li><a href="<c:url value ="/hsncode/list"/>">HSN Code</a></li>
             <li><a href="<c:url value ="/saccode/list"/>">SAC Code</a></li>
          <!--  <li class="has_sub"><a>item 1<i class="icon-ios-arrow-right right"></i></a>

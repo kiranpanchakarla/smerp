@@ -27,9 +27,6 @@
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6"></div>
-			</div>
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
@@ -42,41 +39,28 @@
 								<div class="card">
 									<div class="card-header">
 										<div class="content-header row">
-											<!-- <div class="content-header-left col-md-6 col-xs-12 mb-1">
-								</div>
-								<div
-									class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-									<div class="breadcrumb-wrapper col-xs-12">
-										<ol class="breadcrumb">
-											<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-											</li>
-											<li class="breadcrumb-item"><a href="#">Administration</a>
-											</li>
-											<li class="breadcrumb-item active">Languages</li>
-										</ol>
-									</div>
-								</div> -->
+
 											<div class="row">
-												<div class="col-md-9">
-													<!-- <h2 class="content-header-title">HSN Code</h2> -->
-													<a class="btn btn-primary" href="/hsncode/create">Create
-														HSN Code</a>
+												<div class="col-md-2">
+													<h3 class="content-header-title">HSN Code</h3>
+
 												</div>
-												<div class="col-md-3" Style="text-align: right;">
+												<div class="col-md-6">
+
+													<a class="btn btn-primary" href="/hsncode/create">Create
+													</a>
+												</div>
+												<div class="col-md-4" Style="text-align: right;">
 
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item">
-														<!-- <a href="/user/dashboard">Home</a> -->
-														<a  href="<c:url value="/user/dashboard"/>">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a
+															href="<c:url value="/user/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">HSN Code</li>
 													</ol>
 												</div>
-												<!-- <div class="col-md-1">
-													<a class="btn btn-primary" href="/hsncode/create">Create HSN Code</a>
-												</div> -->
+
 											</div>
 
 										</div>
@@ -89,7 +73,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-															    <th style="text-align: center;">S.no</th>
+																<th style="text-align: center;">S.no</th>
 																<th style="text-align: center;">HSN CODE</th>
 																<th style="text-align: center;">Description</th>
 																<th style="text-align: center;">Rate</th>
@@ -99,8 +83,9 @@
 														<tbody>
 															<c:forEach items="${hsncodeList}" var="hsncode">
 																<tr>
-																    <td style="text-align: center;"><c:set var="count" value="${count + 1}" scope="page" />
-                                                                     <c:out value="${count}" />  </td>
+																	<td style="text-align: center;"><c:set var="count"
+																			value="${count + 1}" scope="page" /> <c:out
+																			value="${count}" /></td>
 																	<td style="text-align: center;">${hsncode.hsnCode}</td>
 																	<td style="text-align: center;">${hsncode.description}</td>
 																	<td style="text-align: center;">${hsncode.rate}</td>

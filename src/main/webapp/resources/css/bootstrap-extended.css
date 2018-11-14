@@ -1006,7 +1006,7 @@ button:focus {
 
 .breadcrumb {
   font-size: 0.9rem;
-  background-color: transparent;
+  background-color: #ffffff;
   padding: 0 0 0.75rem 0rem; }
   .breadcrumb > li + li::before {
     padding-right: .6rem;

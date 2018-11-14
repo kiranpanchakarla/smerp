@@ -959,7 +959,7 @@ pre {
     width: 8.33333%; }
   .col-md-2 {
     float: left;
-    width: 16.66667%; }
+     width: 12%; }
   .col-md-3 {
     float: left;
     width: 25%; }
@@ -3382,7 +3382,7 @@ tbody.collapse.in {
   padding: 0.75rem 0rem;
   margin-bottom: 1rem;
   list-style: none;
-  background-color: #eceeef;
+  background-color: #ffffff;
   border-radius: 0.18rem; }
   .breadcrumb::after {
     content: "";

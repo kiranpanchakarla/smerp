@@ -1,9 +1,9 @@
 package com.smerp.controller.master;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +19,13 @@ import com.smerp.service.master.CurrencyServices;
 @RequestMapping("/currency")
 public class CurrencyController {
 
+	private static final Logger logger = LogManager.getLogger(CurrencyController.class);
 	@Autowired
 	CurrencyServices currencyServices;
 
 	@GetMapping(value = "/list")
 	public String list(Model model) {
+		logger.info("Inside CurrencyController List Method");
 		List<Currency> currencyList = currencyServices.findAll();
 		model.addAttribute("currencyList", currencyList);
 		return "masters/currency/list";
@@ -31,12 +33,14 @@ public class CurrencyController {
 
 	@GetMapping(value = "/create")
 	public String create(Model model) {
+		logger.info("Inside CurrencyController Create Method");
 		model.addAttribute("currency", new Currency());
 		return "masters/currency/create";
 	}
 
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String currencyId) {
+		logger.info("Inside CurrencyController GetInfo Method");
 		Currency currencyObj = currencyServices.findById(Integer.parseInt(currencyId));
 		model.addAttribute("currencyObj", currencyObj);
 		model.addAttribute("currency", new Currency());
@@ -45,20 +49,23 @@ public class CurrencyController {
 
 	@PostMapping(value = "/delete")
 	public String delete(String id) {
+		logger.info("Inside CurrencyController delete Method");
 		currencyServices.delete(Integer.parseInt(id));
 		return "redirect:list";
 	}
 
 	@PostMapping(value = "/save")
 	public String save(@ModelAttribute("currency") Currency currency, BindingResult result) {
+		logger.info("Inside CurrencyController save Method");
 		currencyServices.save(currency);
 		return "redirect:list";
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String currencyId, Model model,HttpServletRequest request) {
+	public String view(String currencyId, Model model, HttpServletRequest request) {
+		logger.info("Inside CurrencyController view Method");
 		Currency currencyObj = currencyServices.getInfo(Integer.parseInt(currencyId));
-		model.addAttribute("currencyObj", currencyObj); 
+		model.addAttribute("currencyObj", currencyObj);
 		return "masters/currency/view";
 	}
 }

@@ -1,9 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ page import="java.security.Principal" %> 
+
 <!-- END Custom CSS-->
 <div class="first_strip"
 	style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
 	<div>
+	
 		<ul class="main_menu">
 			<li class="nav-item hidden-sm-down toggle_sidemenu_icon"><a
 				class="nav-link nav-menu-main menu-toggle hidden-xs"><i
@@ -11,7 +13,7 @@
 			<li><a>Module</a>
 				<ul class="sub_menu">
 
-					<li class="has_sub"><a>Administration<i
+					<li class="has_sub"><a href="<c:url value ="/user/dashboard"/>">Administration<i
 							class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 
@@ -29,17 +31,17 @@
 							<li class="has_sub"><a>Global Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
-									<li><a href="<c:url value ="/currency/list"/>">Countries</a></li>
+									<li><a href="<c:url value ="/country/list"/>">Countries</a></li>
 									<li><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Languages</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Timezones</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">States</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Hsn Code</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Sac Code</a></li>
+									<li><a href="<c:url value ="/languages/list"/>">Languages</a></li>
+									<li><a href="<c:url value ="/timezone/list"/>">Timezones</a></li>
+									<li><a href="<c:url value ="/states/list"/>">States</a></li>
+									<li><a href="<c:url value ="/hsncode/list"/>">Hsn Code</a></li>
+									<li><a href="<c:url value ="/saccode/list"/>">Sac Code</a></li>
 								</ul></li>
 						</ul></li>
 					 
-					<li class="has_sub"><a>Purchase<i
+					<li class="has_sub"><a href="<c:url value ="/user/purchase"/>">Purchase<i
 							class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<!-- <li><a>Sub item 1</a></li>
@@ -264,7 +266,7 @@
 					<img src="<c:url value="/resources/images/portrait/logo/manuh_logo.jpg"/>"/>
 					 <!-- <img
 						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
-				</span>  <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span> 
+				</span>  <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>

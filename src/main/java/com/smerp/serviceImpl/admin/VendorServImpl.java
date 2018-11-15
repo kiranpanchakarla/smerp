@@ -53,5 +53,24 @@ public class VendorServImpl  implements VendorService {
 	public Vendor getInfo(int id) {
 		return vendorRepository.findById(id);
 	}
+
+
+	@Override
+	public List<String> findAllVendorNames() {
+		// TODO Auto-generated method stub
+		return vendorRepository.findAllVendorNames();
+	}
+
+
+	@Override
+	public Vendor findByName(String name) {
+		return vendorRepository.findByName(name);
+	}
+
+
+	@Override
+	public Vendor findById(int id) {
+		return vendorRepository.findById(id);
+	}
 	
 }

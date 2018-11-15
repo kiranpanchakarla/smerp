@@ -24,6 +24,10 @@ public interface ProductService {
 
 	List<Product> findByIsActive();
 
+	List<String> findAllProductNames();
+
+	Product findByDescription(String name);
+
 	/*void delete(int parseInt);*/
 
 }

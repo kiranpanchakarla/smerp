@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.HSNCode;
 import com.smerp.model.master.SACCode;
@@ -47,7 +48,11 @@ public class Product extends AuditModel {
 	@JoinColumn(name="product_category_id")
 	private ProductCategory productCategory;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rfq_id", nullable = true)
+	private RequestForQuotation  requestForQuotation;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="uom_category_id")
 	private UomCategory uomCategory;
 	
@@ -99,6 +104,22 @@ public class Product extends AuditModel {
 	@Column(name="product_per_purchase_unit")
 	private String produtPerPurchaseUnit;
 	
+	public RequestForQuotation getRequestForQuotation() {
+		return requestForQuotation;
+	}
+
+	public void setRequestForQuotation(RequestForQuotation requestForQuotation) {
+		this.requestForQuotation = requestForQuotation;
+	}
+
+	public String getServiceOrProduct() {
+		return serviceOrProduct;
+	}
+
+	public void setServiceOrProduct(String serviceOrProduct) {
+		this.serviceOrProduct = serviceOrProduct;
+	}
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "packing_uom_id", referencedColumnName = "uom_id")
 	private Uom packingUom;
@@ -360,13 +381,6 @@ public class Product extends AuditModel {
 		this.inventoryUom = inventoryUom;
 	}
 
-	public String getserviceOrProduct() {
-		return serviceOrProduct;
-	}
-
-	public void setserviceOrProduct(String serviceOrProduct) {
-		this.serviceOrProduct = serviceOrProduct;
-	}
 	
 	
 	

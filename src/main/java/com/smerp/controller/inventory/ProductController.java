@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.Uom;
 import com.smerp.service.inventory.ProductCategoryService;
@@ -160,5 +162,13 @@ public class ProductController {
 		productService.delete(id);
 		return "redirect:productList";
 	}
+	
+	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
+	@ResponseBody
+	private String getInvoiceListByInvNumber(@RequestParam("name") String name) throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(productService.findByDescription(name));
+		
+	}
+	
 
 }

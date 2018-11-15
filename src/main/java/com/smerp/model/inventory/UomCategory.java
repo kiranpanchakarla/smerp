@@ -7,24 +7,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.smerp.model.master.AuditModel;
 
-
 @Entity
-@Table(name="tbl_inventory_uom_Category")
+@Table(name = "tbl_inventory_uom_Category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UomCategory extends AuditModel {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="uom_category_id" , nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "uom_category_id", nullable = false, unique = true)
 	private Integer id;
-	
-	@Column(name="uom_category_name")
+
+	@Column(name = "uom_category_name")
 	private String uomCategoryName;
 
 	public Integer getId() {
@@ -47,8 +48,5 @@ public class UomCategory extends AuditModel {
 	public String toString() {
 		return "UomCategory [id=" + id + ", uomCategoryName=" + uomCategoryName + "]";
 	}
-	
-	
-	
 
 }

@@ -15,4 +15,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> findByIsActive(Boolean isActive);
 
 	Product findByProductNo(String productNo);
+
+	@Query("SELECT description FROM Product")
+	List<String> findByDescription();
+	
+	Product findByDescription(String name);
 }

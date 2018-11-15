@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smerp.model.admin.Company;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Vendor;
-
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.master.CountryServices;
-import com.smerp.util.ContextUtil;
 @Configuration
 @PropertySource("classpath:application.properties")
 
@@ -90,6 +92,13 @@ public class VendorController {
 	public String delete(String id) {
 		vendorService.delete(Integer.parseInt(id));
 		return "redirect:list";
+	}
+	
+	@RequestMapping(value = "/getVendorInfo", method = RequestMethod.GET)
+	@ResponseBody
+	private String getInvoiceListByInvNumber(@RequestParam("vendorname") String vendorname) throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(vendorService.findByName(vendorname));
+		
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.smerp.model.admin;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.smerp.model.master.AuditModel;
 
 
@@ -38,8 +40,8 @@ public class VendorsContactDetails extends AuditModel {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="name")
-	private String name;
+	@Column(name="address")
+	private String address;
 	
 	@Column(name="mobile_no")
 	private String mobileNo;
@@ -53,10 +55,8 @@ public class VendorsContactDetails extends AuditModel {
 	@Column(name="gender")
 	private String gender;
 	
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id", nullable = true)
-	private Vendor vendor;
+	@Column(name="isActive")
+	private Boolean isActive = true;
 
 	public Integer getId() {
 		return id;
@@ -90,13 +90,7 @@ public class VendorsContactDetails extends AuditModel {
 		this.title = title;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
 	public String getMobileNo() {
 		return mobileNo;
@@ -130,22 +124,31 @@ public class VendorsContactDetails extends AuditModel {
 		this.gender = gender;
 	}
 
-	public Vendor getVendor() {
-		return vendor;
+
+	public String getAddress() {
+		return address;
 	}
 
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	@Override
 	public String toString() {
-		return "VendorsAddress [id=" + id + ", contactName=" + contactName + ", contactId=" + contactId + ", title="
-				+ title + ", name=" + name + ", mobileNo=" + mobileNo + ", fax=" + fax + ", email=" + email
-				+ ", gender=" + gender + ", vendor=" + vendor + "]";
+		return "VendorsContactDetails [id=" + id + ", contactName=" + contactName + ", contactId=" + contactId
+				+ ", title=" + title + ", address=" + address + ", mobileNo=" + mobileNo + ", fax=" + fax + ", email="
+				+ email + ", gender=" + gender + "]";
 	}
 
-	
-	
+
 
 }

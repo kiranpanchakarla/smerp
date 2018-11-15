@@ -1,5 +1,6 @@
 package com.smerp.model.admin;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.Country;
 
@@ -30,8 +32,7 @@ public class VendorAddress  extends AuditModel{
 	@Column(name="vendor_address_id" , nullable = false, unique = true)
 	private Integer id;
 	
-	@Column(name="pay_to")
-	private String payTo;
+	
 	
 	@Column(name="address_id")
 	private String addressId;
@@ -65,11 +66,11 @@ public class VendorAddress  extends AuditModel{
 	@Column(name="pay_type")
 	private String payType;
 	
+	@Column(name="ship_from")
+	private String shipFrom;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id", nullable = true)
-	private Vendor vendor;
-
+	@Column(name="isActive")
+	private Boolean isActive = true;
 
 	public Integer getId() {
 		return id;
@@ -81,14 +82,7 @@ public class VendorAddress  extends AuditModel{
 	}
 
 
-	public String getPayTo() {
-		return payTo;
-	}
-
-
-	public void setPayTo(String payTo) {
-		this.payTo = payTo;
-	}
+	
 
 
 	public String getAddressId() {
@@ -181,20 +175,6 @@ public class VendorAddress  extends AuditModel{
 	}
 
 
-	public Vendor getVendor() {
-		return vendor;
-	}
-
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
-	
-	
-	
-	
-
 	public String getPayType() {
 		return payType;
 	}
@@ -205,20 +185,34 @@ public class VendorAddress  extends AuditModel{
 	}
 
 
-	@Override
-	public String toString() {
-		return "VendorPayTo [id=" + id + ", payTo=" + payTo + ", addressId=" + addressId + ", addressName="
-				+ addressName + ", street=" + street + ", city=" + city + ", zipCode=" + zipCode + ", country="
-				+ country + ", streetNo=" + streetNo + ", gstin=" + gstin + ", gstinType=" + gstinType + ", payType="
-				+ payType + ", vendor=" + vendor + "]";
+	public String getShipFrom() {
+		return shipFrom;
 	}
 
 
-	
-	
-	
-	
-	
-	
+	public void setShipFrom(String shipFrom) {
+		this.shipFrom = shipFrom;
+	}
+
+
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+	@Override
+	public String toString() {
+		return "VendorAddress [id=" + id + ", addressId=" + addressId + ", addressName=" + addressName + ", street="
+				+ street + ", city=" + city + ", zipCode=" + zipCode + ", country=" + country + ", streetNo=" + streetNo
+				+ ", gstin=" + gstin + ", gstinType=" + gstinType + ", payType=" + payType + ", shipFrom=" + shipFrom
+				+ "]";
+	}
+
 
 }

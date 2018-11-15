@@ -15,7 +15,7 @@
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
          <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
-          <li class="has_sub"><a href="<c:url value ="/vendor/create"/>">Vendor</a></li>
+          <li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
         </ul>
       </li>
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>

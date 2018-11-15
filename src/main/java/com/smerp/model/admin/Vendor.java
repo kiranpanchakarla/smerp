@@ -3,9 +3,7 @@ package com.smerp.model.admin;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,90 +14,84 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.Country;
 
-
 @Entity
-@Table(name="tbl_admin_vendor")
-public class Vendor  extends AuditModel {
+@Table(name = "tbl_admin_vendor")
+public class Vendor extends AuditModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
-	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
-	@Column(name="vendor_id" , nullable = false, unique = true)
-	private Integer id;
-	
-	@Column(name="vendor_code")
-	private String vendorCode;
-	
-	@Column(name="name")
-	private String name;
-	
-	@Column(name="group_name")
-	private String groupName;
-	
-	@Column(name="mobile_no")
-	private String mobileNo;
-	
-	@Column(name="fax")
-	private String fax;
-	
-	@Column(name="email_id")
-	private String emailId;
-	
-	@Column(name="business_partner_type")
-	private String businessPartnerType;
-	
-	@Column(name="payment_term")
-	private String paymentTerms;
-	
-	@Column(name="credit_limits")
-	private String creditLimit;
-	
-	@Column(name="commitment_limit")
-	private String commitmentLimit;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="country_id")
-	private Country bankCountry;
-	
-	
-	
-	@Column(name="bank_name")
-	private String bankName;
-	
-	@Column(name="bank_code")
-	private String bankCode;
-	
-	@Column(name="account_id")
-	private String accountId;
-	
-	@Column(name="bank_account_name")
-	private String bankAccountName;
-	
-	
 
-	@OneToMany(mappedBy = "vendor")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "vendor_id", nullable = false, unique = true)
+	private Integer id;
+
+	@Column(name = "vendor_code")
+	private String vendorCode;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "group_name")
+	private String groupName;
+
+	@Column(name = "mobile_no")
+	private String mobileNo;
+
+	@Column(name = "fax")
+	private String fax;
+
+	@Column(name = "email_id")
+	private String emailId;
+
+	@Column(name = "business_partner_type")
+	private String businessPartnerType;
+
+	@Column(name = "payment_term")
+	private String paymentTerms;
+
+	@Column(name = "credit_limits")
+	private String creditLimit;
+
+	@Column(name = "commitment_limit")
+	private String commitmentLimit;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "country_id")
+	private Country bankCountry;
+
+	@Column(name = "bank_name")
+	private String bankName;
+
+	@Column(name = "bank_code")
+	private String bankCode;
+
+	@Column(name = "account_id")
+	private String accountId;
+
+	@Column(name = "bank_account_name")
+	private String bankAccountName;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "vendor_id", referencedColumnName = "vendor_id")
 	private List<VendorAddress> vendorAddress;
-	
-	
-	
-	
-	@OneToMany(mappedBy = "vendor")
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "vendor_id", referencedColumnName = "vendor_id")
 	private List<VendorsContactDetails> vendorContactDetails;
-	
-	
-	
-	@Column(name="branch")
+
+	@Column(name = "branch")
 	private String branch;
 	
-	
+	@Column(name="isActive")
+	private Boolean isActive = true;
 
 	public Integer getId() {
 		return id;
@@ -124,8 +116,6 @@ public class Vendor  extends AuditModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
 
 	public String getGroupName() {
 		return groupName;
@@ -191,14 +181,9 @@ public class Vendor  extends AuditModel {
 		this.commitmentLimit = commitmentLimit;
 	}
 
-	
-	
-	
 	public String getBankName() {
 		return bankName;
 	}
-
-	
 
 	public void setBankName(String bankName) {
 		this.bankName = bankName;
@@ -235,9 +220,6 @@ public class Vendor  extends AuditModel {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
-	
-	
-	
 
 	public Country getBankCountry() {
 		return bankCountry;
@@ -247,6 +229,35 @@ public class Vendor  extends AuditModel {
 		this.bankCountry = bankCountry;
 	}
 
+	public List<VendorAddress> getVendorAddress() {
+		return vendorAddress;
+	}
+
+	public void setVendorAddress(List<VendorAddress> vendorAddress) {
+		this.vendorAddress = vendorAddress;
+	}
+
+	public List<VendorsContactDetails> getVendorContactDetails() {
+		return vendorContactDetails;
+	}
+
+	public void setVendorContactDetails(List<VendorsContactDetails> vendorContactDetails) {
+		this.vendorContactDetails = vendorContactDetails;
+	}
+	
+	
+	
+
+	
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public String toString() {
 		return "Vendor [id=" + id + ", vendorCode=" + vendorCode + ", name=" + name + ", groupName=" + groupName
@@ -254,48 +265,42 @@ public class Vendor  extends AuditModel {
 				+ businessPartnerType + ", paymentTerms=" + paymentTerms + ", creditLimit=" + creditLimit
 				+ ", commitmentLimit=" + commitmentLimit + ", bankCountry=" + bankCountry + ", bankName=" + bankName
 				+ ", bankCode=" + bankCode + ", accountId=" + accountId + ", bankAccountName=" + bankAccountName
-				+ ", branch=" + branch + "]";
+				+ ", vendorAddress=" + vendorAddress + ", vendorContactDetails=" + vendorContactDetails + ", branch="
+				+ branch + "]";
 	}
 
+	/*
+	 * @Override public String toString() { return "Vendor [id=" + id +
+	 * ", vendorCode=" + vendorCode + ", name=" + name + ", group=" + group +
+	 * ", mobileNo=" + mobileNo + ", fax=" + fax + ", emailId=" + emailId +
+	 * ", businessPartnerType=" + businessPartnerType + ", paymentTerms=" +
+	 * paymentTerms + ", creditLimit=" + creditLimit + ", commitmentLimit=" +
+	 * commitmentLimit + ", bankCountry=" + bankCountry + ", bankName=" + bankName +
+	 * ", bankCode=" + bankCode + ", accountId=" + accountId + ", bankAccountName="
+	 * + bankAccountName + ", branch=" + branch + "]"; }
+	 */
 
-	
-
-	/*@Override
-	public String toString() {
-		return "Vendor [id=" + id + ", vendorCode=" + vendorCode + ", name=" + name + ", group=" + group + ", mobileNo="
-				+ mobileNo + ", fax=" + fax + ", emailId=" + emailId + ", businessPartnerType=" + businessPartnerType
-				+ ", paymentTerms=" + paymentTerms + ", creditLimit=" + creditLimit + ", commitmentLimit="
-				+ commitmentLimit + ", bankCountry=" + bankCountry + ", bankName=" + bankName + ", bankCode=" + bankCode
-				+ ", accountId=" + accountId + ", bankAccountName=" + bankAccountName + ", branch=" + branch + "]";
-	}*/
-	
-	
-	
-	
-	
-	
-	/*@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "vendors")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<VendorPayTo> vendorPayTos;
-	
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "vendors")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<VendorsAddress> vendorsAddresses;
-	
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "vendors")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<VendorShipFrom> vendorShipFroms;*/
-
-	
-	
-	
-	
-	
+	/*
+	 * @JsonManagedReference
+	 * 
+	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendors")
+	 * 
+	 * @LazyCollection(LazyCollectionOption.FALSE) private List<VendorPayTo>
+	 * vendorPayTos;
+	 * 
+	 * @JsonManagedReference
+	 * 
+	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendors")
+	 * 
+	 * @LazyCollection(LazyCollectionOption.FALSE) private List<VendorsAddress>
+	 * vendorsAddresses;
+	 * 
+	 * @JsonManagedReference
+	 * 
+	 * @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendors")
+	 * 
+	 * @LazyCollection(LazyCollectionOption.FALSE) private List<VendorShipFrom>
+	 * vendorShipFroms;
+	 */
 
 }

@@ -55,7 +55,6 @@
 								 				 </c:if>
                                                             </div>
 
-                                                            <input type="hidden" id="id" class="form-control" name="id" value="">
 
                                                             <div class="card-body collapse in">
                                                                 <div class="card-block">
@@ -64,20 +63,27 @@
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
                                                                                     <label>Vendor Code</label>
-                                                                                    <form:input type="text" class="form-control" placeholder='vendorCode' path="vendorCode" value="" />
+                                                                                    <form:input type="text" class="form-control" placeholder='vendorCode' path="vendorCode" value=""
+                                                                                    required="true" oninvalid="this.setCustomValidity('Please Enter Vendor Code')"	oninput="setCustomValidity('')"/>
+                                                                               <div style="color:red;" id="1_errorContainer"  class="help-block with-errors"></div>
                                                                                 </div>
                                                                                
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
                                                                                     <label>Description</label>
-                                                                                    <form:input type="text" class="form-control" placeholder='name' path="name" value="" />
+                                                                                    <form:input type="text" class="form-control" placeholder='name' path="name" value="" 
+                                                                                     required="true" oninvalid="this.setCustomValidity('Please Enter Description')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
+                                                                                     
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-sm-6 form-group">
                                                                                     <label>Group</label>
-                                                                                     <form:input type="text" class="form-control" placeholder='groupName' path="groupName" value="" />
+                                                                                     <form:input type="text" class="form-control" placeholder='groupName' path="groupName" value="" 
+                                                                                      required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
                                                                                 </div>
                                                                             </div>
                                                                             
@@ -86,7 +92,7 @@
 																			<div class="form-body">
                                                                         
                                                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-																<li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
+																<li class="nav-item"><a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
 																</li>
 																<li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Address</a>
 																</li>
@@ -94,47 +100,54 @@
 																</li>
 															</ul>
 																<div class="tab-content">
-																	<div class="tab-pane active" id="home" role="tabpanel"
-																		aria-labelledby="home-tab">
+																	<div class="tab-pane active" id="general" role="tabpanel"
+																		aria-labelledby="general-tab">
 
 																		<div class="row">
 																			<div class="col-sm-6 form-group">
-																				<label>Mobile No</label>
+																				<label>Mobile</label>
 																				<form:input path="mobileNo" placeholder='mobileNo'
-																					type="text" class="form-control" />
+																					type="text" class="form-control numericwithoutdecimal" 
+																					 required="true"  maxlength="10"  oninvalid="this.setCustomValidity('Please Enter Mobile Number')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 																		<div class="row">
 																			<div class="col-sm-6 form-group">
 																				<label>Fax</label>
 																				<form:input path="fax" placeholder='fax' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					 required="true" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 																		<div class="row">
 																			<div class="col-md-6 form-group">
 																				<label>Email</label>
-																				<form:input path="emailId" placeholder='emailId'
-																					type="text" class="form-control" />
+																				<form:input path="emailId" 
+																					type="text" class="form-control"  
+																					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Enter Email Id' 
+																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email Id')"	oninput="setCustomValidity('')" />
 																			</div>
 																		</div>
 																		<div class="row">
 																			<div class="col-md-6 form-group">
 																				<label>Business Type</label>
 																				<form:select path="businessPartnerType"
-																					class="form-control">
+																					class="form-control"  required="true"   oninvalid="this.setCustomValidity('Please Select Business Type')"	oninput="setCustomValidity('')" >
 																					<form:option value="">--Select--</form:option>
 																					<form:option value="Company">Company</form:option>
 																					<form:option value="Private">Private</form:option>
 																					<form:option value="Employee">Employee</form:option>
 																				</form:select>
+																				<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 
 																		
 
 																		<div class="optionBox">
-																			<div class="block">
+																			
 																				
 																				
 																				<!--Dynamic Load data  -->
@@ -152,33 +165,72 @@
 												<div class="form-group"><label>Add Contact Details</label></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Contact ID</label><input type="text" value="${listContactDetails.contactId}" name="vendorContactDetails[<%= count %>].contactId" class="form-control"/></div></div>
+												<div class="form-group"><label>Contact ID</label><input type="text" value="${listContactDetails.contactId}" name="vendorContactDetails[<%= count %>].contactId" class="form-control"
+												required="required" />
+												<!-- oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div> -->
+												
+												</div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Title</label><select value="${listContactDetails.title}" name="vendorContactDetails[<%= count %>].title" class="form-control">
-												<option value="">select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select></div></div>
+												<div class="form-group"><label>Title</label>
+												
+												
+												<select class="form-control"  name="vendorContactDetails[<%= count %>].title" required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')">
+												<option value="" selected disabled>Select</option>
+											<c:forTokens items = "Mr,Ms" delims = "," var = "titleName">
+											  <c:choose>  
+											    <c:when test="${titleName == listContactDetails.title}"> 
+											       <option value="${titleName}" selected ><c:out value = "${titleName}"/></option> 
+											    </c:when>  
+											    <c:otherwise>  
+											       <option value="${titleName}"><c:out value = "${titleName}"/></option>
+											    </c:otherwise>   
+        									 </c:choose>  
+     										</c:forTokens>
+									           </select>
+									           <div style="color:red;"  class="help-block with-errors"></div>
+												</div></div>
 												
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Contact Name</label><input type="text" class="form-control" value="${listContactDetails.contactName}" name="vendorContactDetails[<%= count %>].contactName" /></div></div>
+												<div class="form-group"><label>Contact Name</label><input type="text" class="form-control" value="${listContactDetails.contactName}" name="vendorContactDetails[<%= count %>].contactName" 
+													required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Address</label><input type="text" class="form-control" value="${listContactDetails.address}" name="vendorContactDetails[<%= count %>].address"/></div></div>
+												<div class="form-group"><label>Address</label><input type="text" class="form-control" value="${listContactDetails.address}" name="vendorContactDetails[<%= count %>].address"	
+												required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Mobile</label><input type="text" class="form-control"  value="${listContactDetails.mobileNo}"  name="vendorContactDetails[<%= count %>].mobileNo"/></div></div>
+												<div class="form-group"><label>Mobile</label><input type="text" class="form-control"  value="${listContactDetails.mobileNo}"  name="vendorContactDetails[<%= count %>].mobileNo"	
+												required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Fax</label><input type="text" class="form-control" value="${listContactDetails.fax}" name="vendorContactDetails[<%= count %>].fax"/></div></div>
+												<div class="form-group"><label>Fax</label><input type="text" class="form-control" value="${listContactDetails.fax}" name="vendorContactDetails[<%= count %>].fax"	
+												required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Email</label><input type="text" class="form-control" value="${listContactDetails.email}"  name="vendorContactDetails[<%= count %>].email" /></div></div>
+												<div class="form-group"><label>Email</label><input type="text" class="form-control" value="${listContactDetails.email}"  name="vendorContactDetails[<%= count %>].email" 
+													required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div></div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												<div class="form-group"><label>Gender</label><select class="form-control" value="${listContactDetails.gender}" name="vendorContactDetails[<%= count %>].gender">
-												<option value="">select</option>
-												<option value="Male">Male</option>
-												<option value="Female">Female</option>
-												</select></div></div>
+												<div class="form-group"><label>Gender</label>
+												
+									<select class="form-control" value="${listContactDetails.gender}" name="vendorContactDetails[<%= count %>].gender" 
+									required="true" oninvalid="this.setCustomValidity('Please Contact Id')"	oninput="setCustomValidity('')">
+												<option value="" selected disabled>Select</option>
+											<c:forTokens items = "Male,Female" delims = "," var = "genderName">
+											  <c:choose>  
+											    <c:when test="${genderName == listContactDetails.gender}"> 
+											       <option value="${genderName}" selected ><c:out value = "${genderName}"/></option> 
+											    </c:when>  
+											    <c:otherwise>  
+											       <option value="${genderName}"><c:out value = "${genderName}"/></option>
+											    </c:otherwise>   
+        									 </c:choose>  
+     										</c:forTokens>
+									</select>		
+												<div style="color:red;"  class="help-block with-errors"></div>
+												
+												</div></div>
 
 												<div class="col-xs-12 col-sm-3">
 												<div class="form-group">
@@ -202,6 +254,8 @@
 																		</c:if>
 																		<input type="hidden" id="indexValue">
 																		<!--//Dynamic Load data  -->
+																		
+																		   <div class="block">
 																				<p Class="error">
 																					<a class="add btn btn-success flat btn-responsive"><i
 																						class="fa fa-plus btni_left"></i>Add Contact
@@ -218,62 +272,72 @@
 																		
 																		
 																		<!--Single Address  -->
-																		
+																		<c:if test="${vendor.id==null}">
+											  
 																		<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
-																		<div class="col-xs-12 col-sm-12">
-																		<div class="form-group"><label>Add Address Details</label>
-																		<label>&nbsp;&nbsp;&nbsp; </label>
-																		<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].payType"  value="payType">payType</label>
-																		<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].shipFrom" value="shipFrom">Ship From</label>
-																		
+																		 <div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">
+																		 <label>Add vendorAddress Details</label></div></div><div class="col-md-3">  
+												
+												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].payType"  value="payType">Pay Type</label>
+												 					     &nbsp; &nbsp; &nbsp; 
+												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].shipFrom" value="shipFrom">Ship From</label>
 																		</div></div>
+																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Address ID</label>
-																		<input type="text" name="vendorAddress[0].addressId"  class="form-control">
+																		<input type="text" name="vendorAddress[0].addressId"  class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Address Name</label>
-																		<input type="text" name="vendorAddress[0].addressName" class="form-control">
+																		<input type="text" name="vendorAddress[0].addressName" class="form-control"  
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Street/ PO Box</label>
-																		<input type="text" name="vendorAddress[0].street" class="form-control">
+																		<input type="text" name="vendorAddress[0].street" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>City</label>
-																		<input type="text" name="vendorAddress[0].city" class="form-control">
+																		<input type="text" name="vendorAddress[0].city" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Zip code</label>
-																		<input type="text" name="vendorAddress[0].zipCode" class="form-control">
+																		<input type="text" name="vendorAddress[0].zipCode" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Street No</label>
-																		<input type="text" name="vendorAddress[0].streetNo" class="form-control">
+																		<input type="text" name="vendorAddress[0].streetNo" class="form-control"  
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>GST IN </label>
-																		<input type="text" name="vendorAddress[0].gstin" class="form-control">
+																		<input type="text" name="vendorAddress[0].gstin" class="form-control"  
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>GST type</label>
-																		<select name="vendorAddress[0].gstinType" class="form-control">
-																		<option value="">select</option>
+																		<select name="vendorAddress[0].gstinType" class="form-control"
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')">
+																		<option value="" selected disabled>select</option>
 																		<option value="Regular">Regular</option>
 																		<option value="Excisible">Excisible</option>
 																		<option value="Regular">UIN Agency or Embasyy</option>
@@ -281,6 +345,7 @@
 																		<option value="Regular">Non-Resident Taxable person</option>
 																		<option value="Excisible">Casual Taxable Person</option>
 																		</select>
+																		<div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
@@ -293,11 +358,11 @@
 																		</div>
 																		
 																		</div>
-																		
+																		 </c:if>
 																		<!--// Single Address  -->
 																		
 																		<div class="optionBox1">
-																			<div class="block1">
+																			
 																				
 																				<!--1 multiply Dynamically Load   -->
 																					<c:if
@@ -308,67 +373,91 @@
 																			<c:forEach items="${vendor.vendorAddress}"
 																				var="listAddressDetails">
 																				<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
-																		<div class="col-xs-12 col-sm-12">
-																		<div class="form-group"><label>Add Address Details</label>
-																		<label>&nbsp;&nbsp;&nbsp; </label>
-																		<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[<%=count1 %>].payType"  value="payType">payType</label>
-																		<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[<%=count1 %>].shipFrom" value="shipFrom">Ship From</label>
-																		
+																		 <div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">
+																		 <label>Add vendorAddress Details</label></div></div><div class="col-md-3">  
+												
+												 						<label class="checkbox-inline">
+												 						<input type="checkbox" name="vendorAddress[<%=count1 %>].payType"  
+												 						<c:if test="${listAddressDetails.payType!=null}">
+												 						checked
+												 						 </c:if>
+												 						value="payType">Pay Type</label>
+												 					     &nbsp; &nbsp; &nbsp; 
+												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[<%=count1 %>].shipFrom" 
+												 						<c:if test="${listAddressDetails.shipFrom!=null}">
+												 						checked
+												 						 </c:if>
+												 						value="shipFrom">Ship From</label>
 																		</div></div>
+																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Address ID</label>
-																		<input type="text"  value="${listAddressDetails.addressId}" name="vendorAddress[<%=count1 %>].addressId" class="form-control">
+																		<input type="text"  value="${listAddressDetails.addressId}" name="vendorAddress[<%=count1 %>].addressId" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Address Name</label>
-																		<input type="text" value="${listAddressDetails.addressName}" name="vendorAddress[<%=count1 %>].addressName" class="form-control">
+																		<input type="text" value="${listAddressDetails.addressName}" name="vendorAddress[<%=count1 %>].addressName" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Street/ PO Box</label>
-																		<input type="text" value="${listAddressDetails.street}" name="vendorAddress[<%=count1 %>].street" class="form-control">
+																		<input type="text" value="${listAddressDetails.street}" name="vendorAddress[<%=count1 %>].street" class="form-control"  
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>City</label>
-																		<input type="text" value="${listAddressDetails.city}" name="vendorAddress[<%=count1 %>].city" class="form-control">
+																		<input type="text" value="${listAddressDetails.city}" name="vendorAddress[<%=count1 %>].city" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Zip code</label>
-																		<input type="text" value="${listAddressDetails.zipCode}" name="vendorAddress[<%=count1 %>].zipCode" class="form-control">
+																		<input type="text" value="${listAddressDetails.zipCode}" name="vendorAddress[<%=count1 %>].zipCode" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Street No</label>
-																		<input type="text" value="${listAddressDetails.streetNo}" name="vendorAddress[<%=count1 %>].streetNo" class="form-control">
+																		<input type="text" value="${listAddressDetails.streetNo}" name="vendorAddress[<%=count1 %>].streetNo" class="form-control" 
+																		 required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>GST IN </label>
-																		<input type="text" value="${listAddressDetails.gstin}" name="vendorAddress[<%=count1 %>].gstin" class="form-control">
+																		<input type="text" value="${listAddressDetails.gstin}" name="vendorAddress[<%=count1 %>].gstin" class="form-control"  
+																		required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>GST type</label>
-																		<select name="vendorAddress[<%=count1 %>].gstinType" class="form-control">
-																		<option value="">select</option>
-																		<option value="Regular">Regular</option>
-																		<option value="Excisible">Excisible</option>
-																		<option value="Regular">UIN Agency or Embasyy</option>
-																		<option value="Excisible">Composition Levy</option>
-																		<option value="Regular">Non-Resident Taxable person</option>
-																		<option value="Excisible">Casual Taxable Person</option>
-																		</select>
+																		
+																		<select class="form-control"  name="vendorAddress[<%=count1 %>].gstinType" 	required="true" oninvalid="this.setCustomValidity('Please Enter Group')"	oninput="setCustomValidity('')">
+																		<option value="" selected disabled>Select</option>
+																	<c:forTokens items = "Regular,Excisible,Regular,Excisible,UIN Agency or Embasyy,Composition Levy,Non-Resident Taxable person,Casual Taxable Person" delims = "," var = "gstType">
+																	  <c:choose>  
+																	     <c:when test="${gstType == listAddressDetails.gstinType}"> 
+																	       <option value="${gstType}" selected ><c:out value = "${gstType}"/></option> 
+																	    </c:when>  
+																	    <c:otherwise>  
+																	       <option value="${gstType}"><c:out value = "${gstType}"/></option>
+																	    </c:otherwise>   
+						        									 </c:choose>  
+						     										</c:forTokens>
+															              </select>	
+																		<div style="color:red;"  class="help-block with-errors"></div>
+																		
 																		</div>
 																		</div>
 																		
@@ -397,14 +486,14 @@
 																		</c:if>
 																		<input type="hidden" id="indexValue1">
 																				
-																				
+																				<div class="block1">
 																				<!--1 // multiply Dynamically Load   -->
 																				
 																				<p Class="error">
 																					<a class="add1 btn btn-success flat btn-responsive"><i
 																						class="fa fa-plus btni_left"></i>Add Address</a>
 																				</p>
-																			</div>
+																			   </div>
 																		</div>
 																		<!--Pay - Shipping  -->
 																		
@@ -418,19 +507,25 @@
 																			<div class="col-sm-4 form-group">
 																				<label>paymentTerms</label>
 																				<form:input path="paymentTerms" placeholder='paymentTerms'
-																					type="text" class="form-control" />
+																					type="text" class="form-control" 
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Payment Terms')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
 																				<label>creditLimit</label>
 																				<form:input path="creditLimit" placeholder='creditLimit' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Credit Limit')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
 																				<label>Commitment Limit</label>
 																				<form:input path="commitmentLimit" placeholder='paymentTerms'
-																					type="text" class="form-control" />
+																					type="text" class="form-control" 
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Commitment Limit')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 																		
@@ -439,7 +534,7 @@
 																		<div class="row">
 																			
 																			<div class="col-sm-6 form-group">
-																				<label>BankCountry</label>
+																				<label>Bank Country</label>
 																				 <form:select path="bankCountry" id="selectSubcat"
 																					cssClass="form-control">
 																						<form:option value="${country.id}">${country.name}</form:option>
@@ -448,9 +543,11 @@
 																		      </div>
 																		      
 																		      <div class="col-sm-6 form-group">
-																				<label>BankName</label>
+																				<label>Bank Name</label>
 																				<form:input path="bankName" placeholder='bankAccountName' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					required="true" oninvalid="this.setCustomValidity('Please Enter Bank Name')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																		
@@ -464,13 +561,17 @@
 																			<div class="col-sm-6 form-group">
 																				<label>Bank Code</label>
 																				<form:input path="bankCode" placeholder='bankCode' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					 required="true" oninvalid="this.setCustomValidity('Please Enter Bank Code')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			<div class="col-sm-6 form-group">
-																				<label>accountId</label>
+																				<label>Account Id</label>
 																				<form:input path="accountId" placeholder='accountId' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					 required="true" oninvalid="this.setCustomValidity('Please Enter Account Id')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																		
 																		</div>
@@ -479,13 +580,17 @@
 																			<div class="col-sm-6 form-group">
 																				<label>Bank Account Name</label>
 																				<form:input path="bankAccountName" placeholder='bankAccountName' type="text"
-																					class="form-control" />
+																					class="form-control"
+																					 required="true" oninvalid="this.setCustomValidity('Please Enter Fax Bank Account Name')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																			<div class="col-sm-6 form-group">
 																				<label>branch</label>
 																				<form:input path="branch" placeholder='branch' type="text"
-																					class="form-control" />
+																					class="form-control" 
+																					 required="true" oninvalid="this.setCustomValidity('Please Enter Branch')"	oninput="setCustomValidity('')"/>
+                                                                                    <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
 																			
 																		</div>
@@ -597,11 +702,11 @@
 												+ '<div class="form-group"><label>Add Contact Details</label></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Contact ID</label><input type="text" name="vendorContactDetails['+inc+'].contactId" class="form-control"/></div></div>'
+												+ '<div class="form-group"><label>Contact ID</label><input type="text" name="vendorContactDetails['+inc+'].contactId" class="form-control" required="required" /></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" class="form-control">'
-												+ '<option value="">select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select></div></div>'
+												+ '<option value="" selected disabled >select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select></div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Contact Name</label><input type="text" class="form-control" name="vendorContactDetails['+inc+'].contactName" /></div></div>'
@@ -620,7 +725,7 @@
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender">'
-												+ '<option value="">select</option>'
+												+ '<option value="" selected disabled >select</option>'
 												+ '<option value="Male">Male</option>'
 												+ '<option value="Female">Female</option>'
 												+ '</select></div></div>'
@@ -664,20 +769,16 @@
 
 						$('.block1:last')
 								.before('<div class="row address-details-block1" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">'
-												+ '<div class="col-xs-12 col-sm-9"><div class="form-group">'
-												+ '<label>Add vendorAddress Details</label></div></div>'
+												+ '<div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">'
+												+ '<label>Add vendorAddress Details</label></div></div><div class="col-md-3">  '
 												
-												
-												+ '<div class="col-xs-12 col-sm-3"><div class="form-group">'
-												
-												+ '<label>&nbsp;&nbsp;&nbsp; </label>'
 												+ '<label class="checkbox-inline"><input type="checkbox" name="vendorAddress['+inc+'].payType"  value="payType">Pay Type</label>'
-												+ '<label class="checkbox-inline"><input type="checkbox" name="vendorAddress['+inc+'].shipFrom" value="shipFrom">Ship From</label>'
+												+ '&nbsp; &nbsp; &nbsp; <label class="checkbox-inline"><input type="checkbox" name="vendorAddress['+inc+'].shipFrom" value="shipFrom">Ship From</label>'
 												
-												+ '<label><label>&nbsp;&nbsp;&nbsp; </label><br><a class="remove1 btn btn-danger">Remove</a></label></div></div>'
+												+ '</div><div class="col-md-3"> <a class="remove1 btn btn-danger">Remove</a></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group">'
-												+ '<label>Address ID</label><input type="text" name="vendorAddress['+inc+'].addressId" class="form-control"></div></div>'
+												+ '<label>Address ID</label><input type="text" name="vendorAddress['+inc+'].addressId" class="form-control"  /></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Address Name</label>'
 												+ '<input type="text" name="vendorAddress['+inc+'].addressName" class="form-control"></div></div>'
@@ -699,7 +800,7 @@
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>GST type</label>'
 												+ '<select name="vendorAddress['+inc+'].gstinType" class="form-control">'
-												+ '<option value="">select</option><option value="Regular">Regular</option>'
+												+ '<option selected disabled value="">select</option><option value="Regular">Regular</option>'
 												+ '<option value="Excisible">Excisible</option>'
 												+ '<option value="Regular">UIN Agency or Embasyy</option>'
 												+ '<option value="Excisible">Composition Levy</option>'

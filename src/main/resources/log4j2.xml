@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
-         <Property name="LOG_PATTERN">[%clr{%p}] %clr{%d{ABSOLUTE}}{red} %clr{[%6c]}{blue} %clr{%M:} %clr{%m}{magenta}%n%xwEx</Property>
+         <Property name="LOG_PATTERN">[%p] %d{ABSOLUTE} %c %M-%m%n</Property>
         <Property name="APP_LOG_ROOT">c:/temp</Property>
-        
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT" follow="true">
@@ -23,26 +22,14 @@
     </Appenders>
     <Loggers>
  
-        <Logger name="com.smerp" additivity="false" level="DEBUG">
+        <Logger name="com.smep" additivity="false">
             <AppenderRef ref="appLog" />
             <AppenderRef ref="Console" />
         </Logger>
-        
-        <!-- <Logger name="org.springframework" additivity="false" level="DEBUG">
-            <AppenderRef ref="appLog" />
+ 
+        <Root level="debug">
             <AppenderRef ref="Console" />
-        </Logger>  -->
-        
-         <!-- <Logger name="org.hibernate" additivity="false" level="DEBUG">
-            <AppenderRef ref="appLog" />
-            <AppenderRef ref="Console" />
-        </Logger>  -->
-        
-        
-         <Root level="off">
-              <AppenderRef ref="Console" />
-              <AppenderRef ref="appLog" />
-        </Root>  
-       
+             <AppenderRef ref="appLog" />
+        </Root>
     </Loggers>
 </Configuration>

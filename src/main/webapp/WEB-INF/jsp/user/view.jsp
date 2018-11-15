@@ -12,9 +12,8 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">

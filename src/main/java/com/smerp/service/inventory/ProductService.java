@@ -22,6 +22,8 @@ public interface ProductService {
 
 	Product findByProductNo(String productNo);
 
+	List<Product> findByIsActive();
+
 	/*void delete(int parseInt);*/
 
 }

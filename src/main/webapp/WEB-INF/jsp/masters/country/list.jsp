@@ -11,10 +11,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 </head>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -127,14 +126,15 @@
 
 $(document).ready(function() {
 	  $('#example').DataTable( {
+		  "scrollX": true
 	       
 	    } );
 } );
 
 </script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
 </body>
 </html>
 

@@ -87,7 +87,7 @@ public class ProductController {
 		
 	@GetMapping(value = "/productList")
 	public String list(Model model) {
-		List<Product> productList = productService.findAll();
+		List<Product> productList = productService.findByIsActive();
 		model.addAttribute("productList", productList);
 		return "product/productList";
 	}

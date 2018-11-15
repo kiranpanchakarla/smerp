@@ -10,9 +10,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-<script src="/resources/components/bootstrap-validator/js/jquery.min.js" type="text/javascript"></script>
-<script src="/resources/components/bootstrap-validator/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/resources/components/bootstrap-validator/js/validator.min.js" type="text/javascript"></script>
+
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
+
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -93,8 +95,8 @@
 															</div>
 
 															<div style="text-align: center;">
-																<a class="btn btn-primary" href="/saccode/list">Back</a>
-																<a href="/saccode/list">
+																<a class="btn btn-primary" href="<c:url value="/saccode/list"/>">Back</a>
+																<a href="<c:url value="/saccode/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
 																	</button>

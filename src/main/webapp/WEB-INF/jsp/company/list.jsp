@@ -12,11 +12,10 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
-<%-- <link href="<c:url value="/resources/css/style.css"/>"
-    rel="stylesheet" type="text/css" /> --%>
+
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -35,24 +34,7 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<!-- <div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Company</h2>
-										
-									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Company</li>
-											</ol>
-										</div>
-									</div>
-								</div> -->
+								
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
@@ -146,9 +128,11 @@ $(document).ready(function() {
 
 </script>
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script> 
+
+<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
+
 </body>
 	
 </html>

@@ -12,9 +12,8 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -45,7 +44,7 @@
 										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
 											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
@@ -75,7 +74,7 @@
 																	<th>product Group</th>
 																	<th>Uom Group</th>
 																	<th>Description</th>
-																	<th>isActive</th>
+																<!-- 	<th>isActive</th> -->
 																	<th>Actions</th>
 																	
 																</tr>
@@ -87,9 +86,9 @@
 																	<td>${productList.productCategory.name}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
 																	<td>${productList.description}</td>
-																	<th><c:if test="${productList.isActive eq true}">Active</c:if>
-																	<c:if test="${productList.isActive eq false}">InActive</c:if></th>
-																	<td style="width:14%">
+																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
+																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
+																	<td >
 																	 <a class ="btn btn-primary" href="<c:url value="/product/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a> | 
 																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')"><i class="icon-bin left"></i></a>
 				                                                    <a  class ="btn btn-primary" href="<c:url value="/product/view?productId=${productList.id}"/>"><i class="icon-eye3 left"></i></a>
@@ -120,15 +119,16 @@
 
 $(document).ready(function() {
 	  $('#example').DataTable( {
+		  "scrollX": true
 	       
 	    } );
 } );
 
 </script>
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
 </body>
 	
 </html>

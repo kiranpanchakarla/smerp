@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script> -->
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
@@ -265,7 +266,8 @@
     </footer>
     <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
-<script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script>
+<script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>
+<!-- <script src="/resources/js/scripts/pages/dashboard-lite.js" type="text/javascript"></script> -->
 <script>
 
 $(document).ready(function(){

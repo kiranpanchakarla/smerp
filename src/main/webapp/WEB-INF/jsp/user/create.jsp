@@ -13,9 +13,9 @@
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
 
-<script src="/resources/components/bootstrap-validator/js/jquery.min.js" type="text/javascript"></script>
-<script src="/resources/components/bootstrap-validator/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/resources/components/bootstrap-validator/js/validator.min.js" type="text/javascript"></script>
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
@@ -153,7 +153,7 @@
 																</div>
 															</div>
 															<div class="form-actions right">
-																<a href="/user/list">
+																<a href="<c:url value="/user/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> Cancel</button>
 																</a>
 																<c:if test="${user.username!=null}">

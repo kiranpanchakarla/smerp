@@ -7,6 +7,7 @@
 <!-- //<link rel="shortcut icon" type="image/png" href="images/favicon-32.png"> -->
 <link href="<c:url value="images/favicon-32.png"/>" rel="shortcut" />
 <link href="<c:url value="/resources/css/bootstrap.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/bootstrap-extended.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/fonts/icomoon.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/fonts/flag-icon-css/css/flag-icon.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/app.css"/>" rel="stylesheet" type="text/css" />

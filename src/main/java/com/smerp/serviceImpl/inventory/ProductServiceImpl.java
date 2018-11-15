@@ -90,4 +90,10 @@ public class ProductServiceImpl implements ProductService {
 
 		return productRepository.findByProductNo(productNo);
 	}
+
+	@Override
+	public List<Product> findByIsActive() {
+		// TODO Auto-generated method stubfindByIsActive(true);
+		return productRepository.findByIsActive(true);
+	}
 }

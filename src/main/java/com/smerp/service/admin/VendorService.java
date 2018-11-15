@@ -15,4 +15,10 @@ public interface VendorService {
 	Vendor save(Vendor company);
 	
 	void delete(int id);
+
+	List<String> findAllVendorNames();
+
+	Vendor findByName(String vendorname);
+
+	Vendor findById(int i);
 }

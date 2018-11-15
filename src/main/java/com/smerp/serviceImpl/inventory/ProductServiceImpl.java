@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
-	@Override
+/*	@Override
 	public Product save(Product product) {
 		try {
 			if (product != null && product.getserviceOrProduct().equals("service")) {
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return product;
 
-	}
+	}*/
 
 	@Override
 	public List<Product> productList() {
@@ -95,5 +95,22 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findByIsActive() {
 		// TODO Auto-generated method stubfindByIsActive(true);
 		return productRepository.findByIsActive(true);
+	}
+
+	@Override
+	public List<String> findAllProductNames() {
+		// TODO Auto-generated method stub
+		return productRepository.findByDescription();
+	}
+
+	@Override
+	public Product save(Product product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product findByDescription(String name) {
+		return productRepository.findByDescription(name);
 	}
 }

@@ -16,4 +16,9 @@ public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 
 	@Query("SELECT c FROM Vendor c WHERE isActive=:isActive order by updatedAt desc")
 	List<Vendor> findByIsActive(@Param("isActive") Boolean isActive);
+
+	@Query("SELECT name FROM Vendor")
+	List<String> findAllVendorNames();
+
+	Vendor findByName(String name);
 }

@@ -6,14 +6,12 @@
 
 
 <script src=<c:url value="/resources/js/core/libraries/jquery.min.js"/> type="text/javascript"></script>
-<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
 <script src=<c:url value="/resources/js/core/libraries/bootstrap.min.js"/> type="text/javascript"></script> 
-
-
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script> -->
-<!-- <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script> -->
-
-
 <script src=<c:url value="/resources/vendors/js/ui/unison.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/vendors/js/charts/chart.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/core/app-menu.js"/> type="text/javascript"></script> 

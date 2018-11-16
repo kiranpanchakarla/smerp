@@ -23,7 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Vendor;
+import com.smerp.model.admin.VendorAddress;
+import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.VendorAddressService;
+import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.CountryServices;
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -34,6 +38,12 @@ public class VendorController {
 	
 	@Autowired
 	private VendorService vendorService;
+	
+	@Autowired
+	VendorsContactDetailsService vendorsContactDetailsService;
+	
+	@Autowired
+	VendorAddressService	vendorAddressService;
 	
 	@Autowired
 	CountryServices countryServices;
@@ -98,6 +108,13 @@ public class VendorController {
 	@ResponseBody
 	private String getInvoiceListByInvNumber(@RequestParam("vendorname") String vendorname) throws JsonProcessingException {
 		return new ObjectMapper().writeValueAsString(vendorService.findByName(vendorname));
+		
+	}
+	
+	@RequestMapping(value = "/getShippingAddressInfo", method = RequestMethod.GET)
+	@ResponseBody
+	private String getShippingAddressInfo(@RequestParam("shippingId") String shippingId) throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(vendorAddressService.findById(Integer.parseInt(shippingId)));
 		
 	}
 	

@@ -56,8 +56,12 @@ public class RequestForQuotation {
 	private Date requiredDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "vendor_address_id")
-	private VendorAddress vendorAddress;
+	@JoinColumn(name = "vendor_shipping_address_id")
+	private VendorAddress vendorShippingAddress;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "vendor_paytype_address_id")
+	private VendorAddress vendorPayTypeAddress;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "vendor_contact_id")
@@ -139,11 +143,18 @@ public class RequestForQuotation {
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
 	}
-	public VendorAddress getVendorAddress() {
-		return vendorAddress;
+	
+	public VendorAddress getVendorShippingAddress() {
+		return vendorShippingAddress;
 	}
-	public void setVendorAddress(VendorAddress vendorAddress) {
-		this.vendorAddress = vendorAddress;
+	public void setVendorShippingAddress(VendorAddress vendorShippingAddress) {
+		this.vendorShippingAddress = vendorShippingAddress;
+	}
+	public VendorAddress getVendorPayTypeAddress() {
+		return vendorPayTypeAddress;
+	}
+	public void setVendorPayTypeAddress(VendorAddress vendorPayTypeAddress) {
+		this.vendorPayTypeAddress = vendorPayTypeAddress;
 	}
 	public VendorsContactDetails getVendorContactDetails() {
 		return vendorContactDetails;
@@ -155,8 +166,9 @@ public class RequestForQuotation {
 	public String toString() {
 		return "RequestForQuotation [id=" + id + ", vendor=" + vendor + ", lineItems=" + lineItems + ", docNumber="
 				+ docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber + ", postingDate="
-				+ postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate + ", vendorAddress="
-				+ vendorAddress + ", vendorContactDetails=" + vendorContactDetails + "]";
+				+ postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
+				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
+				+ ", vendorContactDetails=" + vendorContactDetails + "]";
 	}
 	
 	

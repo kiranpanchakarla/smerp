@@ -22,10 +22,13 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
 		Vendor vendor=vendorService.findById(Integer.parseInt(requestForQuotation.getVendorId()));
 		requestForQuotation.setVendor(vendor);
-		requestForQuotation.setStatus("Draft");
-		requestForQuotation.setDocNumber("doc123");
-		requestForQuotation.setReferenceDocNumber("refDocNumber");
 		return requestForQuotationRepository.save(requestForQuotation);
+	}
+
+	@Override
+	public RequestForQuotation	 findLastDocumentNumber() {
+		// TODO Auto-generated method stub
+		return requestForQuotationRepository.findTopByOrderByIdDesc();
 	}
 
 }

@@ -12,27 +12,72 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-<script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
- <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
- <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
+	type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
+	type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
+	type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/>
+	type="text/javascript"></script>
 
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>" rel="stylesheet" type="text/css" />
-	
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>"
+	rel="stylesheet" type="text/css" />
+
 </head>
 
-	
 
+<!-----------    END   ---------------------------------->
 
-
-
-
-<!-----------    END   ---------------------------------->	
-	
 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	  var date = new Date();
+	  var today = new Date(date.getDate(),date.getFullYear(), date.getMonth());
+	  var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		
+		
+		  $('#postingDate').datepicker({
+				format: "dd/mm/yyyy",
+				todayHighlight: true,
+				startDate: today,
+				endDate: end,
+				autoclose: true
+				  });
+			
+		  $('#documentDate').datepicker({
+				format: "dd/mm/yyyy",
+				todayHighlight: true,
+				startDate: today,
+				endDate: end,
+				autoclose: true
+		  });
+		  
+		  
+		  $('#require_date').datepicker({
+				format: "dd/mm/yyyy",
+				todayHighlight: true,
+				startDate: today,
+				endDate: end,
+				autoclose: true
+		  });
+
+	     $('#postingDate,#documentDate','#require_date').datepicker('setDate', today);
+		
+		
+
 	
 	var vendorNames=[];
 	var vendorNamesList=${vendorNamesList};
@@ -48,7 +93,7 @@ $(document).ready(function(){
 		        source: availableTagsvendornames,
 		        select: function(event, ui) {
 		        	var vendorname = ui.item.value;
-		        	alert(vendorname);
+		        //	alert(vendorname);
 		            autocompletevendorDetails(vendorname,itemParentRow);
 		       		 },
 		        }); 
@@ -58,6 +103,8 @@ $(document).ready(function(){
 		//get the vendor information based on vendor name
     	function autocompletevendorDetails(vendorname,itemParentRow){
 			alert(vendorname);
+			//$("#vendorContactDetails").html("");
+		//	 $("#vendorAddress").html("");
 			
     	 $.ajax({
 			   type: "GET",
@@ -65,7 +112,7 @@ $(document).ready(function(){
     			async : false,
                 url: "<c:url value="/vendor/getVendorInfo"/>", 
                 success: function (response) {
-                	console.log(response);
+                	console.log("vendor details"+response);
                 	var obj =JSON.parse(response);
                 	
                 	$('#vendordata').val(obj.id);
@@ -75,14 +122,18 @@ $(document).ready(function(){
                 	var vendoraddress=obj.vendorAddress;
                 	
                 	$.each(vendorcontactdetails, function( index, value ) {
-                		  alert( index + ": " + JSON.stringify(value) );
-                		    alert(value.contactName)
+                		//  alert( index + ": " + JSON.stringify(value) );
+                		 //   alert(value.contactName)
                 		    $("#vendorContactDetails").append($("<option></option>").attr("value",value.id).text(value.contactName)); 
                 		});
                 	
-                	$.each(vendoraddress, function( index, value ) {
+                	  $.each(vendoraddress, function( index, value ) {
               		  alert( index + ": " + JSON.stringify(value) );
-              		   $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+              			 if(value.payTo!=null && "shipFrom".localeCompare(value.shipFrom)){
+              		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+              			 }else{
+              				 $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+              			 }
               		});
                 	
                	 },
@@ -130,12 +181,23 @@ $(document).ready(function(){
                 url: "<c:url value="/product/getProductInfo"/>", 
                 success: function (response) {
                 	console.log(response);
+                	
+                	
+                	
                 	var obj =JSON.parse(response);
+                	
+                	//var myJSON = JSON.stringify(obj);
+                	
+                	
                 	
                 	var hsndata=obj.hsnCode;
                 	alert("hsnCode"+hsndata.hsnCode);
                 //	$('.hsnVal').val(hsndata.hsnCode);
-                	
+                
+                	$(itemParentRow).find(".productName").val(obj.description);
+                	$(itemParentRow).find(".productId").val(obj.id);
+            	
+                
                 	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
                 	
                 	var uom=obj.purchasingUom.uomName;
@@ -158,6 +220,88 @@ $(document).ready(function(){
                 });
 		}
 	
+    	$('#vendorAddress').on('change', function() {
+    		var shippingId=$('#vendorAddress').val();
+    		$('#shippingAddressTable').html("");
+    		
+    		$.ajax({
+ 			   type: "GET",
+     			data: {shippingId :shippingId}, 
+     			async : false,
+                 url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
+                 success: function (response) {
+                	console.log(response);
+                		var obj =JSON.parse(response);
+                 	
+                		//shippingAddress
+                		//shippingAddressTableTr
+                		var addr=obj.addressName;
+                		var street=obj.street;
+                		var city=obj.city;
+                		var zipCode=obj.zipCode;
+                		
+                		//$('#shippingAddressTable').html("");
+                		
+                		$('#shippingAddressTable').append(addr+', ');
+                		$('#shippingAddressTable').append(street+'<br/>');
+                		$('#shippingAddressTable').append(city+' - ');
+                		$('#shippingAddressTable').append(zipCode+'<br/>');
+                		
+                		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
+                            if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
+                            	var country=obj.country.name;
+                                $('#shippingAddressTable').append(country);
+                            }
+                		}
+                 	
+                	 },
+                 error: function(e){
+                  alert('Error: ' + e);
+                  }
+                 });
+    	
+    	});
+    	
+    					// pay to address ajax call
+	
+                                $('#vendorPayToAddress').on('change', function() {
+                            		var shippingId=$('#vendorPayToAddress').val();
+                            		$('#payToAddressTable').html("");
+                            		
+                            		$.ajax({
+                         			   type: "GET",
+                             			data: {shippingId :shippingId}, 
+                             			async : false,
+                                         url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
+                                         success: function (response) {
+                                        	console.log(response);
+                                        		var obj =JSON.parse(response);
+                                        		var addr=obj.addressName;
+                                        		var street=obj.street;
+                                        		var city=obj.city;
+                                        		var zipCode=obj.zipCode;
+                                        		
+                                        		
+                                        		$('#payToAddressTable').append(addr+', ');
+                                        		$('#payToAddressTable').append(street+'<br/>');
+                                        		$('#payToAddressTable').append(city+' - ');
+                                        		$('#payToAddressTable').append(zipCode+'<br/>');
+                                        		
+                                        		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
+                                                    if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
+                                                    	var country=obj.country.name;
+                                                        $('#payToAddressTable').append(country);
+                                                    }
+                                        		}
+                                         	
+                                        	 },
+                                         error: function(e){
+                                          alert('Error: ' + e);
+                                          }
+                                         });
+                            	
+                            	});
+                        	
 	
 	//alert("ready");
 	$('#addItem').click(function() {
@@ -170,7 +314,7 @@ $(document).ready(function(){
 				
 						
 						+ '<td>'
-						+ '<select  name="lineItem['+i+'].category" style="width:160px !important;" class="form-control category'+i+' category"  id="category'+i+'" >'
+						+ '<select  name="lineItems['+i+'].category" style="width:160px !important;" class="form-control category'+i+' category"  id="category'+i+'" >'
 						+'<option value="">select</option>'+
 						<c:forEach items="${categoryMap}" var="category">
 						'<option value="${category.key}">${category.value}</option>'+
@@ -180,16 +324,22 @@ $(document).ready(function(){
 					
 						
 						+'<td>'
-						+'<input type="text" name="lineItem['+i+'].productNo" class="form-control productName productNo'+i+'" id="productNo'+i+'"   />'
+						+'<input type="text" name="lineItems['+i+'].productName" class="form-control productName productName'+i+'" id="productName'+i+'"   />'
 						+'</td>'
 						
+						+'<td style="display:none;">'
+						+'<input type="hidden" name="lineItems['+i+'].productId" class="form-control productId productId'+i+'" id="productId'+i+'"   />'
+						+'</td>'
+						
+						
+						
 						+'<td>'
-						+'<input type="text" name="lineItem['+i+'].hsnOrSac" class="form-control hsnVal hsnOrSac'+i+'" id="hsnOrSac'+i+'"   />'
+						+'<input type="text" name="lineItems['+i+'].hsnOrSac" class="form-control hsnVal hsnOrSac'+i+'" id="hsnOrSac'+i+'"   />'
 						+'</td>'
 						
 						
 						+'<td>'
-						+'<input type="text" name="lineItem['+i+'].uom" class="form-control uom uom'+i+'" id="uom'+i+'"   />'
+						+'<input type="text" name="lineItems['+i+'].uom" class="form-control uom uom'+i+'" id="uom'+i+'"   />'
 						+'</td>'
 						
 					/* 	+ '<td>'
@@ -202,16 +352,16 @@ $(document).ready(function(){
 						+ '</td>' */
 						
 						+'<td>'
-						+'<input type="text" name="lineItem['+i+'].quantity" class="form-control quantity'+i+'" id="quantity'+i+'"   />'
+						+'<input type="text" name="lineItems['+i+'].quantity" class="form-control quantity'+i+'" id="quantity'+i+'"   />'
 						+'</td>'
 						
 						+'<td>'
-						+'<input type="text" name="lineItem['+i+'].productGroup" class="form-control  productGroup productGroup'+i+'" id="productGroup'+i+'"   />'
+						+'<input type="text" name="lineItems['+i+'].productGroup" class="form-control  productGroup productGroup'+i+'" id="productGroup'+i+'"   />'
 						+'</td>'
 						
 						
 						+ '<td>'
-						+ '<select  name="lineItem['+i+'].warehouse" style="width:160px !important;" class="form-control warehouse'+i+' warehouse"  id="warehouse'+i+'" >'
+						+ '<select  name="lineItems['+i+'].warehouse" style="width:160px !important;" class="form-control warehouse'+i+' warehouse"  id="warehouse'+i+'" >'
 						+'<option value="">select</option>'+
 						<c:forEach items="${planMap}" var="planMap">
 						'<option value="${planMap.key}">${planMap.value}</option>'+
@@ -260,7 +410,7 @@ function removeData(index){
 					<div class="large-12 columns">
 						<div class="content-body">
 
-				
+
 
 
 							<form:form method="POST" action="/rfq/save"
@@ -282,42 +432,52 @@ function removeData(index){
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Name</label>
-																	<form:input type="text" cssClass="form-control vendorname"
-																		placeholder='Vendor Name' path="name"
-																		required="true" />
+																	<form:input type="text"
+																		cssClass="form-control vendorname"
+																		placeholder='Vendor Name' path="name" required="true" />
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
 																<div class="col-sm-6 form-group">
 																	<label>Email Id</label>
-																	<form:input type="text" cssClass="form-control emailId" readonly="true"
-																		placeholder='Email Id' path="emailId"
+																	<form:input type="text" cssClass="form-control emailId"
+																		readonly="true" placeholder='Email Id' path="emailId"
 																		required="true" />
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
 															</div>
-															
-															
+
+
 
 															<div class="row">
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>Contact Person </label>
-																	
-																	<form:select path="vendorContactDetails.id"  id="vendorContactDetails"
-																		cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select State ')"	oninput="setCustomValidity('')">
+
+																	<form:select path="vendorContactDetails.id"
+																		id="vendorContactDetails" cssClass="form-control"
+																		required="true"
+																		oninvalid="this.setCustomValidity('Please Select State ')"
+																		oninput="setCustomValidity('')">
 																	</form:select>
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
 
-																<div class="col-sm-6 form-group">
-																	<label>Ship From</label>
-																	<form:select path="vendorAddress.id"  id="vendorAddress"
-																		cssClass="form-control" required="true" >
-																	</form:select>	
-																		
+																<div class="col-sm-4 form-group">
+																	<label>Pay To</label>
+																	<form:select path="vendorPayTypeAddress.id" id="vendorPayToAddress"
+																		cssClass="form-control" required="true">
+																		<form:option value="Select">Select</form:option>
+																	</form:select>
+																</div>
 																
+																<div class="col-sm-4 form-group">
+																	<label>Ship From</label>
+																	<form:select path="vendorShippingAddress.id" id="vendorAddress"
+																		cssClass="form-control" required="true">
+																		<form:option value="Select">Select</form:option>
+																	</form:select>
 																</div>
 
 															</div>
@@ -325,18 +485,44 @@ function removeData(index){
 															<div class="card-body collapse in">
 																<div class="card-block">
 																	<div class="form-body">
+
+																		<div class="row">
+																			<div class="col-sm-6 form-group">
+																				<label>Document Number</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Document Number' path="docNumber"
+																					readonly="true" />
+																				<div style="color: red;"
+																					class="help-block with-errors"></div>
+																			</div>
+
+																			<div class="col-sm-6 form-group">
+																				<label>Reference Document Number</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Reference Document Number'
+																					path="referenceDocNumber" />
+																				<div style="color: red;"
+																					class="help-block with-errors"></div>
+																			</div>
+																		</div>
+
+
+
+
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Posting Date' path="postingDate" />
+																					placeholder='Posting Date' path="postingDate"
+																					autocomplete="off" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Document Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Date' path="documentDate" />
+																					placeholder='Document Date' path="documentDate"
+																					autocomplete="off" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
@@ -346,7 +532,7 @@ function removeData(index){
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					id="require_date" placeholder='Required Date'
-																					path="requiredDate" />
+																					autocomplete="off" path="requiredDate" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
@@ -355,98 +541,132 @@ function removeData(index){
 																</div>
 															</div>
 
+															<ul class="nav nav-tabs" id="myTab" role="tablist">
+																<li class="nav-item"><a class="nav-link active"
+																	id="home-tab" data-toggle="tab" href="#home" role="tab"
+																	aria-controls="home" aria-selected="true">Item
+																		Details</a></li>
+																<li class="nav-item"><a class="nav-link"
+																	id="profile-tab" data-toggle="tab" href="#profile"
+																	role="tab" aria-controls="profile"
+																	aria-selected="false">Inventory</a></li>
+															</ul>
 
-													
-
-															<div class="row">
-																<div class="col-xs-12">
+															<div class="tab-content">
+																<div class="tab-pane active" id="home" role="tabpanel"
+																	aria-labelledby="home-tab">
 																	<div class="row">
-																		<div class="text-right"
-																			style="margin: 0px 20px 10px 0px;">
-																			<input type="button" class="btn btn-info"
-																				id="addItem" value="Add Row">
-																		</div>
-																		<div class="table-responsive">
-																			<div class="col-sm-12">
-																				<table class="table table-bordered table-striped"
-																					id="itemTbl">
-																					<thead>
-																						<tr>
-																							<!-- <th>S.No</th> -->
-																							<th>Category</th>
-																							<th>Product Name</th>
-																							<th>HSN or SAC</th>
-																							<th>UOM</th>
-																							<th>Quantity</th>
-																							<th>Product Group</th>
-																							<th>Ware house</th>
-																							<th>Action</th>
-																						</tr>
-																					</thead>
-																					<tbody>
-																						<c:choose>
-																							<c:when test="${empty rfq.id}">
-																								<tr class="multTot multTot0">
-																								<td>
-																									<form:select class="form-control"
-																											style="width:160px !important;"
-																											path="lineItems[0].category">
-																											<form:option value="" label="Select" />
-																											<form:options items="${categoryMap}" />
-																										</form:select>		
-																								</td>
-																								<td><form:input type="text"
-																											path="lineItems[0].productNo" 
-																											class="form-control productName" ></form:input></td>
-																								
-																									<td><form:input type="text"
-																											path="lineItems[0].hsnOrSac"
-																											class="form-control hsnVal" readonly="true"></form:input></td>
-																										
-																										
-																									<td><form:input type="text"
-																											path="lineItems[0].uom"
-																											class="form-control uom" readonly="true"></form:input></td>
-																												
-																									<%-- <td><form:select class="form-control uom"
-																											style="width:160px !important;"
-																											path="lineItems[0].uom">
-																											<form:option value="" label="Select" />
-																										</form:select>
-																									</td>	 --%>	
-																											
-																									
-																									<td><form:input type="text"
-																											path="lineItems[0].quantity"
-																											class="form-control"></form:input></td>
-																										
-																									<td><form:input type="text"
-																											path="lineItems[0].productGroup"
-																											class="form-control productGroup" readonly="true"></form:input>
-																									</td>
-																										<td><form:select class="form-control"
-																											style="width:160px !important;"
-																											path="lineItems[0].warehouse">
-																											<form:option value="" label="Select" />
-																											<form:options items="${planMap}" />
-																										</form:select>
-																									</td>
-																									<td></td>
+																		<div class="col-xs-12">
+																			<div class="row">
+																				<div class="text-right"
+																					style="margin: 0px 20px 10px 0px;">
+																					<input type="button" class="btn btn-info"
+																						id="addItem" value="Add Row">
+																				</div>
+																				<div class="table-responsive">
+																					<div class="col-sm-12">
+																						<table class="table table-bordered table-striped"
+																							id="itemTbl">
+																							<thead>
+																								<tr>
+																									<!-- <th>S.No</th> -->
+																									<th>Category</th>
+																									<th style="display:none;">Product Id</th>
+																									<th >Product Name</th>
+																									<th>HSN or SAC</th>
+																									<th>UOM</th>
+																									<th>Quantity</th>
+																									<th>Product Group</th>
+																									<th>Ware house</th>
+																									<th>Action</th>
 																								</tr>
-																							</c:when>
+																							</thead>
+																							<tbody>
+																								<c:choose>
+																									<c:when test="${empty rfq.id}">
+																										<tr class="multTot multTot0">
+																											<td><form:select class="form-control"
+																													style="width:160px !important;"
+																													path="lineItems[0].category">
+																													<form:option value="" label="Select" />
+																													<form:options items="${categoryMap}" />
+																												</form:select></td>
+																											<td><form:input type="text"
+																													path="lineItems[0].productName"
+																													class="form-control productName"></form:input></td>
+																													
+																											<td style="display:none;"><form:input type="hidden"
+																													path="lineItems[0].productId"
+																													class="form-control productId"></form:input></td>
 
-																							<c:otherwise>
+																											<td><form:input type="text"
+																													path="lineItems[0].hsnOrSac"
+																													class="form-control hsnVal" readonly="true"></form:input></td>
+
+
+																											<td><form:input type="text"
+																													path="lineItems[0].uom"
+																													class="form-control uom" readonly="true"></form:input></td>
+
+
+																											<td><form:input type="text"
+																													path="lineItems[0].quantity"
+																													class="form-control"></form:input></td>
+
+																											<td><form:input type="text"
+																													path="lineItems[0].productGroup"
+																													class="form-control productGroup"
+																													readonly="true"></form:input></td>
+																											<td><form:select class="form-control"
+																													style="width:160px !important;"
+																													path="lineItems[0].warehouse">
+																													<form:option value="" label="Select" />
+																													<form:options items="${planMap}" />
+																												</form:select></td>
+																											<td></td>
+																										</tr>
+																									</c:when>
+
+																									<c:otherwise>
 																							hiiiiiiiii
 																							</c:otherwise>
-																						</c:choose>
-																					</tbody>
-																				</table>
+																								</c:choose>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																				<br> <br>
 																			</div>
 																		</div>
-																		<br>
-																		<br>
 																	</div>
 																</div>
+
+																<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+																	<table class="table">
+																		<thead>
+																			<tr>
+																				<th style="vertical-align: top; !important">Shipping From</th>
+																				<td>
+																					<div id="shippingAddressTable">
+																					</div>
+																				</td>
+																			</tr>
+																			<tr>
+																				<th style="vertical-align: top; !important">Pay To</th>
+																				<td>
+																					<div id="payToAddressTable">
+																					</div>
+																				</td>
+																			</tr>
+																		</thead>
+
+
+																	</table>
+
+																</div>
+
+
 															</div>
 
 
@@ -457,11 +677,11 @@ function removeData(index){
 											</div>
 										</div>
 									</div>
-									<input type="hidden" id="vendordata"  name="vendorId" />
+									<input type="hidden" id="vendordata" name="vendorId" />
+
+									<form:input type="submit" path="status"   value="Save" class="btn btn-primary"/>
+									<form:input type="submit" path="status"   value="Draft" class="btn btn-primary"/>	
 									
-									<button type="submit" name="submitSave" class="btn btn-primary">
-																				<i class="icon-check2"></i> Save
-																			</button>
 									<div>
 										<a href="#" onclick="goBack()" class="btn btn-primary"
 											style="float: left;"> Back</a>
@@ -494,39 +714,8 @@ function removeData(index){
 </body>
 <!-- alertfy-->
 <!-- form validations-->
-<script>
-  $(function () {
-    //Date picker
-	//var date = new Date();
-	//var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-	//var enddate  = new Date(date.getFullYear(), date.getMonth(), date.getDate()+10);
-    $('#postingDate').datepicker({
-      autoclose: true,
-      format: 'dd/mm/yyyy',
-	  orientation: 'bottom auto'
-    });
-	$('#documentDate').datepicker({
-      autoclose: true,
-      format: 'dd/mm/yyyy',
-      orientation: 'bottom auto'
-    }); 
-	$('#require_date').datepicker({
-      autoclose: true,
-      format: 'dd/mm/yyyy',
-      orientation: 'bottom auto'
-    });
-	// update with current date
-	//$( '#posting_date, #doc_date','#require_date' ).datepicker( 'setDate', today );
-	
-	
- });
- 
 
-    
-</script>
-<script
-	src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/>
-	type="text/javascript"></script>
+
 
 
 </html>

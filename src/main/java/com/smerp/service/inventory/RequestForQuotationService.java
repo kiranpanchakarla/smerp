@@ -6,4 +6,6 @@ public interface RequestForQuotationService {
 
 	RequestForQuotation save(RequestForQuotation requestForQuotation);
 
+	RequestForQuotation findLastDocumentNumber();
+
 }

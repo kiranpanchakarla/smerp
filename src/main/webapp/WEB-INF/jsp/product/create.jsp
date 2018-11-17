@@ -37,11 +37,6 @@ $(document).ready(function(){
 
                 <div class="app-content content container-fluid" style="margin-top: 40px;">
 	<div class="content-wrapper">
-		<div class="content-header row">
-			<div class="col-md-6">
-				<h4>Product</h4>
-			</div>
-		</div>
 		<div class="content-body">
 			<div class="row">
 				<div class="large-12 columns">
@@ -54,15 +49,15 @@ $(document).ready(function(){
 										<div class="card">
 											<div class="card-header">
 												<c:if test="${product.id!=null}">
-													<h4 class="card-title" id="basic-layout-icons">Product/Update</h4>
+													<h2 class="card-title" id="basic-layout-icons">Product/Update</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${product.id==null}">
-													<h4 class="card-title" id="basic-layout-icons">Product/Create</h4>
+													<h2 class="card-title" id="basic-layout-icons">Product/Create</h2>
 												</c:if> 
 											</div>
 											<input type="hidden" id="id" class="form-control" name="id" value="">
-											<div class="card-body collapse in">
+											<div class="card-body collapse in create-block">
 												<div class="card-block">
 													<form class="form">
 														<div class="form-body">
@@ -343,7 +338,11 @@ $(document).ready(function(){
 																</div>
 															</div>
 														</div>
-														<div class="form-actions right">
+														<br>
+														<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a>
 															<a href="<c:url value="/product/productList"/>">
 																<button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> Cancel</button>
 															</a>
@@ -359,8 +358,10 @@ $(document).ready(function(){
 											</div>
 										</div>
 									</div>
+									</div>
+									
 							</section>
-						</form:form> <a href="#" onclick="goBack()" class="btn btn-primary"> Back</a> 
+						</form:form>  
 						</div>
 						<!--  <a class="btn btn-primary" href="/users/4">Back</a> -->
 						<br>

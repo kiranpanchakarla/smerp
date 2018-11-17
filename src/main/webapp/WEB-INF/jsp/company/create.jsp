@@ -20,25 +20,18 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-
-
 	<c:import url="/WEB-INF/jsp/header.jsp" />
-
 	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
 	
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-			</div>
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
 					<div class="large-12 columns">
-
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-
 							<form:form method="POST" action="/company/save"  enctype="multipart/form-data"
 								modelAttribute="company"  data-toggle="validator" role="form"  class="bv-form">
 								<section id="basic-form-layouts">

@@ -35,14 +35,21 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
+								
+								<div>
+									<div class="content-body">
+										<!-- Basic Tables start -->
+
+										<div class="card">
+											<div class="card-header" style="height: 60px;">
+											<div class="row">
+												<div class="col-md-2">
 										<h2 class="content-header-title">Product</h2>
+										</div>
+												<div class="col-md-6">
 										<a class="btn btn-primary" href="<c:url value="/product/create"/>">Create</a>
 									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
+												<div class="col-md-4">
 											<ol class="breadcrumb">
 												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
 												</li>
@@ -53,15 +60,6 @@
 										</div>
 									</div>
 								</div>
-								<div>
-									<div class="content-body">
-										<!-- Basic Tables start -->
-
-										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">Product List</h4>
-												
-											</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
 													 
@@ -70,11 +68,10 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																	<th>Product No.e</th>
+																	<th>Product Number</th>
+																	<th>Description</th>
 																	<th>product Group</th>
 																	<th>Uom Group</th>
-																	<th>Description</th>
-																<!-- 	<th>isActive</th> -->
 																	<th>Actions</th>
 																	
 																</tr>
@@ -83,15 +80,15 @@
 															<c:forEach items="${productList}" var="productList">
 																<tr>
 																	<td>${productList.productNo}</td>
+																	<td>${productList.description}</td>
 																	<td>${productList.productCategory.name}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
-																	<td>${productList.description}</td>
 																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
 																	<td >
-																	 <a class ="btn btn-primary" href="<c:url value="/product/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')"><i class="icon-bin left"></i></a>
-				                                                    <a  class ="btn btn-primary" href="<c:url value="/product/view?productId=${productList.id}"/>"><i class="icon-eye3 left"></i></a>
+																	 <a class ="btn btn-edit" href="<c:url value="/product/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a>
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')"><i class="icon-bin left"></i></a>
+				                                                    <a  class ="btn btn-view" href="<c:url value="/product/view?productId=${productList.id}"/>"><i class="icon-eye3 left"></i></a>
 																	</td>
 																</tr>
 																</c:forEach>

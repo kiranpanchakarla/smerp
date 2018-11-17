@@ -12,8 +12,12 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -34,96 +38,99 @@
 					<div class="large-12 columns">
 
 						<div class="content-wrapper">
-							<div class="content-header row">
-								<div class="content-header-left col-md-6 col-xs-12 mb-1">
-									<h2 class="content-header-title">Product </h2>
-									<a class="btn btn-primary"
-										href="<c:url value="/product/getInfo?productId=${product.id}"/>">Edit</a>
-								</div>
-								<div
-									class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-									<div class="breadcrumb-wrapper col-xs-12">
-										<ol class="breadcrumb">
-										<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-												</li>
-											<li class="breadcrumb-item"><a href="#">Administration</a>
-											</li>
-											<li class="breadcrumb-item active">Product View</li>
-										</ol>
-									</div>
-								</div>
-							</div>
+
 							<div>
 								<div class="content-body">
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header">
-											<h4 class="card-title">Product View</h4>
-											
-										</div>
-
-
-
-										<div class="col-md-12">
-											<div class="card">
-												<div class="card-body collapse in">
-													<div class="table-responsive">
-														<table class="table table-bordered mb-0">
-
-															<tr>
-																<th style="width: 40%;">Product Name</th>
-																<td>${product.productNo}</td>
-															</tr>
-															<tr>
-																<th>Description</th>
-																<td>${product.description}</td>
-															</tr>
-
-															<tr>
-																<th>UOM Group</th>
-																<td>${product.uomCategory.uomCategoryName}</td>
-															</tr>
-
-
-															<tr>
-																<th>Type</th>
-																<td>${product.serviceOrProduct}</td>
-															</tr>
-														</table>
-													</div>
+										<div class="content-header row">
+											<div class="col-md-2">
+												<h2 class="content-header-title">Product</h2>
+											</div>
+											<div class="col-md-6">
+												<a class="btn btn-primary"
+													href="<c:url value="/product/getInfo?productId=${product.id}"/>">Edit</a>
+											</div>
+											<div
+												class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
+												<div class="breadcrumb-wrapper col-xs-12">
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a
+															href="<c:url value="/user/dashboard"/>">Home</a></li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Product View</li>
+													</ol>
 												</div>
 											</div>
 										</div>
 									</div>
-
-
 									<div>
-										<a href="#" onclick="goBack()" class="btn btn-primary"
-											style="float: left;"> Back</a>
-									</div>
+										<div class="content-body">
+											<!-- Basic Tables start -->
 
+											<div class="card">
+
+
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-body collapse in">
+															<div class="table-responsive">
+																<table
+																	class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
+																	<tr class="odd">
+																		<th style="width: 40%;">Product Name</th>
+																		<td>${product.productNo}</td>
+																	</tr>
+																	<tr class="even">
+																		<th>Description</th>
+																		<td>${product.description}</td>
+																	</tr>
+
+																	<tr class="odd">
+																		<th>UOM Group</th>
+																		<td>${product.uomCategory.uomCategoryName}</td>
+																	</tr>
+
+
+																	<tr class="even">
+																		<th>Type</th>
+																		<td>${product.serviceOrProduct}</td>
+																	</tr>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+
+											<div>
+												<a href="#" onclick="goBack()" class="btn btn-primary"
+													style="float: left;"> Back</a>
+											</div>
+
+										</div>
+										<br>
+									</div>
 								</div>
-								<br>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<footer class="footer footer-static footer-light navbar-border">
-		<p class="clearfix text-muted text-sm-center mb-0 px-2">
-			<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-				&copy; 2018 <a href="#" target="_blank"
-				class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved.
-			</span>
-		</p>
-	</footer>
+			<footer class="footer footer-static footer-light navbar-border">
+				<p class="clearfix text-muted text-sm-center mb-0 px-2">
+					<span class="float-md-right d-xs-block d-md-inline-block">Copyright
+						&copy; 2018 <a href="#" target="_blank"
+						class="text-bold-800 grey darken-2">SMERP </a>, All rights
+						reserved.
+					</span>
+				</p>
+			</footer>
 
-	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-
-
+			<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
 
 </html>

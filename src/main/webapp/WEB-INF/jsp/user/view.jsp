@@ -36,12 +36,13 @@
 
 							<div class="content-wrapper">
 								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
+								<div class="col-md-2">
 										<h2 class="content-header-title">User</h2>
+										</div>
+										<div class="col-md-6">
 										<a class="btn btn-primary" href="<c:url value="/user/edit?id=${user.userId}"/>">Edit</a>
 									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
 											<ol class="breadcrumb">
 												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
@@ -58,57 +59,38 @@
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">User View</h4>
-												
-											</div>
-											
+											 
 											
 
     <div class="col-md-12">
         <div class="card">
             <div class="card-body collapse in">
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
 
-                        <tr>
+                        <tr class="odd">
                             <th style="width: 40%;"> Name</th>
                             <td>${user.firstname}  ${user.lastname}</td>
                         </tr>
-                        <tr>
+                        <tr class="even">
                             <th >Email</th>
                             <td>${user.userEmail}</td>
                         </tr>
-                        <tr>
+                        <tr class="odd">
                             <th>Mobile No</th>
                             <td>${user.mobileNo}</td>
                         </tr>
-                        <tr>
+                        <tr class="even">
                             <th>Department</th>
                             <td>${user.department.name}</td>
                         </tr>
                         
-                         <tr>
+                         <tr class="odd">
                             <th>Designation</th>
                             <td>${user.desigination.desigination}</td>
                         </tr>
                         
-                        <%--  <tr>
-                            <th>Reporting Manager</th>
-                            <td>${managername}</td>
-                        </tr>
                         
-                        
-                         <tr>
-                            <th>Phone</th>
-                            <td>${company.phoneNum}</td>
-                        </tr>
-                        
-                        
-                         <tr>
-                            <th>City</th>
-                            <td>${company.city}</td>
-                        </tr> --%>
 
                     </table>
                 </div>

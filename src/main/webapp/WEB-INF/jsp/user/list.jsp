@@ -34,35 +34,30 @@
 				<div class="row">
 					<div class="large-12 columns">
 
-							<div class="content-wrapper">
-								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Users</h2>
-										<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
-										
-									</div>
-								<!-- 	<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Company</li>
-											</ol>
-										</div>
-									</div> -->
-								</div>
-								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">Users List</h4>
-												
+											<div class="card-header" style="height: 60px;">
+											<div class="row">
+												<div class="col-md-2">
+													<h2 class="content-header-title">Users</h2>
+												</div>
+												<div class="col-md-6">
+													<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
+												</div>
+												<div class="col-md-4">
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+														</li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Users</li>
+													</ol>
+												</div>
 											</div>
+
+										</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
 													 
@@ -74,9 +69,7 @@
 																	<th>Name</th>
 																	<th>Designation</th>
 																	<th>Department</th>
-																	<th>Mobile Number</th>
 																	<th>Email</th>
-																	<th>Status</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -86,16 +79,11 @@
 																	<td>${list.firstname} ${list.lastname}</td>
 																	<td>${list.desigination.desigination}</td>
 																	<td>${list.department.name}</td>
-																	<td>${list.mobileNo}</td>
 																	<td>${list.userEmail}</td>
-																	<th>
-																	<c:if test="${list.enabled eq true}">Active</c:if>
-																	<c:if test="${list.enabled eq false}">InActive</c:if>
-																	</th>
 																	<td>
-																	 <a class ="btn btn-primary" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>|
-														    		<a class ="btn btn-primary" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
+																	 <a class ="btn btn-edit" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a>  
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>
+														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							
 																</tr>
 																</c:forEach>

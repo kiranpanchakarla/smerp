@@ -12,15 +12,9 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<%-- <link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>">
-<link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>"> --%>
-
 
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> -->
-
-
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
@@ -66,13 +60,7 @@
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<!-- <div class="card-header">
-												<h4 class="card-title">Company View</h4>
-												
-											</div> -->
-											
-											
-											
+											 			
 
     <div class="col-md-12">
         <div class="card">

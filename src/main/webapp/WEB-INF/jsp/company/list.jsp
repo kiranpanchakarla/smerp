@@ -70,11 +70,8 @@
 																<tr>
 																    <th>SNO</th>
 																	<th>Name</th>
-																	<th>TagLine</th>
 																	<th>GSTN</th>
-																	<th>Mobile</th>
 																	<th>City</th>
-																	<th>ZipCode</th>
 																	<th>WebSite</th>
 																	<th>Actions</th>
 																</tr>
@@ -85,11 +82,8 @@
 																<td><c:set var="count" value="${count + 1}" scope="page" />
                                                                      <c:out value="${count}" />  </td>
 																	<td>${companyList.name}</td>
-																	<td>${companyList.companyTagLine}</td>
 																	<td>${companyList.gstinVat}</td>
-																	<td>${companyList.phoneNum}</td>
 																	<td>${companyList.city}</td>
-																	<td>${companyList.zipCode}</td>
 																	<td>${companyList.webSite}</td>
 																	<td >
 																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>"><i class="icon-edit left"></i></a>  

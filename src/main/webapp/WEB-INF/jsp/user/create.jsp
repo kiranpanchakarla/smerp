@@ -11,22 +11,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
-</head>
+
 
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
 
+</head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	
 	<div class="app-content content container-fluid" style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6">
-					<h4>USER</h4>
-				</div>
-			</div>
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
@@ -40,18 +37,17 @@
 											<div class="card">
 												<div class="card-header">
 													<c:if test="${user.userId!=null}">
-														<h4 class="card-title" id="basic-layout-icons">Update</h4>
+														<h2 class="card-title" id="basic-layout-icons">User/Update</h2>
 														<form:input type="hidden" cssClass="form-control" path="userId" />
 													</c:if>
 													<c:if test="${user.userId==null}">
-														<h4 class="card-title" id="basic-layout-icons">Create</h4>
+														<h2 class="card-title" id="basic-layout-icons">User/Create</h2>
 													</c:if>	
 												</div>
 												<input type="hidden" id="designationValue" class="form-control" name="id" value="${user.desigination.desigination}">
 												<input type="hidden" id="designationKey" class="form-control" name="id" value="${user.desigination.id}">
 												<div class="card-body collapse in">
-													<div class="card-block">
-														<form class="form">
+													<div class="card-block collapse in create-block">
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group">
@@ -59,6 +55,7 @@
 																		<form:input type="text" cssClass="form-control" placeholder='First Name' path="firstname" required="true" oninvalid="this.setCustomValidity('Please Enter First Name')" oninput="setCustomValidity('')" />
 																		<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
+																	
 																	<div class="col-sm-6 form-group">
 																		<label>Last Name</label>
 																		<form:input type="text" cssClass="form-control" placeholder='Lat Name' path="lastname" required="true" oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')" />
@@ -72,7 +69,7 @@
 																		<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																	<div class="col-sm-2 form-group">
-																		<label>Image</label>
+																		<!-- <label>Image</label> -->
 																		<%-- <form:input type="file" cssClass="form-control" accept="image/*" onchange="loadFile(event)" path="logo" value="${company.logo}" />--%>
 																		<p>
 																			<input type="file" name="file" id="file" value="${user.image}" onchange="return fileValidation(event)" style="display: none;" required="true" oninvalid="this.setCustomValidity('Please Upload Image')" oninput="setCustomValidity('')" />
@@ -82,7 +79,9 @@
 																			<label for="file" style="cursor: pointer;">
 																				<img src="${contextPath}/resources/images/company/cameraIcon.png">
 																			</label>
+																			
 																		</p>
+																		<label style="margin-left: -40px;margin-top: 30px;">Image</label>
 																		<div style="color:red;" id="3_errorContainer" class="help-block with-errors"></div>
 																	</div>
 																	<div class="col-sm-4 form-group">
@@ -152,7 +151,10 @@
 																	</div>
 																</div>
 															</div>
-															<div class="form-actions right">
+															<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a>
 																<a href="<c:url value="/user/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> Cancel</button>
 																</a>
@@ -163,14 +165,14 @@
 																	<button type="submit" class="btn btn-primary">	<i class="icon-check2"></i> Save</button>
 																</c:if>
 															</div>
-														</form>
+														
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</section>
-							</form:form> <a href="#" onclick="goBack()" class="btn btn-primary"> Back</a> 
+							</form:form> 
 							<!-- 	<a class="btn btn-primary" href="#">Back</a> <br> <br> -->
 							<!-- // Basic form layout section end -->
 						</div>

@@ -12,8 +12,10 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
 <%-- <link href="<c:url value="/resources/css/style.css"/>"
     rel="stylesheet" type="text/css" /> --%>
@@ -29,113 +31,121 @@
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
 			<div class="content-header row">
-				<div class="col-md-6">
-					 
-				</div>
+				<div class="col-md-6"></div>
 			</div>
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
 					<div class="large-12 columns">
 
-							<div class="content-wrapper">
-								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Vendor</h2>
-										<a class="btn btn-primary" href="<c:url value="/vendor/create"/>">Create</a>
-									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Vendor</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-								<div>
-									<div class="content-body">
-										<!-- Basic Tables start -->
+						<div class="content-wrapper">
 
-										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">Vendor List</h4>
-												
+							<div>
+								<div class="content-body">
+									<!-- Basic Tables start -->
+
+									<div class="card">
+										<div class="card-header" style="height: 60px;">
+											<div class="row">
+												<div class="col-md-2">
+													<h2 class="content-header-title">Vendor</h2>
+												</div>
+												<div class="col-md-6">
+													<a class="btn btn-primary"
+														href="<c:url value="/vendor/create"/>">Create</a>
+												</div>
+												<div class="col-md-4">
+														<ol class="breadcrumb">
+															<li class="breadcrumb-item"><a
+																href="/user/dashboard">Home</a></li>
+															<li class="breadcrumb-item"><a href="#">Administration</a>
+															</li>
+															<li class="breadcrumb-item active">Vendor</li>
+														</ol>
+													</div>
+												</div>
 											</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
-													 
+
 													<div class="table-responsive">
-														<table id="example" class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
+														<table id="example"
+															class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>SNO</th>
+																	<th>SNO</th>
 																	<th>vendor Name</th>
 																	<th>vendorCode</th>
-																	<th>GroupName</th>
-																	<th>PhoneNumber</th>
-																	<th>Bank Name</th>
-																	<th>fax</th>
+																	 
+																	
 																	<th>Actions</th>
 																</tr>
 															</thead>
 															<tbody>
-															<c:forEach items="${vendorList}" var="vendorList">
-																<tr>
-																<td><c:set var="count" value="${count + 1}" scope="page" />
-                                                                     <c:out value="${count}" />  </td>
-																	<td>${vendorList.name}</td>
-																	<td>${vendorList.vendorCode}</td>
-																	<td>${vendorList.groupName}</td>
-																	<td>${vendorList.mobileNo}</td>
-																	<td>${vendorList.bankName}</td>
-																	<td>${vendorList.fax}</td>
-																	<td >
-																	 <a class ="btn btn-primary" href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i class="icon-bin left"></i></a>|
-															    	<a  class ="btn btn-primary" href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i class="icon-eye3 left"></i></a>
-																	</td>
-																</tr>
+																<c:forEach items="${vendorList}" var="vendorList">
+																	<tr>
+																		<td><c:set var="count" value="${count + 1}"
+																				scope="page" /> <c:out value="${count}" /></td>
+																		<td>${vendorList.name}</td>
+																		<td>${vendorList.vendorCode}</td>
+																		<td><a class="btn btn-edit"
+																			href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
+																				class="icon-edit left"></i></a>  <a
+																			class="btn btn-delete" href="#"
+																			onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
+																				class="icon-bin left"></i></a> <a
+																			class="btn btn-view"
+																			href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
+																				class="icon-eye3 left"></i></a></td>
+																	</tr>
 																</c:forEach>
 															</tbody>
-														
+
 														</table>
 													</div>
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 									<br>
 								</div>
 							</div>
+						</div>
 					</div>
-					</div>
-</div></div></div>
-				<footer class="footer footer-static footer-light navbar-border">
-  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
-</footer>
+				</div>
+			</div>
+		</div>
+		<footer class="footer footer-static footer-light navbar-border">
+			<p class="clearfix text-muted text-sm-center mb-0 px-2">
+				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
+					&copy; 2018 <a href="#" target="_blank"
+					class="text-bold-800 grey darken-2">SMERP </a>, All rights
+					reserved.
+				</span>
+			</p>
+		</footer>
 
-<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-<script type="text/javascript">
+		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#example').DataTable({
+					"scrollX" : true
+				});
+			});
+		</script>
 
-$(document).ready(function() {
-	  $('#example').DataTable( {
-		  "scrollX": true
-	    } );
-} );
-
-</script>
-
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script> 
+		<script
+			src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+			type="text/javascript"></script>
+		<script
+			src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
+			type="text/javascript"></script>
+		<script
+			src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
+			type="text/javascript"></script>
 </body>
-	
+
 </html>
 

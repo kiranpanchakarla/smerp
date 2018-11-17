@@ -36,95 +36,101 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Vendor</h2>
-										<a class="btn btn-primary" href="<c:url value="/vendor/getInfo?vendorId=${vendor.id}"/>">Edit</a>
-									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Vendor</li>
-											</ol>
-										</div>
-									</div>
-								</div>
+								
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
 
-										<div class="card">
-											<div class="card-header">
-												<h4 class="card-title">Vendor View</h4>
-												
+									<div class="card">
+										<div class="content-header row">
+											<div class="col-md-2">
+												<h2 class="content-header-title">Vendor</h2>
 											</div>
-											
-											
-
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body collapse in">
-                <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
-
-                        <tr>
-                            <th style="width: 40%;">vendor Name</th>
-                            <td>${vendor.name}</td>
-                        </tr>
-                        <tr>
-                            <th >vendor Code</th>
-                            <td>${vendor.vendorCode}</td>
-                        </tr>
-                        <tr>
-                            <th>vendor Tagline</th>
-                            <td>${vendor.groupName}</td>
-                        </tr>
-                        <tr>
-                            <th>Mobile Number</th>
-                            <td>${vendor.mobileNo}</td>
-                        </tr>
-                        
-                        
-                         <tr>
-                            <th>Bank Name</th>
-                            <td>${vendor.bankName}</td>
-                        </tr>
-                        
-                        
-                         <tr>
-                            <th>fax</th>
-                            <td>${vendor.fax}</td>
-                        </tr>
-                        
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-											
-											
-											
-											
-											
-											
+											<div class="col-md-6">
+												<a class="btn btn-primary"
+													href="<c:url value="/vendor/getInfo?vendorId=${vendor.id}"/>">Edit</a>
+											</div>
+											<div
+												class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
+												<div class="breadcrumb-wrapper col-xs-12">
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+														</li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Vendor</li>
+													</ol>
+												</div>
+											</div>
 										</div>
-										
-										
-										<div>
-										<a href="#" onclick="goBack()" class="btn btn-primary"
-											style="float: left;"> Back</a>
 									</div>
-										
+									<div>
+										<div class="content-body">
+											<!-- Basic Tables start -->
+
+											<div class="card">
+
+
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-body collapse in">
+															<div class="table-responsive">
+																<table
+																	class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
+
+																	<tr class="odd">
+																		<th style="width: 40%;">vendor Name</th>
+																		<td>${vendor.name}</td>
+																	</tr>
+																	<tr class="even">
+																		<th>vendor Code</th>
+																		<td>${vendor.vendorCode}</td>
+																	</tr>
+																	<tr class="odd">
+																		<th>vendor Tagline</th>
+																		<td>${vendor.groupName}</td>
+																	</tr>
+																	<tr class="even">
+																		<th>Mobile Number</th>
+																		<td>${vendor.mobileNo}</td>
+																	</tr>
+
+
+																	<tr class="odd">
+																		<th>Bank Name</th>
+																		<td>${vendor.bankName}</td>
+																	</tr>
+
+
+																	<tr class="even">
+																		<th>fax</th>
+																		<td>${vendor.fax}</td>
+																	</tr>
+
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+
+
+
+
+
+
+
+											</div>
+
+
+											<div>
+												<a href="#" onclick="goBack()" class="btn btn-primary"
+													style="float: left;"> Back</a>
+											</div>
+
+										</div>
+										<br>
 									</div>
-									<br>
 								</div>
-							</div>
 					</div>
 					</div>
 </div></div></div>

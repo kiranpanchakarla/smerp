@@ -25,11 +25,6 @@
 
                 <div class="app-content content container-fluid" style="margin-top: 40px;">
                     <div class="content-wrapper">
-                        <div class="content-header row">
-                            <div class="col-md-6">
-                                <h4>Vendor</h4>
-                            </div>
-                        </div>
                         <div class="content-body">
                             <!--/ project charts -->
                             <div class="row">
@@ -46,46 +41,48 @@
                                                         <div class="card">
                                                             <div class="card-header">
                                                              <c:if test = "${vendor.id!=null}">  
-												   <h4 class="card-title" id="basic-layout-icons">Vendor/Update</h4>
+												   <h2 class="card-title" id="basic-layout-icons">Vendor/Update</h2>
      					 									<form:input type="hidden" cssClass="form-control"  path="id"  />
 								 				 </c:if>
 								 				 
 								 				  <c:if test = "${vendor.id==null}">  
-												   <h4 class="card-title" id="basic-layout-icons">Vendor/Create</h4>
+												   <h2 class="card-title" id="basic-layout-icons">Vendor/Create</h2>
 								 				 </c:if>
                                                             </div>
 
 
-                                                            <div class="card-body collapse in">
+                                                            <div class="card-body collapse in create-block">
                                                                 <div class="card-block">
                                                                    
                                                                         <div class="form-body">
                                                                             <div class="row">
-                                                                                <div class="col-sm-6 form-group">
+                                                                                <div class="col-sm-4 form-group">
                                                                                     <label>Vendor Code</label>
                                                                                     <form:input type="text" class="form-control" placeholder='vendorCode' path="vendorCode" value=""
                                                                                     required="true" oninvalid="this.setCustomValidity('Please Enter Vendor Code')"	oninput="setCustomValidity('')"/>
                                                                                <div style="color:red;" class="help-block with-errors"></div>
                                                                                 </div>
                                                                                
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-6 form-group">
+                                                                               <div class="col-sm-4 form-group">
                                                                                     <label>Vendor Name</label>
                                                                                     <form:input type="text" class="form-control" placeholder='name' path="name" value=""  onchange="isValidName('name','/vendor/isValidVendorName','1_errorContainer','Vendor Name Already Exists')"
                                                                                      required="true" oninvalid="this.setCustomValidity('Please Enter Vendor Name')"	oninput="setCustomValidity('')"/>
                                                                                     <div style="color:red;"  id="1_errorContainer"   class="help-block with-errors"></div>
                                                                                      
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-6 form-group">
+                                                                               
+                                                                                <div class="col-sm-4 form-group">
                                                                                     <label>Group</label>
                                                                                      <form:input type="text" class="form-control" placeholder='groupName' path="groupName" value="" 
                                                                                       required="true" oninvalid="this.setCustomValidity('Please Enter Group Name')"	oninput="setCustomValidity('')"/>
                                                                                     <div style="color:red;"  class="help-block with-errors"></div>
                                                                                 </div>
+                                                                               
+                                                                               
+                                                                               
+                                                                               
                                                                             </div>
+                                                                             
                                                                             
                                                                         </div>
                                                                         <form class="form">
@@ -111,8 +108,7 @@
 																					 required="true"  maxlength="10"  oninvalid="this.setCustomValidity('Please Enter Mobile Number')"	oninput="setCustomValidity('')"/>
                                                                                     <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
-																		</div>
-																		<div class="row">
+																			
 																			<div class="col-sm-6 form-group">
 																				<label>Fax</label>
 																				<form:input path="fax" placeholder='fax' type="text"
@@ -120,7 +116,11 @@
 																					 required="true" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')"/>
                                                                                     <div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
+																			
+																			
+																			
 																		</div>
+																		 
 																		<div class="row">
 																			<div class="col-md-6 form-group">
 																				<label>Email</label>
@@ -130,8 +130,7 @@
 																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
 																	<div style="color:red;"  class="help-block with-errors" ></div>
 																			</div>
-																		</div>
-																		<div class="row">
+																			
 																			<div class="col-md-6 form-group">
 																				<label>Business Type</label>
 																				<form:select path="businessPartnerType"
@@ -143,7 +142,9 @@
 																				</form:select>
 																				<div style="color:red;"  class="help-block with-errors"></div>
 																			</div>
+																			
 																		</div>
+																		 
 
 																		<!--Single Contact  -->
 																		
@@ -341,7 +342,7 @@
 											  
 																		<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
 																		 <div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">
-																		 <label>Add Vendor Address Details</label></div></div><div class="col-md-3">  
+																		 <label>Vendor Address Details</label></div></div><div class="col-md-3">  
 												
 												 						<label class="checkbox-inline"><input type="checkbox" checked="checked" name="vendorAddress[0].payTo"  value="payTo" >Pay To</label>
 												 					     &nbsp; &nbsp; &nbsp; 
@@ -357,7 +358,7 @@
 																		</div>
 																		
 																		<div class="col-xs-12 col-sm-4">
-																		<div class="form-group"><label>Address Name</label>
+																		<div class="form-group"><label>Address</label>
 																		<input type="text" name="vendorAddress[0].addressName" class="form-control"  
 																		required="true" oninvalid="this.setCustomValidity('Please Enter Address')"	oninput="setCustomValidity('')"/><div style="color:red;"  class="help-block with-errors"></div>
 																		</div>
@@ -570,7 +571,7 @@
 																		<div class="row">
 																			
 																			<div class="col-sm-4 form-group">
-																				<label>paymentTerms</label>
+																				<label>Payment Terms</label>
 																				<form:input path="paymentTerms" placeholder='paymentTerms'
 																					type="text" class="form-control" 
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Payment Terms')"	oninput="setCustomValidity('')"/>
@@ -578,7 +579,7 @@
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
-																				<label>creditLimit</label>
+																				<label>Credit Limit</label>
 																				<form:input path="creditLimit" placeholder='creditLimit' type="text"
 																					class="form-control"  onkeypress="return isNumericKey(event)"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Credit Limit')"	oninput="setCustomValidity('')"/>
@@ -670,7 +671,11 @@
 
 															</div>
                     									</form>
-                   										 <div class="form-actions right">
+                    									<br>
+                   										<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a>
 																<a href="<c:url value ="/vendor/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
@@ -701,7 +706,7 @@
                                     </section>
 
                                     </form:form>
-                                     <a href="#" onclick="goBack()" class="btn btn-primary"> Back</a> 
+                                   
                                      </div>
                                    <!--  <a class="btn btn-primary" href="/users/4">Back</a> -->
                                     <br>
@@ -717,16 +722,15 @@
                     </div>
                 </div>
 
-                <footer class="footer footer-static footer-light navbar-border">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="footer_logo">
-                                <img src="/resources/images/footer_logo.png">
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                 <footer class="footer footer-static footer-light navbar-border">
+			<p class="clearfix text-muted text-sm-center mb-0 px-2">
+				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
+					&copy; 2018 <a href="#" target="_blank"
+					class="text-bold-800 grey darken-2">SMERP </a>, All rights
+					reserved.
+				</span>
+			</p>
+		</footer>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
               	<%--  <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
     </body>

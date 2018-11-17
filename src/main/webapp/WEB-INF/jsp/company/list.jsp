@@ -69,10 +69,10 @@
 															<thead>
 																<tr>
 																    <th>SNO</th>
-																	<th>Company Name</th>
-																	<th>Company TagLine</th>
+																	<th>Name</th>
+																	<th>TagLine</th>
 																	<th>GSTN</th>
-																	<th>PhoneNumber</th>
+																	<th>Mobile</th>
 																	<th>City</th>
 																	<th>ZipCode</th>
 																	<th>WebSite</th>
@@ -92,9 +92,9 @@
 																	<td>${companyList.zipCode}</td>
 																	<td>${companyList.webSite}</td>
 																	<td >
-																	 <a class ="btn btn-primary" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-warning" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')"><i class="icon-bin left"></i></a>|
-															    	<a  class ="btn btn-primary" href="<c:url value="/company/view?companyId=${companyList.id}"/>"><i class="icon-eye3 left"></i></a>
+																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>"><i class="icon-edit left"></i></a>  
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')"><i class="icon-bin left"></i></a>
+															    	<a  class ="btn btn-view" href="<c:url value="/company/view?companyId=${companyList.id}"/>"><i class="icon-eye3 left"></i></a>
 																	</td>
 																</tr>
 																</c:forEach>

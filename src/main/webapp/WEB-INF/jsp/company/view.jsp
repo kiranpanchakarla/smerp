@@ -41,15 +41,16 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
+								<div class="card-header"><div class="content-header row">
+									<div class="col-md-2">
 										<h2 class="content-header-title">Company</h2>
+										</div>
+										<div class="col-md-6">
 										<a class="btn btn-primary" href="<c:url value="/company/getInfo?companyId=${company.id}"/>">Edit</a>
 									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb"><c:url value="/user/dashboard"/>
+											<ol class="breadcrumb">
 												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
@@ -59,15 +60,17 @@
 										</div>
 									</div>
 								</div>
+								</div>
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<div class="card-header">
+											<!-- <div class="card-header">
 												<h4 class="card-title">Company View</h4>
 												
-											</div>
+											</div> -->
+											
 											
 											
 
@@ -75,39 +78,40 @@
         <div class="card">
             <div class="card-body collapse in">
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <!-- <table class="table table-bordered mb-0 view-table"></table> -->
+                    <table class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
 
-                        <tr>
+                        <tr class="odd">
                             <th style="width: 40%;">Company Name</th>
                             <td>${company.name}</td>
                         </tr>
-                        <tr>
+                        <tr class="even">
                             <th >Company logo</th>
                             <td><p><img  src="${filePath}" alt="See" id="output" width="100" height="70" /></p></td>
                         </tr>
-                        <tr>
+                        <tr class="odd">
                             <th>Company Tagline</th>
                             <td>${company.companyTagLine}</td>
                         </tr>
-                        <tr>
+                        <tr class="even">
                             <th>Email</th>
                             <td>${company.emailId}</td>
                         </tr>
                         
                         
-                         <tr>
+                         <tr class="odd">
                             <th>State</th>
                             <td>${company.states.name}</td>
                         </tr>
                         
                         
-                         <tr>
+                         <tr class="even">
                             <th>Phone</th>
                             <td>${company.phoneNum}</td>
                         </tr>
                         
                         
-                         <tr>
+                         <tr class="odd">
                             <th>City</th>
                             <td>${company.city}</td>
                         </tr>

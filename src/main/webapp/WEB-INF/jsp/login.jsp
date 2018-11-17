@@ -21,22 +21,22 @@
   <div class="content-wrapper">
     <div class="content-header row"> </div>
     <div class="content-body">
-      <section class="flexbox-container">
-        <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1  box-shadow-2 p-0">
-          <div class="card border-grey border-lighten-3 m-0">
-          <c:if test="${not empty errorMsg}">
-							<div class="alert alert-danger">
-							 <b>${errorMsg}</b>
-							</div>
-			</c:if>
-			
-            <div class="card-header no-border">
-              <div class="card-title text-xs-center">
+      <section class="flexbox-container login-main">
+        <div class="col-md-3">
+        <div class="card-title text-xs-center">
                 <div class="p-1">
                 <img style="width: 150px;"  src="<c:url value="/resources/images/logo.png"/>"/>
                 <!-- <img src="/resources/images/logo.png" style="width: 150px;" alt="branding logo"> -->
                 </div>
               </div>
+          <div class="card border-grey border-lighten-3 m-0">
+          <c:if test="${not empty errorMsg}">
+							<div class="alert alert-danger">
+							 <b>${errorMsg}</b>
+							</div>
+			</c:if>		
+            <div class="card-header no-border">
+              
               <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login Here</span></h6>
             </div>
             <div class="card-body collapse in">

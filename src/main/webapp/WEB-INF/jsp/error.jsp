@@ -40,6 +40,10 @@
                             <th>Exception</th>
                             <td>${exception}</td>
                         </tr>
+                          <tr>
+                            <th>Cause</th>
+                            <td>${cause}</td>
+                        </tr>
                         <tr>
                             <th>Trace</th>
                             <td>${trace}</td>

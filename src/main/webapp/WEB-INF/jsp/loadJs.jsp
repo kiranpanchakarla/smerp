@@ -106,7 +106,7 @@
 	   });
    }
   
-  function isValidName(nameId,url,displayId){
+  function isValidName(nameId,url,displayId,msg){
 	  var dataString  ="name="+$('#'+nameId).val();
 	  $.ajax({
 			 type:"GET",
@@ -114,9 +114,9 @@
 			 data : dataString,
 			 success: function(result){
 				 if(result==true){
-					 alertify.success('Field Already Exist');
+					 alertify.success(msg);
 					 $('#'+nameId).val('');
-					 $('#'+displayId).html('Field Already Exist');
+					 $('#'+displayId).html(msg);
 				 }else {
 					 $('#'+displayId).html(''); 
 				 }

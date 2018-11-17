@@ -104,6 +104,19 @@ public class VendorController {
 		return "redirect:list";
 	}
 	
+	@GetMapping(value = "/isValidVendorName")
+	@ResponseBody
+	public boolean isValidVendorName(String name) {
+		logger.info("VendorName" + name);
+		Vendor vendor = vendorService.findByName(name);
+		if (vendor != null) {
+			logger.info("Vendor Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@RequestMapping(value = "/getVendorInfo", method = RequestMethod.GET)
 	@ResponseBody
 	private String getInvoiceListByInvNumber(@RequestParam("vendorname") String vendorname) throws JsonProcessingException {

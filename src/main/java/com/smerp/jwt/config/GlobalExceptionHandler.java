@@ -21,6 +21,9 @@ public class GlobalExceptionHandler {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
+		mav.addObject("cause", exception.getCause());
+		mav.addObject("message", exception.getMessage());
+		mav.addObject("trace", exception.getStackTrace());
 		mav.addObject("url", req.getRequestURL());
 		mav.setViewName("error");
 		return mav;

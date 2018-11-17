@@ -6,4 +6,6 @@ import com.smerp.model.inventory.RequestForQuotation;
 
 public interface RequestForQuotationRepository extends JpaRepository<RequestForQuotation, Integer> {
 
+	RequestForQuotation findTopByOrderByIdDesc();
+
 }

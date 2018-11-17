@@ -53,14 +53,31 @@ public class RequestForQuotationController {
 	
 
 	@GetMapping("/create")
-	public String createPage(Model model) throws JsonProcessingException {
-		model.addAttribute("rfq", new RequestForQuotation());
+	public String createPage(Model model,RequestForQuotation rfq) throws JsonProcessingException {
 		model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
 		ObjectMapper mapper = new ObjectMapper();
+		RequestForQuotation rfqdetails=requestForQuotationService.findLastDocumentNumber();
+		if (rfqdetails.getDocNumber()!=null) {
+			rfq.setDocNumber(documentNumberGeneration(rfqdetails.getDocNumber()));
+		}else {
+			rfq.setDocNumber("doc_1");
+		}
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("rfq",rfq);
 		return "rfq/create";
+	}
+
+
+	private String documentNumberGeneration(String documentNumber) {
+		String[] parts = documentNumber.split("_");
+		String prefix = parts[0]; // 004
+		String suffix = parts[1];
+		int docno=Integer.parseInt(suffix)+1;
+		
+		String docNumber=prefix+'_'+docno;
+		return docNumber;
 	}
 	
 	@PostMapping("/save")

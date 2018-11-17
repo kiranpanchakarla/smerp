@@ -19,8 +19,11 @@ public class LineItems {
 	@Column(name="lineitem_id" , nullable = false, unique = true)
 	private Integer id;
 
-	@Column(name="productNo")
-	private String productNo;
+	@Column(name="productId")
+	private Integer productId;
+	
+	@Column(name="productName")
+	private String productName;
 	
 	@Column(name="uom")
 	private String uom;
@@ -46,12 +49,15 @@ public class LineItems {
 	
 	
 
-	public String getProductNo() {
-		return productNo;
+
+
+
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProductNo(String productNo) {
-		this.productNo = productNo;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public String getUom() {
@@ -99,6 +105,14 @@ public class LineItems {
 		return id;
 	}
 
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -121,10 +135,14 @@ public class LineItems {
 
 	@Override
 	public String toString() {
-		return "LineItems [id=" + id + ", productNo=" + productNo + ", uom=" + uom + ", quantity=" + quantity
-				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsnOrSac=" + hsnOrSac
-				+ ", category=" + category + ", requestForQuotation=" + requestForQuotation + "]";
+		return "LineItems [id=" + id + ", productId=" + productId + ", productName=" + productName + ", uom=" + uom
+				+ ", quantity=" + quantity + ", productGroup=" + productGroup + ", warehouse=" + warehouse
+				+ ", hsnOrSac=" + hsnOrSac + ", category=" + category + ", requestForQuotation=" + requestForQuotation
+				+ "]";
 	}
 
+	
+	
+	
 
 }

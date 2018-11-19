@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smerp.jwt.config.TokenProvider;
 import com.smerp.model.admin.User;
+import com.smerp.service.UserService;
+import com.smerp.service.admin.CompanyServices;
+import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.ProductService;
 
 @Controller
 public class LoginController {
@@ -29,7 +34,17 @@ public class LoginController {
 	@Autowired
 	TokenProvider  tokenProvider;
 
+	@Autowired
+	private UserService userService;
 	
+	@Autowired
+	CompanyServices companyServices;
+	
+	@Autowired
+	ProductService  productService; 
+	
+	@Autowired
+	VendorService vendorService;
 
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	@ExceptionHandler(value = Exception.class)
@@ -56,7 +71,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public String dashboard(HttpSession session) {
+	public String dashboard(HttpSession session,Model model) {
 		
 		
 		Authentication auth=SecurityContextHolder.getContext().getAuthentication();
@@ -65,10 +80,20 @@ public class LoginController {
 		
 		session.setAttribute("tokenId", token);
 		
+		
+		
 		try {
 			User user=(User) auth.getPrincipal();
 			
 			logger.info("company details----------"+user.getCompany());
+			
+			logger.info("userService"+userService.findAll().size());
+			logger.info("productService" +productService.findByIsActive().size());
+			logger.info("vendorService" +vendorService.findByIsActive().size());
+			model.addAttribute("userListCount", userService.findAll().size());
+			model.addAttribute("productsCount", productService.findByIsActive().size());
+			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,6 +101,7 @@ public class LoginController {
 		
 		return "home";
 	}
+	
 	
 /*	
 	@RequestMapping("/tokenExpired")

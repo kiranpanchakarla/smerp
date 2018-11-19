@@ -16,6 +16,18 @@
  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.nav-item').click(function(){
+		$(this).parent('ul').find('li').removeClass('active');
+		$(this).parent('ul').find('li').find('a').removeClass('active');
+		$(this).find('a').addClass('active');
+	});
+});
+
+
+</script>
+
     </head>
 
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">

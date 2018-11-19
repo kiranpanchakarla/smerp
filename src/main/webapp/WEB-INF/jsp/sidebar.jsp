@@ -3,7 +3,7 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow"> 
   <div class="main-menu-content">
     <ul class="side_main_menu">
-      <li><a href="<c:url value ="/user/dashboard"/>"><i class="icon-android-home left"></i><span class="menu_text">DASHBOARD</span><span class="menu_text_pad">&nbsp;</span></a>
+      <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-home left"></i><span class="menu_text">DASHBOARD</span><span class="menu_text_pad">&nbsp;</span></a>
         <ul class="sub_menu">
          <%--  <li class="has_sub"><a href="<c:url value ="/users/4"/>">Users</a></li> --%>
          <%-- <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li> --%>

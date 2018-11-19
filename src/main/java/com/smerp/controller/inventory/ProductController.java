@@ -84,7 +84,7 @@ public class ProductController {
 	@PostMapping(value = "/save")
 	public String save( Product product,Model model,BindingResult result) {
 	    productService.save(product);
-		return "redirect:productList";
+		return "redirect:list";
 	}
 		
 	@GetMapping(value = "/list")

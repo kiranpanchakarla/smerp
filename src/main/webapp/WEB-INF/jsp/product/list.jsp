@@ -68,6 +68,7 @@
 															style="width: 100%">
 															<thead>
 																<tr>
+																	<th>SNO</th>
 																	<th>Product Number</th>
 																	<th>Description</th>
 																	<th>product Group</th>
@@ -79,6 +80,8 @@
 															<tbody>
 															<c:forEach items="${productList}" var="productList">
 																<tr>
+																<td><c:set var="count" value="${count + 1}" scope="page" />
+                                                                     <c:out value="${count}" />  </td>
 																	<td>${productList.productNo}</td>
 																	<td>${productList.description}</td>
 																	<td>${productList.productCategory.name}</td>
@@ -107,9 +110,7 @@
 					</div>
 					</div>
 </div></div></div>
-				<footer class="footer footer-static footer-light navbar-border">
-  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
-</footer>
+			<c:import url="/WEB-INF/jsp/footer.jsp" />
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 <script type="text/javascript">

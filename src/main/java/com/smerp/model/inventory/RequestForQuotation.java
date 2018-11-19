@@ -31,12 +31,6 @@ public class RequestForQuotation {
 	@JoinColumn(name="vendor_id")
 	private Vendor vendor;
 	
-	private transient String name;
-	private transient String emailId;
-	
-	private transient String vendorId;
-	
-	
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "rfq_id", referencedColumnName = "rfq_id")
@@ -67,27 +61,6 @@ public class RequestForQuotation {
 	@JoinColumn(name = "vendor_contact_id")
 	private VendorsContactDetails vendorContactDetails;
 	
-	
-	
-	
-	public String getVendorId() {
-		return vendorId;
-	}
-	public void setVendorId(String vendorId) {
-		this.vendorId = vendorId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getEmailId() {
-		return emailId;
-	}
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
 	public String getDocNumber() {
 		return docNumber;
 	}
@@ -170,6 +143,8 @@ public class RequestForQuotation {
 				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
 				+ ", vendorContactDetails=" + vendorContactDetails + "]";
 	}
+
+	
 	
 	
 	

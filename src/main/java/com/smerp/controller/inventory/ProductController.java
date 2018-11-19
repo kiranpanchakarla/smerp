@@ -87,11 +87,11 @@ public class ProductController {
 		return "redirect:productList";
 	}
 		
-	@GetMapping(value = "/productList")
+	@GetMapping(value = "/list")
 	public String list(Model model) {
 		List<Product> productList = productService.findByIsActive();
 		model.addAttribute("productList", productList);
-		return "product/productList";
+		return "product/list";
 	}
 		
 	@GetMapping(value = "/getInfo")

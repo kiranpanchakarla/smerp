@@ -12,9 +12,9 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
+
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
@@ -35,61 +35,59 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
-								<div class="col-md-2">
-										<h2 class="content-header-title">User</h2>
+								<div class="card-header"><div class="content-header row">
+									<div class="col-md-2">
+										<h2 class="content-header-title">RFQ</h2>
 										</div>
 										<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/user/edit?id=${user.userId}"/>">Edit</a>
+										<a class="btn btn-primary" href="<c:url value="/rfq/create?id=${rfq.id}"/>">Edit</a>
 									</div>
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
 											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
-												<li class="breadcrumb-item active">User</li>
+												<li class="breadcrumb-item active">rfq</li>
 											</ol>
 										</div>
 									</div>
+								</div>
 								</div>
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											 
-											
+											 			
 
     <div class="col-md-12">
         <div class="card">
             <div class="card-body collapse in">
                 <div class="table-responsive">
+                    <!-- <table class="table table-bordered mb-0 view-table"></table> -->
                     <table class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
+
                         <tr class="odd">
-                            <th style="width: 40%;"> Name</th>
-                            <td>${user.firstname}  ${user.lastname}</td>
+                            <th style="width: 40%;">Vendor Name</th>
+                            <td >${rfq.vendor.name}</td>
                         </tr>
+                       
                         <tr class="even">
-                            <th >Email</th>
-                            <td>${user.userEmail}</td>
+                            <th >Document Number</th>
+                          <td>${rfq.docNumber}</td>
                         </tr>
                         <tr class="odd">
-                            <th>Mobile No</th>
-                            <td>${user.mobileNo}</td>
-                        </tr>
-                        <tr class="even">
-                            <th>Department</th>
-                            <td>${user.department.name}</td>
-                        </tr>
-                        
-                         <tr class="odd">
-                            <th>Designation</th>
-                            <td>${user.desigination.desigination}</td>
+                            <th>Reference Document  Number</th>
+                           <td>${rfq.referenceDocNumber}</td>
                         </tr>
                         
                         
+                         <tr class="even">
+                            <th >Document Date</th>
+                           <td>${rfq.documentDate}</td>
+                        </tr>
 
                     </table>
                 </div>
@@ -118,8 +116,9 @@
 					</div>
 					</div>
 </div></div></div>
-			<c:import url="/WEB-INF/jsp/footer.jsp" />
-			<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+				<c:import url="/WEB-INF/jsp/footer.jsp" />
+
+<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 
 </body>
 	

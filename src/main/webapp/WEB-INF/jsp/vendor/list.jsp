@@ -55,96 +55,84 @@
 														href="<c:url value="/vendor/create"/>">Create</a>
 												</div>
 												<div class="col-md-4">
-														<ol class="breadcrumb">
-															<li class="breadcrumb-item"><a
-																href="/user/dashboard">Home</a></li>
-															<li class="breadcrumb-item"><a href="#">Administration</a>
-															</li>
-															<li class="breadcrumb-item active">Vendor</li>
-														</ol>
-													</div>
-												</div>
-											</div>
-											<div class="card-body collapse in">
-												<div class="card-block card-dashboard">
-
-													<div class="table-responsive">
-														<table id="example"
-															class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
-															style="width: 100%">
-															<thead>
-																<tr>
-																	<th>SNO</th>
-																	<th>vendor Name</th>
-																	<th>vendorCode</th>
-																	 
-																	
-																	<th>Actions</th>
-																</tr>
-															</thead>
-															<tbody>
-																<c:forEach items="${vendorList}" var="vendorList">
-																	<tr>
-																		<td><c:set var="count" value="${count + 1}"
-																				scope="page" /> <c:out value="${count}" /></td>
-																		<td>${vendorList.name}</td>
-																		<td>${vendorList.vendorCode}</td>
-																		<td><a class="btn btn-edit"
-																			href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
-																				class="icon-edit left"></i></a>  <a
-																			class="btn btn-delete" href="#"
-																			onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
-																				class="icon-bin left"></i></a> <a
-																			class="btn btn-view"
-																			href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
-																				class="icon-eye3 left"></i></a></td>
-																	</tr>
-																</c:forEach>
-															</tbody>
-
-														</table>
-													</div>
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a></li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Vendor</li>
+													</ol>
 												</div>
 											</div>
 										</div>
+										<div class="card-body collapse in">
+											<div class="card-block card-dashboard">
 
+												<div class="table-responsive">
+													<table id="example"
+														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
+														style="width: 100%">
+														<thead>
+															<tr>
+																<th>SNO</th>
+																<th>vendor Name</th>
+																<th>vendorCode</th>
+
+
+																<th>Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${vendorList}" var="vendorList">
+																<tr>
+																	<td><c:set var="count" value="${count + 1}"
+																			scope="page" /> <c:out value="${count}" /></td>
+																	<td>${vendorList.name}</td>
+																	<td>${vendorList.vendorCode}</td>
+																	<td><a class="btn btn-edit"
+																		href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
+																			class="icon-edit left"></i></a> <a class="btn btn-delete"
+																		href="#"
+																		onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
+																			class="icon-bin left"></i></a> <a class="btn btn-view"
+																		href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
+																			class="icon-eye3 left"></i></a></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
 									</div>
-									<br>
 								</div>
+								<br>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<footer class="footer footer-static footer-light navbar-border">
-			<p class="clearfix text-muted text-sm-center mb-0 px-2">
-				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
-					class="text-bold-800 grey darken-2">SMERP </a>, All rights
-					reserved.
-				</span>
-			</p>
-		</footer>
+	</div>
+	<c:import url="/WEB-INF/jsp/footer.jsp" />
 
-		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$('#example').DataTable({
-					"scrollX" : true
-				});
+	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable({
+				"scrollX" : true
 			});
-		</script>
+		});
+	</script>
 
-		<script
-			src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
-			type="text/javascript"></script>
-		<script
-			src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
-			type="text/javascript"></script>
-		<script
-			src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
-			type="text/javascript"></script>
+	<script
+		src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
+		type="text/javascript"></script>
 </body>
 
 </html>

@@ -20,7 +20,8 @@
       </li>
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/product/productList"/>">Product</a></li>
+          <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
+           <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product UOM Category</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Unit Of Measure</a></li>

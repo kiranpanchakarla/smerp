@@ -44,6 +44,25 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	var id=$('#id').val();
+	
+	//alert("id--->"+id);
+
+		if(id!=''){
+			var vendorName=$('.vendorname').val();
+			alert("vendorName"+vendorName);
+			autocompletevendorDetails(vendorName);
+			var payTypeAddressId='${vendorPayTypeAddressId}';
+			var shippingAddressId='${vendorShippingAddressId}';
+			
+			
+			alert("payTypeAddressId--->"+payTypeAddressId);
+			alert("shippingAddressId--->"+shippingAddressId);
+			vendorShippingAddress(shippingAddressId);
+			vendorPayTypeAddress(payTypeAddressId);
+		}
+	
+	
 	  var date = new Date();
 	  var today = new Date(date.getDate(),date.getFullYear(), date.getMonth());
 	  var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -88,20 +107,19 @@ $(document).ready(function(){
 	
 	
 		$(document).on("keypress", ".vendorname", function() {
-			var itemParentRow = $(this).parents(".multTot");
 			$(this).autocomplete({
 		        source: availableTagsvendornames,
 		        select: function(event, ui) {
 		        	var vendorname = ui.item.value;
 		        //	alert(vendorname);
-		            autocompletevendorDetails(vendorname,itemParentRow);
+		            autocompletevendorDetails(vendorname);
 		       		 },
 		        }); 
 			});
 			 
 		
 		//get the vendor information based on vendor name
-    	function autocompletevendorDetails(vendorname,itemParentRow){
+    	function autocompletevendorDetails(vendorname){
 			alert(vendorname);
 			//$("#vendorContactDetails").html("");
 		//	 $("#vendorAddress").html("");
@@ -223,84 +241,92 @@ $(document).ready(function(){
     	$('#vendorAddress').on('change', function() {
     		var shippingId=$('#vendorAddress').val();
     		$('#shippingAddressTable').html("");
-    		
-    		$.ajax({
- 			   type: "GET",
-     			data: {shippingId :shippingId}, 
-     			async : false,
-                 url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
-                 success: function (response) {
-                	console.log(response);
-                		var obj =JSON.parse(response);
-                 	
-                		//shippingAddress
-                		//shippingAddressTableTr
-                		var addr=obj.addressName;
-                		var street=obj.street;
-                		var city=obj.city;
-                		var zipCode=obj.zipCode;
-                		
-                		//$('#shippingAddressTable').html("");
-                		
-                		$('#shippingAddressTable').append(addr+', ');
-                		$('#shippingAddressTable').append(street+'<br/>');
-                		$('#shippingAddressTable').append(city+' - ');
-                		$('#shippingAddressTable').append(zipCode+'<br/>');
-                		
-                		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
-                            if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
-                            	var country=obj.country.name;
-                                $('#shippingAddressTable').append(country);
-                            }
-                		}
-                 	
-                	 },
-                 error: function(e){
-                  alert('Error: ' + e);
-                  }
-                 });
-    	
+    		vendorShippingAddress(shippingId);
     	});
+    	
+    	
+    	
+    	function vendorShippingAddress(shippingId){
+			$.ajax({
+	 			   type: "GET",
+	     			data: {shippingId :shippingId}, 
+	     			async : false,
+	                 url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
+	                 success: function (response) {
+	                	console.log(response);
+	                		var obj =JSON.parse(response);
+	                 	
+	                		//shippingAddress
+	                		//shippingAddressTableTr
+	                		var addr=obj.addressName;
+	                		var street=obj.street;
+	                		var city=obj.city;
+	                		var zipCode=obj.zipCode;
+	                		
+	                		//$('#shippingAddressTable').html("");
+	                		
+	                		$('#shippingAddressTable').append(addr+', ');
+	                		$('#shippingAddressTable').append(street+'<br/>');
+	                		$('#shippingAddressTable').append(city+' - ');
+	                		$('#shippingAddressTable').append(zipCode+'<br/>');
+	                		
+	                		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
+	                            if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
+	                            	var country=obj.country.name;
+	                                $('#shippingAddressTable').append(country);
+	                            }
+	                		}
+	                 	
+	                	 },
+	                 error: function(e){
+	                  alert('Error: ' + e);
+	                  }
+	                 });
+		}
     	
     					// pay to address ajax call
 	
                                 $('#vendorPayToAddress').on('change', function() {
                             		var shippingId=$('#vendorPayToAddress').val();
                             		$('#payToAddressTable').html("");
-                            		
-                            		$.ajax({
-                         			   type: "GET",
-                             			data: {shippingId :shippingId}, 
-                             			async : false,
-                                         url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
-                                         success: function (response) {
-                                        	console.log(response);
-                                        		var obj =JSON.parse(response);
-                                        		var addr=obj.addressName;
-                                        		var street=obj.street;
-                                        		var city=obj.city;
-                                        		var zipCode=obj.zipCode;
-                                        		
-                                        		
-                                        		$('#payToAddressTable').append(addr+', ');
-                                        		$('#payToAddressTable').append(street+'<br/>');
-                                        		$('#payToAddressTable').append(city+' - ');
-                                        		$('#payToAddressTable').append(zipCode+'<br/>');
-                                        		
-                                        		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
-                                                    if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
-                                                    	var country=obj.country.name;
-                                                        $('#payToAddressTable').append(country);
-                                                    }
-                                        		}
-                                         	
-                                        	 },
-                                         error: function(e){
-                                          alert('Error: ' + e);
-                                          }
-                                         });
-                            	
+                            		vendorPayTypeAddress(shippingId);
                             	});
+    					
+    					
+                                function vendorPayTypeAddress(shippingId){
+                        			$.ajax({
+                          			   type: "GET",
+                              			data: {shippingId :shippingId}, 
+                              			async : false,
+                                          url: "<c:url value="/vendor/getShippingAddressInfo"/>", 
+                                          success: function (response) {
+                                         	console.log(response);
+                                         		var obj =JSON.parse(response);
+                                         		var addr=obj.addressName;
+                                         		var street=obj.street;
+                                         		var city=obj.city;
+                                         		var zipCode=obj.zipCode;
+                                         		
+                                         		
+                                         		$('#payToAddressTable').append(addr+', ');
+                                         		$('#payToAddressTable').append(street+'<br/>');
+                                         		$('#payToAddressTable').append(city+' - ');
+                                         		$('#payToAddressTable').append(zipCode+'<br/>');
+                                         		
+                                         		if(obj.country!="" && obj.country != null && (typeof(obj.country)!= "undefined")){
+                                                     if(obj.country.name != "" && obj.country.name != "undefined" && (typeof(obj.country.name) != "undefined")){
+                                                     	var country=obj.country.name;
+                                                         $('#payToAddressTable').append(country);
+                                                     }
+                                         		}
+                                          	
+                                         	 },
+                                          error: function(e){
+                                           alert('Error: ' + e);
+                                           }
+                                          });
+                        		}
+    					
                         	
 	
 	//alert("ready");
@@ -380,7 +406,7 @@ $(document).ready(function(){
 		i++;
 	});
 	
-});
+  });
 
 
 function removeData(index){
@@ -434,21 +460,22 @@ function removeData(index){
 																	<label>Name</label>
 																	<form:input type="text"
 																		cssClass="form-control vendorname"
-																		placeholder='Vendor Name' path="name" required="true" />
+																		placeholder='Vendor Name' path="vendor.name"
+																		required="true" />
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
 																<div class="col-sm-6 form-group">
 																	<label>Email Id</label>
 																	<form:input type="text" cssClass="form-control emailId"
-																		readonly="true" placeholder='Email Id' path="emailId"
-																		required="true" />
+																		readonly="true" placeholder='Email Id'
+																		path="vendor.emailId" required="true" />
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
 															</div>
 
-
+															<form:hidden path="id" />
 
 															<div class="row">
 																<div class="col-sm-4 form-group">
@@ -466,17 +493,19 @@ function removeData(index){
 
 																<div class="col-sm-4 form-group">
 																	<label>Pay To</label>
-																	<form:select path="vendorPayTypeAddress.id" id="vendorPayToAddress"
-																		cssClass="form-control" required="true">
-																		<form:option value="Select">Select</form:option>
+																	<form:select path="vendorPayTypeAddress.id"
+																		id="vendorPayToAddress" cssClass="form-control"
+																		required="true">
+																		<%-- <form:option value="Select">Select</form:option> --%>
 																	</form:select>
 																</div>
-																
+
 																<div class="col-sm-4 form-group">
 																	<label>Ship From</label>
-																	<form:select path="vendorShippingAddress.id" id="vendorAddress"
-																		cssClass="form-control" required="true">
-																		<form:option value="Select">Select</form:option>
+																	<form:select path="vendorShippingAddress.id"
+																		id="vendorAddress" cssClass="form-control"
+																		required="true">
+																		<%-- <form:option value="Select">Select</form:option> --%>
 																	</form:select>
 																</div>
 
@@ -571,8 +600,8 @@ function removeData(index){
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th>Category</th>
-																									<th style="display:none;">Product Id</th>
-																									<th >Product Name</th>
+																									<th style="display: none;">Product Id</th>
+																									<th>Product Name</th>
 																									<th>HSN or SAC</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
@@ -594,9 +623,9 @@ function removeData(index){
 																											<td><form:input type="text"
 																													path="lineItems[0].productName"
 																													class="form-control productName"></form:input></td>
-																													
-																											<td style="display:none;"><form:input type="hidden"
-																													path="lineItems[0].productId"
+
+																											<td style="display: none;"><form:input
+																													type="hidden" path="lineItems[0].productId"
 																													class="form-control productId"></form:input></td>
 
 																											<td><form:input type="text"
@@ -628,8 +657,75 @@ function removeData(index){
 																									</c:when>
 
 																									<c:otherwise>
-																							hiiiiiiiii
-																							</c:otherwise>
+																										<!--1 multiply Dynamically Load   -->
+																										<c:if test="${not empty lineItems}">
+
+																											<c:set var="count" value="0" scope="page" />
+																											<c:forEach items="${lineItems}"
+																												var="listLineItems">
+																												<tr class="multTot multTot0">
+																													<td><form:select class="form-control"
+																															style="width:160px !important;"
+																															path="lineItems[${count}].category">
+																															<form:option value="" label="Select" />
+																															<form:options items="${categoryMap}" />
+																														</form:select></td>
+																													<td><form:input type="text"
+																															path="lineItems[${count}].productName"
+																															value="${listLineItems.productName}"
+																															class="form-control productName"></form:input></td>
+
+																													<td style="display: none;"><form:input
+																															type="hidden"
+																															path="lineItems[${count}].productId"
+																															value="${listLineItems.productId}"
+																															class="form-control productId"></form:input></td>
+
+																													<td><form:input type="text"
+																															path="lineItems[${count}].hsnOrSac"
+																															value="${listLineItems.hsnOrSac}"
+																															class="form-control hsnVal"
+																															readonly="true"></form:input></td>
+
+
+																													<td><form:input type="text"
+																															path="lineItems[${count}].uom"
+																															value="${listLineItems.uom}"
+																															class="form-control uom" readonly="true"></form:input></td>
+
+
+																													<td><form:input type="text"
+																															path="lineItems[${count}].quantity"
+																															value="${listLineItems.quantity}"
+																															class="form-control"></form:input></td>
+
+																													<td><form:input type="text"
+																															path="lineItems[${count}].productGroup"
+																															value="${listLineItems.productGroup}"
+																															class="form-control productGroup"
+																															readonly="true"></form:input></td>
+																													<td><form:select class="form-control"
+																															style="width:160px !important;"
+																															path="lineItems[${count}].warehouse">
+																															<form:option value="" label="Select" />
+																															<form:options items="${planMap}" />
+																														</form:select></td>
+																													<td></td>
+																												</tr>
+
+																												<c:set var="count" value="${count + 1}"
+																													scope="page" />
+																											</c:forEach>
+
+																											<input type="hidden" id="addressCount"
+																												value="${count}">
+																											<input type="hidden" id="addressIndexCount"
+																												value="${count}">
+
+																										</c:if>
+
+
+																									</c:otherwise>
 																								</c:choose>
 																							</tbody>
 																						</table>
@@ -641,36 +737,29 @@ function removeData(index){
 																	</div>
 																</div>
 
-																<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+																<div class="tab-pane" id="profile" role="tabpanel"
+																	aria-labelledby="profile-tab">
 
 																	<table class="table">
 																		<thead>
 																			<tr>
-																				<th style="vertical-align: top; !important">Shipping From</th>
+																				<th style="vertical-align: top; !important">Shipping
+																					From</th>
 																				<td>
-																					<div id="shippingAddressTable">
-																					</div>
+																					<div id="shippingAddressTable"></div>
 																				</td>
 																			</tr>
 																			<tr>
-																				<th style="vertical-align: top; !important">Pay To</th>
+																				<th style="vertical-align: top; !important">Pay
+																					To</th>
 																				<td>
-																					<div id="payToAddressTable">
-																					</div>
+																					<div id="payToAddressTable"></div>
 																				</td>
 																			</tr>
 																		</thead>
-
-
 																	</table>
-
 																</div>
-
-
 															</div>
-
-
-
 														</div>
 													</div>
 												</div>
@@ -678,22 +767,26 @@ function removeData(index){
 										</div>
 									</div>
 									<input type="hidden" id="vendordata" name="vendorId" />
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<form:input type="submit" path="status" value="Save"
+												class="btn btn-primary" />
+											<form:input type="submit" path="status" value="Draft"
+												class="btn btn-primary" />
+										</div>
+										<div class="col-sm-6 form-group">
 
-									<form:input type="submit" path="status"   value="Save" class="btn btn-primary"/>
-									<form:input type="submit" path="status"   value="Draft" class="btn btn-primary"/>	
-									
-									<div>
-										<a href="#" onclick="goBack()" class="btn btn-primary"
-											style="float: left;"> Back</a>
+											<a href="<c:url value="/rfq/list"/>">
+												<button type="button" class="btn btn-warning mr-1">
+													<i class="icon-cross2"></i> Cancel
+												</button>
+											</a> <a href="#" onclick="goBack()"
+												class="btn btn-primary float-left"> Back </a>
+										</div>
 									</div>
+
 								</section>
 							</form:form>
-
-
-
-
-
-
 						</div>
 					</div>
 					<!--/ project charts -->
@@ -701,15 +794,13 @@ function removeData(index){
 				</div>
 			</div>
 		</div>
+
 	</div>
-	<footer class="footer footer-static footer-light navbar-border">
-		<p class="clearfix text-muted text-sm-center mb-0 px-2">
-			<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-				&copy; 2018 <a href="#" target="_blank"
-				class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved.
-			</span>
-		</p>
-	</footer>
+
+
+	<c:import url="/WEB-INF/jsp/footer.jsp" />
+
+
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
 <!-- alertfy-->

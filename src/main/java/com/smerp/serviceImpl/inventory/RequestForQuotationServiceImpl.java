@@ -1,5 +1,7 @@
 package com.smerp.serviceImpl.inventory;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +22,24 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
-		Vendor vendor=vendorService.findById(Integer.parseInt(requestForQuotation.getVendorId()));
+		Vendor vendor=vendorService.findById(requestForQuotation.getVendor().getId());
 		requestForQuotation.setVendor(vendor);
 		return requestForQuotationRepository.save(requestForQuotation);
 	}
 
 	@Override
 	public RequestForQuotation	 findLastDocumentNumber() {
-		// TODO Auto-generated method stub
 		return requestForQuotationRepository.findTopByOrderByIdDesc();
+	}
+
+	@Override
+	public List<RequestForQuotation> findAll() {
+		return requestForQuotationRepository.findAll();
+	}
+
+	@Override
+	public RequestForQuotation findById(int id) {
+		return requestForQuotationRepository.findById(id).get();
 	}
 
 }

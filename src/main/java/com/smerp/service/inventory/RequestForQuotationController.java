@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smerp.jwt.controller.UserController;
 import com.smerp.model.admin.Plant;
+import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.master.PlantService;
@@ -68,8 +68,49 @@ public class RequestForQuotationController {
 		model.addAttribute("rfq",rfq);
 		return "rfq/create";
 	}
+	
+	@GetMapping("/edit")
+	public String edit(String id,Model model) throws JsonProcessingException {
+		RequestForQuotation rfq=requestForQuotationService.findById(Integer.parseInt(id));
+		
+		VendorAddress vendorPayTypeAddress=rfq.getVendorPayTypeAddress();
+		VendorAddress  vendorShippingAddress=rfq.getVendorShippingAddress();
+		
+		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
+		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
+		model.addAttribute("lineItems",rfq.getLineItems());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("categoryMap", categoryMap());
+		model.addAttribute("planMap", plantMap());
+		
+		model.addAttribute("rfq",rfq);
+		return "rfq/create";
+	}
 
-
+	@GetMapping("/view")
+	public String view(String id,Model model) throws JsonProcessingException {
+		RequestForQuotation rfq=requestForQuotationService.findById(Integer.parseInt(id));
+		
+		VendorAddress vendorPayTypeAddress=rfq.getVendorPayTypeAddress();
+		VendorAddress  vendorShippingAddress=rfq.getVendorShippingAddress();
+		
+		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
+		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
+		model.addAttribute("lineItems",rfq.getLineItems());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("categoryMap", categoryMap());
+		model.addAttribute("categoryMap", categoryMap());
+		model.addAttribute("planMap", plantMap());
+		
+		model.addAttribute("rfq",rfq);
+		return "rfq/view";
+	}
 	private String documentNumberGeneration(String documentNumber) {
 		String[] parts = documentNumber.split("_");
 		String prefix = parts[0]; // 004
@@ -81,12 +122,20 @@ public class RequestForQuotationController {
 	}
 	
 	@PostMapping("/save")
-	public void name(RequestForQuotation requestForQuotation) {
+	public String name(RequestForQuotation requestForQuotation) {
 		logger.info("Inside save method");
 		logger.info("rfq details"+requestForQuotationService.save(requestForQuotation));
-		
-		
+		 return "rfq/list";
 	}
+	
+	
+	@GetMapping("/list")
+	public String list(Model model) {
+	 List<RequestForQuotation>	list=requestForQuotationService.findAll();
+	 model.addAttribute("list", list);
+	 return "rfq/list";
+	}
+	
 
 	public Map<String, Object> categoryMap() {
 		Map<String, Object> map = new LinkedHashMap<>();

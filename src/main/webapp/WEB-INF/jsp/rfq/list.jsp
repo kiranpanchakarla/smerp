@@ -43,10 +43,10 @@
 											<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-2">
-													<h2 class="content-header-title">Users</h2>
+													<h2 class="content-header-title">RFQ List</h2>
 												</div>
 												<div class="col-md-6">
-													<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
+													<a class="btn btn-primary" href="<c:url value="/rfq/create"/>">Create</a>
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
@@ -54,7 +54,7 @@
 														</li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-													<li class="breadcrumb-item active">Users</li>
+														<li class="breadcrumb-item active">RFQ List</li>
 													</ol>
 												</div>
 											</div>
@@ -68,30 +68,36 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>SNO</th>
-																	<th>Name</th>
-																	<th>Designation</th>
-																	<th>Department</th>
-																	<th>Email</th>
+																	<th>SNO</th>
+																	<th>Vendor Name</th>
+																	<th>EmailId</th>
+																	<th>Document Number</th>
+																	<!-- <th>Posting Date</th>
+																	<th>Document Date</th>
+																	<th>Required Date</th> -->
+																	<th>Status</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
 															<tbody>
 															<c:forEach items="${list}" var="list">
 																<tr>
-																<td><c:set var="count" value="${count + 1}" scope="page" />
+																	<td><c:set var="count" value="${count + 1}" scope="page" />
                                                                      <c:out value="${count}" />  </td>
-																	<td>${list.firstname} ${list.lastname}</td>
-																	<td>${list.desigination.desigination}</td>
-																	<td>${list.department.name}</td>
-																	<td>${list.userEmail}</td>
+																	<td>${list.vendor.name}</td>
+																	<td>${list.vendor.emailId}</td>
+																	<td>${list.docNumber}</td>
+																	<%-- <td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.postingDate}" /> </td>
+																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.documentDate}" /> </td>
+																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.requiredDate}" /> </td> --%>
+																	<td>${list.status}</td>
 																	<td>
-																	 <a class ="btn btn-edit" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a>  
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>
-														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
+																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a> | 
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a>|
+														    		<a class ="btn btn-view" href="<c:url value="/rfq/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							
 																</tr>
-																</c:forEach>
+														  </c:forEach>
 															</tbody>
 														
 														</table>

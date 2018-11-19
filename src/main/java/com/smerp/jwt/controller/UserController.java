@@ -228,13 +228,6 @@ public class UserController {
 		return map;
 	}
 
-	@RequestMapping(value = { "/dashboard" }, method = RequestMethod.GET)
-	public String getHome(Model model) {
-		
-		model.addAttribute("userListCount", userService.findAll().size());
-		model.addAttribute("productsCount", productService.findByIsActive().size());
-		model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
-		return "home";
-	}
+	
 
 }

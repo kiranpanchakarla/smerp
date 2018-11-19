@@ -50,14 +50,14 @@ $(document).ready(function(){
 
 		if(id!=''){
 			var vendorName=$('.vendorname').val();
-			alert("vendorName"+vendorName);
+			//alert("vendorName"+vendorName);
 			autocompletevendorDetails(vendorName);
 			var payTypeAddressId='${vendorPayTypeAddressId}';
 			var shippingAddressId='${vendorShippingAddressId}';
 			
 			
-			alert("payTypeAddressId--->"+payTypeAddressId);
-			alert("shippingAddressId--->"+shippingAddressId);
+			//alert("payTypeAddressId--->"+payTypeAddressId);
+			//alert("shippingAddressId--->"+shippingAddressId);
 			vendorShippingAddress(shippingAddressId);
 			vendorPayTypeAddress(payTypeAddressId);
 		}
@@ -120,7 +120,7 @@ $(document).ready(function(){
 		
 		//get the vendor information based on vendor name
     	function autocompletevendorDetails(vendorname){
-			alert(vendorname);
+			//alert(vendorname);
 			//$("#vendorContactDetails").html("");
 		//	 $("#vendorAddress").html("");
 			
@@ -146,7 +146,7 @@ $(document).ready(function(){
                 		});
                 	
                 	  $.each(vendoraddress, function( index, value ) {
-              		  alert( index + ": " + JSON.stringify(value) );
+              		 // alert( index + ": " + JSON.stringify(value) );
               			 if(value.payTo!=null && "shipFrom".localeCompare(value.shipFrom)){
               		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
               			 }else{
@@ -156,7 +156,7 @@ $(document).ready(function(){
                 	
                	 },
                 error: function(e){
-                 alert('Error: ' + e);
+                // alert('Error: ' + e);
                  }
                 });
 		}
@@ -181,7 +181,7 @@ $(document).ready(function(){
 	        source: availableTags,
 	        select: function(event, ui) {
 	        	name = ui.item.value;
-	        	alert(name);
+	        	//alert(name);
 	             autocompleteandchange(name,itemParentRow);
 	       		 },
 	        }); 
@@ -190,7 +190,7 @@ $(document).ready(function(){
 
 	//get the product information based on product  name
     	function autocompleteandchange(name,itemParentRow){
-			alert(name);
+			//alert(name);
 			
     	 $.ajax({
 			   type: "GET",
@@ -209,7 +209,7 @@ $(document).ready(function(){
                 	
                 	
                 	var hsndata=obj.hsnCode;
-                	alert("hsnCode"+hsndata.hsnCode);
+                	//alert("hsnCode"+hsndata.hsnCode);
                 //	$('.hsnVal').val(hsndata.hsnCode);
                 
                 	$(itemParentRow).find(".productName").val(obj.description);
@@ -219,7 +219,7 @@ $(document).ready(function(){
                 	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
                 	
                 	var uom=obj.purchasingUom.uomName;
-                	alert("uom"+uom);
+                	//alert("uom"+uom);
                 	//$('.uom').val(uom);
                 	
                 	 $(itemParentRow).find(".uom").val(uom);
@@ -233,7 +233,7 @@ $(document).ready(function(){
                 	
                	 },
                 error: function(e){
-                 alert('Error: ' + e);
+               //  alert('Error: ' + e);
                  }
                 });
 		}
@@ -279,7 +279,7 @@ $(document).ready(function(){
 	                 	
 	                	 },
 	                 error: function(e){
-	                  alert('Error: ' + e);
+	               //   alert('Error: ' + e);
 	                  }
 	                 });
 		}
@@ -322,7 +322,7 @@ $(document).ready(function(){
                                           	
                                          	 },
                                           error: function(e){
-                                           alert('Error: ' + e);
+                                        //   alert('Error: ' + e);
                                            }
                                           });
                         		}

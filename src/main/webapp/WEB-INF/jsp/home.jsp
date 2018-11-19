@@ -58,8 +58,8 @@
               <div class="card-block">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h4 class="pink">5</h4>
-                    <span>Purchase</span> </div>
+                    <h3 class="pink">${productsCount}</h3>
+                    <span>Products</span> </div>
                   <div class="media-right media-middle"> <i class="icon-bag2 pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
@@ -72,8 +72,8 @@
               <div class="card-block">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3 class="teal">6</h3>
-                    <span>Admin</span> </div>
+                    <h3 class="teal">${userListCount}</h3>
+                    <span>Users</span> </div>
                   <div class="media-right media-middle"> <i class="icon-user1 teal font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
@@ -86,8 +86,8 @@
               <div class="card-block">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3 class="deep-orange">99.99 %</h3>
-                    <span>Inventory</span> </div>
+                    <h3 class="deep-orange">${vendorListCount}</h3>
+                    <span>Vendors</span> </div>
                   <div class="media-right media-middle"> <i class="icon-diagram deep-orange font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>

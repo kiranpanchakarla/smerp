@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +32,8 @@ import com.smerp.service.UserService;
 import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.admin.DesignationService;
+import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.CurrencyServices;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.RoleService;
@@ -72,6 +73,12 @@ public class UserController {
 	
 	@Autowired
 	PlantService plantService;
+	
+	@Autowired
+	ProductService  productService; 
+	
+	@Autowired
+	VendorService vendorService;
 
 	@GetMapping("/create")
 	private String createPage(Model model , User user) {
@@ -222,7 +229,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/dashboard" }, method = RequestMethod.GET)
-	public String getHome() {
+	public String getHome(Model model) {
+		
+		model.addAttribute("userListCount", userService.findAll().size());
+		model.addAttribute("productsCount", productService.findByIsActive().size());
+		model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
 		return "home";
 	}
 

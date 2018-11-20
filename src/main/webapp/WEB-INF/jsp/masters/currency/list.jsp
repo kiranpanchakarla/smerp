@@ -74,9 +74,8 @@
 														<thead>
 															<tr>
 																<th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">Currency Name</th>
-																<th style="text-align: center;">Currency
-																	Description</th>
+																<th style="text-align: center;">Name</th>
+																<th style="text-align: center;">Description</th>
 																<th style="text-align: center;">Actions</th>
 															</tr>
 														</thead>

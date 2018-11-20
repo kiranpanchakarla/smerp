@@ -425,11 +425,11 @@ function removeData(index){
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
+			<!-- <div class="content-header row">
 				<div class="col-md-6">
 					<h4>RFQ</h4>
 				</div>
-			</div>
+			</div> -->
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
@@ -446,10 +446,10 @@ function removeData(index){
 									<div class="row match-height">
 
 										<div class="col-md-12">
-											<div class="card">
+											<div class="card-box">
 												<div class="card-header">
 
-													<h4 class="card-title" id="basic-layout-icons">RFQ/Create</h4>
+													<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
 												</div>
 
 												<div class="card-body collapse in">
@@ -512,7 +512,7 @@ function removeData(index){
 															</div>
 
 															<div class="card-body collapse in">
-																<div class="card-block">
+																<div class="card-block-in">
 																	<div class="form-body">
 
 																		<div class="row">
@@ -570,7 +570,7 @@ function removeData(index){
 																</div>
 															</div>
 
-															<ul class="nav nav-tabs" id="myTab" role="tablist">
+															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
 																<li class="nav-item"><a class="nav-link active"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
@@ -586,14 +586,10 @@ function removeData(index){
 																	aria-labelledby="home-tab">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<div class="row">
-																				<div class="text-right"
-																					style="margin: 0px 20px 10px 0px;">
-																					<input type="button" class="btn btn-info"
-																						id="addItem" value="Add Row">
-																				</div>
+																			<div class="row-in">
+																				
 																				<div class="table-responsive">
-																					<div class="col-sm-12">
+																					<div class="full-col-table">
 																						<table class="table table-bordered table-striped"
 																							id="itemTbl">
 																							<thead>
@@ -731,7 +727,10 @@ function removeData(index){
 																						</table>
 																					</div>
 																				</div>
-																				<br> <br>
+																				<div class="add-row-block">
+																					<input type="button" class="btn btn-info"
+																						id="addItem" value="Add Row">
+																				</div>
 																			</div>
 																		</div>
 																	</div>
@@ -740,7 +739,7 @@ function removeData(index){
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
 
-																	<table class="table">
+																	<table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -767,24 +766,26 @@ function removeData(index){
 										</div>
 									</div>
 									<input type="hidden" id="vendordata" name="vendorId" />
-									<div class="row">
+									<div class="card-block"><div class="row">
 										<div class="col-sm-6 form-group">
-											<form:input type="submit" path="status" value="Save"
+											<a href="#" onclick="goBack()"
+												class="btn btn-primary"> Back </a>
+												
+										</div>
+										<div class="col-sm-6 form-group">
+                                              <form:input type="submit" path="status" value="Save"
 												class="btn btn-primary" />
 											<form:input type="submit" path="status" value="Draft"
 												class="btn btn-primary" />
-										</div>
-										<div class="col-sm-6 form-group">
-
+												
 											<a href="<c:url value="/rfq/list"/>">
 												<button type="button" class="btn btn-warning mr-1">
 													<i class="icon-cross2"></i> Cancel
 												</button>
-											</a> <a href="#" onclick="goBack()"
-												class="btn btn-primary float-left"> Back </a>
+											</a> 
 										</div>
 									</div>
-
+                                    </div>
 								</section>
 							</form:form>
 						</div>
@@ -806,7 +807,15 @@ function removeData(index){
 <!-- alertfy-->
 <!-- form validations-->
 
-
+<script>
+$('#containerContainingTabs a').on('click', function(e) {
+	e.preventDefault();
+	$(this).tab('show');
+	var theThis = $(this);
+	$('#containerContainingTabs a').removeClass('active');
+	theThis.addClass('active');
+	});
+	</script>
 
 
 </html>

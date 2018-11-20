@@ -423,3 +423,47 @@ table.dataTable.no-footer{
 	color: #106570;
     font-weight: 500;
 }
+.btn-danger{color: #FFFFFF !important;}
+.vendor-update .has-danger{
+	position: relative;
+}
+.vendor-update .has-danger .help-block {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+table.dataTable tbody th, table.dataTable tbody td{ padding: 8px 4px !important; }
+table.dataTable.nowrap th, table.dataTable.nowrap td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.fixed-width-table {
+    width: auto;
+}
+
+.fixed-width-table th, .fixed-width-table td {
+    text-align: left;
+    font-size: 13px;
+    padding: 5px 20px;
+}
+.address-details-block {
+    background-color: #d2dfef;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.add-row-block {
+    float: right;
+}
+.table th, .table td {
+    padding: 5px !important;
+}
+.full-col-table table th {
+    color: #106570;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.45;
+    text-align: left !important;
+}
+
+

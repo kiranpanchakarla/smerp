@@ -63,7 +63,7 @@ $(document).ready(function(){
                                                             </div>
 
 
-                                                            <div class="card-body collapse in create-block">
+                                                            <div class="card-body collapse in vendor-update">
                                                                 <div class="card-block">
                                                                    
                                                                         <div class="form-body">
@@ -162,7 +162,7 @@ $(document).ready(function(){
 																		
 																		<c:if test="${vendor.id==null}">
 											  
-																		<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
+																		<div class="row address-details-block" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">
 												 <div class="col-xs-12 col-sm-12">
 												 <div class="form-group"><label>Add Contact Details</label></div></div>
 
@@ -238,7 +238,7 @@ $(document).ready(function(){
 																			<c:forEach items="${vendor.vendorContactDetails}"
 																				var="listContactDetails">
 																				
-																				<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
+																				<div class="row address-details-block" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">
 												<div class="col-xs-12 col-sm-12">
 												<div class="form-group"><label>Add Contact Details</label></div></div>
 
@@ -352,7 +352,7 @@ $(document).ready(function(){
 																		<!--Single Address  -->
 																		<c:if test="${vendor.id==null}">
 											  
-																		<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
+																		<div class="row address-details-block" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">
 																		 <div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">
 																		 <label>Vendor Address Details</label></div></div><div class="col-md-3">  
 												
@@ -450,7 +450,7 @@ $(document).ready(function(){
 																			%>
 																			<c:forEach items="${vendor.vendorAddress}"
 																				var="listAddressDetails">
-																				<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">
+																				<div class="row address-details-block" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">
 																		 <div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">
 																		 <label>Add Vendor Address Details</label></div></div><div class="col-md-3">  
 												
@@ -770,7 +770,7 @@ $(document).ready(function(){
 
 						//alert("imc-->"+inc);
 						$('.block:last')
-								.before('<div class="row address-details-block" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">'
+								.before('<div class="row address-details-block" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">'
 												+ '<div class="col-xs-12 col-sm-12">'
 												+ '<div class="form-group"><label>Add Contact Details</label></div></div>'
 
@@ -845,7 +845,7 @@ $(document).ready(function(){
 						}
 
 						$('.block1:last')
-								.before('<div class="row address-details-block1" style="background-color:#dcdada;font:white;padding:10px;margin-bottom:10px;">'
+								.before('<div class="row address-details-block1" style="background-color:#d2dfef;font:white;padding:10px;margin-bottom:10px;">'
 												+ '<div class="col-md-12"><div class="row"><div class="col-md-6"><div class="form-group">'
 												+ '<label>Add vendorAddress Details</label></div></div><div class="col-md-3">  '
 												

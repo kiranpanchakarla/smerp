@@ -1,7 +1,9 @@
 package com.smerp.controller.master;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.master.SACCode;
 import com.smerp.service.master.SacService;
 
@@ -69,4 +77,13 @@ public class SacCodeController {
 		model.addAttribute("saccodeObj", saccodeObj);
 		return "masters/saccode/view";
 	}
+	
+	@RequestMapping(value = "/getSacInfo", method = RequestMethod.GET)
+    @ResponseBody
+    private String getSacDetailsBySacCode(@RequestParam("sacCode") String sacCode) throws JsonProcessingException {
+        logger.info("sacCode"+ sacCode);
+        return new ObjectMapper().writeValueAsString(sacService.findBySacCode(sacCode));
+        
+    }
+	
 }

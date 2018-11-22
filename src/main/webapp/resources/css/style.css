@@ -466,4 +466,14 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
     text-align: left !important;
 }
 
+.create-block  [type="radio"] {
+   width: auto !important;
+}
+
+.radio-list {
+   line-height: 10px;
+   padding: 5px 7px;
+   color: #106570;
+   font-weight: 500;
+}
 

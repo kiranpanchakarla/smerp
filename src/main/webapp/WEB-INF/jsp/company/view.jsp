@@ -51,7 +51,7 @@
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
 											<ol class="breadcrumb"><%-- <c:url value="/user/dashboard"/> --%>
-												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
+												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
@@ -66,13 +66,7 @@
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<!-- <div class="card-header">
-												<h4 class="card-title">Company View</h4>
-												
-											</div> -->
-											
-											
-											
+											 
 
     <div class="col-md-12">
         <div class="card">

@@ -12,8 +12,12 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -35,62 +39,76 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
-											<div class="row">
-												<div class="col-md-2">
-													<h4 class="content-header-title" style="width: 180px;">HSN
-														Code View</h4>
+
+										<div class="card-header">
+											<div class="content-header row">
+												<div class="col-md-3">
+													<h2 class="content-header-title">HSN Code</h2>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<a class="btn btn-primary"
-														href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncodeObj.id}"/>"
-														style="margin-left: 30px;">Edit</a>
+														href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncodeObj.id}"/>">Edit</a>
 												</div>
-
-												<div class="col-md-4">
-													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-														</li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
-														</li>
-														<li class="breadcrumb-item active">HSN Code</li>
-													</ol>
+												<div
+													class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
+													<div class="breadcrumb-wrapper col-xs-12">
+														<ol class="breadcrumb">
+															<li class="breadcrumb-item"><a
+																href="<c:url value="/dashboard"/>">Home</a></li>
+															<li class="breadcrumb-item"><a href="#">Administration</a>
+															</li>
+															<li class="breadcrumb-item active">HSN Code</li>
+														</ol>
+													</div>
 												</div>
 											</div>
 										</div>
-										<div class="card-body collapse in">
-											<div class="table-responsive">
-												<table class="table table-bordered mb-0">
+										<div class="content-body">
+											<!-- Basic Tables start -->
 
-													<tr>
-														<th style="width: 40%;">HSN Code</th>
-														<td>${hsncodeObj.hsnCode}</td>
-													</tr>
+											<div class="card">
 
-													<tr>
-														<th style="width: 40%;">Description</th>
-														<td>${hsncodeObj.description}</td>
-													</tr>
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-body collapse in">
+															<div class="table-responsive">
+																<!-- <table class="table table-bordered mb-0 view-table"></table> -->
+																<table
+																	class="table table-bordered mb-0 fixed-width-table">
 
-													<tr>
-														<th style="width: 40%;">Rate</th>
-														<td>${hsncodeObj.rate}</td>
-													</tr>
-												</table>
+																	<tr>
+																		<th>HSN Code</th>
+																		<td>${hsncodeObj.hsnCode}</td>
+																	</tr>
+
+																	<tr>
+																		<th>Description</th>
+																		<td>${hsncodeObj.description}</td>
+																	</tr>
+
+																	<tr>
+																		<th>Rate</th>
+																		<td>${hsncodeObj.rate}</td>
+																	</tr>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
+
+
+											<div>
+												<a href="#" onclick="goBack()" class="btn btn-primary"
+													style="float: left;">Back</a>
+											</div>
+
 										</div>
+										<br>
 									</div>
 								</div>
 							</div>
-
-
-							<div>
-								<a href="#" onclick="goBack()" class="btn btn-primary"
-									style="float: left;">Back</a>
-							</div>
-
 						</div>
-						<br>
 					</div>
 				</div>
 			</div>

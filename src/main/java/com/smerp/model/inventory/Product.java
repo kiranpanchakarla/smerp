@@ -1,5 +1,6 @@
 package com.smerp.model.inventory;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,10 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.HSNCode;
 import com.smerp.model.master.SACCode;
+
+ 
 
 
 
@@ -44,13 +46,13 @@ public class Product extends AuditModel {
 	private String description;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="product_category_id")
 	private ProductCategory productCategory;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rfq_id", nullable = true)
-	private RequestForQuotation  requestForQuotation;
+	private RequestForQuotation  requestForQuotation;*/
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="uom_category_id")
@@ -74,7 +76,7 @@ public class Product extends AuditModel {
 	@Column(name="service_type")
 	private String serviceType;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="sac_id")
 	private SACCode sacCode;
 	
@@ -84,7 +86,7 @@ public class Product extends AuditModel {
 	@Column(name="product_type")
 	private String productType;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="hsn_id")
 	private HSNCode hsnCode;
 	
@@ -97,20 +99,14 @@ public class Product extends AuditModel {
 	@Column(name="prefered_vendor")
 	private String preferredVendor;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "purchase_uom_id", referencedColumnName = "uom_id" )
 	private Uom purchasingUom;
 	
 	@Column(name="product_per_purchase_unit")
 	private String produtPerPurchaseUnit;
 	
-	public RequestForQuotation getRequestForQuotation() {
-		return requestForQuotation;
-	}
-
-	public void setRequestForQuotation(RequestForQuotation requestForQuotation) {
-		this.requestForQuotation = requestForQuotation;
-	}
+	
 
 	public String getServiceOrProduct() {
 		return serviceOrProduct;
@@ -120,7 +116,7 @@ public class Product extends AuditModel {
 		this.serviceOrProduct = serviceOrProduct;
 	}
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "packing_uom_id", referencedColumnName = "uom_id")
 	private Uom packingUom;
 	
@@ -128,7 +124,7 @@ public class Product extends AuditModel {
 	private String qualityPerPackage;
 	
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "inventory_uom_id", referencedColumnName = "uom_id")
 	private Uom inventoryUom;
 	

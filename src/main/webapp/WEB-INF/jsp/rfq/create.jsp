@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -82,7 +81,8 @@
 																	<form:input type="text"
 																		cssClass="form-control vendorname"
 																		placeholder='Vendor Name' path="vendor.name"
-																		required="true" />
+																		required="true"  autocomplete="off"/>
+																		
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>

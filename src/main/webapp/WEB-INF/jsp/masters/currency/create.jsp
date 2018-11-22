@@ -38,13 +38,14 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<form:form method="POST" action="/currency/save"
+							<c:url value="/currency/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}" 
 								modelAttribute="currency" onsubmit="return register()"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
-										<div class="col-md-6" style="margin-left: 250px;">
+										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
 													<h4 class="card-title" id="basic-layout-icons">Currency/Create</h4>
@@ -55,11 +56,11 @@
 												<input type="hidden" id="id" class="form-control" name="id"
 													value="${currencyObj.id}">
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
-														<form class="form">
 															<div class="form-body">
-																<div class="form-group">
+																<div class="row">
+																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput1">Currency Name</label>
 																	<div>
 
@@ -68,12 +69,12 @@
 																			value="${currencyObj.name}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
-																		<div style="color: red;"
+																		<div  
 																			class="help-block with-errors"></div>
-																		<div class="form-control-position"></div>
+																		 
 																	</div>
 																</div>
-																<div class="form-group">
+																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Currency
 																		Description</label>
 																	<div>
@@ -84,13 +85,15 @@
 																			oninput="setCustomValidity('')" />
 																		<div style="color: red;"
 																			class="help-block with-errors"></div>
-																		<div class="form-control-position"></div>
+																		 
 																	</div>
 																</div>
 															</div>
-															<div class="form-actions center">
-																<a class="btn btn-primary" href="<c:url value="/currency/list"/>">Back</a>
-																<a href="<c:url value="/currency/list"/>">
+															<br>
+															<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a> <a href="<c:url value="/currency/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
 																	</button>

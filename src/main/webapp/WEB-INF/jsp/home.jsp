@@ -52,66 +52,84 @@
     <div class="content-header row"> </div>
     <div class="content-body"><!-- stats -->
       <div class="row">
-        <div class="col-xl-3 col-lg-6 col-xs-12">
+      <div class="col-xl-3 col-lg-6 col-xs-12">
           <div class="card">
+          <a href="<c:url value="/company/list"/>">
             <div class="card-body">
-              <div class="card-block">
+              <div class="card-block color-box1">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3 class="pink">${productsCount}</h3>
+                    
+                    <h3>${companyListCount}</h3>
+                    <span>Company</span> </div>
+                  <div class="media-right media-middle"> <i class="icon-cube pink font-large-2 float-xs-right"></i> </div>
+                </div>
+              </div>
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        <div >
+        <div class="col-xl-3 col-lg-6 col-xs-12">
+         <a href="<c:url value="/product/list"/>">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-block color-box2">
+                <div class="media">
+                  <div class="media-body text-xs-left">
+                    <h3>${productsCount}</h3>
                     <span>Products</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-bag2 pink font-large-2 float-xs-right"></i> </div>
+                  <div class="media-right media-middle"> <i class="icon-egg pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
             </div>
           </div>
+          </a>
         </div>
-        <div class="col-xl-3 col-lg-6 col-xs-12">
+      
+        
+        <div class="col-xl-3 col-lg-6 col-xs-12" >
+        <a href="<c:url value="/user/list"/>">
           <div class="card">
             <div class="card-body">
-              <div class="card-block">
+              <div class="card-block color-box3">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3 class="teal">${userListCount}</h3>
+                    <h3>${userListCount}</h3>
+                    
                     <span>Users</span> </div>
                   <div class="media-right media-middle"> <i class="icon-user1 teal font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
             </div>
           </div>
+            </a>
         </div>
+      
+       
         <div class="col-xl-3 col-lg-6 col-xs-12">
+       <a href="<c:url value="/vendor/list"/>">
           <div class="card">
             <div class="card-body">
-              <div class="card-block">
+              <div class="card-block color-box4">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3 class="deep-orange">${vendorListCount}</h3>
+                    <h3>${vendorListCount}</h3>
                     <span>Vendors</span> </div>
                   <div class="media-right media-middle"> <i class="icon-diagram deep-orange font-large-2 float-xs-right"></i> </div>
                 </div>
+               
               </div>
             </div>
           </div>
+          </a>
         </div>
-        <div class="col-xl-3 col-lg-6 col-xs-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-block">
-                <div class="media">
-                  <div class="media-body text-xs-left">
-                  <h3 class="cyan">3</h3>
-                    <span>Settings</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-ios-help-outline cyan font-large-2 float-xs-right"></i> </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <!--/ stats --> 
       <!--/ project charts -->
-      <div class="row">
+     <%--  <div class="row">
         <div class="col-xl-8 col-lg-12">
           <div class="card">
             <div class="card-body">
@@ -162,44 +180,85 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --%>
       <!--/ project charts --> 
       <!-- Recent invoice with Statistics -->
       <div class="row match-height">
-        <div class="col-xl-4 col-lg-12">
-          <div class="card">
-            <div class="card-body">
+        <div class="col-sm-12">
+         
+        <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body product-box1">
               <div class="media">
-                <div class="p-2 text-xs-center bg-deep-orange media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
+                <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-cube font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                  <h5 class="deep-orange">Global Settings</h5>
-                  <progress class="progress progress-sm progress-deep-orange mt-1 mb-0" value="45" max="100"></progress>
+                <h3><a href="<c:url value="/company/create"/>">New Company</a></h3>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <div class="media">
-                <div class="p-2 text-xs-center bg-cyan media-left media-middle"> <i class="icon-camera7 font-large-2 white"></i> </div>
-                <div class="p-2 media-body">
-                  <h5>New Products</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <div class="media">
-                <div class="p-2 media-body text-xs-left">
-                  <h5>New Users</h5>
-                </div>
-                <div class="p-2 text-xs-center bg-teal media-right media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-8 col-lg-12">
+        
+        
+         <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body product-box2">
+              <div class="media">
+                <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-egg font-large-2 white"></i> </div>
+                <div class="p-2 media-body">
+                 <h3><a href="<c:url value="/product/create"/>">New Product</a></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body product-box3">
+              <div class="media">
+                 <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
+                <div class="p-2 media-body">
+                <h3><a href="<c:url value="/user/create"/>">New User</a></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+         <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body product-box4">
+              <div class="media">
+               <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
+                <div class="p-2 media-body">
+                 <h3><a href="<c:url value="/vendor/create"/>">New Vendor</a></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        </div>
+          
+         <!--  <div class="card">
+            <div class="card-body">
+               <div class="media">
+               <div class="p-2 text-xs-center bg-teal media-right media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
+                <div class="p-2 media-body">
+                  <h5>New Users</h5>
+                </div>
+                
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <!-- <div class="col-xl-8 col-lg-12">
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">Recent Invoices</h4>
@@ -247,9 +306,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <hr>
+      <!-- <hr> -->
     </div>
   </div>
 </div>

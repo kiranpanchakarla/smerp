@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 </head>
+
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
@@ -40,21 +41,21 @@
 								<div class="content-body">
 
 									<div class="card">
-										<div class="card-header">
+										<div class="card-header" style="height: 60px;">
 											<div class="row">
-												<div class="col-md-2">
-													<h2 class="content-header-title">States</h2>
+												<div class="col-md-3">
+													<h2 class="content-header-title">Department</h2>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<a class="btn btn-primary"
-														href="<c:url value="/states/create"/>">Create</a>
+														href="<c:url value="/department/create"/>">Create</a>
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-														<li class="breadcrumb-item active">States</li>
+														<li class="breadcrumb-item active">Department</li>
 													</ol>
 												</div>
 											</div>
@@ -69,31 +70,28 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
-																<th>Code</th>
-																<th>Name</th>
-																<th>Country</th>
-																<th>Actions</th>
+																<th >S.no</th>
+																<th >Company</th>
+																<th >Department</th> 
+																<th >Actions</th>
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${statesList}" var="states">
+															<c:forEach items="${departmentList}" var="department">
 																<tr>
-																	<td><c:set var="count"
+																	<td ><c:set var="count"
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
-																	<td>${states.code}</td>
-																	<td>${states.name}</td>
-																	<td>${states.country.name}</td>
-																	<td><a
-																		class="btn btn-edit"
-																		href="<c:url value="/states/getInfo?statesId=${states.id}"/>">
+																	<td >${department.company.name}</td>
+																	<td >${department.name}</td> 
+																	<td  ><a class="btn btn-edit"
+																		href="<c:url value="/department/getInfo?departmentId=${department.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a>  <a class="btn btn-delete mr-1" href="#"
-																		onclick="deleteById('<c:out value="${states.id}"/>','/states/delete')"><i
-																			class="icon-bin left"></i></a> <a
+																	</a>   <a class="btn btn-delete mr-1" href="#"
+																		onclick="deleteById('<c:out value="${department.id}"/>','/department/delete')"><i
+																			class="icon-bin left"></i></a>   <a
 																		class="btn btn-view"
-																		href="<c:url value="/states/view?statesId=${states.id}"/>"><i
+																		href="<c:url value="/department/view?departmentId=${department.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>
 															</c:forEach>
@@ -123,6 +121,7 @@
 $(document).ready(function() {
 	  $('#example').DataTable( {
 		  "scrollX": true
+	       
 	    } );
 } );
 

@@ -75,13 +75,13 @@
 																			<input type="file" name="file" id="file" value="${user.image}" onchange="return fileValidation(event)" style="display: none;" required="true" oninvalid="this.setCustomValidity('Please Upload Image')" oninput="setCustomValidity('')" />
 																			<form:input type="hidden" path="image" value="${user.image}" />
 																		</p>
-																		<p style="margin-top: -28px;">
+																		<p>
 																			<label for="file" style="cursor: pointer;">
 																				<img src="${contextPath}/resources/images/company/cameraIcon.png">
 																			</label>
 																			
 																		</p>
-																		<label style="margin-left: -40px;margin-top: 30px;">Image</label>
+																		<!-- <label>Image</label> -->
 																		<div style="color:red;" id="3_errorContainer" class="help-block with-errors"></div>
 																	</div>
 																	<div class="col-sm-4 form-group">
@@ -104,8 +104,8 @@
 																		<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																	<div class="col-sm-6 form-group">
-																		<label>Mobile Number</label>
-																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="10" pattern="[0-9]+$" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
+																		<label>Mobile</label>
+																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="10" minlength="10" pattern="[0-9]+$" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
 																		<div style="color:red;" class="help-block with-errors"></div>
 																	</div>
 																</div>

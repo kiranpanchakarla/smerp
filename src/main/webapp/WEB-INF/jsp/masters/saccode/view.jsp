@@ -12,8 +12,12 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -34,63 +38,74 @@
 								<!-- Basic Tables start -->
 
 								<div class="card">
-									<div class="card-header" style="height: 60px;">
-										<div class="row">
-											<div class="col-md-2">
-												<h4 class="content-header-title" style="width: 180px;">SAC
-													Code View</h4>
+									<div class="card-header">
+										<div class="content-header row">
+											<div class="col-md-3">
+												<h2 class="content-header-title">SAC Code</h2>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<a class="btn btn-primary"
-													href="<c:url value="/saccode/getInfo?saccodeId=${saccodeObj.id}"/>"
-													style="margin-left: 30px;">Edit</a>
+													href="<c:url value="/saccode/getInfo?saccodeId=${saccodeObj.id}"/>">Edit</a>
 											</div>
-
-											<div class="col-md-4">
-												<ol class="breadcrumb">
-													<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-													</li>
-													<li class="breadcrumb-item"><a href="#">Administration</a>
-													</li>
-													<li class="breadcrumb-item active">SAC Code</li>
-												</ol>
-											</div>
-										</div>
-									</div>
-									<div class="card-body collapse in">
-										<div class="card-block card-dashboard">
-											<div class="table-responsive">
-												<table class="table table-bordered mb-0">
-
-													<tr>
-														<th style="width: 40%;">SAC Code</th>
-														<td>${saccodeObj.sacCode}</td>
-													</tr>
-
-													<tr>
-														<th style="width: 40%;">Description</th>
-														<td>${saccodeObj.description}</td>
-													</tr>
-
-													<tr>
-														<th style="width: 40%;">Rate</th>
-														<td>${saccodeObj.rate}</td>
-													</tr>
-												</table>
+											<div
+												class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
+												<div class="breadcrumb-wrapper col-xs-12">
+													<ol class="breadcrumb">
+														<li class="breadcrumb-item"><a
+															href="<c:url value="/dashboard"/>">Home</a></li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">SAC Code</li>
+													</ol>
+												</div>
 											</div>
 										</div>
 									</div>
+									<div class="content-body">
+										<!-- Basic Tables start -->
+
+										<div class="card">
+
+											<div class="col-md-12">
+												<div class="card">
+													<div class="card-body collapse in">
+														<div class="table-responsive">
+															<!-- <table class="table table-bordered mb-0 view-table"></table> -->
+															<table
+																class="table table-bordered mb-0 fixed-width-table">
+
+																<tr>
+																	<th>SAC Code</th>
+																	<td>${saccodeObj.sacCode}</td>
+																</tr>
+
+																<tr>
+																	<th>Description</th>
+																	<td>${saccodeObj.description}</td>
+																</tr>
+
+																<tr>
+																	<th>Rate</th>
+																	<td>${saccodeObj.rate}</td>
+																</tr>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div>
+											<a href="#" onclick="goBack()" class="btn btn-primary"
+												style="float: left;">Back</a>
+										</div>
+
+									</div>
+
 								</div>
 							</div>
-
-
-							<div>
-								<a href="#" onclick="goBack()" class="btn btn-primary"
-									style="float: left;">Back</a>
-							</div>
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -105,17 +120,15 @@
 			</span>
 		</p>
 	</footer>
-    <c:import url="/WEB-INF/jsp/loadJs.jsp" />
+	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 	<script type="text/javascript">
-	
-$(document).ready(function() {
-	  $('#example').DataTable( {
-	       
-	    } );
-} );
+		$(document).ready(function() {
+			$('#example').DataTable({
 
-</script>
-<!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
+			});
+		});
+	</script>
+	<!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script> 
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" type="text/javascript"></script> 
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" type="text/javascript"></script>  -->
 </body>

@@ -1,7 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,7 @@ public class CurrencyController {
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside CurrencyController List Method");
-		List<Currency> currencyList = currencyServices.findAll();
-		model.addAttribute("currencyList", currencyList);
+		model.addAttribute("currencyList", currencyServices.findAll());
 		return "masters/currency/list";
 	}
 
@@ -41,8 +38,7 @@ public class CurrencyController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String currencyId) {
 		logger.info("Inside CurrencyController GetInfo Method");
-		Currency currencyObj = currencyServices.findById(Integer.parseInt(currencyId));
-		model.addAttribute("currencyObj", currencyObj);
+		model.addAttribute("currencyObj", currencyServices.findById(Integer.parseInt(currencyId)));
 		model.addAttribute("currency", new Currency());
 		return "masters/currency/create";
 	}
@@ -62,10 +58,9 @@ public class CurrencyController {
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String currencyId, Model model, HttpServletRequest request) {
+	public String view(String currencyId, Model model) {
 		logger.info("Inside CurrencyController view Method");
-		Currency currencyObj = currencyServices.getInfo(Integer.parseInt(currencyId));
-		model.addAttribute("currencyObj", currencyObj);
+		model.addAttribute("currencyObj", currencyServices.getInfo(Integer.parseInt(currencyId)));
 		return "masters/currency/view";
 	}
 }

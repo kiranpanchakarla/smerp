@@ -52,8 +52,7 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">Countries</li>
@@ -71,32 +70,31 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">Country Code</th>
-																<th style="text-align: center;">Country name</th>
-																<th style="text-align: center;">Currency</th> 
-																<th style="text-align: center;">Phone Code</th>
-																<th style="text-align: center;">Actions</th>
+																<th >S.no</th>
+																<th >Country Code</th>
+																<th >Country name</th>
+																<th >Currency</th> 
+																<th >Phone Code</th>
+																<th >Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${countryList}" var="country">
 																<tr>
-																	<td style="text-align: center;"><c:set var="count"
+																	<td ><c:set var="count"
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
-																	<td style="text-align: center;">${country.countryCode}</td>
-																	<td style="text-align: center;">${country.name}</td>
-																	<td style="text-align: center;">${country.currency.name}</td> 
-																	<td style="text-align: center;">${country.phoneCode}</td>
-																	<td style="text-align: center;"><a
-																		class="btn btn-primary"
+																	<td >${country.countryCode}</td>
+																	<td >${country.name}</td>
+																	<td >${country.currency.name}</td> 
+																	<td >${country.phoneCode}</td>
+																	<td  ><a class="btn btn-edit"
 																		href="<c:url value="/country/getInfo?countryId=${country.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> | <a class="btn btn-warning mr-1" href="#"
+																	</a>   <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${country.id}"/>','/country/delete')"><i
-																			class="icon-bin left"></i></a> | <a
-																		class="btn btn-primary"
+																			class="icon-bin left"></i></a>   <a
+																		class="btn btn-view"
 																		href="<c:url value="/country/view?countryId=${country.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>

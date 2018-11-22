@@ -36,9 +36,9 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<c:url value="/country/save" var="createUrl" />
+							<c:url value="/department/save" var="createUrl" />
 							<form:form  method="POST" action="${createUrl}" 
-								modelAttribute="country" onsubmit="return register()"
+								modelAttribute="department" onsubmit="return register()"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -46,13 +46,13 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Country/Create</h4>
+													<h4 class="card-title" id="basic-layout-icons">Department/Create</h4>
 													<!-- <a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a> -->
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${countryObj.id}">
+													value="${departmentObj.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -60,25 +60,21 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Country Code</label>
-																	<div>
-
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Country Code' path="countryCode"
-																			value="${countryObj.countryCode}" required="true"
-																			oninvalid="this.setCustomValidity('Please Enter Country Code')"
-																			oninput="setCustomValidity('')" />
-																		<div  
-																			class="help-block with-errors"></div>
-																		 
-																	</div>
-																</div>
+																		<label>Company</label>
+																		<form:select id="company" path="company.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
+																			<form:option value="">Select</form:option>
+																			<c:forEach items="${companyList}" var="companyList">
+																				<form:option value="${companyList.id}">${companyList.name}</form:option>
+																			</c:forEach>
+																		</form:select>
+																		<div   class="help-block with-errors"></div>
+																	</div> 
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Country Name</label>
+																	<label for="timesheetinput2">Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Country Name' path="name"
-																			value="${countryObj.name}" required="true"
+																			placeholder='Department Name' path="name"
+																			value="${departmentObj.name}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
 																			oninput="setCustomValidity('')" />
 																		<div  
@@ -86,24 +82,15 @@
 																		 
 																	</div>
 																</div>
-																<div class="col-sm-4 form-group">
-																		<label>Currency</label>
-																		<form:select id="currency" path="currency.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Currency')" oninput="setCustomValidity('')">
-																			<form:option value="">Select</form:option>
-																			<c:forEach items="${currencyList}" var="currencyList">
-																				<form:option value="${currencyList.id}">${currencyList.name}</form:option>
-																			</c:forEach>
-																		</form:select>
-																		<div   class="help-block with-errors"></div>
+																
 																	</div>
-																	</div>
-																	<div class="row">
+																	<%-- <div class="row">
 																	<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Phone Code</label>
+																	<label for="timesheetinput2">Manager</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Phone Code' path="phoneCode"
-																			value="${countryObj.phoneCode}" required="true"
+																			placeholder='Manager Name' path="phoneCode"
+																			value="${departmentObj.user.username}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Phone Code')"
 																			oninput="setCustomValidity('')" />
 																		<div  
@@ -111,7 +98,7 @@
 																		 
 																	</div>
 																</div>
-																	</div>
+																	</div> --%>
 																
 																
 															</div>
@@ -119,20 +106,20 @@
 															<div class="text-xs-center">
 																	
 																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
-											                        Back</a> <a href="<c:url value="/country/list"/>">
+											                        Back</a> <a href="<c:url value="/department/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
 																	</button>
 																</a> <input type="hidden" name="${_csrf.parameterName}"
 																	value="${_csrf.token}" />
 
-																<c:if test="${country.name!=null}">
+																<c:if test="${department.name!=null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Update
 																	</button>
 																</c:if>
 
-																<c:if test="${country.name==null}">
+																<c:if test="${department.name==null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Save
 																	</button>

@@ -52,7 +52,7 @@
 												<div class="col-md-4" Style="text-align: right;">
 
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">HSN Code</li>
@@ -71,29 +71,29 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">HSN CODE</th>
-																<th style="text-align: center;">Description</th>
-																<th style="text-align: center;">Rate</th>
-																<th style="text-align: center;">Actions</th>
+																<th>S.no</th>
+																<th>HSN CODE</th>
+																<th>Description</th>
+																<th>Rate</th>
+																<th>Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${hsncodeList}" var="hsncode">
 																<tr>
-																	<td style="text-align: center;"><c:set var="count"
+																	<td><c:set var="count"
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
-																	<td style="text-align: center;">${hsncode.hsnCode}</td>
-																	<td style="text-align: center;">${hsncode.description}</td>
-																	<td style="text-align: center;">${hsncode.rate}</td>
-																	<td style="text-align: center;"><a
-																		class="btn btn-primary"
+																	<td>${hsncode.hsnCode}</td>
+																	<td>${hsncode.description}</td>
+																	<td>${hsncode.rate}</td>
+																	<td><a
+																		class="btn btn-edit"
 																		href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncode.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> <a class="btn btn-warning mr-1" href="#"
+																	</a> <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${hsncode.id}"/>','/hsncode/delete')"><i
-																			class="icon-bin left"></i></a> <a class="btn btn-primary"
+																			class="icon-bin left"></i></a> <a class="btn btn-view"
 																		href="<c:url value="/hsncode/view?hsncodeId=${hsncode.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 

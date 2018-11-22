@@ -35,13 +35,14 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<form:form method="POST" action="/saccode/save"
+							<c:url value="/saccode/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}" 
 								modelAttribute="saccode" onsubmit="return register()"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
-									<div class="row match-height" style="background: white;">
+									<div class="row match-height" >
 
-										<div class="col-md-6" style="margin-left: 250px;">
+										<div class="col-md-12" >
 											<div class="card">
 												<div class="card-header">
 													<div class="row">
@@ -59,11 +60,12 @@
 												<input type="hidden" id="id" class="form-control" name="id"
 													value="${saccodeObj.id}">
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<form class="form">
 															<div class="form-body">
-																<div class="form-group">
+																<div class="row">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">SAC Code</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='SAC Code' path="sacCode"
@@ -73,7 +75,7 @@
 																	<div style="color: red;" class="help-block with-errors"></div>
 																</div>
 
-																<div class="form-group">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Description</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Description' path="description"
@@ -83,7 +85,7 @@
 																	<div style="color: red;" class="help-block with-errors"></div>
 																</div>
 
-																<div class="form-group">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Rate</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Rate' path="rate"
@@ -94,8 +96,12 @@
 																</div>
 															</div>
 
-															<div style="text-align: center;">
-																<a class="btn btn-primary" href="<c:url value="/saccode/list"/>">Back</a>
+															</div>
+															<br>
+															<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a>
 																<a href="<c:url value="/saccode/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel

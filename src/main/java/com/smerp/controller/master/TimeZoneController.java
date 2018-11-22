@@ -1,7 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +29,7 @@ public class TimeZoneController {
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside TimeZoneController List Method");
-		List<TimeZone> timeZoneList = timeZoneService.findAll();
-		model.addAttribute("timezoneList", timeZoneList);
+		model.addAttribute("timezoneList", timeZoneService.findAll());
 		return "masters/timezone/list";
 	}
 
@@ -47,8 +44,7 @@ public class TimeZoneController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String timezoneId) {
 		logger.info("Inside TimeZoneController GetInfo Method");
-		TimeZone timezoneObj = timeZoneService.findById(Integer.parseInt(timezoneId));
-		model.addAttribute("timezoneObj", timezoneObj);
+		model.addAttribute("timezoneObj", timeZoneService.findById(Integer.parseInt(timezoneId)));
 		model.addAttribute("timezone", new TimeZone());
 		model.addAttribute("countryList", countryService.countryList());
 		return "masters/timezone/create";
@@ -69,10 +65,9 @@ public class TimeZoneController {
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String timezoneId, Model model, HttpServletRequest request) {
+	public String view(String timezoneId, Model model) {
 		logger.info("Inside TimeZoneController view Method");
-		TimeZone timezoneObj = timeZoneService.getInfo(Integer.parseInt(timezoneId));
-		model.addAttribute("timezoneObj", timezoneObj);
+		model.addAttribute("timezoneObj", timeZoneService.getInfo(Integer.parseInt(timezoneId)));
 		return "masters/timezone/view";
 	}
 }

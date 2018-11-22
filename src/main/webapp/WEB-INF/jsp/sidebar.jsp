@@ -16,19 +16,21 @@
           <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
          <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
           <li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
+          <li class="has_sub"><a href="<c:url value ="/department/list"/>">Departments</a></li>
+          <li class="has_sub"><a href="<c:url value ="/designation/list"/>">Designations</a></li>
         </ul>
       </li>
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
            <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li>
-          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>
-          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product UOM Category</a></li>
-          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Unit Of Measure</a></li>
-          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Attributes</a></li>
-          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Attribute Values</a></li>
-         <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Warehouse</a></li>
-         <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Inventory Adjustment</a></li>
+          <li class="has_sub"><a href="<c:url value =""/>">Product Type</a></li>
+          <li class="has_sub"><a href="<c:url value =""/>">Product UOM Category</a></li>
+          <li class="has_sub"><a href="<c:url value =""/>">Unit Of Measure</a></li>
+          <li class="has_sub"><a href="<c:url value =""/>">Product Attributes</a></li>
+          <li class="has_sub"><a href="<c:url value =""/>">Product Attribute Values</a></li>
+         <li class="has_sub"><a href="<c:url value =""/>">Warehouse</a></li>
+         <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li>
         </ul>
       </li>
       

@@ -37,47 +37,53 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
-											<div class="row">
-												<div class="col-md-2">
-													<h4 class="content-header-title" style="width: 180px;">Country
-														View</h4>
-												</div>
-												<div class="col-md-6">
-													<a class="btn btn-primary"
-														href="<c:url value="/country/getInfo?countryId=${countryObj.id}"/>">Edit</a>
-												</div>
-
-												<div class="col-md-4">
-													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-														</li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
-														</li>
-														<li class="breadcrumb-item active">Country</li>
-													</ol>
-												</div>
-											</div>
+										<div class="card-header"><div class="content-header row">
+									<div class="col-md-2">
+										<h2 class="content-header-title">Country</h2>
 										</div>
-										<div class="card-body collapse in">
-											<div class="table-responsive">
-												<table class="table table-bordered mb-0">
+										<div class="col-md-6">
+										<a class="btn btn-primary" href="<c:url value="/country/getInfo?countryId=${countryObj.id}"/>">Edit</a>
+									</div>
+									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
+										<div class="breadcrumb-wrapper col-xs-12">
+											<ol class="breadcrumb"> 
+												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
+												</li>
+												<li class="breadcrumb-item"><a href="#">Administration</a>
+												</li>
+												<li class="breadcrumb-item active">Country</li>
+											</ol>
+										</div>
+									</div>
+								</div>
+								</div>
+										<div class="content-body">
+											<!-- Basic Tables start -->
 
+											<div class="card">
+												  
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-body collapse in">
+															<div class="table-responsive">
+																<!-- <table class="table table-bordered mb-0 view-table"></table> -->
+																<table
+																	class="table table-bordered mb-0 fixed-width-table">
 													<tr>
-														<th style="width: 40%;">Country Code</th>
+														<th >Country Code</th>
 														<td>${countryObj.countryCode}</td>
 													</tr>
 
 													<tr>
-														<th style="width: 40%;">Country name</th>
+														<th>Country name</th>
 														<td>${countryObj.name}</td>
 													</tr>
 													<tr>
-														<th style="width: 40%;">Currency</th>
+														<th >Currency</th>
 														<td>${countryObj.currency.name}</td>
 													</tr>
 													<tr>
-														<th style="width: 40%;">Phone Code</th>
+														<th >Phone Code</th>
 														<td>${countryObj.phoneCode}</td>
 													</tr>
 

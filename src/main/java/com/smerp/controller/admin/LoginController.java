@@ -93,7 +93,7 @@ public class LoginController {
 			model.addAttribute("userListCount", userService.findAll().size());
 			model.addAttribute("productsCount", productService.findByIsActive().size());
 			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
-			
+			model.addAttribute("companyListCount", companyServices.findByIsActive().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

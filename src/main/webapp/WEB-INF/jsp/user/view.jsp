@@ -35,8 +35,8 @@
 					<div class="large-12 columns">
 
 							<div class="content-wrapper">
-								<div class="content-header row">
-								<div class="col-md-2">
+								<div class="card-header"><div class="content-header row">
+									<div class="col-md-2">
 										<h2 class="content-header-title">User</h2>
 										</div>
 										<div class="col-md-6">
@@ -54,6 +54,7 @@
 										</div>
 									</div>
 								</div>
+								</div>
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
@@ -66,7 +67,8 @@
         <div class="card">
             <div class="card-body collapse in">
                 <div class="table-responsive">
-                    <table class="display nowrap table table_padding_custom table-hover table-striped table-bordered dataTable no-footer center-block">
+                    <table class="table table-bordered mb-0 fixed-width-table">
+
                         <tr class="odd">
                             <th style="width: 40%;"> Name</th>
                             <td>${user.firstname}  ${user.lastname}</td>

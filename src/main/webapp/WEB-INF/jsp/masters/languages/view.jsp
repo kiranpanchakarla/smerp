@@ -31,16 +31,24 @@
 					<div class="large-12 columns">
 
 						<div class="content-wrapper">
-							<%-- <div class="content-header row">
-									<div class="content-header-left col-md-6 col-xs-12 mb-1">
-										<h2 class="content-header-title">Language</h2>
+							
+							<div>
+								<div class="content-body">
+									<!-- Basic Tables start -->
+
+									<div class="card">
+									 
+												<div class="card-header"><div class="content-header row">
+									<div class="col-md-2">
+										<h2 class="content-header-title">Languages</h2>
+										</div>
+										<div class="col-md-6">
 										<a class="btn btn-primary" href="<c:url value="/languages/getInfo?languagesId=${languagesObj.id}"/>">Edit</a>
 									</div>
-									<div
-										class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
+											<ol class="breadcrumb"> 
+												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
@@ -48,41 +56,23 @@
 											</ol>
 										</div>
 									</div>
-								</div> --%>
-							<div>
-								<div class="content-body">
-									<!-- Basic Tables start -->
+								</div>
+								</div>
+										<div class="content-body">
+											<!-- Basic Tables start -->
 
-									<div class="card">
-										<div class="card-header" style="height: 60px;">
-											<div class="row">
-												<div class="col-md-2">
-													<h4 class="content-header-title" style="width: 180px;">Languages
-														View</h4>
-												</div>
-												<div class="col-md-6">
-													<a class="btn btn-primary"
-														href="<c:url value="/languages/getInfo?languagesId=${languagesObj.id}"/>"
-														style="margin-left: 30px;">Edit</a>
-												</div>
-
-												<div class="col-md-4">
-													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-														</li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
-														</li>
-														<li class="breadcrumb-item active">Languages</li>
-													</ol>
-												</div>
-											</div>
-										</div>
-										<div class="card-body collapse in">
-											<div class="table-responsive">
-												<table class="table table-bordered mb-0">
+											<div class="card">
+												  
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-body collapse in">
+															<div class="table-responsive">
+																 
+																<table
+																	class="table table-bordered mb-0 fixed-width-table">
 
 													<tr>
-														<th style="width: 40%;">Language</th>
+														<th>Language</th>
 														<td>${languagesObj.name}</td>
 													</tr>
 

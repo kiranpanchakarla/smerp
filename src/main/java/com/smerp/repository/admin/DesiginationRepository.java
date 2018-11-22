@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.Desigination;
 
+
+
 @Repository
 public interface DesiginationRepository extends JpaRepository<Desigination, Integer> {
 
@@ -14,4 +16,5 @@ public interface DesiginationRepository extends JpaRepository<Desigination, Inte
 
 	List<Desigination> findByDepartmentId(int id);
 
+	Desigination findById(int id);
 }

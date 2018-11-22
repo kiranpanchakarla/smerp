@@ -32,7 +32,8 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="POST" action="/company/save"  enctype="multipart/form-data"
+							<c:url value="/company/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}"  enctype="multipart/form-data"
 								modelAttribute="company"  data-toggle="validator" role="form"  class="bv-form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -56,30 +57,38 @@
 													<div class="card-block">
 														<div class="form-body">
 															<div class="row">
-																<div class="col-sm-6 form-group">
-																	<label>Company Name</label>
+																<div class="col-sm-4 form-group">
+																	<label>Name</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer','Company Name Already Exists')"
 																	required="true" oninvalid="this.setCustomValidity('Please Enter Company Name')"	oninput="setCustomValidity('')"/>
-																		<div  id="1_errorContainer"  class="help-block with-errors"></div>
+																		<div  id="1_errorContainer"  class="help-block with-errors"></div> 
 																</div>
 																
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
+																	<label>Tagline</label>
+																	<form:input type="text" cssClass="form-control"
+																		placeholder='Company TagLine' path="companyTagLine"
+																		required="true"  oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
+																		<div   class="help-block with-errors"></div>
+																</div>
+																
+																<div class="col-sm-4 form-group">
 																<div class="col-sm-12 no-padding">
-																	<label>LOGO</label>
+																	<label>Logo</label>
 																	 <%-- <form:input type="file" cssClass="form-control"  accept="image/*" onchange="loadFile(event)" 
 																		path="logo" value="${company.logo}" /> --%>
 																		
 																<div class="logo-upload">
 																<input type="file"   name="file" id="file" value="${company.logo}"  onchange="return fileValidation(event)" 
-			                                                            required="true" oninvalid="this.setCustomValidity('Please Upload Image')"	oninput="setCustomValidity('')"   />
+			                                                             oninvalid="this.setCustomValidity('Please Upload Image')"	oninput="setCustomValidity('')"   />
 
 																<form:input  type="hidden" path="logo" value="${company.logo}" />
 																</div>
 															<div class="logo-upload hidden"><label for="file" style="cursor: pointer;">
 															<img src="${contextPath}/resources/images/company/cameraIcon.png"></label>
 															</div>
-																<div  id="3_errorContainer"  class="help-block with-errors"></div>
+																<!-- <div  id="3_errorContainer"  class="help-block with-errors"></div> -->
 																</div>
 																
 																<div class="col-sm-12 form-group no-margin">
@@ -102,26 +111,38 @@
 
 
 															<div class="row">
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>GSTIN</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='GSTIN' path="gstinVat"
 																		required="true"  pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  oninvalid="this.setCustomValidity('Please Enter Valid GSTIN Number Ex:22AABCE2207R1Z6')"	oninput="setCustomValidity('')"/>
 																		<div   class="help-block with-errors"></div>
 																</div>
-																
-																<div class="col-sm-6 form-group">
-																	<label>Company Tagline</label>
-																	<form:input type="text" cssClass="form-control"
-																		placeholder='Company TagLine' path="companyTagLine"
-																		required="true"  oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
-																		<div   class="help-block with-errors"></div>
+																 
+																<div class="col-sm-4 form-group">
+																	<label>State Code</label>
+																	<form:select path="statesCode.id" id="selectSubcat"
+																		cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select State ')"	oninput="setCustomValidity('')">
+																		<form:option value="">--Select--</form:option>
+																		<c:forEach items="${stateList}" var="stateList">
+
+																			<form:option value="${stateList.id}">${stateList.stateCode} | ${stateList.name}</form:option>
+																		</c:forEach>
+																	</form:select>
+																	<div   class="help-block with-errors"></div>
 																</div>
 																
+																<div class="col-sm-4 form-group">
+																	<label>Pan Number</label>
+																	<form:input type="text" cssClass="form-control"
+																		placeholder='Pan Number' path="panNum"
+																		required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter PAN Number')"	oninput="setCustomValidity('')" />
+																<div   class="help-block with-errors"></div>
+																</div>
 																
 															</div>
 
-															<div class="row">
+															<%-- <div class="row">
 																
 																<div class="col-sm-6 form-group">
 																	<label>State Code</label>
@@ -144,7 +165,7 @@
 																<div   class="help-block with-errors"></div>
 																</div>
 																
-															</div>
+															</div> --%>
 														
 															<div class="card-header-in">
 																<h4 class="card-title" id="basic-layout-icons">Address</h4>
@@ -158,61 +179,59 @@
 
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Street-1</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='street1' path="street1"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Street1')"	oninput="setCustomValidity('')" />
 																		<div   class="help-block with-errors"></div>
 																			</div>
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Street-2</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Street2' path="street2"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Street2')"	oninput="setCustomValidity('')" />
 																		<div   class="help-block with-errors"></div>
 																			</div>
-																		</div>
-
-
-																		<div class="row">
 																			
-																			<div class="col-sm-6 form-group">
-																				<label>Phone</label>
-																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
-																					placeholder='Enter Phone No' path="phoneNum" pattern="[0-9]+$"
-																					required="true"  maxlength="10" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
-																	<div   class="help-block with-errors"></div>
-																			</div>
-																			<div class="col-sm-6 form-group">
-																				<label>Fax</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter fax Num' path="faxNum"
-																					required="true" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
-																	<div   class="help-block with-errors"></div>
-																			</div>
-																		</div>
-
-
-																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>City</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter City' path="city"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter City')"	oninput="setCustomValidity('')"/>
 																	<div   class="help-block with-errors"></div>
 																			</div>
-																			<div class="col-sm-6 form-group">
+																		</div>
+
+
+																		<div class="row">
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>Mobile</label>
+																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
+																					placeholder='Mobile Number' path="phoneNum" pattern="[0-9]+$"
+																					required="true"  maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
+																	<div   class="help-block with-errors"></div>
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Fax</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='fax Number' path="faxNum"
+																					required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
+																	<div   class="help-block with-errors"></div>
+																			</div>
+																			
+																			<div class="col-sm-4 form-group">
 																				<label>Email</label>
 																				<form:input type="email" cssClass="form-control"  onchange="isValidName('emailId','/company/isValidEmailId','2_errorContainer','Company Email Already Exists')"
-																				 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Enter Email' path="emailId"
+																				 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Email Id' path="emailId"
 																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
 																		<div  id="2_errorContainer"  class="help-block with-errors" ></div>
 																			</div>
 																		</div>
-
+ 
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>State</label>
 																				<form:select path="states.id" id="selectSubcat"
 																					cssClass="form-control" required="true"   oninvalid="this.setCustomValidity('Please Select State')"	oninput="setCustomValidity('')">
@@ -224,7 +243,7 @@
 																				</form:select>
 																				<div   class="help-block with-errors"></div>
 																			</div>
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Country</label>
 																				 <form:select path="country" id="selectSubcat"
 																					cssClass="form-control">
@@ -232,31 +251,29 @@
 																				</form:select> 
 																				
 																			</div>
-																		</div>
-
-																		<div class="row">
 																			
-																			
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>ZIP Code</label>
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
-																					placeholder='Enter ZIP Code' path="zipCode"
+																					placeholder='ZIP Code' path="zipCode"
 																					required="true" maxlength="6"  oninvalid="this.setCustomValidity('Please ZIP Code')"	oninput="setCustomValidity('')" />
 																		<div   class="help-block with-errors"></div>
 																			</div>
 																			
-																			<div class="col-sm-6 form-group">
-																				<label>Website</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter Website' path="webSite" id="instmanageformid"
-																					required="true"  oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
-																	<div  class="help-block with-errors"></div>
-																			</div>
 																			
 																			
 																			
 																		</div>
 
+																		 <div class="row">
+																		 <div class="col-sm-4 form-group">
+																				<label>Website</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Website' path="webSite" id="instmanageformid"
+																					required="true"  oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
+																	<div  class="help-block with-errors"></div>
+																			</div>
+																		 </div>
 
 
 																	</div>
@@ -264,9 +281,7 @@
 																	<div class="text-xs-center">
 																	
 																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
-											                        Back</a>
-											
-																		<a href="<c:url value="/company/list"/>">
+											                        Back</a> <a href="<c:url value="/company/list"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>

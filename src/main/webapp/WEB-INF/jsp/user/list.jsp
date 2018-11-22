@@ -50,8 +50,7 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="/user/dashboard">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 													<li class="breadcrumb-item active">Users</li>
@@ -68,9 +67,9 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>SNO</th>
+																    <th>S.no</th>
 																	<th>Name</th>
-																	<th>Designation</th>
+																	 <th>Designation</th>
 																	<th>Department</th>
 																	<th>Email</th>
 																	<th>Actions</th>
@@ -82,7 +81,7 @@
 																<td><c:set var="count" value="${count + 1}" scope="page" />
                                                                      <c:out value="${count}" />  </td>
 																	<td>${list.firstname} ${list.lastname}</td>
-																	<td>${list.desigination.desigination}</td>
+																	<td>${list.desigination.desigination}</td> 
 																	<td>${list.department.name}</td>
 																	<td>${list.userEmail}</td>
 																	<td>

@@ -54,8 +54,7 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">Currency</li>
@@ -73,28 +72,28 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">Name</th>
-																<th style="text-align: center;">Description</th>
-																<th style="text-align: center;">Actions</th>
+																<th >S.no</th>
+																<th >Name</th>
+																<th >Description</th>
+																<th >Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${currencyList}" var="currency">
 																<tr>
-																	<td style="text-align: center;"><c:set var="count"
+																	<td><c:set var="count"
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
-																	<td style="text-align: center;">${currency.name}</td>
-																	<td style="text-align: center;">${currency.description}</td>
-																	<td style="text-align: center;"><a
-																		class="btn btn-primary"
+																	<td>${currency.name}</td>
+																	<td>${currency.description}</td>
+																	<td><a
+																		class="btn btn-edit"
 																		href="<c:url value="/currency/getInfo?currencyId=${currency.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> | <a class="btn btn-warning mr-1" href="#"
+																	</a>  <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${currency.id}"/>','/currency/delete')"><i
-																			class="icon-bin left"></i></a> | <a
-																		class="btn btn-primary"
+																			class="icon-bin left"></i></a>  <a
+																		class="btn btn-view"
 																		href="<c:url value="/currency/view?currencyId=${currency.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>

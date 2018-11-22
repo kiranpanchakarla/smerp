@@ -1,3 +1,4 @@
+
 package com.smerp.serviceImpl.inventory;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public class ProductServiceImpl implements ProductService {
 
 	private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
-/*	@Override
+	@Override
 	public Product save(Product product) {
 		try {
-			if (product != null && product.getserviceOrProduct().equals("service")) {
+			if (product != null && product.getServiceOrProduct().equals("service")) {
 				product.setHsnCode(null);
 				
 			} else {
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return product;
 
-	}*/
+	}
 
 	@Override
 	public List<Product> productList() {
@@ -103,11 +104,13 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findByDescription();
 	}
 
-	@Override
-	public Product save(Product product) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/*@Override
+    public Product save(Product product) {
+        
+        
+        
+        return productRepository.save(product);
+    }*/
 
 	@Override
 	public Product findByDescription(String name) {

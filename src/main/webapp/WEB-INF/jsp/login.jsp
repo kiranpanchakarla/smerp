@@ -53,23 +53,23 @@
                   </fieldset>
                   <fieldset class="form-group row">
                     <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
-                      <fieldset>
+                     <!--  <fieldset>
                         <input type="checkbox" id="remember-me" class="chk-remember">
                         <label for="remember-me"> Remember Me</label>
-                      </fieldset>
+                      </fieldset> -->
                     </div>
-                    <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" class="card-link">Forgot Password?</a></div>
+                   <!--  <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" class="card-link">Forgot Password?</a></div> -->
                   </fieldset>
                   <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
                 </form>
               </div>
             </div>
-            <div class="card-footer">
+           <!--  <div class="card-footer">
               <div class="">
                 <p class="float-sm-left text-xs-center m-0"><a href="#" class="card-link">Recover password</a></p>
                 <p class="float-sm-right text-xs-center m-0">New to SMERP? <a href="#" class="card-link">Sign Up</a></p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>

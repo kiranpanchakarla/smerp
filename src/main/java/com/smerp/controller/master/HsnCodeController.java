@@ -1,7 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,7 @@ public class HsnCodeController {
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside HsnCodeController List Method");
-		List<HSNCode> hsncodeList = hsnCodeService.findAll();
-		model.addAttribute("hsncodeList", hsncodeList);
+		model.addAttribute("hsncodeList", hsnCodeService.findAll());
 		return "masters/hsncode/list";
 	}
 
@@ -42,8 +39,7 @@ public class HsnCodeController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String hsncodeId) {
 		logger.info("Inside HsnCodeController GetInfo Method");
-		HSNCode hsncodeObj = hsnCodeService.findById(Integer.parseInt(hsncodeId));
-		model.addAttribute("hsncodeObj", hsncodeObj);
+		model.addAttribute("hsncodeObj", hsnCodeService.findById(Integer.parseInt(hsncodeId)));
 		model.addAttribute("hsncode", new HSNCode());
 		return "masters/hsncode/create";
 	}
@@ -63,10 +59,9 @@ public class HsnCodeController {
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String hsncodeId, Model model, HttpServletRequest request) {
+	public String view(String hsncodeId, Model model) {
 		logger.info("Inside HsnCodeController view Method");
-		HSNCode hsncodeObj = hsnCodeService.getInfo(Integer.parseInt(hsncodeId));
-		model.addAttribute("hsncodeObj", hsncodeObj);
+		model.addAttribute("hsncodeObj", hsnCodeService.getInfo(Integer.parseInt(hsncodeId)));
 		return "masters/hsncode/view";
 	}
 }

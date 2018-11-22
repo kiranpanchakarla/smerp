@@ -12,9 +12,15 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
+<%-- <link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>"> --%>
+
 
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> -->
+
+
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
@@ -36,20 +42,20 @@
 
 							<div class="content-wrapper">
 								<div class="card-header"><div class="content-header row">
-									<div class="col-md-2">
-										<h2 class="content-header-title">RFQ</h2>
+									<div class="col-md-3">
+										<h2 class="content-header-title">Designations</h2>
 										</div>
-										<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/rfq/edit?id=${rfq.id}"/>">Edit</a>
+										<div class="col-md-5">
+										<a class="btn btn-primary" href="<c:url value="/designation/getInfo?designationId=${designationObj.id}"/>">Edit</a>
 									</div>
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
+											<ol class="breadcrumb"><%-- <c:url value="/user/dashboard"/> --%>
+												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
-												<li class="breadcrumb-item active">rfq</li>
+												<li class="breadcrumb-item active">Designation</li>
 											</ol>
 										</div>
 									</div>
@@ -60,35 +66,34 @@
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											 			
+											 
 
     <div class="col-md-12">
         <div class="card">
             <div class="card-body collapse in">
                 <div class="table-responsive">
                     <!-- <table class="table table-bordered mb-0 view-table"></table> -->
-                   <table class="table table-bordered mb-0 fixed-width-table">
-
-                        <tr class="odd">
-                            <th >Vendor Name</th>
-                            <td >${rfq.vendor.name}</td>
-                        </tr>
-                       
-                        <tr class="even">
-                            <th >Document Number</th>
-                          <td>${rfq.docNumber}</td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Reference Document  Number</th>
-                           <td>${rfq.referenceDocNumber}</td>
-                        </tr>
-                        
-                        
+                    <table class="table table-bordered mb-0 fixed-width-table">
+                    
                          <tr class="even">
-                            <th >Document Date</th>
-                           <td>${rfq.documentDate}</td>
+                            <th>Designation Name</th>
+                            <td>${designationObj.desigination}</td>
                         </tr>
 
+
+                        <tr class="odd">
+                            <th>Company Name</th>
+                            <td>${designationObj.company.name}</td>
+                        </tr>
+                         
+                         
+                        <tr class="even">
+                            <th>Department Name</th>
+                            <td>${designationObj.department.name}</td>
+                        </tr>
+                        
+                        
+                         
                     </table>
                 </div>
             </div>
@@ -116,7 +121,9 @@
 					</div>
 					</div>
 </div></div></div>
-				<c:import url="/WEB-INF/jsp/footer.jsp" />
+				<footer class="footer footer-static footer-light navbar-border">
+  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
+</footer>
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 

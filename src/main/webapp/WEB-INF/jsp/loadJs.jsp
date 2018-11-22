@@ -86,44 +86,61 @@
   
   
   function deleteById(id,url){
-	  alertify.confirm('Are you Sure Want to Delete', function(){
-	      //alertify.success('Ok');
-			//"You pressed OK!";
-	  		var dataString  = "id="+id;
-	  			 $.ajax({
-	  				 type:"POST",
-	  				 url: url,
-	  				 data : dataString,
-	  				 success: function(result){
-	  					 alertify.success('Deleted successfully');
-	  					 setTimeout(function(){
-	  						 location.reload();
-	  					 }, 800);
-	  			    }});
-	  			 
-	          }, function(){
-	      alertify.error('Cancel')
-	   });
-   }
-  
-  function isValidName(nameId,url,displayId,msg){
-	  var dataString  ="name="+$('#'+nameId).val();
-	  $.ajax({
-			 type:"GET",
-			 url: url,
-			 data : dataString,
-			 success: function(result){
-				 if(result==true){
-					 alertify.success(msg);
-					 $('#'+nameId).val('');
-					 $('#'+displayId).html(msg);
-				 }else {
-					 $('#'+displayId).html(''); 
-				 }
-		    }});
-	  
+      alertify.confirm('Are you Sure Want to Delete', function(){
+          //alertify.success('Ok');
+            //"You pressed OK!";
+            
+            
+            var parts = url.split('/');
+      /* alert(parts); */
+      var answer = parts[parts.length - 1];
+      /* alert(answer);
+             */
+            
+            
+              var dataString  = "id="+id;
+                   $.ajax({
+                       type:"POST",
+                      /*  url: url, */
+                       url: answer,
+                       data : dataString,
+                       success: function(result){
+                           alertify.success('Deleted successfully');
+                           setTimeout(function(){
+                               location.reload();
+                           }, 800);
+                      }});
+                  
+              }, function(){
+          alertify.error('Cancelled')
+       });
   }
-  
+
+ function isValidName(nameId,url,displayId,msg){
+      
+      
+      var parts = url.split('/');
+     /*  alert(parts); */
+      var answer = parts[parts.length - 1];
+    /*   alert(answer); */
+      
+      var dataString  ="name="+$('#'+nameId).val();
+      $.ajax({
+             type:"GET",
+            /*  url: url, */
+              url: answer,
+             data : dataString,
+             success: function(result){
+                 if(result==true){
+                     alertify.success(msg);
+                     $('#'+nameId).val('');
+                     $('#'+displayId).html(msg);
+                 }else {
+                     $('#'+displayId).html('');
+                 }
+            }});
+      
+ }
 
   function goBack() {
       window.history.back();

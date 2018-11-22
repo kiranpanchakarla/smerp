@@ -42,7 +42,8 @@ $(document).ready(function(){
 				<div class="large-12 columns">
 					<div class="content-body">
 						<!-- Basic form layout section start -->
-						<form:form method="POST" action="/product/save" modelAttribute="product"  data-toggle="validator" role="form">
+						<c:url value="/product/save" var="createUrl" />
+						<form:form  method="POST" action="${createUrl}" modelAttribute="product"  data-toggle="validator" role="form">
 							<section id="basic-form-layouts">
 								<div class="row match-height">
 									<div class="col-md-12">
@@ -63,30 +64,18 @@ $(document).ready(function(){
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-6 form-group has-feedback">
-																	<label>Product No</label>
-																	<form:input type="text" class="form-control" placeholder='productNo' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
-																	<div style="color:red;" id="1_productNo" class="help-block with-errors"></div>
+																	<label>Product Number</label>
+																	<form:input type="text" class="form-control" placeholder='product number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
+																	<div  id="1_productNo" class="help-block with-errors"></div>
 																</div>
-																<div class="col-sm-6 form-group">
-																	<div style="margin-top: 38px">
-																		<form:checkbox path="inventoryProduct" id="inventoryProduct" class="purchaseType" value="inventoryProduct" required="true"  />Inventory Product
-																		<!-- <div style="color:red;" class="help-block with-errors"></div> -->
-																	</div>
-																</div>
-															</div>
-															<div class="row">
+																
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
 																	<form:input type="text" class="form-control" placeholder='description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
-																	<div style="color:red;" class="help-block with-errors"></div>
-																</div>
-																<div class="col-sm-6 form-group">
-																	<div style="margin-top: 38px">
-																		<form:checkbox path="purchaseProduct"  id="purchaseProduct" class="purchaseType" value="purchaseProduct" required="true"  />Purchase Product
-																		<!-- <div style="color:red;" class="help-block with-errors"></div> -->
-																	</div>
+																	<div  class="help-block with-errors"></div>
 																</div>
 															</div>
+															
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Product Group</label>
@@ -96,10 +85,8 @@ $(document).ready(function(){
 																			<form:option value="${productCategory.id}">${productCategory.name}</form:option>
 																		</c:forEach>
 																	</form:select>
-																	<div style="color:red;" class="help-block with-errors"></div>
+																	<div  class="help-block with-errors"></div>
 																</div>
-															</div>
-															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>UOM Group</label>
 																	<form:select path="uomCategory.id" id="uomCategoryId" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM Group')" oninput="setCustomValidity('')">
@@ -108,9 +95,24 @@ $(document).ready(function(){
 																			<form:option value="${uomCategory.id}">${uomCategory.uomCategoryName}</form:option>
 																		</c:forEach>
 																	</form:select>
-																	<div style="color:red;" class="help-block with-errors"></div>
+																	<div  class="help-block with-errors"></div>
 																</div>
 															</div>
+															
+															<div class="row">
+																<div class="col-sm-12 form-group">
+																<div class="inventory-list">
+																		<form:checkbox path="inventoryProduct" id="inventoryProduct" class="purchaseType" value="inventoryProduct" required="true"  /> <span class="radio-list">Inventory Product</span>
+																		<!-- <div  class="help-block with-errors"></div> -->
+																	</div>
+																	
+																	<div class="inventory-list">
+																		<form:checkbox path="purchaseProduct"  id="purchaseProduct" class="purchaseType" value="purchaseProduct" required="true"  /> <span class="radio-list">Purchase Product</span>
+																		<!-- <div  class="help-block with-errors"></div> -->
+																	</div>
+																</div>
+															</div>
+															
 															<ul class="nav nav-tabs" id="myTab" role="tablist">
 																<li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
 																</li>
@@ -121,53 +123,54 @@ $(document).ready(function(){
 															</ul>
 															<div class="tab-content">
 																<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-																	<br>
+																	
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
+																		<div class="inventory-list">
 																			<!-- <label>With old Tax Liable</label> -->
-																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" required="true" />Withholding Tax Liable
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" required="true" /><span class="radio-list">Withholding Tax Liable</span>
+																			<div  class="help-block with-errors"></div>
+																		</div>
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
 																			<div class="input-group">
 																				<!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-																				<form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="service" />Service
-																				<form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="product" />Product
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="service" /><span class="radio-list">Service</span></div>
+																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="product" /><span class="radio-list">Product</span></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
-																			<form:checkbox path="gst" value="gst" id="gstcategory" required="true" />GST
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div class="inventory-list"><form:checkbox path="gst" value="gst" id="gstcategory" required="true" /><span class="radio-list">GST</span>
+																			<div  class="help-block with-errors"></div>
+																			</div>
 																		</div>
 																		<input type="hidden" id="gstValue" class="form-control" name="gstValue" value="${product.gst}">
 																	</div>
 																	<div id="service-gst-div" style="display: none;">
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Service Type:</label>
 																				<form:input path="serviceType" id="service" type="text" class="form-control"  oninvalid="this.setCustomValidity('Please Enter Service Type')" oninput="setCustomValidity('')" />
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
-																		</div>
-																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																		
+																			<div class="col-sm-4 form-group">
 																				<label>SAC:</label>
-																				<form:select path="sacCode.id"  id="sacCode" class="form-control"  oninvalid="this.setCustomValidity('Please Select SAC Type')" oninput="setCustomValidity('')">
+																				<form:select path="sacCode.id"   class="form-control"  oninvalid="this.setCustomValidity('Please Select SAC Type')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
 																					<c:forEach items="${sacList}" var="sac">
 																						<form:option value="${sac.id}">${sac.sacCode}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
-																		</div>
-																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																		
+																			<div class="col-sm-4 form-group">
 																				<label>Tax Category</label>
 																				<form:select path="taxCategory" id="taxCategory" class="form-control"  oninvalid="this.setCustomValidity('Please Select Tax Category')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
@@ -175,13 +178,13 @@ $(document).ready(function(){
 																						<form:option value="${taxCategory.key}">${taxCategory.value}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
 																		</div>
 																	</div>
 																	<div id="product-gst-div" style="display: none;">
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Product Type</label>
 																				<form:select id="product" path="productType" class="form-control"  oninvalid="this.setCustomValidity('Please Select Product  Type')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
@@ -189,11 +192,10 @@ $(document).ready(function(){
 																					<form:option value="${productType.key}">${productType.value}</form:option>
 																				</c:forEach>
 																				</form:select>
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
-																		</div>
-																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																		
+																			<div class="col-sm-4 form-group">
 																				<label>HSN:</label>
 																				<form:select path="hsnCode.id" class="form-control" oninvalid="this.setCustomValidity('Please Select HSN Code')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
@@ -201,11 +203,10 @@ $(document).ready(function(){
 																						<form:option value="${hsn.id}">${hsn.hsnCode}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
-																		</div>
-																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			
+																			<div class="col-sm-4 form-group">
 																				<label>TaxCategory</label>
 																				<form:select path="productTaxCategory" class="form-control" oninvalid="this.setCustomValidity('Please Select Tax Category')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
@@ -213,9 +214,11 @@ $(document).ready(function(){
 																						<form:option value="${taxCategory.key}">${taxCategory.value}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div style="color:red;" class="help-block with-errors"></div>
+																				<div  class="help-block with-errors"></div>
 																			</div>
+																			
 																		</div>
+																		
 																	</div>
 																	<p class="card-title">Serial and Batch Numbers</p>
 																	<div class="row">
@@ -228,21 +231,20 @@ $(document).ready(function(){
 																				</c:forEach>
 																			</form:select>
 																				
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																	</div>
 																</div>
 																<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-																	<br>
+																	
 																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Preferred Vendor</label>
 																			<form:input path="preferredVendor" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																	
+																		<div class="col-sm-4 form-group">
 																			<label>Purchasing UOM Name: </label>
 																			
 																			<form:select id="purchasingUomId" path="purchasingUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
@@ -252,16 +254,15 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																		<input type="hidden" id="purchasingUomValue" class="form-control" name="id" value="${product.purchasingUom.uomName}">
 																		<input type="hidden" id="purchasingUomKey" class="form-control" name="id" value="${product.purchasingUom.id}">
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																	
+																		<div class="col-sm-4 form-group">
 																			<label>Products Per Purchase Unit:</label>
 																			<form:input path="produtPerPurchaseUnit" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Per Purchase Unit')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																	</div>
 																	<div class="row">
@@ -273,23 +274,22 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																		<input type="hidden" id="packingUomValue" class="form-control" name="id" value="${product.packingUom.uomName}">
 																		<input type="hidden" id="packingUomKey" class="form-control" name="id" value="${product.packingUom.id}">
-																	</div>
-																	<div class="row">
+																	
 																		<div class="col-sm-6 form-group">
 																			<label>Quantity Per Package:</label>
 																			<form:input path="qualityPerPackage" type="text" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																	</div>
 																</div>
 																<div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-																	<br>
+																	
 																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Inventory UoM:</label>
 																			<form:select id="inventoryUomId" path="inventoryUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
@@ -297,23 +297,20 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div style="color:red;" class="help-block with-errors"></div>
-																		</div>
+																			<div  class="help-block with-errors"></div>
 																		<input type="hidden" id="inventoryUomValue" class="form-control" name="id" value="${product.inventoryUom.uomName}">
 																		<input type="hidden" id="inventoryUomKey" class="form-control" name="id" value="${product.inventoryUom.id}">
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																	    </div>
+																		<div class="col-sm-4 form-group">
 																			<label>Minimum</label>
 																			<form:input path="minimun" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Minimum Value')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																	
+																		<div class="col-sm-4 form-group">
 																			<label>Maximum</label>
 																			<form:input path="maximim" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																	</div>
 																	<div class="row">
@@ -325,14 +322,13 @@ $(document).ready(function(){
 																					<form:option value="${valuationMethod.key}">${valuationMethod.value}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
-																	</div>
-																	<div class="row">
+																	
 																		<div class="col-sm-6 form-group">
 																			<label>Product Cost:</label>
 																			<form:input path="productCost" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Cost')" oninput="setCustomValidity('')" />
-																			<div style="color:red;" class="help-block with-errors"></div>
+																			<div  class="help-block with-errors"></div>
 																		</div>
 																	</div>
 																</div>

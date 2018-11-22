@@ -118,8 +118,8 @@ public class UserController {
 	public String show(String id, Model model) {
 		try {
 			User user = userService.findById(Integer.parseInt(id));
-			Integer managerId = user.getReportingManagerId();
-			User userDt = userService.findById(managerId);
+			//Integer managerId = user.getReportingManagerId();
+			//User userDt = userService.findById(managerId);
 			model.addAttribute("plantList", plantService.findAll());
 			// model.addAttribute("managername",userDt.getFirstname()+"
 			// "+user.getLastname());

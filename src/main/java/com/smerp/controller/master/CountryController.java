@@ -1,7 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,13 @@ public class CountryController {
 
 	@Autowired
 	CurrencyServices currencyServices;
+	
+	
 
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside CountryController List Method");
-		List<Country> countryList = countryServices.countryList();
-		model.addAttribute("countryList", countryList);
+		model.addAttribute("countryList", countryServices.countryList());
 		return "masters/country/list";
 	}
 
@@ -45,10 +44,9 @@ public class CountryController {
 	}
 
 	@GetMapping(value = "/getInfo")
-	public String GetInfo(Model model, String countryId, HttpServletRequest request) {
+	public String GetInfo(Model model, String countryId) {
 		logger.info("Inside CountryController GetInfo Method");
-		Country countryObj = countryServices.getInfo(Integer.parseInt(countryId));
-		model.addAttribute("countryObj", countryObj);
+		model.addAttribute("countryObj", countryServices.getInfo(Integer.parseInt(countryId)));
 		model.addAttribute("country", new Country());
 		model.addAttribute("currencyList", currencyServices.findAll());
 		return "masters/country/create";
@@ -69,10 +67,9 @@ public class CountryController {
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String countryId, Model model, HttpServletRequest request) {
+	public String view(String countryId, Model model) {
 		logger.info("Inside CountryController view Method");
-		Country countryObj = countryServices.getInfo(Integer.parseInt(countryId));
-		model.addAttribute("countryObj", countryObj);
+		model.addAttribute("countryObj", countryServices.getInfo(Integer.parseInt(countryId)));
 		return "masters/country/view";
 	}
 }

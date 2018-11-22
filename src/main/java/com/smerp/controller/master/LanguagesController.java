@@ -1,6 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class LanguagesController {
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside LanguagesController List Method");
-		List<Languages> languagesList = languagesService.findAll();
-		model.addAttribute("languagesList", languagesList);
+		model.addAttribute("languagesList", languagesService.findAll());
 		return "masters/languages/list";
 	}
 
@@ -41,8 +39,7 @@ public class LanguagesController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String languagesId) {
 		logger.info("Inside LanguagesController GetInfo Method");
-		Languages languagesObj = languagesService.findById(Integer.parseInt(languagesId));
-		model.addAttribute("languagesObj", languagesObj);
+		model.addAttribute("languagesObj", languagesService.findById(Integer.parseInt(languagesId)));
 		model.addAttribute("languages", new Languages());
 		return "masters/languages/create";
 	}
@@ -64,8 +61,7 @@ public class LanguagesController {
 	@GetMapping(value = "/view")
 	public String view(String languagesId, Model model) {
 		logger.info("Inside LanguagesController view Method");
-		Languages languagesObj = languagesService.getInfo(Integer.parseInt(languagesId));
-		model.addAttribute("languagesObj", languagesObj);
+		model.addAttribute("languagesObj", languagesService.getInfo(Integer.parseInt(languagesId)));
 		return "masters/languages/view";
 	}
 }

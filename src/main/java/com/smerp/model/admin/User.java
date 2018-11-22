@@ -72,7 +72,7 @@ public class User extends AuditModel {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="desigination_id")
-	private Desigination desigination;
+	private Desigination designation;
 	
 	
 	@Column(name="reporting_manager_id")
@@ -208,11 +208,11 @@ public class User extends AuditModel {
 	}
 
 	public Desigination getDesigination() {
-		return desigination;
+		return designation;
 	}
 
-	public void setDesigination(Desigination desigination) {
-		this.desigination = desigination;
+	public void setDesigination(Desigination designation) {
+		this.designation = designation;
 	}
 
 	public Integer getReportingManagerId() {
@@ -258,7 +258,7 @@ public class User extends AuditModel {
 		return "User [userId=" + userId + ", username=" + username + ", userEmail=" + userEmail + ", password="
 				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", mobileNo=" + mobileNo + ", activationId=" + activationId + ", company=" + company + ", department="
-				+ department + ", desigination=" + desigination + ", reportingManagerId=" + reportingManagerId
+				+ department + ", designation=" + designation + ", reportingManagerId=" + reportingManagerId
 				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + "]";
 	}
 

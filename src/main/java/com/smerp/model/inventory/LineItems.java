@@ -2,63 +2,58 @@ package com.smerp.model.inventory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.smerp.model.master.AuditModel;
 
 @Entity
 @Table(name = "tbl_admin_rfq_lineitems")
-public class LineItems {
-	
+public class LineItems extends AuditModel {
+
 	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
-	@Column(name="lineitem_id" , nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "lineitem_id", nullable = false, unique = true)
 	private Integer id;
 
-	@Column(name="productId")
+	@Column(name = "product_id")
 	private Integer productId;
-	
-	@Column(name="productName")
-	private String productName;
-	
-	@Column(name="uom")
+
+	/*
+	 * @Column(name="product_name") private String productName;
+	 */
+
+	@Column(name = "product_number")
+	private String prodouctNumber;
+
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "uom")
 	private String uom;
-	
-	@Column(name="quantity")
-	private int quantity;
-	
-	@Column(name="productgroup")
+
+	/*
+	 * @Column(name="quantity") private Integer quantity;
+	 */
+
+	@Column(name = "required_quantity")
+	private Integer requiredQuantity;
+
+	@Column(name = "product_group")
 	private String productGroup;
-	
-	@Column(name="warehouse")
+
+	@Column(name = "warehouse")
 	private String warehouse;
-	
-	@Column(name="hsnorsac")
-	private String hsnOrSac;
-	
-	@Column(name="category")
-	private String category;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", nullable = true)
-	private RequestForQuotation requestForQuotation;
 	
 	
-
-
-
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+	@Column(name="hsn")
+    private String hsn;
+    
+    @Column(name="sac_code")
+    private String sacCode;
 
 	public String getUom() {
 		return uom;
@@ -66,14 +61,6 @@ public class LineItems {
 
 	public void setUom(String uom) {
 		this.uom = uom;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public String getProductGroup() {
@@ -92,14 +79,7 @@ public class LineItems {
 		this.warehouse = warehouse;
 	}
 
-	public String getHsnOrSac() {
-		return hsnOrSac;
-	}
-
-	public void setHsnOrSac(String hsnOrSac) {
-		this.hsnOrSac = hsnOrSac;
-	}
-
+	
 
 	public Integer getId() {
 		return id;
@@ -117,32 +97,56 @@ public class LineItems {
 		this.id = id;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getProdouctNumber() {
+		return prodouctNumber;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setProdouctNumber(String prodouctNumber) {
+		this.prodouctNumber = prodouctNumber;
 	}
 
-	public RequestForQuotation getRequestForQuotation() {
-		return requestForQuotation;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setRequestForQuotation(RequestForQuotation requestForQuotation) {
-		this.requestForQuotation = requestForQuotation;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getRequiredQuantity() {
+		return requiredQuantity;
+	}
+
+	public void setRequiredQuantity(Integer requiredQuantity) {
+		this.requiredQuantity = requiredQuantity;
+	}
+
+	public String getHsn() {
+		return hsn;
+	}
+
+	public void setHsn(String hsn) {
+		this.hsn = hsn;
+	}
+
+	public String getSacCode() {
+		return sacCode;
+	}
+
+	public void setSacCode(String sacCode) {
+		this.sacCode = sacCode;
 	}
 
 	@Override
 	public String toString() {
-		return "LineItems [id=" + id + ", productId=" + productId + ", productName=" + productName + ", uom=" + uom
-				+ ", quantity=" + quantity + ", productGroup=" + productGroup + ", warehouse=" + warehouse
-				+ ", hsnOrSac=" + hsnOrSac + ", category=" + category + ", requestForQuotation=" + requestForQuotation
-				+ "]";
+		return "LineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
+				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
+				+ sacCode + "]";
 	}
 
 	
-	
+
 	
 
 }

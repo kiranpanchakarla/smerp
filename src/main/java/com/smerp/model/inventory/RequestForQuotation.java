@@ -17,10 +17,11 @@ import javax.persistence.Table;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
+import com.smerp.model.master.AuditModel;
 
 @Entity
 @Table(name="tbl_admin_rfq")
-public class RequestForQuotation {
+public class RequestForQuotation extends AuditModel {
 	
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -31,22 +32,21 @@ public class RequestForQuotation {
 	@JoinColumn(name="vendor_id")
 	private Vendor vendor;
 	
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "rfq_id", referencedColumnName = "rfq_id")
 	private List<LineItems> lineItems;;
 	
-	@Column(name="docNumber")
+	@Column(name="doc_number")
 	private String docNumber;
 	@Column(name="status")
 	private String status;
-	@Column(name="referenceDocNumber")
+	@Column(name="reference_doc_number")
 	private String referenceDocNumber;
-	@Column(name="postingDate")
+	@Column(name="posting_date")
 	private Date postingDate;
-	@Column(name="documentDate")
+	@Column(name="document_date")
 	private Date documentDate;
-	@Column(name="requiredDate")
+	@Column(name="required_date")
 	private Date requiredDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -60,6 +60,12 @@ public class RequestForQuotation {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "vendor_contact_id")
 	private VendorsContactDetails vendorContactDetails;
+	
+	@Column(name="category")
+	private String category;
+	
+	@Column(name="is_active")
+	private Boolean isActive = true;
 	
 	public String getDocNumber() {
 		return docNumber;
@@ -135,14 +141,35 @@ public class RequestForQuotation {
 	public void setVendorContactDetails(VendorsContactDetails vendorContactDetails) {
 		this.vendorContactDetails = vendorContactDetails;
 	}
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	@Override
 	public String toString() {
 		return "RequestForQuotation [id=" + id + ", vendor=" + vendor + ", lineItems=" + lineItems + ", docNumber="
 				+ docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber + ", postingDate="
 				+ postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
 				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
-				+ ", vendorContactDetails=" + vendorContactDetails + "]";
+				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
+				+ "]";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	

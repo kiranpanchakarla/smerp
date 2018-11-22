@@ -2,7 +2,6 @@ package com.smerp.service.inventory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.master.PlantService;
+import com.smerp.service.master.SacService;
 
 @Controller
 @RequestMapping("/rfq")
@@ -45,6 +45,9 @@ public class RequestForQuotationController {
 	@Autowired
 	RequestForQuotationService requestForQuotationService;
 	
+	@Autowired
+	SacService sacService;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -54,11 +57,13 @@ public class RequestForQuotationController {
 
 	@GetMapping("/create")
 	public String createPage(Model model,RequestForQuotation rfq) throws JsonProcessingException {
-		model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("planMap", plantMap());
+		//model.addAttribute("categoryMap", categoryMap());
 		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("planMap", plantMap());
+		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
+		
 		RequestForQuotation rfqdetails=requestForQuotationService.findLastDocumentNumber();
-		if (rfqdetails.getDocNumber()!=null) {
+		if (rfqdetails!=null && rfqdetails.getDocNumber()!=null) {
 			rfq.setDocNumber(documentNumberGeneration(rfqdetails.getDocNumber()));
 		}else {
 			rfq.setDocNumber("doc_1");
@@ -72,18 +77,18 @@ public class RequestForQuotationController {
 	@GetMapping("/edit")
 	public String edit(String id,Model model) throws JsonProcessingException {
 		RequestForQuotation rfq=requestForQuotationService.findById(Integer.parseInt(id));
-		
+		ObjectMapper mapper = new ObjectMapper();
 		VendorAddress vendorPayTypeAddress=rfq.getVendorPayTypeAddress();
 		VendorAddress  vendorShippingAddress=rfq.getVendorShippingAddress();
-		
+		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		model.addAttribute("lineItems",rfq.getLineItems());
 		
-		ObjectMapper mapper = new ObjectMapper();
+		
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
-		model.addAttribute("categoryMap", categoryMap());
+	//	model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
 		
 		model.addAttribute("rfq",rfq);
@@ -104,8 +109,7 @@ public class RequestForQuotationController {
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
-		model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("categoryMap", categoryMap());
+		//model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
 		
 		model.addAttribute("rfq",rfq);
@@ -123,9 +127,10 @@ public class RequestForQuotationController {
 	
 	@PostMapping("/save")
 	public String name(RequestForQuotation requestForQuotation) {
-		logger.info("Inside save method");
+		logger.info("Inside save method" +requestForQuotation );
+		// delete rq_item_details.
 		logger.info("rfq details"+requestForQuotationService.save(requestForQuotation));
-		 return "rfq/list";
+		return "redirect:list";
 	}
 	
 	
@@ -137,12 +142,12 @@ public class RequestForQuotationController {
 	}
 	
 
-	public Map<String, Object> categoryMap() {
+	/*public Map<String, Object> categoryMap() {
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("GOODS", "GOODS");
 		map.put("SERVICE", "SERVICE");
 		return map;
-	}
+	}*/
 	
 	public Map<Integer, Object> plantMap(){
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));

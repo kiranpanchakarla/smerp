@@ -52,4 +52,16 @@ public class SacServiceImpl implements SacService {
 		return sacRepository.findById(id);
 	}
 
+	@Override
+    public List<String> findAllSacCodes() {
+        
+        return sacRepository.findAllSacCodes();
+    }
+	
+	@Override
+    public SACCode findBySacCode(String sacCode) {
+        
+        return sacRepository.findBySacCode(sacCode);
+    }
+	
 }

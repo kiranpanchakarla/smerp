@@ -14,4 +14,8 @@ public interface SacService {
 	void delete(int id);
     
 	SACCode getInfo(int id);
+	
+	List<String> findAllSacCodes();
+	
+	SACCode findBySacCode(String sacCode);
 }

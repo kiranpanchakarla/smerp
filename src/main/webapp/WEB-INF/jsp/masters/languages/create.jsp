@@ -37,12 +37,13 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<form:form method="POST" action="/languages/save"
+							<c:url value="/languages/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}" 
 								modelAttribute="languages" onsubmit="return register()" data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
-										<div class="col-md-6" style="margin-left: 250px;">
+										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
 													<div class="row">
@@ -60,23 +61,28 @@
 												<input type="hidden" id="id" class="form-control" name="id"
 													value="${languagesObj.id}">
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<form class="form">
 															<div class="form-body">
-																<div class="form-group">
+																<div class="row">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Languages Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Languages Name' path="name"
 																			value="${languagesObj.name}" required="true" oninvalid="this.setCustomValidity('Please Enter Language')"    oninput="setCustomValidity('')"/>
-																	<div style="color:red;"  class="help-block with-errors"></div>
+																	<div   class="help-block with-errors"></div>
 																	</div>
 																</div>
 
 															</div>
-															<div class="form-actions center">
-																	<a class="btn btn-primary" href="<c:url value="/languages/list"/>">Back</a>
+															</div>
+															<br>
+															<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a> 
 																<a href="<c:url value="/languages/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel

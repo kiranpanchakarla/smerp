@@ -40,7 +40,7 @@
 										<!-- Basic Tables start -->
 
 										<div class="card">
-											<div class="card-header" style="height: 60px;">
+											<div class="card-header">
 											<div class="row">
 												<div class="col-md-2">
 													<h2 class="content-header-title">Company</h2>
@@ -50,10 +50,8 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="/dashboard">Home</a>
-														</li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
+														<li class="breadcrumb-item"><a href="#">Administration</a></li>
 														<li class="breadcrumb-item active">Company</li>
 													</ol>
 												</div>
@@ -68,7 +66,7 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>SNO</th>
+																    <th>S.no</th>
 																	<th>Name</th>
 																	<th>GSTN</th>
 																	<th>City</th>

@@ -1,7 +1,5 @@
 package com.smerp.controller.master;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +29,7 @@ public class StatesController {
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		logger.info("Inside StatesController List Method");
-		List<States> statesList = statesService.findAll();
-		model.addAttribute("statesList", statesList);
+		model.addAttribute("statesList", statesService.findAll());
 		return "masters/states/list";
 	}
 
@@ -47,8 +44,7 @@ public class StatesController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String statesId) {
 		logger.info("Inside StatesController GetInfo Method");
-		States statesObj = statesService.findById(Integer.parseInt(statesId));
-		model.addAttribute("statesObj", statesObj);
+		model.addAttribute("statesObj", statesService.findById(Integer.parseInt(statesId)));
 		model.addAttribute("states", new States());
 		model.addAttribute("countryList", countryService.countryList());
 		return "masters/states/create";
@@ -69,10 +65,9 @@ public class StatesController {
 	}
 
 	@GetMapping(value = "/view")
-	public String view(String statesId, Model model, HttpServletRequest request) {
+	public String view(String statesId, Model model) {
 		logger.info("Inside StatesController view Method");
-		States statesObj = statesService.getInfo(Integer.parseInt(statesId));
-		model.addAttribute("statesObj", statesObj);
+		model.addAttribute("statesObj", statesService.getInfo(Integer.parseInt(statesId)));
 		return "masters/states/view";
 	}
 

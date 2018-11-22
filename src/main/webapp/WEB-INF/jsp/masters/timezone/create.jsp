@@ -34,13 +34,14 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<form:form method="POST" action="/timezone/save"
+							<c:url value="/timezone/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}" 
 								modelAttribute="timezone" onsubmit="return register()"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
-										<div class="col-md-6" style="margin-left: 250px;">
+										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
 													<h4 class="card-title" id="basic-layout-icons">Time
@@ -52,11 +53,12 @@
 												<input type="hidden" id="id" class="form-control" name="id"
 													value="${timezoneObj.id}">
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<form class="form">
 															<div class="form-body">
-																<div class="form-group">
+																<div class="row">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Name</label>
 																	<div>
 
@@ -65,12 +67,11 @@
 																			value="${timezoneObj.name}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter timezone')"
 																			oninput="setCustomValidity('')" />
-																		<div style="color: red;"
-																			class="help-block with-errors"></div>
-																		<div class="form-control-position"></div>
+																		<div  class="help-block with-errors"></div>
+																		 
 																	</div>
 																</div>
-																<div class="form-group">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput2">Difference From UTC</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
@@ -78,12 +79,11 @@
 																			value="${timezoneObj.diffFromUtc}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Difference From UTC')"
 																			oninput="setCustomValidity('')" />
-																		<div style="color: red;"
-																			class="help-block with-errors"></div>
-																		<div class="form-control-position"></div>
+																		<div  class="help-block with-errors"></div>
+																		 
 																	</div>
 																</div>
-																<div class="form-group">
+																<div class="col-sm-6 form-group">
 																		<label>Country</label>
 																		<form:select id="country" path="country.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Country')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
@@ -91,11 +91,15 @@
 																				<form:option value="${countryList.id}">${countryList.name}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<div  class="help-block with-errors"></div>
 																	</div>
 															</div>
-															<div class="form-actions center">
-																<a class="btn btn-primary" href="/timezone/list">Back</a>
+															</div>
+															<br>
+															<div class="text-xs-center">
+																	
+																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
+											                        Back</a> 
 																<a href="/timezone/list">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel

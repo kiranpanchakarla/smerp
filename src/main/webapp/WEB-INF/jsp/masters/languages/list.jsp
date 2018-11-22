@@ -37,7 +37,7 @@
 							<div>
 								<div class="content-body">
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
+										<div class="card-header">
 											<div class="row">
 												<div class="col-md-2">
 													<h2 class="content-header-title">Languages</h2>
@@ -49,8 +49,7 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">Languages</li>
@@ -68,25 +67,25 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-															    <th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">Languages</th>
-																<th style="text-align: center;">Actions</th>
+															    <th>S.no</th>
+																<th>Languages</th>
+																<th>Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${languagesList}" var="languages">
 																<tr>
-																    <td style="text-align: center;"><c:set var="count" value="${count + 1}" scope="page" />
+																    <td><c:set var="count" value="${count + 1}" scope="page" />
                                                                      <c:out value="${count}" />  </td>
-																	<td style="text-align: center;">${languages.name}</td>
-																	<td style="text-align: center;"><a
-																		class="btn btn-primary"
+																	<td>${languages.name}</td>
+																	<td><a
+																		class="btn btn-edit"
 																		href="<c:url value="/languages/getInfo?languagesId=${languages.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> <a class="btn btn-warning mr-1" href="#"
+																	</a> <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${languages.id}"/>','/languages/delete')"><i
 																			class="icon-bin left"></i></a>
-																			<a  class ="btn btn-primary" href="<c:url value="/languages/view?languagesId=${languages.id}"/>"><i class="icon-eye3 left"></i></a></td>
+																			<a  class ="btn btn-view" href="<c:url value="/languages/view?languagesId=${languages.id}"/>"><i class="icon-eye3 left"></i></a></td>
 
 																</tr>
 															</c:forEach>

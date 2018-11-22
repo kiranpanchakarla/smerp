@@ -40,7 +40,7 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
+										<div class="card-header">
 										<div class="row">
 										<div class="col-md-2">
 										<h3 class="content-header-title">SAC Code</h3>
@@ -51,8 +51,7 @@
 												 
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-											<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-											</li>
+											<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 											<li class="breadcrumb-item"><a href="#">Administration</a>
 											</li>
 											<li class="breadcrumb-item active">SAC Code</li>
@@ -69,27 +68,27 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-															    <th style="text-align: center;">S.no</th>
-																<th style="text-align: center;">SAC CODE</th>
-																<th style="text-align: center;">Description</th>
-																<th style="text-align: center;">Rate</th>
-																<th style="text-align: center;">Actions</th>
+															    <th>S.no</th>
+																<th>SAC CODE</th>
+																<th>Description</th>
+																<th>Rate</th>
+																<th>Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${saccodeList}" var="saccode">
 																<tr>
-																    <td style="text-align: center;"><c:set var="count" value="${count + 1}" scope="page" />
+																    <td><c:set var="count" value="${count + 1}" scope="page" />
                                                                      <c:out value="${count}" />  </td>
-																	<td style="text-align: center;">${saccode.sacCode}</td>
-																	<td style="text-align: center;">${saccode.description}</td>
-																	<td style="text-align: center;">${saccode.rate}</td>
-																	<td style="text-align: center;"><a class="btn btn-primary"
+																	<td>${saccode.sacCode}</td>
+																	<td>${saccode.description}</td>
+																	<td>${saccode.rate}</td>
+																	<td><a class="btn btn-edit"
 																		href="<c:url value="/saccode/getInfo?saccodeId=${saccode.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> <a class="btn btn-warning mr-1" href="#"
+																	</a> <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${saccode.id}"/>','/saccode/delete')"><i
-																			class="icon-bin left"></i></a><a class="btn btn-primary"
+																			class="icon-bin left"></i></a><a class="btn btn-view"
 																		href="<c:url value="/saccode/view?saccodeId=${saccode.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 

@@ -20,12 +20,12 @@
 							<li class="has_sub"><a>Admin Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
-									<li ><a href="<c:url value ="/currency/list"/>">Company</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Users</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Vendors</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Roles</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Departments</a></li>
-									<li><a href="<c:url value ="/currency/list"/>">Designation</a></li>
+									<li ><a href="<c:url value ="/company/list"/>">Company</a></li>
+									<li><a href="<c:url value ="/user/list"/>">Users</a></li>
+									<li><a href="<c:url value ="/vendor/list"/>">Vendors</a></li>
+									<%-- <li><a href="<c:url value =""/>">Roles</a></li> --%>
+									<li><a href="<c:url value ="/department/list"/>">Departments</a></li>
+									<li><a href="<c:url value ="/designation/list"/>">Designation</a></li>
 								</ul></li>
 								
 							<li class="has_sub"><a>Global Settings<i

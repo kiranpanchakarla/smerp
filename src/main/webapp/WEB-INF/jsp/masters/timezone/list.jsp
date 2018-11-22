@@ -40,7 +40,7 @@
 								<div class="content-body">
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
+										<div class="card-header">
 											<div class="row">
 												<div class="col-md-2">
 													<h2 class="content-header-title">Timezone</h2>
@@ -51,8 +51,7 @@
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
-														</li>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
 														<li class="breadcrumb-item active">Timezone</li>
@@ -70,30 +69,30 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th style="text-align: center;">S.no</th>
-																<th style="text-align: center;"> Name</th>
-																<th style="text-align: center;">Difference from UTC</th>
-																<th style="text-align: center;">Country</th>
-																<th style="text-align: center;">Actions</th>
+																<th>S.no</th>
+																<th> Name</th>
+																<th>Difference from UTC</th>
+																<th>Country</th>
+																<th>Actions</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:forEach items="${timezoneList}" var="timezone">
 																<tr>
-																	<td style="text-align: center;"><c:set var="count"
+																	<td><c:set var="count"
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
-																	<td style="text-align: center;">${timezone.name}</td>
-																	<td style="text-align: center;">${timezone.diffFromUtc}</td>
-																	<td style="text-align: center;">${timezone.country.name}</td>
-																	<td style="text-align: center;"><a
-																		class="btn btn-primary"
+																	<td>${timezone.name}</td>
+																	<td>${timezone.diffFromUtc}</td>
+																	<td>${timezone.country.name}</td>
+																	<td><a
+																		class="btn btn-edit"
 																		href="<c:url value="/timezone/getInfo?timezoneId=${timezone.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> | <a class="btn btn-warning mr-1" href="#"
+																	</a>  <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${timezone.id}"/>','/timezone/delete')"><i
-																			class="icon-bin left"></i></a> | <a
-																		class="btn btn-primary"
+																			class="icon-bin left"></i></a>  <a
+																		class="btn btn-view"
 																		href="<c:url value="/timezone/view?timezoneId=${timezone.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>

@@ -65,6 +65,13 @@
         </ul>
       </li>
       
+      
+<li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Purchase Request</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+        <ul class="sub_menu">
+          <li class="has_sub"><a href="<c:url value ="/purchaseReq/list"/>">Purchase Request</a></li>
+        </ul>
+      </li>
+      
     </ul>
   </div>
 </div>

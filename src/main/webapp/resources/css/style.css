@@ -532,3 +532,6 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
 .product-box1 i, .product-box2 i , .product-box3 i , .product-box4 i {
     font-size: 32px !important;
 }
+.create-block [type="button"] {
+    width: auto;
+}

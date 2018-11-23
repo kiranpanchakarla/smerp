@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -81,19 +82,14 @@
 																	<form:input type="text"
 																		cssClass="form-control vendorname"
 																		placeholder='Vendor Name' path="vendor.name"
-																		required="true"  autocomplete="off"/>
-																		
-																	<div style="color: red;" id="1_errorContainer"
-																		class="help-block with-errors"></div>
+																		required="true" />
 																</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
 																<div class="col-sm-6 form-group">
 																	<label>Email Id</label>
 																	<form:input type="text" cssClass="form-control emailId"
 																		readonly="true" placeholder='Email Id'
-																		path="vendor.emailId" required="true" />
-																	<div style="color: red;" id="1_errorContainer"
-																		class="help-block with-errors"></div>
+																		path="vendor.emailId"   />
 																</div>
 															</div>
 
@@ -105,7 +101,6 @@
 
 																	<form:select path="vendorContactDetails.id"
 																		id="vendorContactDetails" cssClass="form-control"
-																		required="true"
 																		oninvalid="this.setCustomValidity('Please Select State ')"
 																		oninput="setCustomValidity('')">
 																	</form:select>
@@ -143,17 +138,13 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
-																				<div style="color: red;"
-																					class="help-block with-errors"></div>
 																			</div>
 
 																			<div class="col-sm-6 form-group">
 																				<label>Reference Document Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
-																					path="referenceDocNumber" />
-																				<div style="color: red;"
-																					class="help-block with-errors"></div>
+																					path="referenceDocNumber" required="true" />
 																			</div>
 																		</div>
 
@@ -165,7 +156,7 @@
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" />
+																					autocomplete="off" required="true" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
@@ -173,7 +164,7 @@
 																				<label>Document Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Date' path="documentDate"
-																					autocomplete="off" />
+																					autocomplete="off" required="true" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
@@ -183,7 +174,7 @@
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					id="require_date" placeholder='Required Date'
-																					autocomplete="off" path="requiredDate" />
+																					autocomplete="off" path="requiredDate" required="true" />
 																				<div style="color: red;"
 																					class="help-block with-errors"></div>
 																			</div>
@@ -214,7 +205,7 @@
                                                                         </div>
 															</div>
 																		
-															<input type="hidden" id="addressCount" value="1">
+															<input type="hidden" id="addressCount" value="0">
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
@@ -253,43 +244,7 @@
 																								</tr>
 																							</thead>
 																							<tbody >
-																										<tr class="multTot multTot0">
 																										
-																											<td ><form:input type="text"
-																													path="lineItems[0].prodouctNumber"
-																													class="form-control prodouctNumber "></form:input></td>
-																										
-																											<td style="display: none;"><form:input
-																													type="hidden" path="lineItems[0].productId"
-																													class="form-control productId"></form:input></td>
-																											
-																											<td ><form:input type="text"
-																													path="lineItems[0].uom"
-																													class="form-control uom" readonly="true"></form:input></td>
-
-																											<td><form:input type="text"
-																													path="lineItems[0].requiredQuantity"
-																													class="form-control"></form:input></td>
-																											
-																											<td ><form:input type="text"
-																													path="lineItems[0].productGroup"
-																													class="form-control productGroup"
-																													readonly="true"></form:input></td>			
-																											
-																											<td><form:select class="form-control"
-																													style="width:160px !important;"
-																													path="lineItems[0].warehouse">
-																													<form:option value="" label="Select" />
-																													<form:options items="${planMap}" />
-																												</form:select></td>
-																												
-																											<td  ><form:input type="text"
-																													path="lineItems[0].hsn"
-																													class="form-control hsnVal" readonly="true"></form:input>
-																											</td>
-																											
-																									       <td class="text-center"><a  onclick="removeData(0)" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
-																										</tr>
                                                                                             </tbody>
                                                                                       </table>   
                                                                                          
@@ -306,36 +261,7 @@
 																								</tr>
 																							</thead> 
                                                                                             <tbody >
-																										<tr class="multTot multTot0">
 																										
-																											<td style="display: none;"><form:input
-																													type="hidden" path="lineItems[0].productId"
-																													class="form-control productId"></form:input></td>
-																											
-																											<td ><form:input type="text"
-																													path="lineItems[0].sacCode"
-																													class="form-control sacCode"
-																													></form:input></td>		
-																											
-																											<td ><form:input type="text"
-																													path="lineItems[0].description"
-																													class="form-control description"
-																													readonly="true"></form:input></td>
-																											
-
-																											<td><form:input type="text"
-																													path="lineItems[0].requiredQuantity"
-																													class="form-control"></form:input></td>
-																											
-																											<td><form:select class="form-control"
-																													style="width:160px !important;"
-																													path="lineItems[0].warehouse">
-																													<form:option value="" label="Select" />
-																													<form:options items="${planMap}" />
-																												</form:select></td>
-																											
-																									       <td class="text-center"><a  onclick="removeData1(0)" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
-																										</tr>
                                                                                             </tbody>
                                                                                         </table>    
                                                                                             
@@ -381,11 +307,13 @@
 																															type="hidden"
 																															path="lineItems[${count}].productId"
 																															value="${listLineItems.productId}"
-																															class="form-control productId"></form:input></td>
+																															class="form-control productId"></form:input>
+																												<form:hidden path="lineItems[${count}].id"/>	
+																															</td>
 																															
 																													<c:if test="${rfq.category=='Item'}">
 																													<td ><form:input type="text"
-																															path="lineItems[${count}].prodouctNumber"
+																															path="lineItems[${count}].prodouctNumber" required="true"
 																															value="${listLineItems.prodouctNumber}"
 																															class="form-control prodouctNumber"></form:input></td>
 																													
@@ -396,7 +324,7 @@
 																													
 																													<td><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}"
+																															value="${listLineItems.requiredQuantity}" required="true"
 																															class="form-control"></form:input></td>
 																															
 																														<td><form:input type="text"
@@ -406,7 +334,7 @@
 																															readonly="true"></form:input></td>
 																														
 																														<td><form:select class="form-control"
-																															style="width:160px !important;"
+																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
@@ -422,10 +350,10 @@
 																													
 																													<c:if test="${rfq.category!='Item'}">
 																													<td><form:input type="text"
-																															path="lineItems[${count}].hsn"
+																															path="lineItems[${count}].sacCode"
 																															value="${listLineItems.sacCode}"
 																															class="form-control sacCode"
-																															readonly="true"></form:input></td>
+																															></form:input></td>
 																													
 																													<td><form:input type="text"
 																															path="lineItems[${count}].hsn"
@@ -435,11 +363,11 @@
 																															
 																													<td><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}"
+																															value="${listLineItems.requiredQuantity}" required="true"
 																															class="form-control"></form:input></td>
 																													
 																													<td><form:select class="form-control"
-																															style="width:160px !important;"
+																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
@@ -468,8 +396,12 @@
 																				</div>
 																				<div class="add-row-block">
 																					<input type="button" class="btn btn-info"
-																						id="addItem" value="Add Row">
+																						onclick="addItem()" value="Add Row">
+																						
 																				</div>
+																				
+																				
+																				
 																			</div>
 																		</div>
 																	</div>
@@ -541,6 +473,9 @@
 
 
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+	
+	
+	
 </body>
 <!-- alertfy-->
 <!-- form validations-->
@@ -551,23 +486,162 @@
 
 <script type="text/javascript">
 
-var i=1;var j=1;
+
 var inc=0;
-$(document).ready(function(){
-	
-	 if ($('#service_radio').is(":checked") == true) {
+var edit_addressCount=0;
+
+
+if ($('#service_radio').is(":checked") == true) {
+	// alert("CHECKsERVICE");
 		 $("#serviceTbl").show();
 		 $("#itemTbl").hide();
 	 }else {
+		// alert("cHECKitem");
 		 document.getElementById("items_radio").checked = true;
 		 $("#serviceTbl").hide();
 	      $("#itemTbl").show();
 	 }
 	
+	
+	 
 		if ($('#edit_addressCount').val() != undefined ) {
+			// alert("edit");
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
+
+		if ($('#edit_addressCount').val() != undefined ) {
+		}else{
+			addItem();
+		}
+
+
+function addItem() {
+		
+		//alert("addItem");
+	
+						var addressCount = $('#addressCount').val();
+						 edit_addressCount = $('#edit_addressCount').val();
+						if (edit_addressCount != undefined ) {
+							    inc = parseInt(edit_addressCount)+1;
+								$('#edit_addressCount').val(inc);
+						}else {
+								inc = parseInt(addressCount) ;
+						}
+						
+						
+						//alert(inc);
+						
+	
+	  if ($('#items_radio').is(":checked") == true) {
+		  //alert("itemAppend");
+	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
+			+'</td>'
+			
+			+'<td style="display:none;">'
+			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+'</td>'
+			
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'</td>'
+			
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'</td>'
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+			+'</td>'
+			
+			
+			+ '<td>'
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+'<option value="">select</option>'+
+			<c:forEach items="${planMap}" var="planMap">
+			'<option value="${planMap.key}">${planMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</td>'
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+'</td>'
+			
+			+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
+			+ '</td>'
+			 
+			
+	+'</tr>';
+			if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+				$("#edit_item_serviceTbl").append(item_table_data);
+			}else{
+				 $("#itemTbl").append(item_table_data);
+			}
+		 
+					
+	  }else {
+		// alert("sERVICEAppend");
+		  var service_table_data='<tr class="multTot multTot'+inc+'">'
+			
+			+'<td style="display:none;">'
+			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+'</td>'
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].sacCode" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
+			+'</td>'
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+'</td>'
+			
+			
+			+'<td>'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'</td>'
+			
+			+ '<td>'
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+'<option value="">select</option>'+
+			<c:forEach items="${planMap}" var="planMap">
+			'<option value="${planMap.key}">${planMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</td>'
+			
+			
+			
+			+ ' <td class="text-center"><a  onclick="removeData1('+inc+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
+			+ '</td>'
+			 
+			
+	+'</tr>';
+		 // alert(service_table_data);
+		  if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+			 // alert("edit");
+			  $("#edit_item_serviceTbl").append(service_table_data);
+			}else{
+				 $("#serviceTbl").append(service_table_data);
+			}
+		  
+	  }
+		
+	
+		inc++;
+		$('#addressCount').val(inc);
+		
+	}
+
+
+$(document).ready(function(){
+	
+	
 	
 	var id=$('#id').val();
 	
@@ -908,141 +982,33 @@ $(document).ready(function(){
 	
 	//alert("ready");
 	
-	$('#addItem').click(function() {
-		
-		
 	
-						var addressCount = $('#addressCount').val();
-						var edit_addressCount = $('#edit_addressCount').val();
-						if (edit_addressCount != undefined ) {
-							    inc = parseInt(edit_addressCount)+1;
-								$('#edit_addressCount').val(inc);
-						}else {
-							if(addressCount==1){
-								inc =parseInt(inc)+1;
-							}else {
-								inc = parseInt(addressCount)  + 1;
-							}
-						}
-						
-						
-						//alert(inc)
-						$('#addressCount').val(inc);
-						 i = inc;
-						 j = inc;
-	
-	  if ($('#items_radio').is(":checked") == true) {
-		  
-	        var item_table_data = '<tr class="multTot multTot'+i+'">'
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+i+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+i+'" id="prodouctNumber'+i+'"   />'
-			+'</td>'
-			
-			+'<td style="display:none;">'
-			+'<input type="hidden" name="lineItems['+i+'].productId" class="form-control productId productId'+i+'" id="productId'+i+'"   />'
-			+'</td>'
-			
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+i+'].uom" class="form-control uom uom'+i+'" id="uom'+i+'"   />'
-			+'</td>'
-			
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+i+'].requiredQuantity" class="form-control requiredQuantity'+i+'" id="requiredQuantity'+i+'"   />'
-			+'</td>'
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+i+'].productGroup" class="form-control  productGroup productGroup'+i+'" id="productGroup'+i+'"   />'
-			+'</td>'
-			
-			
-			+ '<td>'
-			+ '<select  name="lineItems['+i+'].warehouse" style="width:160px !important;" class="form-control warehouse'+i+' warehouse"  id="warehouse'+i+'" >'
-			+'<option value="">select</option>'+
-			<c:forEach items="${planMap}" var="planMap">
-			'<option value="${planMap.key}">${planMap.value}</option>'+
-			</c:forEach>
-			+ '</select>'
-			+ '</td>'
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+i+'].hsn" class="form-control hsnVal hsn'+i+'" id="hsn'+i+'"   />'
-			+'</td>'
-			
-			+ ' <td class="text-center"><a  onclick="removeData('+i+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
-			+ '</td>'
-			 
-			
-	+'</tr>';
-			if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-				$("#edit_item_serviceTbl").append(item_table_data);
-			}else{
-				 $("#itemTbl").append(item_table_data);
-			}
-		 
-					
-	  }else {
-		 
-		  var service_table_data='<tr class="multTot multTot'+j+'">'
-			
-			+'<td style="display:none;">'
-			+'<input type="hidden" name="lineItems['+j+'].productId" class="form-control productId productId'+j+'" id="productId'+j+'"   />'
-			+'</td>'
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+j+'].sacCode" class="form-control sacCode  sacCode'+j+'" id="hsn'+j+'"   />'
-			+'</td>'
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+j+'].description" class="form-control description '+j+'" id="uom'+j+'"   />'
-			+'</td>'
-			
-			
-			+'<td>'
-			+'<input type="text" name="lineItems['+j+'].requiredQuantity" class="form-control requiredQuantity'+j+'" id="requiredQuantity'+j+'"   />'
-			+'</td>'
-			
-			+ '<td>'
-			+ '<select  name="lineItems['+j+'].warehouse" style="width:160px !important;" class="form-control warehouse'+j+' warehouse"  id="warehouse'+j+'" >'
-			+'<option value="">select</option>'+
-			<c:forEach items="${planMap}" var="planMap">
-			'<option value="${planMap.key}">${planMap.value}</option>'+
-			</c:forEach>
-			+ '</select>'
-			+ '</td>'
-			
-			+ ' <td class="text-center"><a  onclick="removeData1('+j+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
-			+ '</td>'
-			 
-			
-	+'</tr>';
-		  
-		  if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-				 $("#edit_addressCount").append(service_table_data);
-			}else{
-				 $("#serviceTbl").append(service_table_data);
-			}
-		  
-	  }
-		
-		j++;
-		i++;
-	});
 	
   });
 
-
+                                                
+				
+		
+		
 function removeData(index){
 	//alert("ff"+index);
-	$('table#itemTbl tr.multTot'+index).remove();
+	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+	}else{
+		$('table#itemTbl tr.multTot'+index).remove();
+	}
+	
 }
 
 
 function removeData1(index){
 	//alert("ff"+index);
-	$('table#serviceTbl tr.multTot'+index).remove();
+	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+	}else{
+		$('table#serviceTbl tr.multTot'+index).remove();
+	}
+	
 }
 
 
@@ -1059,25 +1025,42 @@ function removeData2(index){
 
 
 $("#items_radio").click(function() {
-	$("#serviceTbl").hide();
-	 $("#itemTbl").show();
-	 $("#edit_item_serviceTbl").hide();
-	 $(this).parents().find("#serviceTbl").find(".form-control").attr("required",false).val(''); 
-	 
-       var edit_inc = $('#edit_addressCount').val();
-       if(edit_inc!= undefined){
-    	   inc = edit_inc;
-       }
-      for(var k=1;k<=inc;k++) {
-    	  removeData1(k);
-	  }
-	  inc=0;
-	  
-	  $('#addressCount').val(1);
-	  $('#edit_addressCount').val(0);
+	//alert("item");
+	 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
+		 $("#serviceTbl").hide();
+		 $("#itemTbl").show();
+		 $("#edit_item_serviceTbl").hide();
+		 $(this).parents().find("#serviceTbl").find(".form-control").attr("required",false).val(''); 
+		 
+	       var edit_inc = $('#edit_addressCount').val();
+	       if(edit_inc!= undefined){
+	    	   inc = edit_inc;
+	       }
+	      for(var k=0;k<=inc;k++) {
+	    	  removeData1(k);
+	    	  if(edit_inc!= undefined){
+	    		  removeData2(k);
+	    	  }
+		  }
+		  inc=0;
+		  
+		  $('#addressCount').val(0);
+		  $('#edit_addressCount').val(-1);
+		  addItem();
+		 
+		 
+	  			 
+	          }, function(){
+	        	  
+	        	  document.getElementById("items_radio").checked = true;
+	      alertify.error('Cancel')
+	   });
+	
 });
 
 $("#service_radio").click(function() {
+	//alert("service");
+	 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1087,13 +1070,23 @@ $("#service_radio").click(function() {
       if(edit_inc!= undefined){
    	   inc = edit_inc;
       }
-      for(var k=1;k<=inc;k++) {
+      for(var k=0;k<=inc;k++) {
     	  removeData(k);
+    	  if(edit_inc!= undefined){
+    		  removeData2(k);
+    	  }
 	  }
       
 	  inc=0;
-	  $('#addressCount').val(1);
-	  $('#edit_addressCount').val(0);
+	  $('#addressCount').val(0);
+	  $('#edit_addressCount').val(-1);
+	  addItem();
+	  
+	 }, function(){
+   	  
+   	  document.getElementById("service_radio").checked = true;
+     alertify.error('Cancel')
+    });
 	 
 });
 
@@ -1105,7 +1098,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	</script>
-
+<!-- changes -->
 
 </html>
 

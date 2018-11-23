@@ -27,19 +27,25 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
+		
+		if(requestForQuotation.getId() !=null) {   //  delete List Of Items.
+			RequestForQuotation requestForListOfItems = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
+	        List<LineItems>    requestLists = requestForListOfItems.getLineItems();
+	                for (LineItems lineObj: requestLists) {
+	                	lineitemsRepository.deleteByLineId(lineObj.getId());
+	             }
+	        }
+		
 		Vendor vendor=vendorService.findById(requestForQuotation.getVendor().getId());
+		
 		requestForQuotation.setVendor(vendor);
-		/*try{
-			for (LineItems smsAlertSysBean: requestForQuotation.getLineItems()) {  // delete records 
-				lineitemsRepository.deleteByrfqId(requestForQuotation);
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		
-		
-		
+				
 		return requestForQuotationRepository.save(requestForQuotation);
+	/*	return requestForQuotationRepository.save(requestForQuotation);*/
+		
+		/*lineitemsRepository.deleteById(2);
+		return requestForQuotation;*/
+		
 	}
 
 	@Override

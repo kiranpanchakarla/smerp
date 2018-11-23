@@ -157,7 +157,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		return userDao.findByName(username);
 	}
 
-	
+	 public List<User> findByIsActive() {
+	        return userDao.findByIsActive(true);
+	    }
 	
 
 }

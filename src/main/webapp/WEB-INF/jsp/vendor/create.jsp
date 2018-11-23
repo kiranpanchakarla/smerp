@@ -349,7 +349,7 @@ $(document).ready(function(){
 																		<!--Single Address  -->
 																		<c:if test="${vendor.id==null}">
 											  
-																		<div class="row address-details-block" >
+																		<div class="row address-details-block1" >
 																		
 																		 <div class="col-md-12"><div class="row"><div class="col-md-7"><div class="form-group">
 																		 <label>Vendor Address Details</label></div></div><div class="col-md-3">  
@@ -449,7 +449,7 @@ $(document).ready(function(){
 																			%>
 																			<c:forEach items="${vendor.vendorAddress}"
 																				var="listAddressDetails">
-																		<div class="row address-details-block" >
+																		<div class="row address-details-block1" >
 																		 <div class="col-md-12"><div class="row"><div class="col-md-7"><div class="form-group">
 																		 <label>Vendor Address Details</label></div></div><div class="col-md-3">  
 												
@@ -837,7 +837,7 @@ $(document).ready(function(){
 						}
 
 						$('.block1:last')
-								.before('<div class="row address-details-block" >'
+								.before('<div class="row address-details-block1" >'
 												+ '<div class="col-md-12"><div class="row"><div class="col-md-7"><div class="form-group">'
 												+ '<label>VendorAddress Details</label></div></div><div class="col-md-3">  '
 												

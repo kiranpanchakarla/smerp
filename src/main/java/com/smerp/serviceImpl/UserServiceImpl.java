@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.smerp.dao.UserDao;
@@ -25,7 +24,6 @@ import com.smerp.model.admin.Role;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
 import com.smerp.service.master.RoleService;
-import com.smerp.util.RandomUtil;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -146,6 +144,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		logger.info("map---------->"+map);
 		return map;
 	}
+
+	@Override
+	public List<String> findAllUsername() {
+		// TODO Auto-generated method stub
+		return userDao.findAllUsername();
+	}
+
+	@Override
+	public User findByName(String username) {
+		// TODO Auto-generated method stub
+		return userDao.findByName(username);
+	}
+
 	
 	
 

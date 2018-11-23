@@ -30,4 +30,8 @@ public interface UserService {
 	User findById(int parseInt);
 	
 	Map<Long,String> rolesMap(Set<Role> set);
+
+	List<String> findAllUsername();
+
+	User findByName(String username);
 }

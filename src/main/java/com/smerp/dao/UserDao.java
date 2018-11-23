@@ -17,5 +17,13 @@ public interface UserDao extends CrudRepository<User, Long> {
 	List<User> findByCompanyId(Integer id);
 
 	User findByUserId(Integer id);
+
+	
+	@Query("SELECT username FROM User")
+	List<String> findAllUsername();
+
+	
+	@Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
+	User findByName(String username);
    
 }

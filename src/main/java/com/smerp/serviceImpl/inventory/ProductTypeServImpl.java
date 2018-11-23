@@ -19,6 +19,29 @@ public class ProductTypeServImpl implements ProductTypeService {
 	public List<ProductType> findAll() {
 		
 		return productTypeRepository.findAll();
+	}
+
+	@Override
+	public ProductType save(ProductType productType) {
+		return productTypeRepository.save(productType);
+	}
+
+	@Override
+	public ProductType findbyId(int id) {
+		 
+		return productTypeRepository.findById(id);
+	}
+
+	@Override
+	public void delete(int id) {
+		productTypeRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public ProductType getInfo(int id) {
+		 
+		return productTypeRepository.findById(id);
 	} 
 
 }

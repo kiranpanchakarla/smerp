@@ -23,8 +23,8 @@
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
-           <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li>
-          <li class="has_sub"><a href="<c:url value =""/>">Product Type</a></li>
+          <%--  <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li> --%>
+          <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Type</a></li>
           <li class="has_sub"><a href="<c:url value =""/>">Product UOM Category</a></li>
           <li class="has_sub"><a href="<c:url value =""/>">Unit Of Measure</a></li>
           <li class="has_sub"><a href="<c:url value =""/>">Product Attributes</a></li>
@@ -66,9 +66,10 @@
       </li>
       
       
-<li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Purchase Request</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+<li><a href="#"><i class="icon-egg left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/purchaseReq/list"/>">Purchase Request</a></li>
+           <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li>
         </ul>
       </li>
       

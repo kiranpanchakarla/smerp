@@ -30,7 +30,8 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="POST" action="/user/save" enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form">
+							<c:url value="/user/save" var="createUrl" />
+							<form:form  method="POST" action="${createUrl}"  enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 										<div class="col-md-12">
@@ -53,20 +54,20 @@
 																	<div class="col-sm-6 form-group">
 																		<label>First Name</label>
 																		<form:input type="text" cssClass="form-control" placeholder='First Name' path="firstname" required="true" oninvalid="this.setCustomValidity('Please Enter First Name')" oninput="setCustomValidity('')" />
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
 																		<label>Last Name</label>
-																		<form:input type="text" cssClass="form-control" placeholder='Lat Name' path="lastname" required="true" oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')" />
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<form:input type="text" cssClass="form-control" placeholder='Last Name' path="lastname" required="true" oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')" />
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>User Name</label>
 																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidName('username','/user/isValidUserName','1_userName','User Name Already Exists')" placeholder='User Name' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	<span style="color: red" class="scl-form-error-container" id="1_userName"></span>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-2 form-group">
 																		<!-- <label>Image</label> -->
@@ -101,12 +102,12 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Email</label>
 																		<form:input type="text" cssClass="form-control" placeholder='Email Id' path="userEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id')" oninput="setCustomValidity('')" />
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div  class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Mobile</label>
 																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="10" minlength="10" pattern="[0-9]+$" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
 																<div class="row">
@@ -116,7 +117,7 @@
 																			<form:option value="">Select</form:option>
 																			<form:options items="${department}"></form:options>
 																		</form:select>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Designation</label>
@@ -125,7 +126,7 @@
 																				<form:option value="">Select</form:option>
 																			</c:if>
 																		</form:select>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
 																<div class="row">
@@ -137,7 +138,7 @@
 																				<form:option value="${plantList.id}">${plantList.plantName}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Roles</label>
@@ -147,7 +148,7 @@
 																			</c:if>
 																				<form:options items="${rolesList}"></form:options>
 																		</form:select>
-																		<div style="color:red;" class="help-block with-errors"></div>
+																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
 															</div>

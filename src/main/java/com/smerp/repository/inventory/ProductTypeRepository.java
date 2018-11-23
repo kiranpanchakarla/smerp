@@ -8,4 +8,6 @@ import com.smerp.model.inventory.ProductType;
 @Repository
 public interface ProductTypeRepository extends JpaRepository<ProductType, Integer> {
 
+	ProductType findById(int id);
+	
 }

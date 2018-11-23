@@ -38,9 +38,9 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 
-							<c:url value="/currency/save" var="createUrl" />
+							<c:url value="/producttype/save" var="createUrl" />
 							<form:form  method="POST" action="${createUrl}" 
-								modelAttribute="currency" onsubmit="return register()"
+								modelAttribute="producttype" onsubmit="return register()"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -48,25 +48,25 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Currency/Create</h4>
+													<h4 class="card-title" id="basic-layout-icons">Product Type/Create</h4>
 													<!-- <a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a> -->
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${currencyObj.id}">
+													value="${producttypeObj.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Currency Name</label>
+																	<label for="timesheetinput1">Product Name</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Currency Name' path="name"
-																			value="${currencyObj.name}" required="true"
+																			placeholder='Product Name' path="productName"
+																			value="${producttypeObj.productName}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
@@ -75,12 +75,11 @@
 																	</div>
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Currency
-																		Description</label>
+																	<label for="timesheetinput2">Description</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Currency Description' path="description"
-																			value="${currencyObj.description}" required="true"
+																			placeholder='Product Description' path="description"
+																			value="${producttypeObj.description}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Description')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div style="color: red;"
@@ -93,20 +92,20 @@
 															<div class="text-xs-center">
 																	
 																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
-											                        Back</a> <a href="<c:url value="/currency/list"/>">
+											                        Back</a> <a href="<c:url value="/producttype/list"/>">
 																	<button type="button" class="btn btn-warning mr-1">
 																		<i class="icon-cross2"></i> Cancel
 																	</button>
 																</a> <input type="hidden" name="${_csrf.parameterName}"
 																	value="${_csrf.token}" />
 
-																<c:if test="${currency.name!=null}">
+																<c:if test="${producttype.productName!=null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Update
 																	</button>
 																</c:if>
 
-																<c:if test="${currency.name==null}">
+																<c:if test="${producttype.productName==null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Save
 																	</button>
@@ -115,11 +114,14 @@
 
 															</div>
 														</form>
+														 
+														
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+								</div>
 								</section>
 
 							</form:form>

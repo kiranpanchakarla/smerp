@@ -67,7 +67,7 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
-		model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
+		//model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
 		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests =purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests!=null && purchaseRequests.getDocNumber()!=null) {
@@ -114,7 +114,7 @@ public class PurchaseRequestController {
 		//model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
-		model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
+		//model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
 		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests =purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests!=null && purchaseRequests.getDocNumber()!=null) {

@@ -72,11 +72,11 @@
 													<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
 												</div>
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
 															<div class="row">
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>Name</label>
 																	<form:input type="text"
 																		cssClass="form-control vendorname"
@@ -87,7 +87,7 @@
 																		class="help-block with-errors"></div>
 																</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>Email Id</label>
 																	<form:input type="text" cssClass="form-control emailId"
 																		readonly="true" placeholder='Email Id'
@@ -138,7 +138,7 @@
 																	<div class="form-body">
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Document Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
@@ -147,7 +147,7 @@
 																					class="help-block with-errors"></div>
 																			</div>
 
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Reference Document Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'

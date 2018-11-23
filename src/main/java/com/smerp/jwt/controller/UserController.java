@@ -105,7 +105,7 @@ public class UserController {
 	@GetMapping("/list")
 	private String list(Model model) {
 		logger.info("inside list method");
-		List<User> list = userService.findAll();
+		List<User> list = userService.findByIsActive();
 		if (list.isEmpty()) {
 			return "redirect:/user/create";
 		} else {

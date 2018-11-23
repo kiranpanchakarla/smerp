@@ -10,19 +10,18 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
-<%-- <link href="<c:url value="/resources/css/style.css"/>"
-    rel="stylesheet" type="text/css" /> --%>
+<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
+
+<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
+
+
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
 	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
@@ -39,71 +38,74 @@
 					<div class="large-12 columns">
 
 						<div class="content-wrapper">
-
+							<div class="content-header row"></div>
 							<div>
 								<div class="content-body">
-									<!-- Basic Tables start -->
 
 									<div class="card">
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
-												<div class="col-md-2">
-													<h2 class="content-header-title">Vendor</h2>
+												<div class="col-md-3">
+													<h2 class="content-header-title">Product Type</h2>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<a class="btn btn-primary"
-														href="<c:url value="/vendor/create"/>">Create</a>
+														href="<c:url value="/producttype/create"/>">Create</a>
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-														<li class="breadcrumb-item active">Vendor</li>
+														<li class="breadcrumb-item active">Product Type</li>
 													</ol>
 												</div>
 											</div>
+
 										</div>
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
 
-												<div class="table-responsive">
+												<div class="">
 													<table id="example"
 														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
-																<th>vendor Name</th>
-																<th>vendorCode</th>
-
-
-																<th>Actions</th>
+																<th >S.no</th>
+																<th >Product Name</th>
+																<th >Description</th>
+																<th >Actions</th>
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${vendorList}" var="vendorList">
+															<c:forEach items="${producttypeList}" var="producttype">
 																<tr>
-																	<td><c:set var="count" value="${count + 1}"
-																			scope="page" /> <c:out value="${count}" /></td>
-																	<td>${vendorList.name}</td>
-																	<td>${vendorList.vendorCode}</td>
-																	<td><a class="btn btn-edit"
-																		href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
-																			class="icon-edit left"></i></a> <a class="btn btn-delete"
-																		href="#"
-																		onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
-																			class="icon-bin left"></i></a> <a class="btn btn-view"
-																		href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
+																	<td><c:set var="count"
+																			value="${count + 1}" scope="page" /> <c:out
+																			value="${count}" /></td>
+																	<td>${producttype.productName}</td>
+																	<td>${producttype.description}</td>
+																	<td><a
+																		class="btn btn-edit"
+																		href="<c:url value="/producttype/getInfo?producttypeId=${producttype.id}"/>">
+																			<i class="icon-edit left"></i>
+																	</a>  <a class="btn btn-delete mr-1" href="#"
+																		onclick="deleteById('<c:out value="${producttype.id}"/>','/producttype/delete')"><i
+																			class="icon-bin left"></i></a>  <a
+																		class="btn btn-view"
+																		href="<c:url value="/producttype/view?producttypeId=${producttype.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>
 															</c:forEach>
 														</tbody>
+
 													</table>
 												</div>
 											</div>
 										</div>
 									</div>
+
 								</div>
 								<br>
 							</div>
@@ -113,27 +115,22 @@
 			</div>
 		</div>
 	</div>
+
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
-
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#example').DataTable({
-				"scrollX" : true
-			});
-		});
-	</script>
 
-	<script
-		src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
-		type="text/javascript"></script>
-	<script
-		src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
-		type="text/javascript"></script>
-	<script
-		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
-		type="text/javascript"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	  $('#example').DataTable( {
+		  "scrollX": true
+	    } );
+} );
+
+</script>
+<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
 </body>
-
 </html>
 

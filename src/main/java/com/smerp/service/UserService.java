@@ -22,6 +22,8 @@ public interface UserService {
 	//User findById(Long id);
 
 	List<User>  findByUsersByCompany(Company company);
+	
+	List<User> findByIsActive();
 
 	User findByUsername(String username);
 

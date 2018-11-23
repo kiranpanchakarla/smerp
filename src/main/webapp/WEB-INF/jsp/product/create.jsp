@@ -66,13 +66,13 @@ $(document).ready(function(){
 																<div class="col-sm-6 form-group has-feedback">
 																	<label>Product Number</label>
 																	<form:input type="text" class="form-control" placeholder='product number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
-																	<div  id="1_productNo" class="help-block with-errors"></div>
+																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
 																</div>
 																
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
 																	<form:input type="text" class="form-control" placeholder='description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
-																	<div  class="help-block with-errors"></div>
+																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 															</div>
 															
@@ -85,7 +85,7 @@ $(document).ready(function(){
 																			<form:option value="${productCategory.id}">${productCategory.name}</form:option>
 																		</c:forEach>
 																	</form:select>
-																	<div  class="help-block with-errors"></div>
+																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 																<div class="col-sm-6 form-group">
 																	<label>UOM Group</label>
@@ -95,7 +95,7 @@ $(document).ready(function(){
 																			<form:option value="${uomCategory.id}">${uomCategory.uomCategoryName}</form:option>
 																		</c:forEach>
 																	</form:select>
-																	<div  class="help-block with-errors"></div>
+																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 															</div>
 															
@@ -129,7 +129,7 @@ $(document).ready(function(){
 																		<div class="inventory-list">
 																			<!-- <label>With old Tax Liable</label> -->
 																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" required="true" /><span class="radio-list">Withholding Tax Liable</span>
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		</div>
 																	</div>
@@ -139,14 +139,14 @@ $(document).ready(function(){
 																				<!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
 																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="service" /><span class="radio-list">Service</span></div>
 																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="product" /><span class="radio-list">Product</span></div>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
 																			<div class="inventory-list"><form:checkbox path="gst" value="gst" id="gstcategory" required="true" /><span class="radio-list">GST</span>
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
 																		<input type="hidden" id="gstValue" class="form-control" name="gstValue" value="${product.gst}">
@@ -156,7 +156,7 @@ $(document).ready(function(){
 																			<div class="col-sm-4 form-group">
 																				<label>Service Type:</label>
 																				<form:input path="serviceType" id="service" type="text" class="form-control"  oninvalid="this.setCustomValidity('Please Enter Service Type')" oninput="setCustomValidity('')" />
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		
 																			<div class="col-sm-4 form-group">
@@ -167,7 +167,7 @@ $(document).ready(function(){
 																						<form:option value="${sac.id}">${sac.sacCode}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		
 																			<div class="col-sm-4 form-group">
@@ -178,7 +178,7 @@ $(document).ready(function(){
 																						<form:option value="${taxCategory.key}">${taxCategory.value}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
 																	</div>
@@ -192,7 +192,7 @@ $(document).ready(function(){
 																					<form:option value="${productType.key}">${productType.value}</form:option>
 																				</c:forEach>
 																				</form:select>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		
 																			<div class="col-sm-4 form-group">
@@ -203,7 +203,7 @@ $(document).ready(function(){
 																						<form:option value="${hsn.id}">${hsn.hsnCode}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
@@ -214,7 +214,7 @@ $(document).ready(function(){
 																						<form:option value="${taxCategory.key}">${taxCategory.value}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div  class="help-block with-errors"></div>
+																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																			
 																		</div>
@@ -231,7 +231,7 @@ $(document).ready(function(){
 																				</c:forEach>
 																			</form:select>
 																				
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
 																</div>
@@ -241,7 +241,7 @@ $(document).ready(function(){
 																		<div class="col-sm-4 form-group">
 																			<label>Preferred Vendor</label>
 																			<form:input path="preferredVendor" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	
 																		<div class="col-sm-4 form-group">
@@ -254,7 +254,7 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		<input type="hidden" id="purchasingUomValue" class="form-control" name="id" value="${product.purchasingUom.uomName}">
 																		<input type="hidden" id="purchasingUomKey" class="form-control" name="id" value="${product.purchasingUom.id}">
@@ -262,7 +262,7 @@ $(document).ready(function(){
 																		<div class="col-sm-4 form-group">
 																			<label>Products Per Purchase Unit:</label>
 																			<form:input path="produtPerPurchaseUnit" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Per Purchase Unit')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
 																	<div class="row">
@@ -274,7 +274,7 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		<input type="hidden" id="packingUomValue" class="form-control" name="id" value="${product.packingUom.uomName}">
 																		<input type="hidden" id="packingUomKey" class="form-control" name="id" value="${product.packingUom.id}">
@@ -282,7 +282,7 @@ $(document).ready(function(){
 																		<div class="col-sm-6 form-group">
 																			<label>Quantity Per Package:</label>
 																			<form:input path="qualityPerPackage" type="text" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
 																</div>
@@ -297,20 +297,20 @@ $(document).ready(function(){
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		<input type="hidden" id="inventoryUomValue" class="form-control" name="id" value="${product.inventoryUom.uomName}">
 																		<input type="hidden" id="inventoryUomKey" class="form-control" name="id" value="${product.inventoryUom.id}">
 																	    </div>
 																		<div class="col-sm-4 form-group">
 																			<label>Minimum</label>
 																			<form:input path="minimun" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Minimum Value')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	
 																		<div class="col-sm-4 form-group">
 																			<label>Maximum</label>
 																			<form:input path="maximim" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
 																	<div class="row">
@@ -322,13 +322,13 @@ $(document).ready(function(){
 																					<form:option value="${valuationMethod.key}">${valuationMethod.value}</form:option>
 																				</c:forEach>
 																			</form:select>
-																			<div  class="help-block with-errors"></div>
+																		<!-- 	<div  class="help-block with-errors"></div> -->
 																		</div>
 																	
 																		<div class="col-sm-6 form-group">
 																			<label>Product Cost:</label>
 																			<form:input path="productCost" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Cost')" oninput="setCustomValidity('')" />
-																			<div  class="help-block with-errors"></div>
+																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
 																</div>

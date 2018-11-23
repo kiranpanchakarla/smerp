@@ -146,6 +146,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		logger.info("map---------->"+map);
 		return map;
 	}
+
+	@Override
+	public List<User> findByIsActive() {
+		return userDao.findByIsActive(true);
+	}
 	
 	
 

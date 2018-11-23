@@ -62,7 +62,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company Name' path="name" onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer','Company Name Already Exists')"
 																	required="true" oninvalid="this.setCustomValidity('Please Enter Company Name')"	oninput="setCustomValidity('')"/>
-																		<div  id="1_errorContainer"  class="help-block with-errors"></div> 
+																		<!-- <div  id="1_errorContainer"  class="help-block with-errors"></div>  -->
 																</div>
 																
 																<div class="col-sm-4 form-group">
@@ -70,7 +70,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company TagLine' path="companyTagLine"
 																		required="true"  oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																
 																<div class="col-sm-4 form-group">
@@ -116,7 +116,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='GSTIN' path="gstinVat"
 																		required="true"  pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  oninvalid="this.setCustomValidity('Please Enter Valid GSTIN Number Ex:22AABCE2207R1Z6')"	oninput="setCustomValidity('')"/>
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																 
 																<div class="col-sm-4 form-group">
@@ -129,7 +129,7 @@
 																			<form:option value="${stateList.id}">${stateList.stateCode} | ${stateList.name}</form:option>
 																		</c:forEach>
 																	</form:select>
-																	<div   class="help-block with-errors"></div>
+																	<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																
 																<div class="col-sm-4 form-group">
@@ -137,7 +137,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Pan Number' path="panNum"
 																		required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter PAN Number')"	oninput="setCustomValidity('')" />
-																<div   class="help-block with-errors"></div>
+																<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																
 															</div>
@@ -184,14 +184,14 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='street1' path="street1"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Street1')"	oninput="setCustomValidity('')" />
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Street-2</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Street2' path="street2"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Street2')"	oninput="setCustomValidity('')" />
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
@@ -199,7 +199,7 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Enter City' path="city"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter City')"	oninput="setCustomValidity('')"/>
-																	<div   class="help-block with-errors"></div>
+																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
 
@@ -211,14 +211,14 @@
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
 																					placeholder='Mobile Number' path="phoneNum" pattern="[0-9]+$"
 																					required="true"  maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
-																	<div   class="help-block with-errors"></div>
+																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='fax Number' path="faxNum"
 																					required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
-																	<div   class="help-block with-errors"></div>
+																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			
 																			<div class="col-sm-4 form-group">
@@ -226,7 +226,7 @@
 																				<form:input type="email" cssClass="form-control"  onchange="isValidName('emailId','/company/isValidEmailId','2_errorContainer','Company Email Already Exists')"
 																				 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Email Id' path="emailId"
 																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
-																		<div  id="2_errorContainer"  class="help-block with-errors" ></div>
+																		<!-- <div  id="2_errorContainer"  class="help-block with-errors" ></div> -->
 																			</div>
 																		</div>
  
@@ -241,7 +241,7 @@
 																						<form:option value="${stateList.id}">${stateList.name}</form:option>
 																					</c:forEach>
 																				</form:select>
-																				<div   class="help-block with-errors"></div>
+																				<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Country</label>
@@ -257,7 +257,7 @@
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
 																					placeholder='ZIP Code' path="zipCode"
 																					required="true" maxlength="6"  oninvalid="this.setCustomValidity('Please ZIP Code')"	oninput="setCustomValidity('')" />
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			
 																			
@@ -271,7 +271,7 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Website' path="webSite" id="instmanageformid"
 																					required="true"  oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
-																	<div  class="help-block with-errors"></div>
+																	<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		 </div>
 

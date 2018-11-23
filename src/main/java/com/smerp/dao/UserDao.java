@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import com.smerp.model.admin.User;
 
 @Repository
@@ -17,5 +16,8 @@ public interface UserDao extends CrudRepository<User, Long> {
 	List<User> findByCompanyId(Integer id);
 
 	User findByUserId(Integer id);
+	
+	@Query("SELECT u FROM User u WHERE enabled=:enabled order by updatedAt desc")
+    List<User>  findByIsActive(@Param("enabled") Boolean enabled);
    
 }

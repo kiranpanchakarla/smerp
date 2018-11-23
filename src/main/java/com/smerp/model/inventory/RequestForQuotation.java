@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
@@ -32,7 +33,7 @@ public class RequestForQuotation extends AuditModel {
 	@JoinColumn(name="vendor_id")
 	private Vendor vendor;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name = "rfq_id", referencedColumnName = "rfq_id")
 	private List<LineItems> lineItems;;
 	
@@ -166,9 +167,9 @@ public class RequestForQuotation extends AuditModel {
 	
 	
 	
-	
-	
-	
+	/*
+	changes
+	*/
 	
 
 	

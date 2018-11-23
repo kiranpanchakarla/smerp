@@ -15,7 +15,7 @@ public class LineItems extends AuditModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "lineitem_id", nullable = false, unique = true)
+	@Column(name = "id", nullable = false, unique = true)
 	private Integer id;
 
 	@Column(name = "product_id")

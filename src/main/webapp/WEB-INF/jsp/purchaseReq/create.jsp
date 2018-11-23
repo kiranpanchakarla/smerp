@@ -110,12 +110,12 @@
                                                                         <div class="col-sm-6 form-group">
                                                                             <div class="input-group">
                                                                                 <div class="col-sm-3 form-group">
-                                                                                    <form:radiobutton name="type" path="type" id="items_radio" required="true" value="Item" />
+                                                                                    <form:radiobutton name="type" path="type" id="items_radio"  value="Item" />
                                                                                     <span class="radio-list">Item</span>
 
                                                                                 </div>
                                                                                 <div class="col-sm-3 form-group">
-                                                                                    <form:radiobutton name="type" path="type" id="service_radio" required="true" value="Service" />
+                                                                                    <form:radiobutton name="type" path="type" id="service_radio"  value="Service" />
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div>
                                                                                 <!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->

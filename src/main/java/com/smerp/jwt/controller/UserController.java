@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.jwt.models.Constants;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Department;
@@ -105,7 +107,7 @@ public class UserController {
 	@GetMapping("/list")
 	private String list(Model model) {
 		logger.info("inside list method");
-		List<User> list = userService.findAll();
+		List<User> list = userService.findByIsActive();
 		if (list.isEmpty()) {
 			return "redirect:/user/create";
 		} else {
@@ -228,6 +230,11 @@ public class UserController {
 		return map;
 	}
 
-	
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    private String getUserDetailsByUserName(@RequestParam("username") String username) throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(userService.findByName(username));
+        
+    }
 
 }

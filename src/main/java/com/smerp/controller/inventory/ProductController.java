@@ -166,6 +166,7 @@ public class ProductController {
 	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
 	@ResponseBody
 	private String getInvoiceListByInvNumber(@RequestParam("name") String name) throws JsonProcessingException {
+		logger.info("data-->" +new ObjectMapper().writeValueAsString(productService.findByDescription(name)));
 		return new ObjectMapper().writeValueAsString(productService.findByDescription(name));
 		
 	}

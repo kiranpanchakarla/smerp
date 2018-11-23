@@ -34,4 +34,5 @@ public interface UserService {
 	List<String> findAllUsername();
 
 	User findByName(String username);
+	List<User> findByIsActive();
 }

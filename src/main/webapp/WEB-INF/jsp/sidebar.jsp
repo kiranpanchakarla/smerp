@@ -25,11 +25,11 @@
           <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
           <%--  <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li> --%>
           <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Type</a></li>
-          <li class="has_sub"><a href="<c:url value =""/>">Product UOM Category</a></li>
-          <li class="has_sub"><a href="<c:url value =""/>">Unit Of Measure</a></li>
-          <li class="has_sub"><a href="<c:url value =""/>">Product Attributes</a></li>
+          <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
+          <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
+          <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
           <li class="has_sub"><a href="<c:url value =""/>">Product Attribute Values</a></li>
-         <li class="has_sub"><a href="<c:url value =""/>">Warehouse</a></li>
+         <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
          <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li>
         </ul>
       </li>

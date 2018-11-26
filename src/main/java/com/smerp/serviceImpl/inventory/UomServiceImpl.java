@@ -27,6 +27,34 @@ public class UomServiceImpl implements UomService {
 		return uomRepository.findByuomCategoryId(id);
 	}
 
+
+	@Override
+	public Uom save(Uom uom) {
+		 
+		return uomRepository.save(uom);
+	}
+
+
+	@Override
+	public Uom findById(int id) {
+		 
+		return uomRepository.findById(id);
+	}
+
+
+	@Override
+	public Uom getInfo(int id) {
+		 
+		return uomRepository.findById(id);
+	}
+
+
+	@Override
+	public void delete(int id) {
+		uomRepository.deleteById(id);
+		
+	}
+
 	
 	/*public List<Uom> findById(Integer id) {
 		

@@ -8,4 +8,6 @@ import com.smerp.model.admin.Plant;
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Integer> {
 
+	Plant findById(int id);
+
 }

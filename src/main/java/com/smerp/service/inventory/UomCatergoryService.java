@@ -6,5 +6,13 @@ import java.util.List;
 public interface UomCatergoryService {
 
 	List<UomCategory> findAll();
+	
+	UomCategory save(UomCategory uomCategory);
+	
+	UomCategory findById(int id);
+	
+	UomCategory getInfo(int id);
+	
+	void delete(int id);
 
 }

@@ -10,6 +10,12 @@ public interface UomService {
 	
 	List<Uom> uomList(int uomCategoryId);
 
-	/*List<Uom> findById(Integer id);*/
+	Uom save(Uom uom);
+	
+	Uom findById(int id);
+	
+	Uom getInfo(int id);
+	
+	void delete(int id);
 
 }

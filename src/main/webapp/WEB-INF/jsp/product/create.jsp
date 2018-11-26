@@ -238,11 +238,11 @@ $(document).ready(function(){
 																<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 																	
 																	<div class="row">
-																		<div class="col-sm-4 form-group">
-																			<label>Preferred Vendor</label>
-																			<form:input path="preferredVendor" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
-																			<!-- <div  class="help-block with-errors"></div> -->
-																		</div>
+                                                                        <div class="col-sm-4 form-group">
+                                                                            <label>Preferred Vendor</label>
+                                                                            <form:input path="preferredVendor" class="form-control vendorname" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
+                                                                            <!-- <div  class="help-block with-errors"></div> -->
+                                                                        </div>
 																	
 																		<div class="col-sm-4 form-group">
 																			<label>Purchasing UOM Name: </label>
@@ -266,7 +266,7 @@ $(document).ready(function(){
 																		</div>
 																	</div>
 																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Packing UOM Name:</label>
 																			<form:select id="packingUomId" path="packingUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
@@ -279,7 +279,7 @@ $(document).ready(function(){
 																		<input type="hidden" id="packingUomValue" class="form-control" name="id" value="${product.packingUom.uomName}">
 																		<input type="hidden" id="packingUomKey" class="form-control" name="id" value="${product.packingUom.id}">
 																	
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Quantity Per Package:</label>
 																			<form:input path="qualityPerPackage" type="text" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
@@ -314,7 +314,7 @@ $(document).ready(function(){
 																		</div>
 																	</div>
 																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Valuation Method:</label>
 																			<form:select path="valuationMethod" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select Valuation Method')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
@@ -325,7 +325,7 @@ $(document).ready(function(){
 																		<!-- 	<div  class="help-block with-errors"></div> -->
 																		</div>
 																	
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																			<label>Product Cost:</label>
 																			<form:input path="productCost" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Cost')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
@@ -608,7 +608,24 @@ $(document).ready(function(){
        				// alert(status);
        	            }); 
 
+  		var vendorNames=[];
+        var vendorNamesList=${vendorNamesList};
+        var availableTagsvendornames=[];
+         $.each(vendorNamesList, function (index, value) {
+             availableTagsvendornames.push(value.toString());
+           });
         
+        
+            $(document).on("keypress", ".vendorname", function() {
+                $(this).autocomplete({
+                    source: availableTagsvendornames,
+                    select: function(event, ui) {
+                        var vendorname = ui.item.value;
+                    //    alert(vendorname);
+                      
+                            },
+                    });
+                });
         
         
     </script>

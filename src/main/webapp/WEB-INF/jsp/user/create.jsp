@@ -73,7 +73,7 @@
 																		<!-- <label>Image</label> -->
 																		<%-- <form:input type="file" cssClass="form-control" accept="image/*" onchange="loadFile(event)" path="logo" value="${company.logo}" />--%>
 																		<p>
-																			<input type="file" name="file" id="file" value="${user.image}" onchange="return fileValidation(event)" style="display: none;" required="true" oninvalid="this.setCustomValidity('Please Upload Image')" oninput="setCustomValidity('')" />
+																			<input type="file" name="file" id="file" value="${user.image}" onchange="return fileValidation(event)" style="display: none;" oninvalid="this.setCustomValidity('Please Upload Image')" oninput="setCustomValidity('')" />
 																			<form:input type="hidden" path="image" value="${user.image}" />
 																		</p>
 																		<p>
@@ -83,7 +83,7 @@
 																			
 																		</p>
 																		<!-- <label>Image</label> -->
-																		<div style="color:red;" id="3_errorContainer" class="help-block with-errors"></div>
+																		<!-- <div style="color:red;" id="3_errorContainer" class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-4 form-group">
 																		<c:if test="${filePath==null}">

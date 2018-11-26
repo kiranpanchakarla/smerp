@@ -6,4 +6,6 @@ import com.smerp.model.inventory.UomCategory;
 
 public interface UomCategoryRepository extends JpaRepository<UomCategory, Integer> {
 
+	UomCategory findById(int id);
+	
 }

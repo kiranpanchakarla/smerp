@@ -58,8 +58,8 @@ public class PurchaseRequest extends AuditModel {
 	private String type;
 	
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "purchase_req_id", referencedColumnName = "purchase_req_id")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true )
+	@JoinColumn(name = "purchase_req_id", referencedColumnName = "purchase_req_id" )
 	private List<PurchaseRequestList> purchaseRequestLists;
 	
 	@Column(name="is_active")

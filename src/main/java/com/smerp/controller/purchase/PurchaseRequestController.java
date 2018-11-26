@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,7 +67,7 @@ public class PurchaseRequestController {
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
-		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
 		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests =purchaseRequestService.findLastDocumentNumber();
@@ -113,7 +114,7 @@ public class PurchaseRequestController {
 		ObjectMapper mapper = new ObjectMapper();
 		//model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
-		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("usersList",  mapper.writeValueAsString(userService.findAllUsername()));
 		model.addAttribute("sacList",  mapper.writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests =purchaseRequestService.findLastDocumentNumber();

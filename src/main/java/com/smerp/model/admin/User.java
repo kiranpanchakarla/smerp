@@ -79,7 +79,7 @@ public class User extends AuditModel {
 	private Integer reportingManagerId;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="plant_id")
 	private Plant plant;
 	

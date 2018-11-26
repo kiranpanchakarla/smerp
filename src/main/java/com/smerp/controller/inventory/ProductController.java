@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.Uom;
+import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductCategoryService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.ProductTypeService;
@@ -58,6 +60,9 @@ public class ProductController {
 	@Autowired
 	ProductTypeService productTypeService;
 	
+	@Autowired
+	private VendorService vendorService;
+	
 	
 	@Autowired
 	ProductList productList;
@@ -66,7 +71,8 @@ public class ProductController {
 
 	
 	@GetMapping(value = "/create")
-	public String productCreate(Model model) {
+	public String productCreate(Model model)  throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("hsnList", hsnService.findAll());
 		model.addAttribute("sacList", sacService.findAll());
@@ -77,6 +83,7 @@ public class ProductController {
 		model.addAttribute("productTypeList", productList.getProductType());
 		model.addAttribute("taxCategoryList", productList.getTaxCategory());
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
+		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		model.addAttribute("product", new Product());
 		return "product/create";
 	}
@@ -95,7 +102,8 @@ public class ProductController {
 	}
 		
 	@GetMapping(value = "/getInfo")
-	public String getInfo(String productId, Model model) {
+	public String getInfo(String productId, Model model) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
 		Product product=productService.getInfo(Integer.parseInt(productId));
 		model.addAttribute("product", productService.getInfo(Integer.parseInt(productId)));
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
@@ -110,6 +118,7 @@ public class ProductController {
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
 		model.addAttribute("uomList", uomService.uomList(product.getUomCategory().getId()));
+		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		return "product/create";
 	}
 	
@@ -163,13 +172,17 @@ public class ProductController {
 		return "redirect:productList";
 	}
 	
-	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
-	@ResponseBody
-	private String getInvoiceListByInvNumber(@RequestParam("name") String name) throws JsonProcessingException {
-		logger.info("data-->" +new ObjectMapper().writeValueAsString(productService.findByDescription(name)));
-		return new ObjectMapper().writeValueAsString(productService.findByDescription(name));
-		
-	}
 	
+	
+	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
+    @ResponseBody
+    private String getInvoiceListByProductNumber(@RequestParam("name") String name) throws JsonProcessingException {
+        Product product = productService.findByproductNo(name);
+        logger.info("product Obj-->" + product );
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        logger.info(mapper.writeValueAsString(product));
+        return mapper.writeValueAsString(product);
+    }
 
 }

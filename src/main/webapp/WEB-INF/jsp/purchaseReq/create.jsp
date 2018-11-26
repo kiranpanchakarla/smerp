@@ -36,7 +36,7 @@
                         <div class="large-12 columns">
                             <div class="content-body">
                                 <!-- Basic form layout section start -->
-                                <form:form method="POST" action="/purchaseReq/save" modelAttribute="purchaseRequest" data-toggle="validator" role="form">
+                                <form:form method="POST" action="/purchaseReq/save" class="commentForm" modelAttribute="purchaseRequest" data-toggle="validator" role="form">
                                     <section id="basic-form-layouts">
                                         <div class="row match-height">
                                             <div class="col-md-12">
@@ -137,6 +137,7 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<th>Product Name</th>
+																										<th>Description</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
@@ -182,6 +183,7 @@
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${purchaseRequest.type=='Item'}">
 																									<th>Product Name</th>
+																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
@@ -219,6 +221,10 @@
 																															value="${listpurchaseRequestLists.prodouctNumber}"
 																															class="form-control prodouctNumber"></form:input></td>
 																													
+																														<td><form:input type="text"
+																															path="purchaseRequestLists[${count}].description"
+																															value="${listpurchaseRequestLists.description}"
+																															class="form-control uom" readonly="true"></form:input></td>
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
@@ -323,10 +329,10 @@
                                                                         <button type="button" class="btn btn-warning mr-1"> <i class="icon-cross2"></i> Cancel</button>
                                                                     </a>
                                                                     <c:if test="${purchaseReq.id==null}">
-                                                                        <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Save</button>
+                                                                        <button type="submit"  id="savePurchase" class="btn btn-primary "> <i class="icon-check2"></i> Save</button>
                                                                     </c:if>
                                                                     <c:if test="${purchaseReq.id!=null}">
-                                                                        <button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update</button>
+                                                                        <button type="submit" class="btn btn-primary "> <i class="icon-check2"></i> Update</button>
                                                                     </c:if>
                                                                 </div>
                                                             </form>
@@ -359,7 +365,7 @@
 
     <script type="text/javascript">
 
-
+    
     var inc=0;
     var edit_addressCount=0;
 
@@ -411,11 +417,16 @@
     	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'"  id="prodouctNumber'+inc+'"   />'
     			+'</td>'
     			
     			+'<td style="display:none;">'
     			+'<input type="hidden" name="purchaseRequestLists['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+    			+'</td>'
+    			
+    			
+    			+'<td>'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" class="form-control description '+inc+'" id="description'+inc+'"   />'
     			+'</td>'
     			
     			
@@ -513,6 +524,9 @@
    
     $(document).ready(function(){
     	
+    	
+    
+    	
             var date = new Date();
             var today = new Date(date.getDate(), date.getFullYear(), date.getMonth());
             var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -598,7 +612,7 @@
                         $('.plant').val(obj.plant.plantName);
                         $('.plantId').val(obj.plant.id);
 
-                        var vendorcontactdetails = obj.vendorContactDetails;
+                       /*  var vendorcontactdetails = obj.vendorContactDetails;
                         var vendoraddress = obj.vendorAddress;
 
                         $.each(vendorcontactdetails, function(index, value) {
@@ -614,7 +628,7 @@
                             } else {
                                 $("#vendorPayToAddress").append($("<option></option>").attr("value", value.id).text(value.city));
                             }
-                        });
+                        }); */
 
                     },
                     error: function(e) {
@@ -631,6 +645,8 @@
                 availableTags.push(value.toString());
             });
 
+           
+            
            
             
             $(document).on("keypress", ".prodouctNumber", function() {
@@ -750,9 +766,12 @@
     });
         
         
-
+           
     		
             function removeData(index){
+            	var rowCount = $('#itemTbl tr').length;
+            	alert(rowCount);
+            	
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
@@ -764,6 +783,8 @@
 
 
             function removeData1(index){
+            	inc--;
+        		$('#addressCount').val(inc);
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
@@ -775,6 +796,8 @@
 
 
             function removeData2(index){
+            	inc--;
+        		$('#addressCount').val(inc);
             	//alert("ff"+index);
             	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
             }
@@ -860,6 +883,46 @@
             var theThis = $(this);
             $('#containerContainingTabs a').removeClass('active');
             theThis.addClass('active');
+        });
+        
+        $('form.commentForm').on('submit', function(event) {
+            alert("commentForm");
+            
+            if ($('#items_radio').is(":checked") == true) {
+            var rowCount = $('#itemTbl tr').length-1;
+            
+            if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+  			  alert("edit");
+            	rowCount = $('#edit_item_serviceTbl tr').length-1;
+  			}
+            
+        	if(rowCount == 0){
+        		alertify.alert("please slect atleat one item");
+        		 return false;
+        	}else{
+        		return true;
+        	}
+            } 
+            
+            if ($('#service_radio').is(":checked") == true) {
+        	 var rowCount1 = $('#serviceTbl tr').length-1;
+
+        	 if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+        		alert("edit");
+        		 rowCount1 = $('#edit_item_serviceTbl tr').length-1;
+     			} 
+        	 
+         	if(rowCount1 == 0){
+         		alertify.alert("please slect atleat one  service");
+         		 return false;
+         	}else{
+         		return true;
+         	}
+        	  }
+            
+            
+            
+            
         });
     </script>
 

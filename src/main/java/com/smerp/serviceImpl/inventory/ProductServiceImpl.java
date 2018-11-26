@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.smerp.model.inventory.Product;
@@ -115,5 +116,17 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findByDescription(String name) {
 		return productRepository.findByDescription(name);
+	}
+
+	@Override
+	public List<String> findAllProductNamesByProduct(String product) {
+		
+		return productRepository.findAllProductNamesByProduct(product);
+	}
+
+	@Override
+	public Product findByproductNo(String name) {
+		// TODO Auto-generated method stub
+		return productRepository.findByproductNo(name);
 	}
 }

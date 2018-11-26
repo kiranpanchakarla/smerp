@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.inventory.Product;
@@ -19,5 +20,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("SELECT description FROM Product")
 	List<String> findByDescription();
 	
+	
+	
 	Product findByDescription(String name);
+
+	
+	
+	
+	@Query("SELECT productNo FROM Product WHERE serviceOrProduct=:product")
+	List<String> findAllProductNamesByProduct(@Param("product") String product);
+	
+	
+
+	Product findByproductNo(String name);
 }

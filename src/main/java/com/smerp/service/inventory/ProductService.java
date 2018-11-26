@@ -28,6 +28,10 @@ public interface ProductService {
 
 	Product findByDescription(String name);
 
-	/*void delete(int parseInt);*/
+	List<String> findAllProductNamesByProduct(String product);
+
+	Product findByproductNo(String name);
+
+	
 
 }

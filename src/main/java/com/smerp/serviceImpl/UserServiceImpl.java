@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.smerp.dao.UserDao;
@@ -24,6 +25,7 @@ import com.smerp.model.admin.Role;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
 import com.smerp.service.master.RoleService;
+import com.smerp.util.RandomUtil;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -36,8 +38,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	@Autowired
 	RoleService roleService;
 
-	//@Autowired
-	//private BCryptPasswordEncoder bcryptEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDao.findByUsername(username);
@@ -81,9 +83,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			logger.info("inside userservice impl save method");
 			user.setActivationId("InActive");
 			//user.setPlant("test");
-			//user.setPassword(bcryptEncoder.encode("Welcome"));
+			user.setPassword(bcryptEncoder.encode("Welcome"));
 			user.setCompany(getComapnyIdFromSession());
-			//user.setUsername(RandomUtil.referenceId());
+			user.setUsername(RandomUtil.referenceId());
 			String roleId = user.getRolesDt();
 			Role role = roleService.findById(Long.parseLong(roleId));
 			Set<Role> roles = new HashSet<>();
@@ -109,9 +111,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	private Company getComapnyIdFromSession() {
-		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = loggedInUser.getName();
-		User user = findByUsername(username);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user.getCompany();
 	}
 

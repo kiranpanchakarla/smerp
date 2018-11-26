@@ -30,8 +30,8 @@ public class CompanyServicesImpl implements CompanyServices {
 	@Autowired
 	RoleService roleService;
 
-	///@Autowired
-	//private BCryptPasswordEncoder bcryptEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
 
 	private static final Logger logger = LogManager.getLogger(CompanyServicesImpl.class);
 
@@ -45,10 +45,10 @@ public class CompanyServicesImpl implements CompanyServices {
 			user.setUsername(company.getEmailId());
 			user.setActivationId("InActive");
 			//user.setPlant("test");
-			//user.setPassword(bcryptEncoder.encode("Welcome"));
+			user.setPassword(bcryptEncoder.encode("Welcome"));
 			user.setImage(company.getLogo());
 			user.setFirstname(company.getName());
-			user.setLastname(company.getName());
+		    user.setLastname(company.getName());
 			user.setMobileNo(company.getPhoneNum());
 			user.setUserEmail(company.getEmailId());
 			user.setEnabled(true);

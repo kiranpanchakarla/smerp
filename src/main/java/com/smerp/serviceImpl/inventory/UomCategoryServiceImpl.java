@@ -12,7 +12,6 @@ import com.smerp.service.inventory.UomCatergoryService;
 
 @Service
 public class UomCategoryServiceImpl implements UomCatergoryService {
-
 	
 	@Autowired
 	private UomCategoryRepository  uomCategoryRepository;
@@ -20,8 +19,32 @@ public class UomCategoryServiceImpl implements UomCatergoryService {
 	
 	@Override
 	public List<UomCategory> findAll() {
-		
 		return uomCategoryRepository.findAll();
+	}
+
+
+	@Override
+	public UomCategory save(UomCategory uomCategory) {
+		return uomCategoryRepository.save(uomCategory);
+	}
+
+
+	@Override
+	public UomCategory findById(int id) {
+		return uomCategoryRepository.findById(id);
+	}
+
+
+	@Override
+	public UomCategory getInfo(int id) {
+		return uomCategoryRepository.findById(id);
+	}
+
+
+	@Override
+	public void delete(int id) {
+		uomCategoryRepository.deleteById(id);
+		
 	}
 	
 

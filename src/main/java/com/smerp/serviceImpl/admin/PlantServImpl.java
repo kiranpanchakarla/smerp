@@ -22,4 +22,28 @@ public class PlantServImpl implements PlantService {
 		return plantRepository.findAll();
 	}
 
+	@Override
+	public Plant save(Plant plant) {
+		 
+		return plantRepository.save(plant);
+	}
+
+	@Override
+	public Plant findById(int id) {
+		 
+		return plantRepository.findById(id);
+	}
+
+	@Override
+	public Plant getInfo(int id) {
+		 
+		return plantRepository.findById(id);
+	}
+
+	@Override
+	public void delete(int id) {
+		plantRepository.deleteById(id);
+		
+	}
+
 }

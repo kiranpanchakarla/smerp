@@ -182,7 +182,7 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Street-1</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='street1' path="street1"
+																					placeholder='Street1' path="street1"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter Street1')"	oninput="setCustomValidity('')" />
 																		<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
@@ -197,7 +197,7 @@
 																			<div class="col-sm-4 form-group">
 																				<label>City</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Enter City' path="city"
+																					placeholder='City' path="city"
 																					required="true" oninvalid="this.setCustomValidity('Please Enter City')"	oninput="setCustomValidity('')"/>
 																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
@@ -216,8 +216,8 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='fax Number' path="faxNum"
-																					required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
+																					placeholder='Fax Number' path="faxNum"
+																					required="true" maxlength="20" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
 																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			

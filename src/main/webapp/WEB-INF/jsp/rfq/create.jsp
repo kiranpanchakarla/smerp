@@ -11,33 +11,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+          
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
+ <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
 
-<script
-	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
-	type="text/javascript"></script>
-<script
-	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
-	type="text/javascript"></script>
-<script
-	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
-	type="text/javascript"></script>
-<script
-	src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/>
-	type="text/javascript"></script>
 
-<link
-	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
-	rel="stylesheet" type="text/css" />
-<link
-	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
-	rel="stylesheet" type="text/css" />
-<link
-	href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>"
-	rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/> type="text/javascript"></script>
+<link href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>" rel="stylesheet" type="text/css" />
+
+ 	
 
 </head>
 
-
+ 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -60,9 +47,9 @@
 
 
 
-							<form:form method="POST" action="/rfq/save"
+							<form:form method="POST" action="/rfq/save" id="form" class="bv-form commentForm"
 								enctype="multipart/form-data" modelAttribute="rfq"
-								data-toggle="validator" role="form" class="bv-form">
+								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
@@ -73,30 +60,25 @@
 													<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
 												</div>
 
-												<div class="card-body collapse in">
+												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
 															<div class="row">
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>Name</label>
 																	<form:input type="text"
 																		cssClass="form-control vendorname"
 																		placeholder='Vendor Name' path="vendor.name"
-																		required="true" />
+																		required="true" autocomplete="off" />
 																</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-4 form-group">
 																	<label>Email Id</label>
 																	<form:input type="text" cssClass="form-control emailId"
 																		readonly="true" placeholder='Email Id'
 																		path="vendor.emailId"   />
 																</div>
-															</div>
-
-															<form:hidden path="id" />
-
-															<div class="row">
-																<div class="col-sm-4 form-group">
+                                                                <div class="col-sm-4 form-group">
 																	<label>Contact Person </label>
 
 																	<form:select path="vendorContactDetails.id"
@@ -107,6 +89,12 @@
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
+															</div>
+
+															<form:hidden path="id" />
+
+															<div class="row">
+																
 
 																<div class="col-sm-4 form-group">
 																	<label>Pay To</label>
@@ -125,6 +113,13 @@
 																		<%-- <form:option value="Select">Select</form:option> --%>
 																	</form:select>
 																</div>
+                                                                
+                                                                <div class="col-sm-4 form-group">
+																				<label>Document Number</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Document Number' path="docNumber"
+																					readonly="true" />
+																			</div>
 
 															</div>
 
@@ -133,18 +128,25 @@
 																	<div class="form-body">
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
-																				<label>Document Number</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Number' path="docNumber"
-																					readonly="true" />
-																			</div>
-
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Reference Document Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber" required="true" />
+																			</div>
+                                                                            <div class="col-sm-4 form-group">
+																				<label>Posting Date</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Posting Date' path="postingDate"
+																					autocomplete="off" required="true" />
+																				
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Document Date</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Document Date' path="documentDate"
+																					autocomplete="off" required="true" />
+																				
 																			</div>
 																		</div>
 
@@ -153,41 +155,13 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Posting Date</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" required="true" />
-																				<div style="color: red;"
-																					class="help-block with-errors"></div>
-																			</div>
-																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Date' path="documentDate"
-																					autocomplete="off" required="true" />
-																				<div style="color: red;"
-																					class="help-block with-errors"></div>
-																			</div>
-
-
-																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					id="require_date" placeholder='Required Date'
 																					autocomplete="off" path="requiredDate" required="true" />
-																				<div style="color: red;"
-																					class="help-block with-errors"></div>
-																			</div>
-																		</div>
-																		
-																		
-																	</div>
-																</div>
-															</div>
-															
-															<div class="row">
 																			
-																			<div class="col-sm-6 form-group">
+																			</div>
+                                                                            <div class="col-sm-4 form-group">
                                                                             <div class="input-group">
                                                                                 <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
@@ -203,6 +177,16 @@
                                                                                 <div class="help-block with-errors"></div>
                                                                             </div>
                                                                         </div>
+																		</div>
+																		
+																		
+																	</div>
+																</div>
+															</div>
+															
+															<div class="row">
+																			
+																			
 															</div>
 																		
 															<input type="hidden" id="addressCount" value="0">
@@ -438,7 +422,7 @@
 									</div>
 									<div class="card-block"><div class="row">
 										<div class="col-sm-6 form-group">
-											<a href="#" onclick="goBack()"
+											<a href="#" onClick="goBack()"
 												class="btn btn-primary"> Back </a>
 												
 										</div>
@@ -472,7 +456,7 @@
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
 
 
-	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+
 	
 	
 	
@@ -518,7 +502,6 @@ if ($('#service_radio').is(":checked") == true) {
 
 function addItem() {
 		
-		//alert("addItem");
 	
 						var addressCount = $('#addressCount').val();
 						 edit_addressCount = $('#edit_addressCount').val();
@@ -538,39 +521,53 @@ function addItem() {
 	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
+			+'<div class="form-group">'
 			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+ '</div>'
 			+ '</td>'
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
@@ -590,29 +587,39 @@ function addItem() {
 		  var service_table_data='<tr class="multTot multTot'+inc+'">'
 			
 			+'<td style="display:none;">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].sacCode" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+ '</div>'
 			+'</td>'
 			
 			+ '<td>'
+			+'<div class="form-group">'
 			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+ '</div>'
 			+ '</td>'
 			
 			
@@ -635,7 +642,7 @@ function addItem() {
 	
 		inc++;
 		$('#addressCount').val(inc);
-		
+		$("#form").validator("update");
 	}
 
 
@@ -1038,6 +1045,7 @@ $("#items_radio").click(function() {
 	       }
 	      for(var k=0;k<=inc;k++) {
 	    	  removeData1(k);
+	    	  removeData(k);
 	    	  if(edit_inc!= undefined){
 	    		  removeData2(k);
 	    	  }
@@ -1072,6 +1080,7 @@ $("#service_radio").click(function() {
       }
       for(var k=0;k<=inc;k++) {
     	  removeData(k);
+    	  removeData1(k);
     	  if(edit_inc!= undefined){
     		  removeData2(k);
     	  }
@@ -1097,8 +1106,58 @@ $('#containerContainingTabs a').on('click', function(e) {
 	$('#containerContainingTabs a').removeClass('active');
 	theThis.addClass('active');
 	});
+	
+	
+$('form.commentForm').on('submit', function(event) {
+    
+    if ($('#items_radio').is(":checked") == true) {
+    var rowCount = $('#itemTbl tr').length-1;
+    
+    if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+    	rowCount = $('#edit_item_serviceTbl tr').length-1;
+		}
+    
+	if(rowCount == 0){
+		alertify.alert("please slect atleat one item");
+		 return false;
+	}else{
+		return true;
+	}
+    } 
+    
+    if ($('#service_radio').is(":checked") == true) {
+	 var rowCount1 = $('#serviceTbl tr').length-1;
+
+	 if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+		 rowCount1 = $('#edit_item_serviceTbl tr').length-1;
+			} 
+	 
+ 	if(rowCount1 == 0){
+ 		alertify.alert("please slect atleat one  service");
+ 		 return false;
+ 	}else{
+ 		return true;
+ 	}
+	  }
+    
+});
+function goBack() {
+    window.history.back();
+}
+	
 	</script>
-<!-- changes -->
+
+<%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
+
+<!-- alertifyjs -->
+
+<link href="<c:url value="/resources/components/alertifyjs/css/alertify.css"/>"
+    rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/components/alertifyjs/css/themes/default.css"/>"
+    rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
+
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 
 </html>
-

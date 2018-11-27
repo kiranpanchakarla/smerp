@@ -92,7 +92,7 @@
 																	<td>${list.status}</td>
 																	<td>
 																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a>|
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/rfq/delete')"><i class="icon-bin left"></i></a>|
 														    		<a class ="btn btn-view" href="<c:url value="/rfq/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							
 																</tr>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,7 +69,7 @@ public class RequestForQuotationController {
 		}else {
 			rfq.setDocNumber("doc_1");
 		}
-		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		model.addAttribute("rfq",rfq);
 		return "rfq/create";
@@ -86,7 +87,7 @@ public class RequestForQuotationController {
 		model.addAttribute("lineItems",rfq.getLineItems());
 		
 		
-		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 	//	model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
@@ -107,7 +108,7 @@ public class RequestForQuotationController {
 		model.addAttribute("lineItems",rfq.getLineItems());
 		
 		ObjectMapper mapper = new ObjectMapper();
-		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNames()));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		//model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
@@ -115,6 +116,18 @@ public class RequestForQuotationController {
 		model.addAttribute("rfq",rfq);
 		return "rfq/view";
 	}
+	
+	
+	@PostMapping(value = "/delete")
+	public String delete(@RequestParam("id") int id) {
+		
+		logger.info("Delete msg");
+		requestForQuotationService.delete(id);
+		return "redirect:list";
+	}
+	
+	
+	
 	private String documentNumberGeneration(String documentNumber) {
 		String[] parts = documentNumber.split("_");
 		String prefix = parts[0]; // 004
@@ -136,7 +149,7 @@ public class RequestForQuotationController {
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-	 List<RequestForQuotation>	list=requestForQuotationService.findAll();
+	 List<RequestForQuotation>	list=requestForQuotationService.findByIsActive();
 	 model.addAttribute("list", list);
 	 return "rfq/list";
 	}

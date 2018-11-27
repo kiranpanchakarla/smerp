@@ -770,7 +770,7 @@
     		
             function removeData(index){
             	var rowCount = $('#itemTbl tr').length;
-            	alert(rowCount);
+            	//alert(rowCount);
             	
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -886,13 +886,11 @@
         });
         
         $('form.commentForm').on('submit', function(event) {
-            alert("commentForm");
             
             if ($('#items_radio').is(":checked") == true) {
             var rowCount = $('#itemTbl tr').length-1;
             
             if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-  			  alert("edit");
             	rowCount = $('#edit_item_serviceTbl tr').length-1;
   			}
             
@@ -908,7 +906,6 @@
         	 var rowCount1 = $('#serviceTbl tr').length-1;
 
         	 if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-        		alert("edit");
         		 rowCount1 = $('#edit_item_serviceTbl tr').length-1;
      			} 
         	 

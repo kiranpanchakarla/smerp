@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
             .antMatchers("/resources/**","/forgotPass/**").permitAll()
             .antMatchers("/resources/**","/registration/**").permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN").and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
+            .antMatchers("/admin/**").hasRole("ADMIN").and().exceptionHandling().and().sessionManagement().invalidSessionUrl("/login").and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class).formLogin().defaultSuccessUrl("/dashboard")
             .loginPage("/login")
             .failureUrl("/login?error=1").permitAll()

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.inventory.LineitemsRepositoryRepository;
 import com.smerp.repository.inventory.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
@@ -29,23 +31,31 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
 		
 		if(requestForQuotation.getId() !=null) {   //  delete List Of Items.
-			RequestForQuotation requestForListOfItems = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
-	        List<LineItems>    requestLists = requestForListOfItems.getLineItems();
-	                for (LineItems lineObj: requestLists) {
-	                	lineitemsRepository.deleteByLineId(lineObj.getId());
-	             }
-	        }
+	    			RequestForQuotation requestForListOfItems = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
+	        		List<LineItems>	 requestLists = requestForListOfItems.getLineItems();
+	        		   	 for (LineItems lineObj: requestLists) { 
+	        		   		lineitemsRepository.deleteAll(requestLists);
+	        		     }
+	        		   	List<LineItems> listItems = requestForQuotation.getLineItems();
+		        		if (listItems != null) {
+		        			for (int i = 0; i < listItems.size(); i++) {
+		        				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() ==null) {
+		        					listItems.remove(i);
+		        				}
+		        			}
+		        			requestForQuotation.setLineItems(listItems);
+		        		}
+		}
+	        		
+	        		
+	        		
+		
 		
 		Vendor vendor=vendorService.findById(requestForQuotation.getVendor().getId());
 		
 		requestForQuotation.setVendor(vendor);
 				
 		return requestForQuotationRepository.save(requestForQuotation);
-	/*	return requestForQuotationRepository.save(requestForQuotation);*/
-		
-		/*lineitemsRepository.deleteById(2);
-		return requestForQuotation;*/
-		
 	}
 
 	@Override
@@ -57,10 +67,25 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	public List<RequestForQuotation> findAll() {
 		return requestForQuotationRepository.findAll();
 	}
+	
+	@Override
+	public List<RequestForQuotation> findByIsActive() {
+		return requestForQuotationRepository.findByIsActive(true);
+	}
+	
 
 	@Override
 	public RequestForQuotation findById(int id) {
 		return requestForQuotationRepository.findById(id).get();
 	}
+	
+	@Override
+	public RequestForQuotation delete(int id) {
+		RequestForQuotation requestForQuotation = requestForQuotationRepository.findById(id).get();
+		requestForQuotation.setIsActive(false);
+		requestForQuotationRepository.save(requestForQuotation);
+		return requestForQuotation;
+	}
+	
 
 }

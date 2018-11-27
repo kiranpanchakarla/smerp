@@ -13,5 +13,9 @@ public interface RequestForQuotationService {
 	List<RequestForQuotation> findAll();
 
 	RequestForQuotation findById(int id);
+	
+	RequestForQuotation delete(int id);
+	
+	List<RequestForQuotation> findByIsActive();
 
 }

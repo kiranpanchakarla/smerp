@@ -101,24 +101,29 @@ public class RequestForQuotationController {
 		logger.info("id-->" + id);
 		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
 		logger.info("rfq-->" + rfq);
-		ObjectMapper mapper = new ObjectMapper();
-		VendorAddress vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
-		VendorAddress vendorShippingAddress = rfq.getVendorShippingAddress();
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
-		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
-		model.addAttribute("lineItems", rfq.getLineItems());
+		ObjectMapper mapper = rfqloadData(model, rfq);
 		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
-
+		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("rfq", rfq);
 		return "rfq/create";
+	}
+
+	private ObjectMapper rfqloadData(Model model, RequestForQuotation rfq) {
+		ObjectMapper mapper = new ObjectMapper();
+		VendorAddress vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
+		VendorAddress vendorShippingAddress = rfq.getVendorShippingAddress();
+		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
+		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
+	
+		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
+		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
+		model.addAttribute("lineItems", rfq.getLineItems());
+		return mapper;
 	}
 
 	@GetMapping("/view")
@@ -126,20 +131,8 @@ public class RequestForQuotationController {
 		logger.info("id-->" + id);
 		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
 		logger.info("rfq-->" + rfq);
-		ObjectMapper mapper = new ObjectMapper();
-		VendorAddress vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
-		VendorAddress vendorShippingAddress = rfq.getVendorShippingAddress();
-		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
-		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
-		model.addAttribute("lineItems", rfq.getLineItems());
-
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		rfqloadData(model, rfq);
 		// model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("planMap", plantMap());
-		logger.info("mapper-->" + mapper);
 		model.addAttribute("rfq", rfq);
 		return "rfq/view";
 	}

@@ -32,7 +32,11 @@ public interface UserService {
 	Map<Long,String> rolesMap(Set<Role> set);
 
 	List<String> findAllUsername();
+	
+	List<String> findFirstNames();
 
 	User findByName(String username);
+	
+	
 	List<User> findByIsActive();
 }

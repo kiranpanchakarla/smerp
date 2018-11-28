@@ -23,10 +23,14 @@ public interface UserDao extends CrudRepository<User, Long> {
 	List<String> findAllUsername();
 
 	
-	@Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
+	@Query("SELECT u FROM User u WHERE LOWER(CONCAT(firstname,' ',lastname)) = LOWER(:username)")
 	User findByName(String username);
 	
 	@Query("SELECT u FROM User u WHERE enabled=:enabled order by updatedAt desc")
 	   List<User>  findByIsActive(@Param("enabled") Boolean enabled);
+
+	
+	@Query("SELECT CONCAT(firstname,' ',lastname) FROM User WHERE enabled=:enabled")
+	List<String> findFirstNames(@Param("enabled") Boolean enabled);
    
 }

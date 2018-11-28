@@ -26,29 +26,19 @@ public class PurchaseRequestServiceImpl  implements PurchaseRequestService {
 	@Override
 	public PurchaseRequest save(PurchaseRequest purchaseRequest) {
 		
-		
 		if(purchaseRequest.getId() !=null) {
-			
-			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+		PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
 		List<PurchaseRequestList>	purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
 		   	 for (PurchaseRequestList purchaseRequest1: purchaseRequestLists) { 
-		   		//purchaseRequestListRepository.deleteByPeqId(purchaseRequest1.getId());
-		   		//purchaseRequestListRepository.deleteById(purchaseRequest1.getId());
 		   		purchaseRequestListRepository.deleteAll(purchaseRequestLists);
-
-		   
 		     }
-			
 		}
-		
-		
 		List<PurchaseRequestList> ltms = purchaseRequest.getPurchaseRequestLists();
 		if (ltms != null) {
 			for (int i = 0; i < ltms.size(); i++) {
 				if (ltms.get(i).getDescription() == null) {
 					ltms.remove(i);
 				}
-				
 			}
 			purchaseRequest.setPurchaseRequestLists(ltms);
 		}
@@ -67,9 +57,7 @@ public class PurchaseRequestServiceImpl  implements PurchaseRequestService {
 		
 		PurchaseRequest purchaseRequest = purchaseRequestRepository.findById(id).get();
 		purchaseRequest.setIsActive(false);
-		purchaseRequestRepository.save(purchaseRequest);
-
-		return purchaseRequest;
+		return purchaseRequestRepository.save(purchaseRequest);
 	}
 
 	@Override
@@ -81,10 +69,7 @@ public class PurchaseRequestServiceImpl  implements PurchaseRequestService {
 	@Override
 	public PurchaseRequest getInfo(int purchaseReqId) {
 		
-		
-		PurchaseRequest obj = purchaseRequestRepository.findById(purchaseReqId).get();
-
-		return obj;
+		return  purchaseRequestRepository.findById(purchaseReqId).get();
 	}
 	
 }

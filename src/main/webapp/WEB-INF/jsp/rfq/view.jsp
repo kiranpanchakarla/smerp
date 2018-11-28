@@ -62,15 +62,15 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>${rfq.vendor.name}
+																	<label>Name</label>: ${rfq.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>${rfq.vendor.emailId}
+																	<label>Email Id</label>: ${rfq.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact Person </label>${rfq.vendorContactDetails.contactName}
+																	<label>Contact Person </label>: ${rfq.vendorContactDetails.contactName}
 																</div>
 															</div>
 
@@ -80,15 +80,15 @@ text-align: left;
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>${rfq.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${rfq.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>${rfq.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${rfq.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>${rfq.docNumber}
+																				<label>Document#</label>: ${rfq.docNumber}
 																			</div>
 
 															</div>
@@ -99,14 +99,14 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document#</label> ${rfq.referenceDocNumber}
+																				<label>Reference Document#</label>: ${rfq.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>
+																				<label>Posting Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>
+																				<label>Document Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.documentDate}" />
 																			</div>
 																		</div>
@@ -116,7 +116,7 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>
+																				<label>Required Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">

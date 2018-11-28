@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.Uom;
 import com.smerp.model.master.AuditModel;
 
 @Entity
@@ -34,8 +35,13 @@ public class PurchaseRequest extends AuditModel {
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id", referencedColumnName = "user_id")
 	private User  user;
+	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="reference_user_id", referencedColumnName = "user_id")
+	private User  referenceUser;
 	
 	@Column(name="doc_number")
     private String docNumber;
@@ -152,13 +158,27 @@ public class PurchaseRequest extends AuditModel {
 		this.isActive = isActive;
 	}
 
+	
+	
+	
+	
+	public User getReferenceUser() {
+		return referenceUser;
+	}
+
+	public void setReferenceUser(User referenceUser) {
+		this.referenceUser = referenceUser;
+	}
+
 	@Override
 	public String toString() {
-		return "PurchaseRequest [id=" + id + ", user=" + user + ", docNumber=" + docNumber + ", documentDate="
-				+ documentDate + ", status=" + status + ", postingDate=" + postingDate + ", requiredDate="
-				+ requiredDate + ", type=" + type + ", purchaseRequestLists=" + purchaseRequestLists + ", isActive="
-				+ isActive + "]";
+		return "PurchaseRequest [id=" + id + ", user=" + user + ", referenceUser=" + referenceUser + ", docNumber="
+				+ docNumber + ", documentDate=" + documentDate + ", status=" + status + ", postingDate=" + postingDate
+				+ ", requiredDate=" + requiredDate + ", type=" + type + ", purchaseRequestLists=" + purchaseRequestLists
+				+ ", isActive=" + isActive + "]";
 	}
+
+	
 
 	
 	

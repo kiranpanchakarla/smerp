@@ -160,6 +160,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	 public List<User> findByIsActive() {
 	        return userDao.findByIsActive(true);
 	    }
+
+	@Override
+	public List<String> findFirstNames() {
+		// TODO Auto-generated method stub
+		return userDao.findFirstNames(true);
+	}
 	
 
 }

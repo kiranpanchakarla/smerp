@@ -231,10 +231,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    @ResponseBody
-    private String getUserDetailsByUserName(@RequestParam("username") String username) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(userService.findByName(username));
-        
-    }
+	@ResponseBody
+	private String getUserDetailsByUserName(@RequestParam("username") String username) throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(userService.findByName(username));
+		
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.smerp.model.admin;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -93,9 +94,9 @@ public class User extends AuditModel {
 	            @JoinColumn(name = "role_id") })
    private Set<Role> roles;
   
- 
+  private transient List<UserModulePermission> userModulePermission;
   
-	private transient String rolesDt;
+  private transient String rolesDt;
 	
 	
 
@@ -117,6 +118,23 @@ public class User extends AuditModel {
 	}
 
 	
+	
+
+	public synchronized Desigination getDesignation() {
+		return designation;
+	}
+
+	public synchronized void setDesignation(Desigination designation) {
+		this.designation = designation;
+	}
+
+	public synchronized List<UserModulePermission> getUserModulePermission() {
+		return userModulePermission;
+	}
+
+	public synchronized void setUserModulePermission(List<UserModulePermission> userModulePermission) {
+		this.userModulePermission = userModulePermission;
+	}
 
 	public String getUsername() {
 		return username;
@@ -259,8 +277,11 @@ public class User extends AuditModel {
 				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", mobileNo=" + mobileNo + ", activationId=" + activationId + ", company=" + company + ", department="
 				+ department + ", designation=" + designation + ", reportingManagerId=" + reportingManagerId
-				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + "]";
+				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + ", userModulePermission="
+				+ userModulePermission + ", rolesDt=" + rolesDt + "]";
 	}
+
+	
 
 	
 

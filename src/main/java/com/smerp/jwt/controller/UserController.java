@@ -1,6 +1,8 @@
 package com.smerp.jwt.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,14 +30,22 @@ import com.smerp.jwt.models.Constants;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Desigination;
+import com.smerp.model.admin.Module;
+import com.smerp.model.admin.Permission;
 import com.smerp.model.admin.Role;
+import com.smerp.model.admin.UPM;
 import com.smerp.model.admin.User;
+import com.smerp.model.admin.UserModulePermission;
+import com.smerp.repository.admin.UserModulePermissionService;
 import com.smerp.service.UserService;
 import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.admin.DesignationService;
+import com.smerp.service.admin.ModuleService;
 import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.PermissionService;
 import com.smerp.service.inventory.ProductService;
+import com.smerp.service.inventory.UPMService;
 import com.smerp.service.master.CurrencyServices;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.RoleService;
@@ -81,6 +91,18 @@ public class UserController {
 	
 	@Autowired
 	VendorService vendorService;
+	
+	@Autowired
+	PermissionService permissionService;
+
+	@Autowired
+	ModuleService moduleService;
+
+	@Autowired
+	UserModulePermissionService userModulePermissionService;
+
+	@Autowired
+	UPMService uPMService;
 
 	@GetMapping("/create")
 	private String createPage(Model model , User user) {
@@ -206,6 +228,86 @@ public class UserController {
 		logger.info("length  " + list.size());
 		return map;
 	}
+	
+	@GetMapping("/addPermissions")
+	public String addPermissions(String id, Model model) {
+		logger.info("user addPermissions method");
+		User user = userService.findById(Integer.parseInt(id));
+		Map<Module, List<Permission>> usermodulepermissionsmap = usermodulepermissionsbyuserId(user, model);
+		if (usermodulepermissionsmap == null || usermodulepermissionsmap.isEmpty()) {
+			usermodulepermissionsmap = new LinkedHashMap<>();
+			// List<UserModulePermission> upmlist = new ArrayList<>();
+			List<Module> list = moduleService.findAll();
+			for (Module module : list) {
+				/*
+				 * UserModulePermission upm = new UserModulePermission();
+				 * upm.setPermissions(permissionService.findAll()); upm.setModule(module);
+				 * upm.setUser(userService.findById(Integer.parseInt(id))); upmlist.add(upm);
+				 */
+				usermodulepermissionsmap.put(module, permissionService.findAll());
+			}
+			// model.addAttribute("list", upmlist);
+		}
+		
+		model.addAttribute("ump", usermodulepermissionsmap);
+		model.addAttribute("user", user);
+		model.addAttribute("id", id);
+		return "user/addPermissions";
+	}
+	
+	@PostMapping("/savePermissions")
+	public String savePermission(User user, Model model) {
+		logger.info("user details in savePermissions method" + user.getUserId());
+		/* getting user permissions information from database */
+		List<UserModulePermission> listupm = userModulePermissionService.findByAllUserId(user.getUserId());
+		/* removing user permissions information from database */
+		
+		if(listupm.isEmpty() ||listupm!=null) {
+			boolean flag = userModulePermissionService.deleteAll(listupm);
+			logger.info("flag" + flag);
+		}
+		
+		/* updating user permisions details in database */
+		userModulePermissionService.saveAll(user);
+		Map<Module, List<Permission>> userpermissionsmap = usermodulepermissionsbyuserId(user, model);
+		logger.info("userpermissionsmap-------->" + userpermissionsmap);
+		model.addAttribute("user", user);
+		model.addAttribute("id", user.getUserId());
+		return "user/addPermissions";
+	}
+	
+	private Map<Module, List<Permission>> usermodulepermissionsbyuserId(User user, Model model) {
+		Map<Module, List<Permission>> userpermissionsmap = new LinkedHashMap<>();
+		List<UPM> upmlist = uPMService.findAll(user.getUserId());
+		for (UPM upm : upmlist) {
+			Module module = new Module();
+			module.setId(upm.getModule_id());
+			module.setModuleName(upm.getModule_name());
+			if (!userpermissionsmap.containsKey(module)) {
+				Permission permissions = new Permission();
+				permissions.setId(upm.getPermssion_id());
+				permissions.setPermissionName(upm.getPermission_name());
+				permissions.setFlag(upm.getUser_access());
+				// p.setDbId(upm.getId());
+				List<Permission> list = new ArrayList<>();
+				list.add(permissions);
+				userpermissionsmap.put(module, list);
+			} else {
+				List<Permission> list = userpermissionsmap.get(module);
+				Permission p = new Permission();
+				p.setId(upm.getPermssion_id());
+				p.setPermissionName(upm.getPermission_name());
+				p.setFlag(upm.getUser_access());
+				// p.setDbId(upm.getId());
+				list.add(p);
+				userpermissionsmap.put(module, list);
+			}
+		}
+
+		model.addAttribute("ump", userpermissionsmap);
+		return userpermissionsmap;
+	}
+
 
 	public Map<Integer, Object> desiganationMap() {
 		Company company = getComapnyIdFromSession();

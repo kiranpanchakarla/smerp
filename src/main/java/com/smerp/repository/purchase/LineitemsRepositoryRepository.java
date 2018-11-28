@@ -1,4 +1,4 @@
-package com.smerp.repository.inventory;
+package com.smerp.repository.purchase;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smerp.model.inventory.LineItems;
 @Transactional(readOnly = true)
 public interface LineitemsRepositoryRepository extends JpaRepository<LineItems, Integer> {
+	
 
 	    @Modifying
 	    @Transactional

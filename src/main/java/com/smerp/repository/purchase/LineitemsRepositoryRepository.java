@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smerp.model.inventory.LineItems;
 @Transactional(readOnly = true)
 public interface LineitemsRepositoryRepository extends JpaRepository<LineItems, Integer> {
+	
 
 	    @Modifying
 	    @Transactional

@@ -37,6 +37,7 @@ public class RequestForQuotationController {
 
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationController.class);
 
+	
 	@Autowired
 	PlantService plantService;
 

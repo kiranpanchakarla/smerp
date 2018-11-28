@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -14,6 +13,8 @@
 </head>
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+
+
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -86,8 +87,7 @@
 																	<td>${productList.description}</td>
 																	<td>${productList.productCategory.name}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
-																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
-																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
+																	
 																	<td >
 																	 <a class ="btn btn-edit" href="<c:url value="/product/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a>
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')"><i class="icon-bin left"></i></a>
@@ -124,9 +124,18 @@ $(document).ready(function() {
 
 </script>
 
-<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
-<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
-<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
+<script
+		src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
+		type="text/javascript"></script>
+
+
+
 </body>
 	
 </html>

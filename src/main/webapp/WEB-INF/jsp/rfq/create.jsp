@@ -217,7 +217,7 @@
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<th>Product Name</th>
+																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
@@ -262,7 +262,7 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${rfq.category=='Item'}">
-																									<th>Product Name</th>
+																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
@@ -1011,7 +1011,7 @@ function removeData(index){
 	}else{
 		$('table#itemTbl tr.multTot'+index).remove();
 	}
-	
+	$("#form").validator("update");
 }
 
 
@@ -1022,13 +1022,14 @@ function removeData1(index){
 	}else{
 		$('table#serviceTbl tr.multTot'+index).remove();
 	}
-	
+	$("#form").validator("update");
 }
 
 
 function removeData2(index){
 	//alert("ff"+index);
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+	$("#form").validator("update");
 }
 
 
@@ -1066,9 +1067,10 @@ $("#items_radio").click(function() {
 		 
 	  			 
 	          }, function(){
+	        	 
+	        	  $("#service_radio").prop('checked',true);
 	        	  
-	        	  document.getElementById("items_radio").checked = true;
-	      alertify.error('Cancel')
+	      alertify.error('Cancel');
 	   });
 	
 });
@@ -1099,8 +1101,7 @@ $("#service_radio").click(function() {
 	  addItem();
 	  
 	 }, function(){
-   	  
-   	  document.getElementById("service_radio").checked = true;
+     	 $("#items_radio").prop('checked',true);
      alertify.error('Cancel')
     });
 	 

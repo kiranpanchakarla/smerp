@@ -36,7 +36,8 @@
                         <div class="large-12 columns">
                             <div class="content-body">
                                 <!-- Basic form layout section start -->
-                                <form:form method="POST" action="/purchaseReq/save" class="commentForm" modelAttribute="purchaseRequest" data-toggle="validator" role="form">
+                                <c:url value="/purchaseReq/save" var="createUrl" />
+                                <form:form method="POST" action="${createUrl}" id="form" class="commentForm" modelAttribute="purchaseRequest" data-toggle="validator" role="form">
                                     <section id="basic-form-layouts">
                                         <div class="row match-height">
                                             <div class="col-md-12">
@@ -58,9 +59,8 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>User</label>
-                                                                            <form:input type="text" class="form-control username" placeholder='User Name' path="user.username" value="" required="true" autocomplete="off" oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}" required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.userId" class="userId" />
-
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
@@ -72,37 +72,38 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Requester Name</label>
-                                                                            <form:input type="text" class="form-control reqname" placeholder='Requester Name' readonly="true"  path="user.firstname" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" value="${user.firstname}${' '}${user.lastname}" required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
+                                                                              <form:hidden path="referenceUser.userId" class="referenceUserId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Posting Date</label>
-                                                                            <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate' path="postingDate" value="" />
+                                                                            <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate' required="true" path="postingDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Plant</label>
-                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="user.plant.plantName" value=""   readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" value="${user.plant.plantName}"   readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.plant.id" class="plantId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Doc Date</label>
-                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate' path="documentDate" value="" />
+                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate' required="true" path="documentDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Email- ID</label>
-                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="user.userEmail" value=""  readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" value="${user.userEmail}"  readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Require Date</label>
-                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' path="requiredDate" value="" />
+                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                     </div>
@@ -136,7 +137,7 @@
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<th>Product Name</th>
+																									<th>Product No.</th>
 																										<th>Description</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
@@ -182,7 +183,7 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${purchaseRequest.type=='Item'}">
-																									<th>Product Name</th>
+																									<th>Product No.</th>
 																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
@@ -231,7 +232,7 @@
 																															class="form-control uom" readonly="true"></form:input></td>
 																													
 																													<td><form:input type="text"
-																															path="purchaseRequestLists[${count}].requiredQuantity"
+																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
 																															value="${listpurchaseRequestLists.requiredQuantity}"
 																															class="form-control"></form:input></td>
 																															
@@ -270,7 +271,7 @@
 																															readonly="true"></form:input></td>
 																															
 																													<td><form:input type="text"
-																															path="purchaseRequestLists[${count}].requiredQuantity"
+																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
 																															value="${listpurchaseRequestLists.requiredQuantity}"
 																															class="form-control"></form:input></td>
 																													
@@ -360,7 +361,7 @@
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <%--  <%@include file="../loadJs.jsp"%> --%>
-            <c:import url="/WEB-INF/jsp/loadJs.jsp" />
+            <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" /> --%>
     </body>
 
     <script type="text/javascript">
@@ -417,44 +418,59 @@
     	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'"  id="prodouctNumber'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber" autocomplete="off" class="form-control prodouctNumber prodouctNumber'+inc+'"  id="prodouctNumber'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			+'<td style="display:none;">'
     			+'<input type="hidden" name="purchaseRequestLists['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" class="form-control description '+inc+'" id="description'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="description'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" readonly="true" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].productGroup" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			
     			+ '<td>'
-    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+    			+'<div class="form-group">'
+    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
     			'<option value="${planMap.key}">${planMap.value}</option>'+
     			</c:forEach>
     			+ '</select>'
+    			+ '</div>'
     			+ '</td>'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
@@ -478,24 +494,32 @@
     			+'</td>'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].sacCode" class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].sacCode"  autocomplete="off"  required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+ '</div>'
     			+'</td>'
     			
     			+ '<td>'
-    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+    			+'<div class="form-group">'
+    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
     			'<option value="${planMap.key}">${planMap.value}</option>'+
     			</c:forEach>
+    			+ '</div>'
     			+ '</select>'
     			+ '</td>'
     			
@@ -519,11 +543,34 @@
     	
     		inc++;
     		$('#addressCount').val(inc);
+    		$("#form").validator("update");
     		
     	}
    
     $(document).ready(function(){
     	
+    	 $('.userId').val(${user.userId}); 
+    	 $('.referenceUserId').val(${user.userId}); 
+    	 
+    	
+    	$('#postingDate').datepicker({
+            dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
+       }).datepicker( "option", { setDate:"0",
+               maxDate:'+3y -1d',
+               minDate:'0' } );
+    	
+    	
+    	 $('#documentDate').datepicker({
+             dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
+        }).datepicker( "option", { setDate:"0",
+                maxDate:'+3y -1d',
+                minDate:'0' } );
+         
+         $('#requiredDate').datepicker({
+                dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
+           }).datepicker( "option", { setDate:0,
+                   maxDate:'+3y -1d',
+                   minDate:'0' } );
     	
     
     	
@@ -533,7 +580,7 @@
 
             
            // alert(today);
-            $('#postingDate').datepicker({
+           /*  $('#postingDate').datepicker({
                 format: "dd/mm/yyyy",
                 todayHighlight: true,
                 startDate: today,
@@ -554,7 +601,7 @@
                 endDate: end,
                 autoclose: true
             });
-            $('#postingDate,#documentDate', '#requiredDate').datepicker('setDate', today);
+            $('#postingDate,#documentDate', '#requiredDate').datepicker('setDate', today); */
 
             var id = $('#id').val();
 
@@ -563,8 +610,25 @@
                 //alert("vendorName"+vendorName);
                 autocompleteuserDetails(userName);
 
-            }
+            }else{
+        		$('#postingDate').datepicker("setDate", "0"); //"0" for current date
+        		$('#documentDate').datepicker("setDate", "0"); //"0" for current date
+        		$('#requiredDate').datepicker("setDate", "10"); //"after 10" for current date
+        	}
 
+            $('#postingDate').datepicker({
+  			  dateFormat: 'dd/mm/yy' 
+  				  });
+  			
+  		  $('#documentDate').datepicker({
+  			  dateFormat: 'dd/mm/yy' 
+  		  });
+  		  
+  		  
+  		  $('#requiredDate').datepicker({
+  			  dateFormat: 'dd/mm/yy' 
+  		  });
+            
             var userNames = [];
             var userNamesList = ${usersList};
             var availableTagsusernames = [];
@@ -601,13 +665,13 @@
                         console.log("user details" + response);
                         var obj = JSON.parse(response);
 
-                        $('#userdata').val(obj.id);
+                       /*  $('#userdata').val(obj.id);
 
-                        $('.reqname').val(obj.firstname);
+                        $('.reqname').val(obj.firstname); */
 
                         $('.emailId').val(obj.userEmail);
 
-                        $('.userId').val(obj.userId);
+                         $('.referenceUserId').val(obj.userId); 
 
                         $('.plant').val(obj.plant.plantName);
                         $('.plantId').val(obj.plant.id);
@@ -836,8 +900,8 @@
                     
                               
                           }, function(){
-                              
-                              document.getElementById("items_radio").checked = true;
+                        	  $("#service_radio").prop('checked',true);
+                             // document.getElementById("items_radio").checked = true;
                       alertify.error('Cancel')
                    });
                 
@@ -868,8 +932,8 @@
                   addItem();
                   
                  }, function(){
-                    
-                    document.getElementById("service_radio").checked = true;
+                	 $("#items_radio").prop('checked',true);
+                   // document.getElementById("service_radio").checked = true;
                 alertify.error('Cancel')
                });
                 
@@ -921,6 +985,35 @@
             
             
         });
+        
+        
+
+        function isNumericKey(evt)
+        {
+        	var charCode = (evt.which) ? evt.which : evt.keyCode;
+        	if (charCode != 46 && charCode > 31 
+        	&& (charCode < 48 || charCode > 57))
+        	return false;
+        	return true;
+        }  
+
+        function goBack() {
+            window.history.back();
+        }
+        
+        
     </script>
 
+<%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
+
+<!-- alertifyjs -->
+
+<link href="<c:url value="/resources/components/alertifyjs/css/alertify.css"/>"
+    rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/components/alertifyjs/css/themes/default.css"/>"
+    rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
+
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
     </html>

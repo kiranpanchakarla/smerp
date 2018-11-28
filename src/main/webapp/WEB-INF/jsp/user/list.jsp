@@ -86,6 +86,7 @@
 																	<td>${list.userEmail}</td>
 																	<td>
 																	 <a class ="btn btn-edit" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a>  
+																	 <a class ="btn btn-edit" href="<c:url value="/user/addPermissions?id=${list.userId}"/>"><i class="icon-add_to_queue left"></i></a> 
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>
 														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							

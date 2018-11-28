@@ -6,6 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -47,8 +48,15 @@
 												<div class="col-md-2">
 										<h2 class="content-header-title">Product</h2>
 										</div>
-												<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/product/create"/>">Create</a>
+									<div class="col-md-6">
+									 <c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'Product'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+	        									<a class="btn btn-primary" href="<c:url value="/product/create"/>">Create</a>
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
 									</div>
 												<div class="col-md-4">
 											<ol class="breadcrumb">

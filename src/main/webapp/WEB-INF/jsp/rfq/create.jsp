@@ -44,10 +44,8 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 
-
-
-
-							<form:form method="POST" action="/rfq/save" id="form" class="bv-form commentForm"
+							<c:url value="/rfq/save" var="createUrl" />
+							<form:form method="POST" action="${createUrl}" id="form" class="bv-form commentForm"
 								enctype="multipart/form-data" modelAttribute="rfq"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
@@ -132,7 +130,7 @@
 																				<label>Reference Document Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
-																					path="referenceDocNumber" required="true" />
+																					path="referenceDocNumber"  />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
@@ -308,8 +306,8 @@
 																													
 																													<td><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}" required="true"
-																															class="form-control"></form:input></td>
+																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
+																															class="form-control"  required="true"></form:input></td>
 																															
 																														<td><form:input type="text"
 																															path="lineItems[${count}].productGroup"
@@ -542,7 +540,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -607,7 +605,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -649,60 +647,56 @@ function addItem() {
 $(document).ready(function(){
 	
 	
-	
 	var id=$('#id').val();
 	
 	//alert("id--->"+id);
 
+	        $('#postingDate').datepicker({ 
+		    	 dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy' 
+		    }).datepicker( "option", { setDate:"0",
+		            maxDate:'+3y -1d',
+		            minDate:'0' } );
+		    
+		    $('#documentDate').datepicker({ 
+		   	 dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy' 
+		   }).datepicker( "option", { setDate:"0",
+		           maxDate:'+3y -1d',
+		           minDate:'0' } );
+		    
+		    $('#require_date').datepicker({ 
+		      	 dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy' 
+		      }).datepicker( "option", { setDate:0,
+		              maxDate:'+3y -1d',
+		              minDate:'0' } );
+	
+	
 		if(id!=''){
 			var vendorName=$('.vendorname').val();
 			//alert("vendorName"+vendorName);
 			autocompletevendorDetails(vendorName);
 			var payTypeAddressId='${vendorPayTypeAddressId}';
 			var shippingAddressId='${vendorShippingAddressId}';
-			
-			
-			//alert("payTypeAddressId--->"+payTypeAddressId);
-			//alert("shippingAddressId--->"+shippingAddressId);
-			vendorShippingAddress(shippingAddressId);
-			vendorPayTypeAddress(payTypeAddressId);
+			 
+		}else{
+		$('#postingDate').datepicker("setDate", "0"); //"0" for current date
+		$('#documentDate').datepicker("setDate", "0"); //"0" for current date
+		$('#require_date').datepicker("setDate", "10"); //"after 10" for current date
 		}
 	
 	
-	  var date = new Date();
-	  var today = new Date(date.getDate(),date.getFullYear(), date.getMonth());
-	  var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		
-		
-		  $('#postingDate').datepicker({
-				format: "dd/mm/yyyy",
-				todayHighlight: true,
-				startDate: today,
-				endDate: end,
-				autoclose: true
+		 $('#postingDate').datepicker({
+			  dateFormat: 'dd/mm/yy' 
 				  });
 			
 		  $('#documentDate').datepicker({
-				format: "dd/mm/yyyy",
-				todayHighlight: true,
-				startDate: today,
-				endDate: end,
-				autoclose: true
+			  dateFormat: 'dd/mm/yy' 
 		  });
 		  
 		  
 		  $('#require_date').datepicker({
-				format: "dd/mm/yyyy",
-				todayHighlight: true,
-				startDate: today,
-				endDate: end,
-				autoclose: true
+			  dateFormat: 'dd/mm/yy' 
 		  });
-
-	     $('#postingDate,#documentDate','#require_date').datepicker('setDate', today);
-		
-		
-
+    
 	
 	var vendorNames=[];
 	var vendorNamesList=${vendorNamesList};
@@ -711,13 +705,13 @@ $(document).ready(function(){
 		 availableTagsvendornames.push(value.toString());
 	   });
 	
-	
+	// alert("push data-->" +availableTagsvendornames);
 		$(document).on("keypress", ".vendorname", function() {
 			$(this).autocomplete({
 		        source: availableTagsvendornames,
 		        select: function(event, ui) {
 		        	var vendorname = ui.item.value;
-		        //	alert(vendorname);
+		        	//alert(vendorname);
 		            autocompletevendorDetails(vendorname);
 		       		 },
 		        }); 
@@ -729,6 +723,8 @@ $(document).ready(function(){
 			//alert(vendorname);
 			//$("#vendorContactDetails").html("");
 		//	 $("#vendorAddress").html("");
+		
+		
 			
     	 $.ajax({
 			   type: "GET",
@@ -744,19 +740,29 @@ $(document).ready(function(){
                 	$('.emailId').val(obj.emailId);
                 	var vendorcontactdetails=obj.vendorContactDetails;
                 	var vendoraddress=obj.vendorAddress;
+                	   $("#vendorContactDetails").html('');
                 	$.each(vendorcontactdetails, function( index, value ) {
                 		//  alert( index + ": " + JSON.stringify(value) );
                 		 //   alert(value.contactName)
                 		    $("#vendorContactDetails").append($("<option></option>").attr("value",value.id).text(value.contactName)); 
                 		});
-                	
+                	  
+                	 $("#vendorAddress").html('');
+                     $("#vendorPayToAddress").html('');
+                   //  alert("vendoraddress-->"+vendoraddress);
                 	  $.each(vendoraddress, function( index, value ) {
-              		 // alert( index + ": " + JSON.stringify(value) );
-              			 if(value.payTo!=null && "shipFrom".localeCompare(value.shipFrom)){
-              		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-              			 }else{
-              				 $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-              			 }
+              		//alert( index + ": " + JSON.stringify(value) );
+              		 if(value.payTo!=null &&  value.shipFrom!=null   ){
+          		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+          		  	     $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+          			 }else if(value.payTo!=null &&  ("payTo".localeCompare(value.payTo)==0)){
+          				//alert("Payto"+value.payTo);
+          				 $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+          			 }else if(value.shipFrom!=null &&  ("shipFrom".localeCompare(value.shipFrom)==0) ){
+          		  	//	alert("Shipping");
+          				 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+          			   } 
+              			 
               		  });
                 	  
                 	
@@ -1141,6 +1147,16 @@ $('form.commentForm').on('submit', function(event) {
 	  }
     
 });
+
+function isNumericKey(evt)
+{
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	if (charCode != 46 && charCode > 31 
+	&& (charCode < 48 || charCode > 57))
+	return false;
+	return true;
+}  
+
 function goBack() {
     window.history.back();
 }

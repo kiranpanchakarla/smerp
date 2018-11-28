@@ -1,4 +1,4 @@
-package com.smerp.serviceImpl.inventory;
+package com.smerp.serviceImpl.purchase;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
-import com.smerp.repository.inventory.LineitemsRepositoryRepository;
-import com.smerp.repository.inventory.RequestForQuotationRepository;
+import com.smerp.repository.purchase.LineitemsRepositoryRepository;
+import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
-import com.smerp.service.inventory.RequestForQuotationService;
+import com.smerp.service.purchase.RequestForQuotationService;
 
 @Service
 public class RequestForQuotationServiceImpl implements RequestForQuotationService {

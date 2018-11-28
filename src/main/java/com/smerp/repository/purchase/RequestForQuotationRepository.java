@@ -1,4 +1,4 @@
-package com.smerp.repository.inventory;
+package com.smerp.repository.purchase;
 
 import java.util.List;
 

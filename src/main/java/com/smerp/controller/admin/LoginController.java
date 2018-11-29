@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -18,14 +17,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smerp.jwt.config.TokenProvider;
-import com.smerp.model.admin.Module;
-import com.smerp.model.admin.Permission;
 import com.smerp.model.admin.UPM;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
@@ -39,8 +36,8 @@ public class LoginController {
 
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 
-	@Autowired
-	TokenProvider tokenProvider;
+/*	@Autowired
+	TokenProvider tokenProvider;*/
 
 	@Autowired
 	private UserService userService;
@@ -113,6 +110,10 @@ public class LoginController {
 		return "home";
 	}
 
+	@GetMapping("/purchase")
+	public String getPurchase() {
+		return "purchasehome";
+	}
 	private Map<String, List<String>> usermodulepermissionsbyuserId(User user, Model model) {
 		Map<String, List<String>> userpermissionsmap = new LinkedHashMap<>();
 		List<UPM> upmlist = uPMService.findAll(user.getUserId());
@@ -135,6 +136,7 @@ public class LoginController {
 		return userpermissionsmap;
 	}
 
+	
 	/*
 	 * @RequestMapping("/tokenExpired") public String tokenExpired() {
 	 * logger.info("tokenExpired"); return "redirect:login";

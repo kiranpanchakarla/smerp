@@ -19,6 +19,8 @@ public interface VendorService {
 	List<String> findAllVendorNames();
 
 	Vendor findByName(String vendorname);
+	
+	Vendor findByCode(String vendorCode);
 
 	Vendor findById(int i);
 }

@@ -25,7 +25,7 @@
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -74,10 +74,8 @@
 														<thead>
 															<tr>
 																<th>S.no</th>
-																<th>vendor Name</th>
-																<th>vendorCode</th>
-
-
+																<th>Vendor Name</th>
+																<th>VendorCode</th>
 																<th>Actions</th>
 															</tr>
 														</thead>

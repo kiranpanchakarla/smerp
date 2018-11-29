@@ -1,4 +1,4 @@
-package com.smerp.jwt.config;
+/*package com.smerp.jwt.config;
 
 
 
@@ -27,3 +27,4 @@ public class MyLogoutSuccessHandlerOne implements LogoutSuccessHandler {
 	}
 
 }
+*/

@@ -29,7 +29,7 @@
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">

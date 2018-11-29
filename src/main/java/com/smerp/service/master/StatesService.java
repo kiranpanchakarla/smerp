@@ -15,4 +15,7 @@ public interface StatesService {
 	void delete(int id);
 	
 	States getInfo(int id);
+	
+	States findByName(String name);
+	
 }

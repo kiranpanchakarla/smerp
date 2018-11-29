@@ -11,15 +11,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 </head>
+
 <link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
 
+
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 
 
 	<c:import url="/WEB-INF/jsp/header.jsp" />
+
 	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
 
 	<div class="app-content content container-fluid"
@@ -34,64 +38,64 @@
 					<div class="large-12 columns">
 
 						<div class="content-wrapper">
-							 
+							<div class="content-header row"></div>
 							<div>
 								<div class="content-body">
-									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header">
-										<div class="row">
-										<div class="col-md-2">
-										<h3 class="content-header-title">SAC Code</h3>
-										</div>
-										<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/saccode/create"/>">Create</a>
-										</div>
-												 
+										<div class="card-header" style="height: 60px;">
+											<div class="row">
+												<div class="col-md-3">
+													<h4 class="content-header-title">Product Attributes Values</h4>
+												</div>
+												<div class="col-md-5">
+													<a class="btn btn-primary"
+														href="<c:url value="/productattributesvalues/create"/>">Create</a>
+												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
-											<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
-											<li class="breadcrumb-item"><a href="#">Administration</a>
-											</li>
-											<li class="breadcrumb-item active">SAC Code</li>
-										</ol>
+														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
+														<li class="breadcrumb-item"><a href="#">Administration</a>
+														</li>
+														<li class="breadcrumb-item active">Product Attributes Values</li>
+													</ol>
 												</div>
 											</div>
+
 										</div>
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
 
-												<div class="table-responsive">
+												<div class="">
 													<table id="example"
 														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
 														style="width: 100%">
 														<thead>
 															<tr>
-															    <th>S.no</th>
-																<th>SAC Code</th>
-																<th>Description</th>
-																<th>Rate</th>
+																<th>S.no</th>
+																<th>Product Attributes</th>
+																<th>Value</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${saccodeList}" var="saccode">
+															<c:forEach items="${productattributesvaluesList}" var="productattributesvalues">
 																<tr>
-																    <td><c:set var="count" value="${count + 1}" scope="page" />
-                                                                     <c:out value="${count}" />  </td>
-																	<td>${saccode.sacCode}</td>
-																	<td>${saccode.description}</td>
-																	<td>${saccode.rate}</td>
-																	<td><a class="btn btn-edit"
-																		href="<c:url value="/saccode/getInfo?saccodeId=${saccode.id}"/>">
+																	<td><c:set var="count"
+																			value="${count + 1}" scope="page" /> <c:out
+																			value="${count}" /></td>
+																	<td>${productattributesvalues.productAttributes.attributeName}</td>
+																	<td>${productattributesvalues.attributeValue}</td>
+																	<td><a
+																		class="btn btn-edit"
+																		href="<c:url value="/productattributesvalues/getInfo?productattributesvaluesId=${productattributesvalues.id}"/>">
 																			<i class="icon-edit left"></i>
-																	</a> <a class="btn btn-delete mr-1" href="#"
-																		onclick="deleteById('<c:out value="${saccode.id}"/>','/saccode/delete')"><i
-																			class="icon-bin left"></i></a><a class="btn btn-view"
-																		href="<c:url value="/saccode/view?saccodeId=${saccode.id}"/>"><i
+																	</a>  <a class="btn btn-delete mr-1" href="#"
+																		onclick="deleteById('<c:out value="${productattributesvalues.id}"/>','/uom/delete')"><i
+																			class="icon-bin left"></i></a>  <a
+																		class="btn btn-view"
+																		href="<c:url value="/productattributesvalues/view?productattributesvaluesId=${productattributesvalues.id}"/>"><i
 																			class="icon-eye3 left"></i></a></td>
-
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -101,6 +105,7 @@
 											</div>
 										</div>
 									</div>
+
 								</div>
 								<br>
 							</div>
@@ -111,9 +116,9 @@
 		</div>
 	</div>
 
-    <c:import url="/WEB-INF/jsp/footer.jsp" />
+	<c:import url="/WEB-INF/jsp/footer.jsp" />
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
-	
+
 <script type="text/javascript">
 
 $(document).ready(function() {

@@ -64,10 +64,9 @@ public class DesignationController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String designationId) {
 		logger.info("Inside DesignationController GetInfo Method");
-		model.addAttribute("designationObj", designationService.getInfo(Integer.parseInt(designationId)));
+		model.addAttribute("designation", designationService.getInfo(Integer.parseInt(designationId)));
+		model.addAttribute("companyList", companyServices.findAll());
 		model.addAttribute("departmentList", departmentService.findAll());
-		model.addAttribute("designation", new Desigination());
-		model.addAttribute("companyList", companyServices.getInfo(Integer.parseInt(designationId)));
 		return "designation/create";
 	}
 

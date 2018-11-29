@@ -6,9 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.smerp.model.admin.Company;
-import com.smerp.model.admin.User;
 import com.smerp.model.admin.Vendor;
 import com.smerp.repository.admin.VendorRepository;
 import com.smerp.service.admin.VendorService;
@@ -71,6 +68,13 @@ public class VendorServImpl  implements VendorService {
 	@Override
 	public Vendor findById(int id) {
 		return vendorRepository.findById(id);
+	}
+
+
+	@Override
+	public Vendor findByCode(String vendorCode) {
+		// TODO Auto-generated method stub
+		return vendorRepository.findByCode(vendorCode);
 	}
 	
 }

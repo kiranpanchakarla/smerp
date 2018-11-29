@@ -68,6 +68,15 @@ public class RequestForQuotation extends AuditModel {
 	@Column(name="is_active")
 	private Boolean isActive = true;
 	
+	@Column(name="remark")
+    private String remark;
+	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public String getDocNumber() {
 		return docNumber;
 	}
@@ -161,9 +170,9 @@ public class RequestForQuotation extends AuditModel {
 				+ postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
 				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
 				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ "]";
+				+ ", remark=" + remark + "]";
 	}
-	
+	 
 	
 	
 	

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.master.Currency;
 import com.smerp.model.master.Languages;
 import com.smerp.service.master.LanguagesService;
 
@@ -63,5 +66,18 @@ public class LanguagesController {
 		logger.info("Inside LanguagesController view Method");
 		model.addAttribute("languagesObj", languagesService.getInfo(Integer.parseInt(languagesId)));
 		return "masters/languages/view";
+	}
+	
+	@GetMapping(value = "/isValidLanguageName")
+	@ResponseBody
+	public boolean isValidLanguageName(String name) {
+		logger.info("languagesName" + name);
+		Languages languages = languagesService.findByName(name);
+		if (languages != null) {
+			logger.info("Languages Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -67,10 +67,10 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-6 form-group">
-																	<label for="timesheetinput1">Languages Name</label>
+																	<label for="timesheetinput1">Language Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Languages Name' path="name"
+																			placeholder='Name' path="name" onchange="isValidName('name','/language/isValidLanguageName','1_errorContainer','Language Name Already Exists')"
 																			value="${languagesObj.name}" required="true" oninvalid="this.setCustomValidity('Please Enter Language')"    oninput="setCustomValidity('')"/>
 																	<div   class="help-block with-errors"></div>
 																	</div>

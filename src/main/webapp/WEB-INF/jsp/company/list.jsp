@@ -68,9 +68,9 @@
 																<tr>
 																    <th>S.no</th>
 																	<th>Name</th>
-																	<th>GSTN</th>
+																	<th>GSTIN</th>
 																	<th>City</th>
-																	<th>WebSite</th>
+																	<th>Website</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>

@@ -44,8 +44,8 @@ public class CountryServicesImpl implements CountryServices {
 	@Override
 	public Country save(Country country) {
 		logger.info("inside CountryServicesImpl save method");
-		countryRepository.save(country);
-		return country;
+		
+		return countryRepository.save(country);
 	}
 
 	@Override
@@ -59,6 +59,12 @@ public class CountryServicesImpl implements CountryServices {
 	public Country getInfo(int id) {
 		logger.info("inside CountryServicesImpl getInfo method");
 		return countryRepository.findById(id);
+	}
+
+	@Override
+	public Country findByName(String name) {
+		 
+		return countryRepository.findByName(name);
 	}
 
 }

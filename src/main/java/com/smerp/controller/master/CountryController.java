@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.admin.Company;
 import com.smerp.model.master.Country;
 import com.smerp.service.master.CountryServices;
 import com.smerp.service.master.CurrencyServices;
@@ -46,8 +49,8 @@ public class CountryController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String countryId) {
 		logger.info("Inside CountryController GetInfo Method");
-		model.addAttribute("countryObj", countryServices.getInfo(Integer.parseInt(countryId)));
-		model.addAttribute("country", new Country());
+		model.addAttribute("country", countryServices.getInfo(Integer.parseInt(countryId)));
+		//model.addAttribute("country", new Country());
 		model.addAttribute("currencyList", currencyServices.findAll());
 		return "masters/country/create";
 	}
@@ -71,5 +74,18 @@ public class CountryController {
 		logger.info("Inside CountryController view Method");
 		model.addAttribute("countryObj", countryServices.getInfo(Integer.parseInt(countryId)));
 		return "masters/country/view";
+	}
+	
+	@GetMapping(value = "/isValidCountryName")
+	@ResponseBody
+	public boolean isValidCountryName(String name) {
+		logger.info("countryName" + name);
+		Country country = countryServices.findByName(name);
+		if (country != null) {
+			logger.info("Company Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

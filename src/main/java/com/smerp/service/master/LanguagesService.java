@@ -14,4 +14,6 @@ public interface LanguagesService {
 	void delete(int id);
 	
 	Languages getInfo(int id);
+	
+	Languages findByName(String name);
 }

@@ -62,7 +62,7 @@
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='code' path="code"
+																			placeholder='Code' path="code"
 																			value="${statesObj.code}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter State Code')"
 																			oninput="setCustomValidity('')" />
@@ -74,8 +74,8 @@
 																	<label for="timesheetinput2">Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='name' path="name"
-																			value="${statesObj.name}" required="true"
+																			placeholder='Name' path="name"
+																			value="${statesObj.name}" required="true" onchange="isValidName('name','/states/isValidStateName','1_errorContainer','State Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter State Name')"
 																			oninput="setCustomValidity('')" />
 																		<div class="help-block with-errors"></div>

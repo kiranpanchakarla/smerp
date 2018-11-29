@@ -11,7 +11,7 @@
         </ul>
       </li>
       
-       <li><a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
          <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
@@ -28,9 +28,9 @@
           <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
           <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
           <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
-          <li class="has_sub"><a href="<c:url value =""/>">Product Attribute Values</a></li>
+          <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
          <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
-         <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li>
+        <%--  <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li> --%>
         </ul>
       </li>
       

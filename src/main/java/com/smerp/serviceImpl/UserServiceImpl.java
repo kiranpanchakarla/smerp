@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			//user.setPlant("test");
 			user.setPassword(bcryptEncoder.encode("Welcome"));
 			user.setCompany(getComapnyIdFromSession());
-			user.setUsername(RandomUtil.referenceId());
+			//user.setUsername(RandomUtil.referenceId());
 			String roleId = user.getRolesDt();
 			Role role = roleService.findById(Long.parseLong(roleId));
 			Set<Role> roles = new HashSet<>();

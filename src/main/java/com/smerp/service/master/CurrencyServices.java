@@ -14,4 +14,7 @@ public interface CurrencyServices {
 	void delete(int currencyId);
 	
 	Currency getInfo(int currencyId);
+	
+	Currency findByName(String name);
+	
 }

@@ -46,7 +46,7 @@
 												</div>
 												<div class="col-md-6">
 
-													<a class="btn btn-primary" href="/hsncode/create">Create
+													<a class="btn btn-primary" href="<c:url value="/hsncode/create"/>">Create
 													</a>
 												</div>
 												<div class="col-md-4" Style="text-align: right;">
@@ -72,7 +72,7 @@
 														<thead>
 															<tr>
 																<th>S.no</th>
-																<th>HSN CODE</th>
+																<th>HSN Code</th>
 																<th>Description</th>
 																<th>Rate</th>
 																<th>Actions</th>

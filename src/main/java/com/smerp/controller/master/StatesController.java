@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.master.Currency;
 import com.smerp.model.master.States;
 import com.smerp.service.master.CountryServices;
 import com.smerp.service.master.StatesService;
@@ -71,4 +74,16 @@ public class StatesController {
 		return "masters/states/view";
 	}
 
+	@GetMapping(value = "/isValidStateName")
+	@ResponseBody
+	public boolean isValidStateName(String name) {
+		logger.info("statesName" + name);
+		States states = statesService.findByName(name);
+		if (states != null) {
+			logger.info("States Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

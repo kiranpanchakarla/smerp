@@ -65,13 +65,13 @@ $(document).ready(function(){
 															<div class="row">
 																<div class="col-sm-6 form-group has-feedback">
 																	<label>Product Number</label>
-																	<form:input type="text" class="form-control" placeholder='product number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
 																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
 																</div>
 																
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
-																	<form:input type="text" class="form-control" placeholder='description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
 																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 															</div>

@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.smerp.model.inventory.ProductAttributes;
-import com.smerp.model.inventory.ProductType;
 import com.smerp.service.inventory.ProductAttributesService;
 
 @Controller
@@ -42,7 +40,7 @@ public class ProductAttributesController {
 	public String GetInfo(Model model, String productattributesId) {
 		logger.info("Inside ProductAttributesController GetInfo Method");
 		model.addAttribute("productattributesObj", attributesService.findById(Integer.parseInt(productattributesId)));
-		model.addAttribute("productattributes", new ProductType());
+		model.addAttribute("productattributes", new ProductAttributes());
 		return "inventory/productattributes/create";
 	}
 

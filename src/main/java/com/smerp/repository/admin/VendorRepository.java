@@ -23,4 +23,7 @@ public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 	@Query("SELECT v FROM Vendor v WHERE LOWER(v.name) = LOWER(:name)")
 	Vendor findByName(String name);
 	
+	@Query("SELECT v FROM Vendor v WHERE LOWER(v.vendorCode) = LOWER(:vendorCode)")
+	Vendor findByCode(String vendorCode);
+	
 }

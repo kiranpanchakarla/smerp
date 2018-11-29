@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ page import="java.security.Principal" %> 
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- END Custom CSS-->
 <div class="first_strip"
@@ -14,22 +13,22 @@
 			<li><a>Module</a>
 				<ul class="sub_menu">
 
-					<li class="has_sub"><a href="<c:url value ="/user/dashboard"/>">Administration<i
+					<li class="has_sub"><a href="<c:url value ="/dashboard"/>">Administration<i
 							class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 
-							<li class="has_sub"><a>Admin Settings<i
+							 <%-- <li class="has_sub"><a>Admin Settings<i
 									class="icon-ios-arrow-right right"></i></a>
-								<ul class="super_sub">
+								  <ul class="super_sub">
 									<li ><a href="<c:url value ="/company/list"/>">Company</a></li>
 									<li><a href="<c:url value ="/user/list"/>">Users</a></li>
 									<li><a href="<c:url value ="/vendor/list"/>">Vendors</a></li>
-									<%-- <li><a href="<c:url value =""/>">Roles</a></li> --%>
+									<li><a href="<c:url value =""/>">Roles</a></li>
 									<li><a href="<c:url value ="/department/list"/>">Departments</a></li>
 									<li><a href="<c:url value ="/designation/list"/>">Designation</a></li>
-								</ul></li>
+								</ul> </li>   --%>
 								
-							<li class="has_sub"><a>Global Settings<i
+							<%--   <li class="has_sub"><a>Global Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
 									<li><a href="<c:url value ="/country/list"/>">Countries</a></li>
@@ -39,10 +38,10 @@
 									<li><a href="<c:url value ="/states/list"/>">States</a></li>
 									<li><a href="<c:url value ="/hsncode/list"/>">Hsn Code</a></li>
 									<li><a href="<c:url value ="/saccode/list"/>">Sac Code</a></li>
-								</ul></li>
-						</ul></li>
+								</ul></li> --%>
+						</ul></li>  
 					 
-					<li class="has_sub"><a href="<c:url value ="/user/purchase"/>">Purchase<i
+					<li class="has_sub"><a href="<c:url value ="/purchase"/>">Purchase<i
 							class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<!-- <li><a>Sub item 1</a></li>
@@ -68,11 +67,12 @@
 									<li><a>Super Sub item 1</a></li>
 									<li><a>Super Sub item 1</a></li>
 								</ul></li> -->
+								
 						</ul></li>
 					  
 				</ul></li>
 			<!-- <li><a>Tools</a> -->
-				<ul class="sub_menu">
+				<!-- <ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
 							class="icon-ios-arrow-right right"></i></a>
@@ -133,9 +133,9 @@
 									<li><a>Super Sub item 1</a></li>
 								</ul></li>
 						</ul></li>
-				</ul></li>
+				</ul> --></li>
 			<!-- <li><a>Window</a> -->
-				<ul class="sub_menu">
+				<!-- <ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
 							class="icon-ios-arrow-right right"></i></a>
@@ -197,7 +197,7 @@
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<!-- <li><a>Help</a> -->
+			<li><a>Help</a>
 				<ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
@@ -259,7 +259,7 @@
 									<li><a>Super Sub item 1</a></li>
 								</ul></li>
 						</ul></li>
-				</ul></li>
+				</ul> </li>-->
 			<li class="dropdown dropdown-user nav-item" style="float: right;">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
@@ -268,12 +268,6 @@
 					 <!-- <img
 						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
 				</span>  <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
-				
-				<sec:authorize access="isAuthenticated()">
-                                   <sec:authentication property="principal.username" /> </span>
-                </sec:authorize>
-				
-				
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>

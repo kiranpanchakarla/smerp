@@ -16,7 +16,7 @@
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
     class="vertical-layout vertical-menu 2-columns">
     <c:import url="/WEB-INF/jsp/header.jsp" />
-    <c:import url="/WEB-INF/jsp/sidebar.jsp" />
+    <c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
     <%-- <%@include file="header.jsp"%>
     <%@include file="sidebar.jsp"%> --%>
     <%-- <div class="app-content content container-fluid"
@@ -54,14 +54,14 @@
       <div class="row">
       <div class="col-xl-3 col-lg-6 col-xs-12">
           <div class="card">
-          <a href="<c:url value="/company/list"/>">
+          <a href="<c:url value ="/purchaseReq/list"/>"> 
             <div class="card-body">
               <div class="card-block color-box1">
                 <div class="media">
                   <div class="media-body text-xs-left">
                     
-                    <h3>${companyListCount}</h3>
-                    <span>Company</span> </div>
+                    <%-- <h3>${companyListCount}</h3> --%>
+                    <span>Purchase Request</span> </div>
                   <div class="media-right media-middle"> <i class="icon-cube pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
@@ -72,14 +72,14 @@
         </div>
         <div >
         <div class="col-xl-3 col-lg-6 col-xs-12">
-         <a href="<c:url value="/product/list"/>">
+           <a href="<c:url value ="/rfq/list"/>">  
           <div class="card">
             <div class="card-body">
               <div class="card-block color-box2">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3>${productsCount}</h3>
-                    <span>Products</span> </div>
+                    <%-- <h3>${productsCount}</h3> --%>
+                    <span>Request Quotations</span> </div>
                   <div class="media-right media-middle"> <i class="icon-egg pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
@@ -90,15 +90,14 @@
       
         
         <div class="col-xl-3 col-lg-6 col-xs-12" >
-        <a href="<c:url value="/user/list"/>">
+        <%-- <a href="<c:url value="/user/list"/>"> --%>
           <div class="card">
             <div class="card-body">
               <div class="card-block color-box3">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3>${userListCount}</h3>
-                    
-                    <span>Users</span> </div>
+                   <%--  <h3>${userListCount}</h3> --%>
+                    <span>Purchase Orders</span> </div>
                   <div class="media-right media-middle"> <i class="icon-user1 teal font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
@@ -109,14 +108,14 @@
       
        
         <div class="col-xl-3 col-lg-6 col-xs-12">
-       <a href="<c:url value="/vendor/list"/>">
+       <%-- <a href="<c:url value="/vendor/list"/>"> --%>
           <div class="card">
             <div class="card-body">
               <div class="card-block color-box4">
                 <div class="media">
                   <div class="media-body text-xs-left">
-                    <h3>${vendorListCount}</h3>
-                    <span>Vendors</span> </div>
+                    <%-- <h3>${vendorListCount}</h3> --%>
+                    <span>Goods Received</span> </div>
                   <div class="media-right media-middle"> <i class="icon-diagram deep-orange font-large-2 float-xs-right"></i> </div>
                 </div>
                
@@ -192,7 +191,7 @@
               <div class="media">
                 <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-cube font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                <h3><a href="<c:url value="/company/create"/>">New Company</a></h3>
+                <h3><a href="<c:url value ="/purchaseReq/list"/>">Purchase Order</a></h3>
                 </div>
               </div>
             </div>
@@ -206,7 +205,7 @@
               <div class="media">
                 <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-egg font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                 <h3><a href="<c:url value="/product/create"/>">New Product</a></h3>
+                 <h3><a href="<c:url value ="/rfq/list"/>">Request Quotation</a></h3>
                 </div>
               </div>
             </div>
@@ -221,7 +220,7 @@
               <div class="media">
                  <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                <h3><a href="<c:url value="/user/create"/>">New User</a></h3>
+                <h3><a href="#">Purchase Orders</a></h3>
                 </div>
               </div>
             </div>
@@ -235,7 +234,7 @@
               <div class="media">
                <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                 <h3><a href="<c:url value="/vendor/create"/>">New Vendor</a></h3>
+                 <h3><a href="#"/>Goods Received</a></h3>
                 </div>
               </div>
             </div>
@@ -312,7 +311,17 @@
     </div>
   </div>
 </div>
-    <c:import url="/WEB-INF/jsp/footer.jsp" />
+    <footer class="footer footer-static footer-light navbar-border">
+        <div class="row">
+            
+            <div class="col-md-12">
+                <div class="footer_logo">
+                    <img <c:url value="images/favicon-32.png"/>">
+                    <%-- <link href="<c:url value="images/favicon-32.png"/>" rel="shortcut" /> --%>
+                </div>
+            </div>
+        </div>
+    </footer>
     <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
 <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>

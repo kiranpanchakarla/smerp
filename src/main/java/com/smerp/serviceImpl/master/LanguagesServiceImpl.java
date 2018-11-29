@@ -48,4 +48,10 @@ public class LanguagesServiceImpl implements LanguagesService {
 		return languagesRepository.findById(id);
 	}
 
+	@Override
+	public Languages findByName(String name) {
+		 
+		return languagesRepository.findByName(name);
+	}
+
 }

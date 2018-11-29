@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -22,7 +21,7 @@
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -91,8 +90,8 @@
 																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.requiredDate}" /> </td> --%>
 																	<td>${list.status}</td>
 																	<td>
-																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a> | 
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/rfq/delete')"><i class="icon-bin left"></i></a>|
+																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a>  
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a> 
 														    		<a class ="btn btn-view" href="<c:url value="/rfq/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							
 																</tr>

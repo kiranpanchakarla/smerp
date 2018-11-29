@@ -27,7 +27,7 @@
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
         <c:import url="/WEB-INF/jsp/header.jsp" />
 
-        <c:import url="/WEB-INF/jsp/sidebar.jsp" />
+        <c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 
         <div class="app-content content container-fluid" style="margin-top: 40px;">
             <div class="content-wrapper">
@@ -831,40 +831,36 @@
         
         
            
+        	
     		
             function removeData(index){
-            	var rowCount = $('#itemTbl tr').length;
-            	//alert(rowCount);
-            	
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
             	}else{
             		$('table#itemTbl tr.multTot'+index).remove();
             	}
-            	
+            	$("#form").validator("update");
             }
 
 
             function removeData1(index){
-            	inc--;
-        		$('#addressCount').val(inc);
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
             	}else{
             		$('table#serviceTbl tr.multTot'+index).remove();
             	}
-            	
+            	$("#form").validator("update");
             }
 
 
             function removeData2(index){
-            	inc--;
-        		$('#addressCount').val(inc);
             	//alert("ff"+index);
             	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+            	$("#form").validator("update");
             }
+
 
 
             </script>
@@ -873,70 +869,73 @@
             <script type="text/javascript">
 
 
+
             $("#items_radio").click(function() {
-                //alert("item");
-                 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
-                     $("#serviceTbl").hide();
-                     $("#itemTbl").show();
-                     $("#edit_item_serviceTbl").hide();
-                     $(this).parents().find("#serviceTbl").find(".form-control").attr("required",false).val('');
-                    
-                       var edit_inc = $('#edit_addressCount').val();
-                       if(edit_inc!= undefined){
-                           inc = edit_inc;
-                       }
-                      for(var k=0;k<=inc;k++) {
-                          removeData1(k);
-                          if(edit_inc!= undefined){
-                              removeData2(k);
-                          }
-                      }
-                      inc=0;
-                      
-                      $('#addressCount').val(0);
-                      $('#edit_addressCount').val(-1);
-                      addItem();
-                    
-                    
-                              
-                          }, function(){
-                        	  $("#service_radio").prop('checked',true);
-                             // document.getElementById("items_radio").checked = true;
-                      alertify.error('Cancel')
-                   });
-                
+            	//alert("item");
+            	 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
+            		 $("#serviceTbl").hide();
+            		 $("#itemTbl").show();
+            		 $("#edit_item_serviceTbl").hide();
+            		 $(this).parents().find("#serviceTbl").find(".form-control").attr("required",false).val(''); 
+            		 
+            	       var edit_inc = $('#edit_addressCount').val();
+            	       if(edit_inc!= undefined){
+            	    	   inc = edit_inc;
+            	       }
+            	      for(var k=0;k<=inc;k++) {
+            	    	  removeData1(k);
+            	    	  removeData(k);
+            	    	  if(edit_inc!= undefined){
+            	    		  removeData2(k);
+            	    	  }
+            		  }
+            		  inc=0;
+            		  
+            		  $('#addressCount').val(0);
+            		  $('#edit_addressCount').val(-1);
+            		  addItem();
+            		 
+            		 
+            	  			 
+            	          }, function(){
+            	        	 
+            	        	  $("#service_radio").prop('checked',true);
+            	        	  
+            	      alertify.error('Cancel');
+            	   });
+            	
             });
 
             $("#service_radio").click(function() {
-                //alert("service");
-                 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
-                $("#serviceTbl").show();
-                 $("#itemTbl").hide();
-                 $("#edit_item_serviceTbl").hide();
-                
-                 $(this).parents().find("#itemTbl").find(".form-control").attr("required",false).val('');
-                 var edit_inc = $('#edit_addressCount').val();
-                 if(edit_inc!= undefined){
-                     inc = edit_inc;
-                 }
-                 for(var k=0;k<=inc;k++) {
-                     removeData(k);
-                     if(edit_inc!= undefined){
-                         removeData2(k);
-                     }
+            	//alert("service");
+            	 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
+            	$("#serviceTbl").show();
+            	 $("#itemTbl").hide();
+            	 $("#edit_item_serviceTbl").hide();
+            	 
+            	 $(this).parents().find("#itemTbl").find(".form-control").attr("required",false).val(''); 
+                  var edit_inc = $('#edit_addressCount').val();
+                  if(edit_inc!= undefined){
+               	   inc = edit_inc;
                   }
-
-                  inc=0;
-                  $('#addressCount').val(0);
-                  $('#edit_addressCount').val(-1);
-                  addItem();
+                  for(var k=0;k<=inc;k++) {
+                	  removeData(k);
+                	  removeData1(k);
+                	  if(edit_inc!= undefined){
+                		  removeData2(k);
+                	  }
+            	  }
                   
-                 }, function(){
-                	 $("#items_radio").prop('checked',true);
-                   // document.getElementById("service_radio").checked = true;
-                alertify.error('Cancel')
-               });
-                
+            	  inc=0;
+            	  $('#addressCount').val(0);
+            	  $('#edit_addressCount').val(-1);
+            	  addItem();
+            	  
+            	 }, function(){
+                 	 $("#items_radio").prop('checked',true);
+                 alertify.error('Cancel')
+                });
+            	 
             });
         
         

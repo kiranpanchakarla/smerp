@@ -69,7 +69,7 @@
 																	<label>Tagline</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Company TagLine' path="companyTagLine"
-																		required="true"  oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
+																		   oninvalid="this.setCustomValidity('Please Enter Company TagLine')"	oninput="setCustomValidity('')" />
 																		<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																
@@ -115,7 +115,7 @@
 																	<label>GSTIN</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='GSTIN' path="gstinVat"
-																		required="true"  pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  oninvalid="this.setCustomValidity('Please Enter Valid GSTIN Number Ex:22AABCE2207R1Z6')"	oninput="setCustomValidity('')"/>
+																		required="true" maxlength='15' minlength='15'  pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  oninvalid="this.setCustomValidity('Please Enter Valid GSTIN Number Ex:22AABCE2207R1Z6')"	oninput="setCustomValidity('')"/>
 																		<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																 
@@ -136,7 +136,7 @@
 																	<label>Pan Number</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Pan Number' path="panNum"
-																		required="true" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter PAN Number')"	oninput="setCustomValidity('')" />
+																		required="true" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter PAN Number')"	oninput="setCustomValidity('')" />
 																<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 																
@@ -190,7 +190,7 @@
 																				<label>Street-2</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Street2' path="street2"
-																					required="true" oninvalid="this.setCustomValidity('Please Enter Street2')"	oninput="setCustomValidity('')" />
+																					  oninvalid="this.setCustomValidity('Please Enter Street2')"	oninput="setCustomValidity('')" />
 																		<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			
@@ -202,22 +202,23 @@
 																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
-
+                                                                        
+                                                                        
 
 																		<div class="row">
-																			
 																			<div class="col-sm-4 form-group">
 																				<label>Mobile</label>
+																				
 																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
-																					placeholder='Mobile Number' path="phoneNum" pattern="[0-9]+$"
-																					required="true"  maxlength="10" minlength="10" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
+																					placeholder='Mobile Number' path="phoneNum" pattern="[+91]+[0-9]+$" value="+91"
+																					required="true"  maxlength="13" minlength="13" oninvalid="this.setCustomValidity('Please Enter Phone Number')"	oninput="setCustomValidity('')"  />
 																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Fax Number' path="faxNum"
-																					required="true" maxlength="20" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
+																					  maxlength="20" minlength="10" oninvalid="this.setCustomValidity('Please Enter Fax Number')"	oninput="setCustomValidity('')" />
 																	<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			
@@ -266,14 +267,25 @@
 																		</div>
 
 																		 <div class="row">
-																		 <div class="col-sm-4 form-group">
+																			
+																			
+																			
+																			<div class="col-sm-4 form-group">
 																				<label>Website</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Website' path="webSite" id="instmanageformid"
-																					required="true"  oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
+																					   oninvalid="this.setCustomValidity('Please Enter WebSite')"	oninput="setCustomValidity('')" />
 																	<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
-																		 </div>
+																			<%-- <div class="col-sm-4 form-group">
+																				<label>Landline</label>
+																				<form:input type="text" cssClass="form-control numericwithoutdecimal"
+																					placeholder='Landline Number' path="phoneNum" pattern="[0-9]+$"
+																					required="true"    />
+																	<!-- <div   class="help-block with-errors"></div> -->
+																			</div> --%>
+																			
+																			</div>
 
 
 																	</div>

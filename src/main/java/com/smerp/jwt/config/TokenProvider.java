@@ -1,4 +1,4 @@
-package com.smerp.jwt.config;
+/*package com.smerp.jwt.config;
 
 import static com.smerp.jwt.models.Constants.SIGNING_KEY;
 
@@ -35,9 +35,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class TokenProvider implements Serializable {
 
-	/**
+	*//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LogManager.getLogger(TokenProvider.class);
@@ -111,3 +111,4 @@ public class TokenProvider implements Serializable {
 	}
 
 }
+*/

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -161,7 +160,17 @@
 																			
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-                                                                            <div class="input-group">
+                                                                          <label>Remark</label> 
+                                                                            <form:textarea type="text" cssClass="form-control"
+																					 placeholder='Enter your Remark'
+																					autocomplete="off" path="remark" required="true" />
+                                                                           </div>
+																		</div>
+																		
+																		
+																		<div class="row">
+																			<div class="col-sm-4 form-group">
+																			<div class="input-group">
                                                                                 <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Item" path="category"  name="category"  id="items_radio" 
@@ -175,7 +184,8 @@
                                                                                 <span class="radio-list">Services</span></div>
                                                                                 <div class="help-block with-errors"></div>
                                                                             </div>
-                                                                        </div>
+																			
+																			</div>
 																		</div>
 																		
 																		

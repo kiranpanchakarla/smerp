@@ -106,7 +106,7 @@
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Mobile</label>
-																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="10" minlength="10" pattern="[0-9]+$" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
+																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="13" minlength="13" pattern="[+91]+[0-9]+$" value="+91"  oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>

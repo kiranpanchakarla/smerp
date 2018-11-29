@@ -19,12 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Vendor;
-import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
@@ -111,6 +108,19 @@ public class VendorController {
 		Vendor vendor = vendorService.findByName(name);
 		if (vendor != null) {
 			logger.info("Vendor Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@GetMapping(value = "/isValidVendorCode")
+	@ResponseBody
+	public boolean isValidVendorCode(String name) {
+		logger.info("code---->" + name);
+		Vendor vendor = vendorService.findByCode(name);
+		if (vendor != null) {
+			logger.info("Vendor Code  Already Exits!");
 			return true;
 		} else {
 			return false;

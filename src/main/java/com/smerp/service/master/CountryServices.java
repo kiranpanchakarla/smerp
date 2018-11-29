@@ -17,5 +17,7 @@ public interface CountryServices {
 	Country getInfo(int id);
 
 	List<States> stateList(int countryId);
+	
+	Country findByName(String name);
 
 }

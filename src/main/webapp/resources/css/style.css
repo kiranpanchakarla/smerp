@@ -365,9 +365,15 @@ form label {
     width: 28%;
 }
 
-.create-block input, .create-block select {
+.create-block input, .create-block textarea, .create-block select {
     float: left;
     width: 72%;
+}
+.table td a i {
+    line-height: 35px;
+}
+#itemTbl .form-group {
+    margin-bottom: 0px;
 }
 .logo-upload {
     margin-top: -20px;

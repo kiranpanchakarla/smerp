@@ -19,7 +19,7 @@
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -51,7 +51,7 @@
 									</div>
 												<div class="col-md-4">
 											<ol class="breadcrumb">
-												<li class="breadcrumb-item"><a href="<c:url value="/user/dashboard"/>">Home</a>
+												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>

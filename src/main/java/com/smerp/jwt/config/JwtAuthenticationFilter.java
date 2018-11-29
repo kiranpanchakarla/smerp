@@ -1,4 +1,4 @@
-package com.smerp.jwt.config;
+/*package com.smerp.jwt.config;
 
 import java.io.IOException;
 
@@ -62,4 +62,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(req, res);
 	}
-}
+}*/

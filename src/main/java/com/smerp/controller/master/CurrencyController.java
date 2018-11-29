@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.master.Country;
 import com.smerp.model.master.Currency;
 import com.smerp.service.master.CurrencyServices;
 
@@ -62,5 +65,18 @@ public class CurrencyController {
 		logger.info("Inside CurrencyController view Method");
 		model.addAttribute("currencyObj", currencyServices.getInfo(Integer.parseInt(currencyId)));
 		return "masters/currency/view";
+	}
+	
+	@GetMapping(value = "/isValidCurrencyName")
+	@ResponseBody
+	public boolean isValidCurrencyName(String name) {
+		logger.info("currencyName" + name);
+		Currency currency = currencyServices.findByName(name);
+		if (currency != null) {
+			logger.info("Currency Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

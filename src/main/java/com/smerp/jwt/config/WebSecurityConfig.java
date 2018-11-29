@@ -20,14 +20,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	
 
-	@Autowired
+	/*@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
-
-	@Override
+*/
+	/*@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
-	}
+	}*/
 
 /*	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,24 +44,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		      auth.authenticationProvider(authProvider);
 	}
 
-	@Bean
+	/*@Bean
 	public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
 		return new JwtAuthenticationFilter();
-	}
+	}*/
 
 	
 	
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-            .antMatchers("/resources/**","/forgotPass/**").permitAll()
-            .antMatchers("/resources/**","/registration/**").permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN").and().exceptionHandling().and().sessionManagement().invalidSessionUrl("/login").and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class).formLogin().defaultSuccessUrl("/dashboard")
-            .loginPage("/login")
-            .failureUrl("/login?error=1").permitAll()
-        .and().logout().permitAll();
-    }
+	  protected void configure(HttpSecurity http) throws Exception {
+	      http.csrf().disable().authorizeRequests()
+	          .antMatchers("/resources/**","/forgotPass/**").permitAll()
+	          .antMatchers("/admin/**").hasRole("ADMIN").and().exceptionHandling().and().sessionManagement().invalidSessionUrl("/login").and().formLogin().defaultSuccessUrl("/dashboard")
+	          .loginPage("/login")
+	          .failureUrl("/login?error=1").and().logout().logoutSuccessUrl("/login?logout").invalidateHttpSession(true)
+	          .deleteCookies("JSESSIONID").permitAll();
+	  }
 	
 
 	
@@ -77,6 +75,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}*/
 
-	
-
+	 
 }

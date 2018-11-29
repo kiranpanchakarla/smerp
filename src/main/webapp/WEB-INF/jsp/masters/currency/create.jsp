@@ -66,7 +66,7 @@
 
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Currency Name' path="name"
-																			value="${currencyObj.name}" required="true"
+																			value="${currencyObj.name}" required="true" onchange="isValidName('name','/currency/isValidCurrencyName','1_errorContainer','Currency Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

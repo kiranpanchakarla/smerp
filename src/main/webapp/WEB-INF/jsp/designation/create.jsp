@@ -63,7 +63,7 @@
 																	<label for="timesheetinput2">Designation</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='designation Name' path="desigination"
+																			placeholder='Designation Name' path="desigination"
 																			value="${designationObj.desigination}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
 																			oninput="setCustomValidity('')" />

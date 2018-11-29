@@ -41,8 +41,8 @@
             </div>
             <div class="card-body collapse in">
               <div class="card-block">
-                <c:url value="/login" var="generateToken" />
-                  <form name='f' class="login-form" role="form" method="POST" action="<c:url value="login"/>" >
+              
+                    <form name='f' class="login-form" role="form" method="post" action="<c:url value="login"/>">
                   <fieldset class="form-group position-relative has-icon-left mb-0">
                     <input type="text" class="form-control form-control-lg input-lg" name="username" id="user-name" placeholder="Your Username" required>
                     <div class="form-control-position"> <i class="icon-head"></i> </div>

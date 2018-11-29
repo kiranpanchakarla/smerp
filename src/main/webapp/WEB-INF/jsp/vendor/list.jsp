@@ -5,6 +5,7 @@
 <html>
 <head>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -51,8 +52,15 @@
 													<h2 class="content-header-title">Vendor</h2>
 												</div>
 												<div class="col-md-6">
-													<a class="btn btn-primary"
-														href="<c:url value="/vendor/create"/>">Create</a>
+													<c:forEach items="${sessionScope.umpmap}" var="ump">
+														 <c:if test="${ump.key eq 'Vendor'}">
+														 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+														 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+					        									<a class="btn btn-primary"
+																			href="<c:url value="/vendor/create"/>">Create</a>
+					   										 </c:if>
+					       								</c:if>     
+   												 </c:forEach>
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
@@ -86,14 +94,32 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${vendorList.name}</td>
 																	<td>${vendorList.vendorCode}</td>
-																	<td><a class="btn btn-edit"
-																		href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
-																			class="icon-edit left"></i></a> <a class="btn btn-delete"
+																	<td>
+																	<c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Vendor'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		 	<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
+									        									<a class="btn btn-edit"
+																		      href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
+																			class="icon-edit left"></i></a>
+									   										 </c:if>
+									   										 <c:if test="${fn:containsIgnoreCase(permissions,'delete')}">
+									        									 <a class="btn btn-delete"
 																		href="#"
 																		onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
-																			class="icon-bin left"></i></a> <a class="btn btn-view"
-																		href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
-																			class="icon-eye3 left"></i></a></td>
+																			class="icon-bin left"></i></a>
+									   										 </c:if>
+									   										 <c:if test="${fn:containsIgnoreCase(permissions,'view')}">
+											        									 <a class="btn btn-view"
+																				href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
+																					class="icon-eye3 left"></i></a>
+									   										 </c:if>
+									   										 
+									       								</c:if>     
+   																   </c:forEach>
+																	
+																	
+																	</td>
 																</tr>
 															</c:forEach>
 														</tbody>

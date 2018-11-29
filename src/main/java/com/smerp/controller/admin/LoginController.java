@@ -124,13 +124,17 @@ public class LoginController {
 				if("Checked".equalsIgnoreCase(upm.getUser_access())) {
 					list.add(upm.getPermission_name());
 				 }
-				userpermissionsmap.put(moduleName, list);
+				if(!list.isEmpty()) {
+					userpermissionsmap.put(moduleName, list);
+				}
 			} else {
 				List<String> list = userpermissionsmap.get(moduleName);
 				if("Checked".equalsIgnoreCase(upm.getUser_access())) {
 					list.add(upm.getPermission_name());
 				 }
-				userpermissionsmap.put(moduleName, list);
+				if(!list.isEmpty()) {
+					userpermissionsmap.put(moduleName, list);
+				}
 			}
 		}
 		return userpermissionsmap;

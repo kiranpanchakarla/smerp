@@ -1,5 +1,6 @@
 <!-- main menu-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow"> 
   <div class="main-menu-content">
     <ul class="side_main_menu">
@@ -13,22 +14,39 @@
       
        <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
-         <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
-          <li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
+         
+          <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'Company'}">
+					 <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
+			 	</c:if>
+			    <c:if test="${ump.key eq 'User'}">
+					<li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
+			 	</c:if>
+			 	
+			 	 <c:if test="${ump.key eq 'Vendor'}">
+					<li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
+			 	</c:if>
+   		  </c:forEach> 
+          
           <li class="has_sub"><a href="<c:url value ="/department/list"/>">Departments</a></li>
           <li class="has_sub"><a href="<c:url value ="/designation/list"/>">Designations</a></li>
         </ul>
       </li>
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
-          <%--  <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li> --%>
-          <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Type</a></li>
-          <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
-          <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
-          <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
-          <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
+        
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'Product'}">
+					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
+					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Type</a></li>
+          			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
+			 	</c:if>
+   		  </c:forEach> 
+     
+         
          <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
         <%--  <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li> --%>
         </ul>

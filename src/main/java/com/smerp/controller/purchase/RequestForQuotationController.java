@@ -71,7 +71,7 @@ public class RequestForQuotationController {
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
 			rfq.setDocNumber(documentNumberGeneration(rfqdetails.getDocNumber()));
 		} else {
-			documentNumberGenerationNotInDB(rfqdetails);
+			documentNumberGenerationNotInDB(rfq);
 		}
 		logger.info("rfqdetails-->" + rfqdetails);
 		model.addAttribute("productList",

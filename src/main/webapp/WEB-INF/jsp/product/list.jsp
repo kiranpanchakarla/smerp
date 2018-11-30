@@ -77,7 +77,7 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																	<th>SNO</th>
+																	<th>S.no</th>
 																	<th>Product Number</th>
 																	<th>Description</th>
 																	<th>product Group</th>

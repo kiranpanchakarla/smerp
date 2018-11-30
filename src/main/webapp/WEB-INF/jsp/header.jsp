@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ page import="java.security.Principal" %> 
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- END Custom CSS-->
 <div class="first_strip"
@@ -268,6 +269,12 @@
 					 <!-- <img
 						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
 				</span>  <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
+				
+				<sec:authorize access="isAuthenticated()">
+                                 <sec:authentication property="principal.username" /> </span>
+               </sec:authorize>
+				
+				
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<a href="#" class="dropdown-item"><i class="icon-head"></i>

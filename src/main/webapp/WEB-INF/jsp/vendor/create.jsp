@@ -202,7 +202,7 @@ $(document).ready(function(){
 												 </div></div>
 
 												<div class="col-xs-12 col-sm-4">
-												 <div class="form-group"><label>Email</label><input type="text" class="form-control" placeholder='Email Id' name="vendorContactDetails[0].email 
+												 <div class="form-group"><label>Email</label><input type="text" class="form-control" placeholder='Email Id' name="vendorContactDetails[0].email" 
 												  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Enter Email'
 																				required="true"  oninvalid="this.setCustomValidity('Please Enter Valid Email')"	oninput="setCustomValidity('')" />
 																	<!-- <div   class="help-block with-errors" ></div> --></div></div>
@@ -354,9 +354,9 @@ $(document).ready(function(){
 																		 <div class="col-md-12"><div class="row"><div class="col-md-7"><div class="form-group">
 																		 <label>Vendor Address Details</label></div></div><div class="col-md-3">  
 												
-												 						<label class="checkbox-inline"><input type="checkbox" checked="checked" name="vendorAddress[0].payTo"  value="payTo" >Pay To</label>
+												 						<label class="checkbox-inline"><input type="checkbox" checked="checked" name="vendorAddress[0].payTo" id="payToAdd0"  value="payTo" >Pay To</label>
 												 					     &nbsp; &nbsp; &nbsp; 
-												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].shipFrom" value="shipFrom">Ship From</label>
+												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[0].shipFrom"  id="shipFromAdd0"  value="shipFrom">Ship From</label>
 																		</div></div>
 																		</div>
 																		
@@ -460,7 +460,7 @@ $(document).ready(function(){
 												 						 </c:if>
 												 						value="payTo">Pay To</label>
 												 					     &nbsp; &nbsp; &nbsp; 
-												 						<label class="checkbox-inline"><input type="checkbox" name="vendorAddress[<%=count1 %>].shipFrom" 
+												 						<label class="checkbox-inline"><input type="checkbox"  id="payToAdd<%=count1 %>"  name="vendorAddress[<%=count1 %>].shipFrom" 
 												 						<c:if test="${listAddressDetails.shipFrom!=null}">
 												 						checked
 												 						 </c:if>
@@ -470,7 +470,7 @@ $(document).ready(function(){
 																		
 																		<div class="col-xs-12 col-sm-4">
 																		<div class="form-group"><label>Address Id</label>
-																		<input type="text"  value="${listAddressDetails.addressId}" name="vendorAddress[<%=count1 %>].addressId" class="form-control" 
+																		<input type="text"  value="${listAddressDetails.addressId}" id="shipFromAdd<%=count1 %>"  name="vendorAddress[<%=count1 %>].addressId" class="form-control" 
 																		placeholder='Address Id' required="true" oninvalid="this.setCustomValidity('Please Enter Address Id')"	oninput="setCustomValidity('')"/><!-- <div   class="help-block with-errors"></div> -->
 																		</div>
 																		</div>
@@ -810,29 +810,30 @@ $(document).ready(function(){
 
 
 <script type="text/javascript">
+var inc1=1;
 	$('.add1')
 			.click(
 					function() {
 						var a = $('#addressIndexCount1').val();
 						var addressCount = $('#addressCount1').val();
 						var index = $('#indexValue1').val();
-						var inc=1;
+						
 						if (a != undefined ) {
 							if (parseInt(a) != parseInt(addressCount)) {
-								inc = parseInt(a) ;
-								$('#addressIndexCount1').val(inc+1);
+								inc1 = parseInt(a) ;
+								$('#addressIndexCount1').val(inc1+1);
 							} else {
-								inc = parseInt(a);
-								$('#addressIndexCount1').val(parseInt(inc) + 1);
+								inc1 = parseInt(a);
+								$('#addressIndexCount1').val(parseInt(inc1) + 1);
 							}
 						} else {
-							//alert("index-->"+inc);
+							//alert("index-->"+inc1);
 							if (index == "" || index == null || index == NaN) {
-								inc = 1;
+								inc1 = 1;
 								$('#indexValue1').val("1");
 							} else {
-								inc = parseInt(index) + 1;
-								$('#indexValue1').val(inc);
+								inc1 = parseInt(index) + 1;
+								$('#indexValue1').val(inc1);
 							}
 						}
 
@@ -841,34 +842,34 @@ $(document).ready(function(){
 												+ '<div class="col-md-12"><div class="row"><div class="col-md-7"><div class="form-group">'
 												+ '<label>VendorAddress Details</label></div></div><div class="col-md-3">  '
 												
-												+ '<label class="checkbox-inline"><input type="checkbox"  name="vendorAddress['+inc+'].payTo"  value="payTo">Pay To</label>'
-												+ '&nbsp; &nbsp; &nbsp; <label class="checkbox-inline"><input type="checkbox" checked="checked" name="vendorAddress['+inc+'].shipFrom" value="shipFrom">Ship From</label>'
+												+ '<label class="checkbox-inline"><input type="checkbox" id="payToAdd'+inc1+'"  name="vendorAddress['+inc1+'].payTo"  value="payTo">Pay To</label>'
+												+ '&nbsp; &nbsp; &nbsp; <label class="checkbox-inline"><input type="checkbox" id="shipFromAdd'+inc1+'"  checked="checked" name="vendorAddress['+inc1+'].shipFrom" value="shipFrom">Ship From</label>'
 												
 												+ '</div><div class="col-md-2"> <a class="remove1 btn btn-danger">Remove</a></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group">'
-												+ '<label>Address Id</label><input type="text" placeholder="Address Id" name="vendorAddress['+inc+'].addressId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address Id\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<label>Address Id</label><input type="text" placeholder="Address Id" name="vendorAddress['+inc1+'].addressId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address Id\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Address</label>'
-												+ '<input type="text" placeholder="Address Name" name="vendorAddress['+inc+'].addressName" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Address Name" name="vendorAddress['+inc1+'].addressName" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street/PO Box</label>'
-												+ '<input type="text" placeholder="Street/PO Box" name="vendorAddress['+inc+'].street" class="form-control"    oninvalid="this.setCustomValidity(\'Please Enter Street\')" oninput="setCustomValidity(\'\')" > </div></div>'
+												+ '<input type="text" placeholder="Street/PO Box" name="vendorAddress['+inc1+'].street" class="form-control"    oninvalid="this.setCustomValidity(\'Please Enter Street\')" oninput="setCustomValidity(\'\')" > </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>City</label>'
-												+ '<input type="text" placeholder="City" name="vendorAddress['+inc+'].city" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter City\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="City" name="vendorAddress['+inc1+'].city" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter City\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Zipcode</label>'
-												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isNumericKey(event)"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc1+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isNumericKey(event)"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street Number</label>'
-												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc+'].streetNo" class="form-control"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>GSTIN </label>'
-												+ '<input type="text" placeholder="GSTIN" name="vendorAddress['+inc+'].gstin" class="form-control" maxlength="15" minlength="15" pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter GST IN\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="GSTIN" name="vendorAddress['+inc1+'].gstin" class="form-control" maxlength="15" minlength="15" pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter GST IN\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>GST type</label>'
-												+ '<select name="vendorAddress['+inc+'].gstinType" class="form-control" required="true"  oninvalid="this.setCustomValidity(\'Please Select GST type\')" oninput="setCustomValidity(\'\')"   >'
+												+ '<select name="vendorAddress['+inc1+'].gstinType" class="form-control" required="true"  oninvalid="this.setCustomValidity(\'Please Select GST type\')" oninput="setCustomValidity(\'\')"   >'
 												+ '<option selected disabled value="">select</option><option value="Regular">Regular</option>'
 												+ '<option value="Excisible">Excisible</option>'
 												+ '<option value="Regular">UIN Agency or Embasyy</option>'
@@ -877,7 +878,7 @@ $(document).ready(function(){
 												+ '<option value="Excisible">Casual Taxable Person</option></select></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Country</label>'
-												+ '<select name="vendorAddress['+inc+'].country" class="form-control">'
+												+ '<select name="vendorAddress['+inc1+'].country" class="form-control">'
 												+ '<option value="${country.id}">${country.name}</option></select></div></div></div>'
 
 												+'</div></div>');
@@ -891,10 +892,26 @@ $(document).ready(function(){
 	
 	
 	
- 	/*  $('form.commentForm').on('submit', function(event) {
- 		
-		return false;
-	});  */
+	  $('form.commentForm').on('submit', function(event) {
+		var pay_flag=0;
+		var ship_flag=0;
+		  for(var k=0;k<=inc1;k++) {
+			if($('#payToAdd'+k).prop('checked') == true){
+				pay_flag++;
+			}
+			if($('#shipFromAdd'+k).prop('checked') == true){
+				ship_flag++
+			}
+		 }
+		 //alert("pay_flag-->"+pay_flag + "ship_flag"+ship_flag);
+		  if(pay_flag!=0 && ship_flag!=0){
+			 return true;
+		  }else {
+			  alertify.alert('Please Add Atleast One PayTo And One ShipFrom Address');
+			 return false;
+		  } 
+		 
+  });   
  	
 	
 	

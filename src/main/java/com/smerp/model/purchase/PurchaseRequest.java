@@ -14,10 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.smerp.model.admin.User;
-import com.smerp.model.inventory.Uom;
 import com.smerp.model.master.AuditModel;
 
 @Entity
@@ -64,6 +62,9 @@ public class PurchaseRequest extends AuditModel {
 	private String type;
 	
 
+	@Column(name="remarks")
+	private String remarks;
+	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true )
 	@JoinColumn(name = "purchase_req_id", referencedColumnName = "purchase_req_id" )
 	private List<PurchaseRequestList> purchaseRequestLists;
@@ -159,9 +160,6 @@ public class PurchaseRequest extends AuditModel {
 	}
 
 	
-	
-	
-	
 	public User getReferenceUser() {
 		return referenceUser;
 	}
@@ -169,14 +167,26 @@ public class PurchaseRequest extends AuditModel {
 	public void setReferenceUser(User referenceUser) {
 		this.referenceUser = referenceUser;
 	}
+	
+	
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
 	@Override
 	public String toString() {
 		return "PurchaseRequest [id=" + id + ", user=" + user + ", referenceUser=" + referenceUser + ", docNumber="
 				+ docNumber + ", documentDate=" + documentDate + ", status=" + status + ", postingDate=" + postingDate
-				+ ", requiredDate=" + requiredDate + ", type=" + type + ", purchaseRequestLists=" + purchaseRequestLists
-				+ ", isActive=" + isActive + "]";
+				+ ", requiredDate=" + requiredDate + ", type=" + type + ", remarks=" + remarks
+				+ ", purchaseRequestLists=" + purchaseRequestLists + ", isActive=" + isActive + "]";
 	}
+
+	
 
 	
 

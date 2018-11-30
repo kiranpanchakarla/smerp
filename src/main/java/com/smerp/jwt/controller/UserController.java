@@ -165,7 +165,7 @@ public class UserController {
 	
 	@GetMapping(value = "/isValidUserName")
 	@ResponseBody
-	public boolean isValidCompanyName(String name) {
+	public boolean isValidUserName(String name) {
 		User user  = userService.findOne(name);
 		if(user!=null) {
 			logger.info("User Name  Already Exits!");

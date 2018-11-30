@@ -98,8 +98,7 @@ public class LoginController {
 			logger.info("company details----------" + user.getCompany());
 			logger.info("userService" + userService.findAll().size());
 			logger.info("productService" + productService.findByIsActive().size());
-			model.addAttribute("userListCount", userService.findAll().size());
-			model.addAttribute("userListCount", userService.findAll().size());
+			model.addAttribute("userListCount", userService.findByIsActive().size());
 			model.addAttribute("productsCount", productService.findByIsActive().size());
 			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
 			model.addAttribute("companyListCount", companyServices.findByIsActive().size());

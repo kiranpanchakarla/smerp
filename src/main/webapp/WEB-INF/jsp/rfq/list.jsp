@@ -50,7 +50,7 @@
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
+														<li class="breadcrumb-item"><a href="<c:url value="purchase"/>">Purchase</a>
 														</li>
 														<li class="breadcrumb-item active">RFQ List</li>
 													</ol>

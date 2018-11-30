@@ -39,11 +39,12 @@
 												<div class="card-header">
 													<c:if test="${user.userId!=null}">
 														<h2 class="card-title" id="basic-layout-icons">User/Update</h2>
-														<form:input type="hidden" cssClass="form-control" path="userId" />
+														
 													</c:if>
 													<c:if test="${user.userId==null}">
 														<h2 class="card-title" id="basic-layout-icons">User/Create</h2>
 													</c:if>	
+													<form:input type="hidden" cssClass="form-control" path="userId" />
 												</div>
 												<input type="hidden" id="designationValue" class="form-control" name="id" value="${user.desigination.desigination}">
 												<input type="hidden" id="designationKey" class="form-control" name="id" value="${user.desigination.id}">
@@ -66,7 +67,7 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>User Name</label>
-																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidName('username','/user/isValidUserName','1_userName','User Name Already Exists')" placeholder='User Name' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	<span style="color: red" class="scl-form-error-container" id="1_userName"></span>
+																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidName('username','/user/isValidUserName','1_userName','User Name Already Exists')" placeholder='User Name' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-2 form-group">
@@ -106,7 +107,11 @@
 																	</div>
 																	<div class="col-sm-6 form-group">
 																		<label>Mobile</label>
-																		<form:input type="text" cssClass="form-control  numericwithoutdecimal" placeholder='Mobile Number' path="mobileNo" maxlength="13" minlength="13" pattern="[+91]+[0-9]+$" value="+91"  oninvalid="this.setCustomValidity('Please Enter Mobile No')" oninput="setCustomValidity('')" />
+																		<form:input path="mobileNo"
+																					placeholder='Mobile Number'
+																					onkeypress="return isNumericKey(event)" type="text"
+																					class="form-control numericwithoutdecimal"
+																					maxlength="13" minlength="13" />
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
@@ -232,7 +237,11 @@ $(document).ready(function() {
        });
 	   
    }
-	
+
+   var id=$('#userId').val();
+   if(id==''){
+   	$("#mobileNo").val("+91");	
+   }
    
  function designationLoadForUpdate(){
 	   var id=$('#designationValue').val();

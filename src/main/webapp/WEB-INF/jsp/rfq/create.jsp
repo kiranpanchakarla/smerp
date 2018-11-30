@@ -23,7 +23,11 @@
  	
 
 </head>
-
+<style>
+    .table td a i {
+    line-height: 35px;
+      }
+    </style>
  
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"

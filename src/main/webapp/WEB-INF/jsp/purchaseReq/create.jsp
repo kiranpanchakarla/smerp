@@ -22,11 +22,7 @@
     <link href="<c:url value=" /resources/css/dataTables/buttons.dataTables.min.css "/>" rel="stylesheet" type="text/css" />
     <link href="<c:url value=" /resources/css/dataTables/jquery.dataTables.min.css "/>" rel="stylesheet" type="text/css" />
     <link href="<c:url value=" /resources/css/datapickercss/bootstrap-datepicker.min.css "/>" rel="stylesheet" type="text/css" />
-    <style>
-    .table td a i {
-    line-height: 35px;
-      }
-    </style>
+    
 
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
         <c:import url="/WEB-INF/jsp/header.jsp" />
@@ -317,6 +313,14 @@
 																				</div>
 																				</div>
 																				</div>
+																				<div class="row">
+																			<div class="col-sm-4 form-group">
+                                                                          <label>Remark</label> 
+                                                                            <form:textarea type="text" cssClass="form-control"
+																					 placeholder='Enter your Remark'
+																					autocomplete="off" path="remarks" required="true" />
+                                                                           </div>
+																				</div>
 																				
                                                                     <!--  -->
                                                                     
@@ -333,8 +337,9 @@
                                                                     <a href="<c:url value=" /purchaseReq/list "/>">
                                                                         <button type="button" class="btn btn-warning mr-1"> <i class="icon-cross2"></i> Cancel</button>
                                                                     </a>
+                                                                     <button type="submit"  id="savePurchase" class="btn btn-primary"> <i class="icon-check2"></i> Draft</button>
                                                                     <c:if test="${purchaseReq.id==null}">
-                                                                        <button type="submit"  id="savePurchase" class="btn btn-primary "> <i class="icon-check2"></i> Save</button>
+                                                                        <button type="submit"  id="savePurchase" class="btn btn-primary"> <i class="icon-check2"></i> Save</button>
                                                                     </c:if>
                                                                     <c:if test="${purchaseReq.id!=null}">
                                                                         <button type="submit" class="btn btn-primary "> <i class="icon-check2"></i> Update</button>
@@ -371,6 +376,8 @@
     <script type="text/javascript">
 
     
+    var recipientsArray = []; 
+    
     var inc=0;
     var edit_addressCount=0;
 
@@ -405,6 +412,7 @@
     		//alert("addItem");
     	
     						var addressCount = $('#addressCount').val();
+    						$('#hiddenAddressCount').val(addressCount);
     						 edit_addressCount = $('#edit_addressCount').val();
     						if (edit_addressCount != undefined ) {
     							    inc = parseInt(edit_addressCount)+1;
@@ -423,7 +431,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber" autocomplete="off" class="form-control prodouctNumber prodouctNumber'+inc+'"  id="prodouctNumber'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -435,7 +443,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="description'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" value="" class="form-control description '+inc+'" id="description'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -553,6 +561,8 @@
    
     $(document).ready(function(){
     	
+    
+    	
     	 $('.userId').val(${user.userId}); 
     	 $('.referenceUserId').val(${user.userId}); 
     	 
@@ -576,36 +586,13 @@
                    maxDate:'+3y -1d',
                    minDate:'0' } );
     	
-    
+     
+
+         
     	
             var date = new Date();
             var today = new Date(date.getDate(), date.getFullYear(), date.getMonth());
             var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-            
-           // alert(today);
-           /*  $('#postingDate').datepicker({
-                format: "dd/mm/yyyy",
-                todayHighlight: true,
-                startDate: today,
-                endDate: end,
-                autoclose: true
-            });
-            $('#documentDate').datepicker({
-                format: "dd/mm/yyyy",
-                todayHighlight: true,
-                startDate: today,
-                endDate: end,
-                autoclose: true
-            });
-            $('#requiredDate').datepicker({
-                format: "dd/mm/yyyy",
-                todayHighlight: true,
-                startDate: today,
-                endDate: end,
-                autoclose: true
-            });
-            $('#postingDate,#documentDate', '#requiredDate').datepicker('setDate', today); */
 
             var id = $('#id').val();
 
@@ -649,6 +636,7 @@
                     select: function(event, ui) {
                         var username = ui.item.value;
                         console.log("username" + username);
+                      
                         //	alert(vendorname);
                         autocompleteuserDetails(username);
                     },
@@ -656,9 +644,6 @@
             });
 
             function autocompleteuserDetails(username) {
-                //alert(vendorname);
-                //$("#vendorContactDetails").html("");
-                //	 $("#vendorAddress").html("");
 
                 $.ajax({
                     type: "GET",
@@ -669,38 +654,15 @@
                         console.log("user details" + response);
                         var obj = JSON.parse(response);
 
-                       /*  $('#userdata').val(obj.id);
-
-                        $('.reqname').val(obj.firstname); */
-
                         $('.emailId').val(obj.userEmail);
-
-                         $('.referenceUserId').val(obj.userId); 
-
+                        $('.referenceUserId').val(obj.userId); 
                         $('.plant').val(obj.plant.plantName);
                         $('.plantId').val(obj.plant.id);
 
-                       /*  var vendorcontactdetails = obj.vendorContactDetails;
-                        var vendoraddress = obj.vendorAddress;
-
-                        $.each(vendorcontactdetails, function(index, value) {
-                            //  alert( index + ": " + JSON.stringify(value) );
-                            //   alert(value.contactName)
-                            $("#vendorContactDetails").append($("<option></option>").attr("value", value.id).text(value.contactName));
-                        });
-
-                        $.each(vendoraddress, function(index, value) {
-                            // alert( index + ": " + JSON.stringify(value) );
-                            if (value.payTo != null && "shipFrom".localeCompare(value.shipFrom)) {
-                                $("#vendorAddress").append($("<option></option>").attr("value", value.id).text(value.city));
-                            } else {
-                                $("#vendorPayToAddress").append($("<option></option>").attr("value", value.id).text(value.city));
-                            }
-                        }); */
+                      
 
                     },
                     error: function(e) {
-                        // alert('Error: ' + e);
                     }
                 });
             }
@@ -714,23 +676,81 @@
             });
 
            
+         
+           //	 alert(#hiddenAddressCount.val());
+          
+          /*  var sample123 = $("#hiddenAddressCount").val();
+          alert(sample123 + "sample123");
+          var count54 = 0;
+            $("#prodouctNumber" + count54).on('keydown keyup',function(e){
+               
+                if(e.which==8){
+                    alert("546456");
+                }
+              }); */
             
+             
+              
            
-            
+            enterdproducts = [];
+              var isDluplicate = true;
+              var data = 123;
             $(document).on("keypress", ".prodouctNumber", function() {
         		var itemParentRow = $(this).parents(".multTot");
-        		//alert("itemParentRow"+itemParentRow);
         		
+        		//alert("itemParentRow"+itemParentRow);
+        		/* alert("itemParentRow"+itemParentRow.length); */
         		$(this).autocomplete({
         	        source: availableTags,
         	        select: function(event, ui) {
-        	        	name = ui.item.value;
-        	        	//alert(name);
-        	             autocompleteandchange(name,itemParentRow);
+        	        	name1 = ui.item.value;
+        	        	name2 = ui.item.index;
+        	        	$("#"+itemParentRow.context.id).val(name1); 
+        	        	 //alert(itemParentRow.context.id);	
+        	        	 enterdproducts.push(name1);
+        	        	
+        	        	
+        	        	
+        	        	
+        	        		
         	       		 },
+        	       		
+        	       		
+        	       		
         	        }); 
+	        	           		
+        		
+        		
         		});
+            
+           
+           
+            $(document).on("blur", ".prodouctNumber", function() {
+            	var itemParentRow = $(this).parents(".multTot");
+            
+            	
+            	var arr=[];
+            	 $(".prodouctNumber").each(function() {
+                	 // alert($.inArray($(this).val(), arr));
+    		        if ($.inArray($(this).val(), arr) == -1){
+    		            arr.push($(this).val());
+    		       	// var isDluplicate = true;
+    		       	autocompleteandchange(($(this).val()),itemParentRow);
+    		        }else{
+    		        	 /* var isDluplicate = false; */
+    		        	   alertify.alert("You have already entered the Product Number "+($(this).val()));
+    		        	 $(this).val('')
+    		        	 ($(this).parents('tr').find('td').find('input').val(''));
+    		        	 ($(this).parents('tr').find('td').find('select').val(''));
+    		        
+    		        }
+    		    });
+                        	
+            	
+            });
 
+           
+         
             
 
             var sacData = ${sacList};
@@ -748,7 +768,7 @@
                     select: function(event, ui) {
                         sacCode = ui.item.value;
                         //alert(name);
-                        autocompleteandchangeSacCode(sacCode, itemParentRow);
+                       // autocompleteandchangeSacCode(sacCode, itemParentRow);
                     },
                 });
             });
@@ -757,14 +777,42 @@
 
        
 
+              $(document).on("blur", ".sacCode", function() {
+            	var itemParentRow = $(this).parents(".multTot");
+            	
+            	 //var isDluplicate = true;
+            	//var name1 =  $("#"+itemParentRow.context.id).val(); 
+            	//recipientsArray = enterdproducts.sort(); 
+            	var arr=[];
+            	 $(".sacCode").each(function() {
+                	 // alert($.inArray($(this).val(), arr));
+    		        if ($.inArray($(this).val(), arr) == -1){
+    		            arr.push($(this).val());
+    		       	// var isDluplicate = true;
+    		       	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
+    		        }else{
+    		        	 
+    		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
+    		        	 $(this).val('')
+    		        	 ($(this).parents('tr').find('td').find('input').val(''));
+    		        	 ($(this).parents('tr').find('td').find('select').val(''));
+    		        }
+    		    });
+            	 
+                        	
+            	
+            });
+
+            
+            
       
       //get the product information based on product  name
-        function autocompleteandchange(name, itemParentRow) {
+        function autocompleteandchange(name1, itemParentRow) {
             //alert(name);
 
             $.ajax({
                 type: "GET",
-                data: {name: name},
+                data: {name: name1},
                 async: false,
                 url: "<c:url value="/product/getProductInfo"/>", 
                 success: function(response) {
@@ -779,7 +827,7 @@
                     //	$('.hsnVal').val(hsndata.hsnCode);
                     $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
 
-                    $(itemParentRow).find(".prodouctNumber").val(obj.description);
+                   // $(itemParentRow).find(".prodouctNumber").val(obj.description);
                     $(itemParentRow).find(".productId").val(obj.id);
                     $(itemParentRow).find(".description").val(obj.description);
                     //$(itemParentRow).find(".prodouctNumber").val(obj.description);
@@ -834,15 +882,21 @@
     });
         
         
-           
-        	
+          
     		
+        	
             function removeData(index){
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+            		
             	}else{
+            	
             		$('table#itemTbl tr.multTot'+index).remove();
+            		var id = "prodouctNumber"+index;
+            		/* alert(id); */
+            		recipientsArray.splice($.inArray(  $("#"+id).val(''), recipientsArray),1);
+            		//recipientsArray.splice($.inArray($( "#"+id).val(''), recipientsArray),1);
             	}
             	$("#form").validator("update");
             }
@@ -866,11 +920,11 @@
             }
 
 
-
             </script>
 
 
             <script type="text/javascript">
+
 
 
 
@@ -899,7 +953,7 @@
             		  $('#edit_addressCount').val(-1);
             		  addItem();
             		 
-            		 
+            		  enterdproducts = [];
             	  			 
             	          }, function(){
             	        	 
@@ -953,6 +1007,37 @@
         });
         
         $('form.commentForm').on('submit', function(event) {
+        	
+        	
+         
+             /*   var arr = [];
+              $(".prodouctNumber").each(function() {
+            	 // alert($.inArray($(this).val(), arr));
+		        if ($.inArray($(this).val(), arr) == -1){
+		            arr.push($(this).val());
+		        }else{
+		        	//alert($(this).val() + "duplicate");
+		        	($(this).parents('tr').find('td').find('input').css('border', '1px solid red'));
+		        	($(this).parents('tr').find('td').find('select').css('border', '1px solid red'));
+		        }
+		    });
+              
+              
+              $(".sacCode").each(function() {
+             	 // alert($.inArray($(this).val(), arr));
+ 		        if ($.inArray($(this).val(), arr) == -1){
+ 		            arr.push($(this).val());
+ 		        }else{
+ 		        	//alert($(this).val() + "duplicate");
+ 		        	($(this).parents('tr').find('td').find('input').css('border', '1px solid red'));
+ 		        	($(this).parents('tr').find('td').find('select').css('border', '1px solid red'));
+ 		        }
+ 		    }); */
+
+              
+             
+              
+            
             
             if ($('#items_radio').is(":checked") == true) {
             var rowCount = $('#itemTbl tr').length-1;
@@ -995,7 +1080,7 @@
         {
         	var charCode = (evt.which) ? evt.which : evt.keyCode;
         	if (charCode != 46 && charCode > 31 
-        	&& (charCode < 48 || charCode > 57))
+        	&& (charCode < 48 || charCode > 57)) 
         	return false;
         	return true;
         }  

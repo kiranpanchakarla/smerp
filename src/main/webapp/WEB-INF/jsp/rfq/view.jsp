@@ -365,7 +365,7 @@ text-align: left;
 
 
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
- <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
+ 
 
 <script type="text/javascript">
 

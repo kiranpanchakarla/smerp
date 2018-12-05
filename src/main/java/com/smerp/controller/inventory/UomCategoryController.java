@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.smerp.model.inventory.UomCategory;
+import com.smerp.model.master.Currency;
 import com.smerp.service.inventory.UomCatergoryService;
 
 @Controller
@@ -64,5 +67,18 @@ public class UomCategoryController {
 		logger.info("Inside UomCategoryController view Method");
 		model.addAttribute("uomcategoryObj", catergoryService.getInfo(Integer.parseInt(uomcategoryId)));
 		return "inventory/uomcategory/view";
+	}
+	
+	@GetMapping(value = "/isValidUomCategoryName")
+	@ResponseBody
+	public boolean isValidUomCategoryName(String name) {
+		logger.info("currencyName" + name);
+		UomCategory uomcategory = catergoryService.findByName(name);
+		if (uomcategory != null) {
+			logger.info("UOM Category Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

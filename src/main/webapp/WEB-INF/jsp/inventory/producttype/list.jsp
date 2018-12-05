@@ -46,7 +46,7 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-3">
-													<h2 class="content-header-title">Product Type</h2>
+													<h2 class="content-header-title">Product Group</h2>
 												</div>
 												<div class="col-md-5">
 													<a class="btn btn-primary"

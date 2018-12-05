@@ -44,7 +44,7 @@
 										 
 										<div class="card-header"><div class="content-header row">
 									<div class="col-md-2">
-										<h2 class="content-header-title">Product Type</h2>
+										<h2 class="content-header-title">Product Group</h2>
 										</div>
 										<div class="col-md-6">
 										<a class="btn btn-primary" href="<c:url value="/producttype/getInfo?producttypeId=${producttypeObj.id}"/>">Edit</a>

@@ -66,7 +66,7 @@
 
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='UOM Name' path="uomName"
-																			 required="true"
+																			 required="true" onchange="isValidName('uomName','/uom/isValidUomName','1_errorContainer','UOM Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter uom Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

@@ -39,8 +39,7 @@ public class ProductAttributesController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String productattributesId) {
 		logger.info("Inside ProductAttributesController GetInfo Method");
-		model.addAttribute("productattributesObj", attributesService.findById(Integer.parseInt(productattributesId)));
-		model.addAttribute("productattributes", new ProductAttributes());
+		model.addAttribute("productattributes", attributesService.getInfo(Integer.parseInt(productattributesId)));
 		return "inventory/productattributes/create";
 	}
 

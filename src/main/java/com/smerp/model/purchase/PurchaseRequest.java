@@ -50,6 +50,7 @@ public class PurchaseRequest extends AuditModel {
 	@Column(name="status")
     private String status;
 
+	private transient  String statusType;
 
 	@Column(name="posting_date")
 	private Date postingDate;
@@ -71,6 +72,16 @@ public class PurchaseRequest extends AuditModel {
 	
 	@Column(name="is_active")
 	private Boolean isActive = true;
+
+	
+	
+	public String getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
 
 	public Integer getId() {
 		return id;

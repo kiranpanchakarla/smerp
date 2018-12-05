@@ -33,7 +33,7 @@
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	<c:import url="/WEB-INF/jsp/purchasesidebar.jsp" />
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
@@ -64,6 +64,7 @@
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
+													<form class="form">
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
@@ -426,44 +427,52 @@
 																		</thead>
 																	</table>
 																</div>
-															</div>
+											<br>				
+									<div class="text-xs-center">
+											<a href="#" onClick="goBack()"
+												class="btn btn-primary float-left"> Back </a>
+										 
+										
+											<a href="<c:url value="/rfq/list"/>">
+												<button type="button" class="btn btn-warning mr-1">
+													<i class="icon-cross2"></i> Cancel
+												</button>
+											</a> 
+											<c:if test="${rfq.status eq 'Draft Stage' || rfq.id==null }">
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                   </c:if>
+                                                                    <c:if test="${rfq.id==null}">
+                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
+                                                                    </c:if>
+                                                                    <c:if test="${rfq.id!=null}">
+                                                                       <form:button  type="submit" id="update" name="statusType" value="UP" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                   
+                                                                     
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
+                                                                     
+                                                                      </c:if>
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 float-right"> <i></i>Approve</form:button>
+                                                               
+										</div>
+										</div>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="card-block"><div class="row">
-										<div class="col-sm-6 form-group">
-											<a href="#" onClick="goBack()"
-												class="btn btn-primary"> Back </a>
-												
-										</div>
-										<div class="col-sm-6 form-group">
-                                              <form:input type="submit" path="status" value="Save"
-												class="btn btn-primary" />
-											<form:input type="submit" path="status" value="Draft"
-												class="btn btn-primary" />
-												
-											<a href="<c:url value="/rfq/list"/>">
-												<button type="button" class="btn btn-warning mr-1">
-													<i class="icon-cross2"></i> Cancel
-												</button>
-											</a> 
-										</div>
-									</div>
-                                    </div>
-								</section>
-							</form:form>
+						</section>
+						</form:form>
+						
 						</div>
 					</div>
 					<!--/ project charts -->
 					<br>
 				</div>
 			</div>
-		</div>
-
-	</div>
+		 </div>
+		 </div>
+		
 
 
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
@@ -836,9 +845,9 @@ $(document).ready(function(){
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("You have already entered the Product Number "+$(this).val());
-		        	 $(this).val('')
-		        	 ($(this).parents('tr').find('td').find('input').val(''));
-		        	 ($(this).parents('tr').find('td').find('select').val(''));
+		        	/*  $(this).val('') */
+		          ($(this).parents('tr').find('td').find('input').val(''));
+		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
 		    });
@@ -871,7 +880,7 @@ $(document).ready(function(){
                 	//alert("hsnCode"+hsndata.hsnCode);
                 //	$('.hsnVal').val(hsndata.hsnCode);
                 
-                	$(itemParentRow).find(".prodouctNumber").val(obj.productNo);
+                	//$(itemParentRow).find(".prodouctNumber").val(obj.productNo);
                 	$(itemParentRow).find(".productId").val(obj.id);
             	
                 
@@ -1138,9 +1147,8 @@ $("#items_radio").click(function() {
 	  			 
 	          }, function(){
 	        	 
-	        	  $("#service_radio").prop('checked',true);
-	        	  
-	      alertify.error('Cancel');
+	        	$("#service_radio").prop('checked',true); 
+	      alertify.error('Cancelled');
 	   });
 	
 });
@@ -1171,8 +1179,8 @@ $("#service_radio").click(function() {
 	  addItem();
 	  
 	 }, function(){
-     	 $("#items_radio").prop('checked',true);
-     alertify.error('Cancel')
+     $("#items_radio").prop('checked',true); 
+     alertify.error('Cancelled')
     });
 	 
 });

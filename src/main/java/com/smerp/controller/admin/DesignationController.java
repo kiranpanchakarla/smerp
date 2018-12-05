@@ -47,7 +47,7 @@ public class DesignationController {
 	}
 	@PostMapping(value = "/save")
 	public String save(@ModelAttribute("designation") Desigination designation, BindingResult result) {
-		logger.info("Inside DepartmentController Save Method");
+		logger.info("Inside DesignationController Save Method");
 		designationService.save(designation);
 		return "redirect:list";
 	}

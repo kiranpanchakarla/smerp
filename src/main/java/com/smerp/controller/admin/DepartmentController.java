@@ -53,8 +53,7 @@ public class DepartmentController {
 		@GetMapping(value = "/getInfo")
 		public String GetInfo(Model model, String departmentId) {
 			logger.info("Inside DepartmentController GetInfo Method");
-			model.addAttribute("departmentObj", departmentService.getInfo(Integer.parseInt(departmentId)));
-			model.addAttribute("department", new Department());
+			model.addAttribute("department", departmentService.getInfo(Integer.parseInt(departmentId)));
 			model.addAttribute("companyList", companyServices.getInfo(Integer.parseInt(departmentId)));
 			return "department/create";
 		}

@@ -45,7 +45,6 @@ private static final Logger logger = LogManager.getLogger(ProductAttributeValues
 	public String GetInfo(Model model, String productattributesvaluesId) {
 		logger.info("Inside ProductAttributesvaluesController GetInfo Method");
 		model.addAttribute("productattributesvalues", attributeValuesService.findById(Integer.parseInt(productattributesvaluesId)));
-		
 		model.addAttribute("productAttributesList", productAttributesService.findAll());
 		return "inventory/productattributevalues/create";
 	}

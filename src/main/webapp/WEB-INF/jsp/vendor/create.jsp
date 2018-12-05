@@ -141,9 +141,9 @@ $(document).ready(function(){
 																				<label>Mobile</label>
 																				<form:input path="mobileNo"
 																					placeholder='Mobile Number'
-																					onkeypress="return isNumericKey(event)" type="text"
-																					class="form-control numericwithoutdecimal"
-																					maxlength="13" minlength="13"
+																					  type="text"
+																					class="form-control"
+																					maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"
 																					oninvalid="this.setCustomValidity('Please Enter Mobile Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -258,7 +258,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Mobile</label><input type="text"
 																							class="form-control" maxlength="13"
-																							minlength="13" pattern ="[0-9+-]+$" placeholder='Mobile Number'
+																							minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}" placeholder='Mobile Number'
 																							name="vendorContactDetails[0].mobileNo"
 																							id="vendorContactDetailsMobileNo"
 																							
@@ -409,7 +409,7 @@ $(document).ready(function(){
 																							<div class="form-group">
 																								<label>Mobile</label><input type="text"
 																									class="form-control" maxlength="13"
-																									minlength="13" pattern ="[0-9+-]+$" 
+																									minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"
 																									value="${listContactDetails.mobileNo}"
 																									name="vendorContactDetails[<%= count %>].mobileNo"
 																									 
@@ -1102,7 +1102,7 @@ if(id==''){
 												+ '<div class="form-group"><label>Address</label><input type="text" placeholder="Address" name="vendorContactDetails['+inc+'].address" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Mobile</label><input type="text" maxlength="13" minlength="13" pattern ="[0-9+-]+$"  placeholder="Mobile Number" value="+91"  name="vendorContactDetails['+inc+'].mobileNo" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Mobile Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<div class="form-group"><label>Mobile</label><input type="text" maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"  placeholder="Mobile Number" value="+91"  name="vendorContactDetails['+inc+'].mobileNo" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Mobile Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Fax</label><input type="text" maxlength="14" minlength="14" pattern="[a-zA-Z]{0}[0-9._%+-]{14}" placeholder="Fax Number" name="vendorContactDetails['+inc+'].fax" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter  Fax Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'

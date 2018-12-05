@@ -65,7 +65,7 @@
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Plant Name' path="attributeName"
+																			placeholder='Product Attributes' path="attributeName"
 																			required="true"
 																			oninvalid="this.setCustomValidity('Please Enter productattributes Name')"
 																			oninput="setCustomValidity('')" />

@@ -52,7 +52,7 @@
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${departmentObj.id}">
+													value="${department.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -63,23 +63,23 @@
 																		<label>Company</label>
 																		<form:select id="company" path="company.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
-																			<c:forEach items="${companyList}" var="companyList">
-																				<form:option value="${companyList.id}">${companyList.name}</form:option>
+																			<c:forEach items="${companyList}" var="company">
+																				<form:option value="${company.id}">${company.name}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div   class="help-block with-errors"></div>
+																		<!-- <div   class="help-block with-errors"></div> -->
 																	</div> 
 																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Department Name' path="name"
-																			value="${departmentObj.name}" required="true"
+																			value="${department.name}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
 																			oninput="setCustomValidity('')" />
-																		<div  
+																		<!-- <div  
 																			class="help-block with-errors"></div>
-																		 
+																		  -->
 																	</div>
 																</div>
 																

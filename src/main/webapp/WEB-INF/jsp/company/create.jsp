@@ -246,9 +246,9 @@
 																				<label>Mobile</label>
 
 																				<form:input type="text"
-																					cssClass="form-control numericwithoutdecimal"
+																					cssClass="form-control"
 																					placeholder='Mobile Number' path="phoneNum"
-																					required="true" maxlength="13" minlength="13"
+																					required="true" maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"
 																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->

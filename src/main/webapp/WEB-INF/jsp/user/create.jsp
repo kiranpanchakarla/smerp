@@ -109,9 +109,9 @@
 																		<label>Mobile</label>
 																		<form:input path="mobileNo"
 																					placeholder='Mobile Number'
-																					onkeypress="return isNumericKey(event)" type="text"
-																					class="form-control numericwithoutdecimal"
-																					maxlength="13" minlength="13" />
+																					 type="text"
+																					class="form-control "
+																					maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"/>
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>

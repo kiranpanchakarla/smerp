@@ -318,7 +318,7 @@
                                                                           <label>Remark</label> 
                                                                             <form:textarea type="text" cssClass="form-control"
 																					 placeholder='Enter your Remark'
-																					autocomplete="off" path="remarks" required="true" />
+																					autocomplete="off" path="remarks"  />
                                                                            </div>
 																				</div>
 																				
@@ -334,16 +334,23 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <a href="<c:url value=" /purchaseReq/list "/>">
-                                                                        <button type="button" class="btn btn-warning mr-1"> <i class="icon-cross2"></i> Cancel</button>
+                                                                    <a href="<c:url value="/purchaseReq/list"/>">
+                                                                        <button type="button" class="btn btn-warning" id="cancel"> <i class="icon-cross2"></i> Cancel</button>
                                                                     </a>
-                                                                     <button type="submit"  id="savePurchase" class="btn btn-primary"> <i class="icon-check2"></i> Draft</button>
-                                                                    <c:if test="${purchaseReq.id==null}">
-                                                                        <button type="submit"  id="savePurchase" class="btn btn-primary"> <i class="icon-check2"></i> Save</button>
+                                                                      
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                    
+                                                                    <c:if test="${purchaseRequest.id==null}">
+                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
-                                                                    <c:if test="${purchaseReq.id!=null}">
-                                                                        <button type="submit" class="btn btn-primary "> <i class="icon-check2"></i> Update</button>
-                                                                    </c:if>
+                                                                    <c:if test="${purchaseRequest.id!=null}">
+                                                                      <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                   
+                                                                     
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
+                                                                     
+                                                                      </c:if>
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 float-right"> <i></i>Approve</form:button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -881,10 +888,6 @@
        
     });
         
-        
-          
-    		
-        	
             function removeData(index){
             	//alert("ff"+index);
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -957,9 +960,9 @@
             	  			 
             	          }, function(){
             	        	 
-            	        	  $("#service_radio").prop('checked',true);
+            	         $("#service_radio").prop('checked',true);  
             	        	  
-            	      alertify.error('Cancel');
+            	      alertify.error('Cancelled');
             	   });
             	
             });
@@ -990,8 +993,8 @@
             	  addItem();
             	  
             	 }, function(){
-                 	 $("#items_radio").prop('checked',true);
-                 alertify.error('Cancel')
+                    $("#items_radio").prop('checked',true);   
+                    alertify.error('Cancelled');
                 });
             	 
             });

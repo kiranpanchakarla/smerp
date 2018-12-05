@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smerp.model.inventory.Uom;
 import com.smerp.model.inventory.UomCategory;
@@ -71,5 +72,18 @@ private static final Logger logger = LogManager.getLogger(UomController.class);
 		logger.info("Inside UomController view Method");
 		model.addAttribute("uomObj", uomService.getInfo(Integer.parseInt(uomId)));
 		return "inventory/uom/view";
+	}
+	
+	@GetMapping(value = "/isValidUomName")
+	@ResponseBody
+	public boolean isValidUomName(String name) {
+		logger.info("currencyName" + name);
+		Uom uom = uomService.findByName(name);
+		if (uom != null) {
+			logger.info("UOM Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

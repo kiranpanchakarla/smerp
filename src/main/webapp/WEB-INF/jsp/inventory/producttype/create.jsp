@@ -48,7 +48,7 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Product Type/Create</h4>
+													<h4 class="card-title" id="basic-layout-icons">Product Group/Create</h4>
 													<!-- <a class="heading-elements-toggle"><i
 														class="icon-ellipsis font-medium-3"></i></a> -->
 												</div>

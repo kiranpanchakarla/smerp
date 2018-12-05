@@ -52,7 +52,7 @@
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${designationObj.id}">
+													value="${designation.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -64,11 +64,10 @@
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Designation Name' path="desigination"
-																			value="${designationObj.desigination}" required="true"
+																			value="${designation.desigination}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
 																			oninput="setCustomValidity('')" />
-																		<div  
-																			class="help-block with-errors"></div>
+																		 
 																		 
 																	</div>
 																</div>
@@ -80,7 +79,7 @@
 																				<form:option value="${companyList.id}">${companyList.name}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div   class="help-block with-errors"></div>
+																		 
 																	</div> 
 																	
 																	<div class="col-sm-4 form-group">
@@ -91,7 +90,7 @@
 																				<form:option value="${departmentList.id}">${departmentList.name}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div   class="help-block with-errors"></div>
+																		 
 																	</div> 
 																 
 																
@@ -125,13 +124,13 @@
 																</a> <input type="hidden" name="${_csrf.parameterName}"
 																	value="${_csrf.token}" />
 
-																<c:if test="${designation.desigination!=null}">
+																<c:if test="${designation.id!=null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Update
 																	</button>
 																</c:if>
 
-																<c:if test="${designation.desigination==null}">
+																<c:if test="${designation.id==null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Save
 																	</button>

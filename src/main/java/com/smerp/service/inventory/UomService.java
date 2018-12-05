@@ -17,5 +17,7 @@ public interface UomService {
 	Uom getInfo(int id);
 	
 	void delete(int id);
+	
+	Uom findByName(String name);
 
 }

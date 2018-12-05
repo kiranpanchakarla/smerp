@@ -46,6 +46,12 @@ public class UomCategoryServiceImpl implements UomCatergoryService {
 		uomCategoryRepository.deleteById(id);
 		
 	}
+
+
+	@Override
+	public UomCategory findByName(String name) {
+		return uomCategoryRepository.findByName(name);
+	}
 	
 
 }

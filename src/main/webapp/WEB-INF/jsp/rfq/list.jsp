@@ -50,7 +50,7 @@
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
-														<li class="breadcrumb-item"><a href="<c:url value="purchase"/>">Purchase</a>
+														<li class="breadcrumb-item"><a href="<c:url value="/purchase"/>">Purchase</a>
 														</li>
 														<li class="breadcrumb-item active">RFQ List</li>
 													</ol>
@@ -89,9 +89,10 @@
 																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.documentDate}" /> </td>
 																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.requiredDate}" /> </td> --%>
 																	<td>${list.status}</td>
-																	<td>
+																	<td><c:if test="${list.status != 'Approved'}">
 																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a>  
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a> 
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a>
+																	</c:if> 
 														    		<a class ="btn btn-view" href="<c:url value="/rfq/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>							
 																</tr>

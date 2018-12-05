@@ -61,12 +61,12 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Product Name</label>
+																	<label for="timesheetinput1">UOM Category Name</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='UOM Category Name' path="uomCategoryName"
-																			value="${uomcategoryObj.uomCategoryName}" required="true"
+																			value="${uomcategoryObj.uomCategoryName}" required="true" onchange="isValidName('uomCategoryName','/uomcategory/isValidUomCategoryName','1_errorContainer','UOM Category Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter uomcategory Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

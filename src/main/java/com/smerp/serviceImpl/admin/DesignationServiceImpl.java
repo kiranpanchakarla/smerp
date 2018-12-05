@@ -30,8 +30,8 @@ public class DesignationServiceImpl implements DesignationService {
 
 	@Override
 	public Desigination save(Desigination designation) {
-		designationRepository.save(designation);
-		return designation;
+		
+		return designationRepository.save(designation);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.smerp.serviceImpl.purchase;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,12 @@ import com.smerp.repository.purchase.LineitemsRepositoryRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.EnumStatusUpdate.StatusUpdate;
 
 @Service
 public class RequestForQuotationServiceImpl implements RequestForQuotationService {
+	
+	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 	
 	@Autowired
 	RequestForQuotationRepository requestForQuotationRepository;
@@ -37,6 +42,26 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	        		   	 for (LineItems lineObj: requestLists) { 
 	        		   		lineitemsRepository.deleteAll(requestLists);
 	        		     }
+	        		   	 
+	        		   	switch (requestForQuotation.getStatusType()) { 
+	        	        case "DR": 
+	        	        	requestForQuotation.setStatus(StatusUpdate.Draft.getStatus());
+	        	            break; 
+	        	        case "SA": 
+	        	        	requestForQuotation.setStatus(StatusUpdate.Open.getStatus());
+	        	            break; 
+	        	        
+	        	        case "RE":  
+	        	        	requestForQuotation.setStatus(StatusUpdate.Reject.getStatus());
+	        	            break; 
+	        	        case "APP": 
+	        	        	requestForQuotation.setStatus(StatusUpdate.Approve.getStatus());
+	        	            break; 
+	        	        default: 
+	        	        	logger.info("Type Not Matched:"+requestForQuotation.getStatusType());
+	        	            break; 
+	        	        } 
+	        		   	 
 	        		   	List<LineItems> listItems = requestForQuotation.getLineItems();
 		        		if (listItems != null) {
 		        			for (int i = 0; i < listItems.size(); i++) {

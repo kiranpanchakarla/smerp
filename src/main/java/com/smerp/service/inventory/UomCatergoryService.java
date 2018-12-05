@@ -15,4 +15,5 @@ public interface UomCatergoryService {
 	
 	void delete(int id);
 
+	UomCategory findByName(String name);
 }

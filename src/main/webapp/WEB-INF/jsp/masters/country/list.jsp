@@ -62,12 +62,11 @@
 
 										</div>
 										<div class="card-body collapse in">
-											<div class="card-block card-dashboard">
-
-												<div class="">
-													<table id="example"
-														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
-														style="width: 100%">
+												<div class="card-block card-dashboard">
+													 
+													<div class="table-responsive">
+														<table id="example" class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
+															style="width: 100%">
 														<thead>
 															<tr>
 																<th >S.no</th>

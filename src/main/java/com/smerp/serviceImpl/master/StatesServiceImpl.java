@@ -54,4 +54,10 @@ public class StatesServiceImpl implements StatesService {
 		return stateRepository.findByName(name);
 	}
 
+	@Override
+	public States findByCode(String name) {
+		// TODO Auto-generated method stub
+		return stateRepository.findByCode(name);
+	}
+
 }

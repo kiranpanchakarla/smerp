@@ -48,4 +48,10 @@ public class HsnServiceImpl implements HsnService {
 		return hsnRepository.findById(id);
 	}
 
+	@Override
+	public HSNCode findByCode(String name) {
+		// TODO Auto-generated method stub
+		return hsnRepository.findByCode(name);
+	}
+
 }

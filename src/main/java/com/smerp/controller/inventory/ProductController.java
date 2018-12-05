@@ -77,7 +77,7 @@ public class ProductController {
 		model.addAttribute("hsnList", hsnService.findAll());
 		model.addAttribute("sacList", sacService.findAll());
 		model.addAttribute("productCategoryList", productCategoryService.findAll());
-		model.addAttribute("productTypeList", productTypeService.findAll());
+		model.addAttribute("productGroupList", productTypeService.findAll());
 		model.addAttribute("manageProductByList", productList.getManageProductBy());
 		model.addAttribute("productTaxCategoryList", productList.getProductTaxCategory());
 		model.addAttribute("productTypeList", productList.getProductType());
@@ -109,7 +109,7 @@ public class ProductController {
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("hsnList", hsnService.findAll());
 		model.addAttribute("sacList", sacService.findAll());
-		model.addAttribute("productCategoryList", productCategoryService.findAll());
+		model.addAttribute("productGroupList", productTypeService.findAll());
 		model.addAttribute("productTypeList", productTypeService.findAll());
 		model.addAttribute("manageProductByList", productList.getManageProductBy());
 		model.addAttribute("productTaxCategoryList", productList.getProductTaxCategory());

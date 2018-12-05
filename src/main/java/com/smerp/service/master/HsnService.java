@@ -14,4 +14,6 @@ public interface HsnService {
 	void delete(int id);
 	
 	HSNCode getInfo(int id);
+	
+	HSNCode findByCode(String name);
 }

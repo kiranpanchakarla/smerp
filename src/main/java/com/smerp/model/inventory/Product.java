@@ -46,6 +46,12 @@ public class Product extends AuditModel {
 	@JoinColumn(name="product_category_id")
 	private ProductCategory productCategory;
 	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="product_type_id")
+	private ProductType productGroup;
+	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rfq_id", nullable = true)
 	private RequestForQuotation  requestForQuotation;
@@ -389,12 +395,24 @@ public class Product extends AuditModel {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+	
+	
+	
+
+	public ProductType getProductGroup() {
+		return productGroup;
+	}
+
+	public void setProductGroup(ProductType productGroup) {
+		this.productGroup = productGroup;
+	}
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", inventoryProduct=" + inventoryProduct + ", purchaseProduct=" + purchaseProduct
 				+ ", productNo=" + productNo + ", description=" + description + ", productCategory=" + productCategory
-				+ ", uomCategory=" + uomCategory + ", barCode=" + barCode + ", withOldTaxLiable=" + withOldTaxLiable
+				+ ", productGroup=" + productGroup + ", requestForQuotation=" + requestForQuotation + ", uomCategory="
+				+ uomCategory + ", barCode=" + barCode + ", withOldTaxLiable=" + withOldTaxLiable
 				+ ", serviceOrProduct=" + serviceOrProduct + ", gst=" + gst + ", product=" + product + ", serviceType="
 				+ serviceType + ", sacCode=" + sacCode + ", taxCategory=" + taxCategory + ", productType=" + productType
 				+ ", hsnCode=" + hsnCode + ", productTaxCategory=" + productTaxCategory + ", manageProductBy="
@@ -405,6 +423,7 @@ public class Product extends AuditModel {
 				+ ", isActive=" + isActive + "]";
 	}
 
+	
 	
 	
 	

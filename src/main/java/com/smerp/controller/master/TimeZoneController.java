@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.master.Currency;
 import com.smerp.model.master.TimeZone;
 import com.smerp.service.master.CountryServices;
 import com.smerp.service.master.TimeZoneService;
@@ -44,8 +47,7 @@ public class TimeZoneController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String timezoneId) {
 		logger.info("Inside TimeZoneController GetInfo Method");
-		model.addAttribute("timezoneObj", timeZoneService.findById(Integer.parseInt(timezoneId)));
-		model.addAttribute("timezone", new TimeZone());
+		model.addAttribute("timezone", timeZoneService.findById(Integer.parseInt(timezoneId)));
 		model.addAttribute("countryList", countryService.countryList());
 		return "masters/timezone/create";
 	}
@@ -69,5 +71,18 @@ public class TimeZoneController {
 		logger.info("Inside TimeZoneController view Method");
 		model.addAttribute("timezoneObj", timeZoneService.getInfo(Integer.parseInt(timezoneId)));
 		return "masters/timezone/view";
+	}
+	
+	@GetMapping(value = "/isValidTimezoneName")
+	@ResponseBody
+	public boolean isValidTimezoneName(String name) {
+		logger.info("currencyName" + name);
+		TimeZone timezone = timeZoneService.findByName(name);
+		if (timezone != null) {
+			logger.info("Timezone Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

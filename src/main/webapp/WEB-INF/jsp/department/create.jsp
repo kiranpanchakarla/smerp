@@ -74,7 +74,7 @@
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Department Name' path="name"
-																			value="${department.name}" required="true"
+																			 required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

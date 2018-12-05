@@ -50,7 +50,7 @@
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${statesObj.id}">
+													value="${states.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -62,11 +62,11 @@
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Code' path="code"
-																			value="${statesObj.code}" required="true"
+																			placeholder='State Code' path="code"
+																			 required="true" onchange="isValidName('code','/states/isValidStateCode','1_errorContainer','State Code Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter State Code')"
 																			oninput="setCustomValidity('')" />
-																		<div  class="help-block with-errors"></div>
+																		 
 																		 
 																	</div>
 																</div>
@@ -75,10 +75,10 @@
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Name' path="name"
-																			value="${statesObj.name}" required="true" onchange="isValidName('name','/states/isValidStateName','1_errorContainer','State Name Already Exists')"
+																			 required="true" onchange="isValidName('name','/states/isValidStateName','1_errorContainer','State Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter State Name')"
 																			oninput="setCustomValidity('')" />
-																		<div class="help-block with-errors"></div>
+																		 
 																		 
 																	</div>
 																</div>
@@ -86,11 +86,11 @@
 																		<label>Country</label>
 																		<form:select id="country" path="country.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Country')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
-																			<c:forEach items="${countryList}" var="countryList">
-																				<form:option value="${countryList.id}">${countryList.name}</form:option>
+																			<c:forEach items="${countryList}" var="country">
+																				<form:option value="${country.id}">${country.name}</form:option>
 																			</c:forEach>
 																		</form:select>
-																		<div class="help-block with-errors"></div>
+																		 
 																	</div>
 																
 															</div>

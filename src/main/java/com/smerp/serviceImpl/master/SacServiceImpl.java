@@ -63,5 +63,11 @@ public class SacServiceImpl implements SacService {
         
         return sacRepository.findBySacCode(sacCode);
     }
+
+	@Override
+	public SACCode findByCode(String name) {
+		// TODO Auto-generated method stub
+		return sacRepository.findByCode(name);
+	}
 	
 }

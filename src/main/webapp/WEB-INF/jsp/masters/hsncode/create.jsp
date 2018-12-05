@@ -59,7 +59,7 @@
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${hsncodeObj.id}">
+													value="${hsncode.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -69,25 +69,25 @@
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">HSN Code</label>
 																	<form:input type="text" cssClass="form-control"
-																		placeholder='HSN Code' path="hsnCode"
-																		value="${hsncodeObj.hsnCode}" required="true" oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
-																     <div   class="help-block with-errors"></div>
+																		placeholder='HSN Code' path="hsnCode" onchange="isValidName('hsnCode','/hsncode/isValidHSNCode','1_errorContainer','HSN Code Already Exists')"
+																		 required="true" oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
+																    
 																</div>
 
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Description</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Description' path="description"
-																		value="${hsncodeObj.description}" required="true" oninvalid="this.setCustomValidity('Enter Description')"    oninput="setCustomValidity('')"/>
-																         <div   class="help-block with-errors"></div>
+																		 required="true" oninvalid="this.setCustomValidity('Enter Description')"    oninput="setCustomValidity('')"/>
+																         
 																</div>
 
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Rate</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Rate' path="rate"
-																		value="${hsncodeObj.rate}" required="true" oninvalid="this.setCustomValidity('Enter Rate')"    oninput="setCustomValidity('')" />
-																         <div class="help-block with-errors"></div>
+																		required="true" oninvalid="this.setCustomValidity('Enter Rate')"    oninput="setCustomValidity('')" />
+																         
 																</div>
 															</div>
 

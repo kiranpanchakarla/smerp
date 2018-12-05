@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.smerp.model.admin.Department;
+import com.smerp.model.inventory.Product;
 import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.admin.DepartmentService;
 
@@ -30,7 +31,7 @@ public class DepartmentController {
 		public String list(Model model) {
 			logger.info("Inside DesignationController List Method");
 			model.addAttribute("companyList", companyServices.findAll());
-			model.addAttribute("departmentList",departmentService.findAll() );
+			model.addAttribute("departmentList",departmentService.findAll());
 			return "department/list";
 		}
 		
@@ -54,7 +55,7 @@ public class DepartmentController {
 		public String GetInfo(Model model, String departmentId) {
 			logger.info("Inside DepartmentController GetInfo Method");
 			model.addAttribute("department", departmentService.getInfo(Integer.parseInt(departmentId)));
-			model.addAttribute("companyList", companyServices.getInfo(Integer.parseInt(departmentId)));
+			model.addAttribute("companyList", companyServices.findAll());
 			return "department/create";
 		}
 

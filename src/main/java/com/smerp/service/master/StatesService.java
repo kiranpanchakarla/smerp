@@ -18,4 +18,6 @@ public interface StatesService {
 	
 	States findByName(String name);
 	
+	States findByCode(String name);
+	
 }

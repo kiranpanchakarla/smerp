@@ -47,8 +47,7 @@ public class StatesController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String statesId) {
 		logger.info("Inside StatesController GetInfo Method");
-		model.addAttribute("statesObj", statesService.findById(Integer.parseInt(statesId)));
-		model.addAttribute("states", new States());
+		model.addAttribute("states", statesService.findById(Integer.parseInt(statesId)));
 		model.addAttribute("countryList", countryService.countryList());
 		return "masters/states/create";
 	}
@@ -81,6 +80,19 @@ public class StatesController {
 		States states = statesService.findByName(name);
 		if (states != null) {
 			logger.info("States Name  Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@GetMapping(value = "/isValidStateCode")
+	@ResponseBody
+	public boolean isValidStateCode(String name) {
+		logger.info("statesCode" + name);
+		States states = statesService.findByCode(name);
+		if (states != null) {
+			logger.info("States Code  Already Exits!");
 			return true;
 		} else {
 			return false;

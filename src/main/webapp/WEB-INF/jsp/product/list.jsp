@@ -93,7 +93,7 @@
                                                                      <c:out value="${count}" />  </td>
 																	<td>${productList.productNo}</td>
 																	<td>${productList.description}</td>
-																	<td>${productList.productCategory.name}</td>
+																	<td>${productList.productGroup.productName}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
 																	
 																	<td >

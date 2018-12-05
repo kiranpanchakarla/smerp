@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smerp.model.master.HSNCode;
 import com.smerp.model.master.SACCode;
 import com.smerp.service.master.SacService;
 
@@ -50,8 +51,7 @@ public class SacCodeController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String saccodeId) {
 		logger.info("Inside SacCodeController GetInfo Method");
-		SACCode saccodeObj = sacService.findById(Integer.parseInt(saccodeId));
-		model.addAttribute("saccodeObj", saccodeObj);
+		SACCode saccode = sacService.findById(Integer.parseInt(saccodeId));
 		model.addAttribute("saccode", new SACCode());
 		return "masters/saccode/create";
 	}
@@ -85,5 +85,18 @@ public class SacCodeController {
         return new ObjectMapper().writeValueAsString(sacService.findBySacCode(sacCode));
         
     }
+	
+	@GetMapping(value = "/isValidSACCode")
+	@ResponseBody
+	public boolean isValidSACCode(String name) {
+		logger.info("sacCode" + name);
+		SACCode saccode = sacService.findByCode(name);
+		if (saccode != null) {
+			logger.info("SAC Code Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }

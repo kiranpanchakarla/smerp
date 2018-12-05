@@ -48,4 +48,10 @@ public class TimeZoneServiceImpl implements TimeZoneService {
 		return timeZoneRepository.findById(id);
 	}
 
+	@Override
+	public TimeZone findByName(String name) {
+		 
+		return timeZoneRepository.findByName(name);
+	}
+
 }

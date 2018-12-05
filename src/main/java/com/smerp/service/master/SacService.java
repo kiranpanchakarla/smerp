@@ -18,4 +18,6 @@ public interface SacService {
 	List<String> findAllSacCodes();
 	
 	SACCode findBySacCode(String sacCode);
+	
+	SACCode findByCode(String name);
 }

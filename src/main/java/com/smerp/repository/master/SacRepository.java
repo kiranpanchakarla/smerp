@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.smerp.model.master.SACCode;
 
 @Repository
@@ -17,4 +16,7 @@ public interface SacRepository extends JpaRepository<SACCode, Integer> {
 	
 	@Query("SELECT sacCode FROM SACCode")
     List<String> findAllSacCodes();
+	
+	@Query("SELECT c FROM SACCode c WHERE LOWER(c.sacCode) = LOWER(:name)")
+	SACCode findByCode(String name);
 }

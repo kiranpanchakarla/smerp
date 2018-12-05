@@ -79,10 +79,10 @@ $(document).ready(function(){
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Product Group</label>
-																	<form:select path="productCategory.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
+																	<form:select path="productGroup.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
 																		<form:option value="">--Select--</form:option>
-																		<c:forEach items="${productCategoryList}" var="productCategory">
-																			<form:option value="${productCategory.id}">${productCategory.name}</form:option>
+																		<c:forEach items="${productGroupList}" var="productGroup">
+																			<form:option value="${productGroup.id}">${productGroup.productName}</form:option>
 																		</c:forEach>
 																	</form:select>
 																	<!-- <div  class="help-block with-errors"></div> -->

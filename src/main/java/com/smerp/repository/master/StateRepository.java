@@ -13,4 +13,7 @@ public interface StateRepository extends JpaRepository<States, Integer> {
 	
 	@Query("SELECT c FROM States c WHERE LOWER(c.name) = LOWER(:name)")
 	States findByName(String name);
+	
+	@Query("SELECT c FROM States c WHERE LOWER(c.code) = LOWER(:name)")
+	States findByCode(String name);
 }

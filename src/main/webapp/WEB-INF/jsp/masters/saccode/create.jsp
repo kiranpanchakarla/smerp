@@ -58,7 +58,7 @@
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"
-													value="${saccodeObj.id}">
+													value="${saccode.id}">
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -69,30 +69,30 @@
 																	<label for="timesheetinput1">SAC Code</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='SAC Code' path="sacCode"
-																		value="${saccodeObj.sacCode}" required="true"
+																		 required="true" onchange="isValidName('sacCode','/saccode/isValidSACCode','1_errorContainer','SAC Code Already Exists')"
 																		oninvalid="this.setCustomValidity('Enter SAC Code')"
 																		oninput="setCustomValidity('')" />
-																	<div style="color: red;" class="help-block with-errors"></div>
+																	 
 																</div>
 
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Description</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Description' path="description"
-																		value="${saccodeObj.description}" required="true"
+																		 required="true"
 																		oninvalid="this.setCustomValidity('Enter Description')"
 																		oninput="setCustomValidity('')" />
-																	<div style="color: red;" class="help-block with-errors"></div>
+																	 
 																</div>
 
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Rate</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='Rate' path="rate"
-																		value="${saccodeObj.rate}" required="true"
+																		 required="true"
 																		oninvalid="this.setCustomValidity('Enter Rate')"
 																		oninput="setCustomValidity('')" />
-																	<div style="color: red;" class="help-block with-errors"></div>
+																	 
 																</div>
 															</div>
 

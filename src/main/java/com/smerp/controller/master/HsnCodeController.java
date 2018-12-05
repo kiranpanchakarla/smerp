@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.smerp.model.master.HSNCode;
+import com.smerp.model.master.States;
 import com.smerp.service.master.HsnService;
 
 @Controller
@@ -39,8 +42,7 @@ public class HsnCodeController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String hsncodeId) {
 		logger.info("Inside HsnCodeController GetInfo Method");
-		model.addAttribute("hsncodeObj", hsnCodeService.findById(Integer.parseInt(hsncodeId)));
-		model.addAttribute("hsncode", new HSNCode());
+		model.addAttribute("hsncode", hsnCodeService.findById(Integer.parseInt(hsncodeId)));
 		return "masters/hsncode/create";
 	}
 
@@ -63,5 +65,18 @@ public class HsnCodeController {
 		logger.info("Inside HsnCodeController view Method");
 		model.addAttribute("hsncodeObj", hsnCodeService.getInfo(Integer.parseInt(hsncodeId)));
 		return "masters/hsncode/view";
+	}
+	
+	@GetMapping(value = "/isValidHSNCode")
+	@ResponseBody
+	public boolean isValidHSNCode(String name) {
+		logger.info("statesCode" + name);
+		HSNCode hsncode = hsnCodeService.findByCode(name);
+		if (hsncode != null) {
+			logger.info("HSN Code Already Exits!");
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

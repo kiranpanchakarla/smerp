@@ -28,14 +28,6 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	@Override
 	public PurchaseRequest save(PurchaseRequest purchaseRequest) {
 		
-		if (purchaseRequest.getId() != null) {
-			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
-			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
-			for (PurchaseRequestList purchaseRequest1 : purchaseRequestLists) {
-				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
-			}
-		}
-		
 		switch (purchaseRequest.getStatusType()) { 
         case "DR": 
         	purchaseRequest.setStatus(StatusUpdate.Draft.getStatus());
@@ -54,6 +46,17 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
         	logger.info("Type Not Matched:"+purchaseRequest.getStatusType());
             break; 
         } 
+		
+		
+		if (purchaseRequest.getId() != null) {
+			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
+			for (PurchaseRequestList purchaseRequest1 : purchaseRequestLists) {
+				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
+			}
+		}
+		
+		
 		
 			List<PurchaseRequestList> ltms = purchaseRequest.getPurchaseRequestLists();
 		if (ltms != null) {

@@ -58,9 +58,11 @@ public class CompanyController {
 	CompanyServices companyServices;
 
 	private static final Logger logger = LogManager.getLogger(CompanyController.class);
+	
 
 	@GetMapping(value = "/list")
 	public String list(Model model) {
+		logger.info("list Company--> ");
 		model.addAttribute("companyList", companyServices.findByIsActive());
 		return "company/list";
 	}

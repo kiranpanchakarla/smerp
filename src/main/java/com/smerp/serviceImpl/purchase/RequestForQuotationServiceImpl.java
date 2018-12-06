@@ -36,31 +36,34 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
 		
+		switch (requestForQuotation.getStatusType()) { 
+        case "DR": 
+        	requestForQuotation.setStatus(StatusUpdate.Draft.getStatus());
+            break; 
+        case "SA": 
+        	requestForQuotation.setStatus(StatusUpdate.Open.getStatus());
+            break; 
+        
+        case "RE":  
+        	requestForQuotation.setStatus(StatusUpdate.Reject.getStatus());
+            break; 
+        case "APP": 
+        	requestForQuotation.setStatus(StatusUpdate.Approve.getStatus());
+            break; 
+        default: 
+        	logger.info("Type Not Matched:"+requestForQuotation.getStatusType());
+            break; 
+        } 
+		
+		
 		if(requestForQuotation.getId() !=null) {   //  delete List Of Items.
 	    			RequestForQuotation requestForListOfItems = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
 	        		List<LineItems>	 requestLists = requestForListOfItems.getLineItems();
 	        		   	 for (LineItems lineObj: requestLists) { 
 	        		   		lineitemsRepository.deleteAll(requestLists);
 	        		     }
-	        		   	 
-	        		   	switch (requestForQuotation.getStatusType()) { 
-	        	        case "DR": 
-	        	        	requestForQuotation.setStatus(StatusUpdate.Draft.getStatus());
-	        	            break; 
-	        	        case "SA": 
-	        	        	requestForQuotation.setStatus(StatusUpdate.Open.getStatus());
-	        	            break; 
-	        	        
-	        	        case "RE":  
-	        	        	requestForQuotation.setStatus(StatusUpdate.Reject.getStatus());
-	        	            break; 
-	        	        case "APP": 
-	        	        	requestForQuotation.setStatus(StatusUpdate.Approve.getStatus());
-	        	            break; 
-	        	        default: 
-	        	        	logger.info("Type Not Matched:"+requestForQuotation.getStatusType());
-	        	            break; 
-	        	        } 
+		}	   	 
+	        		   	
 	        		   	 
 	        		   	List<LineItems> listItems = requestForQuotation.getLineItems();
 		        		if (listItems != null) {
@@ -71,7 +74,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		        			}
 		        			requestForQuotation.setLineItems(listItems);
 		        		}
-		}
+		
 	        		
 	        		
 	        		

@@ -334,18 +334,19 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <a href="<c:url value="/purchaseReq/list"/>">
+                                                                    <%-- <a href="<c:url value="/purchaseReq/list"/>">
                                                                         <button type="button" class="btn btn-warning" id="cancel"> <i class="icon-cross2"></i> Cancel</button>
-                                                                    </a>
-                                                                      
+                                                                    </a> --%>
+                                                                    <c:if test="${purchaseRequest.id==null || purchaseRequest.status =='Draft Stage' }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
-                                                                    
+                                                                    </c:if>
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${purchaseRequest.id!=null}">
                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
                                                                    
+                                                                     <form:button  type="submit" id="cancel" name="statusType" value="CA" class="btn btn-warning"> <i class="icon-cross2"></i> Cancel</form:button>
                                                                      
                                                                       <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
                                                                      

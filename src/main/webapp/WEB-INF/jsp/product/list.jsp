@@ -80,8 +80,8 @@
 																	<th>S.no</th>
 																	<th>Product Number</th>
 																	<th>Description</th>
-																	<th>product Group</th>
-																	<th>Uom Group</th>
+																	<th>Product Group</th>
+																	<th>UOM Group</th>
 																	<th>Actions</th>
 																	
 																</tr>

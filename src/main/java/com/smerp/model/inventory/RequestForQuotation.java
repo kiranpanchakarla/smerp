@@ -42,12 +42,7 @@ public class RequestForQuotation extends AuditModel {
 	@Column(name="status")
 	private String status;
 	private transient  String statusType;
-	public String getStatusType() {
-		return statusType;
-	}
-	public void setStatusType(String statusType) {
-		this.statusType = statusType;
-	}
+	
 	@Column(name="reference_doc_number")
 	private String referenceDocNumber;
 	@Column(name="posting_date")
@@ -77,6 +72,13 @@ public class RequestForQuotation extends AuditModel {
 	
 	@Column(name="remark")
     private String remark;
+	
+	public String getStatusType() {
+		return statusType;
+	}
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
 	
 	public String getRemark() {
 		return remark;

@@ -37,30 +37,38 @@ public class CompanyServicesImpl implements CompanyServices {
 
 	public Company save(Company company) {
 		try {
-			 company = companyRepository.save(company);
-			if(company!=null) {
-			User user = new User();
-			logger.info("inside userservice impl save method");
-			user.setCompany(company);
-			user.setUsername(company.getEmailId());
-			user.setActivationId("InActive");
-			//user.setPlant("test");
-			user.setPassword(bcryptEncoder.encode("Welcome"));
-			user.setImage(company.getLogo());
-			user.setFirstname(company.getName());
-		    user.setLastname(company.getName());
-			user.setMobileNo(company.getPhoneNum());
-			user.setUserEmail(company.getEmailId());
-			user.setEnabled(true);
-			user.setReportingManagerId(company.getId());
-			//user.setUsername(RandomUtil.referenceId());
-			String roleId = "1";
-			Role role = roleService.findById(Long.parseLong(roleId));
-			Set<Role> roles = new HashSet<>();
-			roles.add(role);
-			user.setRoles(roles);
-			userDao.save(user);
+			int first_flag=0;
+			if(company.getId()==null) {
+				first_flag=1;
 			}
+			
+			 company = companyRepository.save(company);
+			logger.info("Company Obj-->" +company);
+				
+				if(first_flag==1) {
+					User user = new User();	
+					logger.info("user Obj-->" +user);
+					user.setCompany(company);
+					user.setUsername(company.getEmailId());
+					user.setActivationId("InActive");
+					//user.setPlant("test");
+					user.setPassword(bcryptEncoder.encode("Welcome"));
+					user.setImage(company.getLogo());
+					user.setFirstname(company.getName());
+				    user.setLastname(company.getName());
+					user.setMobileNo(company.getPhoneNum());
+					user.setUserEmail(company.getEmailId());
+					user.setEnabled(true);
+					user.setReportingManagerId(company.getId());
+					//user.setUsername(RandomUtil.referenceId());
+					String roleId = "1";
+					Role role = roleService.findById(Long.parseLong(roleId));
+					Set<Role> roles = new HashSet<>();
+					roles.add(role);
+					user.setRoles(roles);
+					userDao.save(user);
+				}
+		
 			
 		} catch (Exception ex) {
 			logger.info("error-->" + ex.getMessage());

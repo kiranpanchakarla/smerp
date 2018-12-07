@@ -12,7 +12,7 @@ import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.service.purchase.PurchaseRequestService;
-import com.smerp.util.EnumStatusUpdate.StatusUpdate;
+import com.smerp.util.EnumStatusUpdate;
 
 @Service
 public class PurchaseRequestServiceImpl implements PurchaseRequestService {
@@ -30,18 +30,20 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		
 		switch (purchaseRequest.getStatusType()) { 
         case "DR": 
-        	purchaseRequest.setStatus(StatusUpdate.Draft.getStatus());
+        	purchaseRequest.setStatus(EnumStatusUpdate.DRAFT.getStatus());
             break; 
         case "SA": 
-        	purchaseRequest.setStatus(StatusUpdate.Open.getStatus());
+        	purchaseRequest.setStatus(EnumStatusUpdate.OPEN.getStatus());
             break; 
-        
         case "RE":  
-        	purchaseRequest.setStatus(StatusUpdate.Reject.getStatus());
+        	purchaseRequest.setStatus(EnumStatusUpdate.REJECTED.getStatus());
             break; 
         case "APP": 
-        	purchaseRequest.setStatus(StatusUpdate.Approve.getStatus());
+        	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
             break; 
+        case "CE":
+        	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+			break;
         default: 
         	logger.info("Type Not Matched:"+purchaseRequest.getStatusType());
             break; 
@@ -77,6 +79,12 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		return purchaseRequestRepository.findByIsActive(true);
 	}
 
+	@Override
+	public List<PurchaseRequest> prApprovedList() {
+
+		return purchaseRequestRepository.prApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+	}
+	
 	@Override
 	public PurchaseRequest delete(int id) {
 

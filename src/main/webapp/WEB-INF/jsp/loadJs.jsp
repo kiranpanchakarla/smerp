@@ -86,7 +86,8 @@
   
   
   function deleteById(id,url){
-      alertify.confirm('Are you Sure Want to Delete', function(){
+	  //alertify.alert('Title goes here', 'message')
+      alertify.confirm('Delete','Are You Sure Want To Delete', function(){
           //alertify.success('Ok');
             //"You pressed OK!";
             

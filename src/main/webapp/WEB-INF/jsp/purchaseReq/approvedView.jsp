@@ -33,7 +33,7 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="GET" action="/purchaseReq/view"
+							<form:form method="POST" action="/rfq/savePRtoRFQ"
 								class="commentForm" modelAttribute="purchaseRequest"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
@@ -41,8 +41,7 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h2 class="card-title" id="basic-layout-icons">Purchase
-														Request/View</h2>
+													<h2 class="card-title" id="basic-layout-icons">Convert PR to RFQ</h2>
 												</div>
 												<form:hidden path="id" />
 												<div class="card-body collapse in create-block">
@@ -94,13 +93,14 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Type</label>: ${purchaseRequest.type}
-
 																	</div>
 																	
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Remark</label>:${purchaseRequest.remarks}
 																	</div>
 																</div>
+																
+																
 
 																<!--  -->
 																<input type="hidden" id="addressCount" value="0">
@@ -193,7 +193,12 @@
 															<a href="#" onclick="goBack()"
 																class="btn btn-primary float-left">Back</a>
 																
+						       <form:button  type="submit" name="purchaseId" value="${purchaseRequest.id}" class="btn btn-primary mr-1 float-right"> <i></i>Convert PR to RFQ</form:button>
+																
 														</div>
+														
+														
+														
 
 													</div>
 												</div>

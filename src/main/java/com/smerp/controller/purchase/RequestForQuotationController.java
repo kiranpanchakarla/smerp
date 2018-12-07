@@ -1,6 +1,5 @@
 package com.smerp.controller.purchase;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +29,7 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.GenerateDocNumber;
 
 @Controller
 @RequestMapping("/rfq")
@@ -52,6 +52,8 @@ public class RequestForQuotationController {
 
 	@Autowired
 	SacService sacService;
+	
+
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -69,9 +71,9 @@ public class RequestForQuotationController {
        
 		RequestForQuotation rfqdetails = requestForQuotationService.findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
-			rfq.setDocNumber(documentNumberGeneration(rfqdetails.getDocNumber()));
+			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
 		} else {
-			documentNumberGenerationNotInDB(rfq);
+			rfq = GenerateDocNumber.documentNumberGenerationNotInDB(rfq);
 		}
 		logger.info("rfqdetails-->" + rfqdetails);
 		model.addAttribute("productList",
@@ -83,18 +85,7 @@ public class RequestForQuotationController {
 		return "rfq/create";
 	}
 
-	private void documentNumberGenerationNotInDB(RequestForQuotation rfqdetails) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String[] parts2 = dateFormat.format(date).split("/");
-		String type = "RFQ";
-		String[] parts1 = parts2[2].split(" ");
-		String prefix = type.concat(parts2[0]).concat(parts2[1]).concat(parts1[0]);
-		String suffix = "1";
-		String docNumber = prefix + suffix;
-		logger.info("docNumber-->" + docNumber);
-		rfqdetails.setDocNumber(docNumber);
-	}
+	
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
@@ -115,13 +106,18 @@ public class RequestForQuotationController {
 
 	private ObjectMapper rfqloadData(Model model, RequestForQuotation rfq) {
 		ObjectMapper mapper = new ObjectMapper();
-		VendorAddress vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
-		VendorAddress vendorShippingAddress = rfq.getVendorShippingAddress();
+		VendorAddress vendorPayTypeAddress=new VendorAddress();
+		VendorAddress vendorShippingAddress =new VendorAddress();
+		if(rfq.getVendorPayTypeAddress()!=null && rfq.getVendorPayTypeAddress()!=null) {
+		 vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
+		 vendorShippingAddress = rfq.getVendorShippingAddress();
+		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
+		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
+		}
 		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
 		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
 	
-		model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
-		model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
+		
 		model.addAttribute("lineItems", rfq.getLineItems());
 		return mapper;
 	}
@@ -134,6 +130,7 @@ public class RequestForQuotationController {
 		rfqloadData(model, rfq);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("rfq", rfq);
+		model.addAttribute("plantMap", plantMap());
 		return "rfq/view";
 	}
 
@@ -145,27 +142,22 @@ public class RequestForQuotationController {
 		return "redirect:list";
 	}
 
-	private String documentNumberGeneration(String documentNumber) {
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String[] parts2 = dateFormat.format(date).split("/");
-		String type = "RFQ";
-		String[] parts1 = parts2[2].split(" ");
-		String prefix = type.concat(parts2[0]).concat(parts2[1]).concat(parts1[0]);
-
-		int inc_number = Integer.parseInt(documentNumber.substring(11)) + 1;
-		String docNumber = prefix + inc_number;
-		logger.info("docNumber"+docNumber);
-		return docNumber;
-	}
-
+	
 	@PostMapping("/save")
 	public String name(RequestForQuotation requestForQuotation) {
 		logger.info("Inside save method" + requestForQuotation);
 		logger.info("rfq details" + requestForQuotationService.save(requestForQuotation));
 		return "redirect:list";
 	}
+	
+	@PostMapping("/savePRtoRFQ")
+	public String savePRtoRFQ(@RequestParam String purchaseId) {
+		logger.info("purchaseId" + purchaseId);
+		logger.info("purchaseRequest view-->" + purchaseId);
+		RequestForQuotation rfq = requestForQuotationService.saveRFQ(purchaseId);
+		return "redirect:edit?id="+rfq.getId();
+	}
+
 
 	@GetMapping("/list")
 	public String list(Model model) {

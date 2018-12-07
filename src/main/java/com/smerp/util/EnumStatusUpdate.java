@@ -1,23 +1,23 @@
 package com.smerp.util;
 
-public class EnumStatusUpdate {
+public enum EnumStatusUpdate {
 
-	public enum StatusUpdate
-	{
-	    Open("Open Stage"),
-	    Cancel("Cancel Stage"),
-	    Draft("Draft Stage"),
-	    Approve("Approved"),
-	    Reject("Rejected");
-	 
-	    private String status;
-	 
-	    StatusUpdate(String status) {
-	        this.status = status;
-	    }
-	 
-	    public String getStatus() {
-	        return status;
-	    }
+	OPEN("Open"), 
+	CANCELED("Canceled"),
+	DRAFT("Draft"),
+	APPROVEED("Approved"),
+	CONVERTPRTORFQ("ConvertedToRFQ"),
+	COMPLETED("Completed"),
+	REJECTED("Rejected");
+
+	private String status;
+
+	EnumStatusUpdate(String status) {
+		this.status = status;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
 }

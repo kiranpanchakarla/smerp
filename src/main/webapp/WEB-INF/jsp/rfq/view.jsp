@@ -224,22 +224,12 @@ text-align: left;
 																													<td>${listLineItems.requiredQuantity}</td>
 																															
 																														<td>${listLineItems.productGroup}</td>
-																														
 																														<td>
-																														<c:if test="${listLineItems.warehouse==1}">
-																													         Madurawada
-																													    </c:if>
-																													    
-																													    <c:if test="${listLineItems.warehouse==2}">
-																													        Yelamanchili
-																													    </c:if>
-																													    
-																													    <c:if test="${listLineItems.warehouse==3}">
-																													         MVP Colony
-																													    </c:if>
-																														
-																														</td>
-																															
+																														<c:forEach var="entry" items="${plantMap}">
+																													<c:if test="${entry.key ==listLineItems.warehouse}">
+																													 ${entry.value} 																													 </c:if>
+																													  </c:forEach>
+																														</td>	
 																														<td>${listLineItems.hsn}</td>
 																															
 																													</c:if>
@@ -251,26 +241,13 @@ text-align: left;
 																															
 																													<td>${listLineItems.requiredQuantity}</td>
 																													
-																													<td>
-																														<c:if test="${listLineItems.warehouse==1}">
-																													         Madurawada
-																													    </c:if>
-																													    
-																													    <c:if test="${listLineItems.warehouse==2}">
-																													        Yelamanchili
-																													    </c:if>
-																													    
-																													    <c:if test="${listLineItems.warehouse==3}">
-																													         MVP Colony
-																													    </c:if>
-																														
+																														<td>
+																														<c:forEach var="entry" items="${plantMap}">
+																													<c:if test="${entry.key ==listLineItems.warehouse}">
+																													 ${entry.value} 																													 </c:if>
+																													  </c:forEach>
 																														</td>
-																															
 																													</c:if>
-																													
-																															
-																													
-																												
 																												</tr>
 
 																												<c:set var="count" value="${count + 1}"

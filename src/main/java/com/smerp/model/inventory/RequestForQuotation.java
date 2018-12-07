@@ -70,9 +70,22 @@ public class RequestForQuotation extends AuditModel {
 	@Column(name="is_active")
 	private Boolean isActive = true;
 	
+	@Column(name="purchase_req_id")
+    private Integer purchaseReqId;
+	
+	
 	@Column(name="remark")
     private String remark;
 	
+	
+	
+	
+	public Integer getPurchaseReqId() {
+		return purchaseReqId;
+	}
+	public void setPurchaseReqId(Integer purchaseReqId) {
+		this.purchaseReqId = purchaseReqId;
+	}
 	public String getStatusType() {
 		return statusType;
 	}

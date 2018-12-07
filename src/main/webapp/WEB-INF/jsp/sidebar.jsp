@@ -88,6 +88,9 @@
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/purchaseReq/list"/>">Purchase Request</a></li>
            <li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request Quotations</a></li>
+           
+             <li class="has_sub"><a href="<c:url value ="/purchaseReq/approvedList"/>">Convert PR To RFQ</a></li>
+           
         </ul>
       </li>
       

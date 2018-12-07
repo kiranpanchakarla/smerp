@@ -334,9 +334,6 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <a href="<c:url value="/purchaseReq/list"/>">
-                                                                        <button type="button" class="btn btn-warning" id="cancel"> <i class="icon-cross2"></i> Cancel</button>
-                                                                    </a>
                                                                       
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
                                                                     
@@ -347,10 +344,10 @@
                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
                                                                    
                                                                      
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
                                                                      
                                                                       </c:if>
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 float-right"> <i></i>Approve</form:button>
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -848,7 +845,8 @@
                     $(itemParentRow).find(".uom").val(uom);
 
                     //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
-                    var productgroup = obj.productCategory.categoryType;
+                   // var productgroup = obj.productCategory.categoryType;
+                    var productgroup=obj.productGroup.productName;
                     //$('.productGroup').val(productgroup);
 
                     $(itemParentRow).find(".productGroup").val(productgroup);

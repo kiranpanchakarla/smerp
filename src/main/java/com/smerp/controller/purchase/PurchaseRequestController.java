@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,13 +98,33 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
 		return "/purchaseReq/list";
 	}
+	
+	@GetMapping(value = "/approvedList")
+	public String approvedList(Model model) {
+		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.prApprovedList();
+		logger.info("purchaseRequest list-->" + purchaseRequestsList);
+		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
+		return "/purchaseReq/approvedList";
+	}
 
 	@GetMapping(value = "/view")
 	public String view(Model model, String purchaseReqId) {
+		
 		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
 		logger.info("purchaseRequest view-->" + purchaseRequest);
 		model.addAttribute("purchaseRequest", purchaseRequest);
+		model.addAttribute("plantMap", plantMap());
 		return "purchaseReq/view";
+	}
+	
+	@GetMapping(value = "/approvedView")
+public String approvedView(Model model, String purchaseReqId) {
+		
+		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
+		logger.info("purchaseRequest view-->" + purchaseRequest);
+		model.addAttribute("purchaseRequest", purchaseRequest);
+		model.addAttribute("plantMap", plantMap());
+		return "purchaseReq/approvedView";
 	}
 
 	@GetMapping(value = "/getInfo")
@@ -129,6 +151,7 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseRequest", purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId)));
 		return "purchaseReq/create";
 	}
+	
 	
 	 
 	private void purchaseRequestIdGeneration(PurchaseRequest purchaseRequest) {

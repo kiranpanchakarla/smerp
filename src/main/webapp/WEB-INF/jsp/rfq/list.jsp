@@ -70,10 +70,9 @@
 																	<th>Vendor Name</th>
 																	<th>EmailId</th>
 																	<th>Document Number</th>
-																	<!-- <th>Posting Date</th>
-																	<th>Document Date</th>
-																	<th>Required Date</th> -->
-																	<th>Status</th>
+																	<th>Created Date</th>
+																    <th>Modified Date</th>
+																	<th>RFQ Status</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -85,9 +84,8 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<%-- <td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.postingDate}" /> </td>
-																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.documentDate}" /> </td>
-																	<td><fmt:formatDate pattern = "dd/MM/yyyy"  value = "${list.requiredDate}" /> </td> --%>
+																	<td>${list.createdAt}</td>
+																	<td>${list.updatedAt}</td>
 																	<td>${list.status}</td>
 																	<td><c:if test="${list.status != 'Approved'}">
 																	 <a class ="btn btn-edit" href="<c:url value="/rfq/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a>  

@@ -19,6 +19,9 @@
         </ul> --%>
       </li>
        <li><a href="<c:url value ="/rfq/list"/>"><i class="icon-android-expand left"></i><span class="menu_text">Request for Quotation</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       
+       <li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i class="icon-egg left left"></i><span class="menu_text">Convert PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       
         <%-- <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/product/productList"/>">Product</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>

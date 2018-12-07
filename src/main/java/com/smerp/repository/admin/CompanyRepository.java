@@ -19,6 +19,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	Company findById(int id);
 
-	@Query("SELECT c FROM Company c WHERE isActive=:isActive order by updatedAt desc")
+	@Query("SELECT c FROM Company c WHERE isActive=:isActive order by createdAt asc")
     List<Company>  findByIsActive(@Param("isActive") Boolean isActive);
 }

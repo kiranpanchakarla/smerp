@@ -105,17 +105,17 @@
 																		 	<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 									        									<a class="btn btn-edit"
 																		      href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
-																			class="icon-edit left"></i></a>
+																			class="icon-edit left" data-toggle="tooltip" data-placement="right" title="Edit"></i></a>
 									   										 </c:if>
 									   										 <c:if test="${fn:containsIgnoreCase(permissions,'delete')}">
 									        									 <a class="btn btn-delete"
 																		href="#"
-																		onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')"><i
+																		onclick="deleteById('<c:out value="${vendorList.id}"/>','/vendor/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
 																			class="icon-bin left"></i></a>
 									   										 </c:if>
 									   										 <c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 											        									 <a class="btn btn-view"
-																				href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>"><i
+																				href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
 																					class="icon-eye3 left"></i></a>
 									   										 </c:if>
 									   										 
@@ -149,6 +149,10 @@
 			$('#example').DataTable({
 				"scrollX" : true
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 

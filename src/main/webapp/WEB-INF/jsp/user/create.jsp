@@ -106,14 +106,16 @@
 																		<!-- <div  class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-6 form-group">
-																		<label>Mobile</label>
-																		<form:input path="mobileNo"
-																					placeholder='Mobile Number'
-																					 type="text"
-																					class="form-control "
-																					maxlength="13" minlength="10"pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"/>
-																		<!-- <div class="help-block with-errors"></div> -->
-																	</div>
+																				<label>Mobile</label>
+
+																				<form:input type="text"
+																					cssClass="form-control"
+																					placeholder='Mobile Number' path="mobileNo"
+																					required="true" maxlength="13" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"
+																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
+																					oninput="setCustomValidity('')" />
+																				<!-- <div   class="help-block with-errors"></div> -->
+																			</div>
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group">
@@ -341,7 +343,8 @@ $(document).ready(function() {
 	                     			    	var image = document.getElementById('output');
 	                     			    	image.src = URL.createObjectURL(event.target.files[0]);
 	                     			    }
-	                     			}     			  
+	                     			}     
+	                     			 
             			 
 </script>
 </html>

@@ -152,8 +152,8 @@ $(document).ready(function(){
 																			<div class="col-sm-6 form-group">
 																				<label>Fax</label>
 																				<form:input path="fax" placeholder='Fax number'
-																					type="text" class="form-control" maxlength="14"
-																					minlength="14" pattern="[a-zA-Z]{0}[0-9._%+-]{14}"
+																					type="text" class="form-control" maxlength="15"
+																					minlength="10" onkeypress='return isNumberKey(event);'
 																					oninvalid="this.setCustomValidity('Please Enter Fax Number')"
 																					oninput="setCustomValidity('')" />
 																				<!--  <div   class="help-block with-errors"></div> -->
@@ -272,8 +272,8 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Fax</label><input type="text"
-																							class="form-control" maxlength="14"
-																					minlength="14" pattern="[a-zA-Z]{0}[0-9._%+-]{14}" placeholder='Fax Number'
+																							class="form-control" maxlength="15"
+																					minlength="10" onkeypress='return isNumberKey(event);' placeholder='Fax Number'
 																							name="vendorContactDetails[0].fax"
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Fax')"
@@ -426,8 +426,8 @@ $(document).ready(function(){
 																									class="form-control"
 																									value="${listContactDetails.fax}"
 																									name="vendorContactDetails[<%= count %>].fax"
-																									maxlength="14"
-																					minlength="14" pattern="[a-zA-Z]{0}[0-9._%+-]{14}"
+																									maxlength="15" minlength="10" 
+																					                onkeypress='return isNumberKey(event);'
 																									placeholder='Fax Number' required="true"
 																									oninvalid="this.setCustomValidity('Please Enter FAX')"
 																									oninput="setCustomValidity('')" />
@@ -1105,7 +1105,7 @@ if(id==''){
 												+ '<div class="form-group"><label>Mobile</label><input type="text" maxlength="13" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}" placeholder="Mobile Number" value="+91"  name="vendorContactDetails['+inc+'].mobileNo" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Mobile Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Fax</label><input type="text" maxlength="14" minlength="14" pattern="[a-zA-Z]{0}[0-9._%+-]{14}" placeholder="Fax Number" name="vendorContactDetails['+inc+'].fax" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter  Fax Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<div class="form-group"><label>Fax</label><input type="text" maxlength="15" minlength="10" onkeypress="return isNumberKey(event);" placeholder="Fax Number" name="vendorContactDetails['+inc+'].fax" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter  Fax Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Email</label><input type="text" placeholder="Email Id" name="vendorContactDetails['+inc+'].email" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Email \')" oninput="setCustomValidity(\'\')" >  </div></div>'
@@ -1277,7 +1277,15 @@ var inc1=1;
 	      window.history.back();
 	  }
 	 
-	
+	  function isNumberKey(evt) {
+		    var charCode = (evt.which) ? evt.which : event.keyCode;
+		    console.log(charCode);
+		    if (charCode != 43 && charCode != 45 && charCode > 31
+		        && (charCode < 48 || charCode > 57))
+		        return false;
+
+		    return true;
+		}
 	
 	
 	

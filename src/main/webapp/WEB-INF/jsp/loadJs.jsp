@@ -19,6 +19,9 @@
 <!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>   -->
 
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 
 
 <!-- alertifyjs -->
@@ -86,8 +89,7 @@
   
   
   function deleteById(id,url){
-	  //alertify.alert('Title goes here', 'message')
-      alertify.confirm('Delete','Are You Sure Want To Delete', function(){
+      alertify.confirm('Are you Sure Want to Delete', function(){
           //alertify.success('Ok');
             //"You pressed OK!";
             

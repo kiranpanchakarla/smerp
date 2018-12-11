@@ -256,8 +256,8 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Fax Number' path="faxNum"
-																					maxlength="14" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{13}"
+																					placeholder='Fax Number' path="faxNum" onkeypress='return isNumberKey(event);'
+																					maxlength="15" minlength="10" 
 																					oninvalid="this.setCustomValidity('Please Enter Fax Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -425,6 +425,15 @@
 			var image = document.getElementById('output');
 			image.src = URL.createObjectURL(event.target.files[0]);
 		}
+	}
+	function isNumberKey(evt) {
+	    var charCode = (evt.which) ? evt.which : event.keyCode;
+	    console.log(charCode);
+	    if (charCode != 43 && charCode != 45 &&  charCode > 31
+	        && (charCode < 48 || charCode > 57))
+	        return false;
+
+	    return true;
 	}
 </script>
 </html>

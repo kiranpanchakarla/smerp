@@ -89,12 +89,12 @@
 																	<td>${hsncode.rate}</td>
 																	<td><a
 																		class="btn btn-edit"
-																		href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncode.id}"/>">
+																		href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncode.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit">
 																			<i class="icon-edit left"></i>
 																	</a> <a class="btn btn-delete mr-1" href="#"
-																		onclick="deleteById('<c:out value="${hsncode.id}"/>','/hsncode/delete')"><i
+																		onclick="deleteById('<c:out value="${hsncode.id}"/>','/hsncode/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
 																			class="icon-bin left"></i></a> <a class="btn btn-view"
-																		href="<c:url value="/hsncode/view?hsncodeId=${hsncode.id}"/>"><i
+																		href="<c:url value="/hsncode/view?hsncodeId=${hsncode.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
 																			class="icon-eye3 left"></i></a></td>
 
 																</tr>
@@ -124,6 +124,10 @@
 			$('#example').DataTable({
 				 "scrollX": true
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 	

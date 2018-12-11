@@ -7,6 +7,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -46,7 +47,15 @@
 													<h2 class="content-header-title">Users</h2>
 												</div>
 												<div class="col-md-6">
-													<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
+												<c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'User'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+	        									<a class="btn btn-primary" href="<c:url value="/user/create"/>">Create</a>
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
+													
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
@@ -72,6 +81,7 @@
 																	 <th>Designation</th>
 																	<th>Department</th>
 																	<th>Email</th>
+																	<th>Created</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -84,12 +94,24 @@
 																	<td>${list.desigination.desigination}</td> 
 																	<td>${list.department.name}</td>
 																	<td>${list.userEmail}</td>
+																	<td>${list.createdAt}</td>
 																	<td>
+																	<c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'User'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'update')}"> 
 																	 <a class ="btn btn-edit" href="<c:url value="/user/edit?id=${list.userId}"/>"><i class="icon-edit left"></i></a>  
 																	 <a class ="btn btn-edit" href="<c:url value="/user/addPermissions?id=${list.userId}"/>"><i class="icon-add_to_queue left"></i></a> 
+																	 </c:if>
+									   								<c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')"><i class="icon-bin left"></i></a>
+														    		 </c:if> 
+									   								<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left"></i></a> 
-									                               </td>							
+									                               </c:if> 
+									       								</c:if>     
+   															    	 </c:forEach>
+																	</td>
 																</tr>
 																</c:forEach>
 															</tbody>

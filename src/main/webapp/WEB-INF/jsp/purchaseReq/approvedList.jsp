@@ -7,8 +7,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -45,29 +43,22 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
+										<div class="card-header">
 											<div class="row">
-												<div class="col-md-3">
-													<h2 class="content-header-title">Purchase Request</h2>
+												<div class="col-md-8">
+													<h2 class="content-header-title">Convert PR To RFQ</h2>
 												</div>
-												<div class="col-md-5">
-												<c:forEach items="${sessionScope.umpmap}" var="ump">
-										 <c:if test="${ump.key eq 'Purchase Request'}">
-										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
-	        									<a class="btn btn-primary" href="<c:url value="/purchaseReq/create"/>">Create</a>
-	   										 </c:if>
-	       								</c:if>     
-   									 </c:forEach>
-													
-												</div>
+												<%-- <div class="col-md-5">
+													<a class="btn btn-primary"
+														href="<c:url value="/purchaseReq/create"/>">Create</a>
+												</div> --%>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li>
-														<li class="breadcrumb-item active">Purchase Request</li>
+														<li class="breadcrumb-item active">Convert PR To RFQ</li>
 													</ol>
 												</div>
 											</div>
@@ -82,12 +73,12 @@
 														<thead>
 															<tr>
 																<th>SNO</th>
-																<th>User Name</th>
+																<th>Created By</th>
 																<th>Document No.</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Status</th>
-																<th>Actions</th>
+																<th>PR Status</th>
+																<th>ConvertToRFQ</th>
 
 															</tr>
 														</thead>
@@ -102,45 +93,19 @@
 																	<td>${purchaseRequestsList.createdAt}</td>
 																	<td>${purchaseRequestsList.updatedAt}</td>
 																	<td>${purchaseRequestsList.status}</td>
-																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
-																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
-																	<td>
-																	  <c:choose>
-																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ' }">
-																			
-																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'Purchase Request'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		 <c:choose>
-																	    <c:when test="${fn:containsIgnoreCase(permissions,'update')}">  <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/getInfo?purchaseReqId=${purchaseRequestsList.id}"/>"><i
-																				class="icon-edit left"></i></a></c:when>
-																			<c:otherwise><a class="btn btn-disable"><i
-																					class="icon-bin left"></i></a></c:otherwise></c:choose>
-																		 <c:choose>
-																	<c:when test="${fn:containsIgnoreCase(permissions,'delete')}">  <a class="btn btn-delete" href="#"
+																	<td><c:if test="${purchaseRequestsList.status != 'Completed'}">
+																			 <a class="btn btn-edit"
+																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>"><i
+																				  class="icon-edit left"></i></a></c:if></td>
+																 
+																  <%--  <td> <c:if test="${purchaseRequestsList.status != 'Completed' }"><a class="btn btn-delete" href="#"
 																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')"><i
-																			class="icon-bin left"></i></a></c:when>
-																			<c:otherwise><a class="btn btn-disable"><i
-																					class="icon-bin left"></i></a></c:otherwise></c:choose>
-																			</c:if></c:forEach>
-																	 </c:when>
-																	 <c:otherwise>
-                                                                      <a class="btn btn-disable" ><i
-																					class="icon-edit left"></i></a>
-																				<a class="btn btn-disable"><i
-																					class="icon-bin left"></i></a>
-                                                                     </c:otherwise>
-																	 
-																	  </c:choose>
-																		<c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'Purchase Request'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> <a class="btn btn-view"
+																			class="icon-bin left"></i></a></c:if></td>
+																		<td>	 <a class="btn btn-view"
 																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>"><i
-																			class="icon-eye3 left"></i></a> </c:if> 
-									       							</c:if></c:forEach>
-									       							</td>
-									       							</tr></c:forEach>
+																			class="icon-eye3 left"></i></a></td> --%>
+																</tr>
+															</c:forEach>
 														</tbody>
 
 													</table>

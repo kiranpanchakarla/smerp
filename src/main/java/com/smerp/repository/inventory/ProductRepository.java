@@ -12,7 +12,7 @@ import com.smerp.model.inventory.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query("SELECT P FROM Product P WHERE isActive=:isActive order by updatedAt desc")
+	@Query("SELECT P FROM Product P WHERE isActive=:isActive order by createdAt asc")
 	List<Product> findByIsActive(Boolean isActive);
 
 	Product findByProductNo(String productNo);

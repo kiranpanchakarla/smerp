@@ -84,6 +84,8 @@
 																<th>S.no</th>
 																<th>Vendor Name</th>
 																<th>VendorCode</th>
+																<th>Created</th>
+																<th>Modified</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -94,6 +96,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${vendorList.name}</td>
 																	<td>${vendorList.vendorCode}</td>
+																	<td>${vendorList.createdAt}</td>
+																	<td>${vendorList.updatedAt}</td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Vendor'}">

@@ -6,6 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -58,8 +59,14 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-
-													<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
+												<c:if test="${rfq.id!=null}">
+												<h2 class="card-title" id="basic-layout-icons">RFQ/Update</h2>
+													<form:input type="hidden" cssClass="form-control" path="id" />
+												</c:if>
+												<c:if test="${rfq.id==null}">
+												<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
+												</c:if> 
+													
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -173,15 +180,18 @@
 																		</div>
 																		
 																		
-																		<div class="row">
+																		<div class="row" id="radioDiv">
 																			<div class="col-sm-4 form-group">
 																			<div class="input-group">
+                                                                               
+                                                                               
                                                                                 <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Item" path="category"  name="category"  id="items_radio" 
 																				/>
                                                                                 <span class="radio-list">Item</span>
                                                                                 </div>
+                                                                               
                                                                                 <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Services" path="category"  name="category" id="service_radio" 
@@ -192,6 +202,12 @@
 																			
 																			</div>
 																		</div>
+																		
+																		<div class="row" id="pur_radioDiv" style="display: none">
+																	<div class="col-sm-6 form-group has-feedback">
+																		<label>Type</label>: ${rfq.category}
+																	</div>
+																       </div>
 																		
 																		
 																	</div>
@@ -269,6 +285,7 @@
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
 																										<c:if test="${not empty lineItems}">
+																										<form:hidden path="purchaseReqId" />
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -300,6 +317,58 @@
 																											<c:forEach items="${lineItems}"
 																												var="listLineItems">
 																												
+																												
+																											 <c:if test="${rfq.purchaseReqId!=null}">
+				         
+				                                                                                          <tr class="multTot multTot${count}">
+																												<td style="display: none;"><form:input
+																															type="hidden"
+																															path="lineItems[${count}].productId"
+																															value="${listLineItems.productId}"
+																															class="form-control productId"></form:input>
+																												<form:hidden path="lineItems[${count}].id"/>	
+																															</td>
+																															
+																													<c:if test="${rfq.category=='Item'}">
+																													<td>${listLineItems.prodouctNumber}</td>
+																													
+																													<td>${listLineItems.uom}</td>
+																													
+																													<td>${listLineItems.requiredQuantity}</td>
+																															
+																														<td>${listLineItems.productGroup}</td>
+
+																														<td><c:forEach var="entry"
+																																items="${planMap}">
+																																<c:if
+																																	test="${entry.key ==listLineItems.warehouse}">
+																													 ${entry.value} 																													 </c:if>
+																															</c:forEach></td>
+
+																														<td>${listLineItems.hsn}</td>
+																														<td>--</td>	
+																													</c:if>
+																													
+																													<c:if test="${rfq.category!='Item'}">
+																													<td>${listLineItems.sacCode}</td>
+																													
+																													<td>${listLineItems.description}</td>
+																															
+																													<td>${listLineItems.requiredQuantity}</td>
+
+																														<td><c:forEach var="entry"
+																																items="${planMap}">
+																																<c:if
+																																	test="${entry.key ==listLineItems.warehouse}">
+																													 ${entry.value} 																													 </c:if>
+																															</c:forEach></td>
+																														<td>--</td>		
+																													</c:if>
+																												
+																												</tr>
+																											</c:if>		
+																										
+																										 <c:if test="${rfq.purchaseReqId==null}">
 																												<tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
@@ -312,7 +381,7 @@
 																													<c:if test="${rfq.category=='Item'}">
 																													<td ><form:input type="text"
 																															path="lineItems[${count}].prodouctNumber" required="true"
-																															value="${listLineItems.prodouctNumber}"
+																															value="${listLineItems.prodouctNumber}"  
 																															class="form-control prodouctNumber"></form:input></td>
 																													
 																													<td><form:input type="text"
@@ -372,12 +441,11 @@
 																														</form:select></td>
 																															
 																													</c:if>
-																													
-																															
-																													
-																						                           <td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
+																												            <td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
 																												
 																												</tr>
+																												
+																										  </c:if>	
 
 																												<c:set var="count" value="${count + 1}"
 																													scope="page" />
@@ -392,12 +460,13 @@
 																						
 																					</div>
 																				</div>
+																				 <c:if test="${rfq.purchaseReqId==null}">
 																				<div class="add-row-block">
 																					<input type="button" class="btn btn-info"
 																						onclick="addItem()" value="Add Row">
 																						
 																				</div>
-																				
+																				</c:if>
 																				
 																				
 																			</div>
@@ -429,15 +498,17 @@
 																</div>
 											<br>				
 									<div class="text-xs-center">
+									
+									 <c:if test="${rfq.purchaseReqId==null}">
 											<a href="#" onClick="goBack()"
 												class="btn btn-primary float-left"> Back </a>
-										 
+									</c:if>		
+									
+									 <c:if test="${rfq.purchaseReqId!=null}">	
+												<a href="<c:url value="/purchaseReq/approvedList"/>" class="btn btn-primary float-left">
+																	 Back </a>
+										</c:if> 
 										
-											<a href="<c:url value="/rfq/list"/>">
-												<button type="button" class="btn btn-warning mr-1">
-													<i class="icon-cross2"></i> Cancel
-												</button>
-											</a> 
 											<c:if test="${rfq.status eq 'Draft Stage' || rfq.id==null }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
@@ -445,14 +516,22 @@
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${rfq.id!=null}">
-                                                                       <form:button  type="submit" id="update" name="statusType" value="UP" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
                                                                    
-                                                                     
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
-                                                                     
+                                                                     <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'RFQ'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                     </c:if></c:if></c:forEach>
                                                                       </c:if>
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 float-right"> <i></i>Approve</form:button>
-                                                               
+                                                                      
+                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'RFQ'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
+                                                                      </c:if></c:if></c:forEach>
 										</div>
 										</div>
 														</div>
@@ -495,6 +574,13 @@
 
 var inc=0;
 var edit_addressCount=0;
+
+var purchaseReqId=$('#purchaseReqId').val();
+if(purchaseReqId!='' && purchaseReqId != undefined) {
+	 $("#pur_radioDiv").show();
+	 $("#radioDiv").hide();
+}
+
 
 
 if ($('#service_radio').is(":checked") == true) {
@@ -697,9 +783,15 @@ $(document).ready(function(){
 		if(id!=''){
 			var vendorName=$('.vendorname').val();
 			//alert("vendorName"+vendorName);
+			
+			if(vendorName!=''){
 			autocompletevendorDetails(vendorName);
+			}
+			
 			var payTypeAddressId='${vendorPayTypeAddressId}';
 			var shippingAddressId='${vendorShippingAddressId}';
+			//alert("payTypeAddressId"+payTypeAddressId);
+			//alert("shippingAddressId"+shippingAddressId);
 			 
 		}else{
 		$('#postingDate').datepicker("setDate", "0"); //"0" for current date
@@ -859,14 +951,14 @@ $(document).ready(function(){
 	//get the product information based on product  name
     	function autocompleteandchange(name,itemParentRow){
 			//alert(name);
-			
+			//alert(itemParentRow);
     	 $.ajax({
 			   type: "GET",
     			data: {name :name}, 
     			async : false,
                 url: "<c:url value="/product/getProductInfo"/>", 
                 success: function (response) {
-                	console.log(response);
+                	console.log("getProductInfo-->"+response);
                 	
                 	
                 	
@@ -893,7 +985,8 @@ $(document).ready(function(){
                 	 $(itemParentRow).find(".uom").val(uom);
                 	
              	 //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
-             	 	var productgroup=obj.productCategory.categoryType;
+             	 //	var productgroup=obj.productCategory.categoryType;
+             		var productgroup=obj.productGroup.productName;
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);

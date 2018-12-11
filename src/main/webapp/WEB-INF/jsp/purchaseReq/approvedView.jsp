@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -33,7 +34,7 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="GET" action="/purchaseReq/view"
+							<form:form method="POST" action="/rfq/savePRtoRFQ"
 								class="commentForm" modelAttribute="purchaseRequest"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
@@ -41,8 +42,8 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h2 class="card-title" id="basic-layout-icons">Purchase
-														Request/View</h2>
+													<h2 class="card-title" id="basic-layout-icons">Convert
+														PR to RFQ</h2>
 												</div>
 												<form:hidden path="id" />
 												<div class="card-body collapse in create-block">
@@ -94,13 +95,14 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Type</label>: ${purchaseRequest.type}
-
 																	</div>
-																	
+
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Remark</label>:${purchaseRequest.remarks}
 																	</div>
 																</div>
+
+
 
 																<!--  -->
 																<input type="hidden" id="addressCount" value="0">
@@ -181,7 +183,7 @@
 
 																	</div>
 																</div>
-																
+
 
 																<!--  -->
 
@@ -193,7 +195,20 @@
 															<a href="#" onclick="goBack()"
 																class="btn btn-primary float-left">Back</a>
 																
+                                                             <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Convert To RFQ'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Convert')}"> 
+															<form:button type="submit" name="purchaseId"
+																value="${purchaseRequest.id}"
+																class="btn btn-primary mr-1 float-right">
+																<i></i>Convert PR to RFQ</form:button>
+																</c:if></c:if></c:forEach>
+
 														</div>
+
+
+
 
 													</div>
 												</div>
@@ -213,7 +228,7 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
-	
+
 	<script type="text/javascript">
 		function goBack() {
 			window.history.back();

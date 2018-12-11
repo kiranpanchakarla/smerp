@@ -5,11 +5,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer  {
+public class WebConfig implements WebMvcConfigurer {
     
 	 public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	       registry.addResourceHandler("/data/Company/logo/**").addResourceLocations("file:///D:/data/Company/logo/");
-	       registry.addResourceHandler("/data/Company/users/**").addResourceLocations("file:///D:/data/Company/users/");
+	       registry.addResourceHandler("/SMERP/Company/logo/**").addResourceLocations("file:/SMERP/Company/logo/");
+	       registry.addResourceHandler("/SMERP/Company/users/**").addResourceLocations("file:/SMERP/Company/users/");
        
 	 }
 }

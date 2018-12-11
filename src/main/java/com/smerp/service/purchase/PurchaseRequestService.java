@@ -8,6 +8,8 @@ public interface PurchaseRequestService {
 	PurchaseRequest save(PurchaseRequest purchaseRequest);
 
 	List<PurchaseRequest> findByIsActive();
+	
+	List<PurchaseRequest> prApprovedList();
 
 	PurchaseRequest delete(int id);
 

@@ -253,6 +253,12 @@ position: fixed;
     background: #1fa1b5;
 }
 
+.btn-approve{
+	 background: #12576d !important;
+    border-color: #12576d !important;
+        color: #fff !important;
+}
+
 form label {
     color: #f58423;
 }
@@ -332,9 +338,13 @@ table.dataTable.display tbody td{
     color: #ef752d;
 }
 
+.btn-disable{
+	visibility: hidden;
+}
 .btn-edit,.btn-view {
     color: #1087ad;
 }
+
 .btn-edit:hover,.btn-view:hover,.btn-delete:hover{
 	color:#ee6a31;
 }

@@ -111,7 +111,7 @@
 																					placeholder='Mobile Number'
 																					 type="text"
 																					class="form-control "
-																					maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"/>
+																					maxlength="13" minlength="10"pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"/>
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>

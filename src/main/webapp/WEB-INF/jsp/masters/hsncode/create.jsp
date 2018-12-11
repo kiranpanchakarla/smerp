@@ -70,7 +70,7 @@
 																	<label for="timesheetinput1">HSN Code</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='HSN Code' path="hsnCode" onchange="isValidName('hsnCode','/hsncode/isValidHSNCode','1_errorContainer','HSN Code Already Exists')"
-																		 required="true" oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
+																		 required="true" maxlength="10" minlength="8" pattern="[a-zA-Z]{0}[0-9]{8}" oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
 																    
 																</div>
 

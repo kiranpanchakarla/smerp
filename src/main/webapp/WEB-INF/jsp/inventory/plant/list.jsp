@@ -73,7 +73,7 @@
 														<thead>
 															<tr>
 																<th >S.no</th>
-																<th >plant Name</th>
+																<th >Plant Name</th>
 																<th >Actions</th>
 															</tr>
 														</thead>

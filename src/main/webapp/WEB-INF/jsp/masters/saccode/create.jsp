@@ -70,7 +70,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='SAC Code' path="sacCode"
 																		 required="true" onchange="isValidName('sacCode','/saccode/isValidSACCode','1_errorContainer','SAC Code Already Exists')"
-																		oninvalid="this.setCustomValidity('Enter SAC Code')"
+																		oninvalid="this.setCustomValidity('Enter SAC Code')" maxlength="10" minlength="6" pattern="[a-zA-Z]{0}[0-9]{10}"
 																		oninput="setCustomValidity('')" />
 																	 
 																</div>

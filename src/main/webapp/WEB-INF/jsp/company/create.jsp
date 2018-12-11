@@ -248,7 +248,7 @@
 																				<form:input type="text"
 																					cssClass="form-control"
 																					placeholder='Mobile Number' path="phoneNum"
-																					required="true" maxlength="13" minlength="13" pattern="[a-zA-Z]{0}[0-9+-]{13}"
+																					required="true" maxlength="13" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"
 																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -257,7 +257,7 @@
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Fax Number' path="faxNum"
-																					maxlength="14" minlength="10" pattern="[a-zA-Z]{0}[0-9._%+-]{14}"
+																					maxlength="14" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{13}"
 																					oninvalid="this.setCustomValidity('Please Enter Fax Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->

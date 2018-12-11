@@ -740,6 +740,7 @@
             	var arr=[];
             	 $(".prodouctNumber").each(function() {
                 	 // alert($.inArray($(this).val(), arr));
+                	  if(availableTags.includes($(this).val()) == true) 	 {
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
@@ -752,6 +753,12 @@
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        
     		        }
+                }else {
+                     	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+                     	 ($(this).parents('tr').find('td').find('input').val(''));
+                     	 ($(this).parents('tr').find('td').find('select').val('')); 
+                     }  
+    		      
     		    });
                         	
             	
@@ -794,6 +801,7 @@
             	var arr=[];
             	 $(".sacCode").each(function() {
                 	 // alert($.inArray($(this).val(), arr));
+                	   if(availableSacs.includes($(this).val()) == true) 	 {
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
@@ -805,6 +813,14 @@
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        }
+            	 }else {
+               	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+  		        	 $(this).val('')
+  		        	 ($(this).parents('tr').find('td').find('input').val(''));
+  		        	 ($(this).parents('tr').find('td').find('select').val(''));  
+                 }
+     		        
+    		        
     		    });
             	 
                         	

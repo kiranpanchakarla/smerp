@@ -179,10 +179,14 @@ public class ProductController {
     private String getInvoiceListByProductNumber(@RequestParam("name") String name) throws JsonProcessingException {
         Product product = productService.findByproductNo(name);
         logger.info("product Obj-->" + product );
+        if(product!=null) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         logger.info(mapper.writeValueAsString(product));
         return mapper.writeValueAsString(product);
+        }else {
+        	return "";
+        }
     }
 
 }

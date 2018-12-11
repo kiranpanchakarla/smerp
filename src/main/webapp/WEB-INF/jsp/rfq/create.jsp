@@ -905,7 +905,7 @@ $(document).ready(function(){
 		$.each(prodouctNumbers, function (index, value) {
 		   availableTags.push(value.toString());
 	   });
-		// alert("length"+availableTags.length);
+	 //alert("length"+availableTags);
 		 
 		//$(".prodouctNumber").autocomplete({
 	$(document).on("keypress", ".prodouctNumber", function() {
@@ -929,10 +929,13 @@ $(document).ready(function(){
      	
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
-         	 // alert($.inArray($(this).val(), arr));
+     	//alert("validation-->"+	availableTags.includes($(this).val()) );
+        if(availableTags.includes($(this).val()) == true) 	 {
+     	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
 		       	// var isDluplicate = true;
+		       	
 		       	autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
@@ -942,9 +945,13 @@ $(document).ready(function(){
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
+        }else {
+        	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+        	 ($(this).parents('tr').find('td').find('input').val(''));
+        	 ($(this).parents('tr').find('td').find('select').val('')); 
+        }
+		        
 		    });
-                 	
-     	
      });
 	
 
@@ -960,13 +967,11 @@ $(document).ready(function(){
                 success: function (response) {
                 	console.log("getProductInfo-->"+response);
                 	
-                	
-                	
+                	//alert("--->"+response);
+                	if(response!="") {
                 	var obj =JSON.parse(response);
                 	
                 	//var myJSON = JSON.stringify(obj);
-                	
-                	
                 	
                 	var hsndata=obj.hsnCode;
                 	//alert("hsnCode"+hsndata.hsnCode);
@@ -986,11 +991,15 @@ $(document).ready(function(){
                 	
              	 //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
              	 //	var productgroup=obj.productCategory.categoryType;
+             
              		var productgroup=obj.productGroup.productName;
+             		
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
-                	
+             	 	 
+             	 	 
+                	}
                 	
                	 },
                 error: function(e){
@@ -1121,6 +1130,8 @@ $(document).ready(function(){
                                           	var arr=[];
                                           	 $(".sacCode").each(function() {
                                               	 // alert($.inArray($(this).val(), arr));
+                                              	  if(availableSacs.includes($(this).val()) == true) 	 {
+                                              	 
                                   		        if ($.inArray($(this).val(), arr) == -1){
                                   		            arr.push($(this).val());
                                   		       	// var isDluplicate = true;
@@ -1132,6 +1143,15 @@ $(document).ready(function(){
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
+                                  		        
+                                              }else {
+                                            	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+                               		        	 $(this).val('')
+                               		        	 ($(this).parents('tr').find('td').find('input').val(''));
+                               		        	 ($(this).parents('tr').find('td').find('select').val(''));  
+                                              }
+                                  		        
+                                  		        
                                   		    });
                                           	 
                                                       	

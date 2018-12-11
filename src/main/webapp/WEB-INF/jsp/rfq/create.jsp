@@ -517,12 +517,14 @@
                                                                     </c:if>
                                                                     <c:if test="${rfq.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                   
+                                                                        <form:button  type="submit" id="cancel" name="statusType" value="CA" class="btn btn-warning"> <i class="icon-cross2"></i>Cancel</form:button>
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
+                                                                       <c:if test="${rfq.status != 'Cancelled'}">
                                                                       <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                    </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                       </c:if>
                                                                       
@@ -530,7 +532,9 @@
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                      <c:if test="${rfq.status != 'Cancelled'}">
                                                                       <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
+                                                                     </c:if>
                                                                       </c:if></c:if></c:forEach>
 										</div>
 										</div>

@@ -84,9 +84,9 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>SNO</th>
+																<th>Sno</th>
 																<th>Vendor Name</th>
-																<th>EmailId</th>
+																<th>Email Id</th>
 																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
@@ -122,7 +122,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'update')}">
 																								<a class="btn btn-edit"
-																									href="<c:url value="/rfq/edit?id=${list.id}"/>"><i
+																									href="<c:url value="/rfq/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i
 																									class="icon-edit left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -134,7 +134,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'delete')}">
 																								<a class="btn btn-delete" href="#"
-																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i
+																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
 																									class="icon-bin left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -159,7 +159,7 @@
 																				<c:if
 																					test="${fn:containsIgnoreCase(permissions,'view')}">
 																					<a class="btn btn-view"
-																						href="<c:url value="/rfq/view?id=${list.id}"/>"><i
+																						href="<c:url value="/rfq/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
 																						class="icon-eye3 left"></i></a>
 																				</c:if>
 																			</c:if>
@@ -191,6 +191,10 @@
 			$('#example').DataTable({
 				"scrollX" : true
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 

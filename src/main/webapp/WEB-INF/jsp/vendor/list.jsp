@@ -115,7 +115,7 @@
 									   										 </c:if>
 									   										 <c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 											        									 <a class="btn btn-view"
-																				href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
+																				href="<c:url value="/vendor/view?vendorId=${vendorList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
 																					class="icon-eye3 left"></i></a>
 									   										 </c:if>
 									   										 

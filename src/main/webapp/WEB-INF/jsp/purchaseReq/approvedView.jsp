@@ -195,15 +195,12 @@
 															<a href="#" onclick="goBack()"
 																class="btn btn-primary float-left">Back</a>
 																
-                                                             <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'Convert To RFQ'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Convert')}"> 
+                                                            
 															<form:button type="submit" name="purchaseId"
 																value="${purchaseRequest.id}"
 																class="btn btn-primary mr-1 float-right">
 																<i></i>Convert PR to RFQ</form:button>
-																</c:if></c:if></c:forEach>
+															
 
 														</div>
 

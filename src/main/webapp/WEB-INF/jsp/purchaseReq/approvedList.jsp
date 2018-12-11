@@ -72,9 +72,9 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>SNO</th>
+																<th>Sno</th>
 																<th>Created By</th>
-																<th>Document No.</th>
+																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
@@ -95,7 +95,7 @@
 																	<td>${purchaseRequestsList.status}</td>
 																	<td><c:if test="${purchaseRequestsList.status != 'Completed'}">
 																			 <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>"><i
+																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
 																				  class="icon-edit left"></i></a></c:if></td>
 																 
 																  <%--  <td> <c:if test="${purchaseRequestsList.status != 'Completed' }"><a class="btn btn-delete" href="#"
@@ -132,6 +132,10 @@
 				"scrollX" : true
 
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 

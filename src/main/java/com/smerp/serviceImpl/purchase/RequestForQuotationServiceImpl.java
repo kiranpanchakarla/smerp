@@ -59,7 +59,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		case "APP":
 			requestForQuotation.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
 			break;
-		case "CE":
+		case "CA":
 			requestForQuotation.setStatus(EnumStatusUpdate.CANCELED.getStatus());
 			break;
 		default:

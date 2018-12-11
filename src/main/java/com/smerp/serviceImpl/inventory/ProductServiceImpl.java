@@ -127,6 +127,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findByproductNo(String name) {
 		// TODO Auto-generated method stub
-		return productRepository.findByproductNo(name);
+		return productRepository.findByProductNo(name);
 	}
 }

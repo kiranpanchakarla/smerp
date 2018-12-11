@@ -41,7 +41,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
         case "APP": 
         	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
             break; 
-        case "CE":
+        case "CA":
         	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());
 			break;
         default: 

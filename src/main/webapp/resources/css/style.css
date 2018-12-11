@@ -254,6 +254,10 @@ position: fixed;
         color: #fff !important;
 }
 
+.btn-disable {
+     visibility: hidden;
+}
+
 .btn-primary:hover {
 	border-color: #1fa1b5;
     background: #1fa1b5;

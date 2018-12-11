@@ -595,7 +595,7 @@ $(document).ready(function(){
 																						<label>Zipcode</label> <input type="text"
 																							name="vendorAddress[0].zipCode"
 																							class="form-control"
-																							onkeypress="return isNumericKey(event)"
+																							onkeypress='return isZipcodeKey(event);'
 																							maxlength='6' minlength='6'
 																							placeholder='Zip Code' required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Zip Code')"
@@ -762,8 +762,7 @@ $(document).ready(function(){
 																								<label>Zipcode</label> <input type="text"
 																									value="${listAddressDetails.zipCode}"
 																									name="vendorAddress[<%=count1 %>].zipCode"
-																									class="form-control"
-																									onkeypress="return isNumericKey(event)"
+																									class="form-control" onkeypress='return isZipcodeKey(event);'
 																									placeholder='Zipcode' required="true"
 																									oninvalid="this.setCustomValidity('Please Enter Zip Code')"
 																									oninput="setCustomValidity('')" />
@@ -1182,7 +1181,7 @@ var inc1=1;
 												+ '<input type="text" placeholder="City" name="vendorAddress['+inc1+'].city" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter City\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Zipcode</label>'
-												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc1+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isNumericKey(event)"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc1+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isZipcodeKey(event);"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street Number</label>'
 												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
@@ -1287,7 +1286,14 @@ var inc1=1;
 		    return true;
 		}
 	
-	
+	  function isZipcodeKey(evt) {
+		    var charCode = (evt.which) ? evt.which : event.keyCode;
+		    console.log(charCode);
+		    if (charCode < 48 || charCode > 57)
+		        return false;
+
+		    return true;
+		}
 	
 	
 </script>

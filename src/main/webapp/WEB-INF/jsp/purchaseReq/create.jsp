@@ -849,7 +849,8 @@
                     $(itemParentRow).find(".uom").val(uom);
 
                     //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
-                    var productgroup = obj.productCategory.categoryType;
+                  //  var productgroup = obj.productCategory.categoryType;
+                    var productgroup=obj.productGroup.productName;
                     //$('.productGroup').val(productgroup);
 
                     $(itemParentRow).find(".productGroup").val(productgroup);

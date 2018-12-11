@@ -96,7 +96,7 @@
 																	<td><c:if test="${purchaseRequestsList.status != 'Completed'}">
 																			 <a class="btn btn-edit"
 																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
-																				  class="icon-edit left"></i></a></c:if></td>
+																				  class="icon-eye3 left"></i></a></c:if></td>
 																 
 																  <%--  <td> <c:if test="${purchaseRequestsList.status != 'Completed' }"><a class="btn btn-delete" href="#"
 																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')"><i

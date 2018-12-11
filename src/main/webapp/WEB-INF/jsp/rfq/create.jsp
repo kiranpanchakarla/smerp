@@ -60,11 +60,11 @@
 											<div class="card-box">
 												<div class="card-header">
 												<c:if test="${rfq.id!=null}">
-												<h2 class="card-title" id="basic-layout-icons">RFQ/Update</h2>
+												<h2 class="card-title" id="basic-layout-icons">Update RFQ</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${rfq.id==null}">
-												<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
+												<h2 class="card-title" id="basic-layout-icons">Create New RFQ</h2>
 												</c:if> 
 													
 												</div>

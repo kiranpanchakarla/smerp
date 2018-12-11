@@ -43,9 +43,9 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header" style="height: 60px;">
+										<div class="card-header">
 											<div class="row">
-												<div class="col-md-3">
+												<div class="col-md-8">
 													<h2 class="content-header-title">Convert PR To RFQ</h2>
 												</div>
 												<%-- <div class="col-md-5">

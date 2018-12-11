@@ -7,6 +7,7 @@
         <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
             <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+                <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
                     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
                     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
                     <title>SMERP</title>
@@ -342,12 +343,21 @@
                                                                     </c:if>
                                                                     <c:if test="${purchaseRequest.id!=null}">
                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                   
+                                                                  
+                                                                   <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                      
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
-                                                                     
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
+                                                                     </c:if></c:if></c:forEach>
                                                                       </c:if>
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
+                                                                       <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                       </c:if></c:if></c:forEach>
                                                                 </div>
                                                             </form>
                                                         </div>

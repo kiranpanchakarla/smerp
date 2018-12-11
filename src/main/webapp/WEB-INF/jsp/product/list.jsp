@@ -80,8 +80,8 @@
 																	<th>S.no</th>
 																	<th>Product Number</th>
 																	<th>Description</th>
-																	<th>product Group</th>
-																	<th>Uom Group</th>
+																	<th>Product Group</th>
+																	<th>UOM Group</th>
 																	<th>Actions</th>
 																	
 																</tr>
@@ -143,15 +143,10 @@ $(document).ready(function() {
 
 </script>
 
-<script
-		src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
-		type="text/javascript"></script>
-	<script
-		src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"
-		type="text/javascript"></script>
-	<script
-		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
-		type="text/javascript"></script>
+
+<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
 
 
 

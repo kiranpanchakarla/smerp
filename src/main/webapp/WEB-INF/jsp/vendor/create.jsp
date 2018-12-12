@@ -222,7 +222,7 @@ $(document).ready(function(){
 																							class="form-control" required="true"
 																							oninvalid="this.setCustomValidity('Please Select Valid Title')"
 																							oninput="setCustomValidity('')">
-																							<option value="" selected disabled>select</option>
+																							<option value="" selected disabled>Select</option>
 																							<option value="Mr">Mr</option>
 																							<option value="Ms">Ms</option>
 																						</select>
@@ -302,7 +302,7 @@ $(document).ready(function(){
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Gender')"
 																							oninput="setCustomValidity('')">
-																							<option value="" selected disabled>select</option>
+																							<option value="" selected disabled>Select</option>
 																							<option value="Male">Male</option>
 																							<option value="Female">Female</option>
 																						</select>

@@ -11,6 +11,8 @@ public interface RequestForQuotationService {
 	RequestForQuotation save(RequestForQuotation requestForQuotation);
 	
 	RequestForQuotation saveRFQ(String purchaseId);
+	
+	RequestForQuotation saveCancelStage(String purchaseId);
 
 	RequestForQuotation findLastDocumentNumber();
 

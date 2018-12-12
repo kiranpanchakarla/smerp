@@ -73,7 +73,10 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Requester Name</label>
-                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" value="${user.firstname}${' '}${user.lastname}" required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" 
+                                                                          value="${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}"
+                                                                            
+                                                                             required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
                                                                               <form:hidden path="referenceUser.userId" class="referenceUserId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
@@ -86,7 +89,12 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Plant</label>
-                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" value="${user.plant.plantName}"   readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" 
+                                                                          
+                                                                            value="${purchaseRequest.referenceUser.plant.plantName}" 
+                                                                            
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.plant.id" class="plantId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
@@ -99,7 +107,11 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Email- ID</label>
-                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" value="${user.userEmail}"  readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
+                                                                            
+                                                                            value="${purchaseRequest.referenceUser.userEmail}"
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
@@ -343,7 +355,14 @@
                                                                     </c:if>
                                                                     <c:if test="${purchaseRequest.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                        <form:button  type="submit" id="cancel" name="statusType" value="CA" class="btn btn-warning"> <i class="icon-cross2"></i>Cancel</form:button>
+                                                                        
+ 																		  <a
+																			href="<c:url value="/purchaseReq/cancelStage?id=${purchaseRequest.id}"/>">
+																			<button type="button" class="btn btn-warning mr-1">
+																				<i class="icon-cross2"></i> Cancel
+																			</button>
+																		</a>
+
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
@@ -450,7 +469,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""  required="true"   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			

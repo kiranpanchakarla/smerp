@@ -113,7 +113,7 @@
 														    		<a class ="btn btn-view" href="<c:url value="/rfq/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>	 --%>
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'RFQ'}">
 																						<c:set var="permissions" scope="session"

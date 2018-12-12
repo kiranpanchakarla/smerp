@@ -95,6 +95,7 @@
 																		id="vendorContactDetails" cssClass="form-control"
 																		oninvalid="this.setCustomValidity('Please Select State ')"
 																		oninput="setCustomValidity('')">
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
@@ -106,21 +107,21 @@
 															<div class="row">
 																
 
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-4 form-group rm_address">
 																	<label>Pay To</label>
 																	<form:select path="vendorPayTypeAddress.id"
 																		id="vendorPayToAddress" cssClass="form-control"
 																		required="true">
-																		<%-- <form:option value="Select">Select</form:option> --%>
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																</div>
 
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-4 form-group rm_address">
 																	<label>Ship From</label>
 																	<form:select path="vendorShippingAddress.id"
 																		id="vendorAddress" cssClass="form-control"
 																		required="true">
-																		<%-- <form:option value="Select">Select</form:option> --%>
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																</div>
                                                                 
@@ -175,7 +176,7 @@
                                                                           <label>Remark</label> 
                                                                             <form:textarea type="text" cssClass="form-control"
 																					 placeholder='Enter your Remark'
-																					autocomplete="off" path="remark" required="true" />
+																					autocomplete="off" path="remark"  />
                                                                            </div>
 																		</div>
 																		
@@ -499,15 +500,9 @@
 											<br>				
 									<div class="text-xs-center">
 									
-									 <c:if test="${rfq.purchaseReqId==null}">
-											<a href="#" onClick="goBack()"
-												class="btn btn-primary float-left"> Back </a>
-									</c:if>		
-									
-									 <c:if test="${rfq.purchaseReqId!=null}">	
-												<a href="<c:url value="/purchaseReq/approvedList"/>" class="btn btn-primary float-left">
+												<a href="<c:url value="/rfq/list"/>" class="btn btn-primary float-left">
 																	 Back </a>
-										</c:if> 
+									
 										
 											<c:if test="${rfq.status eq 'Draft Stage' || rfq.id==null }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
@@ -517,7 +512,14 @@
                                                                     </c:if>
                                                                     <c:if test="${rfq.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                        <form:button  type="submit" id="cancel" name="statusType" value="CA" class="btn btn-warning"> <i class="icon-cross2"></i>Cancel</form:button>
+                                                                      
+                                                                      <a
+																			href="<c:url value="/rfq/cancelStage?id=${rfq.id}"/>">
+																			<button type="button" class="btn btn-warning mr-1">
+																				<i class="icon-cross2"></i> Cancel
+																			</button>
+																		</a>
+
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
@@ -532,9 +534,7 @@
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                      <c:if test="${rfq.status != 'Cancelled'}">
                                                                       <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
-                                                                     </c:if>
                                                                       </c:if></c:if></c:forEach>
 										</div>
 										</div>
@@ -892,6 +892,9 @@ $(document).ready(function(){
                 	  
               		$('#shippingAddressTable').html("");
               		vendorShippingAddress($('#vendorAddress').val());
+              		
+              	  $('.rm_address').removeClass('has-error has-danger');
+              	  
                 	
                	 },
                 error: function(e){

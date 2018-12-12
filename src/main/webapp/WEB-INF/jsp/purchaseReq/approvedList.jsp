@@ -93,10 +93,13 @@
 																	<td>${purchaseRequestsList.createdAt}</td>
 																	<td>${purchaseRequestsList.updatedAt}</td>
 																	<td>${purchaseRequestsList.status}</td>
-																	<td><c:if test="${purchaseRequestsList.status != 'Completed'}">
-																			 <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
-																				  class="icon-eye3 left"></i></a></c:if></td>
+																	<td>
+																			
+																				 <a class="btn btn-view"
+																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																			class="icon-eye3 left"></i></a>  
+																				  
+																	</td>
 																 
 																  <%--  <td> <c:if test="${purchaseRequestsList.status != 'Completed' }"><a class="btn btn-delete" href="#"
 																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')"><i

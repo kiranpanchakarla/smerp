@@ -164,6 +164,16 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
         	return dup_rfq;
         }
 	}
+	
+	
+	@Override
+	public RequestForQuotation saveCancelStage(String rfqId) {
+		RequestForQuotation rfq = requestForQuotationRepository.findById(Integer.parseInt(rfqId)).get();
+		rfq.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		requestForQuotationRepository.save(rfq);
+		return rfq;
+		
+	}
 
 	@Override
 	public RequestForQuotation findLastDocumentNumber() {

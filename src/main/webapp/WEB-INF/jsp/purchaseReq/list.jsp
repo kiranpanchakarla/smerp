@@ -106,7 +106,7 @@
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
 																	<td>
 																	  <c:choose>
-																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ' }">
+																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Cancelled' }">
 																			
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
@@ -133,7 +133,8 @@
 																	  </c:choose>
 																		<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> <a class="btn btn-view"
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> 
+																		 <a class="btn btn-view"
 																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
 																			class="icon-eye3 left"></i></a> </c:if> 
 									       							</c:if></c:forEach>

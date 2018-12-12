@@ -193,6 +193,12 @@
 															<a href="#" onclick="goBack()"
 																class="btn btn-primary float-left">Back</a>
 																
+																<c:if test="${purchaseRequest.status == 'Approved'}">
+															<form:button type="submit" name="purchaseId"
+																value="${purchaseRequest.id}"
+																class="btn btn-primary mr-1 float-right">
+																<i></i>Convert PR to RFQ</form:button>
+																</c:if>
 														</div>
 
 													</div>

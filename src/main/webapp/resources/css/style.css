@@ -780,7 +780,7 @@ table.dataTable.display tbody td{
 }
 .table th, .table td{
 	border-bottom: 0px;
-	text-align: center;
+	text-align: left;
 }
 .table-bordered th, .table-bordered td{
 	border:0px;
@@ -945,7 +945,7 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
     font-weight: 500;
 }
 
-.color-box1, .color-box2, .color-box3, .color-box4   { 
+.color-box1, .color-box2, .color-box3, .color-box4, .color-box5  { 
 	border-radius: 10px;
 	box-shadow: 0px 1px 5px 0px rgba(80,80,80, 0.2), 0px 2px 2px 0px rgba(80,80,80, 0.14), 0px 3px 1px -2px rgba(80,80,80, 0.12);
 }
@@ -960,6 +960,9 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
 } 
 .color-box4 { 
 	background: #107fab;
+} 
+.color-box5 { 
+	background: #fff;
 } 
 .color-box1 i, .color-box2 i, .color-box3 i, .color-box4 i{color:#FFF !important;}
 .color-box1 h3, .color-box2 h3, .color-box3 h3, .color-box4 h3{color:#FFF !important;}
@@ -998,3 +1001,26 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
     width: auto;
 }
 
+.tooltip-css {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip-css .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip-css:hover .tooltiptext {
+  visibility: visible;
+}

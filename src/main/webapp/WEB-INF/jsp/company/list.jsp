@@ -101,13 +101,13 @@
 																		 <c:if test="${ump.key eq 'Company'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'update')}"> 
-																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i class="icon-edit left"></i></a>  
+																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-edit left"></i></a>  
 																	 </c:if>
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i class="icon-bin left"></i></a>
+																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin left"></i></a>
 															    	 </c:if> 
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
-															    	<a  class ="btn btn-view" href="<c:url value="/company/view?companyId=${companyList.id}"/>"><i class="icon-eye3 left" data-toggle="tooltip" data-placement="left" title="View"></i></a>
+															    	<a  class ="btn btn-view" href="<c:url value="/company/view?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i class="icon-eye3 left"></i></a>
 																	 </c:if> 
 									       								</c:if>     
    															    	 </c:forEach>
@@ -141,7 +141,7 @@ $(document).ready(function() {
 } );
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();  
-    //$('.btn-edit').tooltip('open');
+    $('.btn-edit').tooltip('open');
 });
 </script>
 

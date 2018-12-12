@@ -86,7 +86,7 @@
 																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Status</th>
+																<th>PR Status</th>
 																<th>Actions</th>
 
 															</tr>

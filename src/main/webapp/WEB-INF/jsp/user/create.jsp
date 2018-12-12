@@ -38,11 +38,11 @@
 											<div class="card">
 												<div class="card-header">
 													<c:if test="${user.userId!=null}">
-														<h2 class="card-title" id="basic-layout-icons">User/Update</h2>
+														<h2 class="card-title" id="basic-layout-icons">Update User Details</h2>
 														
 													</c:if>
 													<c:if test="${user.userId==null}">
-														<h2 class="card-title" id="basic-layout-icons">User/Create</h2>
+														<h2 class="card-title" id="basic-layout-icons">Create New User</h2>
 													</c:if>	
 													<form:input type="hidden" cssClass="form-control" path="userId" />
 												</div>

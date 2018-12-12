@@ -107,7 +107,7 @@
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i class="icon-bin left"></i></a>
 														    		 </c:if> 
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
-														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left" data-toggle="tooltip" data-placement="left" title="View"></i></a> 
+														    		<a class ="btn btn-view" href="<c:url value="/user/view?id=${list.userId}"/>"><i class="icon-eye3 left" data-toggle="tooltip" data-placement="right" title="View"></i></a> 
 									                               </c:if> 
 									       								</c:if>     
    															    	 </c:forEach>

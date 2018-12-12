@@ -27,9 +27,11 @@ import com.smerp.model.admin.UPM;
 import com.smerp.model.admin.User;
 import com.smerp.service.UserService;
 import com.smerp.service.admin.CompanyServices;
+import com.smerp.service.admin.DashboardCountService;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.UPMService;
+import com.smerp.service.purchase.PurchaseRequestService;
 
 @Controller
 public class LoginController {
@@ -53,6 +55,12 @@ public class LoginController {
 
 	@Autowired
 	UPMService uPMService;
+	
+	@Autowired
+	PurchaseRequestService purchaseRequestService;
+	
+	@Autowired
+	DashboardCountService dashboardCountService;
 
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	@ExceptionHandler(value = Exception.class)
@@ -102,6 +110,8 @@ public class LoginController {
 			model.addAttribute("productsCount", productService.findByIsActive().size());
 			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
 			model.addAttribute("companyListCount", companyServices.findByIsActive().size());
+			model.addAttribute("dashboardCount", dashboardCountService.findAll());
+			model.addAttribute("rfqCount", dashboardCountService.findRFQCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

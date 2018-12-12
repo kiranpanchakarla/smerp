@@ -49,11 +49,11 @@
 											<div class="card">
 												<div class="card-header">
 													<c:if test="${company.name==null}">
-														<h2 class="card-title" id="basic-layout-icons">Company/Create</h2>
+														<h2 class="card-title" id="basic-layout-icons">Create New Company</h2>
 													</c:if>
 
 													<c:if test="${company.name!=null}">
-														<h2 class="card-title" id="basic-layout-icons">Company/Update</h2>
+														<h2 class="card-title" id="basic-layout-icons">Update Company Details</h2>
 													</c:if>
 													
 													<form:input type="hidden" cssClass="form-control" path="id" />

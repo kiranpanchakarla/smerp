@@ -17,35 +17,6 @@
     class="vertical-layout vertical-menu 2-columns">
     <c:import url="/WEB-INF/jsp/header.jsp" />
     <c:import url="/WEB-INF/jsp/sidebar.jsp" />
-    <%-- <%@include file="header.jsp"%>
-    <%@include file="sidebar.jsp"%> --%>
-    <%-- <div class="app-content content container-fluid"
-        style="margin-top: 40px;">
-        <div class="content-wrapper">
-            <div class="content-header row">
-                <div class="col-md-6">
-                    <h4>Header</h4>
-                </div>
-            </div>
-            <div class="content-body">
-                <!--/ project charts -->
-                <div class="row">
-                    <div class="col-xl-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                 <div>token:${token}</div>
-                                <input type="text"  id="tokenId"  value="${tokenId}"/> 
-                                <div>data:${data}</div>
-                            </div>
-                            <div class="card-footer">Footer</div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ project charts -->
-                <br>
-            </div>
-        </div>
-    </div> --%>
     
     <div class="app-content content container-fluid" style="margin-top: 40px;">
   <div class="content-wrapper">
@@ -87,7 +58,7 @@
           </div>
           </a>
         </div>
-      
+      </div>
         
         <div class="col-xl-3 col-lg-6 col-xs-12" >
         <a href="<c:url value="/user/list"/>">
@@ -126,63 +97,8 @@
           </a>
         </div>
         
-      </div>
-      <!--/ stats --> 
-      <!--/ project charts -->
-     <%--  <div class="row">
-        <div class="col-xl-8 col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <ul class="list-inline text-xs-center pt-2 m-0">
-                <li class="mr-1">
-                  <h6><i class="icon-circle warning"></i> <span class="grey darken-1">Remaining</span></h6>
-                </li>
-                <li class="mr-1">
-                  <h6><i class="icon-circle success"></i> <span class="grey darken-1">Completed</span></h6>
-                </li>
-              </ul>
-              <div class="chartjs height-250">
-                <canvas id="line-stacked-area" height="250"></canvas>
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Total Projects</span>
-                  <h2 class="block font-weight-normal">10</h2>
-                  <progress class="progress progress-xs mt-2 progress-success" value="70" max="100"></progress>
-                </div>
-                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Total Task</span>
-                  <h2 class="block font-weight-normal">20</h2>
-                  <progress class="progress progress-xs mt-2 progress-success" value="40" max="100"></progress>
-                </div>
-                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Completed Task</span>
-                  <h2 class="block font-weight-normal">40</h2>
-                  <progress class="progress progress-xs mt-2 progress-success" value="60" max="100"></progress>
-                </div>
-                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Total Revenue</span>
-                  <h2 class="block font-weight-normal">0</h2>
-                  <progress class="progress progress-xs mt-2 progress-success" value="90" max="100"></progress>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-12">
-          <div class="card card-inverse bg-info">
-            <div class="card-body">
-              <div class="position-relative">
-                <div class="chart-title position-absolute mt-2 ml-2 white">
-                  <h1 class="display-4">100%</h1>
-                  <span>Employees Satisfied</span> </div>
-                <canvas id="emp-satisfaction" class="height-400 block"></canvas>
-                <div class="chart-stats position-absolute position-bottom-0 position-right-0 mb-2 mr-3 white"> <a href="#" class="btn bg-info bg-darken-3 mr-1 white">Statistics <i class="icon-stats-bars"></i></a> for the last year. </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> --%>
-      <!--/ project charts --> 
-      <!-- Recent invoice with Statistics -->
+     
+      
       <div class="row match-height">
         <div class="col-sm-12">
          
@@ -243,9 +159,15 @@
         </div>
         
         
+       
         
         </div>
-          
+        
+        <!--/ stats --> 
+      <!--/ project charts -->
+     
+      <!--/ project charts --> 
+      <!-- Recent invoice with Statistics -->
          <!--  <div class="card">
             <div class="card-body">
                <div class="media">
@@ -258,56 +180,67 @@
             </div>
           </div> -->
         </div>
-        <!-- <div class="col-xl-8 col-lg-12">
+         
+        <div class="col-md-6">
+        <a href="<c:url value="/purchaseReq/list"/>">
           <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Recent Invoices</h4>
-              
-            </div>
-            <div class="card-body">
-              <div class="card-block">
-                <p>Total paid invoices 0, unpaid 0. <span class="float-xs-right"><a href="#">Invoice Summary <i class="icon-arrow-right2"></i></a></span></p>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                  <thead>
-                    <tr>
-                      <th>Invoice#</th>
-                      <th>Customer Name</th>
-                      <th>Status</th>
-                      <th>Due</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-truncate"><a href="#">INV-001001</a></td>
-                      <td class="text-truncate">Elizabeth W.</td>
-                      <td class="text-truncate"><span class="tag tag-default tag-success">Paid</span></td>
-                      <td class="text-truncate">10/05/2016</td>
-                      <td class="text-truncate">$ 1200.00</td>
-                    </tr>
-                    <tr>
-                      <td class="text-truncate"><a href="#">INV-001012</a></td>
-                      <td class="text-truncate">Andrew D.</td>
-                      <td class="text-truncate"><span class="tag tag-default tag-success">Paid</span></td>
-                      <td class="text-truncate">20/07/2016</td>
-                      <td class="text-truncate">$ 152.00</td>
-                    </tr>
-                    <tr>
-                      <td class="text-truncate"><a href="#">INV-001401</a></td>
-                      <td class="text-truncate">Megan S.</td>
-                      <td class="text-truncate"><span class="tag tag-default tag-success">Paid</span></td>
-                      <td class="text-truncate">16/11/2016</td>
-                      <td class="text-truncate">$ 1450.00</td>
-                    </tr>
-                  </tbody>
-                </table>
+          
+            <div class="card-block color-box5">
+            <h2>Purchase Request</h2>
+              <div class="row">
+                
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.open}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Approved</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.approved}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Rejected</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.rejected}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Converted to RFQ</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.convertedToRFQ}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Total Records</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.total}</h2>
+                </div>
               </div>
             </div>
           </div>
-        </div> -->
+          </a>
+        </div>
+         
+         <div class="col-md-6">
+         <a href="<c:url value="/rfq/list"/>">
+          <div class="card">
+          
+            <div class="card-block color-box5">
+            <h2>Request for Quotation</h2>
+             <div class="row">
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
+                  <h2 class="block font-weight-normal">${rfqCount.open}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Draft Stage</span>
+                  <h2 class="block font-weight-normal">${rfqCount.draft}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Approved</span>
+                  <h2 class="block font-weight-normal">${rfqCount.approved}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Rejected</span>
+                  <h2 class="block font-weight-normal">${rfqCount.rejected}</h2>
+                </div>
+                
+                <div class="col-xs-3  text-xs-center"> <span class="text-muted">Total Records</span>
+                  <h2 class="block font-weight-normal">${rfqCount.total}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div> 
+       
       </div>
+      
       <!-- <hr> -->
     </div>
   </div>

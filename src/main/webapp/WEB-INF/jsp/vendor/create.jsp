@@ -62,11 +62,11 @@ $(document).ready(function(){
 											<div class="card">
 												<div class="card-header">
 													<c:if test="${vendor.id!=null}">
-														<h2 class="card-title" id="basic-layout-icons">Vendor/Update</h2>
+														<h2 class="card-title" id="basic-layout-icons">Update Vendor Details</h2>
 													</c:if>
 
 													<c:if test="${vendor.id==null}">
-														<h2 class="card-title" id="basic-layout-icons">Vendor/Create</h2>
+														<h2 class="card-title" id="basic-layout-icons">Create New Vendor</h2>
 													</c:if>
 												</div>
 												<form:input type="hidden" cssClass="form-control" path="id" />

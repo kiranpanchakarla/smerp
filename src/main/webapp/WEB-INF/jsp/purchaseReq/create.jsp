@@ -49,7 +49,7 @@
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${purchaseRequest.id==null}">
-													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request </h2>
+													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request Details</h2>
 												</c:if> 
 											</div>
                                                    	<form:hidden path="id" />

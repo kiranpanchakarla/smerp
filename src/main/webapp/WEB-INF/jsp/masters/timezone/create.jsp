@@ -44,10 +44,13 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Time
-														zone/Create</h4>
-													<!-- <a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a> -->
+													<c:if test="${timezone.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New Timezone</h2>
+													</c:if>
+
+													<c:if test="${timezone.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update Timezone Details</h2>
+													</c:if>
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

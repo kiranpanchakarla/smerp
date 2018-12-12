@@ -48,8 +48,13 @@
 												<div class="card-header">
 													<div class="row">
 														<div class="col-md-10">
-															<h4 class="card-title" id="basic-layout-icons">HSN
-																Code/Create</h4>
+															<c:if test="${hsncode.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New HSN Code</h2>
+													</c:if>
+
+													<c:if test="${hsncode.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update HSN Code Details</h2>
+													</c:if>
 														</div>
 														<div class="col-md-1">
 															<!-- <a class="btn btn-primary" href="/hsncode/list">Back</a> -->
@@ -70,7 +75,7 @@
 																	<label for="timesheetinput1">HSN Code</label>
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='HSN Code' path="hsnCode" onchange="isValidName('hsnCode','/hsncode/isValidHSNCode','1_errorContainer','HSN Code Already Exists')"
-																		 required="true" maxlength="10" minlength="8" pattern="[a-zA-Z]{0}[0-9]{8}" oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
+																		 required="true" maxlength="10" minlength="8" onkeypress='return isNumberKey(event);' oninvalid="this.setCustomValidity('Enter HSN Code')"    oninput="setCustomValidity('')"/>
 																    
 																</div>
 
@@ -137,6 +142,7 @@
 	</div>
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+	
 </body>
 <script>
 	$(document).ready(function() {
@@ -147,6 +153,15 @@
 		
 		console.log("document cookie"+document.cookie);   */
 	});
+	
+	function isNumberKey(evt) {
+	    var charCode = (evt.which) ? evt.which : event.keyCode;
+	    console.log(charCode);
+	    if ((charCode < 48 || charCode > 57))
+	        return false;
+
+	    return true;
+	}
 </script>
 </html>
 

@@ -690,7 +690,7 @@ pre {
 
 .col-xs-3 {
   float: left;
-  width: 25%; }
+   }
 
 .col-xs-4 {
   float: left;
@@ -4178,7 +4178,7 @@ button.close {
     max-width: 900px; } }
 
 .tooltip {
-  position: absolute;
+  position: fixed;
   z-index: 1070;
   display: block;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

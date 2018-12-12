@@ -19,7 +19,7 @@ public interface UserDao extends CrudRepository<User, Long> {
 	User findByUserId(Integer id);
 
 	
-	@Query("SELECT username FROM User")
+	@Query("SELECT username FROM User where  enabled=true  and designation is not  null")
 	List<String> findAllUsername();
 
 	
@@ -30,7 +30,7 @@ public interface UserDao extends CrudRepository<User, Long> {
 	   List<User>  findByIsActive(@Param("enabled") Boolean enabled);
 
 	
-	@Query("SELECT CONCAT(firstname,' ',lastname) FROM User WHERE enabled=:enabled")
+	@Query("SELECT CONCAT(firstname,' ',lastname) FROM User WHERE enabled=:enabled and designation is not  null")
 	List<String> findFirstNames(@Param("enabled") Boolean enabled);
    
 }

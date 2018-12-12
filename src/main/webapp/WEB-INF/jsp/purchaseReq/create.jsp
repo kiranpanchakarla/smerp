@@ -671,15 +671,13 @@
                     url: "<c:url value="/user/getUserInfo"/>",
                     success: function(response) {
                         console.log("user details" + response);
+                        if(response!='null') {
                         var obj = JSON.parse(response);
-
                         $('.emailId').val(obj.userEmail);
                         $('.referenceUserId').val(obj.userId); 
                         $('.plant').val(obj.plant.plantName);
                         $('.plantId').val(obj.plant.id);
-
-                      
-
+                        }
                     },
                     error: function(e) {
                     }

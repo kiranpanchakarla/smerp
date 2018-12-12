@@ -137,7 +137,7 @@ public String approvedView(Model model, String purchaseReqId) {
 		model.addAttribute("planMap", plantMap());
 		//model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findAllUsername()));
+		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {

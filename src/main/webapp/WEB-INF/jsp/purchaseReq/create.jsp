@@ -45,7 +45,7 @@
                                                 <div class="card">
                                                 <div class="card-header">
 												<c:if test="${purchaseRequest.id!=null}">
-													<h2 class="card-title" id="basic-layout-icons">Update Purchase Request</h2>
+													<h2 class="card-title" id="basic-layout-icons">Update Purchase Request Details</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${purchaseRequest.id==null}">
@@ -238,11 +238,11 @@
 																														<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].description"
 																															value="${listpurchaseRequestLists.description}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control " readonly="true"></form:input></td>
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control " readonly="true"></form:input></td>
 																													
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
@@ -712,52 +712,20 @@
             });
 
            
-         
-           //	 alert(#hiddenAddressCount.val());
-          
-          /*  var sample123 = $("#hiddenAddressCount").val();
-          alert(sample123 + "sample123");
-          var count54 = 0;
-            $("#prodouctNumber" + count54).on('keydown keyup',function(e){
-               
-                if(e.which==8){
-                    alert("546456");
-                }
-              }); */
-            
-             
-              
-           
-            enterdproducts = [];
-              var isDluplicate = true;
-              var data = 123;
-            $(document).on("keypress", ".prodouctNumber", function() {
-        		var itemParentRow = $(this).parents(".multTot");
-        		
-        		//alert("itemParentRow"+itemParentRow);
-        		/* alert("itemParentRow"+itemParentRow.length); */
-        		$(this).autocomplete({
-        	        source: availableTags,
-        	        select: function(event, ui) {
-        	        	name1 = ui.item.value;
-        	        	name2 = ui.item.index;
-        	        	$("#"+itemParentRow.context.id).val(name1); 
-        	        	 //alert(itemParentRow.context.id);	
-        	        	 enterdproducts.push(name1);
-        	        	
-        	        	
-        	        	
-        	        	
-        	        		
-        	       		 },
-        	       		
-        	       		
-        	       		
-        	        }); 
-	        	           		
-        		
-        		
-        		});
+        
+              $(document).on("keypress", ".prodouctNumber", function() {
+          		var itemParentRow = $(this).parents(".multTot");
+          		//alert("itemParentRow"+itemParentRow);
+          		
+          		$(this).autocomplete({
+          	        source: availableTags,
+          	        select: function(event, ui) {
+          	        	name = ui.item.value;
+          	        	//alert(name);
+          	             autocompleteandchange(name,itemParentRow);
+          	       		 },
+          	        }); 
+          		});
             
            
            
@@ -772,7 +740,7 @@
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
-    		       	autocompleteandchange(($(this).val()),itemParentRow);
+    		       	//autocompleteandchange(($(this).val()),itemParentRow);
     		        }else{
     		        	 /* var isDluplicate = false; */
     		        	   alertify.alert("You have already entered the Product Number "+($(this).val()));
@@ -792,7 +760,53 @@
             	
             });
 
-           
+            //get the product information based on product  name
+            function autocompleteandchange(name1, itemParentRow) {
+                //alert(name);
+
+                $.ajax({
+                    type: "GET",
+                    data: {name: name1},
+                    async: false,
+                    url: "<c:url value="/product/getProductInfo"/>", 
+                    success: function(response) {
+                        console.log(response);
+
+                        var obj = JSON.parse(response);
+
+                        //var myJSON = JSON.stringify(obj);
+
+                        var hsndata = obj.hsnCode;
+                        //alert("hsnCode"+hsndata.hsnCode);
+                        //	$('.hsnVal').val(hsndata.hsnCode);
+                        $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
+
+                       // $(itemParentRow).find(".prodouctNumber").val(obj.description);
+                        $(itemParentRow).find(".productId").val(obj.id);
+                        $(itemParentRow).find(".description").val(obj.description);
+                        //$(itemParentRow).find(".prodouctNumber").val(obj.description);
+
+                        // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
+
+                        var uom = obj.purchasingUom.uomName;
+                        //alert("uom" + uom);
+                        //$('.uom').val(uom);
+
+                        $(itemParentRow).find(".uom").val(uom);
+
+                        //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
+                      //  var productgroup = obj.productCategory.categoryType;
+                        var productgroup=obj.productGroup.productName;
+                        //$('.productGroup').val(productgroup);
+
+                        $(itemParentRow).find(".productGroup").val(productgroup);
+
+                    },
+                    error: function(e) {
+                        //  alert('Error: ' + e);
+                    }
+                });
+            }
          
             
 
@@ -811,7 +825,7 @@
                     select: function(event, ui) {
                         sacCode = ui.item.value;
                         //alert(name);
-                       // autocompleteandchangeSacCode(sacCode, itemParentRow);
+                        autocompleteandchangeSacCode(sacCode, itemParentRow);
                     },
                 });
             });
@@ -833,7 +847,7 @@
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
-    		       	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
+    		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
     		        }else{
     		        	 
     		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
@@ -858,53 +872,7 @@
             
             
       
-      //get the product information based on product  name
-        function autocompleteandchange(name1, itemParentRow) {
-            //alert(name);
-
-            $.ajax({
-                type: "GET",
-                data: {name: name1},
-                async: false,
-                url: "<c:url value="/product/getProductInfo"/>", 
-                success: function(response) {
-                    console.log(response);
-
-                    var obj = JSON.parse(response);
-
-                    //var myJSON = JSON.stringify(obj);
-
-                    var hsndata = obj.hsnCode;
-                    //alert("hsnCode"+hsndata.hsnCode);
-                    //	$('.hsnVal').val(hsndata.hsnCode);
-                    $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
-
-                   // $(itemParentRow).find(".prodouctNumber").val(obj.description);
-                    $(itemParentRow).find(".productId").val(obj.id);
-                    $(itemParentRow).find(".description").val(obj.description);
-                    //$(itemParentRow).find(".prodouctNumber").val(obj.description);
-
-                    // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
-
-                    var uom = obj.purchasingUom.uomName;
-                    //alert("uom" + uom);
-                    //$('.uom').val(uom);
-
-                    $(itemParentRow).find(".uom").val(uom);
-
-                    //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
-                  //  var productgroup = obj.productCategory.categoryType;
-                    var productgroup=obj.productGroup.productName;
-                    //$('.productGroup').val(productgroup);
-
-                    $(itemParentRow).find(".productGroup").val(productgroup);
-
-                },
-                error: function(e) {
-                    //  alert('Error: ' + e);
-                }
-            });
-        }
+     
         
         function autocompleteandchangeSacCode(sacCode, itemParentRow) {
             //alert(name);

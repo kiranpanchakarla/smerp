@@ -33,7 +33,8 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="GET" action="/purchaseReq/view"
+							<c:url value="/rfq/savePRtoRFQ" var="createUrl" />
+							<form:form method="POST" action="${createUrl}"
 								class="commentForm" modelAttribute="purchaseRequest"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">

@@ -924,7 +924,7 @@ $(document).ready(function(){
 	        select: function(event, ui) {
 	        	name = ui.item.value;
 	        	//alert(name);
-	            // autocompleteandchange(name,itemParentRow);
+	             autocompleteandchange(name,itemParentRow);
 	       		 },
 	        }); 
 		});
@@ -943,7 +943,7 @@ $(document).ready(function(){
 		            arr.push($(this).val());
 		       	// var isDluplicate = true;
 		       	
-		       	autocompleteandchange(($(this).val()),itemParentRow);
+		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("You have already entered the Product Number "+$(this).val());
@@ -1120,7 +1120,7 @@ $(document).ready(function(){
                                                  select: function(event, ui) {
                                                      sacCode = ui.item.value;
                                                      //alert(name);
-                                                     // autocompleteandchangeSacCode(sacCode,itemParentRow);
+                                                      autocompleteandchangeSacCode(sacCode,itemParentRow);
                                                          },
                                                  });
                                              });
@@ -1142,7 +1142,7 @@ $(document).ready(function(){
                                   		        if ($.inArray($(this).val(), arr) == -1){
                                   		            arr.push($(this).val());
                                   		       	// var isDluplicate = true;
-                                  		       	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
+                                  		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
                                   		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());

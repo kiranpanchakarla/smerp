@@ -253,7 +253,7 @@
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									<th>Action</th>
 																								</tr>
@@ -271,7 +271,7 @@
 																									<th>SAC</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>Action</th>
 																								</tr>
 																							</thead> 
@@ -299,7 +299,7 @@
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
@@ -307,7 +307,7 @@
 																									<th>SAC</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>
 																								</tr>

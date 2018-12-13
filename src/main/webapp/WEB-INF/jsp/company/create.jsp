@@ -247,8 +247,8 @@
 
 																				<form:input type="text"
 																					cssClass="form-control"
-																					placeholder='Mobile Number' path="phoneNum"
-																					required="true" maxlength="13" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"
+																					placeholder='Mobile Number' path="phoneNum" 
+																					required="true" maxlength="13" minlength="10" onkeypress='return isNumberKey(event);'
 																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -407,10 +407,7 @@
 	 image.src = URL.createObjectURL(event.target.files[0]);
 	 }; */
 
-	var id = $('#id').val();
-	if (id == '') {
-		$("#phoneNum").val("+91");
-	}
+	 
 	function fileValidation(event) {
 		var fileInput = document.getElementById('file');
 		var filePath = fileInput.value;

@@ -51,8 +51,8 @@ public class SacCodeController {
 	@GetMapping(value = "/getInfo")
 	public String GetInfo(Model model, String saccodeId) {
 		logger.info("Inside SacCodeController GetInfo Method");
-		SACCode saccode = sacService.findById(Integer.parseInt(saccodeId));
-		model.addAttribute("saccode", new SACCode());
+		SACCode saccode = sacService.getInfo(Integer.parseInt(saccodeId));
+		model.addAttribute("saccode", saccode);
 		return "masters/saccode/create";
 	}
 

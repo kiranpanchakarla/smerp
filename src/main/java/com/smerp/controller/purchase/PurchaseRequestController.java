@@ -68,7 +68,7 @@ public class PurchaseRequestController {
 		logger.info("purchaseRequest create-->" + purchaseRequest);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("user", user);
-		model.addAttribute("purchaseReq", new PurchaseRequest());
+		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		//gets the users first and last name
@@ -91,6 +91,14 @@ public class PurchaseRequestController {
 		return "redirect:list";
 	}
 
+	@GetMapping("/cancelStage")
+	public String cancelStage(String id, Model model) throws JsonProcessingException {
+		logger.info("id-->" + id);
+		logger.info("rfq details" + purchaseRequestService.saveCancelStage(id));
+		return "redirect:list";
+	}
+	
+	
 	@GetMapping(value = "/list")
 	public String list(Model model) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.findByIsActive();
@@ -117,15 +125,7 @@ public class PurchaseRequestController {
 		return "purchaseReq/view";
 	}
 	
-	@GetMapping(value = "/approvedView")
-public String approvedView(Model model, String purchaseReqId) {
-		
-		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
-		logger.info("purchaseRequest view-->" + purchaseRequest);
-		model.addAttribute("purchaseRequest", purchaseRequest);
-		model.addAttribute("plantMap", plantMap());
-		return "purchaseReq/approvedView";
-	}
+	
 
 	@GetMapping(value = "/getInfo")
 	public String getInfo(String purchaseReqId, Model model, PurchaseRequest purchaseRequest) throws JsonProcessingException {
@@ -137,15 +137,9 @@ public String approvedView(Model model, String purchaseReqId) {
 		model.addAttribute("planMap", plantMap());
 		//model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findAllUsername()));
+		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
-		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
-		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
-			purchaseRequest.setDocNumber(documentNumberGeneration(purchaseRequests.getDocNumber()));
-		} else {
-			purchaseRequestIdGeneration(purchaseRequest);
-		}
-        
+		
 		purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
 		model.addAttribute("purchaseRequestLists", purchaseRequest.getPurchaseRequestLists());
 		model.addAttribute("purchaseRequest", purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId)));

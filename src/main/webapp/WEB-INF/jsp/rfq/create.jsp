@@ -60,11 +60,11 @@
 											<div class="card-box">
 												<div class="card-header">
 												<c:if test="${rfq.id!=null}">
-												<h2 class="card-title" id="basic-layout-icons">RFQ/Update</h2>
+												<h2 class="card-title" id="basic-layout-icons">Update RFQ</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${rfq.id==null}">
-												<h2 class="card-title" id="basic-layout-icons">RFQ/Create</h2>
+												<h2 class="card-title" id="basic-layout-icons">Create New RFQ</h2>
 												</c:if> 
 													
 												</div>
@@ -95,6 +95,7 @@
 																		id="vendorContactDetails" cssClass="form-control"
 																		oninvalid="this.setCustomValidity('Please Select State ')"
 																		oninput="setCustomValidity('')">
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
@@ -106,21 +107,21 @@
 															<div class="row">
 																
 
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-4 form-group rm_address">
 																	<label>Pay To</label>
 																	<form:select path="vendorPayTypeAddress.id"
 																		id="vendorPayToAddress" cssClass="form-control"
 																		required="true">
-																		<%-- <form:option value="Select">Select</form:option> --%>
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																</div>
 
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-4 form-group rm_address">
 																	<label>Ship From</label>
 																	<form:select path="vendorShippingAddress.id"
 																		id="vendorAddress" cssClass="form-control"
 																		required="true">
-																		<%-- <form:option value="Select">Select</form:option> --%>
+																		<form:option value="" >Select</form:option>
 																	</form:select>
 																</div>
                                                                 
@@ -175,7 +176,7 @@
                                                                           <label>Remark</label> 
                                                                             <form:textarea type="text" cssClass="form-control"
 																					 placeholder='Enter your Remark'
-																					autocomplete="off" path="remark" required="true" />
+																					autocomplete="off" path="remark"  />
                                                                            </div>
 																		</div>
 																		
@@ -499,15 +500,9 @@
 											<br>				
 									<div class="text-xs-center">
 									
-									 <c:if test="${rfq.purchaseReqId==null}">
-											<a href="#" onClick="goBack()"
-												class="btn btn-primary float-left"> Back </a>
-									</c:if>		
-									
-									 <c:if test="${rfq.purchaseReqId!=null}">	
-												<a href="<c:url value="/purchaseReq/approvedList"/>" class="btn btn-primary float-left">
+												<a href="<c:url value="/rfq/list"/>" class="btn btn-primary float-left">
 																	 Back </a>
-										</c:if> 
+									
 										
 											<c:if test="${rfq.status eq 'Draft Stage' || rfq.id==null }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
@@ -517,12 +512,21 @@
                                                                     </c:if>
                                                                     <c:if test="${rfq.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                   
+                                                                      
+                                                                      <a
+																			href="<c:url value="/rfq/cancelStage?id=${rfq.id}"/>">
+																			<button type="button" class="btn btn-warning mr-1">
+																				<i class="icon-cross2"></i> Cancel
+																			</button>
+																		</a>
+
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
+                                                                       <c:if test="${rfq.status != 'Cancelled'}">
                                                                       <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                    </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                       </c:if>
                                                                       
@@ -888,6 +892,9 @@ $(document).ready(function(){
                 	  
               		$('#shippingAddressTable').html("");
               		vendorShippingAddress($('#vendorAddress').val());
+              		
+              	  $('.rm_address').removeClass('has-error has-danger');
+              	  
                 	
                	 },
                 error: function(e){
@@ -905,7 +912,7 @@ $(document).ready(function(){
 		$.each(prodouctNumbers, function (index, value) {
 		   availableTags.push(value.toString());
 	   });
-		// alert("length"+availableTags.length);
+	 //alert("length"+availableTags);
 		 
 		//$(".prodouctNumber").autocomplete({
 	$(document).on("keypress", ".prodouctNumber", function() {
@@ -917,7 +924,7 @@ $(document).ready(function(){
 	        select: function(event, ui) {
 	        	name = ui.item.value;
 	        	//alert(name);
-	            // autocompleteandchange(name,itemParentRow);
+	             autocompleteandchange(name,itemParentRow);
 	       		 },
 	        }); 
 		});
@@ -929,11 +936,14 @@ $(document).ready(function(){
      	
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
-         	 // alert($.inArray($(this).val(), arr));
+     	//alert("validation-->"+	availableTags.includes($(this).val()) );
+        if(availableTags.includes($(this).val()) == true) 	 {
+     	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
 		       	// var isDluplicate = true;
-		       	autocompleteandchange(($(this).val()),itemParentRow);
+		       	
+		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("You have already entered the Product Number "+$(this).val());
@@ -942,9 +952,13 @@ $(document).ready(function(){
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
+        }else {
+        	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+        	 ($(this).parents('tr').find('td').find('input').val(''));
+        	 ($(this).parents('tr').find('td').find('select').val('')); 
+        }
+		        
 		    });
-                 	
-     	
      });
 	
 
@@ -960,13 +974,11 @@ $(document).ready(function(){
                 success: function (response) {
                 	console.log("getProductInfo-->"+response);
                 	
-                	
-                	
+                	//alert("--->"+response);
+                	if(response!="") {
                 	var obj =JSON.parse(response);
                 	
                 	//var myJSON = JSON.stringify(obj);
-                	
-                	
                 	
                 	var hsndata=obj.hsnCode;
                 	//alert("hsnCode"+hsndata.hsnCode);
@@ -986,11 +998,15 @@ $(document).ready(function(){
                 	
              	 //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
              	 //	var productgroup=obj.productCategory.categoryType;
+             
              		var productgroup=obj.productGroup.productName;
+             		
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
-                	
+             	 	 
+             	 	 
+                	}
                 	
                	 },
                 error: function(e){
@@ -1104,7 +1120,7 @@ $(document).ready(function(){
                                                  select: function(event, ui) {
                                                      sacCode = ui.item.value;
                                                      //alert(name);
-                                                     // autocompleteandchangeSacCode(sacCode,itemParentRow);
+                                                      autocompleteandchangeSacCode(sacCode,itemParentRow);
                                                          },
                                                  });
                                              });
@@ -1121,10 +1137,12 @@ $(document).ready(function(){
                                           	var arr=[];
                                           	 $(".sacCode").each(function() {
                                               	 // alert($.inArray($(this).val(), arr));
+                                              	  if(availableSacs.includes($(this).val()) == true) 	 {
+                                              	 
                                   		        if ($.inArray($(this).val(), arr) == -1){
                                   		            arr.push($(this).val());
                                   		       	// var isDluplicate = true;
-                                  		       	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
+                                  		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
                                   		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
@@ -1132,6 +1150,15 @@ $(document).ready(function(){
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
+                                  		        
+                                              }else {
+                                            	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+                               		        	 $(this).val('')
+                               		        	 ($(this).parents('tr').find('td').find('input').val(''));
+                               		        	 ($(this).parents('tr').find('td').find('select').val(''));  
+                                              }
+                                  		        
+                                  		        
                                   		    });
                                           	 
                                                       	

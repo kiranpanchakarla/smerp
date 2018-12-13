@@ -86,13 +86,13 @@
 																	<td>${productattributes.attributeName}</td>
 																	<td><a
 																		class="btn btn-edit"
-																		href="<c:url value="/productattributes/getInfo?productattributesId=${productattributes.id}"/>">
+																		href="<c:url value="/productattributes/getInfo?productattributesId=${productattributes.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit">
 																			<i class="icon-edit left"></i>
 																	</a>  <a class="btn btn-delete mr-1" href="#"
-																		onclick="deleteById('<c:out value="${productattributes.id}"/>','/productattributes/delete')"><i
+																		onclick="deleteById('<c:out value="${productattributes.id}"/>','/productattributes/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
 																			class="icon-bin left"></i></a>  <a
 																		class="btn btn-view"
-																		href="<c:url value="/productattributes/view?productattributesId=${productattributes.id}"/>"><i
+																		href="<c:url value="/productattributes/view?productattributesId=${productattributes.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
 																			class="icon-eye3 left"></i></a></td>
 																</tr>
 															</c:forEach>
@@ -124,7 +124,10 @@ $(document).ready(function() {
 		  "scrollX": true
 	    } );
 } );
-
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();  
+    //$('.btn-edit').tooltip('open');
+});
 </script>
 <script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 

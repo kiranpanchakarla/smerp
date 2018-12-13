@@ -3,7 +3,7 @@ package com.smerp.util;
 public enum EnumStatusUpdate {
 
 	OPEN("Open"), 
-	CANCELED("Canceled"),
+	CANCELED("Cancelled"),
 	DRAFT("Draft"),
 	APPROVEED("Approved"),
 	CONVERTPRTORFQ("ConvertedToRFQ"),

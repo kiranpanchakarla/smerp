@@ -101,13 +101,13 @@
 																		 <c:if test="${ump.key eq 'Product'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		 	<c:if test="${fn:containsIgnoreCase(permissions,'update')}">
-									        										<a class ="btn btn-edit" href="<c:url value="/product/getInfo?productId=${productList.id}"/>"><i class="icon-edit left"></i></a>
+									        										<a class ="btn btn-edit" href="<c:url value="/product/getInfo?productId=${productList.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i class="icon-edit left"></i></a>
 									   										 </c:if>
 									   										 <c:if test="${fn:containsIgnoreCase(permissions,'delete')}">
-									        									<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')"><i class="icon-bin left"></i></a>
+									        									<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${productList.id}"/>','/product/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i class="icon-bin left"></i></a>
 									   										 </c:if>
 									   										 <c:if test="${fn:containsIgnoreCase(permissions,'view')}">
-									        									<a  class ="btn btn-view" href="<c:url value="/product/view?productId=${productList.id}"/>"><i class="icon-eye3 left"></i></a>
+									        									<a  class ="btn btn-view" href="<c:url value="/product/view?productId=${productList.id}"/>"><i class="icon-eye3 left" data-toggle="tooltip" data-placement="right" title="View"></i></a>
 									   										 </c:if>
 									       								</c:if>     
    															    	 </c:forEach>
@@ -140,7 +140,10 @@ $(document).ready(function() {
 	       
 	    } );
 } );
-
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();  
+    //$('.btn-edit').tooltip('open');
+});
 </script>
 
 

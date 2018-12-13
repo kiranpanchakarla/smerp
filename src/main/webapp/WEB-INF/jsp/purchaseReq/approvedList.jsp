@@ -72,9 +72,9 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>SNO</th>
+																<th>Sno</th>
 																<th>Created By</th>
-																<th>Document No.</th>
+																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
@@ -93,10 +93,13 @@
 																	<td>${purchaseRequestsList.createdAt}</td>
 																	<td>${purchaseRequestsList.updatedAt}</td>
 																	<td>${purchaseRequestsList.status}</td>
-																	<td><c:if test="${purchaseRequestsList.status != 'Completed'}">
-																			 <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/approvedView?purchaseReqId=${purchaseRequestsList.id}"/>"><i
-																				  class="icon-edit left"></i></a></c:if></td>
+																	<td>
+																			
+																				 <a class="btn btn-view"
+																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																			class="icon-eye3 left"></i></a>  
+																				  
+																	</td>
 																 
 																  <%--  <td> <c:if test="${purchaseRequestsList.status != 'Completed' }"><a class="btn btn-delete" href="#"
 																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')"><i
@@ -132,6 +135,10 @@
 				"scrollX" : true
 
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 

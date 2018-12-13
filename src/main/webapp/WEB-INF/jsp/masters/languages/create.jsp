@@ -48,7 +48,13 @@
 												<div class="card-header">
 													<div class="row">
 														<div class="col-md-10">
-															<h4 class="card-title" id="basic-layout-icons">Languages/Create</h4>
+															<c:if test="${languagesObj.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New Language</h2>
+													</c:if>
+
+													<c:if test="${languagesObj.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update Language Details</h2>
+													</c:if>
 														</div>
 														<div class="col-md-1">
 													

@@ -48,9 +48,13 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Product Attributes/Create</h4>
-													<!-- <a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a> -->
+													<c:if test="${productattributes.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New Product Attributes</h2>
+													</c:if>
+
+													<c:if test="${productattributes.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update Product Attributes Details</h2>
+													</c:if>
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

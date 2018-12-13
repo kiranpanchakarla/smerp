@@ -46,9 +46,13 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Country/Create</h4>
-													<!-- <a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a> -->
+													<c:if test="${country.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New Country</h2>
+													</c:if>
+
+													<c:if test="${country.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update Country Details</h2>
+													</c:if>
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

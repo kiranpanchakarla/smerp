@@ -7,6 +7,7 @@
         <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
             <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+                <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
                     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
                     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
                     <title>SMERP</title>
@@ -44,11 +45,11 @@
                                                 <div class="card">
                                                 <div class="card-header">
 												<c:if test="${purchaseRequest.id!=null}">
-													<h2 class="card-title" id="basic-layout-icons">Purchase Request/Update</h2>
+													<h2 class="card-title" id="basic-layout-icons">Update Purchase Request Details</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${purchaseRequest.id==null}">
-													<h2 class="card-title" id="basic-layout-icons">Purchase Request/Create</h2>
+													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request Details</h2>
 												</c:if> 
 											</div>
                                                    	<form:hidden path="id" />
@@ -72,7 +73,10 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Requester Name</label>
-                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" value="${user.firstname}${' '}${user.lastname}" required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" 
+                                                                          value="${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}"
+                                                                            
+                                                                             required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
                                                                               <form:hidden path="referenceUser.userId" class="referenceUserId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
@@ -85,7 +89,12 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Plant</label>
-                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" value="${user.plant.plantName}"   readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" 
+                                                                          
+                                                                            value="${purchaseRequest.referenceUser.plant.plantName}" 
+                                                                            
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.plant.id" class="plantId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
@@ -98,7 +107,11 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Email- ID</label>
-                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" value="${user.userEmail}"  readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
+                                                                            
+                                                                            value="${purchaseRequest.referenceUser.userEmail}"
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
@@ -225,11 +238,11 @@
 																														<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].description"
 																															value="${listpurchaseRequestLists.description}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control " readonly="true"></form:input></td>
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control " readonly="true"></form:input></td>
 																													
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
@@ -334,24 +347,41 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <%-- <a href="<c:url value="/purchaseReq/list"/>">
-                                                                        <button type="button" class="btn btn-warning" id="cancel"> <i class="icon-cross2"></i> Cancel</button>
-                                                                    </a> --%>
-                                                                    <c:if test="${purchaseRequest.id==null || purchaseRequest.status =='Draft Stage' }">
+                                                                    <c:if test="${purchaseRequest.status eq 'Draft Stage' || purchaseRequest.id==null }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
-                                                                    </c:if>
+                                                                   </c:if>
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${purchaseRequest.id!=null}">
-                                                                      <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                   
-                                                                     <form:button  type="submit" id="cancel" name="statusType" value="CA" class="btn btn-warning"> <i class="icon-cross2"></i> Cancel</form:button>
-                                                                     
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject float-right"> <i></i>Reject</form:button>
-                                                                     
+                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                        
+ 																		  <a
+																			href="<c:url value="/purchaseReq/cancelStage?id=${purchaseRequest.id}"/>">
+																			<button type="button" class="btn btn-warning mr-1">
+																				<i class="icon-cross2"></i> Cancel
+																			</button>
+																		</a>
+
+                                                                     <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
+                                                                      <c:if test="${purchaseRequest.status != 'Cancelled'}">
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                     </c:if>
+                                                                     </c:if></c:if></c:forEach>
                                                                       </c:if>
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 float-right"> <i></i>Approve</form:button>
+                                                                      
+                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request' }">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                        <c:if test="${purchaseRequest.status != 'Cancelled'}">
+                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
+                                                                        </c:if>
+                                                                      
+                                                                      </c:if></c:if></c:forEach>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -439,7 +469,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""  required="true"   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -660,15 +690,13 @@
                     url: "<c:url value="/user/getUserInfo"/>",
                     success: function(response) {
                         console.log("user details" + response);
+                        if(response!='null') {
                         var obj = JSON.parse(response);
-
                         $('.emailId').val(obj.userEmail);
                         $('.referenceUserId').val(obj.userId); 
                         $('.plant').val(obj.plant.plantName);
                         $('.plantId').val(obj.plant.id);
-
-                      
-
+                        }
                     },
                     error: function(e) {
                     }
@@ -684,52 +712,20 @@
             });
 
            
-         
-           //	 alert(#hiddenAddressCount.val());
-          
-          /*  var sample123 = $("#hiddenAddressCount").val();
-          alert(sample123 + "sample123");
-          var count54 = 0;
-            $("#prodouctNumber" + count54).on('keydown keyup',function(e){
-               
-                if(e.which==8){
-                    alert("546456");
-                }
-              }); */
-            
-             
-              
-           
-            enterdproducts = [];
-              var isDluplicate = true;
-              var data = 123;
-            $(document).on("keypress", ".prodouctNumber", function() {
-        		var itemParentRow = $(this).parents(".multTot");
-        		
-        		//alert("itemParentRow"+itemParentRow);
-        		/* alert("itemParentRow"+itemParentRow.length); */
-        		$(this).autocomplete({
-        	        source: availableTags,
-        	        select: function(event, ui) {
-        	        	name1 = ui.item.value;
-        	        	name2 = ui.item.index;
-        	        	$("#"+itemParentRow.context.id).val(name1); 
-        	        	 //alert(itemParentRow.context.id);	
-        	        	 enterdproducts.push(name1);
-        	        	
-        	        	
-        	        	
-        	        	
-        	        		
-        	       		 },
-        	       		
-        	       		
-        	       		
-        	        }); 
-	        	           		
-        		
-        		
-        		});
+        
+              $(document).on("keypress", ".prodouctNumber", function() {
+          		var itemParentRow = $(this).parents(".multTot");
+          		//alert("itemParentRow"+itemParentRow);
+          		
+          		$(this).autocomplete({
+          	        source: availableTags,
+          	        select: function(event, ui) {
+          	        	name = ui.item.value;
+          	        	//alert(name);
+          	             autocompleteandchange(name,itemParentRow);
+          	       		 },
+          	        }); 
+          		});
             
            
            
@@ -740,10 +736,11 @@
             	var arr=[];
             	 $(".prodouctNumber").each(function() {
                 	 // alert($.inArray($(this).val(), arr));
+                	  if(availableTags.includes($(this).val()) == true) 	 {
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
-    		       	autocompleteandchange(($(this).val()),itemParentRow);
+    		       	//autocompleteandchange(($(this).val()),itemParentRow);
     		        }else{
     		        	 /* var isDluplicate = false; */
     		        	   alertify.alert("You have already entered the Product Number "+($(this).val()));
@@ -752,12 +749,64 @@
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        
     		        }
+                }else {
+                     	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+                     	 ($(this).parents('tr').find('td').find('input').val(''));
+                     	 ($(this).parents('tr').find('td').find('select').val('')); 
+                     }  
+    		      
     		    });
                         	
             	
             });
 
-           
+            //get the product information based on product  name
+            function autocompleteandchange(name1, itemParentRow) {
+                //alert(name);
+
+                $.ajax({
+                    type: "GET",
+                    data: {name: name1},
+                    async: false,
+                    url: "<c:url value="/product/getProductInfo"/>", 
+                    success: function(response) {
+                        console.log(response);
+
+                        var obj = JSON.parse(response);
+
+                        //var myJSON = JSON.stringify(obj);
+
+                        var hsndata = obj.hsnCode;
+                        //alert("hsnCode"+hsndata.hsnCode);
+                        //	$('.hsnVal').val(hsndata.hsnCode);
+                        $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
+
+                       // $(itemParentRow).find(".prodouctNumber").val(obj.description);
+                        $(itemParentRow).find(".productId").val(obj.id);
+                        $(itemParentRow).find(".description").val(obj.description);
+                        //$(itemParentRow).find(".prodouctNumber").val(obj.description);
+
+                        // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
+
+                        var uom = obj.purchasingUom.uomName;
+                        //alert("uom" + uom);
+                        //$('.uom').val(uom);
+
+                        $(itemParentRow).find(".uom").val(uom);
+
+                        //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
+                      //  var productgroup = obj.productCategory.categoryType;
+                        var productgroup=obj.productGroup.productName;
+                        //$('.productGroup').val(productgroup);
+
+                        $(itemParentRow).find(".productGroup").val(productgroup);
+
+                    },
+                    error: function(e) {
+                        //  alert('Error: ' + e);
+                    }
+                });
+            }
          
             
 
@@ -776,7 +825,7 @@
                     select: function(event, ui) {
                         sacCode = ui.item.value;
                         //alert(name);
-                       // autocompleteandchangeSacCode(sacCode, itemParentRow);
+                        autocompleteandchangeSacCode(sacCode, itemParentRow);
                     },
                 });
             });
@@ -794,10 +843,11 @@
             	var arr=[];
             	 $(".sacCode").each(function() {
                 	 // alert($.inArray($(this).val(), arr));
+                	   if(availableSacs.includes($(this).val()) == true) 	 {
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
     		       	// var isDluplicate = true;
-    		       	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
+    		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
     		        }else{
     		        	 
     		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
@@ -805,6 +855,14 @@
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        }
+            	 }else {
+               	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+  		        	 $(this).val('')
+  		        	 ($(this).parents('tr').find('td').find('input').val(''));
+  		        	 ($(this).parents('tr').find('td').find('select').val(''));  
+                 }
+     		        
+    		        
     		    });
             	 
                         	
@@ -814,52 +872,7 @@
             
             
       
-      //get the product information based on product  name
-        function autocompleteandchange(name1, itemParentRow) {
-            //alert(name);
-
-            $.ajax({
-                type: "GET",
-                data: {name: name1},
-                async: false,
-                url: "<c:url value="/product/getProductInfo"/>", 
-                success: function(response) {
-                    console.log(response);
-
-                    var obj = JSON.parse(response);
-
-                    //var myJSON = JSON.stringify(obj);
-
-                    var hsndata = obj.hsnCode;
-                    //alert("hsnCode"+hsndata.hsnCode);
-                    //	$('.hsnVal').val(hsndata.hsnCode);
-                    $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
-
-                   // $(itemParentRow).find(".prodouctNumber").val(obj.description);
-                    $(itemParentRow).find(".productId").val(obj.id);
-                    $(itemParentRow).find(".description").val(obj.description);
-                    //$(itemParentRow).find(".prodouctNumber").val(obj.description);
-
-                    // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
-
-                    var uom = obj.purchasingUom.uomName;
-                    //alert("uom" + uom);
-                    //$('.uom').val(uom);
-
-                    $(itemParentRow).find(".uom").val(uom);
-
-                    //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
-                    var productgroup = obj.productCategory.categoryType;
-                    //$('.productGroup').val(productgroup);
-
-                    $(itemParentRow).find(".productGroup").val(productgroup);
-
-                },
-                error: function(e) {
-                    //  alert('Error: ' + e);
-                }
-            });
-        }
+     
         
         function autocompleteandchangeSacCode(sacCode, itemParentRow) {
             //alert(name);

@@ -11,8 +11,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 </head>
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
 
 
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
@@ -27,93 +31,85 @@
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
 			<div class="content-body">
-				<!--/ project charts -->
-				<div class="row">
-					<div class="large-12 columns">
-						<div class="content-wrapper"></div>
-						<div>
-							<div class="content-body">
-								<!-- Basic Tables start -->
+				<div class="card">
+										<div class="card-header">
+										<div class="row">
+										<div class="col-md-2">
+										<h3 class="content-header-title">HSN Code</h3>
+										</div>
+											<div class="col-md-6">
 
-								<div class="card">
-									<div class="card-header">
-										<div class="content-header row">
+												<a class="btn btn-primary"
+													href="<c:url value="/hsncode/create"/>">Create </a>
+											</div>
+											<div class="col-md-4" Style="text-align: right;">
 
-											<div class="row">
-												<div class="col-md-2">
-													<h3 class="content-header-title">HSN Code</h3>
-
-												</div>
-												<div class="col-md-6">
-
-													<a class="btn btn-primary" href="<c:url value="/hsncode/create"/>">Create
-													</a>
-												</div>
-												<div class="col-md-4" Style="text-align: right;">
-
-													<ol class="breadcrumb">
-														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
-														<li class="breadcrumb-item"><a href="#">Administration</a>
-														</li>
-														<li class="breadcrumb-item active">HSN Code</li>
-													</ol>
-												</div>
-
+												<ol class="breadcrumb">
+													<li class="breadcrumb-item"><a
+														href="<c:url value="/dashboard"/>">Home</a></li>
+													<li class="breadcrumb-item"><a href="#">Administration</a>
+													</li>
+													<li class="breadcrumb-item active">HSN Code</li>
+												</ol>
 											</div>
 
 										</div>
-										<div class="card-body collapse in">
-											<div class="card-block card-dashboard">
 
-												<div class="table-responsive">
-													<table id="example"
-														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
-														style="width: 100%">
-														<thead>
+									</div>
+									<div class="card-body collapse in">
+										<div class="card-block card-dashboard">
+
+											<div class="table-responsive">
+												<table id="example"
+													class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
+													style="width: 100%">
+													<thead>
+														<tr>
+															<th>S.no</th>
+															<th>HSN Code</th>
+															<th>Description</th>
+															<th>Rate</th>
+															<th>Actions</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${hsncodeList}" var="hsncode">
 															<tr>
-																<th>S.no</th>
-																<th>HSN Code</th>
-																<th>Description</th>
-																<th>Rate</th>
-																<th>Actions</th>
+																<td><c:set var="count" value="${count + 1}"
+																		scope="page" /> <c:out value="${count}" /></td>
+																<td>${hsncode.hsnCode}</td>
+																<td>${hsncode.description}</td>
+																<td>${hsncode.rate}</td>
+																<td><a class="btn btn-edit"
+																	href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncode.id}"/>"
+																	data-toggle="tooltip" data-placement="right"
+																	title="Edit"> <i class="icon-edit left"></i>
+																</a> <a class="btn btn-delete mr-1" href="#"
+																	onclick="deleteById('<c:out value="${hsncode.id}"/>','/hsncode/delete')"
+																	data-toggle="tooltip" data-placement="right"
+																	title="Delete"><i class="icon-bin left"></i></a> <a
+																	class="btn btn-view"
+																	href="<c:url value="/hsncode/view?hsncodeId=${hsncode.id}"/>"
+																	data-toggle="tooltip" data-placement="right"
+																	title="View"><i class="icon-eye3 left"></i></a></td>
+
 															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${hsncodeList}" var="hsncode">
-																<tr>
-																	<td><c:set var="count"
-																			value="${count + 1}" scope="page" /> <c:out
-																			value="${count}" /></td>
-																	<td>${hsncode.hsnCode}</td>
-																	<td>${hsncode.description}</td>
-																	<td>${hsncode.rate}</td>
-																	<td><a
-																		class="btn btn-edit"
-																		href="<c:url value="/hsncode/getInfo?hsncodeId=${hsncode.id}"/>">
-																			<i class="icon-edit left"></i>
-																	</a> <a class="btn btn-delete mr-1" href="#"
-																		onclick="deleteById('<c:out value="${hsncode.id}"/>','/hsncode/delete')"><i
-																			class="icon-bin left"></i></a> <a class="btn btn-view"
-																		href="<c:url value="/hsncode/view?hsncodeId=${hsncode.id}"/>"><i
-																			class="icon-eye3 left"></i></a></td>
+														</c:forEach>
+													</tbody>
 
-																</tr>
-															</c:forEach>
-														</tbody>
-
-													</table>
-												</div>
+												</table>
 											</div>
 										</div>
 									</div>
 								</div>
-								<br>
 							</div>
+							<br>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 
@@ -122,14 +118,24 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#example').DataTable({
-				 "scrollX": true
+				"scrollX" : true
 			});
 		});
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+			//$('.btn-edit').tooltip('open');
+		});
 	</script>
-	
-	<script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
-<script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
-<script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script>
+
+	<script
+		src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>
+		type="text/javascript"></script>
+	<script
+		src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/>
+		type="text/javascript"></script>
+	<script
+		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
+		type="text/javascript"></script>
 </body>
 </html>
 

@@ -81,12 +81,12 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>SNO</th>
+																<th>Sno</th>
 																<th>User Name</th>
-																<th>Document No.</th>
+																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Status</th>
+																<th>PR Status</th>
 																<th>Actions</th>
 
 															</tr>
@@ -106,37 +106,36 @@
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
 																	<td>
 																	  <c:choose>
-																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ' }">
+																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Cancelled' }">
 																			
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		 <c:choose>
 																	    <c:when test="${fn:containsIgnoreCase(permissions,'update')}">  <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/getInfo?purchaseReqId=${purchaseRequestsList.id}"/>"><i
+																				href="<c:url value="/purchaseReq/getInfo?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i
 																				class="icon-edit left"></i></a></c:when>
 																			<c:otherwise><a class="btn btn-disable"><i
 																					class="icon-bin left"></i></a></c:otherwise></c:choose>
 																		 <c:choose>
 																	<c:when test="${fn:containsIgnoreCase(permissions,'delete')}">  <a class="btn btn-delete" href="#"
-																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')"><i
+																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
 																			class="icon-bin left"></i></a></c:when>
 																			<c:otherwise><a class="btn btn-disable"><i
 																					class="icon-bin left"></i></a></c:otherwise></c:choose>
 																			</c:if></c:forEach>
 																	 </c:when>
 																	 <c:otherwise>
-                                                                      <a class="btn btn-disable" ><i
-																					class="icon-edit left"></i></a>
-																				<a class="btn btn-disable"><i
-																					class="icon-bin left"></i></a>
+                                                                     <a class="btn btn-disable" ><i class="icon-edit left"></i></a>
+																      <a class="btn btn-disable"><i class="icon-edit left"></i></a> 
                                                                      </c:otherwise>
 																	 
 																	  </c:choose>
 																		<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> <a class="btn btn-view"
-																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>"><i
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> 
+																		 <a class="btn btn-view"
+																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
 																			class="icon-eye3 left"></i></a> </c:if> 
 									       							</c:if></c:forEach>
 									       							</td>
@@ -167,6 +166,10 @@
 				"scrollX" : true
 
 			});
+		});
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();  
+		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
 

@@ -33,7 +33,8 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 							<!-- Basic form layout section start -->
-							<form:form method="GET" action="/purchaseReq/view"
+							<c:url value="/rfq/savePRtoRFQ" var="createUrl" />
+							<form:form method="POST" action="${createUrl}"
 								class="commentForm" modelAttribute="purchaseRequest"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
@@ -193,6 +194,12 @@
 															<a href="#" onclick="goBack()"
 																class="btn btn-primary float-left">Back</a>
 																
+																<c:if test="${purchaseRequest.status == 'Approved'}">
+															<form:button type="submit" name="purchaseId"
+																value="${purchaseRequest.id}"
+																class="btn btn-primary mr-1 float-right">
+																<i></i>Convert PR to RFQ</form:button>
+																</c:if>
 														</div>
 
 													</div>

@@ -46,9 +46,13 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h4 class="card-title" id="basic-layout-icons">Designation/Create</h4>
-													<!-- <a class="heading-elements-toggle"><i
-														class="icon-ellipsis font-medium-3"></i></a> -->
+													<c:if test="${designation.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New Designation</h2>
+													</c:if>
+
+													<c:if test="${designation.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update Designation Details</h2>
+													</c:if>
 												</div>
 
 												<input type="hidden" id="id" class="form-control" name="id"

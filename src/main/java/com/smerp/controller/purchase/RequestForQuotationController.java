@@ -158,6 +158,13 @@ public class RequestForQuotationController {
 		return "redirect:edit?id="+rfq.getId();
 	}
 
+	@GetMapping("/cancelStage")
+	public String cancelStage(String id, Model model) throws JsonProcessingException {
+		logger.info("id-->" + id);
+		
+		logger.info("rfq details" + requestForQuotationService.saveCancelStage(id));
+		return "redirect:list";
+	}
 
 	@GetMapping("/list")
 	public String list(Model model) {

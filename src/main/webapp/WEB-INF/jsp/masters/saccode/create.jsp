@@ -47,8 +47,13 @@
 												<div class="card-header">
 													<div class="row">
 														<div class="col-md-10">
-															<h4 class="card-title" id="basic-layout-icons">SAC
-																Code/Create</h4>
+															<c:if test="${saccode.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create New SAC Code</h2>
+													</c:if>
+
+													<c:if test="${saccode.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update SAC Code Details</h2>
+													</c:if>
 														</div>
 														<div class="col-md-1">
 															<!-- <a class="btn btn-primary" href="/hsncode/list">Back</a> -->
@@ -70,7 +75,7 @@
 																	<form:input type="text" cssClass="form-control"
 																		placeholder='SAC Code' path="sacCode"
 																		 required="true" onchange="isValidName('sacCode','/saccode/isValidSACCode','1_errorContainer','SAC Code Already Exists')"
-																		oninvalid="this.setCustomValidity('Enter SAC Code')"
+																		oninvalid="this.setCustomValidity('Enter SAC Code')" maxlength="10" minlength="6" onkeypress='return isNumberKey(event);'
 																		oninput="setCustomValidity('')" />
 																	 
 																</div>
@@ -152,6 +157,15 @@
 		
 		console.log("document cookie"+document.cookie);   */
 	});
+	
+	function isNumberKey(evt) {
+	    var charCode = (evt.which) ? evt.which : event.keyCode;
+	    console.log(charCode);
+	    if ((charCode < 48 || charCode > 57))
+	        return false;
+
+	    return true;
+	}
 </script>
 </html>
 

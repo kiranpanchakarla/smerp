@@ -59,7 +59,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		case "APP":
 			requestForQuotation.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
 			break;
-		case "CE":
+		case "CA":
 			requestForQuotation.setStatus(EnumStatusUpdate.CANCELED.getStatus());
 			break;
 		default:
@@ -163,6 +163,16 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
         }else {
         	return dup_rfq;
         }
+	}
+	
+	
+	@Override
+	public RequestForQuotation saveCancelStage(String rfqId) {
+		RequestForQuotation rfq = requestForQuotationRepository.findById(Integer.parseInt(rfqId)).get();
+		rfq.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		requestForQuotationRepository.save(rfq);
+		return rfq;
+		
 	}
 
 	@Override

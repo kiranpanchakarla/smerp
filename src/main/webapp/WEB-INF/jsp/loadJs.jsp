@@ -11,12 +11,15 @@
 <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 
-<script src=<c:url value="/resources/js/core/libraries/bootstrap.min.js"/> type="text/javascript"></script> 
+<!-- <script src=<c:url value="/resources/js/core/libraries/bootstrap.min.js"/> type="text/javascript"></script> -->
 <script src=<c:url value="/resources/vendors/js/ui/unison.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/vendors/js/charts/chart.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/core/app-menu.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/core/app.js"/> type="text/javascript"></script> 
 <!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>   -->
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
 
 
 
@@ -86,8 +89,7 @@
   
   
   function deleteById(id,url){
-	  //alertify.alert('Title goes here', 'message')
-      alertify.confirm('Delete','Are You Sure Want To Delete', function(){
+      alertify.confirm('Are you Sure Want to Delete', function(){
           //alertify.success('Ok');
             //"You pressed OK!";
             

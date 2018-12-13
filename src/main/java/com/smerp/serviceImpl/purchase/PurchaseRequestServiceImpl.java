@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.purchase.PurchaseRequestListRepository;
@@ -41,7 +42,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
         case "APP": 
         	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
             break; 
-        case "CE":
+        case "CA":
         	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());
 			break;
         default: 
@@ -73,6 +74,15 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		return purchaseRequestRepository.save(purchaseRequest);
 	}
 
+	@Override
+	public PurchaseRequest saveCancelStage(String prId) {
+		PurchaseRequest prq = purchaseRequestRepository.findById(Integer.parseInt(prId)).get();
+		prq.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		purchaseRequestRepository.save(prq);
+		return prq;
+	}
+	
+	
 	@Override
 	public List<PurchaseRequest> findByIsActive() {
 

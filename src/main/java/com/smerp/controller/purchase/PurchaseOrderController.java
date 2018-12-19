@@ -6,12 +6,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -25,20 +29,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.inventory.RequestForQuotation;
-import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.TaxCode;
+import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
-import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.GenerateDocNumber;
 
 @Controller
-@RequestMapping("/rfq")
-public class RequestForQuotationController {
+@RequestMapping("/po")
+public class PurchaseOrderController {
 
-	private static final Logger logger = LogManager.getLogger(RequestForQuotationController.class);
+	private static final Logger logger = LogManager.getLogger(PurchaseOrderController.class);
 
 	
 	@Autowired
@@ -51,10 +56,14 @@ public class RequestForQuotationController {
 	private VendorService vendorService;
 
 	@Autowired
-	RequestForQuotationService requestForQuotationService;
+	PurchaseOrderService purchaseOrderService;
 
 	@Autowired
 	SacService sacService;
+	
+	@Autowired
+	TaxCodeRepository taxCodeRepository;
+	
 	
 
 
@@ -65,29 +74,32 @@ public class RequestForQuotationController {
 	}
 
 	@GetMapping("/create")
-	public String createPage(Model model, RequestForQuotation rfq) throws JsonProcessingException {
+	public String create(Model model, PurchaseOrder po) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("rfq-->" + rfq);
+		logger.info("po-->" + po);
+		logger.info("taxCode()-->" + taxCode());
+		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
-		model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
-		RequestForQuotation rfqdetails = requestForQuotationService.findLastDocumentNumber();
-		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
-			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
+		PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
+		if (podetails != null && podetails.getDocNumber() != null) {
+			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
 		} else {
-			  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-			    LocalDateTime now = LocalDateTime.now();
-			    rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+	    LocalDateTime now = LocalDateTime.now();
+		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
 		}
-		logger.info("rfqdetails-->" + rfqdetails);
+		logger.info("podetails-->" + podetails);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
-		model.addAttribute("rfq", rfq);
-		return "rfq/create";
+		model.addAttribute("po", po);
+		return "po/create";
 	}
 
 	
@@ -95,27 +107,29 @@ public class RequestForQuotationController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
-		logger.info("rfq-->" + rfq);
-		ObjectMapper mapper = rfqloadData(model, rfq);
+		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
+		po = purchaseOrderService.getListAmount(po);  // set Amt Calculation  
+		logger.info("po-->" + po);
+		ObjectMapper mapper = poloadData(model, po);
 		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-		model.addAttribute("rfq", rfq);
-		return "rfq/create";
+		model.addAttribute("po", po);
+		return "po/create";
 	}
 
-	private ObjectMapper rfqloadData(Model model, RequestForQuotation rfq) {
+	private ObjectMapper poloadData(Model model, PurchaseOrder po) {
 		ObjectMapper mapper = new ObjectMapper();
 		VendorAddress vendorPayTypeAddress=new VendorAddress();
 		VendorAddress vendorShippingAddress =new VendorAddress();
-		if(rfq.getVendorPayTypeAddress()!=null && rfq.getVendorPayTypeAddress()!=null) {
-		 vendorPayTypeAddress = rfq.getVendorPayTypeAddress();
-		 vendorShippingAddress = rfq.getVendorShippingAddress();
+		if(po.getVendorPayTypeAddress()!=null && po.getVendorPayTypeAddress()!=null) {
+		 vendorPayTypeAddress = po.getVendorPayTypeAddress();
+		 vendorShippingAddress = po.getVendorShippingAddress();
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
@@ -123,74 +137,76 @@ public class RequestForQuotationController {
 		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
 	
 		
-		model.addAttribute("lineItems", rfq.getLineItems());
+		model.addAttribute("purchaseOrderlineItems", po.getPurchaseOrderlineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
-		logger.info("rfq-->" + rfq);
-		rfqloadData(model, rfq);
+		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
+		po = purchaseOrderService.getListAmount(po);
+		logger.info("po-->" + po);
+		poloadData(model, po);
 		// model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("rfq", rfq);
+		model.addAttribute("po", po);
 		model.addAttribute("plantMap", plantMap());
-		return "rfq/view";
+		model.addAttribute("taxCodeMap", taxCode());
+		return "po/view";
 	}
 
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
 		logger.info("Delete msg");
-		requestForQuotationService.delete(id);
+		purchaseOrderService.delete(id);
 		return "redirect:list";
 	}
 
 	
 	@PostMapping("/save")
-	public String name(RequestForQuotation requestForQuotation) {
+	public String name(PurchaseOrder requestForQuotation) {
 		logger.info("Inside save method" + requestForQuotation);
-		logger.info("rfq details" + requestForQuotationService.save(requestForQuotation));
+		logger.info("po details" + purchaseOrderService.save(requestForQuotation));
 		return "redirect:list";
 	}
 	
-	@PostMapping("/savePRtoRFQ")
-	public String savePRtoRFQ(@RequestParam String purchaseId) {
-		logger.info("purchaseId" + purchaseId);
-		logger.info("purchaseRequest view-->" + purchaseId);
-		RequestForQuotation rfq = requestForQuotationService.saveRFQ(purchaseId);
-		return "redirect:edit?id="+rfq.getId();
+	@PostMapping("/saveRFQtoPO")
+	public String savePRtoRFQ(HttpServletRequest request) {
+		String rfqId = request.getParameter("rfqId");
+		logger.info("rfqId" + rfqId);
+		logger.info("rfqId view-->" + rfqId);
+		PurchaseOrder po = purchaseOrderService.savePO(rfqId);
+	   return "redirect:edit?id="+po.getId();
 	}
-	
-	
-	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
-		List<RequestForQuotation> requestForQuotationList = requestForQuotationService.rfqApprovedList();
-		logger.info("requestForQuotation list-->" + requestForQuotationList);
-		model.addAttribute("requestForQuotationList", requestForQuotationList);
-		return "/rfq/approvedList";
-	}
-
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
 		
-		logger.info("rfq details" + requestForQuotationService.saveCancelStage(id));
+		logger.info("po details" + purchaseOrderService.saveCancelStage(id));
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<RequestForQuotation> list = requestForQuotationService.findByIsActive();
+		List<PurchaseOrder> list = purchaseOrderService.findByIsActive();
 		logger.info("list"+list);
 		model.addAttribute("list", list);
-		return "rfq/list";
+		return "po/list";
 	}
 
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
+	}
+	
+	public Map<Integer, Object> taxCode() {
+		
+		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
+		
+		return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
+                (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
+                TreeMap::new));  // for Sorted Values
 	}
 
 }

@@ -832,6 +832,12 @@ form label {
     float: left;
     width: 72%;
 } 
+.item-service-table input{
+	width: 100%;
+}
+ .item-service-table select {
+  width: auto;
+ }
 .create-block [type="checkbox"],.create-block [type="radio"] {
     width: auto;
 }

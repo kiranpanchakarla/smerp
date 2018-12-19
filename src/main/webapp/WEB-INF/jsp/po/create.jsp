@@ -40,7 +40,7 @@
 		<div class="content-wrapper">
 			<!-- <div class="content-header row">
 				<div class="col-md-6">
-					<h4>RFQ</h4>
+					<h4>po</h4>
 				</div>
 			</div> -->
 			<div class="content-body">
@@ -49,9 +49,9 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 
-							<c:url value="/rfq/save" var="createUrl" />
+							<c:url value="/po/save" var="createUrl" />
 							<form:form method="POST" action="${createUrl}" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="rfq"
+								enctype="multipart/form-data" modelAttribute="po"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -59,12 +59,12 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-												<c:if test="${rfq.id!=null}">
-												<h2 class="card-title" id="basic-layout-icons">Update RFQ</h2>
+												<c:if test="${po.id!=null}">
+												<h2 class="card-title" id="basic-layout-icons">Update Purchase Order</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
-												<c:if test="${rfq.id==null}">
-												<h2 class="card-title" id="basic-layout-icons">Create New RFQ</h2>
+												<c:if test="${po.id==null}">
+												<h2 class="card-title" id="basic-layout-icons">Create New Purchase Order</h2>
 												</c:if> 
 													
 												</div>
@@ -173,15 +173,12 @@
 																			
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-                                                                          <label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control"
-																					 placeholder='Enter your Remark'
-																					autocomplete="off" path="remark"  />
-                                                                           </div>
+                                                                          &nbsp;
 																		</div>
 																		
-																		
+																		 
 																		<div class="row" id="radioDiv">
+																		<div class="card-block" style="clear:both;">
 																			<div class="col-sm-4 form-group">
 																			<div class="input-group">
                                                                                
@@ -202,12 +199,16 @@
                                                                             </div>
 																			
 																			</div>
+																			</div>
 																		</div>
 																		
+																		
+																		<div class="card-block" style="clear:both;padding: 0px 1.5rem;">
 																		<div class="row" id="pur_radioDiv" style="display: none">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${rfq.category}
+																		<label>Type</label>: ${po.category}
 																	</div>
+																       </div>
 																       </div>
 																		
 																		
@@ -252,6 +253,10 @@
 																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Product Group</th>
 																									<th>Ware house</th>
 																									<th>HSN</th>
@@ -271,6 +276,10 @@
 																									<th>SAC</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Ware house</th>
 																									<th>Action</th>
 																								</tr>
@@ -285,28 +294,36 @@
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty lineItems}">
-																										<form:hidden path="purchaseReqId" />
-																						<table class="table table-bordered table-striped"
+																										<c:if test="${not empty purchaseOrderlineItems}">
+																										<form:hidden path="rfqId" />
+																						<table class="table table-bordered table-striped item-service-table"
 																							id="edit_item_serviceTbl">   
 																										
 																										<thead>
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${rfq.category=='Item'}">
+																									<c:if test="${po.category=='Item'}">
 																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Product Group</th>
 																									<th>Ware house</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
-																									<c:if test="${rfq.category!='Item'}">
+																									<c:if test="${po.category!='Item'}">
 																									<th>SAC</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Ware house</th>
 																									</c:if>
 																									<th>Action</th>
@@ -315,32 +332,64 @@
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${lineItems}"
+																											<c:forEach items="${purchaseOrderlineItems}"
 																												var="listLineItems">
 																												
 																												
-																											 <c:if test="${rfq.purchaseReqId!=null}">
+																											 <c:if test="${po.rfqId!=null}">
 				         
 				                                                                                          <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="lineItems[${count}].productId"
+																															path="purchaseOrderlineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="lineItems[${count}].id"/>	
+																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
+																															
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].requiredQuantity"
+																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
+																															class="form-control requiredQuantity" autocomplete="off"  required="true"></form:input>
+																															
 																															</td>
 																															
-																													<c:if test="${rfq.category=='Item'}">
+																													<c:if test="${po.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													
 																													<td>${listLineItems.uom}</td>
 																													
 																													<td>${listLineItems.requiredQuantity}</td>
+																													
+																													
+																													<td>
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].unitPrice"
+																															value="${listLineItems.unitPrice}"  autocomplete="off"
+																															class="form-control unitPrice" ></form:input></td>
+																													
+																													
+																													    <td><form:select class="form-control taxCode"
+																															 required="true"
+																															path="purchaseOrderlineItems[${count}].taxCode">
+																															<form:option value="" label="Select" />
+																															<form:options items="${taxCodeMap}" />
+																														</form:select></td>
+																													
 																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].taxTotal"
+																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
+																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].total"
+																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
+																															class="form-control total" readonly="true"  ></form:input></td>
+																													
 																														<td>${listLineItems.productGroup}</td>
 
 																														<td><c:forEach var="entry"
-																																items="${planMap}">
+																																items="${plantMap}">
 																																<c:if
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
@@ -350,15 +399,41 @@
 																														<td>--</td>	
 																													</c:if>
 																													
-																													<c:if test="${rfq.category!='Item'}">
+																													<c:if test="${po.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
 																															
 																													<td>${listLineItems.requiredQuantity}</td>
+																													
+																													<td>
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].unitPrice"  autocomplete="off"
+																															value="${listLineItems.unitPrice}"
+																															class="form-control unitPrice" ></form:input></td>
+																													
+																													
+																													    <td><form:select class="form-control taxCode"
+																															style="width:;" required="true"
+																															path="purchaseOrderlineItems[${count}].taxCode">
+																															<form:option value="" label="Select" />
+																															<form:options items="${taxCodeMap}" />
+																														</form:select></td>
+																													
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].taxTotal"
+																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
+																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].total"
+																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
+																															class="form-control total" readonly="true"  ></form:input></td>
+																													
 
 																														<td><c:forEach var="entry"
-																																items="${planMap}">
+																																items="${plantMap}">
 																																<c:if
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
@@ -369,76 +444,131 @@
 																												</tr>
 																											</c:if>		
 																										
-																										 <c:if test="${rfq.purchaseReqId==null}">
+																										 <c:if test="${po.rfqId==null}">
 																												<tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="lineItems[${count}].productId"
+																															path="purchaseOrderlineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="lineItems[${count}].id"/>	
+																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
 																															</td>
 																															
-																													<c:if test="${rfq.category=='Item'}">
+																													<c:if test="${po.category=='Item'}">
 																													<td ><form:input type="text"
-																															path="lineItems[${count}].prodouctNumber" required="true"
+																															path="purchaseOrderlineItems[${count}].prodouctNumber" required="true"
 																															value="${listLineItems.prodouctNumber}"  
 																															class="form-control prodouctNumber"></form:input></td>
 																													
 																													<td><form:input type="text"
-																															path="lineItems[${count}].uom"
+																															path="purchaseOrderlineItems[${count}].uom"
 																															value="${listLineItems.uom}"
 																															class="form-control uom" readonly="true"></form:input></td>
 																													
 																													<td><form:input type="text"
-																															path="lineItems[${count}].requiredQuantity"
+																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control"  required="true"></form:input></td>
+																															class="form-control requiredQuantity" autocomplete="off"  required="true"></form:input></td>
+																															
+																															
+																															
+																															<td>
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
+																															value="${listLineItems.unitPrice}"
+																															class="form-control unitPrice" ></form:input></td>
+																													
+																													
+																													    <td><form:select class="form-control taxCode"
+																															style="width:;" required="true"
+																															path="purchaseOrderlineItems[${count}].taxCode">
+																															<form:option value="" label="Select" />
+																															<form:options items="${taxCodeMap}" />
+																														</form:select></td>
+																													
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].taxTotal"
+																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
+																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].total"
+																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
+																															class="form-control total" readonly="true"  ></form:input></td>
+																													
 																															
 																														<td><form:input type="text"
-																															path="lineItems[${count}].productGroup"
+																															path="purchaseOrderlineItems[${count}].productGroup"
 																															value="${listLineItems.productGroup}"
 																															class="form-control productGroup"
 																															readonly="true"></form:input></td>
 																														
 																														<td><form:select class="form-control"
-																															style="width:160px !important;" required="true"
-																															path="lineItems[${count}].warehouse">
+																															style="width:;" required="true"
+																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
-																															<form:options items="${planMap}" />
+																															<form:options items="${plantMap}" />
 																														</form:select></td>
 																															
 																														<td><form:input type="text"
-																															path="lineItems[${count}].hsn"
+																															path="purchaseOrderlineItems[${count}].hsn"
 																															value="${listLineItems.hsn}"
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></td>
 																															
 																													</c:if>
 																													
-																													<c:if test="${rfq.category!='Item'}">
+																													<c:if test="${po.category!='Item'}">
 																													<td><form:input type="text"
-																															path="lineItems[${count}].sacCode"
+																															path="purchaseOrderlineItems[${count}].sacCode"
 																															value="${listLineItems.sacCode}"
 																															class="form-control sacCode"
 																															></form:input></td>
 																													
 																													<td><form:input type="text"
-																															path="lineItems[${count}].description"
+																															path="purchaseOrderlineItems[${count}].description"
 																															value="${listLineItems.description}"
 																															class="form-control description"
 																															readonly="true"></form:input></td>
 																															
 																													<td><form:input type="text"
-																															path="lineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}" required="true"
-																															class="form-control"></form:input></td>
+																															path="purchaseOrderlineItems[${count}].requiredQuantity"
+																															value="${listLineItems.requiredQuantity}" required="true" autocomplete="off" onkeypress="return isNumericKey(event)"
+																															class="form-control requiredQuantity"></form:input></td>
+																													
+																													<td>
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].unitPrice"
+																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
+																															class="form-control unitPrice" ></form:input></td>
+																													
+																													
+																													    <td><form:select class="form-control taxCode"
+																															style="width:;" required="true"
+																															path="purchaseOrderlineItems[${count}].taxCode">
+																															<form:option value="" label="Select" />
+																															<form:options items="${taxCodeMap}" />
+																														</form:select></td>
+																													
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].taxTotal"
+																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
+																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															
+																															<td><form:input type="text"
+																															path="purchaseOrderlineItems[${count}].total"
+																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
+																															class="form-control total"  readonly="true"></form:input></td>
+																													
+																													
 																													
 																													<td><form:select class="form-control"
-																															style="width:160px !important;" required="true"
-																															path="lineItems[${count}].warehouse">
+																															style="width:;" required="true"
+																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
-																															<form:options items="${planMap}" />
+																															<form:options items="${plantMap}" />
 																														</form:select></td>
 																															
 																													</c:if>
@@ -461,7 +591,7 @@
 																						
 																					</div>
 																				</div>
-																				 <c:if test="${rfq.purchaseReqId==null}">
+																				 <c:if test="${po.rfqId==null}">
 																				<div class="add-row-block">
 																					<input type="button" class="btn btn-info"
 																						onclick="addItem()" value="Add Row">
@@ -497,41 +627,117 @@
 																		</thead>
 																	</table>
 																</div>
-											<br>				
+											<br>
+											
+											
+											<!--Calculation Part  -->
+											
+											<div class="row">
+											<div class="col-sm-4">
+											<div class="create-block">
+											<div class="form-group">
+											<label>Remark</label> 
+                                                                            <form:textarea type="text" cssClass="form-control"
+																					 placeholder='Enter your Remark'
+																					autocomplete="off" path="remark"  />
+                                                                           </div></div>
+                                                                           </div>
+                                           <div class="col-sm-4">&nbsp;</div>                                
+                                                                           
+											<div class="col-sm-4">
+																<div class="form-group">
+																	<label>Discount(%) :</label> 
+														
+														
+														<form:input type="text" cssClass="form-control" id="totalDiscount"
+																					placeholder='Total  DisCount ' path="totalDiscount"
+																					autocomplete="off"  onkeypress="return isNumericKey1(event)" />
+														
+														
+														
+																</div>
+																
+																<div class="form-group">
+																	<label>Total Before Discount  : </label>
+																	
+																	 	<form:input type="text" cssClass="form-control"
+																					placeholder='Total Before Dis ' path="totalBeforeDisAmt"
+																					autocomplete="off" readonly="true"  />
+																	
+																	
+																</div>
+                                                                <div class="form-group">
+																	<label>Freight : </label>
+																		<form:input type="text" cssClass="form-control"
+																					placeholder='Freight' path="freight"  onkeypress="return isNumericKey(event)"
+																					autocomplete="off"  />
+																</div>
+																
+																 <div class="form-group">
+																	<label>Rounding : </label>
+																		<form:input type="text" cssClass="form-control"
+																					placeholder='Rounding' path="amtRounding"
+																					autocomplete="off" readonly="true" />
+																</div>
+																
+																 <div class="form-group">
+																	<label>Tax Amount :</label> 
+																		<form:input type="text" cssClass="form-control"
+																					placeholder='Tax Amount' path="taxAmt"
+																					autocomplete="off" readonly="true" />
+																</div>
+																
+																 <div class="form-group">
+																	<label>Total Payment Due : </label>
+																		<form:input type="text" cssClass="form-control"
+																					placeholder='Total Payment Due' path="totalPayment"
+																					autocomplete="off" readonly="true" />
+																</div>
+																</div>
+										 </div>
+											
+											
+											
+											
+											
+											
+											
+											<!--Calculation Part  -->
+															
 									<div class="text-xs-center">
 									
-												<a href="<c:url value="/rfq/list"/>" class="btn btn-primary float-left">
+												<a href="<c:url value="/po/list"/>" class="btn btn-primary float-left">
 																	 Back </a>
 									
 										
-											<c:if test="${rfq.status eq 'Draft Stage' || rfq.id==null }">
+											<c:if test="${po.status eq 'Draft Stage' || po.id==null }">
                                                                    <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
-                                                                    <c:if test="${rfq.id==null}">
+                                                                    <c:if test="${po.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
-                                                                    <c:if test="${rfq.id!=null}">
+                                                                    <c:if test="${po.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
                                                                       
                                                                       <a
-																			href="<c:url value="/rfq/cancelStage?id=${rfq.id}"/>">
+																			href="<c:url value="/po/cancelStage?id=${po.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
 																		</a>
 
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'RFQ'}">
+																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
-                                                                       <c:if test="${rfq.status != 'Cancelled'}">
+                                                                       <c:if test="${po.status != 'Cancelled'}">
                                                                       <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
                                                                     </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                       </c:if>
                                                                       
                                                                       <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'RFQ'}">
+																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
                                                                       <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
@@ -579,8 +785,8 @@
 var inc=0;
 var edit_addressCount=0;
 
-var purchaseReqId=$('#purchaseReqId').val();
-if(purchaseReqId!='' && purchaseReqId != undefined) {
+var rfqId=$('#rfqId').val();
+if(rfqId!='' && rfqId != undefined) {
 	 $("#pur_radioDiv").show();
 	 $("#radioDiv").hide();
 }
@@ -634,43 +840,76 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].prodouctNumber" autocomplete="off"  class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
 			+'<div class="form-group1">'
-			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
+			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
 			+'<div class="form-group1">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
+			+'<option value="">Select</option>'+
+			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
+			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</div>'
+			+ '</td>'
+			
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			
+			+ '<td>'
+			+'<div class="form-group1">'
+			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
-			<c:forEach items="${planMap}" var="planMap">
-			'<option value="${planMap.key}">${planMap.value}</option>'+
+			<c:forEach items="${plantMap}" var="plantMap">
+			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -678,7 +917,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -700,35 +939,67 @@ function addItem() {
 			
 			+'<td style="display:none;">'
 			+'<div class="form-group1">'
-			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].sacCode" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].sacCode" autocomplete="off" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			
+			+ '<td>'
+			+'<div class="form-group1">'
+			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
+			+'<option value="">Select</option>'+
+			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
+			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</div>'
+			+ '</td>'
+			
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			+'<td>'
+			+'<div class="form-group1">'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+ '<td>'
 			+'<div class="form-group1">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
-			<c:forEach items="${planMap}" var="planMap">
-			'<option value="${planMap.key}">${planMap.value}</option>'+
+			<c:forEach items="${plantMap}" var="plantMap">
+			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -1209,6 +1480,7 @@ $(document).ready(function(){
 		
 function removeData(index){
 	//alert("ff"+index);
+	setCalculationAmt(index);
 	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
 		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	}else{
@@ -1220,6 +1492,7 @@ function removeData(index){
 
 function removeData1(index){
 	//alert("ff"+index);
+	setCalculationAmt(index);
 	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
 		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	}else{
@@ -1231,6 +1504,7 @@ function removeData1(index){
 
 function removeData2(index){
 	//alert("ff"+index);
+	setCalculationAmt(index);
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	$("#form").validator("update");
 }
@@ -1265,6 +1539,14 @@ $("#items_radio").click(function() {
 		  
 		  $('#addressCount').val(0);
 		  $('#edit_addressCount').val(-1);
+		  
+		  $('#totalBeforeDisAmt').val("");
+		  $('#freight').val("");
+		  $('#amtRounding').val("");
+		  $('#taxAmt').val("");
+		  $('#totalPayment').val("");
+		  $('#totalDiscount').val("");
+		  
 		  addItem();
 		 
 		 
@@ -1300,6 +1582,16 @@ $("#service_radio").click(function() {
 	  inc=0;
 	  $('#addressCount').val(0);
 	  $('#edit_addressCount').val(-1);
+	  
+	  
+	  $('#totalBeforeDisAmt').val("");
+	  $('#freight').val("");
+	  $('#amtRounding').val("");
+	  $('#taxAmt').val("");
+	  $('#totalPayment').val("");
+	  $('#totalDiscount').val("");
+	  
+	  
 	  addItem();
 	  
 	 }, function(){
@@ -1343,7 +1635,7 @@ $('form.commentForm').on('submit', function(event) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("Please Select Atleast One Service");
+ 		alertify.alert("Please Select Atleast One  Service");
  		 return false;
  	}else{
  		return true;
@@ -1355,15 +1647,238 @@ $('form.commentForm').on('submit', function(event) {
 function isNumericKey(evt)
 {
 	var charCode = (evt.which) ? evt.which : evt.keyCode;
-	if (charCode != 46 && charCode > 31 
+	if ( charCode > 31 
 	&& (charCode < 48 || charCode > 57))
 	return false;
 	return true;
-}  
+} 
+
+function isNumericKey1(evt)
+{
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	if ( charCode > 31 
+			&& (charCode < 45 || charCode > 57))
+	return false;
+	return true;
+}
 
 function goBack() {
     window.history.back();
 }
+	
+	
+	
+
+
+$(document).on("change", ".taxCode", function() {
+
+	var itemParentRow = $(this).parents(".multTot");
+	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+//	alert("tax--->" +tax);
+	var tax_amt = getDiscount(tax);
+	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);
+	//alert("tax_amt" +tax_amt);
+	//alert("totalValue" +totalValue);
+	
+	 $(itemParentRow).find(".taxTotal").val(parseFloat((requiredQuantity * unitPrice) * tax_amt).toFixed(2));
+	 $(itemParentRow).find(".total").val(totalValue.toFixed(2));
+	
+	 var sum_total = 0;
+	 var sum_tax_total = 0;
+  	 $(".total").each(function() {
+  		sum_total += parseFloat($(this).val());
+		    });
+  	 
+  	 $(".taxTotal").each(function() {
+  		sum_tax_total += parseFloat($(this).val());
+ 		    });
+  	 
+  	 
+ 	if(!isNaN(sum_total)) {
+	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalDiscount").val("");
+  	 $("#freight").val("");
+ 	}
+  	 
+	});
+	
+	
+	
+
+$(document).on("keyup", ".unitPrice", function() {
+	 var itemParentRow = $(this).parents(".multTot");
+	
+	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+//	alert("tax--->" +tax);
+	var tax_amt = Number(tax) / 100;
+	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
+	//alert("tax_amt" +tax_amt);
+	//alert("totalValue" +totalValue);
+		if( tax !="Select") {
+	 $(itemParentRow).find(".taxTotal").val(parseFloat((requiredQuantity * unitPrice) * tax_amt).toFixed(2));
+	 $(itemParentRow).find(".total").val(totalValue.toFixed(2));
+		}
+	
+	
+	 var sum_total = 0;
+	 var sum_tax_total = 0;
+  	 $(".total").each(function() {
+  		sum_total += parseFloat($(this).val());
+		    });
+  	 
+  	 $(".taxTotal").each(function() {
+  		sum_tax_total += parseFloat($(this).val());
+ 		    });
+  	 
+  	if( tax !="Select"  && !isNaN(sum_total)) {
+	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalDiscount").val("");
+  	 $("#freight").val("");
+    	}
+	});
+	
+
+$(document).on("keyup", ".requiredQuantity", function() {
+	 var itemParentRow = $(this).parents(".multTot");
+	 
+	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+//	alert("tax--->" +tax);
+	var tax_amt = Number(tax) / 100;
+	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
+	//alert("tax_amt" +tax_amt);
+	//alert("totalValue" +totalValue);
+		if( tax !="Select") {
+	 $(itemParentRow).find(".taxTotal").val(parseFloat((requiredQuantity * unitPrice) * tax_amt).toFixed(2));
+	 $(itemParentRow).find(".total").val(totalValue.toFixed(2));
+		}
+	
+	
+	 var sum_total = 0;
+	 var sum_tax_total = 0;
+  	 $(".total").each(function() {
+  		sum_total += parseFloat($(this).val());
+		    });
+  	 
+  	 $(".taxTotal").each(function() {
+  		sum_tax_total += parseFloat($(this).val());
+ 		    });
+  	 
+  	if( tax !="Select"  && !isNaN(sum_total)) {
+	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalDiscount").val("");
+  	 $("#freight").val("");
+    	}
+	});
+
+	
+	
+	$('#totalDiscount').keyup(function() {
+	var totalAmt = $("#totalBeforeDisAmt").val();
+	var discount_val = $("#totalDiscount").val();
+	
+	if(discount_val<100){
+	var discount = Number(discount_val) / 100;
+	var totalPayment = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
+    
+	if( $("#freight").val()!="") {
+		totalPayment += parseFloat($("#freight").val());
+	}
+	if(totalAmt!="") {
+	 $("#totalPayment").val(Math.round(totalPayment));
+	 $("#amtRounding").val( Math.round(totalPayment));
+	}
+	
+	}else {
+		 $("#totalDiscount").val("");
+		alertify.alert("Please Enter Valid Discount!");
+		 return false;
+	}
+	
+	});
+	
+	
+	function getDiscount(discount_val){
+		var discount = Number(discount_val) / 100;
+		return discount;
+	}
+	
+	function getCalculateAmt(requiredQuantity,unitPrice,tax_amt){
+		var amt = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
+		return amt;
+	}
+
+
+
+$('#freight').keyup(function() {
+	
+	var totalAmt = $("#totalBeforeDisAmt").val();
+	var discount_val = $("#totalDiscount").val();
+	var freight = $(this).val();
+	
+//alert("discount_val" +discount_val);
+//alert("freight" +freight);
+//alert("totalAmt" +totalAmt);
+	if( discount_val !="" && $("#totalDiscount").val()!="") {
+		var discount = Number(discount_val) / 100;
+		totalAmt = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
+	}
+	
+	if(totalAmt!="") {
+	var finalValue =  Number(totalAmt) + Number(freight);
+	 $("#totalPayment").val(Math.round(finalValue));
+	 $("#amtRounding").val( Math.round(finalValue));
+	}
+});
+	
+	function setCalculationAmt(index){
+			 var sum_total = 0;
+			 var sum_tax_total = 0;
+		  	 $(".total").each(function(row) {
+		  		///alert("ttt-->" +isNaN($(this).val()));
+		  		 if(row!=index) {
+		  		 sum_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+		  		             }
+				    });
+		  	 
+		  	 $(".taxTotal").each(function(row) {
+		  		if(row!=index) {
+		  		 sum_tax_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+		  	                }
+		 		    });
+		  	 //alert(sum_total);
+		  	// alert(sum_tax_total);
+		  	 
+		  	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+		  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+		  	 
+		var discount_val = $("#totalDiscount").val();
+		var discount = Number(discount_val) / 100;
+		var totalPayment = parseFloat(sum_total) - parseFloat(sum_total * discount);
+	    
+		if( $("#freight").val()!="") {
+			totalPayment += parseFloat($("#freight").val());
+		}
+		if(sum_total!="") {
+		 $("#totalPayment").val(Math.round(totalPayment));
+		 $("#amtRounding").val( Math.round(totalPayment));
+		}
+	
+	}
 	
 	</script>
 

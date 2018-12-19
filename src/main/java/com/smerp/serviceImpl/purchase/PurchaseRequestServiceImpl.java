@@ -2,6 +2,8 @@ package com.smerp.serviceImpl.purchase;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.util.EnumStatusUpdate;
 
 @Service
+@Transactional
 public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 
 	
@@ -54,9 +57,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		if (purchaseRequest.getId() != null) {
 			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
 			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
-			for (PurchaseRequestList purchaseRequest1 : purchaseRequestLists) {
 				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
-			}
 		}
 		
 		

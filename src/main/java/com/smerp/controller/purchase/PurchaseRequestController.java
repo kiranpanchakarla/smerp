@@ -1,13 +1,12 @@
 package com.smerp.controller.purchase;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +33,7 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.GenerateDocNumber;
 
 @Controller
 @RequestMapping("/purchaseReq")
@@ -76,9 +76,11 @@ public class PurchaseRequestController {
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
 		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
-			purchaseRequest.setDocNumber(documentNumberGeneration(purchaseRequests.getDocNumber()));
+			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
 		} else {
-			purchaseRequestIdGeneration(purchaseRequest);
+			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+			 LocalDateTime now = LocalDateTime.now();
+			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0"));
 		}
 		model.addAttribute("purchaseRequest", purchaseRequest);
 		return "/purchaseReq/create";
@@ -146,19 +148,6 @@ public class PurchaseRequestController {
 		return "purchaseReq/create";
 	}
 	
-	
-	 
-	private void purchaseRequestIdGeneration(PurchaseRequest purchaseRequest) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String[] parts2 = dateFormat.format(date).split("/");
-		String type = "PR";
-		String[] parts1 = parts2[2].split(" ");
-		String prefix = type.concat(parts2[0]).concat(parts2[1]).concat(parts1[0]);
-		String suffix = "1";
-		String docNumber = prefix + suffix;
-		purchaseRequest.setDocNumber(docNumber);
-	}
 
 	@PostMapping(value = "/delete")
 	public String deletePurchaseReq(@RequestParam("id") int id) {
@@ -168,21 +157,6 @@ public class PurchaseRequestController {
 		return "redirect:list";
 	}
 
-	
-	private String documentNumberGeneration(String documentNumber) {
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String[] parts2 = dateFormat.format(date).split("/");
-		String type = "PR";
-		String[] parts1 = parts2[2].split(" ");
-		String prefix = type.concat(parts2[0]).concat(parts2[1]).concat(parts1[0]);
-
-		int inc_number = Integer.parseInt(documentNumber.substring(10)) + 1;
-		String docNumber = prefix + inc_number;
-		logger.info("docNumber" + docNumber);
-		return docNumber;
-	}
 
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));

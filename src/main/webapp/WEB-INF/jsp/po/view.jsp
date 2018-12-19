@@ -32,7 +32,7 @@ text-align: left;
 		<div class="content-wrapper">
 			<!-- <div class="content-header row">
 				<div class="col-md-6">
-					<h4>RFQ</h4>
+					<h4>po</h4>
 				</div>
 			</div> -->
 			<div class="content-body">
@@ -44,8 +44,8 @@ text-align: left;
 
 
 
-							<form:form method="POST" action="/po/saveRFQtoPO" id="form" class="bv-form commentForm" 
-								enctype="multipart/form-data" modelAttribute="rfq"
+							<form:form method="POST" action="/po/save" id="form" class="bv-form commentForm"
+								enctype="multipart/form-data" modelAttribute="po"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -54,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">RFQ/View</h2>
+													<h2 class="card-title" id="basic-layout-icons">PurchaseOrder/View</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -62,15 +62,15 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>: ${rfq.vendor.name}
+																	<label>Name</label>: ${po.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>: ${rfq.vendor.emailId}
+																	<label>Email Id</label>: ${po.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact Person </label>: ${rfq.vendorContactDetails.contactName}
+																	<label>Contact Person </label>: ${po.vendorContactDetails.contactName}
 																</div>
 															</div>
 
@@ -80,15 +80,15 @@ text-align: left;
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>: ${rfq.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${po.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>: ${rfq.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${po.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${rfq.docNumber}
+																				<label>Document#</label>: ${po.docNumber}
 																			</div>
 
 															</div>
@@ -99,15 +99,15 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document#</label>: ${rfq.referenceDocNumber}
+																				<label>Reference Document#</label>: ${po.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.postingDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Document Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.documentDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.documentDate}" />
 																			</div>
 																		</div>
 
@@ -117,7 +117,7 @@ text-align: left;
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${rfq.requiredDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
                                                                             <div class="input-group">
@@ -176,78 +176,111 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty lineItems}">
+																										<c:if test="${not empty purchaseOrderlineItems}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
 																										<thead>
-																								<tr>
+																							<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${rfq.category=='Item'}">
-																									<th>Product Name</th>
+																									<c:if test="${po.category=='Item'}">
+																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Product Group</th>
 																									<th>Ware house</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
-																									<c:if test="${rfq.category!='Item'}">
+																									<c:if test="${po.category!='Item'}">
 																									<th>SAC</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
+																									<th>Unit Price</th>
+																									<th>Tax Code</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
 																									<th>Ware house</th>
 																									</c:if>
+																									<th>Action</th>
 																								</tr>
 																							</thead>
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${lineItems}"
+																											<c:forEach items="${purchaseOrderlineItems}"
 																												var="listLineItems">
 																												
-																												<tr class="multTot multTot${count}">
+																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="lineItems[${count}].productId"
+																															path="purchaseOrderlineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="lineItems[${count}].id"/>	
+																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
 																															</td>
 																															
-																													<c:if test="${rfq.category=='Item'}">
+																													<c:if test="${po.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													
 																													<td>${listLineItems.uom}</td>
 																													
 																													<td>${listLineItems.requiredQuantity}</td>
-																															
+																													
+																															<td>${listLineItems.unitPrice}</td>
+																															<td><c:forEach var="entry"
+																																items="${taxCodeMap}">
+																																<c:if test="${entry.key ==listLineItems.taxCode}">
+																													            ${entry.value} 																													 </c:if>
+																															</c:forEach></td>
+																															<td>${listLineItems.taxTotal}</td>
+																															<td>${listLineItems.total}</td>
+																													
 																														<td>${listLineItems.productGroup}</td>
-																														<td>
-																														<c:forEach var="entry" items="${plantMap}">
-																													<c:if test="${entry.key ==listLineItems.warehouse}">
+
+																												<td><c:forEach var="entry"
+																														items="${plantMap}">
+																														<c:if
+																															test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
-																													  </c:forEach>
-																														</td>	
-																														<td>${listLineItems.hsn}</td>
-																															
+																													</c:forEach></td>
+
+																												<td>${listLineItems.hsn}</td>
+																														<td>--</td>	
 																													</c:if>
 																													
-																													<c:if test="${rfq.category!='Item'}">
+																													<c:if test="${po.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
 																															
 																													<td>${listLineItems.requiredQuantity}</td>
 																													
-																														<td>
-																														<c:forEach var="entry" items="${plantMap}">
-																													<c:if test="${entry.key ==listLineItems.warehouse}">
+																													<td>${listLineItems.unitPrice}</td>
+																												<td><c:forEach var="entry"
+																														items="${taxCodeMap}">
+																														<c:if
+																															test="${entry.key ==listLineItems.taxCode}">
+																													            ${entry.value} 																													 </c:if>
+																													</c:forEach></td>
+																												<td>${listLineItems.taxTotal}</td>
+																												<td>${listLineItems.total}</td>
+
+
+																												<td><c:forEach var="entry"
+																																items="${plantMap}">
+																																<c:if
+																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
-																													  </c:forEach>
-																														</td>
+																															</c:forEach></td>
+																														<td>--</td>		
 																													</c:if>
+																												
 																												</tr>
 
 																												<c:set var="count" value="${count + 1}"
@@ -283,11 +316,11 @@ text-align: left;
 																				<td>
 																					<div id="shippingAddressTable">
 																					
-																					${rfq.vendorShippingAddress.addressName}<br>
-																					${rfq.vendorShippingAddress.street}
-																					${rfq.vendorShippingAddress.city}
-																					${rfq.vendorShippingAddress.zipCode}<br>
-																					${rfq.vendorShippingAddress.country.name}
+																					${po.vendorShippingAddress.addressName}<br>
+																					${po.vendorShippingAddress.street}
+																					${po.vendorShippingAddress.city}
+																					${po.vendorShippingAddress.zipCode}<br>
+																					${po.vendorShippingAddress.country.name}
 																					
 																					
 																					</div>
@@ -299,11 +332,11 @@ text-align: left;
 																				<td>
 																					<div id="payToAddressTable">
 																					
-																					${rfq.vendorPayTypeAddress.addressName}<br>
-																					${rfq.vendorPayTypeAddress.street}
-																					${rfq.vendorPayTypeAddress.city}
-																					${rfq.vendorPayTypeAddress.zipCode}<br>
-																					${rfq.vendorPayTypeAddress.country.name}
+																					${po.vendorPayTypeAddress.addressName}<br>
+																					${po.vendorPayTypeAddress.street}
+																					${po.vendorPayTypeAddress.city}
+																					${po.vendorPayTypeAddress.zipCode}<br>
+																					${po.vendorPayTypeAddress.country.name}
 																					
 																					
 																					</div>
@@ -319,19 +352,57 @@ text-align: left;
 											</div>
 										</div>
 									</div>
-										<div>
-															<a href="#" onclick="goBack()"
-																class="btn btn-primary float-left">Back</a>
-																
-																<c:if test="${rfq.status == 'Approved'}">
-																<input type="hidden" name="rfqId" 	value="${rfq.id}">
-																
-																
-															<form:button type="button" id="convertBtn"
-																class="btn btn-primary mr-1 float-right">
-																<i></i>Convert To PO</form:button>
-																</c:if>
-														</div>
+									
+									<!--Calculation Part  -->
+									
+									<div class="row">
+											<div class="col-sm-4"> &nbsp;  </div>
+                                           <div class="col-sm-4">&nbsp;</div>   
+											
+										<div class="col-sm-4">
+											<div class="form-group">
+												<label>Discount(%) :</label>
+												${po.totalDiscount}
+											</div>
+
+											<div class="form-group">
+												<label>Total Before Discount : </label>
+												${po.totalBeforeDisAmt}
+											</div>
+											<div class="form-group">
+												<label>Freight : </label> ${po.freight}
+											</div>
+
+											<div class="form-group">
+												<label>Rounding : </label> ${po.amtRounding}
+											</div>
+
+											<div class="form-group">
+												<label>Tax Amount :</label> ${po.taxAmt}
+											</div>
+
+											<div class="form-group">
+												<label>Total Payment Due : </label> ${po.totalPayment}
+											</div>
+										</div>
+									
+									</div>		
+											
+											
+											
+											
+											
+											
+											<!--Calculation Part  -->
+									<div class="card-block"><div class="row">
+										<div class="col-sm-6 form-group">
+											<a href="#" onClick="goBack()"
+												class="btn btn-primary"> Back </a>
+												
+										</div>
+										
+									</div>
+                                    </div>
 								</section>
 							</form:form>
 						</div>
@@ -358,15 +429,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
-$('#convertBtn').on('click', function(event) {
-	event.preventDefault();
-	  alertify.confirm('Are you Sure, Want to Change RFQ to PO', function(){
-		  form.submit();
-	  }, function(){
-          alertify.error('Cancelled')
-       });
- 
-});
+	
 	
 function goBack() {
     window.history.back();

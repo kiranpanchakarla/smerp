@@ -34,7 +34,7 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 							<c:url value="/rfq/savePRtoRFQ" var="createUrl" />
-							<form:form method="POST" action="${createUrl}"
+							<form:form method="POST" action="${createUrl}" id="form" 
 								class="commentForm" modelAttribute="purchaseRequest"
 								data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
@@ -195,8 +195,8 @@
 																class="btn btn-primary float-left">Back</a>
 																
 																<c:if test="${purchaseRequest.status == 'Approved'}">
-															<form:button type="submit" name="purchaseId"
-																value="${purchaseRequest.id}"
+																	<input type="hidden" name="purchaseId" 	value="${purchaseRequest.id}">
+															<form:button type="button" id="convertBtn"
 																class="btn btn-primary mr-1 float-right">
 																<i></i>Convert PR to RFQ</form:button>
 																</c:if>
@@ -219,12 +219,25 @@
 			</div>
 		</div>
 	</div>
+	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
 	
 	<script type="text/javascript">
 		function goBack() {
 			window.history.back();
 		}
+		
+		$('#convertBtn').on('click', function(event) {
+			event.preventDefault();
+			  alertify.confirm('Are you Sure, Want To Change  PR to RFQ', function(){
+				  form.submit();
+			  }, function(){
+		          alertify.error('Cancelled')
+		       });
+		 
+		});
+		
+		
 	</script>
 </body>
 

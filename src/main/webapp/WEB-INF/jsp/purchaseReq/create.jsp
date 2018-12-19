@@ -60,7 +60,7 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>User</label>
-                                                                            <form:input type="text" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}" required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
+                                                                            <form:input type="text" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.userId" class="userId" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
@@ -73,7 +73,7 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Requester Name</label>
-                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name'  path="referenceUser.firstname" 
+                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name' autocomplete="off"  path="referenceUser.firstname" 
                                                                           value="${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}"
                                                                             
                                                                              required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
@@ -232,7 +232,7 @@
 																													<c:if test="${purchaseRequest.type=='Item'}">
 																													<td ><form:input type="text"
 																															path="purchaseRequestLists[${count}].prodouctNumber"
-																															value="${listpurchaseRequestLists.prodouctNumber}"
+																															value="${listpurchaseRequestLists.prodouctNumber}" 
 																															class="form-control prodouctNumber"></form:input></td>
 																													
 																														<td><form:input type="text"
@@ -246,7 +246,7 @@
 																													
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
-																															value="${listpurchaseRequestLists.requiredQuantity}"
+																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
 																															class="form-control"></form:input></td>
 																															
 																														<td><form:input type="text"
@@ -285,7 +285,7 @@
 																															
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
-																															value="${listpurchaseRequestLists.requiredQuantity}"
+																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
 																															class="form-control"></form:input></td>
 																													
 																													<td><form:select class="form-control"
@@ -468,7 +468,7 @@
     	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""  required="true"   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -480,34 +480,34 @@
     			
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" value="" class="form-control description '+inc+'" id="description'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" readonly="true" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<div class="form-group1">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+ '<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
@@ -518,7 +518,7 @@
     			+ '</td>'
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -544,26 +544,26 @@
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].sacCode"  autocomplete="off"  required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<div class="form-group1">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+ '<td>'
-    			+'<div class="form-group">'
+    			+'<div class="form-group1">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
@@ -776,7 +776,11 @@
 
                         //var myJSON = JSON.stringify(obj);
 
-                        var hsndata = obj.hsnCode;
+	                       var hsndata=0;
+	                	
+	                	if(obj.hsnCode!=null) {
+	                		hsndata=obj.hsnCode;
+	                	}
                         //alert("hsnCode"+hsndata.hsnCode);
                         //	$('.hsnVal').val(hsndata.hsnCode);
                         $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
@@ -1064,7 +1068,7 @@
   			}
             
         	if(rowCount == 0){
-        		alertify.alert("please slect atleat one item");
+        		alertify.alert("Please Select Atleast One Item");
         		 return false;
         	}else{
         		return true;
@@ -1079,7 +1083,7 @@
      			} 
         	 
          	if(rowCount1 == 0){
-         		alertify.alert("please slect atleat one  service");
+         		alertify.alert("Please Select Atleast One Service");
          		 return false;
          	}else{
          		return true;

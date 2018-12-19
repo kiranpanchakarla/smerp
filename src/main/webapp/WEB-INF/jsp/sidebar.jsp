@@ -103,6 +103,20 @@
              <li class="has_sub"><a href="<c:url value ="/purchaseReq/approvedList"/>">Convert PR To RFQ</a></li>
            </c:if>
            </c:forEach>
+           
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'PurchaseOrder'}">
+             <li class="has_sub"><a href="<c:url value ="/po/list"/>">Purchase Order</a></li>
+           </c:if>
+           </c:forEach>
+           
+           
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'Convert To PO'}">
+             <li class="has_sub"><a href="<c:url value ="/purchaseReq/approvedList"/>">Convert PO</a></li>
+           </c:if>
+           </c:forEach>
+           
         </ul>
       </li>
       

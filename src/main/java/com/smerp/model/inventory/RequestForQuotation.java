@@ -35,12 +35,14 @@ public class RequestForQuotation extends AuditModel {
 	
 	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name = "rfq_id", referencedColumnName = "rfq_id")
-	private List<LineItems> lineItems;;
+	private List<LineItems> lineItems;
 	
 	@Column(name="doc_number")
 	private String docNumber;
+	
 	@Column(name="status")
 	private String status;
+	
 	private transient  String statusType;
 	
 	@Column(name="reference_doc_number")

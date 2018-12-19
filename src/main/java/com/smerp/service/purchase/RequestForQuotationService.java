@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.util.EnumStatusUpdate;
 
 public interface RequestForQuotationService {
 	
@@ -23,5 +24,7 @@ public interface RequestForQuotationService {
 	RequestForQuotation delete(int id);
 	
 	List<RequestForQuotation> findByIsActive();
+	
+	List<RequestForQuotation> rfqApprovedList();
 
 }

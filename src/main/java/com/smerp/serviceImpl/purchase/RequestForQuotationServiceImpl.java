@@ -1,7 +1,11 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +27,7 @@ import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 
 @Service
+@Transactional
 public class RequestForQuotationServiceImpl implements RequestForQuotationService {
 
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
@@ -114,7 +119,9 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
 			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
 		} else {
-			rfq = GenerateDocNumber.documentNumberGenerationNotInDB(rfq);
+			  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+			  LocalDateTime now = LocalDateTime.now();
+			  rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
 		}
 
 		if (prq != null) {
@@ -176,6 +183,13 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	}
 
 	@Override
+	public List<RequestForQuotation> rfqApprovedList() {
+
+		return requestForQuotationRepository.rfqApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+	}
+	
+	
+	@Override
 	public RequestForQuotation findLastDocumentNumber() {
 		return requestForQuotationRepository.findTopByOrderByIdDesc();
 	}
@@ -194,7 +208,8 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	public RequestForQuotation findById(int id) {
 		return requestForQuotationRepository.findById(id).get();
 	}
-
+	
+	
 	@Override
 	public RequestForQuotation delete(int id) {
 		RequestForQuotation requestForQuotation = requestForQuotationRepository.findById(id).get();

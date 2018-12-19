@@ -7,6 +7,7 @@ public enum EnumStatusUpdate {
 	DRAFT("Draft"),
 	APPROVEED("Approved"),
 	CONVERTPRTORFQ("ConvertedToRFQ"),
+	CONVERTRFQTOPO("ConvertedToPO"),
 	COMPLETED("Completed"),
 	REJECTED("Rejected");
 

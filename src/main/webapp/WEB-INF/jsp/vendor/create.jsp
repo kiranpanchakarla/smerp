@@ -141,9 +141,9 @@ $(document).ready(function(){
 																				<label>Mobile</label>
 																				<form:input path="mobileNo"
 																					placeholder='Mobile Number'
-																					  type="text"
+																					  type="text" autocomplete="off"
 																					class="form-control"
-																					maxlength="13" minlength="10" onkeypress='return isNumberKey(event);'
+																					maxlength="13" minlength="10" onkeypress='return isNumericMobileKey(event);'
 																					oninvalid="this.setCustomValidity('Please Enter Mobile Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -257,7 +257,7 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Mobile</label><input type="text"
-																							class="form-control" maxlength="13"
+																							class="form-control" maxlength="13" value="+91"
 																							minlength="10" onkeypress='return isNumberKey(event);' placeholder='Mobile Number'
 																							name="vendorContactDetails[0].mobileNo"
 																							id="vendorContactDetailsMobileNo"
@@ -1272,14 +1272,30 @@ var inc1=1;
 	      window.history.back();
 	  }
 	 
-	  function isNumberKey(evt) {
+	   function isNumberKey(evt) {
 		    var charCode = (evt.which) ? evt.which : event.keyCode;
 		    console.log(charCode);
-		    if (charCode != 43 && charCode != 45 && charCode > 31
-		        && (charCode < 48 || charCode > 57))
-		        return false;
+		    if (charCode > 31 && (charCode < 48 || charCode > 57))
+				   return false;
 
 		    return true;
+		} 
+	  
+		var id = $('#id').val();
+		if (id == '') {
+			$("#mobileNo").val("+91");
+		}
+	  function isNumericMobileKey(evt)
+		{
+			var data = $("#mobileNo").val();
+			var first_pos = data.charAt(0);
+			var charCode = (evt.which) ? evt.which : evt.keyCode;
+			if(first_pos=="" && charCode==43)
+				return true;
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+			   return false;
+			
+			return true;
 		}
 	
 	  function isZipcodeKey(evt) {

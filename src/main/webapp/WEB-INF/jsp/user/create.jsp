@@ -111,8 +111,8 @@
 																				<form:input type="text"
 																					cssClass="form-control"
 																					placeholder='Mobile Number' path="mobileNo"
-																					required="true" maxlength="13" minlength="10" onkeypress='return isNumberKey(event);'
-																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
+																					required="true" maxlength="13" minlength="10" onkeypress='return isNumericMobileKey(event);'
+																					oninvalid="this.setCustomValidity('Please Enter Phone Number')" autocomplete="off"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
@@ -197,7 +197,10 @@
 <script>
 $(document).ready(function() {
  
-
+	var id = $('#userId').val();
+	if (id == '') {
+		$("#mobileNo").val("+91");
+	}
 	
 	if (typeof $("#userId").val() != 'undefined'){
 		designationLoadForUpdate();
@@ -351,6 +354,20 @@ $(document).ready(function() {
 
 	                     			    return true;
 	                     			}
+	                     			
+	                     			function isNumericMobileKey(evt)
+	                     			{
+	                     				var data = $("#mobileNo").val();
+	                     				var first_pos = data.charAt(0);
+	                     				var charCode = (evt.which) ? evt.which : evt.keyCode;
+	                     				if(first_pos=="" && charCode==43)
+	                     					return true;
+	                     				if (charCode > 31 && (charCode < 48 || charCode > 57))
+	                     				   return false;
+	                     				
+	                     				return true;
+	                     			}
+	                     			
 </script>
 </html>
 

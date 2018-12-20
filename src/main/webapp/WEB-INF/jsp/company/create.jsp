@@ -246,9 +246,9 @@
 																				<label>Mobile</label>
 
 																				<form:input type="text"
-																					cssClass="form-control"
-																					placeholder='Mobile Number' path="phoneNum"
-																					required="true" maxlength="13" minlength="10" pattern="[+]{1}[a-zA-Z]{0}[0-9]{12}"
+																					cssClass="form-control "
+																					placeholder='Mobile Number' path="phoneNum" autocomplete="off"
+																					required="true" maxlength="13" minlength="10" onkeypress="return isNumericMobileKey(event)" 
 																					oninvalid="this.setCustomValidity('Please Enter Phone Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -411,6 +411,30 @@
 	if (id == '') {
 		$("#phoneNum").val("+91");
 	}
+
+	function isNumericKey(evt)
+	{
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+		   return false;
+		
+		return true;
+	}
+	
+	
+	function isNumericMobileKey(evt)
+	{
+		var data = $("#phoneNum").val();
+		var first_pos = data.charAt(0);
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if(first_pos=="" && charCode==43)
+			return true;
+		if (charCode > 31 && (charCode < 48 || charCode > 57))
+		   return false;
+		
+		return true;
+	}
+	
 	function fileValidation(event) {
 		var fileInput = document.getElementById('file');
 		var filePath = fileInput.value;
@@ -426,7 +450,7 @@
 			image.src = URL.createObjectURL(event.target.files[0]);
 		}
 	}
-	function isNumberKey(evt) {
+	/* function isNumberKey(evt) {
 	    var charCode = (evt.which) ? evt.which : event.keyCode;
 	    console.log(charCode);
 	    if (charCode != 43 && charCode != 45 &&  charCode > 31
@@ -434,7 +458,7 @@
 	        return false;
 
 	    return true;
-	}
+	} */
 </script>
 </html>
 

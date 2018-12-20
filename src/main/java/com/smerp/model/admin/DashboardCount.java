@@ -11,7 +11,14 @@ public class DashboardCount {
 	private Integer convertedToRFQ;
 	private Integer approved;
 	private Integer rejected;
+	private Integer convertedToPO;
 	
+	public Integer getConvertedToPO() {
+		return convertedToPO;
+	}
+	public void setConvertedToPO(Integer convertedToPO) {
+		this.convertedToPO = convertedToPO;
+	}
 	public Integer getCancelled() {
 		return cancelled;
 	}

@@ -54,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">PurchaseOrder/View</h2>
+													<h2 class="card-title" id="basic-layout-icons">Purchase Order</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -193,12 +193,12 @@ text-align: left;
 																									<th>Tax Total</th>
 																									<th>Total</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
 																									<c:if test="${po.category!='Item'}">
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
 																									<th>Unit Price</th>

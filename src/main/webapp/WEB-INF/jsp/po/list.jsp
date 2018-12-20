@@ -47,7 +47,7 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-3">
-													<h2 class="content-header-title">PurchaseOrder List</h2>
+													<h2 class="content-header-title">Purchase Order</h2>
 												</div>
 												<div class="col-md-5">
 													<c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -69,7 +69,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li>
-														<li class="breadcrumb-item active">PurchaseOrder List</li>
+														<li class="breadcrumb-item active">Purchase Order List</li>
 													</ol>
 												</div>
 											</div>
@@ -122,7 +122,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'update')}">
 																								<a class="btn btn-edit"
-																									href="<c:url value="/po/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i
+																									href="<c:url value="/po/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
 																									class="icon-edit left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -134,7 +134,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'delete')}">
 																								<a class="btn btn-delete" href="#"
-																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
+																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
 																									class="icon-bin left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -159,7 +159,7 @@
 																				<c:if
 																					test="${fn:containsIgnoreCase(permissions,'view')}">
 																					<a class="btn btn-view"
-																						href="<c:url value="/po/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																						href="<c:url value="/po/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																						class="icon-eye3 left"></i></a>
 																				</c:if>
 																			</c:if>

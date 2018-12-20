@@ -60,13 +60,13 @@
 											<div class="card-box">
 												<div class="card-header">
 												<c:if test="${rfq.id!=null}">
-												<h2 class="card-title" id="basic-layout-icons">Update RFQ</h2>
+												<h2 class="card-title" id="basic-layout-icons">Update Request For Quotation</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${rfq.id==null}">
-												<h2 class="card-title" id="basic-layout-icons">Create New RFQ</h2>
+												<h2 class="card-title" id="basic-layout-icons">Create New Request For Quotation</h2>
 												</c:if> 
-													
+												 	
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -268,10 +268,10 @@
 																							<thead>
 																								<tr>
 																									<th style="display: none;">Product Id</th>
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>Action</th>
 																								</tr>
 																							</thead> 
@@ -299,15 +299,15 @@
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
 																									<c:if test="${rfq.category!='Item'}">
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>
 																								</tr>

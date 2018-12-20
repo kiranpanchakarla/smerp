@@ -79,7 +79,7 @@
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>RFQ Status</th>
-																<th>Actions</th>
+																<th>Convert to PO</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -97,7 +97,7 @@
 																	<td>
 																			
 																				 <a class="btn btn-view"
-																		href="<c:url value="/rfq/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																		href="<c:url value="/rfq/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																			class="icon-eye3 left"></i></a>  
 																				  
 																	</td>

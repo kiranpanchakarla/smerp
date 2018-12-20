@@ -21,17 +21,26 @@
       </li>
       </c:if>
       </c:forEach>
+      
+      <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'Convert To RFQ'}">
+       <li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i class="icon-egg left left"></i><span class="menu_text">Convert PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+        </c:if>
+       </c:forEach>
+      
        <c:forEach items="${sessionScope.umpmap}" var="ump">
 			     <c:if test="${ump.key eq 'RFQ'}">
        <li><a href="<c:url value ="/rfq/list"/>"><i class="icon-android-expand left"></i><span class="menu_text">Request for Quotation</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
        
        </c:if>
        </c:forEach>
-        <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Convert To RFQ'}">
-       <li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i class="icon-egg left left"></i><span class="menu_text">Convert PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-        </c:if>
-       </c:forEach>
+        
+       
+       <c:forEach items="${sessionScope.umpmap}" var="ump">
+			     <c:if test="${ump.key eq 'Convert To PO'}">
+		         <li><a href="<c:url value ="/rfq/approvedList"/>"><i class="icon-android-expand left"></i><span class="menu_text">Convert RFQ To PO</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+         </c:if>
+         </c:forEach>
        
         <c:forEach items="${sessionScope.umpmap}" var="ump">
 			     <c:if test="${ump.key eq 'PurchaseOrder'}">
@@ -40,11 +49,7 @@
          </c:forEach>
            
            
-         <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Convert To PO'}">
-		         <li><a href="<c:url value ="/rfq/approvedList"/>"><i class="icon-android-expand left"></i><span class="menu_text">Convert To PO</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-         </c:if>
-         </c:forEach>
+         
        
         <%-- <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/product/productList"/>">Product</a></li>

@@ -84,7 +84,7 @@ public class PurchaseOrder extends AuditModel {
 	private String remark;
 
 	@Column(name = "total_discount")
-	private Integer totalDiscount;
+	private Double totalDiscount;
 
 	@Column(name = "total_payment")
 	private Double totalPayment ;
@@ -236,11 +236,11 @@ public class PurchaseOrder extends AuditModel {
 		this.remark = remark;
 	}
 
-	public Integer getTotalDiscount() {
+	public Double getTotalDiscount() {
 		return totalDiscount;
 	}
 
-	public void setTotalDiscount(Integer totalDiscount) {
+	public void setTotalDiscount(Double totalDiscount) {
 		this.totalDiscount = totalDiscount;
 	}
 

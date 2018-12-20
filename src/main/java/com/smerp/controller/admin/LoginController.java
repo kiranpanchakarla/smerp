@@ -112,6 +112,7 @@ public class LoginController {
 			model.addAttribute("companyListCount", companyServices.findByIsActive().size());
 			model.addAttribute("dashboardCount", dashboardCountService.findAll());
 			model.addAttribute("rfqCount", dashboardCountService.findRFQCount());
+			model.addAttribute("poCount", dashboardCountService.findPOCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

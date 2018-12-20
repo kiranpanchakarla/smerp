@@ -273,7 +273,7 @@
 																							<thead>
 																								<tr>
 																									<th style="display: none;">Product Id</th>
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
 																									<th>Unit Price</th>
@@ -317,7 +317,7 @@
 																									</c:if>
 																									
 																									<c:if test="${po.category!='Item'}">
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
 																									<th>Unit Price</th>

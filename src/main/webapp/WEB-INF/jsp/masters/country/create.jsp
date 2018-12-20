@@ -106,7 +106,7 @@
 																	<label for="timesheetinput2">Phone Code</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"
-																			placeholder='Phone Code' path="phoneCode"
+																			placeholder='Phone Code' maxlength="5" path="phoneCode" onkeypress='return isNumberKey(event);'
 																			value="${country.phoneCode}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Phone Code')"
 																			oninput="setCustomValidity('')" />
@@ -179,6 +179,17 @@
 		</footer>
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+<script>
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    console.log(charCode);
+    if (charCode != 43 && charCode != 45 &&  charCode > 31
+        && (charCode < 48 || charCode > 57))
+        return false;
+
+    return true;
+}
+</script>
 </body>
 
 </html>

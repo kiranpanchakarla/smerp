@@ -113,13 +113,13 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		 <c:choose>
 																	    <c:when test="${fn:containsIgnoreCase(permissions,'update')}">  <a class="btn btn-edit"
-																				href="<c:url value="/purchaseReq/getInfo?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i
+																				href="<c:url value="/purchaseReq/getInfo?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
 																				class="icon-edit left"></i></a></c:when>
 																			<c:otherwise><a class="btn btn-disable"><i
 																					class="icon-bin left"></i></a></c:otherwise></c:choose>
 																		 <c:choose>
 																	<c:when test="${fn:containsIgnoreCase(permissions,'delete')}">  <a class="btn btn-delete" href="#"
-																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
+																		onclick="deleteById('<c:out value="${purchaseRequestsList.id}"/>','/purchaseReq/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
 																			class="icon-bin left"></i></a></c:when>
 																			<c:otherwise><a class="btn btn-disable"><i
 																					class="icon-bin left"></i></a></c:otherwise></c:choose>
@@ -135,7 +135,7 @@
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/><c:if test="${fn:containsIgnoreCase(permissions,'view')}"> 
 																		 <a class="btn btn-view"
-																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																			class="icon-eye3 left"></i></a> </c:if> 
 									       							</c:if></c:forEach>
 									       							</td>

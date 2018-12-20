@@ -78,7 +78,7 @@
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
-																<th>ConvertToRFQ</th>
+																<th>Convert To RFQ</th>
 
 															</tr>
 														</thead>
@@ -96,7 +96,7 @@
 																	<td>
 																			
 																				 <a class="btn btn-view"
-																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="left" title="View"><i
+																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																			class="icon-eye3 left"></i></a>  
 																				  
 																	</td>

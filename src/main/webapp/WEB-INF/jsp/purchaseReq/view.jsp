@@ -43,7 +43,7 @@
 											<div class="card">
 												<div class="card-header">
 													<h2 class="card-title" id="basic-layout-icons">Purchase
-														Request/View</h2>
+														Request</h2>
 												</div>
 												<form:hidden path="id" />
 												<div class="card-body collapse in create-block">
@@ -121,7 +121,7 @@
 																						<th>UOM</th>
 																						<th>Quantity</th>
 																						<th>Product Group</th>
-																						<th>Ware house</th>
+																						<th>Warehouse</th>
 																						<th>HSN</th>
 																				</thead>
 
@@ -151,10 +151,10 @@
 																				<thead>
 																					<tr>
 																						<th>S.No</th>
-																						<th>SAC</th>
+																						<th>SAC Code</th>
 																						<th>Description</th>
 																						<th>Request Quantity</th>
-																						<th>Ware house</th>
+																						<th>Warehouse</th>
 																					</tr>
 																				</thead>
 
@@ -229,7 +229,7 @@
 		
 		$('#convertBtn').on('click', function(event) {
 			event.preventDefault();
-			  alertify.confirm('Are you Sure, Want To Change  PR to RFQ', function(){
+			  alertify.confirm('Are you Sure, Want To Convert PR to RFQ', function(){
 				  form.submit();
 			  }, function(){
 		          alertify.error('Cancelled')

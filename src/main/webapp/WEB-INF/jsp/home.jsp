@@ -192,6 +192,12 @@
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
                   <h2 class="block font-weight-normal">${dashboardCount.open}</h2>
                 </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Draft Stage</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.draft}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Cancelled</span>
+                  <h2 class="block font-weight-normal">${dashboardCount.cancelled}</h2>
+                </div>
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Approved</span>
                   <h2 class="block font-weight-normal">${dashboardCount.approved}</h2>
                 </div>
@@ -223,15 +229,52 @@
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Draft Stage</span>
                   <h2 class="block font-weight-normal">${rfqCount.draft}</h2>
                 </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Cancelled</span>
+                  <h2 class="block font-weight-normal">${rfqCount.cancelled}</h2>
+                </div>
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Approved</span>
                   <h2 class="block font-weight-normal">${rfqCount.approved}</h2>
                 </div>
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Rejected</span>
                   <h2 class="block font-weight-normal">${rfqCount.rejected}</h2>
                 </div>
-                
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Converted to RFQ</span>
+                  <h2 class="block font-weight-normal">${rfqCount.convertedToRFQ}</h2>
+                </div>
+                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Converted to PO</span>
+                  <h2 class="block font-weight-normal">${rfqCount.convertedToPO}</h2>
+                </div>
                 <div class="col-xs-3  text-xs-center"> <span class="text-muted">Total Records</span>
                   <h2 class="block font-weight-normal">${rfqCount.total}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div> 
+       
+       <div class="col-md-6">
+         <a href="<c:url value="/rfq/list"/>">
+          <div class="card">
+          
+            <div class="card-block color-box5">
+            <h2>Purchase Order</h2>
+             <div class="row">
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
+                  <h2 class="block font-weight-normal">${poCount.open}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Draft Stage</span>
+                  <h2 class="block font-weight-normal">${poCount.draft}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Approved</span>
+                  <h2 class="block font-weight-normal">${poCount.approved}</h2>
+                </div>
+                <div class="col-xs-3 text-xs-center"> <span class="text-muted">Rejected</span>
+                  <h2 class="block font-weight-normal">${poCount.rejected}</h2>
+                </div>
+                
+                <div class="col-xs-3  text-xs-center"> <span class="text-muted">Total Records</span>
+                  <h2 class="block font-weight-normal">${poCount.total}</h2>
                 </div>
               </div>
             </div>

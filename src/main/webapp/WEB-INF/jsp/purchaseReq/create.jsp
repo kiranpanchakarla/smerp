@@ -49,7 +49,7 @@
 													<form:input type="hidden" cssClass="form-control" path="id" />
 												</c:if>
 												<c:if test="${purchaseRequest.id==null}">
-													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request Details</h2>
+													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request</h2>
 												</c:if> 
 											</div>
                                                    	<form:hidden path="id" />
@@ -155,7 +155,7 @@
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									<th>Action</th>
 																								</tr>
@@ -170,10 +170,10 @@
 																							<thead>
 																								<tr>
 																									<th style="display: none;">Product Id</th>
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>Action</th>
 																								</tr>
 																							</thead> 
@@ -201,15 +201,15 @@
 																									<th>UOM</th>
 																									<th>Quantity</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
 																									<c:if test="${purchaseRequest.type!='Item'}">
-																									<th>SAC</th>
+																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Request Quantity</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>
 																								</tr>

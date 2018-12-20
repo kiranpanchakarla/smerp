@@ -9,5 +9,7 @@ public interface DashboardCountService {
 	
 	DashboardCount findRFQCount();
 	
+	DashboardCount findPOCount();
+	
 	
 }

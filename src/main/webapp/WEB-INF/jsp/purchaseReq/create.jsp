@@ -247,7 +247,7 @@
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
 																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
-																															class="form-control"></form:input></td>
+																															class="form-control validatePrice"></form:input></td>
 																															
 																														<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].productGroup"
@@ -286,7 +286,7 @@
 																													<td><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
 																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
-																															class="form-control"></form:input></td>
+																															class="form-control validatePrice"></form:input></td>
 																													
 																													<td><form:select class="form-control"
 																															style="width:160px !important;"
@@ -495,7 +495,7 @@
     			
     			+'<td>'
     			+'<div class="form-group1">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -558,7 +558,7 @@
     			
     			+'<td>'
     			+'<div class="form-group1">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -1110,6 +1110,11 @@
             window.history.back();
         }
         
+        $(document).on("keypress", ".validatePrice", function(e) {	
+    		if (this.value.length == 0 && e.which == 48 ){
+    			      return false;
+    			   }
+    		});
         
     </script>
 

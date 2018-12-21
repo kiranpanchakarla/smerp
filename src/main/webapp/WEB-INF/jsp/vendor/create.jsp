@@ -218,8 +218,8 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Title</label> <select
-																							name="vendorContactDetails[0].title"
-																							class="form-control" required="true"
+																							name="vendorContactDetails[0].title" id="title0"
+																							class="form-control " onchange="titleValidation(0)"  required="true"
 																							oninvalid="this.setCustomValidity('Please Select Valid Title')"
 																							oninput="setCustomValidity('')">
 																							<option value="" selected disabled>Select</option>
@@ -299,7 +299,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Gender</label> <select class="form-control"
 																							name="vendorContactDetails[0].gender"
-																							required="true"
+																							required="true" id="gender0"
 																							oninvalid="this.setCustomValidity('Please Enter Gender')"
 																							oninput="setCustomValidity('')">
 																							<option value="" selected disabled>Select</option>
@@ -1087,7 +1087,7 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Contact Id</label><input type="text" placeholder="Contact Id" name="vendorContactDetails['+inc+'].contactId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Id\')" oninput="setCustomValidity(\'\')" > </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Title\')" oninput="setCustomValidity(\'\')" >'
+												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" id="title'+inc+'"  onchange="titleValidation('+inc+')"  class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Title\')" oninput="setCustomValidity(\'\')" >'
 												+ '<option value="" selected disabled >select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select> <div   class="help-block with-errors" ></div></div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4">'
@@ -1106,7 +1106,7 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Email</label><input type="text" placeholder="Email Id" name="vendorContactDetails['+inc+'].email" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Email \')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"   required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
+												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"  id="gender'+inc+'"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
 												+ '<option value="" selected disabled >select</option>'
 												+ '<option value="Male">Male</option>'
 												+ '<option value="Female">Female</option>'
@@ -1307,6 +1307,17 @@ var inc1=1;
 		    return true;
 		}
 	
+	 
+  	  
+  	  function titleValidation(index) {
+  		 var val = $("#title"+index).val();
+  		if(val=='Mr') {
+  		$("#gender"+index+" option[value='Male']").attr('selected', 'selected');
+  		}else {
+  	    $("#gender"+index+" option[value='Female']").attr('selected', 'selected');
+  		}
+  	  }
+	 
 	
 </script>
 

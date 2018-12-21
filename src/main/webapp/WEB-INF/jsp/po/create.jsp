@@ -349,7 +349,7 @@
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity" autocomplete="off"  required="true"></form:input>
+																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input>
 																															
 																															</td>
 																															
@@ -379,12 +379,12 @@
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></td>
 																															
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total" readonly="true"  ></form:input></td>
+																															class="form-control total validatePrice" readonly="true"  ></form:input></td>
 																													
 																														<td>${listLineItems.productGroup}</td>
 
@@ -424,12 +424,12 @@
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></td>
 																															
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total" readonly="true"  ></form:input></td>
+																															class="form-control total validatePrice" readonly="true"  ></form:input></td>
 																													
 
 																														<td><c:forEach var="entry"
@@ -468,7 +468,7 @@
 																													<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity" autocomplete="off"  required="true"></form:input></td>
+																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input></td>
 																															
 																															
 																															
@@ -476,7 +476,7 @@
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
 																															value="${listLineItems.unitPrice}"
-																															class="form-control unitPrice" ></form:input></td>
+																															class="form-control unitPrice validatePrice" ></form:input></td>
 																													
 																													
 																													    <td><form:select class="form-control taxCode"
@@ -490,7 +490,7 @@
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal " readonly="true"  ></form:input></td>
 																															
 																															<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
@@ -535,13 +535,13 @@
 																													<td><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" required="true" autocomplete="off" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity"></form:input></td>
+																															class="form-control requiredQuantity validatePrice"></form:input></td>
 																													
 																													<td>
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"
 																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
-																															class="form-control unitPrice" ></form:input></td>
+																															class="form-control unitPrice validatePrice" ></form:input></td>
 																													
 																													
 																													    <td><form:select class="form-control taxCode"
@@ -649,7 +649,7 @@
 																	<label>Discount(%) :</label> 
 														
 														
-														<form:input type="text" cssClass="form-control" id="totalDiscount"
+														<form:input type="text" cssClass="form-control validatePrice" id="totalDiscount"
 																					placeholder='Total  DisCount ' path="totalDiscount"
 																					autocomplete="off"  onkeypress="return isNumericKey1(event)" />
 														
@@ -668,7 +668,7 @@
 																</div>
                                                                 <div class="form-group">
 																	<label>Freight : </label>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control validatePrice"
 																					placeholder='Freight' path="freight"  onkeypress="return isNumericKey(event)"
 																					autocomplete="off"  />
 																</div>
@@ -860,14 +860,14 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -886,7 +886,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -958,14 +958,14 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1879,6 +1879,12 @@ $('#freight').keyup(function() {
 		}
 	
 	}
+	
+	$(document).on("keypress", ".validatePrice", function(e) {	
+		if (this.value.length == 0 && e.which == 48 ){
+			      return false;
+			   }
+		});
 	
 	</script>
 

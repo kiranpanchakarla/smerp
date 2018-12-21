@@ -393,7 +393,7 @@
 																													<td><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control"  required="true"></form:input></td>
+																															class="form-control validatePrice"  required="true"></form:input></td>
 																															
 																														<td><form:input type="text"
 																															path="lineItems[${count}].productGroup"
@@ -654,7 +654,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -719,7 +719,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group1">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1359,7 +1359,16 @@ function isNumericKey(evt)
 	&& (charCode < 48 || charCode > 57))
 	return false;
 	return true;
-}  
+} 
+
+
+	
+$(document).on("keypress", ".validatePrice", function(e) {	
+	if (this.value.length == 0 && e.which == 48 ){
+		      return false;
+		   }
+	
+	});
 
 function goBack() {
     window.history.back();

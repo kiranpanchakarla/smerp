@@ -141,9 +141,9 @@ $(document).ready(function(){
 																				<label>Mobile</label>
 																				<form:input path="mobileNo"
 																					placeholder='Mobile Number'
-																					  type="text"
+																					  type="text" autocomplete="off"
 																					class="form-control"
-																					maxlength="13" minlength="10" onkeypress='return isNumberKey(event);'
+																					maxlength="13" minlength="10" onkeypress='return isNumericMobileKey(event);'
 																					oninvalid="this.setCustomValidity('Please Enter Mobile Number')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -218,8 +218,8 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Title</label> <select
-																							name="vendorContactDetails[0].title"
-																							class="form-control" required="true"
+																							name="vendorContactDetails[0].title" id="title0"
+																							class="form-control " onchange="titleValidation(0)"  required="true"
 																							oninvalid="this.setCustomValidity('Please Select Valid Title')"
 																							oninput="setCustomValidity('')">
 																							<option value="" selected disabled>Select</option>
@@ -257,7 +257,7 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Mobile</label><input type="text"
-																							class="form-control" maxlength="13"
+																							class="form-control" maxlength="13" value="+91"
 																							minlength="10" onkeypress='return isNumberKey(event);' placeholder='Mobile Number'
 																							name="vendorContactDetails[0].mobileNo"
 																							id="vendorContactDetailsMobileNo"
@@ -299,7 +299,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Gender</label> <select class="form-control"
 																							name="vendorContactDetails[0].gender"
-																							required="true"
+																							required="true" id="gender0"
 																							oninvalid="this.setCustomValidity('Please Enter Gender')"
 																							oninput="setCustomValidity('')">
 																							<option value="" selected disabled>Select</option>
@@ -1087,7 +1087,7 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Contact Id</label><input type="text" placeholder="Contact Id" name="vendorContactDetails['+inc+'].contactId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Id\')" oninput="setCustomValidity(\'\')" > </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Title\')" oninput="setCustomValidity(\'\')" >'
+												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" id="title'+inc+'"  onchange="titleValidation('+inc+')"  class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Title\')" oninput="setCustomValidity(\'\')" >'
 												+ '<option value="" selected disabled >select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select> <div   class="help-block with-errors" ></div></div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4">'
@@ -1106,7 +1106,7 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Email</label><input type="text" placeholder="Email Id" name="vendorContactDetails['+inc+'].email" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Email \')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"   required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
+												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"  id="gender'+inc+'"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
 												+ '<option value="" selected disabled >select</option>'
 												+ '<option value="Male">Male</option>'
 												+ '<option value="Female">Female</option>'
@@ -1272,14 +1272,30 @@ var inc1=1;
 	      window.history.back();
 	  }
 	 
-	  function isNumberKey(evt) {
+	   function isNumberKey(evt) {
 		    var charCode = (evt.which) ? evt.which : event.keyCode;
 		    console.log(charCode);
-		    if (charCode != 43 && charCode != 45 && charCode > 31
-		        && (charCode < 48 || charCode > 57))
-		        return false;
+		    if (charCode > 31 && (charCode < 48 || charCode > 57))
+				   return false;
 
 		    return true;
+		} 
+	  
+		var id = $('#id').val();
+		if (id == '') {
+			$("#mobileNo").val("+91");
+		}
+	  function isNumericMobileKey(evt)
+		{
+			var data = $("#mobileNo").val();
+			var first_pos = data.charAt(0);
+			var charCode = (evt.which) ? evt.which : evt.keyCode;
+			if(first_pos=="" && charCode==43)
+				return true;
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+			   return false;
+			
+			return true;
 		}
 	
 	  function isZipcodeKey(evt) {
@@ -1291,6 +1307,17 @@ var inc1=1;
 		    return true;
 		}
 	
+	 
+  	  
+  	  function titleValidation(index) {
+  		 var val = $("#title"+index).val();
+  		if(val=='Mr') {
+  		$("#gender"+index+" option[value='Male']").attr('selected', 'selected');
+  		}else {
+  	    $("#gender"+index+" option[value='Female']").attr('selected', 'selected');
+  		}
+  	  }
+	 
 	
 </script>
 

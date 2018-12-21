@@ -1030,3 +1030,23 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
 .tooltip-css:hover .tooltiptext {
   visibility: visible;
 }
+.text-xs-center .text-xs-center {
+    float: none;
+    display: inline-block;
+}
+
+.text-center {
+    text-align: center;
+}
+h2.font-weight-normal {
+    font-size: 20px;
+}
+.edit-user-dropdown{
+	float: right !important;
+}
+.edit-user-dropdown label {
+    vertical-align: 9px;
+}
+.edit-user-dropdown .dropdown-toggle::after{
+    top: -20px;
+}

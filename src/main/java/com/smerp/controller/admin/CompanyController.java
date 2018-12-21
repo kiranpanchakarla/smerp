@@ -1,9 +1,14 @@
 package com.smerp.controller.admin;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +32,8 @@ import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.master.CountryServices;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.FilePathUtil;
+import com.smerp.util.HTMLToPDFGenerator;
+import com.smerp.util.RequestContext;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -43,6 +50,14 @@ public class CompanyController {
 	public void setProp(String prop) {
 		this.logoUploadedPath = prop;
 	}
+	
+	private static String pdfUploadedPath;
+
+	@Value(value = "${file.upload.pdf.path}")
+	public void setPropPDF(String pdf) {
+		this.pdfUploadedPath = pdf;
+	}
+	
 
 	private static String countryCode;
 
@@ -56,6 +71,9 @@ public class CompanyController {
 
 	@Autowired
 	CompanyServices companyServices;
+	
+	@Autowired
+	private HTMLToPDFGenerator hTMLToPDFGenerator;
 
 	private static final Logger logger = LogManager.getLogger(CompanyController.class);
 	
@@ -131,6 +149,31 @@ public class CompanyController {
 			return false;
 		}
 	}
+	
+	@RequestMapping("/downloadPdf")
+	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
+			HttpSession session, String regType, Model model,String orgId) throws Exception {
+
+		
+		RequestContext.set(ContextUtil.populateContexturl(request));
+		String path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+				.OfflineHtmlStringToPdf(pdfUploadedPath);
+		logger.info("path " +path);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		File file = new File(path);
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+		FileInputStream fileInputStream = new FileInputStream(path);
+		int i;
+		while ((i = fileInputStream.read()) != -1) {
+			out.write(i);
+		}
+		fileInputStream.close();
+		out.close();
+	}
+	
+	
 
 	@PostMapping(value = "/save")
 	public String save(@RequestParam(value = "file", required = false, defaultValue = "") MultipartFile file,

@@ -1,5 +1,8 @@
 package com.smerp.controller.purchase;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,9 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,12 +41,22 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.HTMLToPDFGenerator;
+import com.smerp.util.RequestContext;
 
 @Controller
 @RequestMapping("/purchaseReq")
 public class PurchaseRequestController {
 
+	private static String pdfUploadedPath;
+	
+	@Value(value = "${file.upload.pdf.path}")
+	public void setPropPDF(String pdf) {
+		this.pdfUploadedPath = pdf;
+	}
+	
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestController.class);
 
@@ -56,6 +74,9 @@ public class PurchaseRequestController {
 
 	@Autowired
 	SacService sacService;
+	
+	@Autowired
+	private HTMLToPDFGenerator hTMLToPDFGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -147,6 +168,36 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseRequest", purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId)));
 		return "purchaseReq/create";
 	}
+	
+	@RequestMapping("/downloadPdf")
+	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
+			HttpSession session, String regType, Model model,String orgId) throws Exception {
+		
+		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(98);
+		logger.info("purchaseRequest view-->" + purchaseRequest);
+		
+		RequestContext.set(ContextUtil.populateContexturl(request));
+		String path = "";
+		
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+				.OfflineHtmlStringToPdfForPurchaseReq(pdfUploadedPath,purchaseRequest);
+				
+		logger.info("path " +path);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		File file = new File(path);
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+		FileInputStream fileInputStream = new FileInputStream(path);
+		int i;
+		while ((i = fileInputStream.read()) != -1) {
+			out.write(i);
+		}
+		fileInputStream.close();
+		out.close();
+	}
+	
+	
 	
 
 	@PostMapping(value = "/delete")

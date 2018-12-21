@@ -98,6 +98,13 @@
 			<version>5.5.10</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf -->
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.1.7</version>
+		</dependency>
+		
 		<!-- Convert to indian number format eg: 1,23,500.00 -->
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -154,6 +161,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency> 
+		
+		
 		
 	</dependencies>
 

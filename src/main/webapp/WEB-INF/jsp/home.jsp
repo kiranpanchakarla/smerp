@@ -186,8 +186,8 @@
           <div class="card">
           
             <div class="card-block color-box5">
-            <h2>Purchase Request</h2>
-              <div class="row">
+            <h2 class="text-center">Purchase Request</h2>
+              <div class="row text-xs-center">
                 
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
                   <h2 class="block font-weight-normal">${dashboardCount.open}</h2>
@@ -221,8 +221,8 @@
           <div class="card">
           
             <div class="card-block color-box5">
-            <h2>Request for Quotation</h2>
-             <div class="row">
+            <h2 class="text-center">Request for Quotation</h2>
+             <div class="row text-xs-center">
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
                   <h2 class="block font-weight-normal">${rfqCount.open}</h2>
                 </div>
@@ -258,8 +258,8 @@
           <div class="card">
           
             <div class="card-block color-box5">
-            <h2>Purchase Order</h2>
-             <div class="row">
+            <h2 class="text-center">Purchase Order</h2>
+             <div class="row text-xs-center">
                 <div class="col-xs-3 text-xs-center"> <span class="text-muted">Open Stage</span>
                   <h2 class="block font-weight-normal">${poCount.open}</h2>
                 </div>

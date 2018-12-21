@@ -94,7 +94,7 @@
 																	<td>${purchaseRequestsList.updatedAt}</td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<td>
-																			
+																			<a class="btn btn-view">&nbsp;</a>
 																				 <a class="btn btn-view"
 																		href="<c:url value="/purchaseReq/view?purchaseReqId=${purchaseRequestsList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																			class="icon-eye3 left"></i></a>  

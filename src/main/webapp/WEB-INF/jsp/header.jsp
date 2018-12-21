@@ -261,7 +261,7 @@
 								</ul></li>
 						</ul></li>
 				</ul> </li>-->
-			<li class="dropdown dropdown-user nav-item" style="float: right;">
+			<li class="dropdown dropdown-user nav-item edit-user-dropdown">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
 					class="avatar avatar-online">
@@ -269,19 +269,19 @@
 					 <!-- <img
 						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
 				</span>  <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
-				
+				<label>
 				<sec:authorize access="isAuthenticated()">
                                  <sec:authentication property="principal.username" /> </span>
                </sec:authorize>
-				
+				</label>
 				
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
-					<a href="#" class="dropdown-item"><i class="icon-head"></i>
+					<!-- <a href="#" class="dropdown-item"><i class="icon-head"></i>
 						Edit Profile</a> <a href="#" class="dropdown-item"><i
 						class="icon-mail6"></i> My Inbox</a> <a href="#" class="dropdown-item"><i
 						class="icon-clipboard2"></i> Task</a> <a href="#"
-						class="dropdown-item"><i class="icon-calendar5"></i> Calender</a>
+						class="dropdown-item"><i class="icon-calendar5"></i> Calender</a> -->
 					<div class="dropdown-divider"></div>
 					<a href="<c:url value ='/logout'/>" class="dropdown-item"><i
 						class="icon-power3"></i> Logout</a>

@@ -12,7 +12,7 @@
 .alertify .ajs-header {
   color: black;
   font-weight: bold;
-  background: #fafafa;
+  background: #ecf5fd;
   border-bottom: #eee 1px solid;
   border-radius: 2px 2px 0 0;
 }
@@ -31,7 +31,7 @@
   margin: 0;
 }
 .alertify .ajs-footer {
-  background: #fbfbfb;
+  background: #ecf5fd;
   border-top: #eee 1px solid;
   border-radius: 0 0 2px 2px;
 }

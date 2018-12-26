@@ -25,6 +25,7 @@ import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.purchase.PurchaseOrderService;
 
 import freemarker.template.TemplateException;
 
@@ -46,6 +47,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 
 	@Autowired
 	PurchaseOrderController purchaseOrderController;
+	
+	@Autowired
+	PurchaseOrderService purchaseOrderService;
 	
 
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
@@ -143,33 +147,8 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	}
 	
 	public String OfflineHtmlStringToPdfForPO(String pdfFilePath,PurchaseOrder purchaseOrder) throws TemplateException, IOException, DocumentException {
-		try {
-			List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
-			Double addAmt=0.0;
-			Double addTaxAmt=0.0;
-			if (listItems != null) {
-				for (int i = 0; i < listItems.size(); i++) {
-					PurchaseOrderLineItems polist = listItems.get(i);
-					if(polist.getUnitPrice()!=null) {
-					addTaxAmt += UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode());
-					addAmt +=UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode());
-					polist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode()));
-					polist.setTotal(""+UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode()));
-					}else {
-					polist.setTaxTotal("");
-					polist.setTotal("");	
-					}
-				}
-				purchaseOrder.setPurchaseOrderlineItems(listItems);
-			}
-			purchaseOrder.setTotalBeforeDisAmt(addAmt);
-			purchaseOrder.setTaxAmt(""+addTaxAmt);
-			if(purchaseOrder.getTotalPayment()!=null) {
-			purchaseOrder.setAmtRounding(""+purchaseOrder.getTotalPayment());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		purchaseOrder = purchaseOrderService.getListAmount(purchaseOrder);
 		
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());

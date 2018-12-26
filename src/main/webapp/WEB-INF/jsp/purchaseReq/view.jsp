@@ -152,7 +152,7 @@
 																						<th>S.No</th>
 																						<th>SAC Code</th>
 																						<th>Description</th>
-																						<th>Request Quantity</th>
+																						<th>Quantity</th>
 																						<th>Warehouse</th>
 																					</tr>
 																				</thead>

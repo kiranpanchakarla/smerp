@@ -4,13 +4,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +16,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
+import com.smerp.controller.purchase.PurchaseOrderController;
+import com.smerp.controller.purchase.PurchaseRequestController;
+import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
-import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
-import com.smerp.service.master.PlantService;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -36,11 +35,20 @@ public class SendEmail extends EmailerGenerator{
 	private JavaMailSender mailSender;
 	
 	@Autowired
-	PlantService plantService;
+	PurchaseRequestController purchaseRequestController;
+	
+	@Autowired
+	RequestForQuotationController rfqController;
+
+	@Autowired
+	PurchaseOrderController purchaseOrderController;
+
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
 	PurchaseRequest pr;
+	RequestForQuotation rfq;
+	PurchaseOrder po;
 	
 	public void sendPREmail(PurchaseRequest purchaseRequest) throws Exception {
 		 if (shouldNotify()) {
@@ -80,7 +88,10 @@ public class SendEmail extends EmailerGenerator{
 			Map<String, Object> input = new HashMap<String, Object>(1);
 			input.put("user", getUser());
 			input.put("pr", getPurchaseRequest());
-			input.put("plantMap", plantMap());
+			input.put("rfq", getRequestForQuotation());
+			input.put("po", getPurchaseOrder());
+			input.put("plantMap", purchaseRequestController.plantMap());
+			input.put("taxCodeMap", purchaseOrderController.taxCode());
 			input.put("contextPath", RequestContext.get().getContextPath());
 			getTemplate().process(input, out);
 			out.flush();
@@ -99,17 +110,79 @@ public class SendEmail extends EmailerGenerator{
 		return pr;
 	}
 
-	public Map<Integer, Object> plantMap() {
-		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
-
+	public RequestForQuotation getRequestForQuotation() {
+		return rfq;
 	}
-
+	
+	public PurchaseOrder getPurchaseOrder() {
+		return po;
+	}
+	
 	@Override
 	protected MimeMessagePreparator createMessage(String mailTo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+
+	public void sendRFQEmail(RequestForQuotation requestForQuotation) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification about " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createRFQMessage(requestForQuotation));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
 	 
+	protected MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				rfq = requestForQuotation;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo("k.panchakarla@manuhindia.com");
+				message.setSubject("RequestForQuotation :" + rfq.getDocNumber() + " Status :" + rfq.getStatus());
+				message.setText(getBody(), true);
+			}
+
+		};
+	}
+	
+	public void sendPOEmail(PurchaseOrder purchaseOrder) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createPOMessage(purchaseOrder));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createPOMessage(PurchaseOrder purchaseOrder) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				po = purchaseOrder;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo("k.panchakarla@manuhindia.com");
+				message.setSubject("Purchase Order :" + po.getDocNumber() + " Status :" + po.getStatus());
+				message.setText(getBody(), true);
+			}
+
+		};
+	}
 
 }

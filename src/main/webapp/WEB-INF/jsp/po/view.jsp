@@ -205,7 +205,7 @@ text-align: left;
 																									<th>Tax Code</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>
 																								</tr>

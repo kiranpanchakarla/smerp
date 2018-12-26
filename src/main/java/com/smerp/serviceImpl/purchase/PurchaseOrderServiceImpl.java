@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smerp.model.admin.Vendor;
+import com.smerp.model.admin.VendorAddress;
+import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
@@ -21,10 +23,14 @@ import com.smerp.repository.purchase.PurchaseOrderLineItemsRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.VendorAddressService;
+import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
 @Service
@@ -41,12 +47,21 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 	@Autowired
 	VendorService vendorService;
+	
+	@Autowired
+	VendorAddressService vendorAddressService;
+	
+	@Autowired
+	VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
 	RequestForQuotationService requestForQuotationService;
 	
 	@Autowired
 	RequestForQuotationRepository requestForQuotationRepository;
+	
+	@Autowired
+	EmailGenerator emailGenerator;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -120,8 +135,27 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		}
 
 		Vendor vendor = vendorService.findById(purchaseOrder.getVendor().getId());
+		VendorAddress vendorShippingAddress = vendorAddressService.findById(purchaseOrder.getVendorShippingAddress().getId());
+		VendorAddress vendorPayAddress = vendorAddressService.findById(purchaseOrder.getVendorPayTypeAddress().getId());
+		
+		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(purchaseOrder.getVendorContactDetails().getId());
+
 		purchaseOrder.setVendor(vendor);
-		return purchaseOrderRepository.save(purchaseOrder);
+		purchaseOrder.setVendorContactDetails(vendorsContactDetails);
+		purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
+		purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+		
+		if(purchaseOrder.getStatusType()!=null &&  purchaseOrder.getStatusType().equals("APP")) {
+			try {
+    			 RequestContext.initialize();
+    		     RequestContext.get().getConfigMap().put("mail.template", "purchaseOrderEmail.ftl");  //Sending Email
+    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPOEmail(purchaseOrder);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+		}
+		/*return purchaseOrderRepository.save(purchaseOrder);*/
+		return  purchaseOrder ;
 	}
 
 	@Override

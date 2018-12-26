@@ -21,7 +21,7 @@
               </tr>
               <tr>
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
-                <p style="text-align: left;font-family: inherit;">Dear <b>${pr.user.username}</b> </p>
+                <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px">
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Purchase Request</h2>
@@ -54,20 +54,25 @@
                 <td><#if rfq.documentDate??>${rfq.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
-                <tr>
-                <td><strong >Require Date</strong></td>
-                <td><#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
-                </tr>
+               <tr>
+               <td><strong >Require Date</strong></td>
+               <td>:<#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+               <td><strong >Type</strong></td>
+               <td>:<#if rfq.category??>${rfq.category}</#if> </td>
+               <td><strong >Status</strong></td>
+               <td>:<#if rfq.status??>${rfq.status}</#if> </td>
+               </tr>
                 
              
             </table>
                 
                <br></br>
                 <#if rfq.category??>
+                 <#assign sno = 1/>
                <#if rfq.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-               
+                <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -77,6 +82,7 @@
                 </tr>
                 <#list rfq.lineItems as rfqlist>
                 <tr>
+                <td style="border: solid 1px ;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;">${rfqlist.prodouctNumber}</td>
                 <td style="border: solid 1px ;">${rfqlist.uom}</td>
                 <td style="border: solid 1px ;">${rfqlist.requiredQuantity}</td>
@@ -97,6 +103,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
+                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -104,6 +111,7 @@
                 </tr>
                 <#list rfq.lineItems as rfqlist>
                 <tr>
+                <td style="border: solid 1px ;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;">${rfqlist.sacCode}</td>
                 <td style="border: solid 1px ;">${rfqlist.description}</td>
                 <td style="border: solid 1px ;">${rfqlist.requiredQuantity}</td>

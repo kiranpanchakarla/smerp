@@ -65,9 +65,11 @@
                 </table>
                 
                 <#if pr.type??>
+                 <#assign sno = 1/>
                <#if pr.type = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
+                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">S.no</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Product Name</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Description</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">UOM</strong></p></td>
@@ -78,6 +80,7 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
+                <td style="border: solid 1px gray;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.prodouctNumber}</p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.description}</p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.uom}</p></td>
@@ -98,6 +101,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
+                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">S.no</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">SAC Code</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Description</strong></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Quantity</strong></p></td>
@@ -105,6 +109,7 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
+                <td style="border: solid 1px gray;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.sacCode}</p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.description}</p></td>
                 <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.requiredQuantity}</p></td>

@@ -258,7 +258,7 @@
 																									<th>Tax Total</th>
 																									<th>Total</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									<th>Action</th>
 																								</tr>
@@ -275,12 +275,12 @@
 																									<th style="display: none;">Product Id</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
-																									<th>Request Quantity</th>
+																									<th>Quantity</th>
 																									<th>Unit Price</th>
 																									<th>Tax Code</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>Action</th>
 																								</tr>
 																							</thead> 
@@ -312,19 +312,19 @@
 																									<th>Tax Total</th>
 																									<th>Total</th>
 																									<th>Product Group</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									<th>HSN</th>
 																									</c:if>
 																									
 																									<c:if test="${po.category!='Item'}">
 																									<th>SAC Code</th>
 																									<th>Description</th>
-																									<th>Request Quantity</th>
+																									<th>Quantity</th>
 																									<th>Unit Price</th>
 																									<th>Tax Code</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Ware house</th>
+																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>
 																								</tr>

@@ -200,7 +200,7 @@
 																										<c:if test="${rfq.category!='Item'}">
 																											<th>SAC Code</th>
 																											<th>Description</th>
-																											<th>Request Quantity</th>
+																											<th>Quantity</th>
 																											<th>Warehouse</th>
 																										</c:if>
 																									</tr>

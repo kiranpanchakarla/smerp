@@ -270,7 +270,7 @@
 																									<th style="display: none;">Product Id</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
-																									<th>Request Quantity</th>
+																									<th>Quantity</th>
 																									<th>Warehouse</th>
 																									<th>Action</th>
 																								</tr>
@@ -306,7 +306,7 @@
 																									<c:if test="${rfq.category!='Item'}">
 																									<th>SAC Code</th>
 																									<th>Description</th>
-																									<th>Request Quantity</th>
+																									<th>Quantity</th>
 																									<th>Warehouse</th>
 																									</c:if>
 																									<th>Action</th>

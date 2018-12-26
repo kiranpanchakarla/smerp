@@ -8,7 +8,6 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.inventory.PurchaseOrder;
-import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.purchase.PurchaseOrderService;
@@ -190,17 +188,6 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		return null;
 	}
 
-	@Override
-	protected MimeMessagePreparator createPRMessage(PurchaseRequest purchaseRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	

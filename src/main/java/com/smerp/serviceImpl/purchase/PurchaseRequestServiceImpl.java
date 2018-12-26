@@ -8,12 +8,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.smerp.email.EmailGeneratorFactory;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.RequestContext;
 
@@ -28,8 +28,9 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	@Autowired
 	PurchaseRequestListRepository purchaseRequestListRepository;
 	
+	
 	@Autowired
-	EmailGeneratorFactory emailGeneratorFactory;
+	EmailGenerator emailGenerator;
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestServiceImpl.class);
 	@Override
@@ -50,7 +51,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
         	try {
       			 RequestContext.initialize();
       		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
-      		     emailGeneratorFactory.get(EmailGeneratorFactory.PURCHASEREQUEST_EMAIL).sendPR(purchaseRequest);
+      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
       		} catch (Exception e) {
       			e.printStackTrace();
       		}

@@ -75,9 +75,6 @@
                      <p> ${value}</p>
                      </#if>
                 </#list>
-               
-             
-              
                 
                 </td>
                 <td style="border: solid 1px ;">${prlist.hsn}</td>
@@ -99,7 +96,11 @@
                 <td style="border: solid 1px ;">${prlist.sacCode}</td>
                 <td style="border: solid 1px ;">${prlist.description}</td>
                 <td style="border: solid 1px ;">${prlist.requiredQuantity}</td>
-                <td style="border: solid 1px ;">${prlist.warehouse}</td>
+                <td style="border: solid 1px ;"> <#list plantMap as key, value>
+                <#if (prlist.warehouse) == (key?string)>
+                     <p> ${value}</p>
+                     </#if>
+                </#list></td>
                 </tr>
                 </#list>
                 </table>

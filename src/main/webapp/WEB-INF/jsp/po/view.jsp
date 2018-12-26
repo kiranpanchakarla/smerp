@@ -200,7 +200,7 @@ text-align: left;
 																									<c:if test="${po.category!='Item'}">
 																									<th>SAC Code</th>
 																									<th>Description</th>
-																									<th>Request Quantity</th>
+																									<th>Quantity</th>
 																									<th>Unit Price</th>
 																									<th>Tax Code</th>
 																									<th>Tax Total</th>
@@ -394,10 +394,14 @@ text-align: left;
 											
 											
 											<!--Calculation Part  -->
-									<div class="card-block"><div class="row">
-										<div class="col-sm-6 form-group">
-											<a href="#" onClick="goBack()"
-												class="btn btn-primary"> Back </a>
+									
+									<div class="card-block">
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<div class="row">
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+										              </div>
 												
 										</div>
 										

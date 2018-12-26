@@ -10,11 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
@@ -171,9 +168,9 @@ public class PurchaseRequestController {
 	
 	@RequestMapping("/downloadPdf")
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
-			HttpSession session, String regType, Model model,String orgId) throws Exception {
+			HttpSession session, String regType, Model model,String orgId,String purchaseReqId) throws Exception {
 		
-		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(98);
+		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
 		logger.info("purchaseRequest view-->" + purchaseRequest);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));

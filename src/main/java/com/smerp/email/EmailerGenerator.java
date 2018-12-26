@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
+import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.util.RequestContext;
 
 import freemarker.template.Configuration;
@@ -107,7 +109,7 @@ public abstract class EmailerGenerator implements Emailer {
 	            try {
 	                mailSender.send(createMessage(mailTo));
 	                logger.info("Email notification successfully sent for " + mailTo);
-	                doPostProcessing();
+	                doPRPostProcessing();
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
 	                throw new Exception(e);
@@ -115,7 +117,32 @@ public abstract class EmailerGenerator implements Emailer {
 	        }
 	}
 	
-	   protected void doPostProcessing() {
+	@Override
+	public void sendPR(PurchaseRequest purchaseRequest) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + purchaseRequest.getReferenceUser().getUserEmail() + " ...");
+	            try {
+	                mailSender.send(createPRMessage(purchaseRequest));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	                doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	  
+	
+
+	protected abstract MimeMessagePreparator createPRMessage(PurchaseRequest purchaseRequest);
+	
+	   protected void doPRPostProcessing() {
+	        // Hook to allow any post processing stuff
+	    }
+	   
+	   protected abstract MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation);
+		
+	   protected void doRFQPostProcessing() {
 	        // Hook to allow any post processing stuff
 	    }
 	

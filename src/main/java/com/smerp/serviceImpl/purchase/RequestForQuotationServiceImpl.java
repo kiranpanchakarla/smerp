@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.email.EmailGeneratorFactory;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.RequestForQuotation;
@@ -25,6 +26,7 @@ import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.RequestContext;
 
 @Service
 @Transactional
@@ -46,6 +48,9 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	
 	@Autowired
 	PurchaseRequestRepository purchaseRequestRepository;
+	
+	@Autowired
+	EmailGeneratorFactory emailGeneratorFactory;
 
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {

@@ -14,6 +14,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
+import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.purchase.PurchaseRequest;
+
 @Component
 public class RegistrationEmail extends EmailerGenerator {
 	
@@ -58,6 +61,21 @@ public class RegistrationEmail extends EmailerGenerator {
 		}
 		return out.toString();
 	}
+
+	@Override
+	protected MimeMessagePreparator createPRMessage(PurchaseRequest purchaseRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+ 
+
+	@Override
+	protected MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	/*private User getUser() {
 		return RequestContext.get().getUser();

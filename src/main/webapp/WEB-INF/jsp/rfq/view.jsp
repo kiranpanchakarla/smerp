@@ -52,9 +52,8 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-
-													<h2 class="card-title" id="basic-layout-icons">Request
-														For Quotation</h2>
+												 <h2 class="card-title" id="basic-layout-icons">Request For Quotation</h2> 
+													
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -321,8 +320,11 @@
 																
 															</div>
 															<div>
-																	<a href="#" onclick="goBack()"
-																		class="btn btn-primary float-left">Back</a>
+																	
+														<div class="row">
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+										              </div>
 
 																	<c:if test="${rfq.status == 'Approved'}">
 																		<input type="hidden" name="rfqId" value="${rfq.id}">

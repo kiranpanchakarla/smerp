@@ -1,5 +1,8 @@
 package com.smerp.controller.purchase;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,12 +13,13 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,7 +41,10 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.HTMLToPDFGenerator;
+import com.smerp.util.RequestContext;
 
 @Controller
 @RequestMapping("/po")
@@ -45,6 +52,7 @@ public class PurchaseOrderController {
 
 	private static final Logger logger = LogManager.getLogger(PurchaseOrderController.class);
 
+	private static String pdfUploadedPath;
 	
 	@Autowired
 	PlantService plantService;
@@ -64,7 +72,8 @@ public class PurchaseOrderController {
 	@Autowired
 	TaxCodeRepository taxCodeRepository;
 	
-	
+	@Autowired
+	private HTMLToPDFGenerator hTMLToPDFGenerator;
 
 
 	@InitBinder
@@ -208,5 +217,33 @@ public class PurchaseOrderController {
                 (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
                 TreeMap::new));  // for Sorted Values
 	}
+	
+	@RequestMapping("/downloadPdf")
+	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
+			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
+		
+		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
+		logger.info("RequestForQuotation view-->" + po);
+		
+		RequestContext.set(ContextUtil.populateContexturl(request));
+		String path = "";
+		
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+				.OfflineHtmlStringToPdfForPO(pdfUploadedPath,po);
+				
+		logger.info("path " +path);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		File file = new File(path);
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+		FileInputStream fileInputStream = new FileInputStream(path);
+		int i;
+		while ((i = fileInputStream.read()) != -1) {
+			out.write(i);
+		}
+		fileInputStream.close();
+		out.close();
+	} 
 
 }

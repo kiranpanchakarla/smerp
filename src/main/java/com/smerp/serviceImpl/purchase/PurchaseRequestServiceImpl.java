@@ -8,14 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.RequestContext;
 
 @Service
 @Transactional
@@ -27,6 +27,10 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 
 	@Autowired
 	PurchaseRequestListRepository purchaseRequestListRepository;
+	
+	
+	@Autowired
+	EmailGenerator emailGenerator;
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestServiceImpl.class);
 	@Override
@@ -44,6 +48,13 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
             break; 
         case "APP": 
         	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+        	try {
+      			 RequestContext.initialize();
+      		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
+      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
+      		} catch (Exception e) {
+      			e.printStackTrace();
+      		}
             break; 
         case "CA":
         	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());

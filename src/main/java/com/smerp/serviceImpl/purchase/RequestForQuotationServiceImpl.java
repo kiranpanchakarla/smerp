@@ -46,7 +46,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	
 	@Autowired
 	PurchaseRequestRepository purchaseRequestRepository;
-
+	
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
 

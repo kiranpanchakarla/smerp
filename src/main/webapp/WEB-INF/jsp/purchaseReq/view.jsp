@@ -42,8 +42,7 @@
 										<div class="col-md-12">
 											<div class="card">
 												<div class="card-header">
-													<h2 class="card-title" id="basic-layout-icons">Purchase
-														Request</h2>
+												 <h2 class="card-title" id="basic-layout-icons">Purchase Request</h2> 
 												</div>
 												<form:hidden path="id" />
 												<div class="card-body collapse in create-block">
@@ -191,9 +190,11 @@
 														</form>
 
 														<div>
-															<a href="#" onclick="goBack()"
-																class="btn btn-primary float-left">Back</a>
-																
+															
+																<div class="row">
+												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												      <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+										       </div>
 																<c:if test="${purchaseRequest.status == 'Approved'}">
 																	<input type="hidden" name="purchaseId" 	value="${purchaseRequest.id}">
 															<form:button type="button" id="convertBtn"

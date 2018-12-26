@@ -115,12 +115,12 @@ public abstract class EmailerGenerator implements Emailer {
 	        }
 	}
 	
-	   protected void doPostProcessing() {
-	        // Hook to allow any post processing stuff
-	    }
+	  
 	
 	 protected abstract MimeMessagePreparator createMessage(String mailTo);
-
+	  protected void doPostProcessing() {
+	        // Hook to allow any post processing stuff
+	    }
 	    protected boolean shouldNotify() {
 	        return true;
 	    }

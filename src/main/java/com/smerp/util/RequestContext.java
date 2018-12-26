@@ -1,5 +1,6 @@
 package com.smerp.util;
 
+
 public class RequestContext {
 
 	private static ThreadLocal<Context> requestContext = new ThreadLocal<Context>();
@@ -19,10 +20,4 @@ public class RequestContext {
 	public static void remove() {
 		requestContext.set(null);
 	}
-
-	@Override
-	public String toString() {
-		return "RequestContext []";
-	}
-
 }

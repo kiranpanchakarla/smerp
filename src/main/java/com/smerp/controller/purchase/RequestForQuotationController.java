@@ -1,5 +1,8 @@
 package com.smerp.controller.purchase;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,13 +33,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.RequestForQuotation;
-import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.HTMLToPDFGenerator;
+import com.smerp.util.RequestContext;
 
 @Controller
 @RequestMapping("/rfq")
@@ -40,6 +49,7 @@ public class RequestForQuotationController {
 
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationController.class);
 
+	private static String pdfUploadedPath;
 	
 	@Autowired
 	PlantService plantService;
@@ -56,7 +66,8 @@ public class RequestForQuotationController {
 	@Autowired
 	SacService sacService;
 	
-
+	@Autowired
+	private HTMLToPDFGenerator hTMLToPDFGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -191,6 +202,34 @@ public class RequestForQuotationController {
 
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
+	}
+	
+	@RequestMapping("/downloadPdf")
+	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
+			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
+		
+		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
+		logger.info("RequestForQuotation view-->" + rfq);
+		
+		RequestContext.set(ContextUtil.populateContexturl(request));
+		String path = "";
+		
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+				.OfflineHtmlStringToPdfForRFQ(pdfUploadedPath,rfq);
+				
+		logger.info("path " +path);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		File file = new File(path);
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+		FileInputStream fileInputStream = new FileInputStream(path);
+		int i;
+		while ((i = fileInputStream.read()) != -1) {
+			out.write(i);
+		}
+		fileInputStream.close();
+		out.close();
 	}
 
 }

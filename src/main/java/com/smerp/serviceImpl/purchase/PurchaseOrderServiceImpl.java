@@ -147,6 +147,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		
 		if(purchaseOrder.getStatusType()!=null &&  purchaseOrder.getStatusType().equals("APP")) {
 			try {
+			   	purchaseOrder =getListAmount(purchaseOrder);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "purchaseOrderEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPOEmail(purchaseOrder);
@@ -154,8 +155,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
     			e.printStackTrace();
     		}
 		}
-		/*return purchaseOrderRepository.save(purchaseOrder);*/
-		return  purchaseOrder ;
+		 
+		return purchaseOrderRepository.save(purchaseOrder); 
+		 
 	}
 
 	@Override

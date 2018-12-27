@@ -442,7 +442,7 @@
 		if (!allowedExtensions.exec(filePath)) {
 			//alert();
 			alertify
-					.alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+					.alert(("Upload Image",'Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
 			fileInput.value = '';
 			return false;
 		} else {

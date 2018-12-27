@@ -12,42 +12,43 @@
         <table style="width:100%">
                 <tr>
                 <td><strong >User</strong></td>
-                <td>: ${pr.user.username}</td>
+                <td>: <#if pr.user.username??> ${pr.user.username}</#if></td>
                 <td><strong >Doc No</strong></td>
-                <td>: ${pr.docNumber} </td>
+                <td>:<#if pr.docNumber??> ${pr.docNumber}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Requester Name</strong></td>
-                <td>: ${pr.referenceUser.firstname}</td>
-                <td><strong >Posting Date</strong></td>
-                <td><#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}</#if></td>
+                <td><strong >Posting Date </strong></td>
+                <td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Plant</strong></td>
-                <td>: ${pr.referenceUser.plant.plantName}</td>
+                <td>:<#if pr.referenceUser.plant.plantName??> ${pr.referenceUser.plant.plantName}</#if></td>
                 <td><strong >Doc Date</strong></td>
-                <td><#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Email- ID</strong></td>
-                <td>:   ${pr.referenceUser.userEmail}</td>
+                <td>:  <#if pr.referenceUser.userEmail??> ${pr.referenceUser.userEmail}</#if></td>
                 <td><strong >Require Date</strong></td>
-                <td><#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 </tr>
                 
                 <tr>
                 <td><strong >Type</strong></td>
-                <td>:  ${pr.type}</td>
+                <td>: <#if pr.type??> ${pr.type}</#if></td>
                 <td><strong >Status</strong></td>
-                <td>:  ${pr.status}</td> 
+                <td>: <#if pr.status??> ${pr.status}</#if></td> 
                 </tr>
                 
             </table>
                 <br></br>
                 <#if pr.type??>
+                 <#assign sno = 1/>
                <#if pr.type = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
@@ -62,22 +63,22 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                 <td style="border: solid 1px ;">${prlist?index}</td>
-                <td style="border: solid 1px ;">${prlist.prodouctNumber}</td>
-                <td style="border: solid 1px ;">${prlist.description}</td>
-                <td style="border: solid 1px ;">${prlist.uom}</td>
-                <td style="border: solid 1px ;">${prlist.requiredQuantity}</td>
-                <td style="border: solid 1px ;">${prlist.productGroup}</td>
+                <td style="border: solid 1px ; text-align:center;">${sno}<#assign sno = sno + 1 /></td>
+                <td style="border: solid 1px ;"><#if prlist.prodouctNumber??>&nbsp;${prlist.prodouctNumber}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.uom??> &nbsp;${prlist.uom}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.productGroup??>&nbsp;${prlist.productGroup}</#if></td>
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
                 <#if (prlist.warehouse) == (key?string)>
-                     <p> ${value}</p>
+                     <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
                 
                 </td>
-                <td style="border: solid 1px ;">${prlist.hsn}</td>
+                <td style="border: solid 1px ;">&nbsp;${prlist.hsn}</td>
                 </tr>
                 </#list>
                 </table>
@@ -92,13 +93,13 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                <td style="border: solid 1px ;">${prlist?index}</td>
-                <td style="border: solid 1px ;">${prlist.sacCode}</td>
-                <td style="border: solid 1px ;">${prlist.description}</td>
-                <td style="border: solid 1px ;">${prlist.requiredQuantity}</td>
+                <td style="border: solid 1px ;text-align:center; ">${sno}<#assign sno = sno + 1 /></td>
+                <td style="border: solid 1px ;"><#if prlist.sacCode??>&nbsp;${prlist.sacCode}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
                 <td style="border: solid 1px ;"> <#list plantMap as key, value>
                 <#if (prlist.warehouse) == (key?string)>
-                     <p> ${value}</p>
+                     <p>&nbsp;${value}</p>
                      </#if>
                 </#list></td>
                 </tr>

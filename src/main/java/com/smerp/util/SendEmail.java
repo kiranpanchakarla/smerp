@@ -72,7 +72,7 @@ public class SendEmail extends EmailerGenerator{
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				pr = purchaseRequest;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo("k.panchakarla@manuhindia.com");
+				message.setTo(getUser().getUserEmail());
 				message.setSubject("PurchaseRequest :" + pr.getDocNumber() + " Status :" + pr.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -147,7 +147,7 @@ public class SendEmail extends EmailerGenerator{
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				rfq = requestForQuotation;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo("k.panchakarla@manuhindia.com");
+				message.setTo(getUser().getUserEmail());
 				message.setSubject("RequestForQuotation :" + rfq.getDocNumber() + " Status :" + rfq.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -177,7 +177,7 @@ public class SendEmail extends EmailerGenerator{
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				po = purchaseOrder;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo("k.panchakarla@manuhindia.com");
+				message.setTo(getUser().getUserEmail());
 				message.setSubject("Purchase Order :" + po.getDocNumber() + " Status :" + po.getStatus());
 				message.setText(getBody(), true);
 			}

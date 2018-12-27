@@ -946,14 +946,14 @@ $(document).ready(function(){
 		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
-		        	   alertify.alert("You have already entered the Product Number "+$(this).val());
+		        	   alertify.alert("Request For Quotation","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
         }else {
-        	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+        	 alertify.alert("Request For Quotation",$(this).val() +  " Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
         }
@@ -1149,14 +1149,14 @@ $(document).ready(function(){
                                   		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
-                                  		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
+                                  		        	   alertify.alert("Request For Quotation","You have already entered the SAC Code "+$(this).val());
                                   		        	 $(this).val('')
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
                                   		        
                                               }else {
-                                            	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+                                            	  alertify.alert("Request For Quotation",$(this).val() +" SAC Code Does Not Exists ");
                                		        	 $(this).val('')
                                		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                		        	 ($(this).parents('tr').find('td').find('select').val(''));  
@@ -1244,7 +1244,7 @@ function removeData2(index){
 
 $("#items_radio").click(function() {
 	//alert("item");
-	 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
+	 alertify.confirm("Request For Quotation",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
 		 $("#serviceTbl").hide();
 		 $("#itemTbl").show();
 		 $("#edit_item_serviceTbl").hide();
@@ -1279,7 +1279,7 @@ $("#items_radio").click(function() {
 
 $("#service_radio").click(function() {
 	//alert("service");
-	 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
+	 alertify.confirm("Request For Quotation",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1328,7 +1328,7 @@ $('form.commentForm').on('submit', function(event) {
 		}
     
 	if(rowCount == 0){
-		alertify.alert("Please Select Atleast One Item");
+		alertify.alert("Request For Quotation","Please Select Atleast One Item");
 		 return false;
 	}else{
 		return true;
@@ -1343,7 +1343,7 @@ $('form.commentForm').on('submit', function(event) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("Please Select Atleast One Service");
+ 		alertify.alert("Request For Quotation","Please Select Atleast One Service");
  		 return false;
  	}else{
  		return true;

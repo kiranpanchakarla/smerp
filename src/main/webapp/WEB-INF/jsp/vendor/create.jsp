@@ -1225,7 +1225,7 @@ var inc1=1;
 		  if(pay_flag!=0 && ship_flag!=0){
 			 return true;
 		  }else {
-			  alertify.alert('Please Add Atleast One PayTo And One ShipFrom Address');
+			  alertify.alert("Vendor",'Please Add Atleast One PayTo And One ShipFrom Address');
 			 return false;
 		  } 
 		 

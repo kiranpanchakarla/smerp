@@ -255,6 +255,8 @@ public class UserController {
 		return "user/addPermissions";
 	}
 	
+	
+	
 	@PostMapping("/savePermissions")
 	public String savePermission(User user, Model model) {
 		logger.info("user details in savePermissions method" + user.getUserId());
@@ -308,6 +310,8 @@ public class UserController {
 		return userpermissionsmap;
 	}
 
+	
+	
 
 	public Map<Integer, Object> desiganationMap() {
 		Company company = getComapnyIdFromSession();

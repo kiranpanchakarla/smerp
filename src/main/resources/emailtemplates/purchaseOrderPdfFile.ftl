@@ -40,16 +40,21 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if po.requiredDate??>${po.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                 <td><strong >Type</strong></td>
+                <td>:<#if po.category??>${po.category}</#if> </td>
+                <td><strong >Status</strong></td>
+                <td>:<#if po.status??>${po.status}</#if> </td>
                 </tr>
                 
              
             </table>
                 <br></br>
                 <#if po.category??>
+                  <#assign sno = 1/>
                <#if po.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-               
+               <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -63,10 +68,11 @@
                 </tr>
                 <#list po.purchaseOrderlineItems as polist>
                 <tr>
+                <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${polist.prodouctNumber}</td>
                 <td style="border: solid 1px ;">${polist.uom}</td>
                 <td style="border: solid 1px ;">${polist.requiredQuantity}</td>
-                <td style="border: solid 1px ;">${polist.unitPrice}</td>
+                <td style="border: solid 1px ;"><#if polist.unitPrice??>${polist.unitPrice}</#if></td>
                 <td style="border: solid 1px ;">
                   <#if polist.taxCode??>
                 <#list taxCodeMap as key, value>
@@ -95,6 +101,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
+                <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -106,10 +113,11 @@
                 </tr>
                 <#list po.purchaseOrderlineItems as polist>
                 <tr>
+                 <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${polist.sacCode}</td>
                 <td style="border: solid 1px ;">${polist.description}</td>
                 <td style="border: solid 1px ;">${polist.requiredQuantity}</td>
-                <td style="border: solid 1px ;">${polist.unitPrice}</td>
+              <td style="border: solid 1px ;"><#if polist.unitPrice??>${polist.unitPrice}</#if></td>
                 <td style="border: solid 1px ;">
                <#if polist.taxCode??>
                 <#list taxCodeMap as key, value>

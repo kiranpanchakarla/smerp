@@ -21,21 +21,21 @@
                 <td><strong >Requester Name</strong></td>
                 <td>: ${pr.referenceUser.firstname}</td>
                 <td><strong >Posting Date</strong></td>
-                <td><#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Plant</strong></td>
                 <td>: ${pr.referenceUser.plant.plantName}</td>
                 <td><strong >Doc Date</strong></td>
-                <td><#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Email- ID</strong></td>
                 <td>:   ${pr.referenceUser.userEmail}</td>
                 <td><strong >Require Date</strong></td>
-                <td><#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 </tr>
                 
                 <tr>
@@ -48,6 +48,7 @@
             </table>
                 <br></br>
                 <#if pr.type??>
+                 <#assign sno = 1/>
                <#if pr.type = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
@@ -62,7 +63,7 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                 <td style="border: solid 1px ;">${prlist?index}</td>
+               <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${prlist.prodouctNumber}</td>
                 <td style="border: solid 1px ;">${prlist.description}</td>
                 <td style="border: solid 1px ;">${prlist.uom}</td>
@@ -92,7 +93,7 @@
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                <td style="border: solid 1px ;">${prlist?index}</td>
+                <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${prlist.sacCode}</td>
                 <td style="border: solid 1px ;">${prlist.description}</td>
                 <td style="border: solid 1px ;">${prlist.requiredQuantity}</td>

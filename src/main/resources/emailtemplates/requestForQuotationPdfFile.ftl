@@ -32,24 +32,29 @@
                 <td><strong>Ref Doc No.</strong></td>
                 <td>: ${rfq.referenceDocNumber}</td>
                 <td><strong >Posting Date</strong></td>
-                <td><#if rfq.postingDate??>${rfq.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if rfq.postingDate??>${rfq.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 <td><strong >Doc Date</strong></td>
-                <td><#if rfq.documentDate??>${rfq.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if rfq.documentDate??>${rfq.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Require Date</strong></td>
-                <td><#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td>:<#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                 <td><strong >Type</strong></td>
+                <td>:<#if rfq.category??>${rfq.category}</#if> </td>
+                <td><strong >Status</strong></td>
+                <td>:<#if rfq.status??>${rfq.status}</#if> </td>
                 </tr>
                 
              
             </table>
                 <br></br>
                 <#if rfq.category??>
+                 <#assign sno = 1/>
                <#if rfq.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-               
+                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -59,6 +64,7 @@
                 </tr>
                 <#list rfq.lineItems as rfqlist>
                 <tr>
+                <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${rfqlist.prodouctNumber}</td>
                 <td style="border: solid 1px ;">${rfqlist.uom}</td>
                 <td style="border: solid 1px ;">${rfqlist.requiredQuantity}</td>
@@ -79,6 +85,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
+                <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -86,6 +93,7 @@
                 </tr>
                 <#list rfq.lineItems as rfqlist>
                 <tr>
+                 <td style="border: solid 1px ;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
                 <td style="border: solid 1px ;">${rfqlist.sacCode}</td>
                 <td style="border: solid 1px ;">${rfqlist.description}</td>
                 <td style="border: solid 1px ;">${rfqlist.requiredQuantity}</td>

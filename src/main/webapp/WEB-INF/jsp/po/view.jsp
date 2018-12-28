@@ -70,7 +70,7 @@ text-align: left;
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact Person </label>: ${po.vendorContactDetails.contactName}
+																	<label>Contact</label>: ${po.vendorContactDetails.contactName}
 																</div>
 															</div>
 
@@ -99,14 +99,14 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document#</label>: ${po.referenceDocNumber}
+																				<label>Ref Doc#</label>: ${po.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>: 
+																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.documentDate}" />
 																			</div>
 																		</div>
@@ -182,9 +182,10 @@ text-align: left;
 																										
 																										<thead>
 																							<tr>
-																									<!-- <th>S.No</th> -->
+																									
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${po.category=='Item'}">
+																									<th>S.no</th>
 																									<th>Product No.</th>
 																									<th>UOM</th>
 																									<th>Quantity</th>
@@ -198,6 +199,7 @@ text-align: left;
 																									</c:if>
 																									
 																									<c:if test="${po.category!='Item'}">
+																									<th>S.No</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
 																									<th>Quantity</th>
@@ -224,6 +226,8 @@ text-align: left;
 																															class="form-control productId"></form:input>
 																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
 																															</td>
+																													<td><c:set var="index" value="${index + 1}"
+																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
 																													<c:if test="${po.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>

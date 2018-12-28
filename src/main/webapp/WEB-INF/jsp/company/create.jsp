@@ -408,6 +408,7 @@
 	 }; */
 
 	var id = $('#id').val();
+	
 	if (id == '') {
 		$("#phoneNum").val("+91");
 	}
@@ -441,8 +442,7 @@
 		var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 		if (!allowedExtensions.exec(filePath)) {
 			//alert();
-			alertify
-					.alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+			alertify.alert("Upload Image",'Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
 			fileInput.value = '';
 			return false;
 		} else {

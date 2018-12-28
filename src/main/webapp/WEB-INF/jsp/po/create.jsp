@@ -89,7 +89,7 @@
 																		path="vendor.emailId"   />
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact Person </label>
+																	<label>Contact</label>
 
 																	<form:select path="vendorContactDetails.id"
 																		id="vendorContactDetails" cssClass="form-control"
@@ -126,7 +126,7 @@
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document Number</label>
+																				<label>Doc Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
@@ -140,7 +140,7 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document Number</label>
+																				<label>Ref Doc No.</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber"  />
@@ -153,7 +153,7 @@
 																				
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>
+																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Date' path="documentDate"
 																					autocomplete="off" required="true" />
@@ -710,40 +710,41 @@
 																	 Back </a>
 									
 										
-											<c:if test="${po.status eq 'Draft Stage' || po.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
+											<c:if test="${po.status eq 'Draft' || po.id==null }">
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${po.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${po.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                      
-                                                                      <a
-																			href="<c:url value="/po/cancelStage?id=${po.id}"/>">
+                                                                      <a href="<c:url value="/po/cancelStage?id=${po.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
 																		</a>
-
+																		 
+                                                                      </c:if>
+                                                                      <!-- Approve -->
+                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                      </c:if></c:if></c:forEach>
+  																		<!-- Reject -->
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                        <c:if test="${po.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
                                                                     </c:if>
                                                                      </c:if></c:if></c:forEach>
-                                                                      </c:if>
                                                                       
-                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
-                                                                      </c:if></c:if></c:forEach>
-										</div>
-										</div>
+                                                                     
+										                      </div>
+										                  </div>
 														</div>
 													</div>
 												</div>
@@ -839,41 +840,41 @@ function addItem() {
 	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].prodouctNumber" autocomplete="off"  class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
@@ -885,27 +886,27 @@ function addItem() {
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${plantMap}" var="plantMap">
@@ -916,7 +917,7 @@ function addItem() {
 			+ '</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
@@ -938,40 +939,40 @@ function addItem() {
 		  var service_table_data='<tr class="multTot multTot'+inc+'">'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].sacCode" autocomplete="off" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
@@ -983,19 +984,19 @@ function addItem() {
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${plantMap}" var="plantMap">
@@ -1217,14 +1218,14 @@ $(document).ready(function(){
 		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
-		        	   alertify.alert("You have already entered the Product Number "+$(this).val());
+		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
         }else {
-        	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+        	 alertify.alert("Purchase Order",$(this).val() +  "Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
         }
@@ -1420,14 +1421,14 @@ $(document).ready(function(){
                                   		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
-                                  		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
+                                  		        	   alertify.alert("Purchase Order",  "You have already entered the SAC Code "+$(this).val());
                                   		        	 $(this).val('')
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
                                   		        
                                               }else {
-                                            	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+                                            	  alertify.alert("Purchase Order",$(this).val() +" SAC Code Does Not Exists ");
                                		        	 $(this).val('')
                                		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                		        	 ($(this).parents('tr').find('td').find('select').val(''));  
@@ -1518,7 +1519,7 @@ function removeData2(index){
 
 $("#items_radio").click(function() {
 	//alert("item");
-	 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
+	 alertify.confirm("Purchase Order",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
 		 $("#serviceTbl").hide();
 		 $("#itemTbl").show();
 		 $("#edit_item_serviceTbl").hide();
@@ -1561,7 +1562,7 @@ $("#items_radio").click(function() {
 
 $("#service_radio").click(function() {
 	//alert("service");
-	 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
+	 alertify.confirm("Purchase Order",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1620,7 +1621,7 @@ $('form.commentForm').on('submit', function(event) {
 		}
     
 	if(rowCount == 0){
-		alertify.alert("Please Select Atleast One Item");
+		alertify.alert("Purchase Order","Please Select Atleast One Item");
 		 return false;
 	}else{
 		return true;
@@ -1635,7 +1636,7 @@ $('form.commentForm').on('submit', function(event) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("Please Select Atleast One  Service");
+ 		alertify.alert("Purchase Order","Please Select Atleast One  Service");
  		 return false;
  	}else{
  		return true;
@@ -1805,7 +1806,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("Please Enter Valid Discount!");
+		alertify.alert("Purchase Order","Please Enter Valid Discount!");
 		 return false;
 	}
 	

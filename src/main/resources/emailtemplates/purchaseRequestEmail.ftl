@@ -28,92 +28,97 @@
                 
                 <table style="width:100%">
                 <tr>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">User</strong></p></td>
-                <td><p style="margin:5px 0;">: ${pr.user.username}</p></td>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Doc No</strong></p></td>
-                <td><p style="margin:5px 0;">: ${pr.docNumber} </p></td>
+                <td><strong >User</strong></td>
+                <td>: <#if pr.user.username??> ${pr.user.username}</#if></td>
+                <td><strong >Doc No</strong></td>
+                <td>:<#if pr.docNumber??> ${pr.docNumber}</#if> </td>
                 </tr>
                 
                 <tr>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Requester Name</strong></p></td>
-                <td><p style="margin:5px 0;">: ${pr.referenceUser.firstname}</p></td>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Posting Date</strong></p></td>
-                <td><p style="margin:5px 0;"><#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if></p> </td>
+                <td><strong >Requester Name</strong></td>
+                <td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}</#if></td>
+                <td><strong >Posting Date </strong></td>
+                <td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Plant</strong></p></td>
-                <td><p style="margin:5px 0;">: ${pr.referenceUser.plant.plantName}</p></td>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Doc Date</strong></p></td>
-                <td><p style="margin:5px 0;"><#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if></p> </td>
+                <td><strong >Plant</strong></td>
+                <td>:<#if pr.referenceUser.plant.plantName??> ${pr.referenceUser.plant.plantName}</#if></td>
+                <td><strong >Doc Date</strong></td>
+                <td>:<#if pr.documentDate??>${pr.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Email- ID</strong></p></td>
-                <td><p style="margin:5px 0;">:   ${pr.referenceUser.userEmail}</p></td>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Require Date</strong></p></td>
-                <td><p style="margin:5px 0;"><#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></p></td>
+                <td><strong >Email- ID</strong></td>
+                <td>:  <#if pr.referenceUser.userEmail??> ${pr.referenceUser.userEmail}</#if></td>
+                <td><strong >Require Date</strong></td>
+                <td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 </tr>
                 
                 <tr>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Type</strong></p></td>
-                <td><p style="margin:5px 0;">:  ${pr.type}</p></td>
-                <td><p style="margin:5px 0;"><strong style="color: #106570;">Status</strong></p></td>
-                <td><p style="margin:5px 0;">:  ${pr.status}</p></td> 
+                <td><strong >Type</strong></td>
+                <td>: <#if pr.type??> ${pr.type}</#if></td>
+                <td><strong >Status</strong></td>
+                <td>: <#if pr.status??> ${pr.status}</#if></td> 
                 </tr>
                 
-                </table>
-                
+            </table>
+                <br></br>
                 <#if pr.type??>
                  <#assign sno = 1/>
                <#if pr.type = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">S.no</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Product Name</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Description</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">UOM</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Quantity</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Product Group</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Warehouse	</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">HSN</strong></p></td>
+                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
+                <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >Quantity</strong></td>
+                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
+                <td style="border: solid 1px ;"><strong >HSN</strong></td>
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.prodouctNumber}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.description}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.uom}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.requiredQuantity}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.productGroup}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">  
-                <#list plantMap as key, value>
-               <#if (prlist.warehouse) == (key?string)>
-                    <p> ${value}</p>
-                    </#if>
-               </#list>
-                </p></td>
+                <td style="border: solid 1px ; text-align:center;">${sno}<#assign sno = sno + 1 /></td>
+                <td style="border: solid 1px ;"><#if prlist.prodouctNumber??>&nbsp;${prlist.prodouctNumber}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.uom??> &nbsp;${prlist.uom}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.productGroup??>&nbsp;${prlist.productGroup}</#if></td>
+                <td style="border: solid 1px ;">
                 
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.hsn}</p></td>
+                <#list plantMap as key, value>
+                <#if (prlist.warehouse) == (key?string)>
+                     <p>&nbsp;${value}</p>
+                     </#if>
+                </#list>
+                
+                </td>
+                <td style="border: solid 1px ;">&nbsp;${prlist.hsn}</td>
                 </tr>
                 </#list>
                 </table>
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">S.no</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">SAC Code</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Description</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Quantity</strong></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;"><strong style="color: #106570;">Warehouse</strong></p></td>
+                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
+                <td style="border: solid 1px ;"><strong >Quantity</strong></td>
+                <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${sno}<#assign sno = sno + 1 /></p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.sacCode}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.description}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.requiredQuantity}</p></td>
-                <td style="border: solid 1px gray;"><p style="margin:5px;">${prlist.warehouse}</p></td>
+                <td style="border: solid 1px ;text-align:center; ">${sno}<#assign sno = sno + 1 /></td>
+                <td style="border: solid 1px ;"><#if prlist.sacCode??>&nbsp;${prlist.sacCode}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
+                <td style="border: solid 1px ;"> <#list plantMap as key, value>
+                <#if (prlist.warehouse) == (key?string)>
+                     <p>&nbsp;${value}</p>
+                     </#if>
+                </#list></td>
                 </tr>
                 </#list>
                 </table>

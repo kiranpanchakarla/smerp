@@ -7,6 +7,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script> -->
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -106,9 +107,17 @@
         <div class="card">
             <div class="card-body product-box1">
               <div class="media">
-                <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-cube font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                <h3><a href="<c:url value="/company/create"/>">New Company</a></h3>
+                <c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'Company'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+										 	     <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-cube font-large-2 white"></i> </div>
+	        									 <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/company/create"/>">New Company</a></h3>
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
+               
                 </div>
               </div>
             </div>
@@ -120,9 +129,18 @@
         <div class="card">
             <div class="card-body product-box2">
               <div class="media">
-                <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-egg font-large-2 white"></i> </div>
+               
                 <div class="p-2 media-body">
-                 <h3><a href="<c:url value="/product/create"/>">New Product</a></h3>
+                  <c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'Product'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-egg font-large-2 white"></i> </div>
+	        									  <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/product/create"/>">New Product</a></h3>
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
+                
                 </div>
               </div>
             </div>
@@ -135,9 +153,17 @@
         <div class="card">
             <div class="card-body product-box3">
               <div class="media">
-                 <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                <h3><a href="<c:url value="/user/create"/>">New User</a></h3>
+                 <c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'User'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-user1 font-large-2 white"></i> </div>
+	        									  <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/user/create"/>">New User</a></h3>
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
+                
                 </div>
               </div>
             </div>
@@ -149,18 +175,25 @@
         <div class="card">
             <div class="card-body product-box4">
               <div class="media">
-               <div class="p-2 text-xs-center product-bg-box media-left media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
                 <div class="p-2 media-body">
-                 <h3><a href="<c:url value="/vendor/create"/>">New Vendor</a></h3>
+                 <c:forEach items="${sessionScope.umpmap}" var="ump">
+										 <c:if test="${ump.key eq 'Vendor'}">
+										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+				                                 <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-user1 font-large-2 white"></i> </div>
+				                                 <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/vendor/create"/>">New Vendor</a></h3>
+				                                 
+				                                 
+	   										 </c:if>
+	       								</c:if>     
+   									 </c:forEach>
+                
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        
-       
-        
+         
         </div>
         
         <!--/ stats --> 
@@ -180,8 +213,25 @@
             </div>
           </div> -->
         </div>
-         
-        <div class="col-md-6">
+        <div class="col-md-4">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+              <div class="card-block">
+                <h4 class="card-title" style="text-align: center;">Product Request</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${dashboardCount.open}</span> Open </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${dashboardCount.draft}</span> Draft </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${dashboardCount.cancelled}</span>Cancelled </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${dashboardCount.approved}</span> Approved</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${dashboardCount.rejected}</span> Rejected </li>
+                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${dashboardCount.convertedToRFQ}</span>Converted to RFQ</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${dashboardCount.total}</span> Total Records </li>
+              </ul>
+            </div>
+          </div>
+         </div>
+       <%--  <div class="col-md-6">
         <a href="<c:url value="/purchaseReq/list"/>">
           <div class="card">
           
@@ -214,9 +264,27 @@
             </div>
           </div>
           </a>
-        </div>
-         
-         <div class="col-md-6">
+        </div> --%>
+         <div class="col-md-4">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+              <div class="card-block">
+                <h4 class="card-title" style="text-align: center;">Request For Quotation</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${rfqCount.open}</span> Open </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${rfqCount.draft}</span> Draft </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${rfqCount.cancelled}</span>Cancelled </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.approved}</span> Approved</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${rfqCount.rejected}</span> Rejected </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToPO}</span>Converted to PO</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${rfqCount.total}</span> Total Records </li>
+              </ul>
+            </div>
+          </div>
+         </div>
+         <%-- <div class="col-md-6">
          <a href="<c:url value="/rfq/list"/>">
           <div class="card">
           
@@ -251,9 +319,25 @@
             </div>
           </div>
           </a>
-        </div> 
-       
-       <div class="col-md-6">
+        </div>  --%>
+       <div class="col-md-4">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+              <div class="card-block">
+                <h4 class="card-title" style="text-align: center;">Product Order</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${poCount.open}</span> Open </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${poCount.draft}</span> Draft </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${poCount.cancelled}</span>Cancelled </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${poCount.approved}</span> Approved</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.rejected}</span> Rejected </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${poCount.total}</span> Total Records </li>
+              </ul>
+            </div>
+          </div>
+         </div>
+       <%-- <div class="col-md-6">
          <a href="<c:url value="/rfq/list"/>">
           <div class="card">
           
@@ -280,9 +364,9 @@
             </div>
           </div>
           </a>
-        </div> 
+        </div>  --%>
        
-      </div>
+      </div><br><br>
       
       <!-- <hr> -->
     </div>

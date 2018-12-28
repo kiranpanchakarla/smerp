@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -186,9 +187,10 @@
 
 																								<thead>
 																									<tr>
-																										<!-- <th>S.No</th> -->
+																										
 																										<th style="display: none;">Product Id</th>
 																										<c:if test="${rfq.category=='Item'}">
+																											<th>S.no</th> 
 																											<th>Product Name</th>
 																											<th>UOM</th>
 																											<th>Quantity</th>
@@ -198,6 +200,7 @@
 																										</c:if>
 
 																										<c:if test="${rfq.category!='Item'}">
+																										    <th>S.No</th> 
 																											<th>SAC Code</th>
 																											<th>Description</th>
 																											<th>Quantity</th>
@@ -219,6 +222,8 @@
 																													class="form-control productId"></form:input>
 																												<form:hidden path="lineItems[${count}].id" />
 																											</td>
+																											<td><c:set var="index" value="${index + 1}"
+																								                  scope="page" /> <c:out value="${index}" /></td>
 
 																											<c:if test="${rfq.category=='Item'}">
 																												<td>${listLineItems.prodouctNumber}</td>
@@ -325,15 +330,22 @@
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
-
-																	<c:if test="${rfq.status == 'Approved'}">
+										              
+										              <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'RFQ'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${rfq.status == 'Approved'}">
 																		<input type="hidden" name="rfqId" value="${rfq.id}">
-
-
 																		<form:button type="button" id="convertBtn"
 																			class="btn btn-primary mr-1 float-right">
 																			<i></i>Convert To PO</form:button>
 																	</c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+
+																	
 																</div>
 														</div>
 													</div>

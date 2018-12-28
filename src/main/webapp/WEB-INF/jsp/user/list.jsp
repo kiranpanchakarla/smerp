@@ -80,7 +80,7 @@
 																	<th>Name</th>
 																	 <th>Designation</th>
 																	<th>Department</th>
-																	<th>Email</th>
+																	<th>Email Id</th>
 																	<th>Created</th>
 																	<th>Actions</th>
 																</tr>

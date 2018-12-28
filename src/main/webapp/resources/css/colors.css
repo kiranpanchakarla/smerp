@@ -3351,6 +3351,9 @@ input:focus ~ .bg-warning {
 
 .bg-danger.bg-lighten-5 {
   background-color: #F9E1E4 !important; }
+  
+.bg-total {
+  background-color: #b145b3 !important}
 
 .btn-danger.btn-lighten-5 {
   border-color: #F9E1E4 !important;

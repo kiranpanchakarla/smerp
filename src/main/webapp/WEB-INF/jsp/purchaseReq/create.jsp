@@ -347,8 +347,8 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <c:if test="${purchaseRequest.status eq 'Draft Stage' || purchaseRequest.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                    <c:if test="${purchaseRequest.status eq 'Draft' || purchaseRequest.id==null }">
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
@@ -362,26 +362,30 @@
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
 																		</a>
-
+																		
+																		
+                                                                      </c:if>
+                                                                      <!-- Approve -->
+                                                                       <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request' }">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                        <c:if test="${purchaseRequest.status != 'Cancelled'}">
+                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                        </c:if>
+                                                                     
+                                                                      </c:if></c:if></c:forEach>
+                                                                       <!-- Reject -->
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                       <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
                                                                      </c:if>
                                                                      </c:if></c:if></c:forEach>
-                                                                      </c:if>
                                                                       
-                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'Purchase Request' }">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                        <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
-                                                                        </c:if>
-                                                                      
-                                                                      </c:if></c:if></c:forEach>
+                                                                     
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -468,7 +472,7 @@
     	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""  required="true"   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -480,34 +484,34 @@
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" value="" class="form-control description '+inc+'" id="description'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" readonly="true" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+ '<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
@@ -518,7 +522,7 @@
     			+ '</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -544,26 +548,26 @@
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].sacCode"  autocomplete="off"  required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+ '<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
@@ -743,14 +747,14 @@
     		       	//autocompleteandchange(($(this).val()),itemParentRow);
     		        }else{
     		        	 /* var isDluplicate = false; */
-    		        	   alertify.alert("You have already entered the Product Number "+($(this).val()));
+    		        	   alertify.alert("Purchase Request","You have already entered the Product Number "+($(this).val()));
     		        	 $(this).val('')
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        
     		        }
                 }else {
-                     	 alertify.alert($(this).val() +  " Product Number Does Not Exists!");  
+                     	 alertify.alert("Purchase Request",$(this).val() +  " Product Number Does Not Exists!");  
                      	 ($(this).parents('tr').find('td').find('input').val(''));
                      	 ($(this).parents('tr').find('td').find('select').val('')); 
                      }  
@@ -783,7 +787,7 @@
 	                	}
                         //alert("hsnCode"+hsndata.hsnCode);
                         //	$('.hsnVal').val(hsndata.hsnCode);
-                        $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
+                        $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
 
                        // $(itemParentRow).find(".prodouctNumber").val(obj.description);
                         $(itemParentRow).find(".productId").val(obj.id);
@@ -854,13 +858,13 @@
     		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
     		        }else{
     		        	 
-    		        	   alertify.alert("You have already entered the SAC Code "+$(this).val());
+    		        	   alertify.alert("Purchase Request","You have already entered the SAC Code "+$(this).val());
     		        	 $(this).val('')
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
     		        	 ($(this).parents('tr').find('td').find('select').val(''));
     		        }
             	 }else {
-               	  alertify.alert($(this).val() +" SAC Code Does Not Exists ");
+               	  alertify.alert("Purchase Request",$(this).val() +" SAC Code Does Not Exists ");
   		        	 $(this).val('')
   		        	 ($(this).parents('tr').find('td').find('input').val(''));
   		        	 ($(this).parents('tr').find('td').find('select').val(''));  
@@ -951,7 +955,7 @@
 
             $("#items_radio").click(function() {
             	//alert("item");
-            	 alertify.confirm('Are you Sure Want to Change  Item ,Service will be removed ', function(){
+            	 alertify.confirm("Purchase Request",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
             		 $("#serviceTbl").hide();
             		 $("#itemTbl").show();
             		 $("#edit_item_serviceTbl").hide();
@@ -987,7 +991,7 @@
 
             $("#service_radio").click(function() {
             	//alert("service");
-            	 alertify.confirm('Are you Sure Want to Change Service ,Items will be removed! ', function(){
+            	 alertify.confirm("Purchase Request",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
             	$("#serviceTbl").show();
             	 $("#itemTbl").hide();
             	 $("#edit_item_serviceTbl").hide();
@@ -1068,7 +1072,7 @@
   			}
             
         	if(rowCount == 0){
-        		alertify.alert("Please Select Atleast One Item");
+        		alertify.alert("Purchase Request","Please Select Atleast One Item");
         		 return false;
         	}else{
         		return true;
@@ -1083,7 +1087,7 @@
      			} 
         	 
          	if(rowCount1 == 0){
-         		alertify.alert("Please Select Atleast One Service");
+         		alertify.alert("Purchase Request","Please Select Atleast One Service");
          		 return false;
          	}else{
          		return true;

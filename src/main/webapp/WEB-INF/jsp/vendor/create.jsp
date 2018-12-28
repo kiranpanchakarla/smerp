@@ -299,7 +299,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Gender</label> <select class="form-control"
 																							name="vendorContactDetails[0].gender"
-																							required="true" id="gender0"
+																							required="true" id="gender0" onchange="genderValidation(0)"
 																							oninvalid="this.setCustomValidity('Please Enter Gender')"
 																							oninput="setCustomValidity('')">
 																							<option value="" selected disabled>Select</option>
@@ -1106,7 +1106,7 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Email</label><input type="text" placeholder="Email Id" name="vendorContactDetails['+inc+'].email" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Email \')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"  id="gender'+inc+'"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
+												+ '<div class="form-group"><label>Gender</label><select class="form-control" name="vendorContactDetails['+inc+'].gender"  id="gender'+inc+'"   onchange="genderValidation('+inc+')"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Gender\')" oninput="setCustomValidity(\'\')"    >'
 												+ '<option value="" selected disabled >select</option>'
 												+ '<option value="Male">Male</option>'
 												+ '<option value="Female">Female</option>'
@@ -1225,7 +1225,7 @@ var inc1=1;
 		  if(pay_flag!=0 && ship_flag!=0){
 			 return true;
 		  }else {
-			  alertify.alert('Please Add Atleast One PayTo And One ShipFrom Address');
+			  alertify.alert("Vendor",'Please Add Atleast One PayTo And One ShipFrom Address');
 			 return false;
 		  } 
 		 
@@ -1311,13 +1311,25 @@ var inc1=1;
   	  
   	  function titleValidation(index) {
   		 var val = $("#title"+index).val();
-  		if(val=='Mr') {
-  		$("#gender"+index+" option[value='Male']").attr('selected', 'selected');
+  		 if(val=='Mr') {
+  		$("#gender"+index+" option[value='Male']").attr('selected', true);
+  	    $("#gender"+index+" option[value='Female']").attr('selected', false);
   		}else {
-  	    $("#gender"+index+" option[value='Female']").attr('selected', 'selected');
+  	    $("#gender"+index+" option[value='Female']").attr('selected', true);
+  	  $("#gender"+index+" option[value='Male']").attr('selected', false);
   		}
   	  }
 	 
+  	 function genderValidation(index) {
+  		 var val = $("#gender"+index).val();
+  		 if(val=='Male') {
+  		$("#title"+index+" option[value='Mr']").attr('selected', true);
+  		 $("#title"+index+" option[value='Ms']").attr('selected', false);
+  		}else {
+  	    $("#title"+index+" option[value='Ms']").attr('selected', true);
+  	    $("#title"+index+" option[value='Mr']").attr('selected', false);
+  		}
+  	  }
 	
 </script>
 

@@ -200,11 +200,11 @@ $(document).ready(function() {
 	var id = $('#userId').val();
 	if (id == '') {
 		$("#mobileNo").val("+91");
+	}else {
+		designationLoadForUpdate();
 	}
 	
 	if (typeof $("#userId").val() != 'undefined'){
-		designationLoadForUpdate();
-		
 		$("#username").prop("readonly",true);
 	}
 	
@@ -217,7 +217,6 @@ $(document).ready(function() {
 	});
    
    function designationLoad(){
-	  // alert("hiii");
 	   $("#desigination").html('<option>Select</option>');
 	   $.ajax({
            type : "GET",
@@ -247,7 +246,6 @@ $(document).ready(function() {
    
  function designationLoadForUpdate(){
 	   var id=$('#designationValue').val();
-		// alert(id);
 	   $.ajax({
            type : "GET",
            url : "<c:url value="/user/getdeginations/"/>?id="+$("#department").val(),

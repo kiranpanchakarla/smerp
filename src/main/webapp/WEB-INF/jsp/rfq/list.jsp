@@ -67,8 +67,8 @@
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/dashboard"/>">Home</a></li>
-														<li class="breadcrumb-item"><a
-															href="<c:url value="/purchase"/>">Purchase</a></li>
+														<%-- <li class="breadcrumb-item"><a
+															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
 														<li class="breadcrumb-item active">RFQ</li>
 													</ol>
 												</div>
@@ -84,7 +84,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>Sno</th>
+																<th>S.no</th>
 																<th>Vendor Name</th>
 																<th>Email Id</th>
 																<th>Document Number</th>

@@ -242,6 +242,12 @@ position: fixed;
         color: #fff !important;
 }
 
+.btn-draft {
+    background: #a77a21  !important;
+    border-color: #a77a21  !important;
+        color: #fff !important;
+}
+
 .btn-reject {
     background: #c35252 !important;
     border-color: #b13a3a !important;
@@ -1049,4 +1055,10 @@ h2.font-weight-normal {
 }
 .edit-user-dropdown .dropdown-toggle::after{
     top: -20px;
+}
+.new_card_style{
+	background-color:#fff;
+}
+.new_card_style .card-block{
+	padding:10px;
 }

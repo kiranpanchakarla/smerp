@@ -633,40 +633,40 @@ function addItem() {
 	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].prodouctNumber" class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">
@@ -677,7 +677,7 @@ function addItem() {
 			+ '</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
@@ -699,32 +699,32 @@ function addItem() {
 		  var service_table_data='<tr class="multTot multTot'+inc+'">'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="lineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].sacCode" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">

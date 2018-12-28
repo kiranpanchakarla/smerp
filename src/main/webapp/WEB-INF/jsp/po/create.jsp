@@ -839,41 +839,41 @@ function addItem() {
 	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].prodouctNumber" autocomplete="off"  class="form-control prodouctNumber prodouctNumber'+inc+'" required="true" id="prodouctNumber'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
@@ -885,27 +885,27 @@ function addItem() {
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${plantMap}" var="plantMap">
@@ -916,7 +916,7 @@ function addItem() {
 			+ '</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
@@ -938,40 +938,40 @@ function addItem() {
 		  var service_table_data='<tr class="multTot multTot'+inc+'">'
 			
 			+'<td style="display:none;">'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].sacCode" autocomplete="off" required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
@@ -983,19 +983,19 @@ function addItem() {
 			
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+'<input type="text" name="purchaseOrderlineItems['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+ '<td>'
-			+'<div class="form-group1">'
+			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${plantMap}" var="plantMap">

@@ -468,7 +468,7 @@
     	        var item_table_data = '<tr class="multTot multTot'+inc+'">'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].prodouctNumber"  autocomplete="off"  value=""  required="true"   class="form-control prodouctNumber prodouctNumber'+inc+'" id="prodouctNumber'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -480,34 +480,34 @@
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" value="" class="form-control description '+inc+'" id="description'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" readonly="true" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+ '<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">
@@ -518,7 +518,7 @@
     			+ '</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
@@ -544,26 +544,26 @@
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].sacCode"  autocomplete="off"  required="true"  class="form-control sacCode  sacCode'+inc+'" id="hsn'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			
     			+'<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
     			+ '<td>'
-    			+'<div class="form-group1">'
+    			+'<div class="form-group">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
     			+'<option value="">select</option>'+
     			<c:forEach items="${planMap}" var="planMap">

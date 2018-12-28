@@ -38,7 +38,8 @@
 								<div>
 									<div class="content-body">
 										<!-- Basic Tables start -->
-
+										
+ 
 										<div class="card">
 											
 											<div class="card-body collapse in">
@@ -63,6 +64,10 @@
 													</div>  --%>
 													
 													<div class="row">
+													
+													<div class="row bold-text" align="center">
+											 Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
+								                  </div>
 																<div class="col-xs-12 col-sm-12">
 																	<c:set var="count" value="0" scope="page" />
 																	<c:forEach items="${ump}" var="map"  varStatus="loop">
@@ -76,11 +81,11 @@
 																		    		
 																					  <c:when test="${permissions.flag eq 'Checked'}">
 																				<div class="float-left">
-																				<input type="checkbox" checked="checked"  name="userModulePermission[${count}].permissions"  value="${permissions.id}" />${permissions.permissionName}</div>
+																				<input type="checkbox" checked="checked" class="checkBoxClass"   name="userModulePermission[${count}].permissions"  value="${permissions.id}" />${permissions.permissionName}</div>
 																		           </c:when>
 																		           <c:otherwise>
 																		           
-																			    <div class="float-left"><input type="checkbox"    name="userModulePermission[${count}].permissions"  value="${permissions.id}" /> ${permissions.permissionName}</div>
+																			    <div class="float-left"><input type="checkbox" class="checkBoxClass"     name="userModulePermission[${count}].permissions"  value="${permissions.id}" /> ${permissions.permissionName}</div>
 																					  </c:otherwise>
 																				</c:choose> 
 																				
@@ -120,7 +125,40 @@
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 
+<script type="text/javascript">
 
+$(document).ready(function () {
+    
+	 if($('.checkBoxClass:checked').length == $('.checkBoxClass').length){
+         $('#ckbCheckAll').prop('checked',true);
+     }else{
+         $('#ckbCheckAll').prop('checked',false);
+     }
+	
+	$('#ckbCheckAll').on('click',function(){
+        if(this.checked){
+            $('.checkBoxClass').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkBoxClass').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+    
+    $('.checkBoxClass').on('click',function(){
+        if($('.checkBoxClass:checked').length == $('.checkBoxClass').length){
+            $('#ckbCheckAll').prop('checked',true);
+        }else{
+            $('#ckbCheckAll').prop('checked',false);
+        }
+    });
+    
+});
+
+
+</script>
 
 </body>
 </html>

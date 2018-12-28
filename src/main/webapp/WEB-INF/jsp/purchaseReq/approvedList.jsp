@@ -56,8 +56,8 @@
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/dashboard"/>">Home</a></li>
-														<li class="breadcrumb-item"><a
-															href="<c:url value="/purchase"/>">Purchase</a></li>
+														<%-- <li class="breadcrumb-item"><a
+															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
 														<li class="breadcrumb-item active">Convert PR To RFQ</li>
 													</ol>
 												</div>

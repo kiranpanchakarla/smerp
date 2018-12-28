@@ -93,7 +93,7 @@
                 <td style="border: solid 1px ;"><#if rfqlist.sacCode??>&nbsp;${rfqlist.sacCode}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.description??>&nbsp;${rfqlist.description}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.requiredQuantity??>&nbsp;${rfqlist.requiredQuantity}</#if></td>
-               <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
                 <#if (rfqlist.warehouse) == (key?string)>
@@ -106,7 +106,34 @@
                 </#list>
                 </table>
                 </#if></#if>
+                <br><br>
+                <table style="width:50%">
+                <tr>
+                <td><strong>Shipping From :</strong></td>
+                <td><strong>Pay To :</strong></td>
+                </tr>
                 
+                <tr>
+                <td><#if rfq.vendorShippingAddress.addressName??>${rfq.vendorShippingAddress.addressName},</#if></td>
+                <td><#if rfq.vendorPayTypeAddress.addressName??>${rfq.vendorPayTypeAddress.addressName}</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.street??>${rfq.vendorShippingAddress.street}, </#if></td>
+                 <td> <#if rfq.vendorPayTypeAddress.street??>${rfq.vendorPayTypeAddress.street},</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.city??>${rfq.vendorShippingAddress.city},</#if> </td>
+                <td><#if rfq.vendorPayTypeAddress.city??>${rfq.vendorPayTypeAddress.city},</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.zipCode??>${rfq.vendorShippingAddress.zipCode}, </#if></td>
+                <td> <#if rfq.vendorPayTypeAddress.zipCode??>${rfq.vendorPayTypeAddress.zipCode},</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.country.name??>${rfq.vendorShippingAddress.country.name}.</#if></td>
+                <td><#if rfq.vendorPayTypeAddress.country.name??>${rfq.vendorPayTypeAddress.country.name}.</#if></td>
+                </tr>
+            </table>
      
     </body>
 </html>

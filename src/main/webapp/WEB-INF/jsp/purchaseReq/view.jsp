@@ -8,15 +8,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 <%--  <c:import url="/WEB-INF/jsp/loadcss.jsp" /> --%>
 <style>
-.table thead tr th {
+/* .table thead tr th {
 	text-align: center !important;
-}
+} */
 </style>
 </head>
 
@@ -114,7 +115,7 @@
 																					<tr>
 																						<!-- <th>S.No</th> -->
 																						<th style="display: none;">Product Id</th>
-																						<th>S.No</th>
+																						<th>S.no</th>
 																						<th>Product Name</th>
 																						<th>Description</th>
 																						<th>UOM</th>
@@ -195,12 +196,21 @@
 												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												      <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										       </div>
-																<c:if test="${purchaseRequest.status == 'Approved'}">
-																	<input type="hidden" name="purchaseId" 	value="${purchaseRequest.id}">
-															<form:button type="button" id="convertBtn"
-																class="btn btn-primary mr-1 float-right">
-																<i></i>Convert PR to RFQ</form:button>
-																</c:if>
+																<c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'Purchase Request'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${purchaseRequest.status == 'Approved'}">
+																	    <input type="hidden" name="purchaseId" 	value="${purchaseRequest.id}">
+															            <form:button type="button" id="convertBtn" class="btn btn-primary mr-1 float-right">
+																        <i></i>Convert PR to RFQ</form:button>
+																       </c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+																
+																
+																
 														</div>
 
 													</div>

@@ -123,7 +123,35 @@
                 </#list>
                 </table>
                 </#if></#if>
+                 <br><br>
+                 
+                <table style="width:100%">
+                <tr>
+                <td><strong>Shipping From :</strong></td>
+                <td><strong>Pay To :</strong></td>
+                </tr>
                 
+                <tr>
+                <td><#if rfq.vendorShippingAddress.addressName??>${rfq.vendorShippingAddress.addressName},</#if></td>
+                <td><#if rfq.vendorPayTypeAddress.addressName??>${rfq.vendorPayTypeAddress.addressName}</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.street??>${rfq.vendorShippingAddress.street}, </#if></td>
+                 <td> <#if rfq.vendorPayTypeAddress.street??>${rfq.vendorPayTypeAddress.street},</#if></td>
+                </tr>
+                <tr>
+                <td><#if rfq.vendorShippingAddress.city??>${rfq.vendorShippingAddress.city},</#if> </td>
+                <td><#if rfq.vendorPayTypeAddress.city??>${rfq.vendorPayTypeAddress.city},</#if></td>
+                </tr>
+                <tr>
+                <tr><td><#if rfq.vendorShippingAddress.zipCode??>${rfq.vendorShippingAddress.zipCode}, </#if></td>
+                <td> <#if rfq.vendorPayTypeAddress.zipCode??>${rfq.vendorPayTypeAddress.zipCode},</#if></td>
+                </tr>
+                <tr><td><#if rfq.vendorShippingAddress.country.name??>${rfq.vendorShippingAddress.country.name}.</#if> </td>
+                <td><#if rfq.vendorPayTypeAddress.country.name??>${rfq.vendorPayTypeAddress.country.name}.</#if></td>
+                </tr>
+            </table>
+                 
                 </div>
                </td>
               </tr>

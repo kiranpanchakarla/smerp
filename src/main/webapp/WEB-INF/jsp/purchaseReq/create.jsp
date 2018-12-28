@@ -347,8 +347,8 @@
 
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
-                                                                    <c:if test="${purchaseRequest.status eq 'Draft Stage' || purchaseRequest.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-primary"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                    <c:if test="${purchaseRequest.status eq 'Draft' || purchaseRequest.id==null }">
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
@@ -362,26 +362,30 @@
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
 																		</a>
-
+																		
+																		
+                                                                      </c:if>
+                                                                      <!-- Approve -->
+                                                                       <c:forEach items="${sessionScope.umpmap}" var="ump">
+																		 <c:if test="${ump.key eq 'Purchase Request' }">
+																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
+                                                                        <c:if test="${purchaseRequest.status != 'Cancelled'}">
+                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                        </c:if>
+                                                                     
+                                                                      </c:if></c:if></c:forEach>
+                                                                       <!-- Reject -->
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                       <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-check2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
                                                                      </c:if>
                                                                      </c:if></c:if></c:forEach>
-                                                                      </c:if>
                                                                       
-                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'Purchase Request' }">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                        <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-primary mr-1 "> <i class="icon-check2"></i>Approve</form:button>
-                                                                        </c:if>
-                                                                      
-                                                                      </c:if></c:if></c:forEach>
+                                                                     
                                                                 </div>
                                                             </form>
                                                         </div>

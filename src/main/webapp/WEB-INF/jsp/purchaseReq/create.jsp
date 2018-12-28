@@ -783,7 +783,7 @@
 	                	}
                         //alert("hsnCode"+hsndata.hsnCode);
                         //	$('.hsnVal').val(hsndata.hsnCode);
-                        $(itemParentRow).find(".hsnVal").val(obj.hsnCode.hsnCode);
+                        $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
 
                        // $(itemParentRow).find(".prodouctNumber").val(obj.description);
                         $(itemParentRow).find(".productId").val(obj.id);

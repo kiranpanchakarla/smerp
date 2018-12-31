@@ -13,9 +13,17 @@
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
 
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
+	type="text/javascript"></script>
+<!-- <script
+	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
+	type="text/javascript"></script> -->
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
+	type="text/javascript"></script>
 
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -65,33 +73,46 @@
 													
 													<div class="row">
 													
-													<div class="row bold-text" align="center">
+													<!-- <div class="row bold-text" align="center">
 											 Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
-								                  </div>
+								                  </div> -->
 																<div class="col-xs-12 col-sm-12">
 																	<c:set var="count" value="0" scope="page" />
 																	<c:forEach items="${ump}" var="map"  varStatus="loop">
 																	  
 																	  <div class="row bold-text">
+																	  <input type="checkbox" class="module${count}"  onclick="setAllPermission(${count})"   />	
 																	  <input type="hidden" name="userModulePermission[${count}].module" readonly="readonly"   value="${map.key.id}" />${map.key.moduleName}
 																	  </div>
 																	  <div class="row bold-value">
 																		 <c:forEach items="${map.value}" var="permissions">
-																		    <c:choose>
-																		    		
-																					  <c:when test="${permissions.flag eq 'Checked'}">
+																		
+																		
+																		<c:choose>
+
+																			<c:when test="${permissions.flag eq 'Checked'}">
 																				<div class="float-left">
-																				<input type="checkbox" checked="checked" class="checkBoxClass"   name="userModulePermission[${count}].permissions"  value="${permissions.id}" />${permissions.permissionName}</div>
-																		           </c:when>
-																		           <c:otherwise>
-																		           
-																			    <div class="float-left"><input type="checkbox" class="checkBoxClass"     name="userModulePermission[${count}].permissions"  value="${permissions.id}" /> ${permissions.permissionName}</div>
-																					  </c:otherwise>
-																				</c:choose> 
-																				
-																				
-																		  </c:forEach>
+																					<input type="checkbox" checked="checked"
+																						class="permissions${count}" onclick="changePermission(${count})"
+																						name="userModulePermission[${count}].permissions"
+																						value="${permissions.id}" />${permissions.permissionName}</div>
+																			</c:when>
+																			<c:otherwise>
+
+																				<div class="float-left">
+																					<input type="checkbox" class="permissions${count}"
+																						name="userModulePermission[${count}].permissions" onclick="changePermission(${count})"
+																						value="${permissions.id}" />
+																					${permissions.permissionName}
+																				</div>
+																			</c:otherwise>
+																		</c:choose>
+
+
+																	</c:forEach>
 																		  </div>
+																		  
+																		  
 																		<input type="hidden" name="userModulePermission[${count}].user.userId" readonly="readonly"   value="${id}" />
 																		
 																		   <c:set var="count" value="${count + 1}" scope="page" />
@@ -127,6 +148,7 @@
 
 <script type="text/javascript">
 
+/* 
 $(document).ready(function () {
     
 	 if($('.checkBoxClass:checked').length == $('.checkBoxClass').length){
@@ -155,7 +177,49 @@ $(document).ready(function () {
         }
     });
     
-});
+    
+}); */
+
+
+function setAllPermission(moduleId){
+	
+	 alertify.confirm('Your Data Will Be Losed Are you Sure Want to Convert!', function(){
+		
+		 if($(".module"+moduleId).is(':checked')) {
+				$('.permissions'+moduleId).each(function(){
+			         this.checked = true;
+			     });
+			}else {
+				$('.permissions'+moduleId).each(function(){
+			         this.checked = false;
+			     });
+			}
+	 
+	 }, function(){
+		 $(".module"+moduleId).prop('checked',false);
+         alertify.error('Cancelled');
+      });
+	
+	
+	
+}
+
+function changePermission(permissionId){
+	if($('.permissions'+permissionId+':checked').length == $('.permissions'+permissionId).length){
+         $(".module"+permissionId).prop('checked',true);
+     }else{
+         $(".module"+permissionId).prop('checked',false);
+     }
+}
+
+for(var i=0;i<=9;i++) {
+	if($('.permissions'+i+':checked').length == $('.permissions'+i).length){
+        $(".module"+i).prop('checked',true);
+    }else{
+        $(".module"+i).prop('checked',false);
+    }
+}
+
 
 
 </script>

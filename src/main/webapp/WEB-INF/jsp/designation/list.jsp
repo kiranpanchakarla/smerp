@@ -7,6 +7,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -47,8 +48,16 @@
 													<h2 class="content-header-title">Designation</h2>
 												</div>
 												<div class="col-md-5">
-													<a class="btn btn-primary"
-														href="<c:url value="/designation/create"/>">Create</a>
+													
+													<c:forEach items="${sessionScope.umpmap}" var="ump">
+												<c:if test="${ump.key eq 'Admin Master'}">
+														<c:set var="permissions" scope="session"
+																		value="${ump.value}" />
+														<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
+															<a class="btn btn-primary" href="<c:url value="/designation/create"/>">Create</a>
+													    </c:if>
+												</c:if>
+												</c:forEach>	
 												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
@@ -86,15 +95,32 @@
 																	<td >${designation.desigination}</td>
 																	<td >${designation.company.name}</td>
 																	<td >${designation.department.name}</td> 
-																	<td  ><a class="btn btn-edit"
+																	<td >   
+																			<c:forEach items="${sessionScope.umpmap}" var="ump">
+												<c:if test="${ump.key eq 'Admin Master'}">
+												<c:set var="permissions" scope="session" value="${ump.value}" />
+														<c:if test="${fn:containsIgnoreCase(permissions,'update')}">
+																	<a class="btn btn-edit"
 																		href="<c:url value="/designation/getInfo?designationId=${designation.id}"/>" data-toggle="tooltip" data-placement="right" title="Edit">
 																			<i class="icon-edit left"></i>
-																	</a>   <a class="btn btn-delete mr-1" href="#"
+																	</a> 
+														</c:if>		
+														
+														<c:if test="${fn:containsIgnoreCase(permissions,'delete')}">
+																	  <a class="btn btn-delete mr-1" href="#"
 																		onclick="deleteById('<c:out value="${designation.id}"/>','/designation/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i
-																			class="icon-bin left"></i></a>   <a
+																			class="icon-bin left"></i></a>
+														</c:if>				
+															
+														<c:if test="${fn:containsIgnoreCase(permissions,'view')}">				
+																			 <a
 																		class="btn btn-view"
 																		href="<c:url value="/designation/view?designationId=${designation.id}"/>" data-toggle="tooltip" data-placement="right" title="View"><i
-																			class="icon-eye3 left"></i></a></td>
+																			class="icon-eye3 left"></i></a>
+														</c:if>		
+																			
+																	</c:if>
+													</c:forEach>  </td>
 																</tr>
 															</c:forEach>
 														</tbody>

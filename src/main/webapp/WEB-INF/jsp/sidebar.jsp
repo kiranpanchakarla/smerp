@@ -12,7 +12,7 @@
         </ul>
       </li>
       
-       <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <li><a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
          
           <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -26,33 +26,36 @@
 			 	 <c:if test="${ump.key eq 'Vendor'}">
 					<li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
 			 	</c:if>
-   		  </c:forEach> 
-          
+   		 
+            <c:if test="${ump.key eq 'Admin Master'}">
           <li class="has_sub"><a href="<c:url value ="/department/list"/>">Departments</a></li>
           <li class="has_sub"><a href="<c:url value ="/designation/list"/>">Designations</a></li>
+          </c:if>
+           </c:forEach> 
         </ul>
       </li>
+      
+      
+       <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Product'}">
        <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-        
-           <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Product'}">
+          
 					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
 					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Group</a></li>
           			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
-			 	</c:if>
-   		  </c:forEach> 
-     
-         
-         <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
-        <%--  <li class="has_sub"><a href="<c:url value =""/>">Inventory Adjustment</a></li> --%>
+         			  <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
         </ul>
       </li>
+      </c:if>
+   		  </c:forEach> 
       
-      
+     
+       <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
       <li><a href="#"><i class="icon-android-settings left"></i><span class="menu_text">Settings</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
          <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
@@ -62,27 +65,11 @@
             <li><a href="<c:url value ="/states/list"/>">States</a></li>
             <li><a href="<c:url value ="/hsncode/list"/>">HSN Code</a></li>
             <li><a href="<c:url value ="/saccode/list"/>">SAC Code</a></li>
-         <!--  <li class="has_sub"><a>item 1<i class="icon-ios-arrow-right right"></i></a>
-            <ul class="super_sub">
-              <li><a>Sub item 1</a></li>
-              <li><a>Sub item 1</a></li>
-              <li><a>Sub item 1</a></li>
-              <li class="has_sub"><a>Sub item 1<i class="icon-ios-arrow-right right"></i></a>
-                <ul class="super_sub">
-                  <li><a>Super Sub item 1</a></li>
-                  <li class="has_sub"><a>Super Sub item 1<i class="icon-ios-arrow-right right"></i></a>
-                    <ul class="super_sub">
-                      <li><a>Super Sub item 1</a></li>
-                    </ul>
-                  </li>
-                  <li><a>Super Sub item 1</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
+        
         </ul>
       </li>
-      
+       </c:if>
+   		  </c:forEach> 
       
       <li>
       

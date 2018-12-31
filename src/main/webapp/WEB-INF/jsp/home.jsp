@@ -217,7 +217,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Product Request</h4>
+                <h4 class="card-title" style="text-align: center;">Purchase Request</h4>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${dashboardCount.open}</span> Open </li>
@@ -324,7 +324,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Product Order</h4>
+                <h4 class="card-title" style="text-align: center;">Purchase Order</h4>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${poCount.open}</span> Open </li>

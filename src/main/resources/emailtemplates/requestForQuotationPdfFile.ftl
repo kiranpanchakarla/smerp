@@ -106,13 +106,12 @@
                 </#list>
                 </table>
                 </#if></#if>
-                <br><br>
+                <br></br>
                 <table style="width:50%">
                 <tr>
                 <td><strong>Shipping From :</strong></td>
                 <td><strong>Pay To :</strong></td>
                 </tr>
-                
                 <tr>
                 <td><#if rfq.vendorShippingAddress.addressName??>${rfq.vendorShippingAddress.addressName},</#if></td>
                 <td><#if rfq.vendorPayTypeAddress.addressName??>${rfq.vendorPayTypeAddress.addressName}</#if></td>

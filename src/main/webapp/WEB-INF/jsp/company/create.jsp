@@ -256,7 +256,7 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Fax Number' path="faxNum" onkeypress='return isNumberKey(event);'
+																					placeholder='Fax Number' path="faxNum" onkeypress='return isNumericKey(event);'
 																					maxlength="15" minlength="10" 
 																					oninvalid="this.setCustomValidity('Please Enter Fax Number')"
 																					oninput="setCustomValidity('')" />

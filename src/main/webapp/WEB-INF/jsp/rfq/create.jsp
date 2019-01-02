@@ -897,6 +897,7 @@ $(document).ready(function(){
               		vendorShippingAddress($('#vendorAddress').val());
               		
               	  $('.rm_address').removeClass('has-error has-danger');
+              	  $("#form").validator("update");
               	  
                 	
                	 },

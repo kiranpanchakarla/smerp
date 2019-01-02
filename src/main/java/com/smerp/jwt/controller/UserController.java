@@ -273,9 +273,10 @@ public class UserController {
 		userModulePermissionService.saveAll(user);
 		Map<Module, List<Permission>> userpermissionsmap = usermodulepermissionsbyuserId(user, model);
 		logger.info("userpermissionsmap-------->" + userpermissionsmap);
-		model.addAttribute("user", user);
+		/*model.addAttribute("user", user);
 		model.addAttribute("id", user.getUserId());
-		return "user/addPermissions";
+		return "user/addPermissions";*/
+		return "redirect:list";
 	}
 	
 	private Map<Module, List<Permission>> usermodulepermissionsbyuserId(User user, Model model) {

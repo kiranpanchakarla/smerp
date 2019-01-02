@@ -101,8 +101,17 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'update')}"> 
 																	 <a class ="btn btn-edit" href="<c:url value="/user/edit?id=${list.userId}"/>" data-toggle="tooltip" data-placement="right" title="Edit"><i class="icon-edit left"></i></a>  
+																	     </c:if>
+																	
+																	<c:forEach items="${sessionScope.umpmap}" var="adminUMP">
+																		 <c:if test="${adminUMP.key eq 'Admin Master'}">
+																		 <c:set var = "adminPermissions" scope = "session" value = "${adminUMP.value}"/>
+																	 <c:if test="${fn:containsIgnoreCase(adminPermissions,'User Permission')}">   
 																	 <a class ="btn btn-edit" href="<c:url value="/user/addPermissions?id=${list.userId}"/>" data-toggle="tooltip" data-placement="right" title="Permission"><i class="icon-add_to_queue left"></i></a> 
 																	 </c:if>
+																	    </c:if>
+																	 </c:forEach>
+																	 
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.userId}"/>','/user/delete')" data-toggle="tooltip" data-placement="right" title="Delete"><i class="icon-bin left"></i></a>
 														    		 </c:if> 

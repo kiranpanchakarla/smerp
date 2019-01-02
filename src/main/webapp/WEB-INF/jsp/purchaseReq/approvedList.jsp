@@ -72,7 +72,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>Sno</th>
+																<th>S.no</th>
 																<th>Created By</th>
 																<th>Document Number</th>
 																<th>Created Date</th>

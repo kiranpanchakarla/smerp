@@ -49,7 +49,9 @@
 										
  
 										<div class="card">
-											
+											<div class="card-header">
+														<h2 class="card-title" id="basic-layout-icons">User Permissions</h2>
+												</div>
 											<div class="card-body collapse in">
 												<div class="card-block card-dashboard">
 												
@@ -80,11 +82,11 @@
 																	<c:set var="count" value="0" scope="page" />
 																	<c:forEach items="${ump}" var="map"  varStatus="loop">
 																	  
-																	  <div class="row bold-text">
+																	  <div class="row col-xs-2 bold-text">
 																	  <input type="checkbox" class="module${count}"  onclick="setAllPermission(${count})"   />	
 																	  <input type="hidden" name="userModulePermission[${count}].module" readonly="readonly"   value="${map.key.id}" />${map.key.moduleName}
 																	  </div>
-																	  <div class="row bold-value">
+																	  <div class="row col-xs-10 bold-value">
 																		 <c:forEach items="${map.value}" var="permissions">
 																		
 																		

@@ -461,7 +461,7 @@ table.dataTable.no-footer{
 }   
 .bold-value{
 	margin: 10px 0;
-	padding-left: 50px;
+	/*padding-left: 50px;*/
 }
 .bold-value .float-left {
     padding-right: 10px;

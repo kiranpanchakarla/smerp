@@ -102,7 +102,7 @@
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Vendor'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		 	<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
+																		 	<c:if test="${fn:containsIgnoreCase(permissions,'update')}">
 									        									<a class="btn btn-edit"
 																		      href="<c:url value="/vendor/getInfo?vendorId=${vendorList.id}"/>"><i
 																			class="icon-edit left" data-toggle="tooltip" data-placement="right" title="Edit"></i></a>

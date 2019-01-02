@@ -339,18 +339,18 @@
 																											 <c:if test="${po.rfqId!=null}">
 				         
 				                                                                                          <tr class="multTot multTot${count}">
-																												<td style="display: none;"><form:input
+																												<td style="display: none;"><div class="form-group"><form:input
 																															type="hidden"
 																															path="purchaseOrderlineItems[${count}].productId"
 																															value="${listLineItems.productId}"
-																															class="form-control productId"></form:input>
+																															class="form-control productId"></form:input></div>
 																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
-																															
+																															<div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
 																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input>
-																															
+																															</div>
 																															</td>
 																															
 																													<c:if test="${po.category=='Item'}">
@@ -361,30 +361,30 @@
 																													<td>${listLineItems.requiredQuantity}</td>
 																													
 																													
-																													<td>
+																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"
 																															value="${listLineItems.unitPrice}"  autocomplete="off"
-																															class="form-control unitPrice" ></form:input></td>
+																															class="form-control unitPrice" ></form:input></div></td>
 																													
 																													
-																													    <td><form:select class="form-control taxCode"
+																													    <td><div class="form-group"><form:select class="form-control taxCode"
 																															 required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																													
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></div></td>
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total validatePrice" readonly="true"  ></form:input></td>
+																															class="form-control total validatePrice" readonly="true"  ></form:input></div></td>
 																													
 																														<td>${listLineItems.productGroup}</td>
 
@@ -406,30 +406,30 @@
 																															
 																													<td>${listLineItems.requiredQuantity}</td>
 																													
-																													<td>
+																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"  autocomplete="off"
 																															value="${listLineItems.unitPrice}"
-																															class="form-control unitPrice" ></form:input></td>
+																															class="form-control unitPrice" ></form:input></div></td>
 																													
 																													
-																													    <td><form:select class="form-control taxCode"
+																													    <td><div class="form-group"><form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																													
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></div></td>
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total validatePrice" readonly="true"  ></form:input></td>
+																															class="form-control total validatePrice" readonly="true"  ></form:input></div></td>
 																													
 
 																														<td><c:forEach var="entry"
@@ -446,130 +446,130 @@
 																										
 																										 <c:if test="${po.rfqId==null}">
 																												<tr class="multTot multTot${count}">
-																												<td style="display: none;"><form:input
+																												<td style="display: none;"><div class="form-group"><form:input
 																															type="hidden"
 																															path="purchaseOrderlineItems[${count}].productId"
 																															value="${listLineItems.productId}"
-																															class="form-control productId"></form:input>
+																															class="form-control productId"></form:input></div>
 																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
 																															</td>
 																															
 																													<c:if test="${po.category=='Item'}">
-																													<td ><form:input type="text"
+																													<td ><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].prodouctNumber" required="true"
 																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></td>
+																															class="form-control prodouctNumber"></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
 																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control uom" readonly="true"></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input></td>
+																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input></div></td>
 																															
 																															
 																															
-																															<td>
+																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
 																															value="${listLineItems.unitPrice}"
-																															class="form-control unitPrice validatePrice" ></form:input></td>
+																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
-																													    <td><form:select class="form-control taxCode"
+																													    <td><div class="form-group"><form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																													
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal " readonly="true"  ></form:input></td>
+																															class="form-control taxTotal " readonly="true"  ></form:input></div></td>
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total" readonly="true"  ></form:input></td>
+																															class="form-control total" readonly="true"  ></form:input></div></td>
 																													
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].productGroup"
 																															value="${listLineItems.productGroup}"
 																															class="form-control productGroup"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																														
-																														<td><form:select class="form-control"
+																														<td><div class="form-group"><form:select class="form-control"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${plantMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].hsn"
 																															value="${listLineItems.hsn}"
 																															class="form-control hsnVal"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
 																													</c:if>
 																													
 																													<c:if test="${po.category!='Item'}">
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].sacCode"
 																															value="${listLineItems.sacCode}"
 																															class="form-control sacCode"
-																															></form:input></td>
+																															></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].description"
 																															value="${listLineItems.description}"
 																															class="form-control description"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" required="true" autocomplete="off" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validatePrice"></form:input></td>
+																															class="form-control requiredQuantity validatePrice"></form:input></div></td>
 																													
-																													<td>
+																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"
 																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
-																															class="form-control unitPrice validatePrice" ></form:input></td>
+																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
-																													    <td><form:select class="form-control taxCode"
+																													    <td><div class="form-group"><form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																													
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].taxTotal"
 																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal" readonly="true"  ></form:input></td>
+																															class="form-control taxTotal" readonly="true"  ></form:input></div></td>
 																															
-																															<td><form:input type="text"
+																															<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].total"
 																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total"  readonly="true"></form:input></td>
+																															class="form-control total"  readonly="true"></form:input></div></td>
 																													
 																													
 																													
-																													<td><form:select class="form-control"
+																													<td><div class="form-group"><form:select class="form-control"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${plantMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
 																													</c:if>
 																												            <td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>

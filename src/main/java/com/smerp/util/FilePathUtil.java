@@ -10,11 +10,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 
 
 public class FilePathUtil {
+	
+	private static final Logger logger = LogManager.getLogger(FilePathUtil.class);
 
 	public static Map<String, String>  getFilePath(MultipartFile multipartFile,String saveFilePath,String folderName) {
 		Map<String, String> responseObj=new HashMap<String, String>();
@@ -65,5 +69,11 @@ public class FilePathUtil {
 	}
 	
 	
+	public static String convertPath(String logoPath) {
+	//String logoPath ="data\\Company\\logo\\images20181224_101326.jpg'";
+	logoPath = logoPath.replaceAll("\\\\", "/");  //" convert  \ to /"
+	logger.info("logoPath-->" +logoPath);
+	return logoPath;
+	}
 	
 }

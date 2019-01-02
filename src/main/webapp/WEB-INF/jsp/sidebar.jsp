@@ -42,12 +42,14 @@
         <ul class="sub_menu">
           
 					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
+					 <c:if test="${ump.key eq 'Admin Master'}">
 					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Group</a></li>
           			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
          			  <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
+         			  </c:if>
         </ul>
       </li>
       </c:if>

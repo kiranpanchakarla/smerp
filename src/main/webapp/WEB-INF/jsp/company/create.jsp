@@ -256,7 +256,7 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Fax Number' path="faxNum" onkeypress='return isNumberKey(event);'
+																					placeholder='Fax Number' path="faxNum" onkeypress='return isNumericKey(event);'
 																					maxlength="15" minlength="10" 
 																					oninvalid="this.setCustomValidity('Please Enter Fax Number')"
 																					oninput="setCustomValidity('')" />
@@ -415,7 +415,17 @@
 
 	function isNumericKey(evt)
 	{
+		var data = $("#faxNum").val();
+		var first_pos = data.charAt(0);
+		var minus_pos1 = data.charAt(2);
+		var minus_pos2 = data.charAt(6);
 		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if(first_pos=="" && charCode==43)
+			return true;
+		if(minus_pos1 =="" && charCode==45)
+			return true;
+		if(minus_pos2 =="" && charCode==45)
+			return true;
 		if (charCode > 31 && (charCode < 48 || charCode > 57))
 		   return false;
 		

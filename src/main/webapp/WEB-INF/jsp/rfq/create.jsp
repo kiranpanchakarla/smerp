@@ -380,66 +380,66 @@
 																															</td>
 																															
 																													<c:if test="${rfq.category=='Item'}">
-																													<td ><form:input type="text"
+																													<td ><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].prodouctNumber" required="true"
 																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></td>
+																															class="form-control prodouctNumber"></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].uom"
 																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></td>
+																															class="form-control uom" readonly="true"></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control validatePrice"  required="true"></form:input></td>
+																															class="form-control validatePrice"  required="true"></form:input></div></td>
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].productGroup"
 																															value="${listLineItems.productGroup}"
 																															class="form-control productGroup"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																														
-																														<td><form:select class="form-control"
+																														<td><div class="form-group"><form:select class="form-control"
 																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].hsn"
 																															value="${listLineItems.hsn}"
 																															class="form-control hsnVal"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
 																													</c:if>
 																													
 																													<c:if test="${rfq.category!='Item'}">
-																													<td><form:input type="text"
-																															path="lineItems[${count}].sacCode"
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].sacCode" required="true"
 																															value="${listLineItems.sacCode}"
 																															class="form-control sacCode"
-																															></form:input></td>
+																															></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].description"
 																															value="${listLineItems.description}"
 																															class="form-control description"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" required="true"
-																															class="form-control"></form:input></td>
+																															class="form-control"></form:input></div></td>
 																													
-																													<td><form:select class="form-control"
+																													<td><div class="form-group"><form:select class="form-control"
 																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
 																													</c:if>
 																												            <td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
@@ -897,6 +897,7 @@ $(document).ready(function(){
               		vendorShippingAddress($('#vendorAddress').val());
               		
               	  $('.rm_address').removeClass('has-error has-danger');
+              	  $("#form").validator("update");
               	  
                 	
                	 },

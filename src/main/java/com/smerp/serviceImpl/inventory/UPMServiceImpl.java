@@ -51,7 +51,7 @@ public class UPMServiceImpl implements UPMService {
 				",mp.permission_name\r\n" + 
 				",ump.module_id \r\n" + 
 				",ump.permission_id\r\n" + 
-				",ump.id  order by mp.module_id";
+				",ump.id  order by mp.module_id ";
 		
 		logger.info("sql-->" +sql);
 		Query query = entityManager.createNativeQuery(sql);

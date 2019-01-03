@@ -230,70 +230,77 @@
 																															</td>
 																															
 																													<c:if test="${purchaseRequest.type=='Item'}">
-																													<td ><form:input type="text"
+																													<td >
+																													<div class="form-group">
+																													<form:input type="text" required="true"
 																															path="purchaseRequestLists[${count}].prodouctNumber"
 																															value="${listpurchaseRequestLists.prodouctNumber}" 
-																															class="form-control prodouctNumber"></form:input></td>
+																															class="form-control prodouctNumber"></form:input></div></td>
 																													
-																														<td><form:input type="text"
+																														<td>
+																														<div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].description"
 																															value="${listpurchaseRequestLists.description}"
-																															class="form-control " readonly="true"></form:input></td>
-																													<td><form:input type="text"
+																															class="form-control " readonly="true"></form:input></div></td>
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control " readonly="true"></form:input></td>
+																															class="form-control " readonly="true"></form:input></div></td>
 																													
-																													<td><form:input type="text"
-																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
+																													<td>
+																													<div class="form-group">
+																													<form:input type="text"
+																															path="purchaseRequestLists[${count}].requiredQuantity"  required="true" onkeypress="return isNumericKey(event)"
 																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
-																															class="form-control validatePrice"></form:input></td>
+																															class="form-control validatePrice"></form:input>
+																														</div>	
+																															</td>
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].productGroup"
 																															value="${listpurchaseRequestLists.productGroup}"
 																															class="form-control productGroup"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																														
-																														<td><form:select class="form-control"
-																															style="width:160px !important;"
+																														<td><div class="form-group"><form:select class="form-control"
+																															style="width:160px !important;"  required="true"
 																															path="purchaseRequestLists[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
-																														<td><form:input type="text"
+																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].hsn"
 																															value="${listpurchaseRequestLists.hsn}"
 																															class="form-control hsnVal"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
 																													</c:if>
 																													
 																													<c:if test="${purchaseRequest.type!='Item'}">
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].sacCode"
-																															value="${listpurchaseRequestLists.sacCode}"
+																															value="${listpurchaseRequestLists.sacCode}"  required="true"
 																															class="form-control sacCode"
-																															></form:input></td>
+																															></form:input></div></td>
 																													
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].description"
 																															value="${listpurchaseRequestLists.description}"
 																															class="form-control description"
-																															readonly="true"></form:input></td>
+																															readonly="true"></form:input></div></td>
 																															
-																													<td><form:input type="text"
+																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
-																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
-																															class="form-control validatePrice"></form:input></td>
+																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"  required="true"
+																															class="form-control validatePrice"></form:input></div></td>
 																													
-																													<td><form:select class="form-control"
-																															style="width:160px !important;"
-																															path="purchaseRequestLists[${count}].warehouse">
+																													<td><div class="form-group"><form:select class="form-control"
+																															style="width:160px !important;"  required="true"
+																															path="purchaseRequestLists[${count}].warehouse">   
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></td>
+																														</form:select></div></td>
 																															
 																													</c:if>
 																													

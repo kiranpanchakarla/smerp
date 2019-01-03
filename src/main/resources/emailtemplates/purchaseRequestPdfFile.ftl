@@ -37,9 +37,9 @@ font-size:60px;
 		Request</h2>
 	<br></br>
 	
-	<!--  <div class="rotate">
+	   <div class="rotate">
 		 ${user.company.name}
-	</div>   -->
+	</div>    
 	
 	
 	<div style="z-index:1; width:100%; position: absolute;">

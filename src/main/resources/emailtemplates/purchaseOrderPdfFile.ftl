@@ -29,9 +29,9 @@ font-size:60px;
 	<h2	class="header" style="position: fixed; left: 0; top: 0; width: 100%; color: black; text-align: center;">Purchase Order</h2>
 	<br></br>
 	
-<!-- 	<div class="rotate">
+  	<div class="rotate">
 		 ${user.company.name}
-	</div> -->
+	</div>  
 
     <div style="z-index:1; width:100%; position: absolute;">
     <#if po??>

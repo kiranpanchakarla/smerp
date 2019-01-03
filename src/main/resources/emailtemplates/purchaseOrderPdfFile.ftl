@@ -208,9 +208,9 @@ font-size:60px;
      
      </#if>
      </div>
-     <div style="position: fixed; left: 0;  bottom: 0; width: 100%; color: black;  text-align: center;">
+     <!-- <div style="position: fixed; left: 0;  bottom: 0; width: 100%; color: black;  text-align: center;">
      <p>Created by: ${user.username}</p>
      <p>Contact information: <a href="">help@manuhindia.com</a>.</p>
-     </div>
+     </div> -->
     </body>
 </html>

@@ -159,9 +159,6 @@ font-size:60px;
                 </tr>
             </table>
             </div>
-     <div style="position: fixed; left: 0;  bottom: 0; width: 100%; color: black;  text-align: center;">
-     <p>Created by: ${user.username}</p>
-     <p>Contact information: <a href="">help@manuhindia.com</a>.</p>
-     </div>
+     
     </body>
 </html>

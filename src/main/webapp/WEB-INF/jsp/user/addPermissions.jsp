@@ -11,6 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+
 </head>
 
 <script
@@ -23,7 +24,7 @@
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
 
-
+ 
 
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -72,12 +73,52 @@
 																	<input type="text" value="${id}" name="userId"/>
 																</div>
 													</div>  --%>
+			 <div class="table-responsive">								
+				<table id="example" class="table table-hover mb-0">
+                <tr>
+                <td><strong >Select All</strong></td>
+                <td><strong >Module</strong></td>
+                <td><strong >Permissions</strong></td>
+                </tr>
+                <c:set var="count" value="0" scope="page" />
+				<c:forEach items="${ump}" var="map"  varStatus="loop">
+                <tr>
+                <td style="text-align:center;"> <input type="checkbox" class="module${count}"  onclick="setAllPermission(${count})"   /></td>
+                <td><input type="hidden" name="userModulePermission[${count}].module" readonly="readonly"   value="${map.key.id}" />${map.key.moduleName}</td>
+                <td>
+					<c:forEach items="${map.value}" var="permissions">
+					<c:choose>
+                    <c:when test="${permissions.flag eq 'Checked'}">
+					<div class="float-left">
+					<input type="checkbox" checked="checked"
+					class="permissions${count}" onclick="changePermission(${count})"
+					name="userModulePermission[${count}].permissions"
+					value="${permissions.id}" />&nbsp;${permissions.permissionName}&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					</c:when>
+					<c:otherwise>
+                    <div class="float-left">
+					<input type="checkbox" class="permissions${count}"
+					name="userModulePermission[${count}].permissions" onclick="changePermission(${count})"
+					value="${permissions.id}" />
+					${permissions.permissionName}&nbsp;&nbsp;
+					</div>
+					</c:otherwise>
+					</c:choose>
+                    </c:forEach>
+					</td>
+					<c:set var="count" value="${count + 1}" scope="page" />
+                </tr>
+                <input type="hidden" name="userModulePermission[${count}].user.userId" readonly="readonly"   value="${id}" />
+					</c:forEach>
+					<input type="hidden" name="userId" value="${user.userId}">
+                </table>
+                </div>
 													
-													<div class="row">
+													<%--  <div class="row">
 													
 													<!-- <div class="row bold-text" align="center">
-											 Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
-								                  </div> -->
+											              Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
+								                     </div> -->
 																<div class="col-xs-12 col-sm-12">
 																	<c:set var="count" value="0" scope="page" />
 																	<c:forEach items="${ump}" var="map"  varStatus="loop">
@@ -122,9 +163,9 @@
 																	  <input type="hidden" name="userId" value="${user.userId}">
 																	  
 																</div>
-													</div>  
+													</div> --%> 
 													
-													
+													<br><br>
 													<a href="#" onclick="goBack()"
 												class="btn btn-primary float-left mr-1"> Back </a>
 												
@@ -185,7 +226,7 @@ $(document).ready(function () {
 
 function setAllPermission(moduleId){
 	
-	 alertify.confirm('Your Data Will Be Losed Are you Sure Want to Convert!', function(){
+	 /* alertify.confirm('Your Data Will Be Lost, Are you Sure Want to Convert!', function(){
 		
 		 if($(".module"+moduleId).is(':checked')) {
 				$('.permissions'+moduleId).each(function(){
@@ -200,10 +241,26 @@ function setAllPermission(moduleId){
 	 }, function(){
 		 $(".module"+moduleId).prop('checked',false);
          alertify.error('Cancelled');
-      });
+      }); */
 	
-	
-	
+      if($(".module"+moduleId).is(':checked')) {
+    	  
+			$('.permissions'+moduleId).each(function(){
+		         this.checked = true;
+		         
+		     });
+		}else {
+			
+			alertify.confirm('Are you Sure, want to Revoke Access to the User!', function(){
+			
+			$('.permissions'+moduleId).each(function(){
+		         this.checked = false;
+			});
+		}, function(){
+			 $(".module"+moduleId).prop('checked',true);
+	         alertify.error('Cancelled');
+	      });
+		}
 }
 
 function changePermission(permissionId){

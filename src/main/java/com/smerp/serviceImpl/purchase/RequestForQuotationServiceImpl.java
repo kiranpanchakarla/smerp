@@ -93,11 +93,9 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			List<LineItems> requestLists = requestForListOfItems.getLineItems();
 			
 			if(requestForQuotation.getPurchaseReqId()==null) {  // if PurchaseReqId null delete list items 
-			for (LineItems lineObj : requestLists) {
 				lineitemsRepository.deleteAll(requestLists);
-			} 
-			List<LineItems> listItems = requestForQuotation.getLineItems();
-			if (listItems != null) {
+			    List<LineItems> listItems = requestForQuotation.getLineItems();
+			    if (listItems != null) {
 				for (int i = 0; i < listItems.size(); i++) {
 					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
 						listItems.remove(i);

@@ -415,7 +415,17 @@
 
 	function isNumericKey(evt)
 	{
+		var data = $("#faxNum").val();
+		var first_pos = data.charAt(0);
+		var minus_pos1 = data.charAt(2);
+		var minus_pos2 = data.charAt(6);
 		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if(first_pos=="" && charCode==43)
+			return true;
+		if(minus_pos1 =="" && charCode==45)
+			return true;
+		if(minus_pos2 =="" && charCode==45)
+			return true;
 		if (charCode > 31 && (charCode < 48 || charCode > 57))
 		   return false;
 		

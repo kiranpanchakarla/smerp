@@ -352,7 +352,7 @@
 																															
 																													<c:if test="${gr.category=='Item'}">
 																													<td ><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].prodouctNumber" required="true"
+																															path="goodsReceiptLineItems[${count}].prodouctNumber" readonly="true"
 																															value="${listLineItems.prodouctNumber}"  
 																															class="form-control prodouctNumber"></form:input></div></td>
 																													
@@ -365,8 +365,8 @@
 																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
 																															class="form-control requiredQuantity validateQuantity" autocomplete="off"  required="true"></form:input></div>
-																															
-																														<input type="text" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
+																													<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >	
+																													<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
 																															
 																															</td>
 																															
@@ -429,8 +429,8 @@
 																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
 																															value="${listLineItems.requiredQuantity}"  autocomplete="off"
 																															class="form-control requiredQuantity validateQuantity" ></form:input></div>
-																												
-																												<input type="text" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >		
+																												<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >
+																												<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >		
 																															
 																															</td>
 																													
@@ -1955,16 +1955,34 @@ $('#freight').keyup(function() {
 		
 		var itemParentRow = $(this).parents(".multTot");
 		 
-		var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
+		
+		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 		
 		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
 		
-		if(temp_requiredQuantity<requiredQuantity){
+	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
+		
+		
+		if(temp_requiredQuantity<remain_requiredQuantity){
 			alertify.alert("Goods Receipt",""+temp_requiredQuantity + " Quantity you have!");	
+			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}
 		
 		});
+	
+	
+	/*  $(".requiredQuantity").each(function() {
+		 var itemParentRow = $(this).parents(".multTot");
+		 var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+		 var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
+		 if(temp_requiredQuantity<=0){
+	        	 ($(this).parents('tr').find('td').find('.requiredQuantity').attr('readonly', true));
+	        	 ($(this).parents('tr').find('td').find('.temp_requiredQuantity').attr('readonly', true));
+			}
+	 }); */
+	
 	
 	
 	</script>

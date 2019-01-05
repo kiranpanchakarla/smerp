@@ -135,7 +135,14 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
     			e.printStackTrace();
     		}
 		}
-		 
+		
+		if(goodsReceipt.getPoId()!=null) {
+		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+		if(!checkQuantityPoGr(po)) {
+			po.setStatus(EnumStatusUpdate.COMPLETED.getStatus());
+			purchaseOrderRepository.save(po);
+			 logger.info("purchaseOrder    COMPLETED -->");
+		} }
 		return goodsReceiptRepository.save(goodsReceipt); 
 		 
 	}
@@ -224,9 +231,12 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		gr = goodsReceiptRepository.save(gr);
 		 
 		/*** Here check Quantity  set status ***/
+		/*if(!checkQuantityPoGr(po)) {
+			po.setStatus(EnumStatusUpdate.COMPLETED.getStatus());  // Set Partial Complted
+			purchaseOrderRepository.save(po);
+			 logger.info("purchaseOrder    COMPLETED -->");
+		}*/
 		
-		//po.setStatus(EnumStatusUpdate.CONVERTRFQTOPO.getStatus());
-		//purchaseOrderRepository.save(po);
 		
 		return gr;
        /* }else {
@@ -316,8 +326,15 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
 		goodsReceipt.setTotalBeforeDisAmt(addAmt);
 		goodsReceipt.setTaxAmt(""+addTaxAmt);
-		
-		Double total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
+		logger.info("addAmt-->" + addAmt); 
+		logger.info("goodsReceipt.getTotalDiscount()-->" + goodsReceipt.getTotalDiscount());
+		logger.info("goodsReceipt.getFreight()-->" + goodsReceipt.getFreight());
+		Double total_amt=0.0;
+		if(goodsReceipt.getTotalDiscount()==null) goodsReceipt.setTotalDiscount(0.0);
+		if(goodsReceipt.getFreight()==null) goodsReceipt.setFreight(0);
+			
+			
+		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
 		goodsReceipt.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
 		goodsReceipt.setTotalPayment(total_amt);
 		

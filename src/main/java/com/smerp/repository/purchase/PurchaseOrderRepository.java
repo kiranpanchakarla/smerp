@@ -18,6 +18,10 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, I
 	PurchaseOrder findByRfqId(int id);
 	
 	//PurchaseOrder findByrfqId(Integer rfqId);
+	
+	
+	@Query("SELECT r FROM PurchaseOrder r WHERE status=:status order by createdAt asc")
+	List<PurchaseOrder> poApprovedList(String status);
 
 
 }

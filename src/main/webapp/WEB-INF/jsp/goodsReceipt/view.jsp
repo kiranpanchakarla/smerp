@@ -32,7 +32,7 @@ text-align: left;
 		<div class="content-wrapper">
 			<!-- <div class="content-header row">
 				<div class="col-md-6">
-					<h4>po</h4>
+					<h4>gr</h4>
 				</div>
 			</div> -->
 			<div class="content-body">
@@ -44,11 +44,9 @@ text-align: left;
 
 
 
-							<c:url value="/gr/savePOtoGR" var="createUrl" />
-							<form:form method="POST" action="${createUrl}" id="form"
-								class="bv-form commentForm" enctype="multipart/form-data"
-								modelAttribute="po" data-toggle="validator" role="form">
-								
+							<form:form method="POST" action="/gr/save" id="form" class="bv-form commentForm"
+								enctype="multipart/form-data" modelAttribute="gr"
+								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
@@ -56,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Purchase Order</h2>
+													<h2 class="card-title" id="basic-layout-icons">Goods Receipt</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -64,15 +62,15 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>: ${po.vendor.name}
+																	<label>Name</label>: ${gr.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>: ${po.vendor.emailId}
+																	<label>Email Id</label>: ${gr.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact</label>: ${po.vendorContactDetails.contactName}
+																	<label>Contact</label>: ${gr.vendorContactDetails.contactName}
 																</div>
 															</div>
 
@@ -82,15 +80,15 @@ text-align: left;
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>: ${po.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${gr.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>: ${po.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${gr.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${po.docNumber}
+																				<label>Document#</label>: ${gr.docNumber}
 																			</div>
 
 															</div>
@@ -101,15 +99,15 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${po.referenceDocNumber}
+																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.postingDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.documentDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
 																			</div>
 																		</div>
 
@@ -119,7 +117,7 @@ text-align: left;
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
                                                                             <div class="input-group">
@@ -178,7 +176,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty purchaseOrderlineItems}">
+																										<c:if test="${not empty goodsReceiptLineItems}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -186,7 +184,7 @@ text-align: left;
 																							<tr>
 																									
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${po.category=='Item'}">
+																									<c:if test="${gr.category=='Item'}">
 																									<th>S.no</th>
 																									<th>Product No.</th>
 																									<th>UOM</th>
@@ -200,7 +198,7 @@ text-align: left;
 																									<th>HSN</th>
 																									</c:if>
 																									
-																									<c:if test="${po.category!='Item'}">
+																									<c:if test="${gr.category!='Item'}">
 																									<th>S.No</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
@@ -217,21 +215,21 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${purchaseOrderlineItems}"
+																											<c:forEach items="${goodsReceiptLineItems}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="purchaseOrderlineItems[${count}].productId"
+																															path="goodsReceiptLineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="purchaseOrderlineItems[${count}].id"/>	
+																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
-																													<c:if test="${po.category=='Item'}">
+																													<c:if test="${gr.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													
 																													<td>${listLineItems.uom}</td>
@@ -260,7 +258,7 @@ text-align: left;
 																														<td>--</td>	
 																													</c:if>
 																													
-																													<c:if test="${po.category!='Item'}">
+																													<c:if test="${gr.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
@@ -322,11 +320,11 @@ text-align: left;
 																				<td>
 																					<div id="shippingAddressTable">
 																					
-																					${po.vendorShippingAddress.addressName}<br>
-																					${po.vendorShippingAddress.street}
-																					${po.vendorShippingAddress.city}
-																					${po.vendorShippingAddress.zipCode}<br>
-																					${po.vendorShippingAddress.country.name}
+																					${gr.vendorShippingAddress.addressName}<br>
+																					${gr.vendorShippingAddress.street}
+																					${gr.vendorShippingAddress.city}
+																					${gr.vendorShippingAddress.zipCode}<br>
+																					${gr.vendorShippingAddress.country.name}
 																					
 																					
 																					</div>
@@ -338,11 +336,11 @@ text-align: left;
 																				<td>
 																					<div id="payToAddressTable">
 																					
-																					${po.vendorPayTypeAddress.addressName}<br>
-																					${po.vendorPayTypeAddress.street}
-																					${po.vendorPayTypeAddress.city}
-																					${po.vendorPayTypeAddress.zipCode}<br>
-																					${po.vendorPayTypeAddress.country.name}
+																					${gr.vendorPayTypeAddress.addressName}<br>
+																					${gr.vendorPayTypeAddress.street}
+																					${gr.vendorPayTypeAddress.city}
+																					${gr.vendorPayTypeAddress.zipCode}<br>
+																					${gr.vendorPayTypeAddress.country.name}
 																					
 																					
 																					</div>
@@ -368,27 +366,27 @@ text-align: left;
 										<div class="col-sm-4">
 											<div class="form-group">
 												<label>Discount(%) :</label>
-												${po.totalDiscount}
+												${gr.totalDiscount}
 											</div>
 
 											<div class="form-group">
 												<label>Total Before Discount : </label>
-												${po.totalBeforeDisAmt}
+												${gr.totalBeforeDisAmt}
 											</div>
 											<div class="form-group">
-												<label>Freight : </label> ${po.freight}
-											</div>
-
-											<div class="form-group">
-												<label>Rounding : </label> ${po.amtRounding}
+												<label>Freight : </label> ${gr.freight}
 											</div>
 
 											<div class="form-group">
-												<label>Tax Amount :</label> ${po.taxAmt}
+												<label>Rounding : </label> ${gr.amtRounding}
 											</div>
 
 											<div class="form-group">
-												<label>Total Payment Due : </label> ${po.totalPayment}
+												<label>Tax Amount :</label> ${gr.taxAmt}
+											</div>
+
+											<div class="form-group">
+												<label>Total Payment Due : </label> ${gr.totalPayment}
 											</div>
 										</div>
 									
@@ -406,29 +404,13 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
 										
 									</div>
-									
-									<c:if test="${quantityStatus==true}">
-									<input type="hidden" name="poId" value="${po.id}">
-																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
-																			<i></i>Convert To GR</form:button>
-																			
-								    </c:if>									
                                     </div>
-                                    
-                                    
-                                    
-																			
-																			
-                                    
-                                    
-                                    
 								</section>
 							</form:form>
 						</div>
@@ -441,38 +423,27 @@ text-align: left;
 
 	</div>
 
-    
-	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+    <c:import url="/WEB-INF/jsp/loadJs.jsp" />
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
+ 
 
+<script type="text/javascript">
 
-	<script type="text/javascript">
-		$('#containerContainingTabs a').on('click', function(e) {
-			e.preventDefault();
-			$(this).tab('show');
-			var theThis = $(this);
-			$('#containerContainingTabs a').removeClass('active');
-			theThis.addClass('active');
-		});
-
-		$('#convertBtn').on(
-				'click',
-				function(event) {
-					event.preventDefault();
-					alertify.confirm('Are you Sure, Want to Convert  PO  to GR',
-							function() {
-								form.submit();
-							}, function() {
-								alertify.error('Cancelled')
-							});
-
-				});
-
-		function goBack() {
-			window.history.back();
-		}
-	</script>
-
+$('#containerContainingTabs a').on('click', function(e) {
+	e.preventDefault();
+	$(this).tab('show');
+	var theThis = $(this);
+	$('#containerContainingTabs a').removeClass('active');
+	theThis.addClass('active');
+	});
+	
+	
+	
+function goBack() {
+    window.history.back();
+}
+</script>
+	
 	
 	
 </body>

@@ -111,7 +111,9 @@
            </c:if>
            </c:forEach>
            
-           
+             <li class="has_sub"><a href="<c:url value ="/po/approvedList"/>">Convert PO To GR</a></li>
+             
+            <li class="has_sub"><a href="<c:url value ="/gr/list"/>">Goods Receipt</a></li>
             
            
         </ul>

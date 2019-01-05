@@ -48,7 +48,9 @@
          </c:if>
          </c:forEach>
            
-           
+            <li><a href="<c:url value ="/po/approvedList"/>"><i class="icon-cube left left"></i><span class="menu_text">Convert PO To GR</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+                
+                 <li><a href="<c:url value ="/gr/list"/>"><i class="icon-cube left left"></i><span class="menu_text">Goods Receipt</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
          
        
         <%-- <ul class="sub_menu">

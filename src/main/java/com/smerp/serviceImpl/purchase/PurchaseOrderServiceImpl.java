@@ -235,6 +235,14 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		
 	}
 
+	
+	@Override
+	public List<PurchaseOrder> poApprovedList() {
+
+		return purchaseOrderRepository.poApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+	}
+	
+	
 	@Override
 	public PurchaseOrder findLastDocumentNumber() {
 		return purchaseOrderRepository.findTopByOrderByIdDesc();

@@ -15,16 +15,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.master.AuditModel;
 
 @Entity
-@Table(name = "tbl_purchase_order")
-public class PurchaseOrder extends AuditModel {
+@Table(name = "tbl_goods_receipt")
+public class GoodsReceipt extends AuditModel {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +35,9 @@ public class PurchaseOrder extends AuditModel {
 	private Vendor vendor;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "po_id", referencedColumnName = "id")
-	private List<PurchaseOrderLineItems> purchaseOrderlineItems;
+	//@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "gr_id", referencedColumnName = "id")
+	private List<GoodsReceiptLineItems> goodsReceiptLineItems;
 
 	@Column(name = "doc_number")
 	private String docNumber;
@@ -77,8 +77,8 @@ public class PurchaseOrder extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "rfq_id")
-	private Integer rfqId;
+	@Column(name = "po_id")
+	private Integer poId;
 
 	@Column(name = "remark")
 	private String remark;
@@ -116,12 +116,14 @@ public class PurchaseOrder extends AuditModel {
 		this.vendor = vendor;
 	}
 
-	public List<PurchaseOrderLineItems> getPurchaseOrderlineItems() {
-		return purchaseOrderlineItems;
+	
+
+	public List<GoodsReceiptLineItems> getGoodsReceiptLineItems() {
+		return goodsReceiptLineItems;
 	}
 
-	public void setPurchaseOrderlineItems(List<PurchaseOrderLineItems> purchaseOrderlineItems) {
-		this.purchaseOrderlineItems = purchaseOrderlineItems;
+	public void setGoodsReceiptLineItems(List<GoodsReceiptLineItems> goodsReceiptLineItems) {
+		this.goodsReceiptLineItems = goodsReceiptLineItems;
 	}
 
 	public String getDocNumber() {
@@ -220,13 +222,7 @@ public class PurchaseOrder extends AuditModel {
 		this.isActive = isActive;
 	}
 
-	public Integer getRfqId() {
-		return rfqId;
-	}
-
-	public void setRfqId(Integer rfqId) {
-		this.rfqId = rfqId;
-	}
+	
 
 	public String getRemark() {
 		return remark;
@@ -290,22 +286,35 @@ public class PurchaseOrder extends AuditModel {
 		this.totalPayment = totalPayment;
 	}
 
+	public Integer getPoId() {
+		return poId;
+	}
+
+	public void setPoId(Integer poId) {
+		this.poId = poId;
+	}
+
 	@Override
 	public String toString() {
-		return "PurchaseOrder [id=" + id + ", vendor=" + vendor + ", purchaseOrderlineItems=" + purchaseOrderlineItems
+		return "GoodsReceipt [id=" + id + ", vendor=" + vendor + ", goodsReceiptLineItems=" + goodsReceiptLineItems
 				+ ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber
 				+ ", postingDate=" + postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
 				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
 				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ ", rfqId=" + rfqId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
+				+ ", poId=" + poId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
 				+ totalPayment + ", freight=" + freight + "]";
 	}
 
 	
 
 	
+
+	
+
+	
 	
 	
 
 	
+
 }

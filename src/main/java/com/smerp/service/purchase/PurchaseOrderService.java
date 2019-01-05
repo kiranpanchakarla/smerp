@@ -3,6 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.RequestForQuotation;
 
 public interface PurchaseOrderService {
 
@@ -23,5 +24,8 @@ public interface PurchaseOrderService {
 	List<PurchaseOrder> findByIsActive();
 	
 	PurchaseOrder getListAmount(PurchaseOrder purchaseOrder);
+	
+
+	List<PurchaseOrder> poApprovedList();
 
 }

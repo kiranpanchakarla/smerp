@@ -13,6 +13,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,28 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 
 	private static final Logger logger = LogManager.getLogger(HTMLSummaryToPDF.class);
 	
+	 
+	private static String modulePR;
+
+	@Value(value = "${module.pr}")
+	public void setPR(String prop) {
+		this.modulePR = prop;
+	}
+	
+	private static String moduleRFQ;
+
+	@Value(value = "${module.rfq}")
+	public void setRFQ(String prop) {
+		this.moduleRFQ = prop;
+	}
+	
+	private static String modulePO;
+
+	@Value(value = "${module.rfq}")
+	public void setPO(String prop) {
+		this.modulePO = prop;
+	}
+	
 	@Autowired
 	HTMLToPDFGenerator hTMLToPDFGenerator;
 	
@@ -55,7 +78,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
 	
-     
+ /*    
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());
@@ -85,7 +108,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		os.flush();
 		os.close();
 		return file.getAbsolutePath();
-	}
+	}*/
 
 	public String OfflineHtmlStringToPdfForPurchaseReq(String pdfFilePath,PurchaseRequest purchaseRequest) throws TemplateException, IOException, DocumentException {
 		File sourceFolder = null;
@@ -103,6 +126,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("pr", purchaseRequest);
 		input.put("user", getUser());
+		input.put("moduleName", modulePR);
 		logger.info("plantMap-->" + purchaseRequestController.plantMap());
 		input.put("plantMap", purchaseRequestController.plantMap());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -131,9 +155,10 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("rfq", forQuotation);
-		System.out.println("plantMap-->" + rfqController.plantMap());
+		logger.info("plantMap-->" + rfqController.plantMap());
 		input.put("plantMap", rfqController.plantMap());
 		input.put("user", getUser());
+		input.put("moduleName", moduleRFQ);
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		getTemplate().process(input, out);
 		ITextRenderer renderer = new ITextRenderer();
@@ -163,7 +188,8 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("po", purchaseOrder);
-		System.out.println("plantMap-->" + purchaseOrderController.plantMap());
+		input.put("moduleName", modulePO);
+		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());

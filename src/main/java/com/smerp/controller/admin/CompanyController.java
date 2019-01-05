@@ -150,7 +150,7 @@ public class CompanyController {
 		}
 	}
 	
-	@RequestMapping("/downloadPdf")
+	/*@RequestMapping("/downloadPdf")
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId) throws Exception {
 
@@ -171,7 +171,7 @@ public class CompanyController {
 		}
 		fileInputStream.close();
 		out.close();
-	}
+	}*/
 	
 	
 

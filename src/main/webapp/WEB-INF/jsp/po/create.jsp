@@ -363,7 +363,7 @@
 																													
 																													<td><div class="form-group">
 																															<form:input type="text"
-																															path="purchaseOrderlineItems[${count}].unitPrice"
+																															path="purchaseOrderlineItems[${count}].unitPrice" required="true"
 																															value="${listLineItems.unitPrice}"  autocomplete="off"
 																															class="form-control unitPrice" ></form:input></div></td>
 																													
@@ -409,7 +409,7 @@
 																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"  autocomplete="off"
-																															value="${listLineItems.unitPrice}"
+																															value="${listLineItems.unitPrice}" required="true"
 																															class="form-control unitPrice" ></form:input></div></td>
 																													
 																													
@@ -475,7 +475,7 @@
 																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}"
+																															value="${listLineItems.unitPrice}" required ="true"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
@@ -539,7 +539,7 @@
 																													
 																													<td><div class="form-group">
 																															<form:input type="text"
-																															path="purchaseOrderlineItems[${count}].unitPrice"
+																															path="purchaseOrderlineItems[${count}].unitPrice" required="true"
 																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													

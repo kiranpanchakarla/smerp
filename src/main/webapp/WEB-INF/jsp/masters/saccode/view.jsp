@@ -44,8 +44,6 @@
 												<h2 class="content-header-title">SAC Code</h2>
 											</div>
 											<div class="col-md-5">
-												<a class="btn btn-primary"
-													href="<c:url value="/saccode/getInfo?saccodeId=${saccodeObj.id}"/>">Edit</a>
 											</div>
 											<div
 												class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">

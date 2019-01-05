@@ -72,7 +72,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>Sno</th>
+																<th>S.no</th>
 																<th>Vendor Name</th>
 																<th>Email Id</th>
 																<th>Document Number</th>

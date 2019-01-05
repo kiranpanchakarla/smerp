@@ -43,7 +43,6 @@
 										<h2 class="content-header-title">Languages</h2>
 										</div>
 										<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/languages/getInfo?languagesId=${languagesObj.id}"/>">Edit</a>
 									</div>
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">

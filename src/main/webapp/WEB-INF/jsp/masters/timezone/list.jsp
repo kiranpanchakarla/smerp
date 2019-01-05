@@ -96,7 +96,6 @@
 																	<td>${timezone.name}</td>
 																	<td>${timezone.diffFromUtc}</td>
 																	<td>${timezone.country.name}</td>
-																	<td>    </td>
 																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">

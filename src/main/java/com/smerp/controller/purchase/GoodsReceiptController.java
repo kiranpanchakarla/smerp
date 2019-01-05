@@ -33,7 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
@@ -41,17 +41,16 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
-import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
 
 @Controller
-@RequestMapping("/po")
-public class PurchaseOrderController {
+@RequestMapping("/gr")
+public class GoodsReceiptController {
 
-	private static final Logger logger = LogManager.getLogger(PurchaseOrderController.class);
+	private static final Logger logger = LogManager.getLogger(GoodsReceiptController.class);
 
 	private static String pdfUploadedPath;
 	
@@ -65,16 +64,13 @@ public class PurchaseOrderController {
 	private VendorService vendorService;
 
 	@Autowired
-	PurchaseOrderService purchaseOrderService;
+	GoodsReceiptService goodsReceiptService;
 
 	@Autowired
 	SacService sacService;
 	
 	@Autowired
 	TaxCodeRepository taxCodeRepository;
-	
-	@Autowired
-	GoodsReceiptService goodsReceiptService;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
@@ -87,9 +83,9 @@ public class PurchaseOrderController {
 	}
 
 	@GetMapping("/create")
-	public String create(Model model, PurchaseOrder po) throws JsonProcessingException {
+	public String create(Model model, GoodsReceipt gr) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("po-->" + po);
+		logger.info("gr-->" + gr);
 		logger.info("taxCode()-->" + taxCode());
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
@@ -97,22 +93,22 @@ public class PurchaseOrderController {
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
-		PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
-		if (podetails != null && podetails.getDocNumber() != null) {
-			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+		GoodsReceipt grDetails = goodsReceiptService.findLastDocumentNumber();
+		if (grDetails != null && grDetails.getDocNumber() != null) {
+			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration(grDetails.getDocNumber()));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
+	    gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0"));
 		}
-		logger.info("podetails-->" + podetails);
+		logger.info("grDetails-->" + grDetails);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
-		model.addAttribute("po", po);
-		return "po/create";
+		model.addAttribute("gr", gr);
+		return "goodsReceipt/create";
 	}
 
 	
@@ -120,10 +116,12 @@ public class PurchaseOrderController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
-		po = purchaseOrderService.getListAmount(po);  // set Amt Calculation  
-		logger.info("po-->" + po);
-		ObjectMapper mapper = poloadData(model, po);
+		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
+		logger.info("11111 gr-->");
+		logger.info("New gr-->" + gr);
+		gr = goodsReceiptService.getListAmount(gr);  // set Amt Calculation  
+		logger.info("gr-->" + gr);
+		ObjectMapper mapper = poloadData(model, gr);
 		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -132,17 +130,17 @@ public class PurchaseOrderController {
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-		model.addAttribute("po", po);
-		return "po/create";
+		model.addAttribute("gr", gr);
+		return "goodsReceipt/create";
 	}
 
-	private ObjectMapper poloadData(Model model, PurchaseOrder po) {
+	private ObjectMapper poloadData(Model model, GoodsReceipt gr) {
 		ObjectMapper mapper = new ObjectMapper();
 		VendorAddress vendorPayTypeAddress=new VendorAddress();
 		VendorAddress vendorShippingAddress =new VendorAddress();
-		if(po.getVendorPayTypeAddress()!=null && po.getVendorPayTypeAddress()!=null) {
-		 vendorPayTypeAddress = po.getVendorPayTypeAddress();
-		 vendorShippingAddress = po.getVendorShippingAddress();
+		if(gr.getVendorPayTypeAddress()!=null && gr.getVendorPayTypeAddress()!=null) {
+		 vendorPayTypeAddress = gr.getVendorPayTypeAddress();
+		 vendorShippingAddress = gr.getVendorShippingAddress();
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
@@ -150,75 +148,63 @@ public class PurchaseOrderController {
 		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
 	
 		
-		model.addAttribute("purchaseOrderlineItems", po.getPurchaseOrderlineItems());
+		model.addAttribute("goodsReceiptLineItems", gr.getGoodsReceiptLineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
-		po = purchaseOrderService.getListAmount(po);
-		logger.info("po-->" + po);
-		poloadData(model, po);
+		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
+		gr = goodsReceiptService.getListAmount(gr);
+		logger.info("gr-->" + gr);
+		poloadData(model, gr);
 		// model.addAttribute("categoryMap", categoryMap());
-		
-		model.addAttribute("quantityStatus", goodsReceiptService.checkQuantityPoGr(po));
-		
-		model.addAttribute("po", po);
+		model.addAttribute("gr", gr);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
-		return "po/view";
+		return "goodsReceipt/view";
 	}
 
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
 		logger.info("Delete msg");
-		purchaseOrderService.delete(id);
+		goodsReceiptService.delete(id);
 		return "redirect:list";
 	}
 
 	
 	@PostMapping("/save")
-	public String name(PurchaseOrder requestForQuotation) {
+	public String name(GoodsReceipt requestForQuotation) {
 		logger.info("Inside save method" + requestForQuotation);
-		logger.info("po details" + purchaseOrderService.save(requestForQuotation));
+		logger.info("gr details" + goodsReceiptService.save(requestForQuotation));
 		return "redirect:list";
 	}
 	
-	@PostMapping("/saveRFQtoPO")
+	@PostMapping("/savePOtoGR")
 	public String savePRtoRFQ(HttpServletRequest request) {
-		String rfqId = request.getParameter("rfqId");
-		logger.info("rfqId" + rfqId);
-		logger.info("rfqId view-->" + rfqId);
-		PurchaseOrder po = purchaseOrderService.savePO(rfqId);
-	   return "redirect:edit?id="+po.getId();
+		String poId = request.getParameter("poId");
+		logger.info("poId" + poId);
+		logger.info("poId view-->" + poId);
+		GoodsReceipt gr = goodsReceiptService.saveGR(poId);
+		return "redirect:edit?id="+gr.getId();
 	}
 
-	
-	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
-		List<PurchaseOrder> purchaseOrderList = purchaseOrderService.poApprovedList();
-		logger.info("purchaseOrder list-->" + purchaseOrderService);
-		model.addAttribute("purchaseOrderList", purchaseOrderList);
-		return "/po/approvedList";
-	}
-	
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
 		
-		logger.info("po details" + purchaseOrderService.saveCancelStage(id));
+		logger.info("gr details" + goodsReceiptService.saveCancelStage(id));
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<PurchaseOrder> list = purchaseOrderService.findByIsActive();
+		List<GoodsReceipt> list = goodsReceiptService.findByIsActive();
 		logger.info("list"+list);
 		model.addAttribute("list", list);
-		return "po/list";
+		return "goodsReceipt/list";
 	}
 
 	public Map<Integer, Object> plantMap() {
@@ -238,14 +224,14 @@ public class PurchaseOrderController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
-		logger.info("RequestForQuotation view-->" + po);
+		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
+		logger.info("RequestForQuotation view-->" + gr);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-				.OfflineHtmlStringToPdfForPO(pdfUploadedPath,po);
+		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);*/
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

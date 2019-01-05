@@ -11,9 +11,9 @@ public class UnitPriceListItems {
 		return totalValue;
 	}
 
-	public static Integer getTotalPaymentAmt(Double totalAmt, Integer discount, Integer freight) {
-		Integer tax_amt = discount / 100;
-		Integer totalValue = (int) (totalAmt - (totalAmt * tax_amt)) + freight;
+	public static Double getTotalPaymentAmt(Double totalAmt, Double discount, Integer freight) {
+		Double tax_amt = discount / 100;
+		Double totalValue =  (totalAmt - (totalAmt * tax_amt)) + freight;
 		return totalValue;
 	}
 	

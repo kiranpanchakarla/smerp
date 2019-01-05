@@ -12,6 +12,10 @@ public class WebConstants {
 	
 	public final static String Email_Purchase_Request = "purchaseRequestEmail.ftl";
 	
+	public final static String Email_Goods_Receipt = "goodsReceiptEmail.ftl";
+	
+	public final static String offline_Goods_Receipt = "goodsReceiptPdfFile.ftl";
+	
 	//public final static String Email_Request_For_Quotation = "requestForQuotationEmail.ftl";
 	
 	//public final static String Email_Purchase_Order = "purchaseOrderPdfFile.ftl";

@@ -230,8 +230,8 @@ public class GoodsReceiptController {
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-	/*	path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-				.OfflineHtmlStringToPdfForPO(pdfUploadedPath,gr);*/
+		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);*/
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

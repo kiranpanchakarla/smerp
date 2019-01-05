@@ -364,7 +364,11 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input></div></td>
+																															class="form-control requiredQuantity validateQuantity" autocomplete="off"  required="true"></form:input></div>
+																															
+																														<input type="text" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
+																															
+																															</td>
 																															
 																															
 																															
@@ -424,7 +428,11 @@
 																															<form:input type="text"
 																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
 																															value="${listLineItems.requiredQuantity}"  autocomplete="off"
-																															class="form-control requiredQuantity" ></form:input></div></td>
+																															class="form-control requiredQuantity validateQuantity" ></form:input></div>
+																												
+																												<input type="text" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >		
+																															
+																															</td>
 																													
 																													<!--  -->
 																													 <td><div class="form-group">
@@ -1939,6 +1947,25 @@ $('#freight').keyup(function() {
 			      return false;
 			   }
 		});
+	
+	$(document).on("keyup", ".validateQuantity", function(e) {	
+		if (this.value.length == 0 && e.which == 48 ){
+			      return false;
+			   }
+		
+		var itemParentRow = $(this).parents(".multTot");
+		 
+		var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+		
+		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
+		
+		if(temp_requiredQuantity<requiredQuantity){
+			alertify.alert("Goods Receipt",""+temp_requiredQuantity + " Quantity you have!");	
+			 return false;
+		}
+		
+		});
+	
 	
 	</script>
 

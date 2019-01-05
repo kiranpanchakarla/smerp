@@ -130,7 +130,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			   	goodsReceipt =getListAmount(goodsReceipt);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReceiptEmail.ftl");  //Sending Email
-    		    // emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPOEmail(goodsReceipt);
+    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReceiptEmail(goodsReceipt);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
@@ -270,12 +270,23 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public GoodsReceipt getListAmount(GoodsReceipt goodsReceipt) {
-		
+		logger.info("getListAmount-->");
 		List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+		
+		PurchaseOrder po = null;
+		List<PurchaseOrderLineItems> poItms =null;
+		 List<GoodsReceipt> listGoodsReceipt =null;
+		if(goodsReceipt.getPoId()!=null) {
+		 po = purchaseOrderService.findById(goodsReceipt.getPoId());
+		 poItms = po.getPurchaseOrderlineItems();
+		listGoodsReceipt = goodsReceiptRepository
+					.findByListPoId(po.getId());  // check Multiple  Quantity
+		}
 		
 		
 		Double addAmt=0.0;
 		Double addTaxAmt=0.0;
+		Integer grQunatity=0;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				GoodsReceiptLineItems grlist = listItems.get(i);
@@ -284,6 +295,18 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
 				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
+				
+				if(goodsReceipt.getPoId()!=null) {
+				if(poItms.get(i).getProdouctNumber()!=null ) {
+					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
+				}else if(poItms.get(i).getSacCode()!=null ) {
+					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getSacCode());
+				} }
+				
+				logger.info("poItms.get(i).getRequiredQuantity()-->" + poItms.get(i).getRequiredQuantity());
+				logger.info("grQunatity-->" + grQunatity);
+				grlist.setTempRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
+				
 				}else {
 				grlist.setTaxTotal("");
 				grlist.setTotal("");	
@@ -343,18 +366,21 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	private Integer getListGoodsProductCount(List<GoodsReceipt> listGoodsReceipt, String category) {
 		Integer qunatity = 0;
+		logger.info("category===>" +category);
+	
 		for (int i = 0; i < listGoodsReceipt.size(); i++) {
 			GoodsReceipt goodsReceiptObj = listGoodsReceipt.get(i);
 			List<GoodsReceiptLineItems> goodsReceiptLineItems = goodsReceiptObj.getGoodsReceiptLineItems();
 			for (int j = 0; j < goodsReceiptLineItems.size(); j++) {
 				GoodsReceiptLineItems grlist = goodsReceiptLineItems.get(j);
+				logger.info("grlist===>" +grlist);
 				if (grlist.getRequiredQuantity() != null) {
 					if (category.equals(grlist.getProdouctNumber()) || category.equals(grlist.getSacCode()))
 						qunatity += grlist.getRequiredQuantity();
 				}
 			}
 		}
-
+		
 		return qunatity;
 	}
 	

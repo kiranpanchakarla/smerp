@@ -1,0 +1,172 @@
+.headColor {
+	background-color: #bfbfbf !important;
+}
+
+.blockCell {
+	background-color: gray;
+}
+
+.small {
+	font-size: 7pt;
+}
+
+.number {
+	text-align: right;
+}
+
+body {
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+		sans-serif !important;
+}
+header{
+   position: fixed;
+   left: 0;
+   top: 0; width: 100%; 
+   color: black; 
+   text-align: center;
+}
+table {
+	table-layout: auto;
+	border-collapse: collapse;
+	width: 100%;
+	page-break-inside: avoid;
+	margin-bottom: 6px;
+}
+
+td {
+	padding: 3px;
+	font-size: 8pt;
+	word-wrap: break-word;
+	height: 100%;
+}
+
+th {
+	padding: 3px;
+	font-size: 7pt;
+	text-align: center;
+	background-color: #bfbfbf !important;
+}
+
+.label {
+	display: block;
+	margin-left: 20px;
+	margin-top: -12px;
+	font-size: 7pt;
+}
+
+.caption {
+	text-align: left;
+	padding: 3px 0px;
+	font-size: 9pt;
+	font-weight: bold;
+}
+.highLight_Fields{
+font-size:12px;
+font-weight: bold;
+}
+
+ @page {
+ 	margin: 100px 50px 50px;
+ 	padding-top:60px !important;
+ 	padding-bottom:60px !important;
+ }
+
+.small {font-size: 8pt;}
+.head{font-size: 9pt;}
+.line{border-bottom: 1px solid black}
+
+/**
+* Specific Elements
+*/
+
+body {
+   background-repeat: repeat-y;
+}
+
+#background{
+   position:absolute;
+   z-index:0;
+   background:white;
+   display:block;
+   min-height:80%;
+   color:black;
+   width:800px;
+    margin:0 auto;
+    padding-top: 100px;
+}
+
+
+
+#content{
+   position: relative;
+   z-index:1;
+}
+
+#watermark {
+    position: fixed;
+    top: 25%;
+    left: 105px;
+    transform: rotate(45deg) !important;
+    -ms-transform:rotate(45deg); /* IE 9 */
+    -moz-transform:rotate(45deg); /* Firefox */
+    -webkit-transform:rotate(45deg); /* Safari and Chrome */
+    -o-transform:rotate(45deg);
+    transform-origin: 50% 50%;
+    opacity: .3;
+    font-size: 40px;
+    color:lightgrey;
+    width: 500px;
+    text-align: center;
+}
+
+#page-header {
+  display: inline;
+}
+#page-footer{
+  text-align: right;
+}
+.modal-title{
+color: #1E90FF;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    background: #51a8ff;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 20px;
+   border: none;
+   color: white;
+}
+
+
+
+/**
+* Flying Saucer custom stuff
+*
+* see https://xhtmlrenderer.dev.java.net/servlets/ReadMsg?listName=dev&msgNo=3707
+*/
+
+@page {
+ size: letter; /*letter landscape*/
+ background: white;
+
+ @top-center {
+   content: element(current);
+ }
+
+ @bottom-right {
+   content: element(footer);
+ }
+
+}
+
+.page-start { -fs-page-sequence: start; page-break-before: always;}
+/* table {page-break-inside: avoid;} */
+/* forces a page break */
+.break {page-break-after:always
+}
+
+span.page:before { content: counter(page); }
+span.pagecount:before { content: counter(pages); }

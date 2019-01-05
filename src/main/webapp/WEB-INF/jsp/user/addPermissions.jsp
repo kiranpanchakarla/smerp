@@ -73,48 +73,8 @@
 																	<input type="text" value="${id}" name="userId"/>
 																</div>
 													</div>  --%>
-			 <div class="table-responsive">								
-				<table id="example" class="table table-hover mb-0">
-                <tr>
-                <td><strong >Select All</strong></td>
-                <td><strong >Module</strong></td>
-                <td><strong >Permissions</strong></td>
-                </tr>
-                <c:set var="count" value="0" scope="page" />
-				<c:forEach items="${ump}" var="map"  varStatus="loop">
-                <tr>
-                <td style="text-align:center;"> <input type="checkbox" class="module${count}"  onclick="setAllPermission(${count})"   /></td>
-                <td><input type="hidden" name="userModulePermission[${count}].module" readonly="readonly"   value="${map.key.id}" />${map.key.moduleName}</td>
-                <td>
-					<c:forEach items="${map.value}" var="permissions">
-					<c:choose>
-                    <c:when test="${permissions.flag eq 'Checked'}">
-					<div class="float-left">
-					<input type="checkbox" checked="checked"
-					class="permissions${count}" onclick="changePermission(${count})"
-					name="userModulePermission[${count}].permissions"
-					value="${permissions.id}" />&nbsp;${permissions.permissionName}&nbsp;&nbsp;&nbsp;&nbsp;</div>
-					</c:when>
-					<c:otherwise>
-                    <div class="float-left">
-					<input type="checkbox" class="permissions${count}"
-					name="userModulePermission[${count}].permissions" onclick="changePermission(${count})"
-					value="${permissions.id}" />
-					${permissions.permissionName}&nbsp;&nbsp;
-					</div>
-					</c:otherwise>
-					</c:choose>
-                    </c:forEach>
-					</td>
-					<c:set var="count" value="${count + 1}" scope="page" />
-                </tr>
-                <input type="hidden" name="userModulePermission[${count}].user.userId" readonly="readonly"   value="${id}" />
-					</c:forEach>
-					<input type="hidden" name="userId" value="${user.userId}">
-                </table>
-                </div>
-													
-													<%--  <div class="row">
+			 
+													   <div class="row">
 													
 													<!-- <div class="row bold-text" align="center">
 											              Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
@@ -163,7 +123,7 @@
 																	  <input type="hidden" name="userId" value="${user.userId}">
 																	  
 																</div>
-													</div> --%> 
+													</div>  
 													
 													<br><br>
 													<a href="#" onclick="goBack()"

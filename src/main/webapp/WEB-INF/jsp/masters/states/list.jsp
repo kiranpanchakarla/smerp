@@ -96,7 +96,6 @@
 																	<td>${states.code}</td>
 																	<td>${states.name}</td>
 																	<td>${states.country.name}</td>
-																	<td>  </td>
 																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">

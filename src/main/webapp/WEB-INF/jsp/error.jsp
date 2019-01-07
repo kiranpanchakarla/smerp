@@ -15,7 +15,7 @@
 
 
     <div style="text-align: center; margin-top: 50px;">
-        <h1>Error Page</h1>
+        <h1>Error</h1>
     </div>
 
     <div class="col-md-12">

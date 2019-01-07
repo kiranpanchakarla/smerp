@@ -34,7 +34,7 @@
                     
                     <h3>${companyListCount}</h3>
                     <span>Company</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-cube pink font-large-2 float-xs-right"></i> </div>
+                  <div class="media-right media-middle"> <i class="icon-building-o pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
               </a>
@@ -52,7 +52,7 @@
                   <div class="media-body text-xs-left">
                     <h3>${productsCount}</h3>
                     <span>Products</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-egg pink font-large-2 float-xs-right"></i> </div>
+                  <div class="media-right media-middle"> <i class="icon-shop pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@
       <div class="row match-height">
         <div class="col-sm-12">
          
-        <div class="col-sm-3">
+       <%--  <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box1">
               <div class="media">
@@ -122,10 +122,10 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --%>
         
         
-         <div class="col-sm-3">
+         <div class="col-sm-4">
         <div class="card">
             <div class="card-body product-box2">
               <div class="media">
@@ -135,7 +135,7 @@
 										 <c:if test="${ump.key eq 'Product'}">
 										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
-				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-egg font-large-2 white"></i> </div>
+				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-product-hunt font-large-2 white"></i> </div>
 	        									  <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/product/create"/>">New Product</a></h3>
 	   										 </c:if>
 	       								</c:if>     
@@ -149,7 +149,7 @@
         
         
         
-        <div class="col-sm-3">
+        <div class="col-sm-4">
         <div class="card">
             <div class="card-body product-box3">
               <div class="media">
@@ -171,7 +171,7 @@
         </div>
         
         
-         <div class="col-sm-3">
+         <div class="col-sm-4">
         <div class="card">
             <div class="card-body product-box4">
               <div class="media">

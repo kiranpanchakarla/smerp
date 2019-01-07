@@ -65,7 +65,7 @@
 																<div class="row">
 																<div class="col-sm-4 form-group">
 																		<label>Company</label>
-																		<form:select id="company" path="company.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
+																		<form:select id="company" path="company.id"   cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
 																			<c:forEach items="${companyList}" var="company">
 																				<form:option value="${company.id}">${company.name}</form:option>
@@ -78,7 +78,7 @@
 																	<div>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Department Name' path="name"
-																			 required="true"
+																			 required="true" onchange="isValidName('name','/department/isValidDepartmentName','1_errorContainer','Department Name Already Exists in this Company')"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
@@ -166,6 +166,33 @@
 		</footer>
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+		<script type="text/javascript">
+		 function isValidDepartmentName(nameId,url,displayId,msg){
+		      
+		      
+		      var parts = url.split('/');
+		     /*  alert(parts); */
+		      var answer = parts[parts.length - 1];
+		    /*   alert(answer); */
+		      
+		      var dataString  ="name="+$('#'+nameId).val()+"&companyId="+ $('#company').val();
+		      $.ajax({
+		             type:"GET",
+		            /*  url: url, */
+		              url: answer,
+		             data : dataString,
+		             success: function(result){
+		                 if(result==true){
+		                     alertify.success(msg);
+		                     $('#'+nameId).val('');
+		                     $('#'+displayId).html(msg);
+		                 }else {
+		                     $('#'+displayId).html('');
+		                 }
+		            }});
+		      
+		 }
+		</script>
 </body>
 
 </html>

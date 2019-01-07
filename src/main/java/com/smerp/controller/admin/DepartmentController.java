@@ -1,5 +1,6 @@
 package com.smerp.controller.admin;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.smerp.model.admin.Department;
-import com.smerp.model.inventory.Product;
 import com.smerp.service.admin.CompanyServices;
 import com.smerp.service.admin.DepartmentService;
 
@@ -71,5 +72,29 @@ public class DepartmentController {
 			logger.info("Inside DepartmentController view Method");
 			model.addAttribute("departmentObj", departmentService.getInfo(Integer.parseInt(departmentId)));
 			return "department/view";
+		}
+		
+		@GetMapping(value = "/isValidDepartmentName")
+		@ResponseBody
+		public boolean isValidDepartmentName(String name,String companyId) {
+			logger.info("Department Name" + name);
+			/*logger.info("ID" + companyId);
+			Integer comId = Integer.parseInt(companyId);
+			boolean valid = departmentService.isValid(name,comId);
+			
+			
+			return valid;*/
+			 
+			 Department department = departmentService.findByName(name);
+			/* List<Department> departmentList = departmentService.findAll();*/
+			if (department != null) {
+				logger.info("Department Name  Already Exits!");
+				return true;
+			} else {
+				return false;
+			} 
+			 
+			
+			 
 		}
 }

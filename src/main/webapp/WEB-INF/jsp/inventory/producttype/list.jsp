@@ -67,7 +67,7 @@
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-														<li class="breadcrumb-item active">Product Type</li>
+														<li class="breadcrumb-item active">Product Group</li>
 													</ol>
 												</div>
 											</div>

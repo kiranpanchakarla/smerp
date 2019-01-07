@@ -78,7 +78,7 @@
       
       <li>
       
-      <a href="#"><i class="icon-egg left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+      <a href="#"><i class="icon-shop left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
         <c:forEach items="${sessionScope.umpmap}" var="ump">
 			     <c:if test="${ump.key eq 'Purchase Request'}">

@@ -136,13 +136,13 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
     		}
 		}
 		
-		if(goodsReceipt.getPoId()!=null) {
+		/*if(goodsReceipt.getPoId()!=null) {
 		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
 		if(!checkQuantityPoGr(po)) {
 			po.setStatus(EnumStatusUpdate.COMPLETED.getStatus());
 			purchaseOrderRepository.save(po);
 			 logger.info("purchaseOrder    COMPLETED -->");
-		} }
+		} }*/
 		return goodsReceiptRepository.save(goodsReceipt); 
 		 
 	}

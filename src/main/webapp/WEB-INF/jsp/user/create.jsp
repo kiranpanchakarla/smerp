@@ -14,9 +14,8 @@
 
 
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
-<!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>     -->
- <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
-
+<!-- <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
+  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
 	<c:import url="/WEB-INF/jsp/header.jsp" />
@@ -31,7 +30,7 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 							<c:url value="/user/save" var="createUrl" />
-							<form:form  method="POST" action="${createUrl}"  enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form">
+							<form:form  method="POST" action="${createUrl}" id="updateForm" enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 										<div class="col-md-12">
@@ -65,9 +64,9 @@
 																	</div>
 																</div>
 																<div class="row">
-																	<div class="col-sm-6 form-group">
-																		<label>User Name</label>
-																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidName('username','/user/isValidUserName','1_userName','User Name Already Exists')" placeholder='User Name' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	
+																	<div class="col-sm-6 form-group-user">
+																		<label>Username</label>
+																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidUserName('username','/user/isValidUserName','1_userName','Username already exist. Please choose a different one.')" placeholder='Username' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-2 form-group">
@@ -204,9 +203,9 @@ $(document).ready(function() {
 		designationLoadForUpdate();
 	}
 	
-	if (typeof $("#userId").val() != 'undefined'){
+	/* if (typeof $("#userId").val() != 'undefined'){
 		$("#username").prop("readonly",true);
-	}
+	} */
 	
 	
 	
@@ -365,6 +364,38 @@ $(document).ready(function() {
 	                     				
 	                     				return true;
 	                     			}
+	                     			
+	                     			function isValidUserName(nameId,url,displayId,msg){
+	                     			      
+	                     			      
+	                     			      var parts = url.split('/');
+	                     			     /*  alert(parts); */
+	                     			      var answer = parts[parts.length - 1];
+	                     			    /*   alert(answer); */
+	                     			      
+	                     			      var dataString  ="name="+$('#'+nameId).val();
+	                     			      var message = "'" +$('#'+nameId).val() + "' " + msg;
+	                     			      
+	                     			      $.ajax({
+	                     			             type:"GET",
+	                     			            /*  url: url, */
+	                     			              url: answer,
+	                     			             data : dataString,
+	                     			             success: function(result){
+	                     			                 if(result==true){
+	                     			                     alertify.alert("Username Error",message);
+	                     			                     $('#'+displayId).html(msg);
+	                     			                     $('.form-group-user').addClass(' has-error has-danger');
+	                     			               	    /*  $("#updateForm").validate(); */
+	                     			                 }else {
+	                     			                     $('#'+displayId).html('');
+	                     			                    $('.form-group-user').removeClass(' has-error has-danger');
+	                     			                 }
+	                     			            }});
+	                     			 
+	                     			      
+	                     			 }
+
 	                     			
 </script>
 </html>

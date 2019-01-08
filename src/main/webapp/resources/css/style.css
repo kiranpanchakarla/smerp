@@ -743,6 +743,11 @@ form .form-group{
 	margin-bottom: 1rem;
 	overflow: hidden;
 }
+
+form .form-group-user{
+	margin-bottom: 1rem;
+	overflow: hidden;
+}
 .text-xs-center{
 	font-size: 13px;
 }
@@ -829,6 +834,12 @@ form label {
     font-weight: 500;
 }
 .create-block .form-group label {
+    float: left;
+    display: inline-block;
+    width: 28%;
+}
+
+.create-block .form-group-user label {
     float: left;
     display: inline-block;
     width: 28%;

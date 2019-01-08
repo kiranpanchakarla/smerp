@@ -18,5 +18,9 @@ public interface DesignationService {
 	Desigination getInfo(int id);
 
 	void delete(int id);
+	
+	boolean isValid(String name,Integer deptId);
+	
+	List<Desigination> findByName(String name);
 
 }

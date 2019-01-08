@@ -16,5 +16,9 @@ public interface DepartmentService {
 	Department getInfo(int id);
 
 	void delete(int id);
+	
+	Department findByName(String name);
+	
+	/*boolean isValid(String name,Integer companyid);*/
 
 }

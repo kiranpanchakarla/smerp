@@ -63,18 +63,7 @@
 														<form class="form">
 															<div class="form-body">
 																<div class="row">
-																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Designation</label>
-																	<div>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Designation Name' path="desigination"
-																			value="${designation.desigination}" required="true"
-																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
-																			oninput="setCustomValidity('')" />
-																		 
-																		 
-																	</div>
-																</div>
+																
 																<div class="col-sm-4 form-group">
 																		<label>Company</label>
 																		<form:select id="company" path="company.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
@@ -96,6 +85,19 @@
 																		</form:select>
 																		 
 																	</div> 
+																	
+																	<div class="col-sm-4 form-group">
+																	<label for="timesheetinput2">Designation</label>
+																	<div>
+																		<form:input type="text" cssClass="form-control" 
+																			placeholder='Designation Name' path="desigination"
+																			value="${designation.desigination}" required="true" onchange="isValidDesiginationName('desigination','/desigination/isValidDesiginationName','1_errorContainer','Desigination Name Already Exists in this Company')"
+																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
+																			oninput="setCustomValidity('')" />
+																		 
+																		 
+																	</div>
+																</div>
 																 
 																
 																	</div>
@@ -177,6 +179,35 @@
 		</footer>
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+		
+		<script type="text/javascript">
+		 function isValidDesiginationName(nameId,url,displayId,msg){
+		      
+		      
+		      var parts = url.split('/');
+		     /*  alert(parts); */
+		      var answer = parts[parts.length - 1];
+		    /*   alert(answer); */
+		      
+		      var dataString  ="name="+$('#'+nameId).val()+"&departmentId="+ $('#department').val();
+		      /* alert(dataString); */
+		      $.ajax({
+		             type:"GET",
+		            /*  url: url, */
+		              url: answer,
+		             data : dataString,
+		             success: function(result){
+		                 if(result==true){
+		                     alertify.success(msg);
+		                     $('#'+nameId).val('');
+		                     $('#'+displayId).html(msg);
+		                 }else {
+		                     $('#'+displayId).html('');
+		                 }
+		            }});
+		      
+		 }
+		</script>
 </body>
 
 </html>

@@ -130,7 +130,7 @@
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
-																			</div>
+																</div>
 
 															</div>
 
@@ -361,10 +361,24 @@
 																															value="${listLineItems.uom}"
 																															class="form-control uom" readonly="true"></form:input></div></td>
 																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
+																													<td>
+																													<c:choose>
+																													 <c:when test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
+																												           <div class="form-group"><form:input type="text"
+																															path="goodsReceiptLineItems[${count}].requiredQuantity"  
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
+																															 class="form-control requiredQuantity validateQuantity" autocomplete="off" readonly="true"  ></form:input></div>
+																												
+																												      </c:when>
+																												      <c:otherwise>
+																												       <div class="form-group"><form:input type="text"
+																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
+																															 onkeypress="return isNumericKey(event)"
 																															class="form-control requiredQuantity validateQuantity" autocomplete="off"  required="true"></form:input></div>
+																												           
+																												       </c:otherwise>
+																													 </c:choose>
+																													
 																													<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >	
 																													<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
 																															
@@ -424,13 +438,26 @@
 																													
 																													<td>${listLineItems.description}</td>
 																															
-																													<td><div class="form-group">
-																															<form:input type="text"
+																													<td>
+																													<c:choose>
+																													 <c:when test="${listLineItems.requiredQuantity <= 0}">
+																												           <div class="form-group"><form:input type="text"
+																															path="goodsReceiptLineItems[${count}].requiredQuantity"  
+																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
+																															 class="form-control requiredQuantity validateQuantity" autocomplete="off" readonly="true"  ></form:input></div>
+																												
+																												      </c:when>
+																												      <c:otherwise>
+																												       <div class="form-group"><form:input type="text"
 																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
-																															value="${listLineItems.requiredQuantity}"  autocomplete="off"
-																															class="form-control requiredQuantity validateQuantity" ></form:input></div>
-																												<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >
-																												<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >		
+																															 onkeypress="return isNumericKey(event)"
+																															class="form-control requiredQuantity validateQuantity" autocomplete="off"  required="true"></form:input></div>
+																												           
+																												       </c:otherwise>
+																													 </c:choose>
+																													
+																													<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >	
+																													<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
 																															
 																															</td>
 																													
@@ -758,11 +785,11 @@
                                                                     </c:if>
                                                                     <c:if test="${gr.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                      <a href="<c:url value="/gr/cancelStage?id=${gr.id}"/>">
+                                                                     <%--  <a href="<c:url value="/gr/cancelStage?id=${gr.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
-																		</a>
+																		</a> --%>
 																		 
                                                                       </c:if>
                                                                       <!-- Approve -->

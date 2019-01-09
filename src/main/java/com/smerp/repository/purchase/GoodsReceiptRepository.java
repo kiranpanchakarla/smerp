@@ -14,7 +14,12 @@ public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Int
 	
 	GoodsReceipt findTopByOrderByIdDesc();
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id")
-	List<GoodsReceipt> findByListPoId(int id);
+	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status!=:status")
+	List<GoodsReceipt> findByListPoId(int id,String status);
+	
+	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status = :status")
+	List<GoodsReceipt> findByApproveListPoId(int id ,String status);
+	
+	GoodsReceipt findByPoId(int id);
 
 }

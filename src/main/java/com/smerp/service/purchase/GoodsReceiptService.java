@@ -25,7 +25,7 @@ public interface GoodsReceiptService {
 	
 	GoodsReceipt getListAmount(GoodsReceipt purchaseOrder);
 	
-	Boolean checkQuantityPoGr(PurchaseOrder po);
+	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	
 
 }

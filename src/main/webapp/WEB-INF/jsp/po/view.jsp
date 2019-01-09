@@ -406,20 +406,26 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												         
+												         <div class="col-sm-4 form-group has-feedback">
+												         <c:if test="${checkStatusPoGr ==true}">
+									<input type="hidden" name="poId" value="${po.id}">
+																		<form:button type="button" id="convertBtn"
+																			class="btn btn-primary mr-1 float-right">
+																			<i></i>Convert To GR</form:button>
+																			
+								                           </c:if>	
+												         
+												         </div>
+												         
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
 										
 									</div>
 									
-									<c:if test="${quantityStatus==true}">
-									<input type="hidden" name="poId" value="${po.id}">
-																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
-																			<i></i>Convert To GR</form:button>
-																			
-								    </c:if>									
+																	
                                     </div>
                                     
                                     

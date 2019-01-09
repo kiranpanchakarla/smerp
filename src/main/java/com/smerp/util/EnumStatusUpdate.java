@@ -9,8 +9,13 @@ public enum EnumStatusUpdate {
 	CONVERTPRTORFQ("ConvertedToRFQ"),
 	CONVERTRFQTOPO("ConvertedToPO"),
 	COMPLETED("Completed"),
-	REJECTED("Rejected");
+	REJECTED("Rejected"),
+	PARTIALLY_RECEIVED("Partially_Received"),
+	CLOSED("closed");
+	
 
+	
+	
 	private String status;
 
 	EnumStatusUpdate(String status) {

@@ -326,7 +326,10 @@
 																									<th>Total</th>
 																									<th>Warehouse</th>
 																									</c:if>
+																									 <c:if test="${gr.poId==null}">
 																									<th>Action</th>
+																									</c:if>
+																									
 																								</tr>
 																							</thead>
 																										
@@ -430,17 +433,31 @@
 																															value="${listLineItems.hsn}"
 																															class="form-control hsnVal" 
 																															readonly="true"></form:input></div></td>
-																															<td>--</td>
+																															
 																													</c:if>
 																													
 																													<c:if test="${gr.category!='Item'}">
-																													<td>${listLineItems.sacCode}</td>
 																													
-																													<td>${listLineItems.description}</td>
+																													
+																													<td>
+																													<div class="form-group">
+																															<form:input type="text"  readonly="true"
+																															path="goodsReceiptLineItems[${count}].sacCode" onkeypress="return isNumericKey(event)"
+																															value="${listLineItems.sacCode}"
+																															class="form-control sacCode validatePrice"  ></form:input></div>
+																													</td>
+																													
+																													<td>
+																													<div class="form-group">
+																															<form:input type="text"  readonly="true"
+																															path="goodsReceiptLineItems[${count}].description" onkeypress="return isNumericKey(event)"
+																															value="${listLineItems.description}"
+																															class="form-control description validatePrice"  ></form:input></div>
+																													</td>
 																															
 																													<td>
 																													<c:choose>
-																													 <c:when test="${listLineItems.requiredQuantity <= 0}">
+																									 <c:when test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
 																												           <div class="form-group"><form:input type="text"
 																															path="goodsReceiptLineItems[${count}].requiredQuantity"  
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
@@ -499,13 +516,13 @@
 																															class="form-control total validatePrice" readonly="true"  ></form:input></div></td>
 																													<!--  -->
 
-																														<td><c:forEach var="entry"
-																																items="${plantMap}">
-																																<c:if
-																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
-																														<td>--</td>		
+																														<td><div class="form-group"><form:select class="form-control"
+																															style="width:;" readonly="true"
+																															path="goodsReceiptLineItems[${count}].warehouse">
+																															<form:option value="" label="Select" />
+																															<form:options items="${plantMap}" />
+																														</form:select></div></td>
+																														
 																													</c:if>
 																												
 																												</tr>

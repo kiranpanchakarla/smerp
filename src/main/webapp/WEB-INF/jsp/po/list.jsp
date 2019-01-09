@@ -113,7 +113,7 @@
 														    		<a class ="btn btn-view" href="<c:url value="/po/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>	 --%>
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'    && list.status != 'Completed'  }">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'    && list.status != 'Completed'  && list.status != 'Closed'  }">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'PurchaseOrder'}">
 																						<c:set var="permissions" scope="session"

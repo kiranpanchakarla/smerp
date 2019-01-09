@@ -25,9 +25,11 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderService;
 
 import freemarker.template.TemplateException;
@@ -77,6 +79,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	GoodsReceiptService goodsReceiptService;
 	
  /*    
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
@@ -204,7 +209,39 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		return file.getAbsolutePath();
 	}
 
-
+public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsReceipt goodsReceipt) throws TemplateException, IOException, DocumentException {
+		
+	goodsReceipt = goodsReceiptService.getListAmount(goodsReceipt);
+		
+		File sourceFolder = null;
+			sourceFolder = new File(downloadUtil.getDownloadPath());
+		if (!sourceFolder.exists()) {
+			sourceFolder.mkdirs();
+		}
+		File file = null;
+		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		file = new File(sourceFolder + File.separator + "POView" + fileStr + ".pdf");
+		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
+		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Receipt);
+		Writer out = new StringWriter();
+		Map<String, Object> input = new HashMap<String, Object>(1);
+		input.put("contextPath", RequestContext.get().getContextPath());
+		input.put("gr", goodsReceipt);
+		input.put("moduleName", modulePO);
+		logger.info("plantMap-->" + purchaseOrderController.plantMap());
+		input.put("plantMap", purchaseOrderController.plantMap());
+		input.put("taxCodeMap", purchaseOrderController.taxCode());
+		input.put("user", getUser());
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		getTemplate().process(input, out);
+		ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(out.toString());
+		renderer.layout();
+		renderer.createPDF(os);
+		os.flush();
+		os.close();
+		return file.getAbsolutePath();
+	}
 
 
 	@Override

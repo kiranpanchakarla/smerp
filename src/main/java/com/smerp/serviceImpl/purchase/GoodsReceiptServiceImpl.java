@@ -278,13 +278,15 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
         	    Collections.sort(values1);
         	    Collections.sort(values2);
         	  if(values1.equals(values2)) {  // check values  pr and gr
-        		  status = EnumStatusUpdate.COMPLETED.getStatus();
+        		  if(poListData.keySet().equals( grApproveListData.keySet())) {  // check keys pr and gr  when Approved list
+            		  status = EnumStatusUpdate.CLOSED.getStatus(); 
+            	  }else {
+            		  status = EnumStatusUpdate.COMPLETED.getStatus();
+            	  }
         	  }else {
         		  status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
         	  }
-        	  if(poListData.keySet().equals( grApproveListData.keySet())) {  // check keys pr and gr  when Approved list
-        		  status = EnumStatusUpdate.CLOSED.getStatus(); 
-        	  }
+        	 
         	  
         	  
         }else { // all keys are not matched  
@@ -302,7 +304,12 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		if (poListItems != null) {
 			for (int i = 0; i < poListItems.size(); i++) {
 				PurchaseOrderLineItems polist = poListItems.get(i);
-				String key = purchaseOrder.getDocNumber() + "$" + polist.getProdouctNumber();
+				String key ="";
+				if(polist.getProdouctNumber()!=null) {
+				 key = purchaseOrder.getDocNumber() + "$" + polist.getProdouctNumber();
+				}else {
+				 key = purchaseOrder.getDocNumber() + "$" + polist.getSacCode();
+				}
 				if (polist.getProdouctNumber() != null && polist.getRequiredQuantity() != 0) {
 					poListData.put(key, polist.getRequiredQuantity());
 				} else if (polist.getSacCode() != null && polist.getRequiredQuantity() != 0) {
@@ -348,7 +355,14 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			for (int j = 0; j < goodsReceiptLineItems.size(); j++) {
 				GoodsReceiptLineItems grlist = goodsReceiptLineItems.get(j);
 				logger.info("grlist===>" + grlist);
-				String key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
+				String key = "";
+				
+				if( grlist.getProdouctNumber()!=null) {
+					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
+					}else {
+					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
+					}
+				
 				if (!grMapListData.containsKey(key)) {
 
 					if (grlist.getProdouctNumber() != null && grlist.getRequiredQuantity() != 0) {
@@ -479,6 +493,12 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	
+	
+	
+	
+	
+	
+	
 	/*@Override
 	public String checkStatusPoGr(PurchaseOrder purchaseOrder) {
 	    String status ="";
@@ -516,6 +536,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
 				.findByListPoId(purchaseOrder.getId(),EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listGoodsReceipt-->" +listGoodsReceipt);
+		
+	/*	String status = setStatusOfPurchaseOrder(listGoodsReceipt.get(0));
+		logger.info("status-->" +status); //Test the Status if you want  */
+		
 		Integer prQunatity = getListPoQuantityCount(purchaseOrder);
 		Integer grQunatity = getListGRQunatityCount(listGoodsReceipt);
 		

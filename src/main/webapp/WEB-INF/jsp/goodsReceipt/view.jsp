@@ -209,7 +209,7 @@ text-align: left;
 																									<th>Total</th>
 																									<th>Warehouse</th>
 																									</c:if>
-																									<th>Action</th>
+																								
 																								</tr>
 																							</thead>
 																										
@@ -255,7 +255,7 @@ text-align: left;
 																													</c:forEach></td>
 
 																												<td>${listLineItems.hsn}</td>
-																														<td>--</td>	
+																														
 																													</c:if>
 																													
 																													<c:if test="${gr.category!='Item'}">
@@ -282,7 +282,7 @@ text-align: left;
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
-																														<td>--</td>		
+																														
 																													</c:if>
 																												
 																												</tr>

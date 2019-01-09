@@ -74,6 +74,8 @@ public class GoodsReceiptController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	
 
 
 	@InitBinder
@@ -224,14 +226,15 @@ public class GoodsReceiptController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
+		logger.info("id -->" + id);
 		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
-		logger.info("RequestForQuotation view-->" + gr);
+		logger.info("goodsReceipt -->" + gr);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);*/
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

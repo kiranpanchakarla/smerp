@@ -1,7 +1,12 @@
 package com.smerp.controller.purchase;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -15,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.code128.Code128Constants;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -28,6 +36,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
@@ -38,6 +48,7 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.BarCodeGeneration;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -54,6 +65,12 @@ public class PurchaseRequestController {
 		this.pdfUploadedPath = pdf;
 	}
 	
+	private String barcodePath;
+	
+	@Value(value = "${file.barcodeupload.path}")
+	public void setPropBarCode(String barcodePath) {
+		this.barcodePath = barcodePath;
+	}
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestController.class);
 
@@ -74,6 +91,9 @@ public class PurchaseRequestController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	BarCodeGeneration barCodeGeneration;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -105,8 +125,12 @@ public class PurchaseRequestController {
 	}
 
 	@PostMapping(value = "/save")
-	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) {
+	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) throws IOException {
 		logger.info("purchaseRequest save-->" + purchaseRequest);
+		
+		if (purchaseRequest.getId() == null) {
+		purchaseRequest.setBarCodeImgPath(barCodeGeneration.downloadbarcodeImpge(purchaseRequest.getDocNumber(), barcodePath));
+		}
 		purchaseRequestService.save(purchaseRequest);
 		return "redirect:list";
 	}
@@ -210,5 +234,43 @@ public class PurchaseRequestController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 
+	
+	@PostMapping(value = "/upload")
+	public String purchaseRequestUpload(@RequestParam("file") MultipartFile multipartFile, Model model,
+			 HttpServletRequest request, HttpServletResponse response, HttpSession session) throws JsonProcessingException {
+		logger.info("purchaseRequest upload-->");
+		
+		if (multipartFile.isEmpty()) {
+			request.setAttribute("message", "Please select a file to upload");
+			return "uploadStatus";
+		}
+		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		
+	/*	
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("user", user);
+		purchaseRequest.setReferenceUser(user);
+		model.addAttribute("planMap", plantMap());
+		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		//gets the users first and last name
+		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
+		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
+		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
+			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
+		} else {
+			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+			 LocalDateTime now = LocalDateTime.now();
+			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0"));
+		}
+		model.addAttribute("purchaseRequest", purchaseRequest);
+		return "/purchaseReq/create";*/
+		return "redirect:list";
+		
+	}
+	
+	
 	
 }

@@ -62,6 +62,12 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		this.modulePO = prop;
 	}
 	
+	private static String moduleGR;
+
+	@Value(value = "${module.grec}")
+	public void setGR(String prop) {
+		this.moduleGR = prop;
+	}
 	@Autowired
 	HTMLToPDFGenerator hTMLToPDFGenerator;
 	
@@ -220,14 +226,14 @@ public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsRece
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "POView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + "GRView" + fileStr + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Receipt);
 		Writer out = new StringWriter();
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("gr", goodsReceipt);
-		input.put("moduleName", modulePO);
+		input.put("moduleName", moduleGR);
 		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());

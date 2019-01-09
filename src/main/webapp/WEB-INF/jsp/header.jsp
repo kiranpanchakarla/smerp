@@ -11,14 +11,14 @@
 			<li class="nav-item hidden-sm-down toggle_sidemenu_icon"><a
 				class="nav-link nav-menu-main menu-toggle hidden-xs"><i
 					class="icon-menu5"> </i></a></li>
-			<li><a>Module</a>
+			<%-- <li><a>Module</a>
 				<ul class="sub_menu">
 
 					<li class="has_sub"><a href="<c:url value ="/dashboard"/>">Administration<i
 							class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 
-							 <%-- <li class="has_sub"><a>Admin Settings<i
+							 <li class="has_sub"><a>Admin Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								  <ul class="super_sub">
 									<li ><a href="<c:url value ="/company/list"/>">Company</a></li>
@@ -27,9 +27,9 @@
 									<li><a href="<c:url value =""/>">Roles</a></li>
 									<li><a href="<c:url value ="/department/list"/>">Departments</a></li>
 									<li><a href="<c:url value ="/designation/list"/>">Designation</a></li>
-								</ul> </li>   --%>
+								</ul> </li>  
 								
-							<%--   <li class="has_sub"><a>Global Settings<i
+							  <li class="has_sub"><a>Global Settings<i
 									class="icon-ios-arrow-right right"></i></a>
 								<ul class="super_sub">
 									<li><a href="<c:url value ="/country/list"/>">Countries</a></li>
@@ -39,7 +39,7 @@
 									<li><a href="<c:url value ="/states/list"/>">States</a></li>
 									<li><a href="<c:url value ="/hsncode/list"/>">Hsn Code</a></li>
 									<li><a href="<c:url value ="/saccode/list"/>">Sac Code</a></li>
-								</ul></li> --%>
+								</ul></li>
 						</ul></li>  
 					 
 					<li class="has_sub"><a href="<c:url value =""/>">Purchase<i
@@ -71,7 +71,7 @@
 								
 						</ul></li>
 					  
-				</ul></li>
+				</ul></li> --%>
 			<!-- <li><a>Tools</a> -->
 				<!-- <ul class="sub_menu">
 					<li><a>item 1</a></li>

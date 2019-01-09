@@ -51,7 +51,7 @@
 												</div>
 												<div class="col-md-5">
 													<c:forEach items="${sessionScope.umpmap}" var="ump">
-														<c:if test="${ump.key eq 'PurchaseOrder'}">
+														<c:if test="${ump.key eq 'Goods Receipt'}">
 															<c:set var="permissions" scope="session"
 																value="${ump.value}" />
 															<c:if
@@ -115,7 +115,7 @@
 																	<td><c:choose>
 																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
-																					<c:if test="${ump.key eq 'PurchaseOrder'}">
+																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"
 																							value="${ump.value}" />
 																						<c:choose>
@@ -153,7 +153,7 @@
 																					class="icon-bin left"></i></a>
 																			</c:otherwise>
 																		</c:choose> <c:forEach items="${sessionScope.umpmap}" var="ump">
-																			<c:if test="${ump.key eq 'PurchaseOrder'}">
+																			<c:if test="${ump.key eq 'Goods Receipt'}">
 																				<c:set var="permissions" scope="session"
 																					value="${ump.value}" />
 																				<c:if

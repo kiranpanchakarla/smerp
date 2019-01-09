@@ -1218,14 +1218,14 @@ $(document).ready(function(){
 		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
-		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
+		        	   alertify.alert("Duplicate Product Added","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
         }else {
-        	 alertify.alert("Purchase Order",$(this).val() +  "Product Number Does Not Exists!");  
+        	 alertify.alert("Check Product Name",$(this).val() +  "Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
         }
@@ -1421,14 +1421,14 @@ $(document).ready(function(){
                                   		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
-                                  		        	   alertify.alert("Purchase Order",  "You have already entered the SAC Code "+$(this).val());
+                                  		        	   alertify.alert("Duplicate Product",  "You have already entered the SAC Code "+$(this).val());
                                   		        	 $(this).val('')
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
                                   		        
                                               }else {
-                                            	  alertify.alert("Purchase Order",$(this).val() +" SAC Code Does Not Exists ");
+                                            	  alertify.alert("Product Not Found",$(this).val() +" SAC Code Does Not Exists ");
                                		        	 $(this).val('')
                                		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                		        	 ($(this).parents('tr').find('td').find('select').val(''));  
@@ -1806,7 +1806,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("Purchase Order","Please Enter Valid Discount!");
+		alertify.alert("Purchase Order Discount","Please Enter Valid Discount!");
 		 return false;
 	}
 	

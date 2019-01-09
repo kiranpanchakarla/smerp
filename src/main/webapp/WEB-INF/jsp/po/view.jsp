@@ -465,7 +465,7 @@ text-align: left;
 				'click',
 				function(event) {
 					event.preventDefault();
-					alertify.confirm('Are you Sure, Want to Convert  PO  to GR',
+					alertify.confirm('Convert PO to GR','Are you Sure, Want to Convert  PO  to GR',
 							function() {
 								form.submit();
 							}, function() {

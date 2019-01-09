@@ -360,7 +360,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				if( grlist.getProdouctNumber()!=null) {
 					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
 					}else {
-					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
+					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getSacCode();
 					}
 				
 				if (!grMapListData.containsKey(key)) {

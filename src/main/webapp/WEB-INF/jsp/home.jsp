@@ -103,7 +103,7 @@
       <div class="row match-height">
         <div class="col-sm-12">
          
-       <%--  <div class="col-sm-3">
+       <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box1">
               <div class="media">
@@ -122,10 +122,10 @@
               </div>
             </div>
           </div>
-        </div> --%>
+        </div>  
         
         
-         <div class="col-sm-4">
+         <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box2">
               <div class="media">
@@ -149,7 +149,7 @@
         
         
         
-        <div class="col-sm-4">
+        <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box3">
               <div class="media">
@@ -171,7 +171,7 @@
         </div>
         
         
-         <div class="col-sm-4">
+        <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box4">
               <div class="media">

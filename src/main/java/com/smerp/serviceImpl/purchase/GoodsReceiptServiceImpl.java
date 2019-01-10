@@ -459,11 +459,16 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
 				}else if(poItms.get(i).getSacCode()!=null ) {
 					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getSacCode());
-				} }
+				} 
 				
 				logger.info("poItms.get(i).getRequiredQuantity()-->" + poItms.get(i).getRequiredQuantity());
 				logger.info("grQunatity-->" + grQunatity);
 				grlist.setTempRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
+				
+				
+				}
+				
+			
 				
 				}else {
 				grlist.setTaxTotal("");

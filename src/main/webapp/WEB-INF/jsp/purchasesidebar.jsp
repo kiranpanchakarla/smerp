@@ -48,9 +48,20 @@
          </c:if>
          </c:forEach>
            
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Convert To GR'}">
             <li><a href="<c:url value ="/po/approvedList"/>"><i class="icon-cubes left left"></i><span class="menu_text">Convert PO To GR</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-                
+             </c:if>
+           </c:forEach>
+           
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Goods Receipt'}">
                  <li><a href="<c:url value ="/gr/list"/>"><i class="icon-android-cart left left"></i><span class="menu_text">Goods Receipt</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+             </c:if>
+           </c:forEach>
+           
+           
+                
          
        
         <%-- <ul class="sub_menu">

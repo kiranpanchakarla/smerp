@@ -881,15 +881,23 @@
 																			<div class="col-sm-4">
 																				<div class="form-group">
 																					<label>Discount(%) :</label>
-
-
+																			<c:choose>
+																			<c:when test="${gr.poId!=null}">
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
 																						id="totalDiscount" placeholder='Total  DisCount '
 																						path="totalDiscount" autocomplete="off"
 																						readonly="true"
 																						onkeypress="return isNumericKey1(event)" />
-
+																			</c:when>
+																			<c:otherwise>
+																			        <form:input type="text"
+																						cssClass="form-control validatePrice"
+																						id="totalDiscount" placeholder='Total  DisCount '
+																						path="totalDiscount" autocomplete="off"
+																						onkeypress="return isNumericKey1(event)" />
+																			</c:otherwise>
+																			</c:choose>	
 
 
 																				</div>
@@ -904,14 +912,33 @@
 
 
 																				</div>
-																				<div class="form-group">
+																				
+																				
+																				
+																					<div class="form-group">
 																					<label>Freight : </label>
+																			<c:choose>
+																			<c:when test="${gr.poId!=null}">
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
 																						placeholder='Freight' path="freight"
 																						onkeypress="return isNumericKey(event)"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																			</c:when>
+																			<c:otherwise>
+																			         <form:input type="text"
+																						cssClass="form-control validatePrice"
+																						placeholder='Freight' path="freight"
+																						onkeypress="return isNumericKey(event)"
+																						autocomplete="off" />
+																			</c:otherwise>
+																			</c:choose>
+																				   </div>													
+																		      
+																																
+																		  
+																		    
+																				
 
 																				<div class="form-group">
 																					<label>Rounding : </label>

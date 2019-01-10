@@ -111,10 +111,17 @@
            </c:if>
            </c:forEach>
            
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Convert To GR'}">
              <li class="has_sub"><a href="<c:url value ="/po/approvedList"/>">Convert PO To GR</a></li>
-             
+             </c:if>
+           </c:forEach>
+           
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Goods Receipt'}">
             <li class="has_sub"><a href="<c:url value ="/gr/list"/>">Goods Receipt</a></li>
-            
+             </c:if>
+           </c:forEach>
            
         </ul>
       </li>

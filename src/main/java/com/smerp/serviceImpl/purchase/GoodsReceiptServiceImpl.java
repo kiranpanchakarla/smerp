@@ -4,11 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -22,10 +20,13 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
+import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
+import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
@@ -49,6 +50,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Autowired
 	GoodsReceiptLineItemsRepository goodsReceiptLineItemsRepository;
+	
+	@Autowired
+	GoodsReturnRepository goodsReturnRepository;
+	
 
 	@Autowired
 	VendorService vendorService;
@@ -256,7 +261,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	
-	
+	@Override
 	public String  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
 		logger.info("set Status-->");
 		String status="";
@@ -322,7 +327,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		return poListData;
 	}
 	
-	private Map<String, Integer> prepareMapForProductQunatityGR(GoodsReceipt goodReceipt) {
+	public Map<String, Integer> prepareMapForProductQunatityGR(GoodsReceipt goodReceipt) {
 		Map<String, Integer> grMapListData = new LinkedHashMap<>();
 
 		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository.findByListPoId(goodReceipt.getPoId(),EnumStatusUpdate.REJECTED.getStatus()); // check
@@ -490,8 +495,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
 		goodsReceipt.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
 		goodsReceipt.setTotalPayment(total_amt);
-		
-		
 	
 	return goodsReceipt;
 	}
@@ -658,5 +661,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			   }*/
 	
 			}
+
+			
+			
 
 }

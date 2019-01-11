@@ -44,8 +44,8 @@ text-align: left;
 
 
 
-							<form:form method="POST" action="/gre/saveGRtoGRE" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="gr"
+							<form:form method="POST" action="/gr/save" id="form" class="bv-form commentForm"
+								enctype="multipart/form-data" modelAttribute="gre"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -54,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Goods Receipt</h2>
+													<h2 class="card-title" id="basic-layout-icons">Goods Return</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -62,33 +62,33 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>: ${gr.vendor.name}
+																	<label>Name</label>: ${gre.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>: ${gr.vendor.emailId}
+																	<label>Email Id</label>: ${gre.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact</label>: ${gr.vendorContactDetails.contactName}
+																	<label>Contact</label>: ${gre.vendorContactDetails.contactName}
 																</div>
 															</div>
 
-															<form:hidden path="id" />
+														<form:hidden path="id" />
 
 															<div class="row">
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>: ${gr.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${gre.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>: ${gr.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${gre.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																				<label>Document#</label>: ${gre.docNumber}
 																			</div>
 
 															</div>
@@ -99,15 +99,15 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
+																				<label>Ref Doc#</label>: ${gre.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.documentDate}" />
 																			</div>
 																		</div>
 
@@ -117,7 +117,7 @@ text-align: left;
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
                                                                             <div class="input-group">
@@ -176,7 +176,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty goodsReceiptLineItems}">
+																										<c:if test="${not empty goodsReturnLineItems}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -184,7 +184,7 @@ text-align: left;
 																							<tr>
 																									
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${gr.category=='Item'}">
+																									<c:if test="${gre.category=='Item'}">
 																									<th>S.no</th>
 																									<th>Product No.</th>
 																									<th>UOM</th>
@@ -198,7 +198,7 @@ text-align: left;
 																									<th>HSN</th>
 																									</c:if>
 																									
-																									<c:if test="${gr.category!='Item'}">
+																									<c:if test="${gre.category!='Item'}">
 																									<th>S.No</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
@@ -215,21 +215,21 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${goodsReceiptLineItems}"
+																											<c:forEach items="${goodsReturnLineItems}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
+																															path="goodsReturnLineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
+																												<form:hidden path="goodsReturnLineItems[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
-																													<c:if test="${gr.category=='Item'}">
+																													<c:if test="${gre.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													
 																													<td>${listLineItems.uom}</td>
@@ -258,7 +258,7 @@ text-align: left;
 																														
 																													</c:if>
 																													
-																													<c:if test="${gr.category!='Item'}">
+																													<c:if test="${gre.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
@@ -320,11 +320,11 @@ text-align: left;
 																				<td>
 																					<div id="shippingAddressTable">
 																					
-																					${gr.vendorShippingAddress.addressName}<br>
-																					${gr.vendorShippingAddress.street}
-																					${gr.vendorShippingAddress.city}
-																					${gr.vendorShippingAddress.zipCode}<br>
-																					${gr.vendorShippingAddress.country.name}
+																					${gre.vendorShippingAddress.addressName}<br>
+																					${gre.vendorShippingAddress.street}
+																					${gre.vendorShippingAddress.city}
+																					${gre.vendorShippingAddress.zipCode}<br>
+																					${gre.vendorShippingAddress.country.name}
 																					
 																					
 																					</div>
@@ -336,11 +336,11 @@ text-align: left;
 																				<td>
 																					<div id="payToAddressTable">
 																					
-																					${gr.vendorPayTypeAddress.addressName}<br>
-																					${gr.vendorPayTypeAddress.street}
-																					${gr.vendorPayTypeAddress.city}
-																					${gr.vendorPayTypeAddress.zipCode}<br>
-																					${gr.vendorPayTypeAddress.country.name}
+																					${gre.vendorPayTypeAddress.addressName}<br>
+																					${gre.vendorPayTypeAddress.street}
+																					${gre.vendorPayTypeAddress.city}
+																					${gre.vendorPayTypeAddress.zipCode}<br>
+																					${gre.vendorPayTypeAddress.country.name}
 																					
 																					
 																					</div>
@@ -366,27 +366,27 @@ text-align: left;
 										<div class="col-sm-4">
 											<div class="form-group">
 												<label>Discount(%) :</label>
-												${gr.totalDiscount}
+												${gre.totalDiscount}
 											</div>
 
 											<div class="form-group">
 												<label>Total Before Discount : </label>
-												${gr.totalBeforeDisAmt}
+												${gre.totalBeforeDisAmt}
 											</div>
 											<div class="form-group">
-												<label>Freight : </label> ${gr.freight}
-											</div>
-
-											<div class="form-group">
-												<label>Rounding : </label> ${gr.amtRounding}
+												<label>Freight : </label> ${gre.freight}
 											</div>
 
 											<div class="form-group">
-												<label>Tax Amount :</label> ${gr.taxAmt}
+												<label>Rounding : </label> ${gre.amtRounding}
 											</div>
 
 											<div class="form-group">
-												<label>Total Payment Due : </label> ${gr.totalPayment}
+												<label>Tax Amount :</label> ${gre.taxAmt}
+											</div>
+
+											<div class="form-group">
+												<label>Total Payment Due : </label> ${gre.totalPayment}
 											</div>
 										</div>
 									
@@ -404,20 +404,7 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
-												         <div class="col-sm-4 form-group has-feedback">
-												        
-									<input type="hidden" name="greId" value="${gr.id}">
-									 <c:if test="${checkStatusGr ==true}">
-																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
-																			<i></i>Goods Return</form:button>
-											</c:if>								
-								                        
-												         
-												         </div>
-												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gre.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -450,19 +437,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
-$('#convertBtn').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
-					function() {
-						form.submit();
-					}, function() {
-						alertify.error('Cancelled')
-					});
-
-		});
-
+	
 	
 function goBack() {
     window.history.back();

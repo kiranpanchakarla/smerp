@@ -11,6 +11,7 @@ public enum EnumStatusUpdate {
 	COMPLETED("Completed"),
 	REJECTED("Rejected"),
 	PARTIALLY_RECEIVED("Partially_Received"),
+	GOODS_RETURN("Goods_Return"),
 	CLOSED("Closed");
 	
 

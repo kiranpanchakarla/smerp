@@ -47,20 +47,10 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-3">
-													<h2 class="content-header-title">Goods Receipt</h2>
+													<h2 class="content-header-title">Goods Return</h2>
 												</div>
 												<div class="col-md-5">
-													<c:forEach items="${sessionScope.umpmap}" var="ump">
-														<c:if test="${ump.key eq 'Goods Receipt'}">
-															<c:set var="permissions" scope="session"
-																value="${ump.value}" />
-															<c:if
-																test="${fn:containsIgnoreCase(permissions,'create')}">
-																<a class="btn btn-primary"
-																	href="<c:url value="/gr/create"/>">Create</a>
-															</c:if>
-														</c:if>
-													</c:forEach>
+													
 
 												</div>
 												<div class="col-md-4">
@@ -69,7 +59,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">Goods Receipt List</li>
+														<li class="breadcrumb-item active">Goods Return List</li>
 													</ol>
 												</div>
 											</div>
@@ -90,7 +80,7 @@
 																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>GR Status</th>
+																<th>GRE Status</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -113,7 +103,7 @@
 														    		<a class ="btn btn-view" href="<c:url value="/gr/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>	 --%>
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"
@@ -122,7 +112,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'update')}">
 																								<a class="btn btn-edit"
-																									href="<c:url value="/gr/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+																									href="<c:url value="/gre/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
 																									class="icon-edit left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -134,7 +124,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'delete')}">
 																								<a class="btn btn-delete" href="#"
-																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
+																									onclick="deleteById('<c:out value="${list.id}"/>','/gre/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
 																									class="icon-bin left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -159,7 +149,7 @@
 																				<c:if
 																					test="${fn:containsIgnoreCase(permissions,'view')}">
 																					<a class="btn btn-view"
-																						href="<c:url value="/gr/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
+																						href="<c:url value="/gre/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																						class="icon-eye3 left"></i></a>
 																				</c:if>
 																			</c:if>

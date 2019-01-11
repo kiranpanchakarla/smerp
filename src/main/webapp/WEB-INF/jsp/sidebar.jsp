@@ -123,6 +123,12 @@
              </c:if>
            </c:forEach>
            
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Goods Receipt'}">
+            <li class="has_sub"><a href="<c:url value ="/gre/list"/>">Goods Return</a></li>
+             </c:if>
+           </c:forEach>
+           
         </ul>
       </li>
       

@@ -21,9 +21,8 @@ import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.master.AuditModel;
 
 @Entity
-@Table(name = "tbl_goods_receipt")
-public class GoodsReceipt extends AuditModel {
-
+@Table(name = "tbl_goods_return")
+public class GoodsReturn extends AuditModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +33,9 @@ public class GoodsReceipt extends AuditModel {
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 
-	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "gr_id", referencedColumnName = "id")
-	private List<GoodsReceiptLineItems> goodsReceiptLineItems;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "gre_id", referencedColumnName = "id")
+	private List<GoodsReturnLineItems> goodsReturnLineItems;
 
 	@Column(name = "doc_number")
 	private String docNumber;
@@ -77,8 +75,8 @@ public class GoodsReceipt extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "po_id")
-	private Integer poId;
+	@Column(name = "gr_id")
+	private Integer grId;
 
 	@Column(name = "remark")
 	private String remark;
@@ -87,18 +85,16 @@ public class GoodsReceipt extends AuditModel {
 	private Double totalDiscount;
 
 	@Column(name = "total_payment")
-	private Double totalPayment ;
+	private Double totalPayment;
 
 	@Column(name = "freight")
 	private Integer freight;
-	
-    private transient String amtRounding;
-    
-    private transient String taxAmt;
-	
-	private transient Double totalBeforeDisAmt ;
-	
-	
+
+	private transient String amtRounding;
+
+	private transient String taxAmt;
+
+	private transient Double totalBeforeDisAmt;
 
 	public Integer getId() {
 		return id;
@@ -116,14 +112,12 @@ public class GoodsReceipt extends AuditModel {
 		this.vendor = vendor;
 	}
 
-	
-
-	public List<GoodsReceiptLineItems> getGoodsReceiptLineItems() {
-		return goodsReceiptLineItems;
+	public List<GoodsReturnLineItems> getGoodsReturnLineItems() {
+		return goodsReturnLineItems;
 	}
 
-	public void setGoodsReceiptLineItems(List<GoodsReceiptLineItems> goodsReceiptLineItems) {
-		this.goodsReceiptLineItems = goodsReceiptLineItems;
+	public void setGoodsReturnLineItems(List<GoodsReturnLineItems> goodsReturnLineItems) {
+		this.goodsReturnLineItems = goodsReturnLineItems;
 	}
 
 	public String getDocNumber() {
@@ -222,8 +216,6 @@ public class GoodsReceipt extends AuditModel {
 		this.isActive = isActive;
 	}
 
-	
-
 	public String getRemark() {
 		return remark;
 	}
@@ -239,8 +231,6 @@ public class GoodsReceipt extends AuditModel {
 	public void setTotalDiscount(Double totalDiscount) {
 		this.totalDiscount = totalDiscount;
 	}
-
-	
 
 	public Double getTotalBeforeDisAmt() {
 		return totalBeforeDisAmt;
@@ -258,8 +248,6 @@ public class GoodsReceipt extends AuditModel {
 		this.freight = freight;
 	}
 
-	
-
 	public String getAmtRounding() {
 		return amtRounding;
 	}
@@ -276,8 +264,6 @@ public class GoodsReceipt extends AuditModel {
 		this.taxAmt = taxAmt;
 	}
 
-
-
 	public Double getTotalPayment() {
 		return totalPayment;
 	}
@@ -286,35 +272,23 @@ public class GoodsReceipt extends AuditModel {
 		this.totalPayment = totalPayment;
 	}
 
-	public Integer getPoId() {
-		return poId;
+	public Integer getGrId() {
+		return grId;
 	}
 
-	public void setPoId(Integer poId) {
-		this.poId = poId;
+	public void setGrId(Integer grId) {
+		this.grId = grId;
 	}
 
 	@Override
 	public String toString() {
-		return "GoodsReceipt [id=" + id + ", vendor=" + vendor + ", goodsReceiptLineItems=" + goodsReceiptLineItems
+		return "GoodsReturn [id=" + id + ", vendor=" + vendor + ", goodsReturnLineItems=" + goodsReturnLineItems
 				+ ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber
 				+ ", postingDate=" + postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
 				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
 				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ ", poId=" + poId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
+				+ ", grId=" + grId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
 				+ totalPayment + ", freight=" + freight + "]";
 	}
-
-	
-
-	
-
-	
-
-	
-	
-	
-
-	
 
 }

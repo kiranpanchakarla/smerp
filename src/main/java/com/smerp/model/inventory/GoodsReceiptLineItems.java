@@ -38,7 +38,7 @@ public class GoodsReceiptLineItems extends AuditModel {
 	private String productGroup;
 
 	@Column(name = "warehouse")
-	private String warehouse;
+	private Integer warehouse;
 
 	@Column(name = "hsn")
 	private String hsn;
@@ -116,11 +116,11 @@ public class GoodsReceiptLineItems extends AuditModel {
 		this.productGroup = productGroup;
 	}
 
-	public String getWarehouse() {
+	public Integer getWarehouse() {
 		return warehouse;
 	}
 
-	public void setWarehouse(String warehouse) {
+	public void setWarehouse(Integer warehouse) {
 		this.warehouse = warehouse;
 	}
 

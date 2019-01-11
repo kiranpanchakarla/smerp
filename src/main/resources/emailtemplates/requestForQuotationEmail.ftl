@@ -85,7 +85,7 @@
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (rfqlist.warehouse) == (key?string)>
+                <#if (rfqlist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
@@ -113,7 +113,7 @@
                <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (rfqlist.warehouse) == (key?string)>
+                <#if (rfqlist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>

@@ -113,7 +113,7 @@
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (goodsReclist.warehouse) == (key?string)>
+                <#if (goodsReclist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
@@ -157,7 +157,7 @@
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (goodsReclist.warehouse) == (key?string)>
+                <#if (goodsReclist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>

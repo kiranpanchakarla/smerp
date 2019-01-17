@@ -342,7 +342,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	private Map<String, Integer> prepareMapForApprovedProductQunatityGR(GoodsReceipt goodReceipt) {
 		Map<String, Integer> grMapListData = new LinkedHashMap<>();
 
-		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository.findByListPoId(goodReceipt.getPoId(),EnumStatusUpdate.APPROVEED.getStatus()); // check
+		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository.findByApproveListPoId(goodReceipt.getPoId(),EnumStatusUpdate.APPROVEED.getStatus()); // check
 																											// Multiple
 																											// Quantity
 		grMapListData = getGoodsReceiptRealQunatityList(goodReceipt, grMapListData, listGoodsReceipt);

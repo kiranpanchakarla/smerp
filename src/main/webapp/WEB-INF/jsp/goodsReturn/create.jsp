@@ -947,7 +947,7 @@
 
 																		<div class="text-xs-center">
 
-																			<a href="<c:url value="/gr/list"/>"
+																			<a href="<c:url value="/gre/list"/>"
 																				class="btn btn-primary float-left"> Back </a>
 
 

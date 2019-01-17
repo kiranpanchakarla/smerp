@@ -95,17 +95,11 @@
 																	<td>${list.createdAt}</td>
 																	<td>${list.updatedAt}</td>
 																	<td>${list.status}</td>
-																	<%-- <td>
-																	<c:if test="${list.status != 'Approved'}">
-																	 <a class ="btn btn-edit" href="<c:url value="/gr/edit?id=${list.id}"/>"><i class="icon-edit left"></i></a>  
-																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')"><i class="icon-bin left"></i></a>
-																	</c:if> 
-														    		<a class ="btn btn-view" href="<c:url value="/gr/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
-									                               </td>	 --%>
+																	
 																	<td><c:choose>
 																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
-																					<c:if test="${ump.key eq 'Goods Receipt'}">
+																					<c:if test="${ump.key eq 'Goods Return'}">
 																						<c:set var="permissions" scope="session"
 																							value="${ump.value}" />
 																						<c:choose>
@@ -143,7 +137,7 @@
 																					class="icon-bin left"></i></a>
 																			</c:otherwise>
 																		</c:choose> <c:forEach items="${sessionScope.umpmap}" var="ump">
-																			<c:if test="${ump.key eq 'Goods Receipt'}">
+																			<c:if test="${ump.key eq 'Goods Return'}">
 																				<c:set var="permissions" scope="session"
 																					value="${ump.value}" />
 																				<c:if

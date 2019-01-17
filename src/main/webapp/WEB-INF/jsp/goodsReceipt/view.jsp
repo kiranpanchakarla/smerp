@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -407,17 +408,31 @@ text-align: left;
 												         
 												         <div class="col-sm-4 form-group has-feedback">
 												        
-									<input type="hidden" name="greId" value="${gr.id}">
-									 <c:if test="${checkStatusGr ==true}">
+									
+										<input type="hidden" name="greId" value="${gr.id}">
+									 <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'Goods Receipt'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'}">
+																		 
+														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn"
 																			class="btn btn-primary mr-1 float-right">
 																			<i></i>Goods Return</form:button>
-											</c:if>								
+											</c:if>	
+																		 
+																	</c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+									
+																
 								                        
 												         
 												         </div>
 												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>

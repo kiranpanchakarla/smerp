@@ -213,13 +213,14 @@
             </div>
           </div> -->
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
                 <h4 class="card-title" style="text-align: center;">Purchase Request</h4>
               </div>
               <ul class="list-group list-group-flush">
+               <%--   <a id="example" onchange="setStatus('Open')" href="<c:url value="/purchaseReq/list?purchaseReqStatus=Open"/>"> --%>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${dashboardCount.open}</span> Open </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${dashboardCount.draft}</span> Draft </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${dashboardCount.cancelled}</span>Cancelled </li>
@@ -265,7 +266,7 @@
           </div>
           </a>
         </div> --%>
-         <div class="col-md-4">
+         <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -320,7 +321,7 @@
           </div>
           </a>
         </div>  --%>
-       <div class="col-md-4">
+       <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -332,6 +333,8 @@
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${poCount.cancelled}</span>Cancelled </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${poCount.approved}</span> Approved</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.rejected}</span> Rejected </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.completed}</span> Completed </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.partiallyReceived}</span> PartiallyReceived </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${poCount.total}</span> Total Records </li>
               </ul>
             </div>
@@ -365,6 +368,25 @@
           </div>
           </a>
         </div>  --%>
+        
+        <div class="col-md-3">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+              <div class="card-block">
+                <h4 class="card-title" style="text-align: center;">Goods Receipt</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${grCount.open}</span> Open </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${grCount.draft}</span> Draft </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${grCount.cancelled}</span>Cancelled </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${grCount.approved}</span> Approved</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${grCount.rejected}</span> Rejected </li>
+                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${grCount.completed}</span> Completed </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${grCount.total}</span> Total Records </li>
+              </ul>
+            </div>
+          </div>
+         </div>
        
       </div><br><br>
       

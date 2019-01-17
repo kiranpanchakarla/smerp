@@ -18,12 +18,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.smerp.controller.purchase.GoodsReceiptController;
+import com.smerp.controller.purchase.GoodsReturnController;
 import com.smerp.controller.purchase.PurchaseOrderController;
 import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
@@ -49,16 +51,18 @@ public class SendEmail extends EmailerGenerator{
 	@Autowired
 	GoodsReceiptController goodsReceiptController;
 	
+	@Autowired
+	GoodsReturnController goodsReturnController;
+	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
 	PurchaseRequest pr;
 	RequestForQuotation rfq;
 	PurchaseOrder po;
 	GoodsReceipt goodsRec;
+	GoodsReturn goodsRet;
 	
-	public GoodsReceipt getGoodsRec() {
-		return goodsRec;
-	}
+	
 
 	public void sendPREmail(PurchaseRequest purchaseRequest) throws Exception {
 		 if (shouldNotify()) {
@@ -101,6 +105,7 @@ public class SendEmail extends EmailerGenerator{
 			input.put("rfq", getRequestForQuotation());
 			input.put("po", getPurchaseOrder());
 			input.put("goodsRec", getGoodsRec());
+			input.put("goodsRet", getGoodsRet());
 			input.put("plantMap", purchaseRequestController.plantMap());
 			input.put("taxCodeMap", purchaseOrderController.taxCode());
 			input.put("contextPath", RequestContext.get().getContextPath());
@@ -111,6 +116,11 @@ public class SendEmail extends EmailerGenerator{
 			throw new RuntimeException(e);
 		}
 		return out.toString();
+	}
+	
+	protected String RejectMessage() {
+		  
+		return "Document has Been Rejected";
 	}
 
 	private User getUser() {
@@ -127,6 +137,13 @@ public class SendEmail extends EmailerGenerator{
 	
 	public PurchaseOrder getPurchaseOrder() {
 		return po;
+	}
+	
+	public GoodsReceipt getGoodsRec() {
+		return goodsRec;
+	}
+	public GoodsReturn getGoodsRet() {
+		return goodsRet;
 	}
 	
 	@Override
@@ -225,5 +242,94 @@ public class SendEmail extends EmailerGenerator{
 
 		};
 	}
+	
+	public void sendGoodsReturnEmail(GoodsReturn goodsReturn) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createGoodsReturnMessage(goodsReturn));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createGoodsReturnMessage(GoodsReturn goodsReturn) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				goodsRet = goodsReturn;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("GoodsReturn :" + goodsRet.getDocNumber() + " Status :" + goodsRet.getStatus());
+				message.setText(getBody(), true);
+			}
 
+		};
+	}
+	
+	public void sendGoodsReturnRejectEmail(GoodsReturn goodsReturn) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createGoodsReturnRejectMessage(goodsReturn));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createGoodsReturnRejectMessage(GoodsReturn goodsReturn) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				goodsRet = goodsReturn;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("GoodsReturn :" + goodsRet.getDocNumber() + " Status :" + goodsRet.getStatus());
+				message.setText(goodsRet.getDocNumber() + " " + RejectMessage(), true);
+			}
+
+		};
+	}
+
+	public void sendDashboardEmail() throws Exception {
+		 if (shouldNotify()) {
+			// logger.info("Sending notification for " + getUser().getUserEmail() + " ...");
+	            try {
+	                mailSender.send(createDashboardMessage());
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createDashboardMessage() {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom(getDefaultEmailFromAddress());
+				//logger.info("Sending notification for " + getUser().getUserEmail());
+				message.setTo("k.panchakarla@manuhindia.com");
+				message.setSubject("Dashbaord Email Test");
+				message.setText("Working",true);
+			}
+
+		};
+	}
 }

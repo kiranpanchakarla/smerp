@@ -128,7 +128,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			}
 			
 			}else {
-				 logger.info("convertd Po to GR Data -->" +goodsReturn);
+				 logger.info("Goods Return Data -->" +goodsReturn);
 			}
 		}
          logger.info("goodsReturn -->" +goodsReturn);
@@ -148,7 +148,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			   	goodsReturn =getListAmount(goodsReturn);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		   //  emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(goodsReturn);
+    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(goodsReturn);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
@@ -164,7 +164,16 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				}
 			
 		}
-		
+		else if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("RE")) {
+			try {
+			   	goodsReturn =getListAmount(goodsReturn);
+    			 RequestContext.initialize();
+    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
+    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnRejectEmail(goodsReturn);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+		}
 	
 		
 		
@@ -491,7 +500,12 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				
 				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
 				logger.info("greQunatity-->" + greQunatity);
-				grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - greQunatity);
+				if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+					grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - greQunatity);
+					}else 
+					{
+						grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity());
+					}
 				
 				}else {
 				grelist.setTaxTotal("");
@@ -611,6 +625,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				if (grelist.getRequiredQuantity() != null) {
 					if (category.equals(grelist.getProdouctNumber()) || category.equals(grelist.getSacCode()))
 						qunatity += grelist.getRequiredQuantity();
+					    logger.info("greQunatity===>" +qunatity);
 				}
 			}
 		}

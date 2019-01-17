@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -408,13 +409,29 @@ text-align: left;
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
 												         <div class="col-sm-4 form-group has-feedback">
-												         <c:if test="${checkStatusPoGr ==true}">
+												         
+												           <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${po.status eq 'Approved' || po.status eq 'Partially_Received'}">
+																		 
+																		   <c:if test="${checkStatusPoGr ==true}">
 									<input type="hidden" name="poId" value="${po.id}">
 																		<form:button type="button" id="convertBtn"
 																			class="btn btn-primary mr-1 float-right">
 																			<i></i>Convert To GR</form:button>
 																			
 								                           </c:if>	
+																		 
+																	</c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+												         
+												         
+												         
+												       
 												         
 												         </div>
 												         

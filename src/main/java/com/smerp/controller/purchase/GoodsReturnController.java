@@ -199,8 +199,8 @@ public class GoodsReturnController {
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForGoodsReturn(pdfUploadedPath,gre);*/
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReturn(pdfUploadedPath,gre);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

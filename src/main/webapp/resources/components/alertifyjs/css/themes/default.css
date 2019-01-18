@@ -10,9 +10,9 @@
   border-radius: 2px;
 }
 .alertify .ajs-header {
-  color: black;
+  color: #3a1b1b;
   font-weight: bold;
-  background: #ecf5fd;
+  background: #f2dede;
   border-bottom: #eee 1px solid;
   border-radius: 2px 2px 0 0;
 }
@@ -31,7 +31,7 @@
   margin: 0;
 }
 .alertify .ajs-footer {
-  background: #ecf5fd;
+  background: #f2dede;
   border-top: #eee 1px solid;
   border-radius: 0 0 2px 2px;
 }
@@ -44,7 +44,7 @@
   text-transform: uppercase;
 }
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
-  color: #3593D2;
+  color: #d23535;
 }
 .alertify-notifier .ajs-message {
   background: rgba(255, 255, 255, 0.95);

@@ -3,6 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.PurchaseOrder;
 
 public interface GoodsReceiptService {
@@ -25,7 +26,9 @@ public interface GoodsReceiptService {
 	
 	GoodsReceipt getListAmount(GoodsReceipt purchaseOrder);
 	
-	Boolean checkQuantityPoGr(PurchaseOrder po);
+	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
+	
+	String setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
 	
 
 }

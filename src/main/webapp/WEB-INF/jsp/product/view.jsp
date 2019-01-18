@@ -47,7 +47,8 @@ $(document).ready(function(){
                     <div class="large-12 columns">
                         <div class="content-body">
                             <!-- Basic form layout section start -->
-                            <form:form method="POST" action="/product/save" class="commentForm" modelAttribute="product" data-toggle="validator" role="form">
+                            <c:url value="/product/save" var="createUrl" />
+                            <form:form method="POST" action="${createUrl}" class="commentForm" modelAttribute="product" data-toggle="validator" role="form">
                                 <section id="basic-form-layouts">
                                     <div class="row match-height">
                                         <div class="col-md-12">

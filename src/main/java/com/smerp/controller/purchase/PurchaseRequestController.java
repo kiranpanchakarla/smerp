@@ -1,11 +1,14 @@
 package com.smerp.controller.purchase;
 
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +31,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.DocumentException;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.purchase.PurchaseRequest;
@@ -38,6 +44,7 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.BarCodeGeneration;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -54,6 +61,19 @@ public class PurchaseRequestController {
 		this.pdfUploadedPath = pdf;
 	}
 	
+	private String barcodePath;
+	
+	@Value(value = "${file.barcodeupload.path}")
+	public void setPropBarCode(String barcodePath) {
+		this.barcodePath = barcodePath;
+	}
+	
+	private String pdfbarcodePath;
+	
+	@Value(value = "${file.barcodeupload.pathnew}")
+	public void setPropnewBarCode(String pdfbarcodePath) {
+		this.pdfbarcodePath = pdfbarcodePath;
+	}
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestController.class);
 
@@ -74,6 +94,9 @@ public class PurchaseRequestController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	BarCodeGeneration barCodeGeneration;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -105,8 +128,12 @@ public class PurchaseRequestController {
 	}
 
 	@PostMapping(value = "/save")
-	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) {
+	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) throws IOException {
 		logger.info("purchaseRequest save-->" + purchaseRequest);
+		
+		if (purchaseRequest.getId() == null) {
+		purchaseRequest.setBarCodeImgPath(barCodeGeneration.downloadbarcodeImpge(purchaseRequest.getDocNumber(), barcodePath));
+		}
 		purchaseRequestService.save(purchaseRequest);
 		return "redirect:list";
 	}
@@ -210,5 +237,28 @@ public class PurchaseRequestController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 
+	/*
+	@PostMapping(value = "/upload")
+	public String purchaseRequestUpload(@RequestParam("file") MultipartFile multipartFile, Model model,
+			 HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException, DocumentException {
+		logger.info("purchaseRequest upload-->");
+		
+		if (multipartFile.isEmpty()) {
+			request.setAttribute("message", "Please select a file to upload");
+			return "uploadStatus";
+		}
+		
+		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.findByIsActive();
+		ArrayList<String> prDocNolist = new ArrayList<String>();
+		for(PurchaseRequest pq: purchaseRequestsList) {
+			prDocNolist.add(pq.getDocNumber());
+		}
+		//barCodeGeneration.downloadbarcodeImpge(prDocNolist, newbarcodePath);
+		
+		barCodeGeneration.barcodeImgstoPDF(prDocNolist,pdfbarcodePath);
+		
+		return "redirect:list";
+	}
+	*/
 	
 }

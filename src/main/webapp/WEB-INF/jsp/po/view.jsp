@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -406,20 +407,42 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												         
+												         <div class="col-sm-4 form-group has-feedback">
+												         
+												           <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${po.status eq 'Approved' || po.status eq 'Partially_Received'}">
+																		 
+																		   <c:if test="${checkStatusPoGr ==true}">
+									<input type="hidden" name="poId" value="${po.id}">
+																		<form:button type="button" id="convertBtn"
+																			class="btn btn-primary mr-1 float-right">
+																			<i></i>Convert To GR</form:button>
+																			
+								                           </c:if>	
+																		 
+																	</c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+												         
+												         
+												         
+												       
+												         
+												         </div>
+												         
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
 										
 									</div>
 									
-									<c:if test="${quantityStatus==true}">
-									<input type="hidden" name="poId" value="${po.id}">
-																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
-																			<i></i>Convert To GR</form:button>
-																			
-								    </c:if>									
+																	
                                     </div>
                                     
                                     
@@ -459,7 +482,7 @@ text-align: left;
 				'click',
 				function(event) {
 					event.preventDefault();
-					alertify.confirm('Are you Sure, Want to Convert  PO  to GR',
+					alertify.confirm('Convert PO to GR','Are you Sure, Want to Convert  PO  to GR',
 							function() {
 								form.submit();
 							}, function() {

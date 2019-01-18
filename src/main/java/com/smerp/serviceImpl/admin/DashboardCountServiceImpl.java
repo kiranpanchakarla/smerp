@@ -112,9 +112,12 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 				"    approvedCnt as ( select count(*) as totalCnt5 from tbl_purchase_order where status='Approved' and is_active=true) ,\r\n" + 
 				"    convertedToRFQCnt as ( select count(*) as totalCnt6 from tbl_purchase_order where status='ConvertedToRFQ' and is_active=true),\r\n" + 
 				"    completed as ( select count(*) as totalCnt7 from tbl_purchase_order where status='Completed' and is_active=true),\r\n" + 
-				"    rejected as ( select count(*) as totalCnt8 from tbl_purchase_order where status='Rejected' and is_active=true)\r\n" + 
-				"select countWise.totalCnt1 ,openCnt.totalCnt2,cancelledCnt.totalCnt3,draftCnt.totalCnt4,approvedCnt.totalCnt5,convertedToRFQCnt.totalCnt6,completed.totalCnt7,rejected.totalCnt8\r\n" + 
-				"from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,convertedToRFQCnt,completed,rejected  ";
+				"    rejected as ( select count(*) as totalCnt8 from tbl_purchase_order where status='Rejected' and is_active=true),\r\n" + 
+				"    partiallyreceived as ( select count(*) as totalCnt9 from tbl_purchase_order where status='Partially_Received' and is_active=true),\r\n" + 
+				"    convertedtopo as ( select count(*) as totalCnt10 from tbl_purchase_order where status='ConvertedToPO' and is_active=true),\r\n" + 
+				"     closed as ( select count(*) as totalCnt11 from tbl_purchase_order where status='Closed' and is_active=true)   \r\n" + 
+				"select countWise.totalCnt1 ,openCnt.totalCnt2,cancelledCnt.totalCnt3,draftCnt.totalCnt4,approvedCnt.totalCnt5,convertedToRFQCnt.totalCnt6,completed.totalCnt7,rejected.totalCnt8,\r\n" + 
+				"partiallyreceived.totalCnt9,convertedtopo.totalCnt10,closed.totalCnt11 from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,convertedToRFQCnt,completed,rejected,partiallyreceived,convertedtopo,closed";
 		
 		Query query = entityManager.createNativeQuery(poSQL);
 		logger.info("Query ----> " + query);
@@ -133,11 +136,50 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	    	 poCount.setConvertedToRFQ(tuple[5] == null ? 0 : ((BigInteger) tuple[5]).intValue());
 	    	 poCount.setCompleted(tuple[6] == null ? 0 :((BigInteger) tuple[6]).intValue());
 	    	 poCount.setRejected(tuple[7] == null ? 0 : ((BigInteger) tuple[7]).intValue());
-	    	
+	    	 poCount.setPartiallyReceived(tuple[8] == null ? 0 :((BigInteger) tuple[8]).intValue());
+	    	 poCount.setConvertedToPO(tuple[9] == null ? 0 : ((BigInteger) tuple[9]).intValue());
+	    	 poCount.setClosed(tuple[10] == null ? 0 :((BigInteger) tuple[10]).intValue());
 	     }
 	     
 	     logger.info("RFQ Count--------->"+poCount); 
 		return poCount;
+	}
+
+	@Override
+	public DashboardCount findGoodsReceiptCount() {
+		String sql= "with countWise as ( select count(*) as totalCnt1 from tbl_goods_return where  is_active=true) ,\r\n" + 
+				"    openCnt as ( select count(*) as totalCnt2 from tbl_goods_return where status='Open' and is_active=true) ,\r\n" + 
+				"    cancelledCnt as ( select count(*) as totalCnt3 from tbl_goods_return where status='Cancelled' and is_active=true ) ,\r\n" + 
+				"    draftCnt as ( select count(*) as totalCnt4 from tbl_goods_return where status='Draft' and is_active=true) ,\r\n" + 
+				"    approvedCnt as ( select count(*) as totalCnt5 from tbl_goods_return where status='Approved' and is_active=true) ,\r\n" + 
+				"    convertedToRFQCnt as ( select count(*) as totalCnt6 from tbl_goods_return where status='ConvertedToRFQ' and is_active=true),\r\n" + 
+				"    completed as ( select count(*) as totalCnt7 from tbl_goods_return where status='Completed' and is_active=true),\r\n" + 
+				"    rejected as ( select count(*) as totalCnt8 from tbl_goods_return where status='Rejected' and is_active=true),\r\n" + 
+				"    convertedToPO as ( select count(*) as totalCnt9 from tbl_goods_return where status='ConvertedToPO' and is_active=true)\r\n" + 
+				"select countWise.totalCnt1 ,openCnt.totalCnt2,cancelledCnt.totalCnt3,draftCnt.totalCnt4,approvedCnt.totalCnt5,completed.totalCnt7,rejected.totalCnt8\r\n" + 
+				"from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,completed,rejected ";
+		
+		Query query = entityManager.createNativeQuery(sql);
+		logger.info("Query ----> " + query);
+		logger.info("sql ----> " + sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+		 DashboardCount dashboardCount = new DashboardCount();
+	     for(Object[] tuple : list) {
+	    	
+	    	 dashboardCount.setTotal(tuple[0] == null ? 0 : ((BigInteger) tuple[0]).intValue());
+	    	 dashboardCount.setOpen(tuple[1] == null ? 0 : ((BigInteger) tuple[1]).intValue());
+	    	 dashboardCount.setCancelled(tuple[2] == null ? 0 : ((BigInteger) tuple[2]).intValue());
+	    	 dashboardCount.setDraft(tuple[3] == null ? 0 : ((BigInteger) tuple[3]).intValue());
+	    	 dashboardCount.setApproved(tuple[4] == null ? 0 : ((BigInteger) tuple[4]).intValue());
+	    	 dashboardCount.setCompleted(tuple[5] == null ? 0 : ((BigInteger) tuple[5]).intValue());
+	    	 dashboardCount.setRejected(tuple[6] == null ? 0 :((BigInteger) tuple[6]).intValue());
+	    	 
+	     }
+	     
+	     logger.info("Goods Receipt Count--------->"+dashboardCount); 
+		return dashboardCount;
 	}
 
 }

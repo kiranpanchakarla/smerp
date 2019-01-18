@@ -743,6 +743,11 @@ form .form-group{
 	margin-bottom: 1rem;
 	overflow: hidden;
 }
+
+form .form-group-user{
+	margin-bottom: 1rem;
+	overflow: hidden;
+}
 .text-xs-center{
 	font-size: 13px;
 }
@@ -834,6 +839,12 @@ form label {
     width: 28%;
 }
 
+.create-block .form-group-user label {
+    float: left;
+    display: inline-block;
+    width: 28%;
+}
+
 .create-block input, .create-block select {
     float: left;
     width: 72%;
@@ -916,7 +927,7 @@ table.dataTable tbody th, table.dataTable tbody td{ padding: 8px 4px !important;
 table.dataTable.nowrap th, table.dataTable.nowrap td {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 150px;
+    max-width: auto;
 }
 .fixed-width-table {
     width: auto;

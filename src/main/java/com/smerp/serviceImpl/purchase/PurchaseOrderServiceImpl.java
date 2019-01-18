@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
+import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
@@ -65,7 +66,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
-
+		purchaseOrder.setCategory("Item");
 		switch (purchaseOrder.getStatusType()) {
 		case "DR":
 			purchaseOrder.setStatus(EnumStatusUpdate.DRAFT.getStatus());
@@ -212,9 +213,10 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setPurchaseOrderlineItems(lineItems);
 			
 		}
-		
+		po.setCategory("Item");
 		po = purchaseOrderRepository.save(po);
 		
+		rfq.setCategory("Item");
 		rfq.setStatus(EnumStatusUpdate.CONVERTRFQTOPO.getStatus());
 		requestForQuotationRepository.save(rfq);
 		
@@ -230,6 +232,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	public PurchaseOrder saveCancelStage(String rfqId) {
 		PurchaseOrder po = purchaseOrderRepository.findById(Integer.parseInt(rfqId)).get();
 		po.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		po.setCategory("Item");
 		purchaseOrderRepository.save(po);
 		return po;
 		
@@ -263,10 +266,13 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		return purchaseOrderRepository.findById(id).get();
 	}
 	
+	
+
 	@Override
 	public PurchaseOrder getListAmount(PurchaseOrder purchaseOrder) {
 		
 		List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
+		List<PurchaseOrderLineItems> addListItems = new ArrayList<PurchaseOrderLineItems>();
 		Double addAmt=0.0;
 		Double addTaxAmt=0.0;
 		if (listItems != null) {
@@ -281,8 +287,11 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				polist.setTaxTotal("");
 				polist.setTotal("");	
 				}
+				addListItems.add(polist);
+				
 			}
-			purchaseOrder.setPurchaseOrderlineItems(listItems);
+			purchaseOrder.setPurchaseOrderlineItems(addListItems);
+			
 		}
 		purchaseOrder.setTotalBeforeDisAmt(addAmt);
 		purchaseOrder.setTaxAmt(""+addTaxAmt);

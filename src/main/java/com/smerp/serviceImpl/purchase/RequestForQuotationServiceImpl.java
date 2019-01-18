@@ -64,7 +64,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
-
+		requestForQuotation.setCategory("Item");
 		switch (requestForQuotation.getStatusType()) {
 		case "DR":
 			requestForQuotation.setStatus(EnumStatusUpdate.DRAFT.getStatus());
@@ -192,9 +192,11 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			
 		}
 		
+		rfq.setCategory("Item");
 		rfq = requestForQuotationRepository.save(rfq);
 		
 		prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+		prq.setType("Item");
 		purchaseRequestRepository.save(prq);
 		
 		return rfq;
@@ -208,6 +210,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	public RequestForQuotation saveCancelStage(String rfqId) {
 		RequestForQuotation rfq = requestForQuotationRepository.findById(Integer.parseInt(rfqId)).get();
 		rfq.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		rfq.setCategory("Item");
 		requestForQuotationRepository.save(rfq);
 		return rfq;
 		

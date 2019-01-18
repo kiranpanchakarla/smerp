@@ -3,7 +3,10 @@ package com.smerp.serviceImpl.purchase;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -17,10 +20,13 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
+import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
+import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
@@ -44,6 +50,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Autowired
 	GoodsReceiptLineItemsRepository goodsReceiptLineItemsRepository;
+	
+	@Autowired
+	GoodsReturnRepository goodsReturnRepository;
+	
 
 	@Autowired
 	VendorService vendorService;
@@ -65,7 +75,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
-
+		goodsReceipt.setCategory("Item");
 		switch (goodsReceipt.getStatusType()) {
 		case "DR":
 			goodsReceipt.setStatus(EnumStatusUpdate.DRAFT.getStatus());
@@ -136,14 +146,25 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
     		}
 		}
 		
-		if(goodsReceipt.getPoId()!=null) {
+		/*if(goodsReceipt.getPoId()!=null) {
 		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
 		if(!checkQuantityPoGr(po)) {
-			po.setStatus(EnumStatusUpdate.COMPLETED.getStatus());
-			purchaseOrderRepository.save(po);
+			
 			 logger.info("purchaseOrder    COMPLETED -->");
-		} }
-		return goodsReceiptRepository.save(goodsReceipt); 
+		} }*/
+		
+		
+		goodsReceipt= goodsReceiptRepository.save(goodsReceipt);
+		
+		if(goodsReceipt.getPoId()!=null) {
+		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+		
+		String status = setStatusOfPurchaseOrder(goodsReceipt);
+		po.setStatus(status);
+		purchaseOrderRepository.save(po);
+		}
+		
+		return goodsReceipt; 
 		 
 	}
 
@@ -183,9 +204,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			gr.setFreight(po.getFreight());
 			gr.setTotalDiscount(po.getTotalDiscount());
 		
-			List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
+			/*List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
 					.findByListPoId(po.getId());  // check Multiple  Quantity
-			Integer grQunatity =0;
+			Integer grQunatity =0;*/
 			
 			List<PurchaseOrderLineItems> poItms = po.getPurchaseOrderlineItems();
 			List<GoodsReceiptLineItems> lineItems =new ArrayList<GoodsReceiptLineItems>();
@@ -197,14 +218,15 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					line.setDescription(poItms.get(i).getDescription());
 					line.setHsn(poItms.get(i).getHsn());
 					
-					if(poItms.get(i).getProdouctNumber()!=null) {
+				/*	if(poItms.get(i).getProdouctNumber()!=null) {
 						 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
 					}else if(poItms.get(i).getSacCode()!=null) {
 						 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getSacCode());
-					}
+					}*/
 					
 				
-					line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
+					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
+					line.setRequiredQuantity(0);
 					
 					line.setSacCode(poItms.get(i).getSacCode());
 					line.setUom(poItms.get(i).getUom());
@@ -228,21 +250,154 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 		}
 		logger.info("gr" + gr);
+		gr.setCategory("Item");
 		gr = goodsReceiptRepository.save(gr);
-		 
-		/*** Here check Quantity  set status ***/
-		/*if(!checkQuantityPoGr(po)) {
-			po.setStatus(EnumStatusUpdate.COMPLETED.getStatus());  // Set Partial Complted
-			purchaseOrderRepository.save(po);
-			 logger.info("purchaseOrder    COMPLETED -->");
-		}*/
 		
+		po.setCategory("Item");
+		po.setStatus(EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus());  // Set Partial Complted
+		purchaseOrderRepository.save(po);
 		
 		return gr;
-       /* }else {
-        	return dup_gr;
-        }*/
+     
 	}
+	
+	
+	
+	@Override
+	public String  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
+		logger.info("set Status-->");
+		String status="";
+		PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReceipt.getPoId());
+		
+		List<GoodsReceiptLineItems> grListItems = goodsReceipt.getGoodsReceiptLineItems();
+		List<PurchaseOrderLineItems> poListItems = purchaseOrder.getPurchaseOrderlineItems();
+		
+		Map<String, Integer> poListData = prepareMapForProductQunatityPR(purchaseOrder, poListItems); // get po list
+		
+		Map<String, Integer> grListData = prepareMapForProductQunatityGR(goodsReceipt);   // get !Rejected  list
+		
+		Map<String, Integer> grApproveListData = prepareMapForApprovedProductQunatityGR(goodsReceipt);  // get Approved list
+	  
+		if(grListData.size()>0) {   // check gr  when !Rejected list
+        if(poListData.keySet().equals( grListData.keySet())) {  // check keys pr and gr  when !Rejected list
+        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
+        	    List<Integer> values2 = new ArrayList<Integer>(grListData.values());
+        	    Collections.sort(values1);
+        	    Collections.sort(values2);
+        	  if(values1.equals(values2)) {  // check values  pr and gr
+        		  if(poListData.keySet().equals( grApproveListData.keySet())) {  // check keys pr and gr  when Approved list
+            		  status = EnumStatusUpdate.CLOSED.getStatus(); 
+            	  }else {
+            		  status = EnumStatusUpdate.COMPLETED.getStatus();
+            	  }
+        	  }else {
+        		  status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
+        	  }
+        	 
+        	  
+        	  
+        }else { // all keys are not matched  
+        	status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
+        }
+		}else {  // No gr list
+        	status = EnumStatusUpdate.APPROVEED.getStatus();
+        }
+    	logger.info("status-->" + status);
+		return status;
+	}
+
+	private Map<String, Integer> prepareMapForProductQunatityPR(PurchaseOrder purchaseOrder,List<PurchaseOrderLineItems> poListItems) {
+		 Map<String, Integer> poListData =new LinkedHashMap<>();
+		if (poListItems != null) {
+			for (int i = 0; i < poListItems.size(); i++) {
+				PurchaseOrderLineItems polist = poListItems.get(i);
+				String key ="";
+				if(polist.getProdouctNumber()!=null) {
+				 key = purchaseOrder.getDocNumber() + "$" + polist.getProdouctNumber();
+				}else {
+				 key = purchaseOrder.getDocNumber() + "$" + polist.getSacCode();
+				}
+				if (polist.getProdouctNumber() != null && polist.getRequiredQuantity() != 0) {
+					poListData.put(key, polist.getRequiredQuantity());
+				} else if (polist.getSacCode() != null && polist.getRequiredQuantity() != 0) {
+					poListData.put(key, polist.getRequiredQuantity());
+				}
+			}
+		}
+		
+		logger.info("poListData-->" + poListData);
+		return poListData;
+	}
+	
+	public Map<String, Integer> prepareMapForProductQunatityGR(GoodsReceipt goodReceipt) {
+		Map<String, Integer> grMapListData = new LinkedHashMap<>();
+
+		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository.findByListPoId(goodReceipt.getPoId(),EnumStatusUpdate.REJECTED.getStatus()); // check
+																											// Multiple
+		grMapListData = getGoodsReceiptRealQunatityList(goodReceipt, grMapListData, listGoodsReceipt);
+		
+		logger.info("grMapListData-->" + grMapListData);
+
+		return grMapListData;
+	}
+	
+	private Map<String, Integer> prepareMapForApprovedProductQunatityGR(GoodsReceipt goodReceipt) {
+		Map<String, Integer> grMapListData = new LinkedHashMap<>();
+
+		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository.findByApproveListPoId(goodReceipt.getPoId(),EnumStatusUpdate.APPROVEED.getStatus()); // check
+																											// Multiple
+																											// Quantity
+		grMapListData = getGoodsReceiptRealQunatityList(goodReceipt, grMapListData, listGoodsReceipt);
+		
+		logger.info("grMapListData-->" + grMapListData);
+
+		return grMapListData;
+	}
+
+	private Map<String, Integer> getGoodsReceiptRealQunatityList(GoodsReceipt goodReceipt, Map<String, Integer> grMapListData,
+			List<GoodsReceipt> listGoodsReceipt) {
+		for (int i = 0; i < listGoodsReceipt.size(); i++) {
+			GoodsReceipt goodsReceiptObj = listGoodsReceipt.get(i);
+			List<GoodsReceiptLineItems> goodsReceiptLineItems = goodsReceiptObj.getGoodsReceiptLineItems();
+			for (int j = 0; j < goodsReceiptLineItems.size(); j++) {
+				GoodsReceiptLineItems grlist = goodsReceiptLineItems.get(j);
+				logger.info("grlist===>" + grlist);
+				String key = "";
+				
+				if( grlist.getProdouctNumber()!=null) {
+					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getProdouctNumber();
+					}else {
+					key = goodReceipt.getReferenceDocNumber() + "$" + grlist.getSacCode();
+					}
+				
+				if (!grMapListData.containsKey(key)) {
+
+					if (grlist.getProdouctNumber() != null && grlist.getRequiredQuantity() != 0) {
+						grMapListData.put(key,
+								grlist.getRequiredQuantity());
+					} else if (grlist.getSacCode() != null && grlist.getRequiredQuantity() != 0) {
+						grMapListData.put(key,
+								grlist.getRequiredQuantity());
+					}
+				} else {
+					Integer tempQunatity = grMapListData.get(key);
+
+					if (grlist.getProdouctNumber() != null && grlist.getRequiredQuantity() != 0) {
+						grMapListData.put(key,
+								tempQunatity + grlist.getRequiredQuantity());
+					} else if (grlist.getSacCode() != null && grlist.getRequiredQuantity() != 0) {
+						grMapListData.put(key,
+								tempQunatity + grlist.getRequiredQuantity());
+					}
+				}
+
+			}
+		}
+		
+		return grMapListData;
+	}
+	
+	
 	
 	
 	
@@ -250,6 +405,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public GoodsReceipt saveCancelStage(String rfqId) {
 		GoodsReceipt gr = goodsReceiptRepository.findById(Integer.parseInt(rfqId)).get();
 		gr.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		gr.setCategory("Item");
 		goodsReceiptRepository.save(gr);
 		return gr;
 		
@@ -282,6 +438,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public GoodsReceipt getListAmount(GoodsReceipt goodsReceipt) {
 		logger.info("getListAmount-->");
 		List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+		List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
 		
 		PurchaseOrder po = null;
 		List<PurchaseOrderLineItems> poItms =null;
@@ -290,7 +447,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 po = purchaseOrderService.findById(goodsReceipt.getPoId());
 		 poItms = po.getPurchaseOrderlineItems();
 		listGoodsReceipt = goodsReceiptRepository
-					.findByListPoId(po.getId());  // check Multiple  Quantity
+					.findByListPoId(po.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
 		}
 		
 		
@@ -311,18 +468,24 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
 				}else if(poItms.get(i).getSacCode()!=null ) {
 					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getSacCode());
-				} }
+				} 
 				
 				logger.info("poItms.get(i).getRequiredQuantity()-->" + poItms.get(i).getRequiredQuantity());
 				logger.info("grQunatity-->" + grQunatity);
 				grlist.setTempRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
 				
+				
+				}
+				
+			
+				
 				}else {
 				grlist.setTaxTotal("");
 				grlist.setTotal("");	
 				}
+				addListItems.add(grlist);
 			}
-			goodsReceipt.setGoodsReceiptLineItems(listItems);
+			goodsReceipt.setGoodsReceiptLineItems(addListItems);
 		}
 		goodsReceipt.setTotalBeforeDisAmt(addAmt);
 		goodsReceipt.setTaxAmt(""+addTaxAmt);
@@ -337,20 +500,60 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
 		goodsReceipt.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
 		goodsReceipt.setTotalPayment(total_amt);
-		
-		
 	
 	return goodsReceipt;
 	}
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	/*@Override
+	public String checkStatusPoGr(PurchaseOrder purchaseOrder) {
+	    String status ="";
+		GoodsReceipt  goodsReceipt = goodsReceiptRepository.findByPoId(purchaseOrder.getId());
+		if(goodsReceipt!=null) {
+		List<PurchaseOrderLineItems> poListItems = purchaseOrder.getPurchaseOrderlineItems();
+		
+		Map<String, Integer> poListData = prepareMapForProductQunatityPR(purchaseOrder, poListItems);
+		
+		Map<String, Integer> grListData = prepareMapForProductQunatityGR(goodsReceipt);
+		
+      
+        if(poListData.keySet().equals( grListData.keySet())) {
+        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
+        	    List<Integer> values2 = new ArrayList<Integer>(grListData.values());
+        	    Collections.sort(values1);
+        	    Collections.sort(values2);
+        	  if(values1.containsAll(values2)) {
+        		  status = EnumStatusUpdate.COMPLETED.getStatus();
+        	  }else {
+        		  status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
+        	  }
+        }else {
+        	status = EnumStatusUpdate.APPROVEED.getStatus();
+        }
+		}else {
+			status = EnumStatusUpdate.APPROVEED.getStatus();
+		}
+		return status;
+	}*/
+	
+	
 	@Override
 	public Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder) {
 		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
-				.findByListPoId(purchaseOrder.getId());
+				.findByListPoId(purchaseOrder.getId(),EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listGoodsReceipt-->" +listGoodsReceipt);
-		Integer prQunatity =  getListPoQuantityCount(purchaseOrder);
+		
+		/*String status = setStatusOfPurchaseOrder(listGoodsReceipt.get(0));
+		logger.info("status-->" +status); //Test the Status if you want  
+*/		
+		Integer prQunatity = getListPoQuantityCount(purchaseOrder);
 		Integer grQunatity = getListGRQunatityCount(listGoodsReceipt);
 		
 		if(prQunatity > grQunatity)
@@ -439,6 +642,32 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		return goodsReceipt;
 	}
 
+			public static void main(String[] args) {
+				
+				Map<String, Integer> poListData = new LinkedHashMap<>();
+				poListData.put("PO2019010747$p103", 10);
+				poListData.put("PO2019010747$p123", 20);
+				
+				Map<String, Integer> grListData = new LinkedHashMap<>();
+				grListData.put("PO2019010747$p103", 5);
+				grListData.put("PO2019010747$p123", 10);
+				
+			  
+		        System.out.println("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
+		        
+		        System.out.println("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
+		        
+		       /* if(key1.containsAll(key2)) {
+		        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
+		        	    List<Integer> values2 = new ArrayList<Integer>(grListData.values());
+		        	    Collections.sort(values1);
+		        	    Collections.sort(values2);
+				
+			   }*/
+	
+			}
 
+			
+			
 
 }

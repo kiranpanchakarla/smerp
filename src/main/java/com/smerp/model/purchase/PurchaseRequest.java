@@ -73,8 +73,17 @@ public class PurchaseRequest extends AuditModel {
 	@Column(name="is_active")
 	private Boolean isActive = true;
 
+	@Column(name="barcodeImgPath")  //Barcode Image Path
+	private String barCodeImgPath;
 	
-	
+	public String getBarCodeImgPath() {
+		return barCodeImgPath;
+	}
+
+	public void setBarCodeImgPath(String barCodeImgPath) {
+		this.barCodeImgPath = barCodeImgPath;
+	}
+
 	public String getStatusType() {
 		return statusType;
 	}

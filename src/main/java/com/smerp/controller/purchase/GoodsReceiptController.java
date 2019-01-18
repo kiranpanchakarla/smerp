@@ -41,6 +41,7 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
+import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -65,6 +66,10 @@ public class GoodsReceiptController {
 
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
+	
+	@Autowired
+	GoodsReturnService goodsReturnService;
+	
 
 	@Autowired
 	SacService sacService;
@@ -74,6 +79,8 @@ public class GoodsReceiptController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	
 
 
 	@InitBinder
@@ -160,6 +167,7 @@ public class GoodsReceiptController {
 		logger.info("gr-->" + gr);
 		poloadData(model, gr);
 		// model.addAttribute("categoryMap", categoryMap());
+		model.addAttribute("checkStatusGr", goodsReturnService.checkQuantityGr(gr));
 		model.addAttribute("gr", gr);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
@@ -224,14 +232,15 @@ public class GoodsReceiptController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
+		logger.info("id -->" + id);
 		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
-		logger.info("RequestForQuotation view-->" + gr);
+		logger.info("goodsReceipt -->" + gr);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);*/
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

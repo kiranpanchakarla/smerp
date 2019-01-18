@@ -182,11 +182,10 @@
 																		
 																		
 																		<div class="row" id="radioDiv">
-																			<div class="col-sm-4 form-group">
+																			<div class="col-sm-6 form-group">
 																			<div class="input-group">
                                                                                
-                                                                               
-                                                                                <div class="inventory-list">
+                                                                                <%--  <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Item" path="category"  name="category"  id="items_radio" 
 																				/>
@@ -197,7 +196,17 @@
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Services" path="category"  name="category" id="service_radio" 
 																				/>	
-                                                                                <span class="radio-list">Services</span></div>
+                                                                                <span class="radio-list">Services</span></div> --%>
+                                                                                
+                                                                                   <div class="inventory-list">
+                                                                                    <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
+                                                                                    <span class="radio-list">Product</span>
+
+                                                                                </div>
+                                                                                <div class="inventory-list" style="display: none;" >
+                                                                                    <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
+                                                                                    <span class="radio-list">Service</span>
+                                                                                </div> 
                                                                                 <div class="help-block with-errors"></div>
                                                                             </div>
 																			
@@ -206,7 +215,7 @@
 																		
 																		<div class="row" id="pur_radioDiv" style="display: none">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${rfq.category}
+																		<label>Type</label>: <%-- ${rfq.category} --%> Product
 																	</div>
 																       </div>
 																		
@@ -309,7 +318,7 @@
 																									<th>Quantity</th>
 																									<th>Warehouse</th>
 																									</c:if>
-																									<th>Action</th>
+																									
 																								</tr>
 																							</thead>
 																										
@@ -347,7 +356,7 @@
 																															</c:forEach></td>
 
 																														<td>${listLineItems.hsn}</td>
-																														<td>--</td>	
+																														
 																													</c:if>
 																													
 																													<c:if test="${rfq.category!='Item'}">
@@ -363,7 +372,7 @@
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
-																														<td>--</td>		
+																															
 																													</c:if>
 																												
 																												</tr>

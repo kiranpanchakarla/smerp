@@ -35,7 +35,8 @@ public class PurchaseOrder extends AuditModel {
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "po_id", referencedColumnName = "id")
 	private List<PurchaseOrderLineItems> purchaseOrderlineItems;
 

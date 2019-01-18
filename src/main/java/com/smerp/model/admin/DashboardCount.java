@@ -12,6 +12,8 @@ public class DashboardCount {
 	private Integer approved;
 	private Integer rejected;
 	private Integer convertedToPO;
+	private Integer partiallyReceived;
+	private Integer closed;
 	
 	public Integer getConvertedToPO() {
 		return convertedToPO;
@@ -69,11 +71,27 @@ public class DashboardCount {
 		rejected = rejecte;
 	}
 	
+	
+	public Integer getPartiallyReceived() {
+		return partiallyReceived;
+	}
+	public void setPartiallyReceived(Integer partiallyReceived) {
+		this.partiallyReceived = partiallyReceived;
+	}
+	public Integer getClosed() {
+		return closed;
+	}
+	public void setClosed(Integer closed) {
+		this.closed = closed;
+	}
+	
 	@Override
 	public String toString() {
 		return "DashboardCount [total=" + total + ", open=" + open + ", cancelled=" + cancelled + ", draft=" + draft
-				+ ", Completed=" + completed + ", ConvertedToRFQ=" + convertedToRFQ + ", Approved=" + approved
-				+ ", Rejected=" + rejected + "]";
+				+ ", completed=" + completed + ", convertedToRFQ=" + convertedToRFQ + ", approved=" + approved
+				+ ", rejected=" + rejected + ", convertedToPO=" + convertedToPO + ", partiallyReceived="
+				+ partiallyReceived + ", closed=" + closed + "]";
 	}
+	 
 	
 }

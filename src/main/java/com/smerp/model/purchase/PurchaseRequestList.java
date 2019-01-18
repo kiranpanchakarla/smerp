@@ -45,7 +45,7 @@ public class PurchaseRequestList extends AuditModel {
 	private String productGroup;
 	
 	@Column(name="ware_house")
-	private String warehouse;
+	private Integer warehouse;
 	
 	@Column(name="hsn")
 	private String hsn;
@@ -125,11 +125,11 @@ public class PurchaseRequestList extends AuditModel {
 		this.prodouctNumber = prodouctNumber;
 	}
 
-	public String getWarehouse() {
+	public Integer getWarehouse() {
 		return warehouse;
 	}
 
-	public void setWarehouse(String warehouse) {
+	public void setWarehouse(Integer warehouse) {
 		this.warehouse = warehouse;
 	}
 

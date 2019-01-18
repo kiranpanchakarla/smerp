@@ -6,30 +6,40 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-          
- <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
- <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
- <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
+
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
+	type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
+	type="text/javascript"></script>
+<script
+	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
+	type="text/javascript"></script>
 
 
-<script src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/> type="text/javascript"></script>
-<link href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>" rel="stylesheet" type="text/css" />
+<script
+	src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/>
+	type="text/javascript"></script>
+<link
+	href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>"
+	rel="stylesheet" type="text/css" />
 
- 	
+
 
 </head>
 <style>
-    .table td a i {
-    line-height: 35px;
-      }
-    </style>
- 
+.table td a i {
+	line-height: 35px;
+}
+</style>
+
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -50,140 +60,141 @@
 						<div class="content-body">
 
 							<c:url value="/gr/save" var="createUrl" />
-							<form:form method="POST" action="${createUrl}" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="gr"
-								data-toggle="validator" role="form" >
+							<form:form method="POST" action="${createUrl}" id="form"
+								class="bv-form commentForm" enctype="multipart/form-data"
+								modelAttribute="gr" data-toggle="validator" role="form">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-												<c:if test="${gr.id!=null}">
-												<h2 class="card-title" id="basic-layout-icons">Update Goods Receipt</h2>
-													<form:input type="hidden" cssClass="form-control" path="id" />
-												</c:if>
-												<c:if test="${gr.id==null}">
-												<h2 class="card-title" id="basic-layout-icons">Create New Goods Receipt</h2>
-												</c:if> 
-													
+													<c:if test="${gr.id!=null}">
+														<h2 class="card-title" id="basic-layout-icons">Update
+															Goods Receipt</h2>
+														<form:input type="hidden" cssClass="form-control"
+															path="id" />
+													</c:if>
+													<c:if test="${gr.id==null}">
+														<h2 class="card-title" id="basic-layout-icons">Create
+															New Goods Receipt</h2>
+													</c:if>
+
 												</div>
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
-													<form class="form">
-														<div class="form-body">
-															<div class="row">
-																<div class="col-sm-4 form-group">
-																	<label>Name</label>
-																	<form:input type="text"
-																		cssClass="form-control vendorname"
-																		placeholder='Vendor Name' path="vendor.name"
-																		required="true" autocomplete="off" />
-																</div>
+														<form class="form">
+															<div class="form-body">
+																<div class="row">
+																	<div class="col-sm-4 form-group">
+																		<label>Name</label>
+																		<form:input type="text"
+																			cssClass="form-control vendorname"
+																			placeholder='Vendor Name' path="vendor.name"
+																			required="true" autocomplete="off" />
+																	</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
-																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>
-																	<form:input type="text" cssClass="form-control emailId"
-																		readonly="true" placeholder='Email Id'
-																		path="vendor.emailId"   />
-																</div>
-                                                                <div class="col-sm-4 form-group">
-																	<label>Contact</label>
+																	<div class="col-sm-4 form-group">
+																		<label>Email Id</label>
+																		<form:input type="text"
+																			cssClass="form-control emailId" readonly="true"
+																			placeholder='Email Id' path="vendor.emailId" />
+																	</div>
+																	<div class="col-sm-4 form-group">
+																		<label>Contact</label>
 
-																	<form:select path="vendorContactDetails.id"
-																		id="vendorContactDetails" cssClass="form-control"
-																		oninvalid="this.setCustomValidity('Please Select State ')"
-																		oninput="setCustomValidity('')">
-																		<form:option value="" >Select</form:option>
-																	</form:select>
-																	<div style="color: red;" id="1_errorContainer"
-																		class="help-block with-errors"></div>
-																</div>
-															</div>
-
-															<form:hidden path="id" />
-
-															<div class="row">
-																
-
-																<div class="col-sm-4 form-group rm_address">
-																	<label>Pay To</label>
-																	<form:select path="vendorPayTypeAddress.id"
-																		id="vendorPayToAddress" cssClass="form-control"
-																		required="true">
-																		<form:option value="" >Select</form:option>
-																	</form:select>
+																		<form:select path="vendorContactDetails.id"
+																			id="vendorContactDetails" cssClass="form-control"
+																			oninvalid="this.setCustomValidity('Please Select State ')"
+																			oninput="setCustomValidity('')">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																		<div style="color: red;" id="1_errorContainer"
+																			class="help-block with-errors"></div>
+																	</div>
 																</div>
 
-																<div class="col-sm-4 form-group rm_address">
-																	<label>Ship From</label>
-																	<form:select path="vendorShippingAddress.id"
-																		id="vendorAddress" cssClass="form-control"
-																		required="true">
-																		<form:option value="" >Select</form:option>
-																	</form:select>
+																<form:hidden path="id" />
+
+																<div class="row">
+
+
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Pay To</label>
+																		<form:select path="vendorPayTypeAddress.id"
+																			id="vendorPayToAddress" cssClass="form-control"
+																			required="true">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																	</div>
+
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Ship From</label>
+																		<form:select path="vendorShippingAddress.id"
+																			id="vendorAddress" cssClass="form-control"
+																			required="true">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																	</div>
+
+																	<div class="col-sm-4 form-group">
+																		<label>Doc Number</label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='Document Number' path="docNumber"
+																			readonly="true" />
+																	</div>
+
 																</div>
-                                                                
-                                                                <div class="col-sm-4 form-group">
-																				<label>Doc Number</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Number' path="docNumber"
-																					readonly="true" />
+
+																<div class="card-body collapse in">
+																	<div class="card-block-in">
+																		<div class="form-body">
+
+																			<div class="row">
+																				<div class="col-sm-4 form-group">
+																					<label>Ref Doc No.</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="referenceDocNumber" />
+																				</div>
+																				<div class="col-sm-4 form-group">
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Posting Date' path="postingDate"
+																						autocomplete="off" required="true" />
+
+																				</div>
+																				<div class="col-sm-4 form-group">
+																					<label>Doc Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Document Date' path="documentDate"
+																						autocomplete="off" required="true" />
+
+																				</div>
 																			</div>
 
-															</div>
-
-															<div class="card-body collapse in">
-																<div class="card-block-in">
-																	<div class="form-body">
-
-																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc No.</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Reference Document Number'
-																					path="referenceDocNumber"  />
-																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" required="true" />
-																				
-																			</div>
-																			<div class="col-sm-4 form-group">
-																				<label>Doc Date</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Date' path="documentDate"
-																					autocomplete="off" required="true" />
-																				
-																			</div>
-																		</div>
 
 
 
+																			<div class="row">
+																				<div class="col-sm-4 form-group">
+																					<label>Required Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						id="require_date" placeholder='Required Date'
+																						autocomplete="off" path="requiredDate"
+																						required="true" />
 
-																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>
-																				<form:input type="text" cssClass="form-control"
-																					id="require_date" placeholder='Required Date'
-																					autocomplete="off" path="requiredDate" required="true" />
-																			
-																			</div>
-                                                                            <div class="col-sm-4 form-group">
-                                                                          &nbsp;
-																		</div>
-																		
-																		 
-																		<div class="row" id="radioDiv">
-																		<div class="card-block" style="clear:both;">
-																			<div class="col-sm-4 form-group">
-																			<div class="input-group">
-                                                                               
-                                                                               
-                                                                                <div class="inventory-list">
+																				</div>
+																				<div class="col-sm-4 form-group">&nbsp;</div>
+
+
+																				<div class="row" id="radioDiv">
+																					<div class="card-block" style="clear: both;">
+																						<div class="col-sm-6 form-group">
+																							<div class="input-group">
+
+ 																				<%--  <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Item" path="category"  name="category"  id="items_radio" 
 																				/>
@@ -194,624 +205,871 @@
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Services" path="category"  name="category" id="service_radio" 
 																				/>	
-                                                                                <span class="radio-list">Services</span></div>
-                                                                                <div class="help-block with-errors"></div>
-                                                                            </div>
-																			
-																			</div>
+                                                                                <span class="radio-list">Services</span></div> --%>
+                                                                                
+                                                                                  <div class="inventory-list">
+                                                                                    <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
+                                                                                    <span class="radio-list">Product</span>
+
+                                                                                </div>
+                                                                                <div class="inventory-list" style="display: none;" >
+                                                                                    <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
+                                                                                    <span class="radio-list">Service</span>
+                                                                                </div> 
+																								<div class="help-block with-errors"></div>
+																							</div>
+
+																						</div>
+																					</div>
+																				</div>
+
+
+																				<div class="card-block"
+																					style="clear: both; padding: 0px 1.5rem;">
+																					<div class="row" id="gr_radioDiv"
+																						style="display: none">
+																						<div class="col-sm-6 form-group has-feedback">
+																							<label>Type</label>: <%-- ${gr.category} --%> Product
+																						</div>
+																					</div>
+																				</div>
+
+
 																			</div>
 																		</div>
-																		
-																		
-																		<div class="card-block" style="clear:both;padding: 0px 1.5rem;">
-																		<div class="row" id="gr_radioDiv" style="display: none">
-																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${gr.category}
 																	</div>
-																       </div>
-																       </div>
-																		
-																		
-																	</div>
-																</div>
-															</div>
-															
-															<div class="row">
-																			
-																			
-															</div>
-																		
-															<input type="hidden" id="addressCount" value="0">
-															
 
-															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item"><a class="nav-link active"
-																	id="home-tab" data-toggle="tab" href="#home" role="tab"
-																	aria-controls="home" aria-selected="true">Item
-																		Details</a></li>
-																<li class="nav-item"><a class="nav-link"
-																	id="profile-tab" data-toggle="tab" href="#profile"
-																	role="tab" aria-controls="profile"
-																	aria-selected="false">Inventory</a></li>
-															</ul>
+																	<div class="row"></div>
 
-															<div class="tab-content">
-																<div class="tab-pane active" id="home" role="tabpanel"
-																	aria-labelledby="home-tab">
-																	<div class="row">
-																		<div class="col-xs-12">
-																			<div class="row-in">
-																				
-																				<div class="table-responsive">
-																					<div class="full-col-table">
-																						<table class="table table-bordered table-striped item-service-table"
-																							id="itemTbl">
-																							<thead>
-																								<tr>
-																									<!-- <th>S.No</th> -->
-																									<th style="display: none;">Product Id</th>
-																									<th>Product No.</th>
-																									<th>UOM</th>
-																									<th>Quantity</th>
-																									<th>Unit Price</th>
-																									<th>Tax Code</th>
-																									<th>Tax Total</th>
-																									<th>Total</th>
-																									<th>Product Group</th>
-																									<th>Warehouse</th>
-																									<th>HSN</th>
-																									<th>Action</th>
-																								</tr>
-																							</thead>
-																							<tbody >
-																										
-                                                                                            </tbody>
-                                                                                      </table>   
-                                                                                         
-                                                                                      <table class="table table-bordered table-striped item-service-table"
-																							id="serviceTbl">   
-																							<thead>
-																								<tr>
-																									<th style="display: none;">Product Id</th>
-																									<th>SAC Code</th>
-																									<th>Description</th>
-																									<th>Quantity</th>
-																									<th>Unit Price</th>
-																									<th>Tax Code</th>
-																									<th>Tax Total</th>
-																									<th>Total</th>
-																									<th>Warehouse</th>
-																									<th>Action</th>
-																								</tr>
-																							</thead> 
-                                                                                            <tbody >
-																										
-                                                                                            </tbody>
-                                                                                        </table>    
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty goodsReceiptLineItems}">
-																										<form:hidden path="poId" />
-																						<table class="table table-bordered table-striped item-service-table"
-																							id="edit_item_serviceTbl">   
-																										
+																	<input type="hidden" id="addressCount" value="0">
+
+
+																	<ul class="nav nav-tabs" id="containerContainingTabs"
+																		role="tablist">
+																		<li class="nav-item"><a class="nav-link active"
+																			id="home-tab" data-toggle="tab" href="#home"
+																			role="tab" aria-controls="home" aria-selected="true">Item
+																				Details</a></li>
+																		<li class="nav-item"><a class="nav-link"
+																			id="profile-tab" data-toggle="tab" href="#profile"
+																			role="tab" aria-controls="profile"
+																			aria-selected="false">Inventory</a></li>
+																	</ul>
+
+																	<div class="tab-content">
+																		<div class="tab-pane active" id="home" role="tabpanel"
+																			aria-labelledby="home-tab">
+																			<div class="row">
+																				<div class="col-xs-12">
+																					<div class="row-in">
+
+																						<div class="table-responsive">
+																							<div class="full-col-table">
+																								<table
+																									class="table table-bordered table-striped item-service-table"
+																									id="itemTbl">
+																									<thead>
+																										<tr>
+																											<!-- <th>S.No</th> -->
+																											<th style="display: none;">Product Id</th>
+																											<th>Product No.</th>
+																											<th>UOM</th>
+																											<th>Quantity</th>
+																											<th>Unit Price</th>
+																											<th>Tax Code</th>
+																											<th>Tax Total</th>
+																											<th>Total</th>
+																											<th>Product Group</th>
+																											<th>Warehouse</th>
+																											<th>HSN</th>
+																											<th>Action</th>
+																										</tr>
+																									</thead>
+																									<tbody>
+
+																									</tbody>
+																								</table>
+
+																								<table
+																									class="table table-bordered table-striped item-service-table"
+																									id="serviceTbl">
+																									<thead>
+																										<tr>
+																											<th style="display: none;">Product Id</th>
+																											<th>SAC Code</th>
+																											<th>Description</th>
+																											<th>Quantity</th>
+																											<th>Unit Price</th>
+																											<th>Tax Code</th>
+																											<th>Tax Total</th>
+																											<th>Total</th>
+																											<th>Warehouse</th>
+																											<th>Action</th>
+																										</tr>
+																									</thead>
+																									<tbody>
+
+																									</tbody>
+																								</table>
+
+
+
+
+
+																								<!--1 multiply Dynamically Load   -->
+																								<c:if test="${not empty goodsReceiptLineItems}">
+																									<form:hidden path="poId" />
+																									<table
+																										class="table table-bordered table-striped item-service-table"
+																										id="edit_item_serviceTbl">
+
 																										<thead>
-																								<tr>
-																									<!-- <th>S.No</th> -->
-																									<th style="display: none;">Product Id</th>
-																									<c:if test="${gr.category=='Item'}">
-																									<th>Product No.</th>
-																									<th>UOM</th>
-																									<th>Quantity</th>
-																									<th>Unit Price</th>
-																									<th>Tax Code</th>
-																									<th>Tax Total</th>
-																									<th>Total</th>
-																									<th>Product Group</th>
-																									<th>Warehouse</th>
-																									<th>HSN</th>
-																									</c:if>
-																									
-																									<c:if test="${gr.category!='Item'}">
-																									<th>SAC Code</th>
-																									<th>Description</th>
-																									<th>Quantity</th>
-																									<th>Unit Price</th>
-																									<th>Tax Code</th>
-																									<th>Tax Total</th>
-																									<th>Total</th>
-																									<th>Warehouse</th>
-																									</c:if>
-																									<th>Action</th>
-																								</tr>
-																							</thead>
-																										
+																											<tr>
+																												<!-- <th>S.No</th> -->
+																												<th style="display: none;">Product Id</th>
+																												<c:if test="${gr.category=='Item'}">
+																													<th>Product No.</th>
+																													<th>UOM</th>
+																													<th>Quantity</th>
+																													<th>Unit Price</th>
+																													<th>Tax Code</th>
+																													<th>Tax Total</th>
+																													<th>Total</th>
+																													<th>Product Group</th>
+																													<th>Warehouse</th>
+																													<th>HSN</th>
+																												</c:if>
+
+																												<c:if test="${gr.category!='Item'}">
+																													<th>SAC Code</th>
+																													<th>Description</th>
+																													<th>Quantity</th>
+																													<th>Unit Price</th>
+																													<th>Tax Code</th>
+																													<th>Tax Total</th>
+																													<th>Total</th>
+																													<th>Warehouse</th>
+																												</c:if>
+																												<c:if test="${gr.poId==null}">
+																													<th>Action</th>
+																												</c:if>
+
+																											</tr>
+																										</thead>
+
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
 																											<c:forEach items="${goodsReceiptLineItems}"
 																												var="listLineItems">
-																												
-																												
-																											 <c:if test="${gr.poId!=null}">
-				         
-				                                                                                          <tr class="multTot multTot${count}">
-																												<td style="display: none;"><div class="form-group"><form:input
-																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
-																															value="${listLineItems.productId}"
-																															class="form-control productId"></form:input></div>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
-																															<div class="form-group">
-																															
-																															</div>
-																															</td>
-																															
-																													<c:if test="${gr.category=='Item'}">
-																													<td ><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].prodouctNumber" readonly="true"
-																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></div></td>
-																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].uom"
-																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
-																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
-																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validateQuantity" autocomplete="off"  required="true"></form:input></div>
-																													<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >	
-																													<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >	
-																															
-																															</td>
-																															
-																															
-																															
+
+
+																												<c:if test="${gr.poId!=null}">
+
+																													<tr class="multTot multTot${count}">
+																														<td style="display: none;"><div
+																																class="form-group">
+																																<form:input type="hidden"
+																																	path="goodsReceiptLineItems[${count}].productId"
+																																	value="${listLineItems.productId}"
+																																	class="form-control productId"></form:input>
+																															</div> <form:hidden
+																																path="goodsReceiptLineItems[${count}].id" />
+																															<div class="form-group"></div></td>
+
+
+
+																														<c:if test="${gr.category=='Item'}">
 																															<td><div class="form-group">
-																															<form:input type="text"  readonly="true"
-																															path="goodsReceiptLineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}"
-																															class="form-control unitPrice validatePrice"  ></form:input></div></td>
-																													
-																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
-																															style="width:;" readonly="true"
-																															path="goodsReceiptLineItems[${count}].taxCode">
-																															<form:option value="" label="Select" />
-																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
-																													
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].taxTotal"
-																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal " readonly="true"  ></form:input></div></td>
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].total"
-																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total" readonly="true"  ></form:input></div></td>
-																													
-																															
-																														<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].productGroup"
-																															value="${listLineItems.productGroup}"
-																															class="form-control productGroup" 
-																															readonly="true"></form:input></div></td>
-																														
-																														<td><div class="form-group"><form:select class="form-control"
-																															style="width:;" readonly="true"
-																															path="goodsReceiptLineItems[${count}].warehouse">
-																															<form:option value="" label="Select" />
-																															<form:options items="${plantMap}" />
-																														</form:select></div></td>
-																															
-																														<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].hsn"
-																															value="${listLineItems.hsn}"
-																															class="form-control hsnVal" 
-																															readonly="true"></form:input></div></td>
-																															<td>--</td>
-																													</c:if>
-																													
-																													<c:if test="${gr.category!='Item'}">
-																													<td>${listLineItems.sacCode}</td>
-																													
-																													<td>${listLineItems.description}</td>
-																															
-																													<td><div class="form-group">
-																															<form:input type="text"
-																															path="goodsReceiptLineItems[${count}].requiredQuantity" 
-																															value="${listLineItems.requiredQuantity}"  autocomplete="off"
-																															class="form-control requiredQuantity validateQuantity" ></form:input></div>
-																												<input type="hidden" value="${listLineItems.requiredQuantity}"  class="original_requiredQuantity" >
-																												<input type="hidden" value="${listLineItems.tempRequiredQuantity}"  class="temp_requiredQuantity" >		
-																															
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].prodouctNumber"
+																																		readonly="true"
+																																		value="${listLineItems.prodouctNumber}"
+																																		class="form-control prodouctNumber"></form:input>
+																																</div></td>
+
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].uom"
+																																		value="${listLineItems.uom}"
+																																		class="form-control uom"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+																															<td><img
+																																src="${contextPath}/resources/images/portrait/info.png"
+																																alt="See" id="output" width="15"
+																																height="15"
+																																style="float: left; margin-right: 10px;"
+																																data-toggle="tooltip"
+																																data-placement="top"
+																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
+																																<c:choose>
+																																	<c:when
+																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				value="${listLineItems.requiredQuantity}"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" readonly="true"></form:input>
+																																		</div>
+
+																																	</c:when>
+																																	<c:otherwise>
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" required="true"></form:input>
+																																		</div>
+
+																																	</c:otherwise>
+																																</c:choose> <input type="hidden"
+																																value="${listLineItems.requiredQuantity}"
+																																class="original_requiredQuantity">
+																																<input type="hidden"
+																																value="${listLineItems.tempRequiredQuantity}"
+																																class="temp_requiredQuantity">
+
 																															</td>
-																													
-																													<!--  -->
-																													 <td><div class="form-group">
-																															<form:input type="text"
-																															path="goodsReceiptLineItems[${count}].unitPrice"
-																															value="${listLineItems.unitPrice}"  autocomplete="off" readonly="true"
-																															class="form-control unitPrice" ></form:input></div></td> 
-																													
-																													
-																													    <td>
-																													    <div class="form-group">
-																															<form:input type="text"
-																															path="goodsReceiptLineItems[${count}].taxCode"
-																															value="${listLineItems.taxCode}"  autocomplete="off" readonly="true"
-																															class="form-control unitPrice" ></form:input></div>
-																													    
-																													    
-																													    
-																													   <%--  <div class="form-group"><form:select class="form-control taxCode"
+
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].unitPrice"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.unitPrice}"
+																																		class="form-control unitPrice validatePrice"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:select
+																																		class="form-control taxCode"
+																																		style="width:;" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].taxCode">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${taxCodeMap}" />
+																																	</form:select>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].taxTotal"
+																																		value="${listLineItems.taxTotal}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control taxTotal "
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].total"
+																																		value="${listLineItems.total}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control total"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].productGroup"
+																																		value="${listLineItems.productGroup}"
+																																		class="form-control productGroup"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].hsn"
+																																		value="${listLineItems.hsn}"
+																																		class="form-control hsnVal"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																														</c:if>
+
+																														<c:if test="${gr.category!='Item'}">
+
+
+																															<td>
+																																<div class="form-group">
+																																	<form:input type="text" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].sacCode"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.sacCode}"
+																																		class="form-control sacCode validatePrice"></form:input>
+																																</div>
+																															</td>
+
+																															<td>
+																																<div class="form-group">
+																																	<form:input type="text" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].description"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.description}"
+																																		class="form-control description validatePrice"></form:input>
+																																</div>
+																															</td>
+
+																															<td><img
+																																src="${contextPath}/resources/images/portrait/info.png"
+																																alt="See" id="output" width="20"
+																																height="20" data-toggle="tooltip"
+																																data-placement="top"
+																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
+																																<c:choose>
+																																	<c:when
+																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				value="${listLineItems.requiredQuantity}"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" readonly="true"></form:input>
+																																		</div>
+
+																																	</c:when>
+																																	<c:otherwise>
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" required="true"></form:input>
+																																		</div>
+
+																																	</c:otherwise>
+																																</c:choose> <input type="hidden"
+																																value="${listLineItems.requiredQuantity}"
+																																class="original_requiredQuantity">
+																																<input type="hidden"
+																																value="${listLineItems.tempRequiredQuantity}"
+																																class="temp_requiredQuantity">
+
+																															</td>
+
+																															<!--  -->
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].unitPrice"
+																																		value="${listLineItems.unitPrice}"
+																																		autocomplete="off" readonly="true"
+																																		class="form-control unitPrice"></form:input>
+																																</div></td>
+
+
+																															<td>
+																																<div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].taxCode"
+																																		value="${listLineItems.taxCode}"
+																																		autocomplete="off" readonly="true"
+																																		class="form-control taxCode"></form:input>
+																																</div> <%--  <div class="form-group"><form:select class="form-control taxCode"
 																															 readonly="true"
 																															path="goodsReceiptLineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
 																														</form:select></div> --%>
-																														
-																														</td>
-																													
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].taxTotal"
-																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal validatePrice" readonly="true"  ></form:input></div></td>
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].total"
-																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total validatePrice" readonly="true"  ></form:input></div></td>
-																													<!--  -->
 
-																														<td><c:forEach var="entry"
-																																items="${plantMap}">
-																																<c:if
-																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
-																														<td>--</td>		
-																													</c:if>
-																												
-																												</tr>
-																											</c:if>		
-																										
-																										 <c:if test="${gr.poId==null}">
-																												<tr class="multTot multTot${count}">
-																												<td style="display: none;"><div class="form-group"><form:input
-																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
-																															value="${listLineItems.productId}"
-																															class="form-control productId"></form:input></div>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
 																															</td>
-																															
-																													<c:if test="${gr.category=='Item'}">
-																													<td ><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].prodouctNumber" required="true"
-																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></div></td>
-																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].uom"
-																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
-																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validatePrice" autocomplete="off"  required="true"></form:input></div></td>
-																															
-																															
-																															
+
+
 																															<td><div class="form-group">
-																															<form:input type="text"
-																															path="goodsReceiptLineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}"
-																															class="form-control unitPrice validatePrice" ></form:input></div></td>
-																													
-																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
-																															style="width:;" required="true"
-																															path="goodsReceiptLineItems[${count}].taxCode">
-																															<form:option value="" label="Select" />
-																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
-																													
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].taxTotal"
-																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal " readonly="true"  ></form:input></div></td>
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].total"
-																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total" readonly="true"  ></form:input></div></td>
-																													
-																															
-																														<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].productGroup"
-																															value="${listLineItems.productGroup}"
-																															class="form-control productGroup"
-																															readonly="true"></form:input></div></td>
-																														
-																														<td><div class="form-group"><form:select class="form-control"
-																															style="width:;" required="true"
-																															path="goodsReceiptLineItems[${count}].warehouse">
-																															<form:option value="" label="Select" />
-																															<form:options items="${plantMap}" />
-																														</form:select></div></td>
-																															
-																														<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].hsn"
-																															value="${listLineItems.hsn}"
-																															class="form-control hsnVal"
-																															readonly="true"></form:input></div></td>
-																															
-																													</c:if>
-																													
-																													<c:if test="${gr.category!='Item'}">
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].sacCode"
-																															value="${listLineItems.sacCode}"
-																															class="form-control sacCode"
-																															></form:input></div></td>
-																													
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].description"
-																															value="${listLineItems.description}"
-																															class="form-control description"
-																															readonly="true"></form:input></div></td>
-																															
-																													<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].requiredQuantity"
-																															value="${listLineItems.requiredQuantity}" required="true" autocomplete="off" onkeypress="return isNumericKey(event)"
-																															class="form-control requiredQuantity validatePrice"></form:input></div></td>
-																													
-																													<td><div class="form-group">
-																															<form:input type="text"
-																															path="goodsReceiptLineItems[${count}].unitPrice"
-																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
-																															class="form-control unitPrice validatePrice" ></form:input></div></td>
-																													
-																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
-																															style="width:;" required="true"
-																															path="goodsReceiptLineItems[${count}].taxCode">
-																															<form:option value="" label="Select" />
-																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
-																													
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].taxTotal"
-																															value="${listLineItems.taxTotal}" onkeypress="return isNumericKey(event)"
-																															class="form-control taxTotal" readonly="true"  ></form:input></div></td>
-																															
-																															<td><div class="form-group"><form:input type="text"
-																															path="goodsReceiptLineItems[${count}].total"
-																															value="${listLineItems.total}" onkeypress="return isNumericKey(event)"
-																															class="form-control total"  readonly="true"></form:input></div></td>
-																													
-																													
-																													
-																													<td><div class="form-group"><form:select class="form-control"
-																															style="width:;" required="true"
-																															path="goodsReceiptLineItems[${count}].warehouse">
-																															<form:option value="" label="Select" />
-																															<form:options items="${plantMap}" />
-																														</form:select></div></td>
-																															
-																													</c:if>
-																												            <td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
-																												
-																												</tr>
-																												
-																										  </c:if>	
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].taxTotal"
+																																		value="${listLineItems.taxTotal}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control taxTotal validatePrice"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].total"
+																																		value="${listLineItems.total}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control total validatePrice"
+																																		readonly="true"></form:input>
+																																</div></td>
+																															<!--  -->
+
+																															<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" readonly="true"
+																																		path="goodsReceiptLineItems[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+																														</c:if>
+
+																													</tr>
+																												</c:if>
+
+																												<c:if test="${gr.poId==null}">
+																													<tr class="multTot multTot${count}">
+																														<td style="display: none;"><div
+																																class="form-group">
+																																<form:input type="hidden"
+																																	path="goodsReceiptLineItems[${count}].productId"
+																																	value="${listLineItems.productId}"
+																																	class="form-control productId"></form:input>
+																															</div> <form:hidden
+																																path="goodsReceiptLineItems[${count}].id" />
+																														</td>
+
+																														<c:if test="${gr.category=='Item'}">
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].prodouctNumber"
+																																		required="true"
+																																		value="${listLineItems.prodouctNumber}"
+																																		class="form-control prodouctNumber"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].uom"
+																																		value="${listLineItems.uom}"
+																																		class="form-control uom"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																		value="${listLineItems.requiredQuantity}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control requiredQuantity validatePrice"
+																																		autocomplete="off" required="true"></form:input>
+																																</div></td>
+
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].unitPrice"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.unitPrice}"
+																																		class="form-control unitPrice validatePrice"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:select
+																																		class="form-control taxCode"
+																																		style="width:;" required="true"
+																																		path="goodsReceiptLineItems[${count}].taxCode">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${taxCodeMap}" />
+																																	</form:select>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].taxTotal"
+																																		value="${listLineItems.taxTotal}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control taxTotal "
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].total"
+																																		value="${listLineItems.total}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control total"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].productGroup"
+																																		value="${listLineItems.productGroup}"
+																																		class="form-control productGroup"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" required="true"
+																																		path="goodsReceiptLineItems[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].hsn"
+																																		value="${listLineItems.hsn}"
+																																		class="form-control hsnVal"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																														</c:if>
+
+																														<c:if test="${gr.category!='Item'}">
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].sacCode"
+																																		value="${listLineItems.sacCode}"
+																																		class="form-control sacCode"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].description"
+																																		value="${listLineItems.description}"
+																																		class="form-control description"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																		value="${listLineItems.requiredQuantity}"
+																																		required="true" autocomplete="off"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control requiredQuantity validatePrice"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].unitPrice"
+																																		value="${listLineItems.unitPrice}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control unitPrice validatePrice"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:select
+																																		class="form-control taxCode"
+																																		style="width:;" required="true"
+																																		path="goodsReceiptLineItems[${count}].taxCode">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${taxCodeMap}" />
+																																	</form:select>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].taxTotal"
+																																		value="${listLineItems.taxTotal}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control taxTotal"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].total"
+																																		value="${listLineItems.total}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control total"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+
+																															<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" required="true"
+																																		path="goodsReceiptLineItems[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+																														</c:if>
+																														<td class="text-center"><a
+																															onclick="removeData2(${count})"
+																															class="tdicon remove confirm-delete"
+																															data-toggle="modal"><i
+																																class="icon-bin left"></i></a></td>
+
+																													</tr>
+
+																												</c:if>
 
 																												<c:set var="count" value="${count + 1}"
 																													scope="page" />
 																											</c:forEach>
-																							
-																							
-																									</tbody>
-																									</table>
-																									<input type="hidden" id="edit_addressCount" value="${count-1}">
-																										</c:if>
 
-																						
+
+																										</tbody>
+																									</table>
+																									<input type="hidden" id="edit_addressCount"
+																										value="${count-1}">
+																								</c:if>
+
+
+																							</div>
+																						</div>
+																						<c:if test="${gr.poId==null}">
+																							<div class="add-row-block">
+																								<input type="button" class="btn btn-info"
+																									onclick="addItem()" value="Add Row">
+
+																							</div>
+																						</c:if>
+
+
 																					</div>
 																				</div>
-																				 <c:if test="${gr.poId==null}">
-																				<div class="add-row-block">
-																					<input type="button" class="btn btn-info"
-																						onclick="addItem()" value="Add Row">
-																						
-																				</div>
-																				</c:if>
-																				
-																				
 																			</div>
 																		</div>
-																	</div>
-																</div>
 
-																<div class="tab-pane" id="profile" role="tabpanel"
-																	aria-labelledby="profile-tab">
+																		<div class="tab-pane" id="profile" role="tabpanel"
+																			aria-labelledby="profile-tab">
 
-																	<table class="table fixed-width-table">
-																		<thead>
-																			<tr>
-																				<th style="vertical-align: top; !important">Shipping
-																					From</th>
-																				<td>
-																					<div id="shippingAddressTable"></div>
-																				</td>
-																			</tr>
-																			<tr>
-																				<th style="vertical-align: top; !important">Pay
-																					To</th>
-																				<td>
-																					<div id="payToAddressTable"></div>
-																				</td>
-																			</tr>
-																		</thead>
-																	</table>
-																</div>
-											<br>
-											
-											
-											<!--Calculation Part  -->
-											
-											<div class="row">
-											<div class="col-sm-4">
-											<div class="create-block">
-											<div class="form-group">
-											<label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control"
-																					 placeholder='Enter your Remark'
-																					autocomplete="off" path="remark"  />
-                                                                           </div></div>
-                                                                           </div>
-                                           <div class="col-sm-4">&nbsp;</div>                                
-                                                                           
-											<div class="col-sm-4">
-																<div class="form-group">
-																	<label>Discount(%) :</label> 
-														
-														
-														<form:input type="text" cssClass="form-control validatePrice" id="totalDiscount"
-																					placeholder='Total  DisCount ' path="totalDiscount"
-																					autocomplete="off" readonly="true"  onkeypress="return isNumericKey1(event)" />
-														
-														
-														
-																</div>
-																
-																<div class="form-group">
-																	<label>Total Before Discount  : </label>
-																	
-																	 	<form:input type="text" cssClass="form-control" 
-																					placeholder='Total Before Dis ' path="totalBeforeDisAmt"
-																					autocomplete="off" readonly="true"  />
-																	
-																	
-																</div>
-                                                                <div class="form-group">
-																	<label>Freight : </label>
-																		<form:input type="text" cssClass="form-control validatePrice"
-																					placeholder='Freight' path="freight"  onkeypress="return isNumericKey(event)"
-																					autocomplete="off" readonly="true" />
-																</div>
-																
-																 <div class="form-group">
-																	<label>Rounding : </label>
-																		<form:input type="text" cssClass="form-control"
-																					placeholder='Rounding' path="amtRounding"
-																					autocomplete="off" readonly="true" />
-																</div>
-																
-																 <div class="form-group">
-																	<label>Tax Amount :</label> 
-																		<form:input type="text" cssClass="form-control"
-																					placeholder='Tax Amount' path="taxAmt"
-																					autocomplete="off" readonly="true" />
-																</div>
-																
-																 <div class="form-group">
-																	<label>Total Payment Due : </label>
-																		<form:input type="text" cssClass="form-control"
-																					placeholder='Total Payment Due' path="totalPayment"
-																					autocomplete="off" readonly="true" />
-																</div>
-																</div>
-										 </div>
-											
-											
-											
-											
-											
-											
-											
-											<!--Calculation Part  -->
-															
-									<div class="text-xs-center">
-									
-												<a href="<c:url value="/gr/list"/>" class="btn btn-primary float-left">
-																	 Back </a>
-									
-										
-											<c:if test="${gr.status eq 'Draft' || gr.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
-                                                                   </c:if>
-                                                                    <c:if test="${gr.id==null}">
-                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
-                                                                    </c:if>
-                                                                    <c:if test="${gr.id!=null}">
-                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
-                                                                      <a href="<c:url value="/gr/cancelStage?id=${gr.id}"/>">
+																			<table class="table fixed-width-table">
+																				<thead>
+																					<tr>
+																						<th style="vertical-align: top; !important">Shipping
+																							From</th>
+																						<td>
+																							<div id="shippingAddressTable"></div>
+																						</td>
+																					</tr>
+																					<tr>
+																						<th style="vertical-align: top; !important">Pay
+																							To</th>
+																						<td>
+																							<div id="payToAddressTable"></div>
+																						</td>
+																					</tr>
+																				</thead>
+																			</table>
+																		</div>
+																		<br>
+
+
+																		<!--Calculation Part  -->
+
+																		<div class="row">
+																			<div class="col-sm-4">
+																				<div class="create-block">
+																					<div class="form-group">
+																						<label>Remark</label>
+																						<form:textarea type="text" cssClass="form-control"
+																							placeholder='Enter your Remark'
+																							autocomplete="off" path="remark" />
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-sm-4">&nbsp;</div>
+
+																			<div class="col-sm-4">
+																				<div class="form-group">
+																					<label>Discount(%) :</label>
+																			<c:choose>
+																			<c:when test="${gr.poId!=null}">
+																					<form:input type="text"
+																						cssClass="form-control validatePrice"
+																						id="totalDiscount" placeholder='Total  DisCount '
+																						path="totalDiscount" autocomplete="off"
+																						readonly="true"
+																						onkeypress="return isNumericKey1(event)" />
+																			</c:when>
+																			<c:otherwise>
+																			        <form:input type="text"
+																						cssClass="form-control validatePrice"
+																						id="totalDiscount" placeholder='Total  DisCount '
+																						path="totalDiscount" autocomplete="off"
+																						onkeypress="return isNumericKey1(event)" />
+																			</c:otherwise>
+																			</c:choose>	
+
+
+																				</div>
+
+																				<div class="form-group">
+																					<label>Total Before Discount : </label>
+
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Total Before Dis '
+																						path="totalBeforeDisAmt" autocomplete="off"
+																						readonly="true" />
+
+
+																				</div>
+																				
+																				
+																				
+																					<div class="form-group">
+																					<label>Freight : </label>
+																			<c:choose>
+																			<c:when test="${gr.poId!=null}">
+																					<form:input type="text"
+																						cssClass="form-control validatePrice"
+																						placeholder='Freight' path="freight"
+																						onkeypress="return isNumericKey(event)"
+																						autocomplete="off" readonly="true" />
+																			</c:when>
+																			<c:otherwise>
+																			         <form:input type="text"
+																						cssClass="form-control validatePrice"
+																						placeholder='Freight' path="freight"
+																						onkeypress="return isNumericKey(event)"
+																						autocomplete="off" />
+																			</c:otherwise>
+																			</c:choose>
+																				   </div>													
+																		      
+																																
+																		  
+																		    
+																				
+
+																				<div class="form-group">
+																					<label>Rounding : </label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div>
+
+																				<div class="form-group">
+																					<label>Tax Amount :</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Tax Amount' path="taxAmt"
+																						autocomplete="off" readonly="true" />
+																				</div>
+
+																				<div class="form-group">
+																					<label>Total Payment Due : </label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Total Payment Due'
+																						path="totalPayment" autocomplete="off"
+																						readonly="true" />
+																				</div>
+																			</div>
+																		</div>
+
+
+
+
+
+
+
+																		<!--Calculation Part  -->
+
+																		<div class="text-xs-center">
+
+																			<a href="<c:url value="/gr/list"/>"
+																				class="btn btn-primary float-left"> Back </a>
+
+
+																			<c:if test="${gr.status eq 'Draft' || gr.id==null }">
+																				<form:button type="submit" id="draft"
+																					name="statusType" value="DR" class="btn btn-draft">
+																					<i class="icon-check2"></i> Draft</form:button>
+																			</c:if>
+																			<c:if test="${gr.id==null}">
+																				<form:button type="submit" id="save"
+																					name="statusType" value="SA"
+																					class="btn btn-primary">
+																					<i class="icon-check2"></i>Save</form:button>
+																			</c:if>
+																			<c:if test="${gr.id!=null}">
+																				<form:button type="submit" id="update"
+																					name="statusType" value="SA"
+																					class="btn btn-primary ">
+																					<i class="icon-check2"></i> Update</form:button>
+																				<%--  <a href="<c:url value="/gr/cancelStage?id=${gr.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
-																		</a>
-																		 
-                                                                      </c:if>
-                                                                      <!-- Approve -->
-                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
-                                                                      </c:if></c:if></c:forEach>
-  																		<!-- Reject -->
-                                                                     <c:forEach items="${sessionScope.umpmap}" var="ump">
-																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
-																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
-                                                                       <c:if test="${gr.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
-                                                                    </c:if>
-                                                                     </c:if></c:if></c:forEach>
-                                                                      
-                                                                     
-										                      </div>
-										                  </div>
-														</div>
+																		</a> --%>
+
+																			</c:if>
+																			<!-- Approve -->
+																			<c:forEach items="${sessionScope.umpmap}" var="ump">
+																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																					<c:set var="permissions" scope="session"
+																						value="${ump.value}" />
+																					<c:if
+																						test="${fn:containsIgnoreCase(permissions,'Approve')}">
+																						<form:button type="submit" id="approve"
+																							name="statusType" value="APP"
+																							class="btn btn-approve ">
+																							<i class="icon-check2"></i>Approve</form:button>
+																					</c:if>
+																				</c:if>
+																			</c:forEach>
+																			<!-- Reject -->
+																			<c:forEach items="${sessionScope.umpmap}" var="ump">
+																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																					<c:set var="permissions" scope="session"
+																						value="${ump.value}" />
+																					<c:if
+																						test="${fn:containsIgnoreCase(permissions,'Reject')}">
+																						<c:if test="${gr.status != 'Cancelled'}">
+																							<form:button type="submit" id="reject"
+																								name="statusType" value="RE"
+																								class="btn btn-reject ">
+																								<i class="icon-cross2"></i>Reject</form:button>
+																						</c:if>
+																					</c:if>
+																				</c:if>
+																			</c:forEach>
+
+
+																		</div>
+																	</div>
+																</div>
+															</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-						</section>
-						</form:form>
-						
+								</section>
+							</form:form>
+
 						</div>
 					</div>
 					<!--/ project charts -->
 					<br>
 				</div>
 			</div>
-		 </div>
-		 </div>
-		
+		</div>
+	</div>
+
 
 
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
 
 
 
-	
-	
-	
+
+
+
 </body>
 <!-- alertfy-->
 <!-- form validations-->
@@ -1559,7 +1817,7 @@ function removeData2(index){
 
 $("#items_radio").click(function() {
 	//alert("item");
-	 alertify.confirm("Purchase Order",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
+	 alertify.confirm("Goods Receipt",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
 		 $("#serviceTbl").hide();
 		 $("#itemTbl").show();
 		 $("#edit_item_serviceTbl").hide();
@@ -1602,7 +1860,7 @@ $("#items_radio").click(function() {
 
 $("#service_radio").click(function() {
 	//alert("service");
-	 alertify.confirm("Purchase Order",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
+	 alertify.confirm("Goods Receipt",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1661,7 +1919,7 @@ $('form.commentForm').on('submit', function(event) {
 		}
     
 	if(rowCount == 0){
-		alertify.alert("Purchase Order","Please Select Atleast One Item");
+		alertify.alert("Goods Receipt","Please Select Atleast One Item");
 		 return false;
 	}else{
 		return true;
@@ -1676,7 +1934,7 @@ $('form.commentForm').on('submit', function(event) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("Purchase Order","Please Select Atleast One  Service");
+ 		alertify.alert("Goods Receipt","Please Select Atleast One  Service");
  		 return false;
  	}else{
  		return true;
@@ -1797,6 +2055,9 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	//alert("requiredQuantity" +requiredQuantity);
 	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	if(tax=='') {
+        tax=  $(itemParentRow).find(".taxCode").val();
+   }
 	//alert("tax--->" +tax);
 	var tax_amt = Number(tax) / 100;
 	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
@@ -1867,7 +2128,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("Purchase Order","Please Enter Valid Discount!");
+		alertify.alert("Goods Receipt Discount","Please Enter Valid Discount!");
 		 return false;
 	}
 	
@@ -1965,7 +2226,7 @@ $('#freight').keyup(function() {
 		
 		
 		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Receipt",""+temp_requiredQuantity + " Quantity you have!");	
+			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
 			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}
@@ -1991,13 +2252,19 @@ $('#freight').keyup(function() {
 
 <!-- alertifyjs -->
 
-<link href="<c:url value="/resources/components/alertifyjs/css/alertify.css"/>"
-    rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/components/alertifyjs/css/themes/default.css"/>"
-    rel="stylesheet" type="text/css" />
-<script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
+<link
+	href="<c:url value="/resources/components/alertifyjs/css/alertify.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/components/alertifyjs/css/themes/default.css"/>"
+	rel="stylesheet" type="text/css" />
+<script
+	src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/>
+	type="text/javascript"></script>
 
-<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link
+	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"
+	rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
 </html>

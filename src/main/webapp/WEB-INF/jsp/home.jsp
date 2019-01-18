@@ -34,7 +34,7 @@
                     
                     <h3>${companyListCount}</h3>
                     <span>Company</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-cube pink font-large-2 float-xs-right"></i> </div>
+                  <div class="media-right media-middle"> <i class="icon-building-o pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
               </a>
@@ -52,7 +52,7 @@
                   <div class="media-body text-xs-left">
                     <h3>${productsCount}</h3>
                     <span>Products</span> </div>
-                  <div class="media-right media-middle"> <i class="icon-egg pink font-large-2 float-xs-right"></i> </div>
+                  <div class="media-right media-middle"> <i class="icon-shop pink font-large-2 float-xs-right"></i> </div>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@
       <div class="row match-height">
         <div class="col-sm-12">
          
-        <div class="col-sm-3">
+       <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box1">
               <div class="media">
@@ -122,7 +122,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>  
         
         
          <div class="col-sm-3">
@@ -135,7 +135,7 @@
 										 <c:if test="${ump.key eq 'Product'}">
 										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
-				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-egg font-large-2 white"></i> </div>
+				                                  <div class="p-2 text-xs-center product-bg-box media-left media-middle" style="float:left;"> <i class="icon-product-hunt font-large-2 white"></i> </div>
 	        									  <h3 style="margin: 5% 0% 0 25%;"><a href="<c:url value="/product/create"/>">New Product</a></h3>
 	   										 </c:if>
 	       								</c:if>     
@@ -171,7 +171,7 @@
         </div>
         
         
-         <div class="col-sm-3">
+        <div class="col-sm-3">
         <div class="card">
             <div class="card-body product-box4">
               <div class="media">
@@ -213,13 +213,14 @@
             </div>
           </div> -->
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
                 <h4 class="card-title" style="text-align: center;">Purchase Request</h4>
               </div>
               <ul class="list-group list-group-flush">
+               <%--   <a id="example" onchange="setStatus('Open')" href="<c:url value="/purchaseReq/list?purchaseReqStatus=Open"/>"> --%>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${dashboardCount.open}</span> Open </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${dashboardCount.draft}</span> Draft </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${dashboardCount.cancelled}</span>Cancelled </li>
@@ -265,7 +266,7 @@
           </div>
           </a>
         </div> --%>
-         <div class="col-md-4">
+         <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -320,7 +321,7 @@
           </div>
           </a>
         </div>  --%>
-       <div class="col-md-4">
+       <div class="col-md-3">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -332,6 +333,8 @@
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${poCount.cancelled}</span>Cancelled </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${poCount.approved}</span> Approved</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.rejected}</span> Rejected </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.completed}</span> Completed </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${poCount.partiallyReceived}</span> PartiallyReceived </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${poCount.total}</span> Total Records </li>
               </ul>
             </div>
@@ -365,6 +368,25 @@
           </div>
           </a>
         </div>  --%>
+        
+        <div class="col-md-3">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+              <div class="card-block">
+                <h4 class="card-title" style="text-align: center;">Goods Receipt</h4>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${grCount.open}</span> Open </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${grCount.draft}</span> Draft </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${grCount.cancelled}</span>Cancelled </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${grCount.approved}</span> Approved</li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${grCount.rejected}</span> Rejected </li>
+                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${grCount.completed}</span> Completed </li>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${grCount.total}</span> Total Records </li>
+              </ul>
+            </div>
+          </div>
+         </div>
        
       </div><br><br>
       

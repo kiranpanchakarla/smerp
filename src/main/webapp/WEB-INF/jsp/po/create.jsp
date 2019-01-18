@@ -179,11 +179,11 @@
 																		 
 																		<div class="row" id="radioDiv">
 																		<div class="card-block" style="clear:both;">
-																			<div class="col-sm-4 form-group">
+																			<div class="col-sm-6 form-group">
 																			<div class="input-group">
                                                                                
                                                                                
-                                                                                <div class="inventory-list">
+                                                                               <%--  <div class="inventory-list">
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Item" path="category"  name="category"  id="items_radio" 
 																				/>
@@ -194,7 +194,21 @@
                                                                                 <form:radiobutton cssClass="form-control"
 																					 value="Services" path="category"  name="category" id="service_radio" 
 																				/>	
-                                                                                <span class="radio-list">Services</span></div>
+                                                                                <span class="radio-list">Services</span></div> --%>
+                                                                                
+                                                                                   <div class="inventory-list">
+                                                                                    <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
+                                                                                    <span class="radio-list">Product</span>
+
+                                                                                </div>
+                                                                                <div class="inventory-list" style="display: none;" >
+                                                                                    <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
+                                                                                    <span class="radio-list">Service</span>
+                                                                                </div> 
+                                                                                
+                                                                                
+                                                                                
+                                                                                
                                                                                 <div class="help-block with-errors"></div>
                                                                             </div>
 																			
@@ -206,7 +220,7 @@
 																		<div class="card-block" style="clear:both;padding: 0px 1.5rem;">
 																		<div class="row" id="pur_radioDiv" style="display: none">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${po.category}
+																		<label>Type</label>: <%-- ${po.category} --%> Product
 																	</div>
 																       </div>
 																       </div>
@@ -326,7 +340,7 @@
 																									<th>Total</th>
 																									<th>Warehouse</th>
 																									</c:if>
-																									<th>Action</th>
+																									
 																								</tr>
 																							</thead>
 																										
@@ -396,7 +410,7 @@
 																															</c:forEach></td>
 
 																														<td>${listLineItems.hsn}</td>
-																														<td>--</td>	
+																														
 																													</c:if>
 																													
 																													<c:if test="${po.category!='Item'}">
@@ -438,7 +452,7 @@
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
-																														<td>--</td>		
+																														
 																													</c:if>
 																												
 																												</tr>
@@ -1218,14 +1232,14 @@ $(document).ready(function(){
 		       	//autocompleteandchange(($(this).val()),itemParentRow);
 		        }else{
 		        	 /* var isDluplicate = false; */
-		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
+		        	   alertify.alert("Duplicate Product Added","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
 		        	 ($(this).parents('tr').find('td').find('select').val('')); 
 		        
 		        }
         }else {
-        	 alertify.alert("Purchase Order",$(this).val() +  "Product Number Does Not Exists!");  
+        	 alertify.alert("Check Product Name",$(this).val() +  "Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
         }
@@ -1421,14 +1435,14 @@ $(document).ready(function(){
                                   		       //	autocompleteandchangeSacCode(($(this).val()),itemParentRow);
                                   		        }else{
                                   		        	 
-                                  		        	   alertify.alert("Purchase Order",  "You have already entered the SAC Code "+$(this).val());
+                                  		        	   alertify.alert("Duplicate Product",  "You have already entered the SAC Code "+$(this).val());
                                   		        	 $(this).val('')
                                   		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                   		        	 ($(this).parents('tr').find('td').find('select').val(''));
                                   		        }
                                   		        
                                               }else {
-                                            	  alertify.alert("Purchase Order",$(this).val() +" SAC Code Does Not Exists ");
+                                            	  alertify.alert("Product Not Found",$(this).val() +" SAC Code Does Not Exists ");
                                		        	 $(this).val('')
                                		        	 ($(this).parents('tr').find('td').find('input').val(''));
                                		        	 ($(this).parents('tr').find('td').find('select').val(''));  
@@ -1806,7 +1820,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("Purchase Order","Please Enter Valid Discount!");
+		alertify.alert("Purchase Order Discount","Please Enter Valid Discount!");
 		 return false;
 	}
 	

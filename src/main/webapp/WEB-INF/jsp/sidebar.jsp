@@ -15,7 +15,7 @@
        <li><a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
          
-          <c:forEach items="${sessionScope.umpmap}" var="ump">
+            <c:forEach items="${sessionScope.umpmap}" var="ump">  
 			     <c:if test="${ump.key eq 'Company'}">
 					 <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
 			 	</c:if>
@@ -31,7 +31,7 @@
           <li class="has_sub"><a href="<c:url value ="/department/list"/>">Departments</a></li>
           <li class="has_sub"><a href="<c:url value ="/designation/list"/>">Designations</a></li>
           </c:if>
-           </c:forEach> 
+            </c:forEach>   
         </ul>
       </li>
       
@@ -76,9 +76,7 @@
        </c:if>
    		  </c:forEach> 
       
-      <li>
-      
-      <a href="#"><i class="icon-egg left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+      <li> <a href="#"><i class="icon-shop left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
         <c:forEach items="${sessionScope.umpmap}" var="ump">
 			     <c:if test="${ump.key eq 'Purchase Request'}">
@@ -111,10 +109,23 @@
            </c:if>
            </c:forEach>
            
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Convert To GR'}">
              <li class="has_sub"><a href="<c:url value ="/po/approvedList"/>">Convert PO To GR</a></li>
-             
+             </c:if>
+           </c:forEach>
+           
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Goods Receipt'}">
             <li class="has_sub"><a href="<c:url value ="/gr/list"/>">Goods Receipt</a></li>
-            
+             </c:if>
+           </c:forEach>
+           
+            <c:forEach items="${sessionScope.umpmap}" var="ump">
+			   <c:if test="${ump.key eq 'Goods Return'}">
+            <li class="has_sub"><a href="<c:url value ="/gre/list"/>">Goods Return</a></li>
+             </c:if>
+           </c:forEach>
            
         </ul>
       </li>

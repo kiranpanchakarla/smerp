@@ -199,7 +199,7 @@ public class UserController {
         return user.getCompany();
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@PostMapping(value = "/save")
 	public String saveUser(@RequestParam(value = "file", required = false, defaultValue = "") MultipartFile file,
 			User user) throws IOException {
 		logger.info("Inside user controller save method" + user);

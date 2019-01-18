@@ -89,7 +89,7 @@
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (prlist.warehouse) == (key?string)>
+                <#if (prlist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
@@ -115,7 +115,7 @@
                 <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
                 <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
                 <td style="border: solid 1px ;"> <#list plantMap as key, value>
-                <#if (prlist.warehouse) == (key?string)>
+                <#if (prlist.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list></td>

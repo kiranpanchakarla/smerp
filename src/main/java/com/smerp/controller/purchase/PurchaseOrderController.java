@@ -163,7 +163,7 @@ public class PurchaseOrderController {
 		poloadData(model, po);
 		// model.addAttribute("categoryMap", categoryMap());
 		
-		model.addAttribute("quantityStatus", goodsReceiptService.checkQuantityPoGr(po));
+		model.addAttribute("checkStatusPoGr", goodsReceiptService.checkQuantityPoGr(po));
 		
 		model.addAttribute("po", po);
 		model.addAttribute("plantMap", plantMap());

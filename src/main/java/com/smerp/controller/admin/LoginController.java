@@ -113,6 +113,7 @@ public class LoginController {
 			model.addAttribute("dashboardCount", dashboardCountService.findAll());
 			model.addAttribute("rfqCount", dashboardCountService.findRFQCount());
 			model.addAttribute("poCount", dashboardCountService.findPOCount());
+			model.addAttribute("grCount", dashboardCountService.findGoodsReceiptCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

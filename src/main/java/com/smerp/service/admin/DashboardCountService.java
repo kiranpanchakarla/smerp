@@ -11,5 +11,9 @@ public interface DashboardCountService {
 	
 	DashboardCount findPOCount();
 	
+	DashboardCount findGoodsReceiptCount();
+	
+	
+	
 	
 }

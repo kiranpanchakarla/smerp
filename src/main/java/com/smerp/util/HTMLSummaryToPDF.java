@@ -25,9 +25,13 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.purchase.GoodsReceiptService;
+import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
 
 import freemarker.template.TemplateException;
@@ -60,6 +64,20 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		this.modulePO = prop;
 	}
 	
+	private static String moduleGR;
+
+	@Value(value = "${module.grec}")
+	public void setGR(String prop) {
+		this.moduleGR = prop;
+	}
+	
+	private static String moduleGRet;
+
+	@Value(value = "${module.gret}")
+	public void setGRet(String prop) {
+		this.moduleGRet = prop;
+	}
+	
 	@Autowired
 	HTMLToPDFGenerator hTMLToPDFGenerator;
 	
@@ -77,6 +95,12 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	GoodsReceiptService goodsReceiptService;
+	
+	@Autowired
+	GoodsReturnService goodsReturnService;
 	
  /*    
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
@@ -204,8 +228,73 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		return file.getAbsolutePath();
 	}
 
+public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsReceipt goodsReceipt) throws TemplateException, IOException, DocumentException {
+		
+	goodsReceipt = goodsReceiptService.getListAmount(goodsReceipt);
+		
+		File sourceFolder = null;
+			sourceFolder = new File(downloadUtil.getDownloadPath());
+		if (!sourceFolder.exists()) {
+			sourceFolder.mkdirs();
+		}
+		File file = null;
+		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		file = new File(sourceFolder + File.separator + "GRView" + fileStr + ".pdf");
+		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
+		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Receipt);
+		Writer out = new StringWriter();
+		Map<String, Object> input = new HashMap<String, Object>(1);
+		input.put("contextPath", RequestContext.get().getContextPath());
+		input.put("gr", goodsReceipt);
+		input.put("moduleName", moduleGR);
+		logger.info("plantMap-->" + purchaseOrderController.plantMap());
+		input.put("plantMap", purchaseOrderController.plantMap());
+		input.put("taxCodeMap", purchaseOrderController.taxCode());
+		input.put("user", getUser());
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		getTemplate().process(input, out);
+		ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(out.toString());
+		renderer.layout();
+		renderer.createPDF(os);
+		os.flush();
+		os.close();
+		return file.getAbsolutePath();
+	}
 
-
+public String OfflineHtmlStringToPdfForGoodsReturn(String pdfFilePath,GoodsReturn goodsReturn) throws TemplateException, IOException, DocumentException {
+	
+	goodsReturn = goodsReturnService.getListAmount(goodsReturn);
+		
+		File sourceFolder = null;
+			sourceFolder = new File(downloadUtil.getDownloadPath());
+		if (!sourceFolder.exists()) {
+			sourceFolder.mkdirs();
+		}
+		File file = null;
+		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		file = new File(sourceFolder + File.separator + "GRView" + fileStr + ".pdf");
+		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
+		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Return);
+		Writer out = new StringWriter();
+		Map<String, Object> input = new HashMap<String, Object>(1);
+		input.put("contextPath", RequestContext.get().getContextPath());
+		input.put("gr", goodsReturn);
+		input.put("moduleName", moduleGRet);
+		logger.info("plantMap-->" + purchaseOrderController.plantMap());
+		input.put("plantMap", purchaseOrderController.plantMap());
+		input.put("taxCodeMap", purchaseOrderController.taxCode());
+		input.put("user", getUser());
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		getTemplate().process(input, out);
+		ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(out.toString());
+		renderer.layout();
+		renderer.createPDF(os);
+		os.flush();
+		os.close();
+		return file.getAbsolutePath();
+	}
 
 	@Override
 	protected MimeMessagePreparator createMessage(String mailTo) {

@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -41,11 +42,10 @@ text-align: left;
 					<div class="large-12 columns">
 						<div class="content-body">
 
+							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
 
-
-
-							<form:form method="POST" action="/gr/save" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="gr"
+							<form:form method="POST" action="${createUrl}" id="form"
+							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -209,7 +209,7 @@ text-align: left;
 																									<th>Total</th>
 																									<th>Warehouse</th>
 																									</c:if>
-																									<th>Action</th>
+																								
 																								</tr>
 																							</thead>
 																										
@@ -255,7 +255,7 @@ text-align: left;
 																													</c:forEach></td>
 
 																												<td>${listLineItems.hsn}</td>
-																														<td>--</td>	
+																														
 																													</c:if>
 																													
 																													<c:if test="${gr.category!='Item'}">
@@ -282,7 +282,7 @@ text-align: left;
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
-																														<td>--</td>		
+																														
 																													</c:if>
 																												
 																												</tr>
@@ -404,7 +404,34 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												         
+												         <div class="col-sm-4 form-group has-feedback">
+												        
+									
+										<input type="hidden" name="greId" value="${gr.id}">
+									 <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'Goods Receipt'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'}">
+																		 
+														 <c:if test="${checkStatusGr ==true}">
+																		<form:button type="button" id="convertBtn"
+																			class="btn btn-primary mr-1 float-right">
+																			<i></i>Goods Return</form:button>
+											</c:if>	
+																		 
+																	</c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+									
+																
+								                        
+												         
+												         </div>
+												         
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -437,7 +464,19 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
-	
+$('#convertBtn').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
+					function() {
+						form.submit();
+					}, function() {
+						alertify.error('Cancelled')
+					});
+
+		});
+
 	
 function goBack() {
     window.history.back();

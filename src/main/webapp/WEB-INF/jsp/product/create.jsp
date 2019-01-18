@@ -29,7 +29,6 @@ $(document).ready(function(){
 
 
 </script>
-
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
        	<c:import url="/WEB-INF/jsp/header.jsp" />
 
@@ -63,20 +62,6 @@ $(document).ready(function(){
 													<form class="form">
 														<div class="form-body">
 															<div class="row">
-																<div class="col-sm-6 form-group has-feedback">
-																	<label>Product Number</label>
-																	<form:input type="text" class="form-control" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
-																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
-																</div>
-																
-																<div class="col-sm-6 form-group">
-																	<label>Description</label>
-																	<form:input type="text" class="form-control" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
-																	<!-- <div  class="help-block with-errors"></div> -->
-																</div>
-															</div>
-															
-															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Product Group</label>
 																	<form:select path="productGroup.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
@@ -87,6 +72,23 @@ $(document).ready(function(){
 																	</form:select>
 																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
+																
+																<div class="col-sm-6 form-group">
+																	<label>Description</label>
+																	<form:input type="text" class="form-control" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
+																	<!-- <div  class="help-block with-errors"></div> -->
+																</div>
+															</div>
+															
+															<div class="row">
+																
+																
+																<div class="col-sm-6 form-group has-feedback">
+																	<label>Product Number</label>
+																	<form:input type="text" class="form-control" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
+																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
+																</div>
+																
 																<div class="col-sm-6 form-group">
 																	<label>UOM Group</label>
 																	<form:select path="uomCategory.id" id="uomCategoryId" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM Group')" oninput="setCustomValidity('')">

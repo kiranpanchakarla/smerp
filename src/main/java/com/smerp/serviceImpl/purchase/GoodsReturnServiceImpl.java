@@ -83,7 +83,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
-
+		goodsReturn.setCategory("Item");
 		switch (goodsReturn.getStatusType()) {
 		case "DR":
 			goodsReturn.setStatus(EnumStatusUpdate.DRAFT.getStatus());
@@ -282,6 +282,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			
 		}
 		logger.info("gre" + gre);
+		gre.setCategory("Item");
 		gre = goodsReturnRepository.save(gre);
 		
 	/*	gr.setStatus(EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus());  // Set Partial Complted
@@ -468,6 +469,8 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		logger.info("getListAmount-->");
 		List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
 		
+		List<GoodsReturnLineItems> addListItems = new ArrayList<GoodsReturnLineItems>();
+		
 		GoodsReceipt gr = null;
 		List<GoodsReceiptLineItems> grItms =null;
 		 List<GoodsReturn> listGoodsReturn =null;
@@ -511,8 +514,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				grelist.setTaxTotal("");
 				grelist.setTotal("");	
 				}
+				
+				addListItems.add(grelist);
+				
 			}
-			goodsReturn.setGoodsReturnLineItems(listItems);
+			goodsReturn.setGoodsReturnLineItems(addListItems);
 		}
 		goodsReturn.setTotalBeforeDisAmt(addAmt);
 		goodsReturn.setTaxAmt(""+addTaxAmt);

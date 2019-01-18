@@ -75,7 +75,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
-
+		goodsReceipt.setCategory("Item");
 		switch (goodsReceipt.getStatusType()) {
 		case "DR":
 			goodsReceipt.setStatus(EnumStatusUpdate.DRAFT.getStatus());
@@ -250,8 +250,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 		}
 		logger.info("gr" + gr);
+		gr.setCategory("Item");
 		gr = goodsReceiptRepository.save(gr);
 		
+		po.setCategory("Item");
 		po.setStatus(EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus());  // Set Partial Complted
 		purchaseOrderRepository.save(po);
 		
@@ -403,6 +405,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public GoodsReceipt saveCancelStage(String rfqId) {
 		GoodsReceipt gr = goodsReceiptRepository.findById(Integer.parseInt(rfqId)).get();
 		gr.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		gr.setCategory("Item");
 		goodsReceiptRepository.save(gr);
 		return gr;
 		
@@ -435,6 +438,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public GoodsReceipt getListAmount(GoodsReceipt goodsReceipt) {
 		logger.info("getListAmount-->");
 		List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+		List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
 		
 		PurchaseOrder po = null;
 		List<PurchaseOrderLineItems> poItms =null;
@@ -479,8 +483,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				grlist.setTaxTotal("");
 				grlist.setTotal("");	
 				}
+				addListItems.add(grlist);
 			}
-			goodsReceipt.setGoodsReceiptLineItems(listItems);
+			goodsReceipt.setGoodsReceiptLineItems(addListItems);
 		}
 		goodsReceipt.setTotalBeforeDisAmt(addAmt);
 		goodsReceipt.setTaxAmt(""+addTaxAmt);
@@ -545,9 +550,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				.findByListPoId(purchaseOrder.getId(),EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listGoodsReceipt-->" +listGoodsReceipt);
 		
-	/*	String status = setStatusOfPurchaseOrder(listGoodsReceipt.get(0));
-		logger.info("status-->" +status); //Test the Status if you want  */
-		
+		/*String status = setStatusOfPurchaseOrder(listGoodsReceipt.get(0));
+		logger.info("status-->" +status); //Test the Status if you want  
+*/		
 		Integer prQunatity = getListPoQuantityCount(purchaseOrder);
 		Integer grQunatity = getListGRQunatityCount(listGoodsReceipt);
 		

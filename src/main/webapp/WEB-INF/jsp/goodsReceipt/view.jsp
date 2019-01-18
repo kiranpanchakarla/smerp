@@ -42,11 +42,10 @@ text-align: left;
 					<div class="large-12 columns">
 						<div class="content-body">
 
+							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
 
-
-
-							<form:form method="POST" action="/gre/saveGRtoGRE" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="gr"
+							<form:form method="POST" action="${createUrl}" id="form"
+							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">

@@ -33,7 +33,8 @@ public class GoodsReturn extends AuditModel {
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gre_id", referencedColumnName = "id")
 	private List<GoodsReturnLineItems> goodsReturnLineItems;
 

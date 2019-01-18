@@ -191,23 +191,32 @@
 
 																				<div class="row" id="radioDiv">
 																					<div class="card-block" style="clear: both;">
-																						<div class="col-sm-4 form-group">
+																						<div class="col-sm-6 form-group">
 																							<div class="input-group">
 
 
-																								<div class="inventory-list">
-																									<form:radiobutton cssClass="form-control"
-																										value="Item" path="category" name="category"
-																										id="items_radio" />
-																									<span class="radio-list">Item</span>
-																								</div>
+																							 <%--  <div class="inventory-list">
+                                                                                <form:radiobutton cssClass="form-control"
+																					 value="Item" path="category"  name="category"  id="items_radio" 
+																				/>
+                                                                                <span class="radio-list">Item</span>
+                                                                                </div>
+                                                                               
+                                                                                <div class="inventory-list">
+                                                                                <form:radiobutton cssClass="form-control"
+																					 value="Services" path="category"  name="category" id="service_radio" 
+																				/>	
+                                                                                <span class="radio-list">Services</span></div> --%>
+                                                                                
+                                                                                    <div class="inventory-list">
+                                                                                    <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
+                                                                                    <span class="radio-list">Product</span>
 
-																								<div class="inventory-list">
-																									<form:radiobutton cssClass="form-control"
-																										value="Services" path="category"
-																										name="category" id="service_radio" />
-																									<span class="radio-list">Services</span>
-																								</div>
+                                                                                </div>
+                                                                                <div class="inventory-list" style="display: none;" >
+                                                                                    <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
+                                                                                    <span class="radio-list">Service</span>
+                                                                                </div> 
 																								<div class="help-block with-errors"></div>
 																							</div>
 
@@ -221,7 +230,7 @@
 																					<div class="row" id="gr_radioDiv"
 																						style="display: none">
 																						<div class="col-sm-6 form-group has-feedback">
-																							<label>Type</label>: ${gre.category}
+																							<label>Type</label>:<%-- ${gre.category} --%> Product
 																						</div>
 																					</div>
 																				</div>

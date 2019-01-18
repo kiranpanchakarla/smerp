@@ -35,6 +35,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestServiceImpl.class);
 	@Override
 	public PurchaseRequest save(PurchaseRequest purchaseRequest) {
+		purchaseRequest.setType("Item");
 		
 		switch (purchaseRequest.getStatusType()) { 
         case "DR": 
@@ -90,6 +91,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	public PurchaseRequest saveCancelStage(String prId) {
 		PurchaseRequest prq = purchaseRequestRepository.findById(Integer.parseInt(prId)).get();
 		prq.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		prq.setType("Item");
 		purchaseRequestRepository.save(prq);
 		return prq;
 	}

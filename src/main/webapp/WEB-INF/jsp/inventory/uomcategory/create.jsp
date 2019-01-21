@@ -15,7 +15,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -68,7 +68,7 @@
 																	<label for="timesheetinput1">UOM Category Name</label>
 																	<div>
 
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='UOM Category Name' path="uomCategoryName"
 																			value="${uomcategoryObj.uomCategoryName}" required="true" onchange="isValidName('uomCategoryName','/uomcategory/isValidUomCategoryName','1_errorContainer','UOM Category Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter uomcategory Name')"

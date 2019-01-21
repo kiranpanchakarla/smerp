@@ -16,7 +16,7 @@
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>     -->
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
-    
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>	    
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -75,7 +75,7 @@ $(document).ready(function(){
 																
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
-																	<form:input type="text" class="form-control" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control camelCase" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
 																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 															</div>
@@ -242,7 +242,7 @@ $(document).ready(function(){
 																	<div class="row">
                                                                         <div class="col-sm-4 form-group">
                                                                             <label>Preferred Vendor</label>
-                                                                            <form:input path="preferredVendor" class="form-control vendorname" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
+                                                                            <form:input path="preferredVendor" class="form-control vendorname camelCase" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
                                                                             <!-- <div  class="help-block with-errors"></div> -->
                                                                         </div>
 																	

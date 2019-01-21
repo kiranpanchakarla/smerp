@@ -15,7 +15,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -81,7 +81,7 @@
 																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Description</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Description' path="description"
 																			value="${producttypeObj.description}" required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Description')"

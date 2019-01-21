@@ -76,11 +76,11 @@
 																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Name</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text"  cssClass="form-control camelCase" 
 																			placeholder='Department Name' path="name"
-																			 required="true" onchange="isValidName('name','/department/isValidDepartmentName','1_errorContainer','Department Name Already Exists in this Company')"
+																			 required="true" onchange="isValidDepartmentName('name','/department/isValidDepartmentName','1_errorContainer','Department Name Already Exists in this Company')"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
-																			oninput="setCustomValidity('')" />
+																			oninput="setCustomValidity('')"  />
 																		<!-- <div  
 																			class="help-block with-errors"></div>
 																		  -->
@@ -167,13 +167,20 @@
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 		<script type="text/javascript">
+		
+		$('.camelCase').keyup(function(){
+			 this.value = capitalize_Words(this.value);
+		});
+		 
+		 function capitalize_Words(str)
+		 {
+		  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+		 }
+		 
 		 function isValidDepartmentName(nameId,url,displayId,msg){
-		      
-		      
+			 
 		      var parts = url.split('/');
-		     /*  alert(parts); */
 		      var answer = parts[parts.length - 1];
-		    /*   alert(answer); */
 		      
 		      var dataString  ="name="+$('#'+nameId).val()+"&companyId="+ $('#company').val();
 		      $.ajax({

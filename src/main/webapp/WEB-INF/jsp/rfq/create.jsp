@@ -23,6 +23,14 @@
 
 <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script> 	
 
+	 <style>
+        .ui-autocomplete { 
+            cursor:pointer; 
+            height:120px; 
+            overflow-y:scroll;
+        }    
+    </style>
+
 </head>
 <style>
     .table td a i {
@@ -838,7 +846,7 @@ $(document).ready(function(){
 	   });
 	
 	// alert("push data-->" +availableTagsvendornames);
-		$(document).on("keypress", ".vendorname", function() {
+	/* 	$(document).on("keypress", ".vendorname", function() {
 			$(this).autocomplete({
 		        source: availableTagsvendornames,
 		        select: function(event, ui) {
@@ -847,7 +855,23 @@ $(document).ready(function(){
 		            autocompletevendorDetails(vendorname);
 		       		 },
 		        }); 
-			});
+			}); */
+			
+			$(document).on("mousedown", ".vendorname", function() {
+				$(this).autocomplete({
+			        source: availableTagsvendornames,
+			        minLength: 0,
+		            scroll: true, 
+		            select: function(event, ui) {
+			        	var vendorname = ui.item.value;
+			        	//alert(vendorname);
+			            autocompletevendorDetails(vendorname);
+			       		 },
+				}).focus(function() {
+		            $(this).autocomplete("search", "");
+		        });
+			      
+				});
 			 
 		
 		//get the vendor information based on vendor name
@@ -928,7 +952,7 @@ $(document).ready(function(){
 	 //alert("length"+availableTags);
 		 
 		//$(".prodouctNumber").autocomplete({
-	$(document).on("keypress", ".prodouctNumber", function() {
+/* 	$(document).on("keypress", ".prodouctNumber", function() {
 		var itemParentRow = $(this).parents(".multTot");
 		//alert("itemParentRow"+itemParentRow);
 		
@@ -940,6 +964,24 @@ $(document).ready(function(){
 	             autocompleteandchange(name,itemParentRow);
 	       		 },
 	        }); 
+		}); */
+	
+	$(document).on("mouseenter", ".prodouctNumber", function() {
+		var itemParentRow = $(this).parents(".multTot");
+		//alert("itemParentRow"+itemParentRow);
+		
+		$(this).autocomplete({
+	        source: availableTags,
+	        minLength: 0,
+            scroll: true, 
+            select: function(event, ui) {
+	        	var name = ui.item.value;
+	        	//alert(name);
+	             autocompleteandchange(name,itemParentRow);
+	       		 },
+			}).focus(function() {
+	            $(this).autocomplete("search", "");
+	        });
 		});
 		
 	

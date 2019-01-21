@@ -16,7 +16,7 @@
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -75,7 +75,7 @@
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Language Name</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Name' path="name" onchange="isValidName('name','/language/isValidLanguageName','1_errorContainer','Language Name Already Exists')"
 																			value="${languagesObj.name}" required="true" oninvalid="this.setCustomValidity('Please Enter Language')"    oninput="setCustomValidity('')"/>
 																	<div   class="help-block with-errors"></div>

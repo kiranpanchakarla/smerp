@@ -23,7 +23,7 @@
     <link href="<c:url value=" /resources/css/dataTables/buttons.dataTables.min.css "/>" rel="stylesheet" type="text/css" />
     <link href="<c:url value=" /resources/css/dataTables/jquery.dataTables.min.css "/>" rel="stylesheet" type="text/css" />
     <link href="<c:url value=" /resources/css/datapickercss/bootstrap-datepicker.min.css "/>" rel="stylesheet" type="text/css" />
-    
+    <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
         <c:import url="/WEB-INF/jsp/header.jsp" />
@@ -73,7 +73,7 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Requester Name</label>
-                                                                            <form:input type="text" class="form-control username" placeholder='Requester Name' autocomplete="off"  path="referenceUser.firstname" 
+                                                                            <form:input type="text" class="form-control username camelCase" placeholder='Requester Name' autocomplete="off"  path="referenceUser.firstname" 
                                                                           value="${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}"
                                                                             
                                                                              required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />

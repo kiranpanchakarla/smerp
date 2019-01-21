@@ -21,8 +21,7 @@
 <script src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/> type="text/javascript"></script>
 <link href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>" rel="stylesheet" type="text/css" />
 
- 	
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 </head>
 <style>
     .table td a i {
@@ -77,7 +76,7 @@
 																<div class="col-sm-4 form-group">
 																	<label>Name</label>
 																	<form:input type="text"
-																		cssClass="form-control vendorname"
+																		cssClass="form-control vendorname camelCase"
 																		placeholder='Vendor Name' path="vendor.name"
 																		required="true" autocomplete="off" />
 																</div>

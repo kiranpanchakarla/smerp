@@ -11,7 +11,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
-
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
@@ -21,7 +20,7 @@
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.nav-item').click(function(){
@@ -78,7 +77,7 @@ $(document).ready(function(){
 															<div class="row">
 																<div class="col-sm-4 form-group">
 																	<label>Vendor Code</label>
-																	<form:input type="text" class="form-control"
+																	<form:input type="text" class="form-control camelCase"
 																		placeholder='Vendor Code' path="vendorCode" value=""
 																		onchange="isValidName('vendorCode','/vendor/isValidVendorCode','1_errorContainer','Vendor Code Already Exists')"
 																		required="true" autocomplete="off"
@@ -89,7 +88,7 @@ $(document).ready(function(){
 
 																<div class="col-sm-4 form-group">
 																	<label>Vendor Name</label>
-																	<form:input type="text" class="form-control"
+																	<form:input type="text" class="form-control camelCase"
 																		placeholder='Vendor Name' path="name" value=""
 																		onchange="isValidName('name','/vendor/isValidVendorName','1_errorContainer','Vendor Name Already Exists')"
 																		required="true" autocomplete="off"
@@ -101,7 +100,7 @@ $(document).ready(function(){
 
 																<div class="col-sm-4 form-group">
 																	<label>Group</label>
-																	<form:input type="text" class="form-control"
+																	<form:input type="text" class="form-control camelCase"
 																		placeholder='Group Name' path="groupName" value=""
 																		oninvalid="this.setCustomValidity('Please Enter Group Name')"
 																		oninput="setCustomValidity('')" />
@@ -207,7 +206,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Contact Id</label><input type="text"
 																							name="vendorContactDetails[0].contactId"
-																							class="form-control" placeholder='Contact Id'
+																							class="form-control camelCase" placeholder='Contact Id'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Contact Id')"
 																							oninput="setCustomValidity('')" />
@@ -233,7 +232,7 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Name</label><input type="text"
-																							class="form-control" placeholder='Contact Name'
+																							class="form-control camelCase" placeholder='Contact Name'
 																							name="vendorContactDetails[0].contactName"
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Contact Name')"
@@ -245,7 +244,7 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Address</label><input type="text"
-																							class="form-control" placeholder='Address'
+																							class="form-control camelCase" placeholder='Address'
 																							name="vendorContactDetails[0].address"
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address')"
@@ -342,7 +341,7 @@ $(document).ready(function(){
 																								<label>Contact Id</label><input type="text"
 																									value="${listContactDetails.contactId}"
 																									name="vendorContactDetails[<%= count %>].contactId"
-																									class="form-control" placeholder='Contact Id'
+																									class="form-control camelCase" placeholder='Contact Id'
 																									required="true"
 																									oninvalid="this.setCustomValidity('Please Enter Contact Id')"
 																									oninput="setCustomValidity('')" />
@@ -382,7 +381,7 @@ $(document).ready(function(){
 																						<div class="col-xs-12 col-sm-4">
 																							<div class="form-group">
 																								<label>Name</label><input type="text"
-																									class="form-control"
+																									class="form-control camelCase"
 																									value="${listContactDetails.contactName}"
 																									name="vendorContactDetails[<%= count %>].contactName"
 																									placeholder='Contact Name' required="true"
@@ -395,7 +394,7 @@ $(document).ready(function(){
 																						<div class="col-xs-12 col-sm-4">
 																							<div class="form-group">
 																								<label>Address</label><input type="text"
-																									class="form-control"
+																									class="form-control camelCase"
 																									value="${listContactDetails.address}"
 																									name="vendorContactDetails[<%= count %>].address"
 																									placeholder='Address' required="true"
@@ -548,7 +547,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address Id</label> <input type="text"
 																							name="vendorAddress[0].addressId"
-																							class="form-control" placeholder='Address Id'
+																							class="form-control camelCase" placeholder='Address Id'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address Id')"
 																							oninput="setCustomValidity('')" />
@@ -560,7 +559,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address</label> <input type="text"
 																							name="vendorAddress[0].addressName"
-																							class="form-control" placeholder='Address'
+																							class="form-control camelCase" placeholder='Address'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address')"
 																							oninput="setCustomValidity('')" />
@@ -572,7 +571,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Street/PO Box</label> <input type="text"
 																							name="vendorAddress[0].street"
-																							class="form-control" placeholder='Street/PO Box'
+																							class="form-control camelCase" placeholder='Street/PO Box'
 																							oninvalid="this.setCustomValidity('Please Enter Street')"
 																							oninput="setCustomValidity('')" />
 																						<!-- <div   class="help-block with-errors"></div> -->
@@ -582,7 +581,7 @@ $(document).ready(function(){
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>City</label> <input type="text"
-																							name="vendorAddress[0].city" class="form-control"
+																							name="vendorAddress[0].city" class="form-control camelCase"
 																							placeholder='City' required="true"
 																							oninvalid="this.setCustomValidity('Please Enter City')"
 																							oninput="setCustomValidity('')" />
@@ -608,7 +607,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Street Number</label> <input type="text"
 																							name="vendorAddress[0].streetNo"
-																							class="form-control" placeholder='Street Number'
+																							class="form-control camelCase" placeholder='Street Number'
 																							oninvalid="this.setCustomValidity('Please Enter Street Number')"
 																							oninput="setCustomValidity('')" />
 																						<!-- <div   class="help-block with-errors"></div> -->
@@ -710,7 +709,7 @@ $(document).ready(function(){
 																								<label>Address Id</label> <input type="text"
 																									value="${listAddressDetails.addressId}"
 																									name="vendorAddress[<%=count1 %>].addressId"
-																									class="form-control" placeholder='Address Id'
+																									class="form-control camelCase" placeholder='Address Id'
 																									required="true"
 																									oninvalid="this.setCustomValidity('Please Enter Address Id')"
 																									oninput="setCustomValidity('')" />
@@ -736,7 +735,7 @@ $(document).ready(function(){
 																								<label>Street/PO Box</label> <input type="text"
 																									value="${listAddressDetails.street}"
 																									name="vendorAddress[<%=count1 %>].street"
-																									class="form-control"
+																									class="form-control camelCase"
 																									placeholder='Street/PO Box'
 																									oninvalid="this.setCustomValidity('Please Enter Street')"
 																									oninput="setCustomValidity('')" />
@@ -876,7 +875,7 @@ $(document).ready(function(){
 																				<label>Payment Terms</label>
 																				<form:input path="paymentTerms"
 																					placeholder='Payment Terms' type="text"
-																					class="form-control" required="true"
+																					class="form-control camelCase" required="true"
 																					oninvalid="this.setCustomValidity('Please Enter Payment Terms')"
 																					oninput="setCustomValidity('')" />
 																				<!--  <div   class="help-block with-errors"></div> -->
@@ -922,7 +921,7 @@ $(document).ready(function(){
 																				<label>Bank Name</label>
 																				<form:input path="bankName"
 																					placeholder='Bank AccountName' type="text"
-																					class="form-control" required="true"
+																					class="form-control camelCase" required="true"
 																					oninvalid="this.setCustomValidity('Please Enter Bank Name')"
 																					oninput="setCustomValidity('')" />
 																				<!--  <div   class="help-block with-errors"></div> -->
@@ -945,7 +944,7 @@ $(document).ready(function(){
 																			<div class="col-sm-4 form-group">
 																				<label>Branch</label>
 																				<form:input path="branch" placeholder='Branch Name'
-																					type="text" class="form-control" required="true"
+																					type="text" class="form-control camelCase" required="true"
 																					oninvalid="this.setCustomValidity('Please Enter Branch Name')"
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
@@ -966,7 +965,7 @@ $(document).ready(function(){
 																				<label>Account Holder</label>
 																				<form:input path="bankAccountName"
 																					placeholder='Account Holder Name' type="text"
-																					class="form-control" required="true"
+																					class="form-control camelCase" required="true"
 																					oninvalid="this.setCustomValidity('Please Enter Bank Account Name')"
 																					oninput="setCustomValidity('')" />
 																				<!--  <div   class="help-block with-errors"></div> -->
@@ -1044,9 +1043,6 @@ $(document).ready(function(){
 	<%--  <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
 </body>
 <script type="text/javascript">
- 
-
-
 
 	$('.add')
 			.click(
@@ -1084,17 +1080,17 @@ $(document).ready(function(){
 												+ '<div class="form-group"><label>Contact Details</label></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Contact Id</label><input type="text" placeholder="Contact Id" name="vendorContactDetails['+inc+'].contactId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Id\')" oninput="setCustomValidity(\'\')" > </div></div>'
+												+ '<div class="form-group"><label>Contact Id</label><input type="text" placeholder="Contact Id" name="vendorContactDetails['+inc+'].contactId" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Id\')" oninput="setCustomValidity(\'\')" > </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Title</label><select name="vendorContactDetails['+inc+'].title" id="title'+inc+'"  onchange="titleValidation('+inc+')"  class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Select Title\')" oninput="setCustomValidity(\'\')" >'
 												+ '<option value="" selected disabled >select</option><option value="Mr">Mr</option><option value="Ms">Ms</option></select> <div   class="help-block with-errors" ></div></div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Name</label><input type="text" placeholder="Contact Name" name="vendorContactDetails['+inc+'].contactName" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Name\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<div class="form-group"><label>Name</label><input type="text" placeholder="Contact Name" name="vendorContactDetails['+inc+'].contactName" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Contact Name\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
-												+ '<div class="form-group"><label>Address</label><input type="text" placeholder="Address" name="vendorContactDetails['+inc+'].address" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<div class="form-group"><label>Address</label><input type="text" placeholder="Address" name="vendorContactDetails['+inc+'].address" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4">'
 												+ '<div class="form-group"><label>Mobile</label><input type="text" maxlength="13" minlength="10" onkeypress="return isNumberKey(event);" placeholder="Mobile Number" value="+91"  name="vendorContactDetails['+inc+'].mobileNo" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Mobile Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
@@ -1127,6 +1123,7 @@ $(document).ready(function(){
 
 
 <script type="text/javascript">
+
 var inc1=1;
 	$('.add1')
 			.click(
@@ -1165,22 +1162,22 @@ var inc1=1;
 												+ '</div><div class="col-md-2"> <a class="remove1 btn btn-danger">Remove</a></div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group">'
-												+ '<label>Address Id</label><input type="text" placeholder="Address Id" name="vendorAddress['+inc1+'].addressId" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address Id\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<label>Address Id</label><input type="text" placeholder="Address Id" name="vendorAddress['+inc1+'].addressId" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address Id\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Address</label>'
-												+ '<input type="text" placeholder="Address Name" name="vendorAddress['+inc1+'].addressName" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Address Name" name="vendorAddress['+inc1+'].addressName" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Address\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 												
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street/PO Box</label>'
-												+ '<input type="text" placeholder="Street/PO Box" name="vendorAddress['+inc1+'].street" class="form-control"    oninvalid="this.setCustomValidity(\'Please Enter Street\')" oninput="setCustomValidity(\'\')" > </div></div>'
+												+ '<input type="text" placeholder="Street/PO Box" name="vendorAddress['+inc1+'].street" class="form-control camelCase"    oninvalid="this.setCustomValidity(\'Please Enter Street\')" oninput="setCustomValidity(\'\')" > </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>City</label>'
-												+ '<input type="text" placeholder="City" name="vendorAddress['+inc1+'].city" class="form-control"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter City\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="City" name="vendorAddress['+inc1+'].city" class="form-control camelCase"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter City\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Zipcode</label>'
 												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc1+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isZipcodeKey(event);"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street Number</label>'
-												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
+												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control camelCase"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>GSTIN </label>'
 												+ '<input type="text" placeholder="GSTIN" name="vendorAddress['+inc1+'].gstin" class="form-control" maxlength="15" minlength="15" pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter GST IN\')" oninput="setCustomValidity(\'\')" >  </div></div>'

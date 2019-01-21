@@ -14,7 +14,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>     -->
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  	
-	
+ <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -89,7 +89,7 @@
 																	<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Designation</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control" 
+																		<form:input type="text" cssClass="form-control camelCase" 
 																			placeholder='Designation Name' path="desigination"
 																			value="${designation.desigination}" required="true" onchange="isValidDesiginationName('desigination','/desigination/isValidDesiginationName','1_errorContainer','Desigination Name Already Exists in this Company')"
 																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
@@ -181,8 +181,8 @@
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 		
 		<script type="text/javascript">
+		
 		 function isValidDesiginationName(nameId,url,displayId,msg){
-		      
 		      
 		      var parts = url.split('/');
 		     /*  alert(parts); */

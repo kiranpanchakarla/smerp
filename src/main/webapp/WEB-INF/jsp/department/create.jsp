@@ -14,6 +14,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  	
+ <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -168,17 +169,7 @@
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 		<script type="text/javascript">
 		
-		$('.camelCase').keyup(function(){
-			 this.value = capitalize_Words(this.value);
-		});
-		 
-		 function capitalize_Words(str)
-		 {
-		  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-		 }
-		 
 		 function isValidDepartmentName(nameId,url,displayId,msg){
-			 
 		      var parts = url.split('/');
 		      var answer = parts[parts.length - 1];
 		      

@@ -82,7 +82,7 @@ $(document).ready(function(){
 																		onchange="isValidName('vendorCode','/vendor/isValidVendorCode','1_errorContainer','Vendor Code Already Exists')"
 																		required="true" autocomplete="off"
 																		oninvalid="this.setCustomValidity('Please Enter Vendor Code')"
-																		oninput="setCustomValidity('')" />
+																		oninput="setCustomValidity('')" readonly="true"  />
 																	<!--  <div  class="help-block with-errors"></div> -->
 																</div>
 

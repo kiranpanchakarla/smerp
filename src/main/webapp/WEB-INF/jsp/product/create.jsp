@@ -64,7 +64,7 @@ $(document).ready(function(){
 															<div class="row">
 																<div class="col-sm-6 form-group">
 																	<label>Product Group</label>
-																	<form:select path="productGroup.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
+																	<form:select path="productGroup.id" class="form-control productGroup" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
 																		<form:option value="">--Select--</form:option>
 																		<c:forEach items="${productGroupList}" var="productGroup">
 																			<form:option value="${productGroup.id}">${productGroup.productName}</form:option>
@@ -85,7 +85,7 @@ $(document).ready(function(){
 																
 																<div class="col-sm-6 form-group has-feedback">
 																	<label>Product Number</label>
-																	<form:input type="text" class="form-control" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control" readonly="true" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value=""  oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
 																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
 																</div>
 																
@@ -392,8 +392,14 @@ $(document).ready(function(){
         	
         	if ($("#id").val()!=''){
         		uomSubCategoryLoadForUpdate();
+        		setProductGroupEnable();
         	}
         	
+            function  setProductGroupEnable() {
+        		  $(".productGroup").find('option').not(':selected').remove();
+        	  }
+        	    
+        	    
         	if (typeof $("#gstValue").val() != 'undefined'){
         		  $("#service-gst-div").hide();
                   $("#product-gst-div").hide();
@@ -628,7 +634,24 @@ $(document).ready(function(){
                             },
                     });
                 });
-        
+            
+            
+     $(".productGroup").change(function(){    
+    	// var productGroup=$('.productGroup').val();
+    	 var productGroup=$(".productGroup option:selected").text();
+    	
+    	  $.ajax({
+ 			   type: "GET",
+     			data: {productGroup :productGroup}, 
+     			async : false,
+                 url: "<c:url value="/product/setProductNo"/>", 
+                 success: function (response) {
+                 	console.log("product Number"+response);
+                 	$('#productNo').val(response);
+                 	
+                 }
+             })      
+     });   
         
     </script>
 

@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.smerp.model.admin.Vendor;
 import com.smerp.model.inventory.ProductType;
 import com.smerp.service.inventory.ProductTypeService;
+import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GenerateDocNumber;
 
 @Controller
 @RequestMapping("/producttype")
@@ -31,7 +35,12 @@ public class ProductTypeController {
 	@GetMapping(value = "/create")
 	public String create(Model model) {
 		logger.info("Inside ProductTypeController Create Method");
-		model.addAttribute("producttype", new ProductType());
+		
+		ProductType productType = productTypeService.findLastCodeNumber();
+		ProductType productTypeObj =  new ProductType();
+		productTypeObj.setProductName(GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.PG, productType == null ? "" :  productType.getProductName()));
+		
+		model.addAttribute("producttype", productTypeObj);
 		return "inventory/producttype/create";
 	}
 

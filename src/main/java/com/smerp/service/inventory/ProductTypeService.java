@@ -16,4 +16,6 @@ public interface ProductTypeService {
 	
 	ProductType getInfo(int id);
 	
+	ProductType findLastCodeNumber();
+	
 }

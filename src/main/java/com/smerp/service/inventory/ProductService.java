@@ -3,6 +3,7 @@ package com.smerp.service.inventory;
 import java.util.List;
 
 import com.smerp.model.inventory.Product;
+import com.smerp.model.inventory.ProductType;
 
 public interface ProductService {
 
@@ -31,6 +32,8 @@ public interface ProductService {
 	List<String> findAllProductNamesByProduct(String product);
 
 	Product findByproductNo(String name);
+	
+	Product findLastCodeNumber(String productGroup);
 
 	
 

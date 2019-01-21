@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Vendor;
@@ -26,6 +27,8 @@ import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.CountryServices;
+import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GenerateDocNumber;
 @Configuration
 @PropertySource("classpath:application.properties")
 
@@ -64,8 +67,11 @@ public class VendorController {
 	
 	@GetMapping(value = "/create")
 	public String vendorCreate(Model model) {
+		Vendor vendor = vendorService.findLastCodeNumber();
+		Vendor vendorObj =  new Vendor();
+		vendorObj.setVendorCode(GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.V, vendor == null ? "" :  vendor.getVendorCode()));
 		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); // for india pass value code 1
-		model.addAttribute("vendor", new Vendor());
+		model.addAttribute("vendor", vendorObj);
 		return "vendor/create";
 	}
 	

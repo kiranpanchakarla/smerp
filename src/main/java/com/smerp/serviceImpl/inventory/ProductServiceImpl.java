@@ -3,10 +3,14 @@ package com.smerp.serviceImpl.inventory;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.smerp.model.inventory.Product;
@@ -18,6 +22,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
@@ -129,4 +136,30 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productRepository.findByProductNo(name);
 	}
+	
+	@Override
+	public Product findLastCodeNumber(String productGroup) {
+		/*return productRepository.findProductGroupByProductCode(productGroup);*/
+		
+		/*return (Product)entityManager.createNamedQuery("getProductCode")
+				.setParameter("productName", productGroup).setMaxResults(1)
+				.getSingleResult();*/
+		Product  pp =null;
+		
+		try{
+			
+			Query query = entityManager.createNamedQuery("getProductCode")
+		
+				.setParameter("productName", productGroup).setMaxResults(1);
+		logger.info("query--->" +query);
+		  pp = (Product) query.getSingleResult();		
+			logger.info(pp);	
+		}catch (NoResultException nre){
+			logger.info("nre--->" +nre);
+				}	
+		
+		return pp;
+		
+	}
+	
 }

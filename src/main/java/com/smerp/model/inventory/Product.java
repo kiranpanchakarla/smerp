@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.HSNCode;
@@ -17,6 +18,7 @@ import com.smerp.model.master.SACCode;
 
 @Entity
 @Table(name="tbl_inventory_product")
+@NamedQuery(name="getProductCode", query="from Product p where p.productGroup.productName=:productName order by p.id DESC ")
 public class Product extends AuditModel {
 	
 	/**

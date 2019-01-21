@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.inventory.Product;
+import com.smerp.model.inventory.ProductType;
 import com.smerp.model.inventory.Uom;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductCategoryService;
@@ -30,6 +31,8 @@ import com.smerp.service.inventory.UomCatergoryService;
 import com.smerp.service.inventory.UomService;
 import com.smerp.service.master.HsnService;
 import com.smerp.service.master.SacService;
+import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.ProductList;
 
 @Controller
@@ -84,6 +87,8 @@ public class ProductController {
 		model.addAttribute("taxCategoryList", productList.getTaxCategory());
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		
+		
 		model.addAttribute("product", new Product());
 		return "product/create";
 	}
@@ -162,6 +167,16 @@ public class ProductController {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	@GetMapping(value = "/setProductNo")
+	@ResponseBody
+	public String  setProductNo(String productGroup) {
+		logger.info("productGroup" + productGroup);
+		Product product = productService.findLastCodeNumber(productGroup);
+		return GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.PGP, product == null ? "" :  product.getProductNo());
+		//return "11111";
 	}
 	
 	@PostMapping(value = "/delete")

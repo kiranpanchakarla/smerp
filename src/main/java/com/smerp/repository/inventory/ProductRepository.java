@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.inventory.Product;
+import com.smerp.model.inventory.ProductType;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -25,4 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<String> findAllProductNamesByProduct(@Param("product") String product);
 	
 	Product findByProductNo(String name);
+	
+	//@Query("SELECT 1 * FROM Product  WHERE productGroup.productName=:name order by createdAt asc LIMIT 1")
+	/*@Query(value="SELECT 1 * FROM Product  WHERE productGroup.productName=:name order by createdAt DESC LIMIT 1", nativeQuery = true)
+	Product findProductGroupByProductCode(String name);*/
 }

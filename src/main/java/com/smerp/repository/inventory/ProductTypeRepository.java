@@ -10,4 +10,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 
 	ProductType findById(int id);
 	
+	ProductType findTopByOrderByIdDesc();
+	
 }

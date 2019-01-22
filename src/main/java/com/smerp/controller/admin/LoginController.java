@@ -103,6 +103,11 @@ public class LoginController {
 			Map<String, List<String>> map = usermodulepermissionsbyuserId(user, model);
 			logger.info(" permissions details map" + map.size());
 			session.setAttribute("umpmap", map);
+			
+			
+			
+			
+			
 			logger.info("company details----------" + user.getCompany());
 			logger.info("userService" + userService.findAll().size());
 			logger.info("productService" + productService.findByIsActive().size());

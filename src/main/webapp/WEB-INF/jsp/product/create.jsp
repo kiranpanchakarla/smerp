@@ -158,13 +158,13 @@ $(document).ready(function(){
 																	<div id="service-gst-div" style="display: none;">
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Service Type:</label>
-																				<form:input path="serviceType" id="service" type="text" class="form-control"  oninvalid="this.setCustomValidity('Please Enter Service Type')" oninput="setCustomValidity('')" />
+																				<label>Service Type</label>
+																				<form:input path="serviceType" id="service" type="text" class="form-control" placeholder="Enter Service Type " oninvalid="this.setCustomValidity('Please Enter Service Type')" oninput="setCustomValidity('')" />
 																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		
 																			<div class="col-sm-4 form-group">
-																				<label>SAC:</label>
+																				<label>SAC Code</label>
 																				<form:select path="sacCode.id"   class="form-control"  oninvalid="this.setCustomValidity('Please Select SAC Type')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
 																					<c:forEach items="${sacList}" var="sac">
@@ -200,7 +200,7 @@ $(document).ready(function(){
 																			</div>
 																		
 																			<div class="col-sm-4 form-group">
-																				<label>HSN:</label>
+																				<label>HSN Code</label>
 																				<form:select path="hsnCode.id" class="form-control" oninvalid="this.setCustomValidity('Please Select HSN Code')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
 																					<c:forEach items="${hsnList}" var="hsn">
@@ -242,14 +242,14 @@ $(document).ready(function(){
 																<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 																	
 																	<div class="row">
-                                                                        <div class="col-sm-4 form-group">
+                                                                        <div class="col-sm-6 form-group">
                                                                             <label>Preferred Vendor</label>
-                                                                            <form:input path="preferredVendor" class="form-control vendorname camelCase" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
+                                                                            <form:input path="preferredVendor" placeholder ="Please Select Vendor Name" class="form-control vendorname camelCase" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
                                                                             <!-- <div  class="help-block with-errors"></div> -->
                                                                         </div>
 																	
-																		<div class="col-sm-4 form-group">
-																			<label>Purchasing UOM Name: </label>
+																		<div class="col-sm-6 form-group">
+																			<label>Purchasing UOM </label>
 																			
 																			<form:select id="purchasingUomId" path="purchasingUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
@@ -263,15 +263,15 @@ $(document).ready(function(){
 																		<input type="hidden" id="purchasingUomValue" class="form-control" name="id" value="${product.purchasingUom.uomName}">
 																		<input type="hidden" id="purchasingUomKey" class="form-control" name="id" value="${product.purchasingUom.id}">
 																	
-																		<div class="col-sm-4 form-group">
+																		<%-- <div class="col-sm-4 form-group">
 																			<label>Products Per Purchase Unit:</label>
 																			<form:input path="produtPerPurchaseUnit" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Per Purchase Unit')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
-																		</div>
+																		</div> --%>
 																	</div>
 																	<div class="row">
-																		<div class="col-sm-4 form-group">
-																			<label>Packing UOM Name:</label>
+																		<div class="col-sm-6 form-group">
+																			<label>SKU </label>
 																			<form:select id="packingUomId" path="packingUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${uomList}" var="uom">
@@ -283,9 +283,9 @@ $(document).ready(function(){
 																		<input type="hidden" id="packingUomValue" class="form-control" name="id" value="${product.packingUom.uomName}">
 																		<input type="hidden" id="packingUomKey" class="form-control" name="id" value="${product.packingUom.id}">
 																	
-																		<div class="col-sm-4 form-group">
-																			<label>Quantity Per Package:</label>
-																			<form:input path="qualityPerPackage" type="text" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
+																		<div class="col-sm-6 form-group">
+																			<label>SKU Quantity</label>
+																			<form:input path="qualityPerPackage" type="text" placeholder ="SKU Quantity" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
@@ -293,8 +293,8 @@ $(document).ready(function(){
 																<div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
 																	
 																	<div class="row">
-																		<div class="col-sm-4 form-group">
-																			<label>Inventory UoM:</label>
+																		<div class="col-sm-6 form-group">
+																			<label>Inventory UOM:</label>
 																			<form:select id="inventoryUomId" path="inventoryUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${uomList}" var="uom">
@@ -305,20 +305,19 @@ $(document).ready(function(){
 																		<input type="hidden" id="inventoryUomValue" class="form-control" name="id" value="${product.inventoryUom.uomName}">
 																		<input type="hidden" id="inventoryUomKey" class="form-control" name="id" value="${product.inventoryUom.id}">
 																	    </div>
-																		<div class="col-sm-4 form-group">
+																		<div class="col-sm-6 form-group">
 																			<label>Minimum</label>
-																			<form:input path="minimun" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Minimum Value')" oninput="setCustomValidity('')" />
+																			<form:input path="minimun" class="form-control numericwithdecimal" placeholder="Minimun Quantity" required="true" oninvalid="this.setCustomValidity('Please Enter Minimum Value')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	
-																		<div class="col-sm-4 form-group">
+																		<div class="col-sm-6 form-group">
 																			<label>Maximum</label>
-																			<form:input path="maximim" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
+																			<form:input path="maximim" class="form-control numericwithdecimal" placeholder="Maximum Quantity" required="true" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-4 form-group">
+																		
+																		<div class="col-sm-6 form-group">
 																			<label>Valuation Method:</label>
 																			<form:select path="valuationMethod" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select Valuation Method')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
@@ -328,8 +327,11 @@ $(document).ready(function(){
 																			</form:select>
 																		<!-- 	<div  class="help-block with-errors"></div> -->
 																		</div>
+																	</div>
+																	<div class="row">
+																		
 																	
-																		<div class="col-sm-4 form-group">
+																		<div class="col-sm-6 form-group">
 																			<label>Product Cost:</label>
 																			<form:input path="productCost" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Cost')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
@@ -626,14 +628,18 @@ $(document).ready(function(){
            });
         
         
-            $(document).on("keypress", ".vendorname", function() {
+            $(document).on("focus", ".vendorname", function() {
                 $(this).autocomplete({
                     source: availableTagsvendornames,
+                    minLength: 0,
+      	            scroll: true,
                     select: function(event, ui) {
                         var vendorname = ui.item.value;
                     //    alert(vendorname);
                       
                             },
+                }).focus(function() {
+  		            $(this).autocomplete("search", "");
                     });
                 });
             

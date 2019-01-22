@@ -1,16 +1,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@ page import="java.security.Principal" %> 
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
- <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ page import="java.security.Principal"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- END Custom CSS-->
 <div class="first_strip"
 	style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
 	<div>
-	
+
 		<ul class="main_menu">
 			<li class="nav-item hidden-sm-down toggle_sidemenu_icon"><a
 				class="nav-link nav-menu-main menu-toggle hidden-xs"><i
 					class="icon-menu5"> </i></a></li>
+			<li class="logo-box text-xs-center"><sec:authorize
+					access="isAuthenticated()">
+					<img
+						src="${contextPath}/<sec:authentication property="principal.company.logo" />"
+						style="width: 4%; position: fixed;" />
+
+				</sec:authorize></li>
+
+
 			<%-- <li><a>Module</a>
 				<ul class="sub_menu">
 
@@ -73,7 +83,7 @@
 					  
 				</ul></li> --%>
 			<!-- <li><a>Tools</a> -->
-				<!-- <ul class="sub_menu">
+			<!-- <ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
 							class="icon-ios-arrow-right right"></i></a>
@@ -134,9 +144,10 @@
 									<li><a>Super Sub item 1</a></li>
 								</ul></li>
 						</ul></li>
-				</ul> --></li>
+				</ul> -->
+			</li>
 			<!-- <li><a>Window</a> -->
-				<!-- <ul class="sub_menu">
+			<!-- <ul class="sub_menu">
 					<li><a>item 1</a></li>
 					<li class="has_sub"><a>item 1<i
 							class="icon-ios-arrow-right right"></i></a>
@@ -264,23 +275,21 @@
 			<li class="dropdown dropdown-user nav-item edit-user-dropdown">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
-					class="avatar avatar-online">
-					
-					<%-- <img src="${contextPath}/${user.image}"/> --%>
-					<sec:authorize access="isAuthenticated()">
-                                <img src="${contextPath}/<sec:authentication property="principal.image" />"/>
-                                  
-                    </sec:authorize>
-					
-					 <!-- <img
-						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> --><i></i>
-				</span>  <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
-				<label>
-				<sec:authorize access="isAuthenticated()">
-                                 <sec:authentication property="principal.username" /> </span>
-               </sec:authorize>
+					class="avatar avatar-online"> <%-- <img src="${contextPath}/${user.image}"/> --%>
+						<sec:authorize access="isAuthenticated()">
+							<img
+								src="${contextPath}/<sec:authentication property="principal.image" />" />
+
+						</sec:authorize> <!-- <img
+						src="/resources/images/portrait/logo/manuh_logo.jpg" alt="avatar"> -->
+						<i></i>
+				</span> <%-- <span class="user-name">${pageContext.request.userPrincipal.principal.username}</span>  --%>
+					<label> <sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.username" />
+							</span>
+						</sec:authorize>
 				</label>
-				
+
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<!-- <a href="#" class="dropdown-item"><i class="icon-head"></i>
@@ -293,7 +302,7 @@
 						class="icon-power3"></i> Logout</a>
 				</div>
 			</li>
-			
+
 		</ul>
 		<div style="clear: both;"></div>
 	</div>

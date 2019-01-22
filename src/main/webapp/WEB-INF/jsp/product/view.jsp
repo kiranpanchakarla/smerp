@@ -211,26 +211,23 @@
 																		aria-labelledby="profile-tab">
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group has-feedback">
+																			<div class="col-sm-6 form-group has-feedback">
 																				<label>Preferred Vendor</label>:
 																				${product.preferredVendor}
 																			</div>
-																			<div class="col-sm-4 form-group has-feedback">
-																				<label>Purchasing UOM Name:</label>:
-																				${product.purchasingUom.id}
+																			<div class="col-sm-6 form-group has-feedback">
+																				<label>Purchasing UOM</label>:
+																				${product.purchasingUom.uomName}
 																			</div>
-																			<div class="col-sm-4 form-group has-feedback">
-																				<label>Products Per Purchase Unit</label>:
-																				${product.produtPerPurchaseUnit}
-																			</div>
+																			
 																		</div>
 																		<div class="row">
-																			<div class="col-sm-4 form-group has-feedback">
-																				<label>Packing UOM Name</label>:
-																				${product.packingUom.id}
+																			<div class="col-sm-6 form-group has-feedback">
+																				<label>SKU</label>:
+																				${product.packingUom.uomName}
 																			</div>
-																			<div class="col-sm-4 form-group has-feedback">
-																				<label>Quantity Per Package</label>:
+																			<div class="col-sm-6 form-group has-feedback">
+																				<label>SKU Quantity  </label>:
 																				${product.qualityPerPackage}
 																			</div>
 																		</div>

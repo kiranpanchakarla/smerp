@@ -75,7 +75,9 @@ $(document).ready(function(){
 																
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
-																	<form:input type="text" class="form-control camelCase" placeholder='Description' path="description" value="" required="true" oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control camelCase" placeholder='Description' path="description"
+																	 value="" required="true" onchange="isValidName('description','/product/isValidProductNo','1_productNo','Product Description Alredy Exists')"
+																	 oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
 																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>
 															</div>
@@ -85,7 +87,7 @@ $(document).ready(function(){
 																
 																<div class="col-sm-6 form-group has-feedback">
 																	<label>Product Number</label>
-																	<form:input type="text" class="form-control" readonly="true" placeholder='Product Number' path="productNo"  onchange="isValidName('productNo','/product/isValidProductNo','1_productNo','Product Alredy Exists')" value=""  oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
+																	<form:input type="text" class="form-control" readonly="true" placeholder='Product Number' path="productNo"  value=""  oninvalid="this.setCustomValidity('Please Enter Product No.')" oninput="setCustomValidity('')" />
 																	<!-- <div  id="1_productNo" class="help-block with-errors"></div> -->
 																</div>
 																

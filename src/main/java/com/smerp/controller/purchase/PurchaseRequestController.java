@@ -112,6 +112,7 @@ public class PurchaseRequestController {
 		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		//gets the users first and last name
 		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));

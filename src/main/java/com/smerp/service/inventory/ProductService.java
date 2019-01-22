@@ -30,6 +30,8 @@ public interface ProductService {
 	Product findByDescription(String name);
 
 	List<String> findAllProductNamesByProduct(String product);
+	
+	List<String> findAllProductDescription(String product);
 
 	Product findByproductNo(String name);
 	

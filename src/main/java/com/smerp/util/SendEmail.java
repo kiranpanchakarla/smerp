@@ -118,6 +118,18 @@ public class SendEmail extends EmailerGenerator{
 		return out.toString();
 	}
 	
+	protected String getDashboardBody() {
+		Writer out = new StringWriter();
+		try {
+			  
+			out.flush();
+		} catch (Exception e) {
+			logger.error("Failed to process exception email template for Registration email ", e);
+			throw new RuntimeException(e);
+		}
+		return out.toString();
+	}
+	
 	protected String RejectMessage() {
 		  
 		return "Document has Been Rejected";
@@ -320,14 +332,14 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createDashboardMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				//logger.info("Sending notification for " + getUser().getUserEmail());
 				message.setTo("k.panchakarla@manuhindia.com");
 				message.setSubject("Dashbaord Email Test");
-				message.setText("Working",true);
+				message.setText(getDashboardBody(), true);
 			}
 
 		};

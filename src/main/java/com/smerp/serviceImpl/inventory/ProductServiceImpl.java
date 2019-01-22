@@ -161,5 +161,11 @@ public class ProductServiceImpl implements ProductService {
 		return pp;
 		
 	}
+
+	@Override
+	public List<String> findAllProductDescription(String product) {
+		// TODO Auto-generated method stub
+		return productRepository.findAllProductDescription(product);
+	}
 	
 }

@@ -22,8 +22,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	Product findByDescription(String name);
 	
 	/*@Query("SELECT productNo FROM Product WHERE serviceOrProduct=:product and isActive=true ")*/
-	@Query("SELECT productNo FROM Product WHERE isActive=true ")
+	@Query("SELECT productNo FROM Product WHERE isActive=true order by createdAt asc")
 	List<String> findAllProductNamesByProduct(@Param("product") String product);
+	
+	@Query("SELECT description FROM Product WHERE isActive=true order by createdAt asc")
+	List<String> findAllProductDescription(@Param("product") String product);
 	
 	Product findByProductNo(String name);
 	

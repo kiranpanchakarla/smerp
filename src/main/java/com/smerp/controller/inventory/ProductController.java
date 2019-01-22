@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.smerp.model.admin.ProductQuantity;
 import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.ProductType;
 import com.smerp.model.inventory.Uom;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductCategoryService;
+import com.smerp.service.inventory.ProductQuantityService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.ProductTypeService;
 import com.smerp.service.inventory.UomCatergoryService;
@@ -69,6 +71,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductList productList;
+	
+	@Autowired
+	ProductQuantityService productQuantityService;
 	
 	private static final Logger logger = LogManager.getLogger(ProductController.class);
 
@@ -130,6 +135,7 @@ public class ProductController {
 	@GetMapping(value = "/view")
 	public String view(String productId, Model model) {
 		Product product=productService.getInfo(Integer.parseInt(productId));
+		List<ProductQuantity> productQuantity = productQuantityService.findProductOrderedQuantity(product.getProductNo());
 		model.addAttribute("product",product);
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("hsnList", hsnService.findAll());
@@ -141,6 +147,7 @@ public class ProductController {
 		model.addAttribute("productTypeList", productList.getProductType());
 		model.addAttribute("taxCategoryList", productList.getTaxCategory());
 		model.addAttribute("uomList", uomService.uomList(product.getUomCategory().getId()));
+		model.addAttribute("productQuantity", productQuantity);
 		//model.addAttribute("uomList",  uomService.uomList();
 		return "product/view";
 	}
@@ -160,23 +167,22 @@ public class ProductController {
 	@ResponseBody
 	public boolean isValidProductNo(String name) {
 		logger.info("companyName" + name);
-		Product product = productService.findByProductNo(name);
+		Product product = productService.findByDescription(name);
 		if (product != null) {
-			logger.info("Product No.  Already Exits!");
+			logger.info("Product Description  Already Exits!");
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+    	
 	
 	@GetMapping(value = "/setProductNo")
 	@ResponseBody
 	public String  setProductNo(String productGroup) {
 		logger.info("productGroup" + productGroup);
 		Product product = productService.findLastCodeNumber(productGroup);
-		return GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.PGP, product == null ? "" :  product.getProductNo());
-		//return "11111";
+		return GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.PGP, product == null ? productGroup :  product.getProductNo());
 	}
 	
 	@PostMapping(value = "/delete")
@@ -184,7 +190,7 @@ public class ProductController {
 		
 		logger.info("Delete msg");
 		productService.delete(id);
-		return "redirect:productList";
+		return "redirect:list";
 	}
 	
 	
@@ -193,6 +199,21 @@ public class ProductController {
     @ResponseBody
     private String getInvoiceListByProductNumber(@RequestParam("name") String name) throws JsonProcessingException {
         Product product = productService.findByproductNo(name);
+        logger.info("product Obj-->" + product );
+        if(product!=null) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        logger.info(mapper.writeValueAsString(product));
+        return mapper.writeValueAsString(product);
+        }else {
+        	return "";
+        }
+    }
+	
+	@RequestMapping(value = "/getProductInfoByDescription", method = RequestMethod.GET)
+    @ResponseBody
+    private String getInvoiceListByDescription(@RequestParam("name") String name) throws JsonProcessingException {
+        Product product = productService.findByDescription(name);
         logger.info("product Obj-->" + product );
         if(product!=null) {
         ObjectMapper mapper = new ObjectMapper();

@@ -12,7 +12,14 @@
         </ul>
       </li>
       
-       <li><a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <li>
+       
+        <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+       <a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+        	</c:if>
+			  </c:forEach>  
+        
         <ul class="sub_menu">
          
             <c:forEach items="${sessionScope.umpmap}" var="ump">  
@@ -48,7 +55,13 @@
       
        
 	   
-       <li><a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <li>
+       <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+       <a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       </c:if>
+			 	 </c:forEach>  
+       
         <ul class="sub_menu">
         <c:forEach items="${sessionScope.umpmap}" var="ump">
                     <c:if test="${ump.key eq 'Product'}">
@@ -94,7 +107,21 @@
        </c:if>
    		  </c:forEach> 
       
-      <li> <a href="#"><i class="icon-shop left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+      <li> 
+     <c:set var="oneTime" value="${oneTime + 1}" scope="page" /> 
+    
+      
+       <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Purchase Request'  || ump.key eq 'Convert To RFQ' || ump.key eq 'RFQ' || ump.key eq 'Convert To PO'|| ump.key eq 'Convert To GR'|| ump.key eq 'Goods Receipt'|| ump.key eq 'Goods Return' }">
+		     <c:if test="${oneTime  ==1}">
+		      <a href="#"><i class="icon-shop left"></i><span class="menu_text">Purchase Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+		       </c:if>
+		    <c:set var="oneTime" value="${oneTime + 1}" scope="page" /> 
+		    
+        </c:if>
+   		  </c:forEach> 
+        
+        
         <ul class="sub_menu">
 					<c:forEach items="${sessionScope.umpmap}" var="ump">
 						<c:if test="${ump.key eq 'Purchase Request'}">

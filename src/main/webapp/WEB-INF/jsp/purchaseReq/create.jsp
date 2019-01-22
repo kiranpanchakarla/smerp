@@ -244,18 +244,18 @@
 																													<form:input type="text" required="true"
 																															path="purchaseRequestLists[${count}].prodouctNumber"
 																															value="${listpurchaseRequestLists.prodouctNumber}" 
-																															class="form-control prodouctNumber"></form:input></div></td>
+																															class="form-control prodouctNumber"   ></form:input></div></td>
 																													
 																														<td>
 																														<div class="form-group">
 																														<form:input type="text"
-																															path="purchaseRequestLists[${count}].description"
+																															path="purchaseRequestLists[${count}].description" required="true"
 																															value="${listpurchaseRequestLists.description}"
 																															class="form-control"></form:input></div></td>
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control description " readonly="true"></form:input></div></td>
+																															class="form-control description " required="true" ></form:input></div></td>
 																													
 																													
 																															
@@ -297,7 +297,7 @@
 																															></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
-																															path="purchaseRequestLists[${count}].description"
+																															path="purchaseRequestLists[${count}].description" required="true"
 																															value="${listpurchaseRequestLists.description}"
 																															class="form-control description"
 																															></form:input></div></td>
@@ -504,7 +504,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" autocomplete="off" value="" class="form-control description description '+inc+'" id="description'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].description" required="true" autocomplete="off" value="" class="form-control description description '+inc+'" id="description'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -877,7 +877,7 @@
                 	  if(availabledescTags.includes($(this).val()) == true) 	 {
     		        if ($.inArray($(this).val(), arr) == -1){
     		            arr.push($(this).val());
-    		         
+    		           
     		       	// var isDluplicate = true;
     		       	//autocompleteandchange(($(this).val()),itemParentRow);
     		        }else{
@@ -947,6 +947,9 @@
                         //$('.productGroup').val(productgroup);
 
                         $(itemParentRow).find(".productGroup").val(productgroup);
+                        
+                        $(itemParentRow).find(".prodouctNumber").removeClass()
+                        $(itemParentRow).find(".description").removeClass()
           
                     },
                     error: function(e) {

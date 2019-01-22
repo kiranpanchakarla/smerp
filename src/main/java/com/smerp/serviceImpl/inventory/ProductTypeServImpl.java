@@ -19,7 +19,7 @@ public class ProductTypeServImpl implements ProductTypeService {
 	@Override
 	public List<ProductType> findAll() {
 		
-		return productTypeRepository.findAll();
+		return productTypeRepository.findAllByOrderByIdAsc();
 	}
 
 	@Override

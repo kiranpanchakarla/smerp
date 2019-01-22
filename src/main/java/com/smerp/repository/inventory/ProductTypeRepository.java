@@ -1,5 +1,7 @@
 package com.smerp.repository.inventory;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +13,7 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	ProductType findById(int id);
 	
 	ProductType findTopByOrderByIdDesc();
+	
+	List<ProductType> findAllByOrderByIdAsc();
 	
 }

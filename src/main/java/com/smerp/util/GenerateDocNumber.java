@@ -59,9 +59,9 @@ public class GenerateDocNumber {
         if(type.equalsIgnoreCase(""+EnumStatusUpdate.V)  &&  docVal.equalsIgnoreCase("")) {
             return "V0001";
         }  else if(type.equalsIgnoreCase(""+EnumStatusUpdate.PG)  &&  docVal.equalsIgnoreCase("")) {
-            return "PG001";
-        }else if(type.startsWith(""+EnumStatusUpdate.PGP)  &&  docVal.equalsIgnoreCase("")) {
-            return "PG001P0001";
+            return "PG0001";
+        }else if(type.startsWith(""+EnumStatusUpdate.PGP)  &&  docVal.length()<7) {
+            return docVal+"P0001";
         } else {
             String splitFirst;
             if(type.startsWith(""+EnumStatusUpdate.PGP)) {
@@ -91,7 +91,7 @@ public class GenerateDocNumber {
     } 
 	
 	public static void main(String[] args) {
-		System.out.println(autoGenereater("PGP","PG001P0001"));
+		System.out.println(autoGenereater("PGP","PG0001P0001"));
 	}
 	
 }

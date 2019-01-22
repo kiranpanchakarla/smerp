@@ -182,7 +182,7 @@
 																			</div>
                                                                             <div class="col-sm-4 form-group">
                                                                           <label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control"
+                                                                            <form:textarea type="text" cssClass="form-control camelCase"
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div>
@@ -857,14 +857,13 @@ $(document).ready(function(){
 		        }); 
 			}); */
 			
-			$(document).on("mousedown", ".vendorname", function() {
+			$(document).on("focus", ".vendorname", function() {
 				$(this).autocomplete({
 			        source: availableTagsvendornames,
 			        minLength: 0,
 		            scroll: true, 
 		            select: function(event, ui) {
 			        	var vendorname = ui.item.value;
-			        	//alert(vendorname);
 			            autocompletevendorDetails(vendorname);
 			       		 },
 				}).focus(function() {
@@ -966,7 +965,7 @@ $(document).ready(function(){
 	        }); 
 		}); */
 	
-	$(document).on("mouseenter", ".prodouctNumber", function() {
+	$(document).on("focus", ".prodouctNumber", function() {
 		var itemParentRow = $(this).parents(".multTot");
 		//alert("itemParentRow"+itemParentRow);
 		

@@ -650,7 +650,7 @@
 											<div class="create-block">
 											<div class="form-group">
 											<label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control"
+                                                                            <form:textarea type="text" cssClass="form-control camelCase"
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div></div>
@@ -1111,7 +1111,7 @@ $(document).ready(function(){
 	   });
 	
 	// alert("push data-->" +availableTagsvendornames);
-		$(document).on("keypress", ".vendorname", function() {
+		/* $(document).on("keypress", ".vendorname", function() {
 			$(this).autocomplete({
 		        source: availableTagsvendornames,
 		        select: function(event, ui) {
@@ -1120,6 +1120,21 @@ $(document).ready(function(){
 		            autocompletevendorDetails(vendorname);
 		       		 },
 		        }); 
+			}); */
+		
+		$(document).on("focus", ".vendorname", function() {
+			$(this).autocomplete({
+		        source: availableTagsvendornames,
+		        minLength: 0,
+	            scroll: true,
+		        select: function(event, ui) {
+		        	var vendorname = ui.item.value;
+		        	//alert(vendorname);
+		            autocompletevendorDetails(vendorname);
+		       		 },
+		        }).focus(function() {
+		            $(this).autocomplete("search", "");
+		        });
 			});
 			 
 		
@@ -1200,17 +1215,21 @@ $(document).ready(function(){
 	 //alert("length"+availableTags);
 		 
 		//$(".prodouctNumber").autocomplete({
-	$(document).on("keypress", ".prodouctNumber", function() {
+	$(document).on("focus", ".prodouctNumber", function() {
 		var itemParentRow = $(this).parents(".multTot");
 		//alert("itemParentRow"+itemParentRow);
 		
 		$(this).autocomplete({
 	        source: availableTags,
+	        minLength: 0,
+            scroll: true,
 	        select: function(event, ui) {
 	        	name = ui.item.value;
 	        	//alert(name);
 	             autocompleteandchange(name,itemParentRow);
 	       		 },
+	        }).focus(function() {
+	            $(this).autocomplete("search", "");
 	        }); 
 		});
 		

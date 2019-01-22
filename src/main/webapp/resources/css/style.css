@@ -1073,3 +1073,22 @@ h2.font-weight-normal {
 .new_card_style .card-block{
 	padding:10px;
 }
+.table-responsive{
+	text-transform: capitalize;
+	/* text-transform: uppercase; */
+}
+.dataTables_scroll{
+	text-transform: capitalize;
+	/* text-transform: uppercase; */
+}
+.header-logo{
+	width: 15%;
+	float:left;
+}
+.logo-box{}
+
+.ui-autocomplete { 
+            cursor:pointer; 
+            height:120px; 
+            overflow-y:scroll;
+        }  

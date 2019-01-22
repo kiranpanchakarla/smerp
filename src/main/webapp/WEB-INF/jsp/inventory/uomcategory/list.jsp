@@ -95,7 +95,7 @@
 																			value="${count}" /></td>
 																	<td>${uomcategory.uomCategoryName}</td>
 																	 
-																	<td>   </td>
+																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 												<c:if test="${ump.key eq 'Admin Master'}">

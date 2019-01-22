@@ -65,12 +65,12 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Product Name</label>
+																	<label for="timesheetinput1">Product Group</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Product Name' path="productName"
-																			value="${producttypeObj.productName}" required="true"
+																			value="${producttypeObj.productName}" required="true" readonly="true"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

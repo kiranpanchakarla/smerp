@@ -167,7 +167,7 @@ public class SendEmail extends EmailerGenerator{
 
 	public void sendRFQEmail(RequestForQuotation requestForQuotation) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification about " + "k.panchakarla@manuhindia.com" + " ...");
+	            logger.info("Sending notification about " + getUser().getUserEmail() + " ...");
 	            try {
 	                mailSender.send(createRFQMessage(requestForQuotation));
 	               // logger.info("Email notification successfully sent for " + mailTo);

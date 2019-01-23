@@ -171,7 +171,7 @@
 
 																						<!--1 multiply Dynamically Load   -->
 																						<c:if test="${not empty lineItems}">
-																							<table class="table table-bordered table-striped"
+																							<table class="table table-bordered table-striped item-service-table"
 																								id="edit_item_serviceTbl">
 
 																								<thead>
@@ -181,7 +181,9 @@
 																										<c:if test="${rfq.category=='Item'}">
 																											<th>S.no</th> 
 																											<th>Product Name</th>
+																											<th>Description</th>
 																											<th>UOM</th>
+																											<th>SKU</th>
 																											<th>Quantity</th>
 																											<th>Product Group</th>
 																											<th>Warehouse</th>
@@ -216,8 +218,12 @@
 
 																											<c:if test="${rfq.category=='Item'}">
 																												<td>${listLineItems.prodouctNumber}</td>
+																												
+																												<td>${listLineItems.description}</td>
 
 																												<td>${listLineItems.uom}</td>
+																												
+																												<td>${listLineItems.sku}</td>
 
 																												<td>${listLineItems.requiredQuantity}</td>
 

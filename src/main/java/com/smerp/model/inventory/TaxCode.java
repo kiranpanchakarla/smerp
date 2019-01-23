@@ -19,7 +19,7 @@ public class TaxCode {
 	private Integer id;
 
 	@Column(name = "tax_code")
-	private Integer taxCode;
+	private Double taxCode;
 
 	@Column(name = "description")
 	private String description;
@@ -32,11 +32,11 @@ public class TaxCode {
 		this.id = id;
 	}
 
-	public Integer getTaxCode() {
+	public Double getTaxCode() {
 		return taxCode;
 	}
 
-	public void setTaxCode(Integer taxCode) {
+	public void setTaxCode(Double taxCode) {
 		this.taxCode = taxCode;
 	}
 

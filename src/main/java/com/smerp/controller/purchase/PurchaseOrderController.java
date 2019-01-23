@@ -106,8 +106,8 @@ public class PurchaseOrderController {
 		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
 		}
 		logger.info("podetails-->" + podetails);
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
@@ -125,8 +125,8 @@ public class PurchaseOrderController {
 		logger.info("po-->" + po);
 		ObjectMapper mapper = poloadData(model, po);
 		
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
@@ -225,7 +225,7 @@ public class PurchaseOrderController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Integer, Object> taxCode() {
+	public Map<Double, Object> taxCode() {
 		
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		

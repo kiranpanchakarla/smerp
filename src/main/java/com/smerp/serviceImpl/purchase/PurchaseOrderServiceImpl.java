@@ -192,23 +192,26 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setVendorPayTypeAddress(rfq.getVendorPayTypeAddress());
 			po.setVendorShippingAddress(rfq.getVendorShippingAddress());
 			
-			List<LineItems> prItms = rfq.getLineItems();
+			
+			List<LineItems> rfqItms = rfq.getLineItems();
 			List<PurchaseOrderLineItems> lineItems =new ArrayList<PurchaseOrderLineItems>();
-			if (prItms != null) {
-				for (int i = 0; i < prItms.size(); i++) {
+			if (rfqItms != null) {
+				for (int i = 0; i < rfqItms.size(); i++) {
 					PurchaseOrderLineItems line = new PurchaseOrderLineItems();
-					line.setProdouctNumber(prItms.get(i).getProdouctNumber());
-					line.setProductGroup(prItms.get(i).getProductGroup());
-					line.setDescription(prItms.get(i).getDescription());
-					line.setHsn(prItms.get(i).getHsn());
-					line.setRequiredQuantity(prItms.get(i).getRequiredQuantity());
-					line.setSacCode(prItms.get(i).getSacCode());
-					line.setUom(prItms.get(i).getUom());
+					line.setProdouctNumber(rfqItms.get(i).getProdouctNumber());
+					line.setProductGroup(rfqItms.get(i).getProductGroup());
+					line.setDescription(rfqItms.get(i).getDescription());
+					line.setHsn(rfqItms.get(i).getHsn());
+					line.setRequiredQuantity(rfqItms.get(i).getRequiredQuantity());
+					line.setSacCode(rfqItms.get(i).getSacCode());
+					line.setUom(rfqItms.get(i).getUom());
 					
 					line.setUnitPrice(77.7); // Set Unit Price
 					
-					line.setWarehouse(prItms.get(i).getWarehouse());
-					line.setProductId(prItms.get(i).getProductId());
+					line.setSacCode(rfqItms.get(i).getSku());
+					
+					line.setWarehouse(rfqItms.get(i).getWarehouse());
+					line.setProductId(rfqItms.get(i).getProductId());
 					lineItems.add(line);
 				}
 			}
@@ -281,7 +284,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				PurchaseOrderLineItems polist = listItems.get(i);
-				if(polist.getUnitPrice()!=null) {
+				if(polist.getUnitPrice()!=null  && polist.getTaxCode()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode());
 				addAmt +=UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode());
 				polist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode()));

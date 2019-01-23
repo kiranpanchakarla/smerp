@@ -219,7 +219,7 @@ public class GoodsReceiptController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Integer, Object> taxCode() {
+	public Map<Double, Object> taxCode() {
 		
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		

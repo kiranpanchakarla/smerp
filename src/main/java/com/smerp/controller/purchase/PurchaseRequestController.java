@@ -185,6 +185,7 @@ public class PurchaseRequestController {
 		model.addAttribute("planMap", plantMap());
 		//model.addAttribute("planMap", plantMap());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
 		

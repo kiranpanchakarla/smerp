@@ -92,8 +92,8 @@ public class RequestForQuotationController {
 			    rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
 		}
 		logger.info("rfqdetails-->" + rfqdetails);
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
@@ -110,8 +110,8 @@ public class RequestForQuotationController {
 		logger.info("rfq-->" + rfq);
 		ObjectMapper mapper = rfqloadData(model, rfq);
 		
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("productList",mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());

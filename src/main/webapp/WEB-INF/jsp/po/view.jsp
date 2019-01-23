@@ -123,21 +123,11 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-                                                                            <div class="input-group">
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Item" path="category"  name="category"  id="items_radio" 
-																				/>
-                                                                                <span class="radio-list">Item</span>
-                                                                                </div>
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Services" path="category"  name="category" id="service_radio" 
-																				/>	
-                                                                                <span class="radio-list">Services</span></div>
-                                                                                <div class="help-block with-errors"></div>
-                                                                            </div>
-                                                                        </div>
+																				<label>Type</label>: Product
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Status</label>: ${po.status}
+																			</div>
 																		</div>
 																		
 																		

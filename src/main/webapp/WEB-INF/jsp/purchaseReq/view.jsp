@@ -94,12 +94,16 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${purchaseRequest.type}
+																		<label>Type</label>: Product <%-- ${purchaseRequest.type} --%>
 
 																	</div>
-																	
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Remark</label>:${purchaseRequest.remarks}
+																		<label>Status</label>: ${purchaseRequest.status}
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-sm-6 form-group has-feedback">
+																		<label>Remark</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
 

@@ -376,7 +376,7 @@
 																													
 																													<td><div class="form-group">
 																															<form:input type="text"
-																															path="purchaseOrderlineItems[${count}].unitPrice" required="true"
+																															path="purchaseOrderlineItems[${count}].unitPrice" readonly="true"
 																															value="${listLineItems.unitPrice}"  autocomplete="off"
 																															class="form-control unitPrice" ></form:input></div></td>
 																													
@@ -422,7 +422,7 @@
 																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"  autocomplete="off"
-																															value="${listLineItems.unitPrice}" required="true"
+																															value="${listLineItems.unitPrice}"  readonly="true"
 																															class="form-control unitPrice" ></form:input></div></td>
 																													
 																													
@@ -488,7 +488,7 @@
 																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}" required ="true"
+																															value="${listLineItems.unitPrice}" required ="true"  readonly="true"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
@@ -552,7 +552,7 @@
 																													
 																													<td><div class="form-group">
 																															<form:input type="text"
-																															path="purchaseOrderlineItems[${count}].unitPrice" required="true"
+																															path="purchaseOrderlineItems[${count}].unitPrice"  readonly="true"
 																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
@@ -881,7 +881,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"   readonly="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -979,7 +979,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  readonly="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1312,6 +1312,9 @@ $(document).ready(function(){
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
+             	 	 
+             	 	 $(itemParentRow).find(".unitPrice").val(obj.productCost);
+             	 	 
              	 	 
              	 	 
                 	}

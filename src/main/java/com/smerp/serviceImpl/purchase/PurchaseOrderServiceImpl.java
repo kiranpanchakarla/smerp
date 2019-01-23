@@ -204,6 +204,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 					line.setRequiredQuantity(prItms.get(i).getRequiredQuantity());
 					line.setSacCode(prItms.get(i).getSacCode());
 					line.setUom(prItms.get(i).getUom());
+					
+					line.setUnitPrice(77.7); // Set Unit Price
+					
 					line.setWarehouse(prItms.get(i).getWarehouse());
 					line.setProductId(prItms.get(i).getProductId());
 					lineItems.add(line);

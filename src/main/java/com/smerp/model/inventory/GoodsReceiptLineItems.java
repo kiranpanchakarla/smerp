@@ -47,10 +47,10 @@ public class GoodsReceiptLineItems extends AuditModel {
 	private String sacCode;
 
 	@Column(name = "unit_price")
-	private Integer unitPrice;
+	private Double unitPrice;
 
 	@Column(name = "tax_code")
-	private Integer taxCode;
+	private Double taxCode;
 	
 	private transient Integer tempRequiredQuantity;
 	
@@ -140,19 +140,21 @@ public class GoodsReceiptLineItems extends AuditModel {
 		this.sacCode = sacCode;
 	}
 	
-	public Integer getUnitPrice() {
+	
+
+	public Double getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Integer unitPrice) {
+	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
-	public Integer getTaxCode() {
+	public Double getTaxCode() {
 		return taxCode;
 	}
 
-	public void setTaxCode(Integer taxCode) {
+	public void setTaxCode(Double taxCode) {
 		this.taxCode = taxCode;
 	}
 

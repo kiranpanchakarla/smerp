@@ -69,12 +69,19 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
+												<div class="col-md-6">
 													<c:if test="${gre.id!=null}">
 														<h2 class="card-title" id="basic-layout-icons">Update
 															Goods Return</h2>
 														<form:input type="hidden" cssClass="form-control"
 															path="id" />
 													</c:if>
+													</div>
+													<div class="col-md-6">
+														<c:if test="${gre.id!=null}">
+														 	<a  class="btn btn-primary float-right"> ${gre.status} </a>
+														</c:if>
+													</div>
 													<c:if test="${gre.id==null}">
 														<h2 class="card-title" id="basic-layout-icons">Create
 															New Goods Return</h2>

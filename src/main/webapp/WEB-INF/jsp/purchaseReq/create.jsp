@@ -153,18 +153,19 @@
 
 																					<div class="table-responsive">
 																					<div class="full-col-table">
-																						<table class="table table-bordered table-striped"
+																						<table class="table table-bordered table-striped item-service-table"
 																							id="itemTbl">
 																							<thead>
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
-																									<th>Product Group</th>
-																									<th>Warehouse</th>
+																									<th>SKU</th>
+																									<th>Group</th>
 																									<th>HSN</th>
+																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									<th>Action</th>
 																								</tr>
@@ -174,7 +175,7 @@
                                                                                             </tbody>
                                                                                       </table>   
                                                                                          
-                                                                                      <table class="table table-bordered table-striped"
+                                                                                      <table class="table table-bordered table-striped item-service-table"
 																							id="serviceTbl">   
 																							<thead>
 																								<tr>
@@ -197,7 +198,7 @@
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
 																										<c:if test="${not empty purchaseRequestLists}">
-																						<table class="table table-bordered table-striped"
+																						<table class="table table-bordered table-striped item-service-table"
 																							id="edit_item_serviceTbl">   
 																										
 																										<thead>
@@ -205,12 +206,13 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${purchaseRequest.type=='Item'}">
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
-																									<th>Product Group</th>
-																									<th>Warehouse</th>
+																									<th>SKU</th>
+																									<th>Group</th>
 																									<th>HSN</th>
+																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									</c:if>
 																									
@@ -252,12 +254,16 @@
 																															path="purchaseRequestLists[${count}].description" required="true"
 																															value="${listpurchaseRequestLists.description}"
 																															class="form-control"></form:input></div></td>
+																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control description " required="true" ></form:input></div></td>
+																															class="form-control uom " required="true" ></form:input></div></td>
 																													
-																													
+																													<td><div class="form-group"><form:input type="text"
+																															path="purchaseRequestLists[${count}].sku"
+																															value="${listpurchaseRequestLists.sku}"
+																															class="form-control sku " required="true" ></form:input></div></td>
 																															
 																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].productGroup"
@@ -265,18 +271,18 @@
 																															class="form-control productGroup"
 																															readonly="true"></form:input></div></td>
 																														
-																														<td><div class="form-group"><form:select class="form-control"
-																															style="width:160px !important;"  required="true"
-																															path="purchaseRequestLists[${count}].warehouse">
-																															<form:option value="" label="Select" />
-																															<form:options items="${planMap}" />
-																														</form:select></div></td>
-																															
 																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].hsn"
 																															value="${listpurchaseRequestLists.hsn}"
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
+																													  
+																													  	<td><div class="form-group"><form:select class="form-control"
+																															style="width:160px !important;"  required="true"
+																															path="purchaseRequestLists[${count}].warehouse">
+																															<form:option value="" label="Select" />
+																															<form:options items="${planMap}" />
+																														</form:select></div></td>
 																													  
 																													  <td>
 																													<div class="form-group">
@@ -367,13 +373,13 @@
                                                                     <a href="#" onclick="goBack()" class="btn btn-primary float-left">
 											                        Back</a>
                                                                     <c:if test="${purchaseRequest.status eq 'Draft' || purchaseRequest.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft mySubButton"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${purchaseRequest.id==null}">
-                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
+                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${purchaseRequest.id!=null}">
-                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                         
  																		  <a
 																			href="<c:url value="/purchaseReq/cancelStage?id=${purchaseRequest.id}"/>">
@@ -390,7 +396,7 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
                                                                         <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve mySubButton"> <i class="icon-check2"></i>Approved</form:button>
                                                                         </c:if>
                                                                      
                                                                       </c:if></c:if></c:forEach>
@@ -400,7 +406,7 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                       <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject mySubButton"> <i class="icon-cross2"></i>Reject</form:button>
                                                                      </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                       
@@ -515,6 +521,12 @@
     			+ '</div>'
     			+'</td>'
     			
+    			+'<td>'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].sku" readonly="true" class="form-control sku sku'+inc+'" id="sku'+inc+'"   />'
+    			+ '</div>'
+    			+'</td>'
+    			
     			
     			+'<td>'
     			+'<div class="form-group">'
@@ -522,6 +534,12 @@
     			+ '</div>'
     			+'</td>'
     			
+    			
+    			+'<td>'
+    			+'<div class="form-group">'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+    			+ '</div>'
+    			+'</td>'
     			
     			+ '<td>'
     			+'<div class="form-group">'
@@ -533,12 +551,6 @@
     			+ '</select>'
     			+ '</div>'
     			+ '</td>'
-    			
-    			+'<td>'
-    			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
-    			+ '</div>'
-    			+'</td>'
     			
     			+'<td>'
     			+'<div class="form-group">'
@@ -835,6 +847,9 @@
                         //$('.uom').val(uom);
 
                         $(itemParentRow).find(".uom").val(uom);
+                        
+                        var sku=obj.packingUom.uomName;
+                      	 $(itemParentRow).find(".sku").val(sku);
 
                         //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
                       //  var productgroup = obj.productCategory.categoryType;
@@ -940,6 +955,9 @@
                         //$('.uom').val(uom);
 
                         $(itemParentRow).find(".uom").val(uom);
+                        
+                        var sku=obj.packingUom.uomName;
+                      	 $(itemParentRow).find(".sku").val(sku);
 
                         //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
                       //  var productgroup = obj.productCategory.categoryType;
@@ -948,8 +966,7 @@
 
                         $(itemParentRow).find(".productGroup").val(productgroup);
                         
-                        $(itemParentRow).find(".prodouctNumber").removeClass()
-                        $(itemParentRow).find(".description").removeClass()
+                     //   $("#form").validator("update");
           
                     },
                     error: function(e) {
@@ -1091,9 +1108,6 @@
 
             <script type="text/javascript">
 
-
-
-
             $("#items_radio").click(function() {
             	//alert("item");
             	 alertify.confirm("Purchase Request",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
@@ -1172,11 +1186,10 @@
             theThis.addClass('active');
         });
         
-        $('form.commentForm').on('submit', function(event) {
-        	
-        	
-         
-             /*   var arr = [];
+      //  $('form.commentForm').on('submit', function(event) {
+         $(".mySubButton").on('click', function() {
+        	 $('form.commentForm').submit();
+        	 /*   var arr = [];
               $(".prodouctNumber").each(function() {
             	 // alert($.inArray($(this).val(), arr));
 		        if ($.inArray($(this).val(), arr) == -1){
@@ -1200,11 +1213,31 @@
  		        }
  		    }); */
 
-              
-             
-              
-            
-            
+ 		 //  $(function(){
+ 			 $("#form").validator("update");
+ 			  if($("#save").hasClass("disabled")){
+ 				 alertify.error('Please fill mandatory fields');
+ 				 return false;
+ 			  } else {
+	 			 var subStatus = $(this).val();
+		         	if(subStatus == 'DR'){
+		         		alertify.alert("Purchase Request","Draft Successfully");
+		         		alertify.message('Draft Successfully');
+		 				return true;
+		 			  } else if(subStatus == "SA"){
+		 				 alertify.success('Saved Successfully');
+		 				return true;
+		 			  } else if(subStatus == "APP"){
+		 				 alertify.success('Ready to Convert PR to RFQ');
+		 				return true;
+		 			  } else if(subStatus == "RE"){
+		 				 alertify.warning('Document Rejected');
+		 				 return true;
+		 			  }  
+	 			  }
+	 		// });
+ 		    
+ 		   
             if ($('#items_radio').is(":checked") == true) {
             var rowCount = $('#itemTbl tr').length-1;
             
@@ -1214,6 +1247,7 @@
             
         	if(rowCount == 0){
         		alertify.alert("Purchase Request","Please Select Atleast One Item");
+        		
         		 return false;
         	}else{
         		return true;
@@ -1234,14 +1268,9 @@
          		return true;
          	}
         	  }
-            
-            
-            
-            
+           
         });
         
-        
-
         function isNumericKey(evt)
         {
         	var charCode = (evt.which) ? evt.which : evt.keyCode;

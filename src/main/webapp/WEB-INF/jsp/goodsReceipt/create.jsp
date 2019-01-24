@@ -69,17 +69,24 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
+												<div class="col-md-6">
 													<c:if test="${gr.id!=null}">
 														<h2 class="card-title" id="basic-layout-icons">Update
 															Goods Receipt</h2>
 														<form:input type="hidden" cssClass="form-control"
 															path="id" />
 													</c:if>
+													
 													<c:if test="${gr.id==null}">
 														<h2 class="card-title" id="basic-layout-icons">Create
 															New Goods Receipt</h2>
 													</c:if>
-
+													</div>
+													<div class="col-md-6">
+													<c:if test="${gr.id!=null}">
+														 <a  class="btn btn-primary float-right"> ${gr.status} </a>
+														</c:if>
+													</div>
 												</div>
 
 												<div class="card-body collapse in create-block">

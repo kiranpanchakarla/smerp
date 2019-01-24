@@ -360,32 +360,32 @@ text-align: left;
 											
 										<div class="col-sm-4">
 											<div class="form-group">
-												<div class="col-sm-6"><label>Discount(%) :</label></div>
-											<div class="col-sm-6">	${gr.totalDiscount} </div>
+												<div class="col-sm-6"><label>Discount(%) </label></div>
+											<div class="col-sm-6">:	${gr.totalDiscount} </div>
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Total Before Discount : </label> </div>
-											<div class="col-sm-6">	${gr.totalBeforeDisAmt} </div>
+											<div class="col-sm-6">	<label>Total Before Discount </label> </div>
+											<div class="col-sm-6">:	${gr.totalBeforeDisAmt} </div>
 											</div>
 											<div class="form-group">
-												<div class="col-sm-6"><label>Freight : </label></div>
-												<div class="col-sm-6"> ${gr.freight} </div>
-											</div>
-
-											<div class="form-group">
-											<div class="col-sm-6">	<label>Rounding : </label></div>
-											<div class="col-sm-6"> ${gr.amtRounding} </div>
+												<div class="col-sm-6"><label>Freight  </label></div>
+												<div class="col-sm-6">: ${gr.freight} </div>
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"> <label>Tax Amount :</label> </div>
-												<div class="col-sm-6"> ${gr.taxAmt} </div>
+											<div class="col-sm-6">	<label>Rounding  </label></div>
+											<div class="col-sm-6">: ${gr.amtRounding} </div>
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Total Payment Due : </label> </div>
-											<div class="col-sm-6"> ${gr.totalPayment} </div>
+												<div class="col-sm-6"> <label>Tax Amount </label> </div>
+												<div class="col-sm-6">: ${gr.taxAmt} </div>
+											</div>
+
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
+											<div class="col-sm-6">: ${gr.totalPayment} </div>
 											</div>
 										</div>
 									

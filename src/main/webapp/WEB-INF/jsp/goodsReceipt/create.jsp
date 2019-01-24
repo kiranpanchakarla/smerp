@@ -272,16 +272,18 @@
 																										<tr>
 																											<!-- <th>S.No</th> -->
 																											<th style="display: none;">Product Id</th>
-																											<th>Product No.</th>
+																											<th>Product#</th>
+																											<th>Description</th>
 																											<th>UOM</th>
-																											<th>Quantity</th>
+																											<th>SKU</th>
 																											<th>Unit Price</th>
-																											<th>Tax Code</th>
+																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Product Group</th>
-																											<th>Warehouse</th>
+																											<th>Group</th>
 																											<th>HSN</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																											<th>Action</th>
 																										</tr>
 																									</thead>
@@ -328,16 +330,18 @@
 																												<!-- <th>S.No</th> -->
 																												<th style="display: none;">Product Id</th>
 																												<c:if test="${gr.category=='Item'}">
-																													<th>Product No.</th>
+																													<th>Product#</th>
+																													<th>Description</th>
 																													<th>UOM</th>
-																													<th>Quantity</th>
+																													<th>SKU</th>
 																													<th>Unit Price</th>
-																													<th>Tax Code</th>
+																													<th>Tax %</th>
 																													<th>Tax Total</th>
 																													<th>Total</th>
-																													<th>Product Group</th>
+																													<th>Group</th>
+																													<th>HSN Code</th>
 																													<th>Warehouse</th>
-																													<th>HSN</th>
+																													<th>Quantity</th>
 																												</c:if>
 
 																												<c:if test="${gr.category!='Item'}">
@@ -387,7 +391,15 @@
 																																		class="form-control prodouctNumber"></form:input>
 																																</div></td>
 
-
+																															<td>
+																																<div class="form-group">
+																																	<form:input type="text"  
+																																		path="goodsReceiptLineItems[${count}].description"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.description}"
+																																		class="form-control description validatePrice"></form:input>
+																																</div>
+																															</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -398,45 +410,13 @@
 																																</div></td>
 
 
-																															<td><img
-																																src="${contextPath}/resources/images/portrait/info.png"
-																																alt="See" id="output" width="15"
-																																height="15"
-																																style="float: left; margin-right: 10px;"
-																																data-toggle="tooltip"
-																																data-placement="top"
-																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
-																																<c:choose>
-																																	<c:when
-																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
-																																				value="${listLineItems.requiredQuantity}"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" readonly="true"></form:input>
-																																		</div>
-
-																																	</c:when>
-																																	<c:otherwise>
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" required="true"></form:input>
-																																		</div>
-
-																																	</c:otherwise>
-																																</c:choose> <input type="hidden"
-																																value="${listLineItems.requiredQuantity}"
-																																class="original_requiredQuantity">
-																																<input type="hidden"
-																																value="${listLineItems.tempRequiredQuantity}"
-																																class="temp_requiredQuantity">
-
-																															</td>
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].sku"
+																																		value="${listLineItems.uom}"
+																																		class="form-control sku"
+																																		readonly="true"></form:input>
+																																</div></td>
 
 
 
@@ -486,6 +466,14 @@
 																																		class="form-control productGroup"
 																																		readonly="true"></form:input>
 																																</div></td>
+																															
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].hsn"
+																																		value="${listLineItems.hsn}"
+																																		class="form-control hsnVal"
+																																		readonly="true"></form:input>
+																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:select class="form-control"
@@ -495,14 +483,48 @@
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>
+																																
+																															<td><img
+																																src="${contextPath}/resources/images/portrait/info.png"
+																																alt="See" id="output" width="15"
+																																height="15"
+																																style="float: left; margin-right: 10px;"
+																																data-toggle="tooltip"
+																																data-placement="top"
+																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
+																																<c:choose>
+																																	<c:when
+																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				value="${listLineItems.requiredQuantity}"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" readonly="true"></form:input>
+																																		</div>
 
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="goodsReceiptLineItems[${count}].hsn"
-																																		value="${listLineItems.hsn}"
-																																		class="form-control hsnVal"
-																																		readonly="true"></form:input>
-																																</div></td>
+																																	</c:when>
+																																	<c:otherwise>
+																																		<div class="form-group">
+																																			<form:input type="text"
+																																				path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																				onkeypress="return isNumericKey(event)"
+																																				class="form-control requiredQuantity validateQuantity"
+																																				autocomplete="off" required="true"></form:input>
+																																		</div>
+
+																																	</c:otherwise>
+																																</c:choose> <input type="hidden"
+																																value="${listLineItems.requiredQuantity}"
+																																class="original_requiredQuantity">
+																																<input type="hidden"
+																																value="${listLineItems.tempRequiredQuantity}"
+																																class="temp_requiredQuantity">
+
+																															</td>
+
+																															
 
 																														</c:if>
 
@@ -569,7 +591,7 @@
 
 																															<!--  -->
 																															<td><div class="form-group">
-																																	<form:input type="text"
+																																	<form:input type="text" 
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
 																																		value="${listLineItems.unitPrice}"
 																																		autocomplete="off" readonly="true"
@@ -647,6 +669,16 @@
 																																		value="${listLineItems.prodouctNumber}"
 																																		class="form-control prodouctNumber"></form:input>
 																																</div></td>
+																																
+																																<td>
+																																<div class="form-group">
+																																	<form:input type="text"  
+																																		path="goodsReceiptLineItems[${count}].description"
+																																		onkeypress="return isNumericKey(event)" required="true"
+																																		value="${listLineItems.description}"
+																																		class="form-control description validatePrice"></form:input>
+																																</div>
+																															</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -655,20 +687,17 @@
 																																		class="form-control uom"
 																																		readonly="true"></form:input>
 																																</div></td>
-
-																															<td><div class="form-group">
+																																
+																																<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="goodsReceiptLineItems[${count}].requiredQuantity"
-																																		value="${listLineItems.requiredQuantity}"
-																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control requiredQuantity validatePrice"
-																																		autocomplete="off" required="true"></form:input>
+																																		path="goodsReceiptLineItems[${count}].sku"
+																																		value="${listLineItems.uom}"
+																																		class="form-control sku"
+																																		readonly="true"></form:input>
 																																</div></td>
 
-
-
 																															<td><div class="form-group">
-																																	<form:input type="text"
+																																	<form:input type="text" readonly="true"
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -713,6 +742,14 @@
 																																		class="form-control productGroup"
 																																		readonly="true"></form:input>
 																																</div></td>
+																															
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReceiptLineItems[${count}].hsn"
+																																		value="${listLineItems.hsn}"
+																																		class="form-control hsnVal"
+																																		readonly="true"></form:input>
+																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:select class="form-control"
@@ -722,14 +759,17 @@
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>
-
+																																
 																															<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="goodsReceiptLineItems[${count}].hsn"
-																																		value="${listLineItems.hsn}"
-																																		class="form-control hsnVal"
-																																		readonly="true"></form:input>
+																																		path="goodsReceiptLineItems[${count}].requiredQuantity"
+																																		value="${listLineItems.requiredQuantity}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control requiredQuantity validatePrice"
+																																		autocomplete="off" required="true"></form:input>
 																																</div></td>
+
+																															
 
 																														</c:if>
 
@@ -761,7 +801,7 @@
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
-																																		value="${listLineItems.unitPrice}"
+																																		value="${listLineItems.unitPrice}" readonly="true"
 																																		onkeypress="return isNumericKey(event)"
 																																		class="form-control unitPrice validatePrice"></form:input>
 																																</div></td>
@@ -1149,6 +1189,11 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
+			+'<td>'
+			+'<div class="form-group">'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].description" required="true" autocomplete="off"  class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
@@ -1156,17 +1201,16 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
-			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].sku" class="form-control sku sku'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1202,6 +1246,11 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
+			+'<td>'
+			+'<div class="form-group">'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
 			
 			+ '<td>'
 			+'<div class="form-group">'
@@ -1216,9 +1265,11 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
+			
+			
 			
 			+ ' <td class="text-center"><a  onclick="removeData('+inc+')" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a>'
 			+ '</td>'
@@ -1250,7 +1301,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="description'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1531,9 +1582,12 @@ $(document).ready(function(){
 		        
 		        }
         }else {
+        	if($(this).val()!=""){
+       
         	 alertify.alert("Purchase Order",$(this).val() +  "Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
+            }
         }
 		        
 		    });
@@ -1570,13 +1624,20 @@ $(document).ready(function(){
                 	$(itemParentRow).find(".productId").val(obj.id);
             	
                 
-                	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
-                	
-                	var uom=obj.purchasingUom.uomName;
-                	//alert("uom"+uom);
-                	//$('.uom').val(uom);
-                	
-                	 $(itemParentRow).find(".uom").val(uom);
+                	$(itemParentRow).find(".description").val(obj.description);
+               	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
+               	
+               	var uom=obj.purchasingUom.uomName;
+               	var sku=obj.packingUom.uomName;
+               
+               	//alert("uom"+uom);
+               	//$('.uom').val(uom);
+               	
+               	 $(itemParentRow).find(".uom").val(uom);
+               	 
+               	 $(itemParentRow).find(".sku").val(sku);
+             	var unitPrice=obj.productCost;
+               	 $(itemParentRow).find(".unitPrice").val(unitPrice);
                 	
              	 //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
              	 //	var productgroup=obj.productCategory.categoryType;
@@ -1596,6 +1657,126 @@ $(document).ready(function(){
                  }
                 });
 		}
+	
+    	/*  Discription List */
+	    var descriptionList = [];
+       var getDescription = ${descriptionList};
+       var availabledescTags = [];
+         $.each(getDescription, function(index, value) {
+          availabledescTags.push(value.toString());
+      });   
+
+          $(document).on("focus", ".description", function() {
+   			var itemParentRow = $(this).parents(".multTot");
+   			//alert("itemParentRow"+itemParentRow);
+   			
+   			$(this).autocomplete({
+   		        source: availabledescTags,
+   		        minLength: 0,
+   	            scroll: true, 
+   	            select: function(event, ui) {
+   		        	var name = ui.item.value;
+   		        	//alert(name);
+   		            autocompleteandchangedesc(name,itemParentRow);
+   		         
+   		       		 },
+   				}).focus(function() {
+   		            $(this).autocomplete("search", "");
+   		        });
+   			});   
+         
+          $(document).on("blur", ".description", function() {
+         	var itemParentRow = $(this).parents(".multTot");
+         
+         	
+         	var arr=[];
+         	 $(".description").each(function() {
+             	 
+             	  if(availabledescTags.includes($(this).val()) == true) 	 {
+ 		        if ($.inArray($(this).val(), arr) == -1){
+ 		            arr.push($(this).val());
+ 		           
+ 		       	// var isDluplicate = true;
+ 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		        }else{
+ 		        	   var isDluplicate = false;
+ 		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
+ 		        	 $(this).val('')
+ 		        	 ($(this).parents('tr').find('td').find('input').val(''));
+ 		        	 ($(this).parents('tr').find('td').find('select').val(''));
+ 		        
+ 		        }
+             }
+             	  else
+             	  {
+             		 if($(this).val()!=""){
+                  	 alertify.alert("No Entry Found",$(this).val() +  " Product Description Does Not Exists!");  
+                  	  ($(this).parents('tr').find('td').find('input').val(''));
+                  	   ($(this).parents('tr').find('td').find('select').val(''));
+             		 }
+                  }   
+ 		      
+ 		    });
+                     	
+         	
+         });
+      
+         //get the product information based on product  description
+          function autocompleteandchangedesc(name1, itemParentRow) {
+             //alert(name);
+
+             $.ajax({
+                 type: "GET",
+                 data: {name: name1},
+                 async: false,
+                 url: "<c:url value="/product/getProductInfoByDescription"/>", 
+                 success: function(response) {
+                     console.log(response);
+
+                     var obj = JSON.parse(response);
+
+                     //var myJSON = JSON.stringify(obj);
+
+	                       var hsndata=0;
+	                	
+	                	if(obj.hsnCode!=null) {
+	                		hsndata=obj.hsnCode;
+	                	}
+                     //alert("hsnCode"+hsndata.hsnCode);
+                     //	$('.hsnVal').val(hsndata.hsnCode);
+                     $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
+
+                    // $(itemParentRow).find(".prodouctNumber").val(obj.description);
+                     $(itemParentRow).find(".productId").val(obj.id);
+                     $(itemParentRow).find(".prodouctNumber").val(obj.productNo);
+                     //$(itemParentRow).find(".prodouctNumber").val(obj.description);
+
+                     // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
+                     var sku=obj.packingUom.uomName;
+            	
+                     var uom = obj.purchasingUom.uomName;
+                     //alert("uom" + uom);
+                     //$('.uom').val(uom);
+
+                     $(itemParentRow).find(".uom").val(uom);
+                     $(itemParentRow).find(".sku").val(sku);
+                     var unitPrice=obj.productCost;
+                   	 $(itemParentRow).find(".unitPrice").val(unitPrice);
+                     //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
+                   //  var productgroup = obj.productCategory.categoryType;
+                     var productgroup=obj.productGroup.productName;
+                     //$('.productGroup').val(productgroup);
+
+                     $(itemParentRow).find(".productGroup").val(productgroup);
+       
+                 },
+                 error: function(e) {
+                     //  alert('Error: ' + e);
+                 }
+             });
+                      
+         }   
+   /* End of Description List  */ 
 	
     	$('#vendorAddress').on('change', function() {
     		var shippingId=$('#vendorAddress').val();

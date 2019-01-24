@@ -51,6 +51,17 @@ public class GoodsReturnLineItems extends AuditModel {
 	@Column(name = "tax_code")
 	private Double taxCode;
 	
+	@Column(name = "sku_quantity")
+    private String sku;
+	
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
 	private transient Integer tempRequiredQuantity;
 	
 	private transient String taxTotal;
@@ -184,12 +195,13 @@ public class GoodsReturnLineItems extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "GoodsReceiptLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+		return "GoodsReturnLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", tempRequiredQuantity="
-				+ tempRequiredQuantity + ", taxTotal=" + taxTotal + ", total=" + total + "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
 	}
+
+	 
 
 
 

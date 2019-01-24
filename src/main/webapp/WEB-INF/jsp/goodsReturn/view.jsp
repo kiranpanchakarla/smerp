@@ -176,16 +176,18 @@ text-align: left;
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${gre.category=='Item'}">
 																									<th>S.no</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
+																									<th>Description</th>
 																									<th>UOM</th>
-																									<th>Quantity</th>
+																									<th>SKU</th>
 																									<th>Unit Price</th>
-																									<th>Tax Code</th>
+																									<th>Tax %</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Product Group</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
-																									<th>HSN</th>
+																									<th>Quantity</th>
 																									</c:if>
 																									
 																									<c:if test="${gre.category!='Item'}">
@@ -221,10 +223,10 @@ text-align: left;
 																															
 																													<c:if test="${gre.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
-																													
+																													<td>${listLineItems.description}</td>
 																													<td>${listLineItems.uom}</td>
+																													<td>${listLineItems.sku}</td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
 																													
 																															<td>${listLineItems.unitPrice}</td>
 																															<td><c:forEach var="entry"
@@ -236,6 +238,7 @@ text-align: left;
 																															<td>${listLineItems.total}</td>
 																													
 																														<td>${listLineItems.productGroup}</td>
+																														<td>${listLineItems.hsn}</td>
 
 																												<td><c:forEach var="entry"
 																														items="${plantMap}">
@@ -243,8 +246,10 @@ text-align: left;
 																															test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
+																													
+																												<td>${listLineItems.requiredQuantity}</td>
 
-																												<td>${listLineItems.hsn}</td>
+																												
 																														
 																													</c:if>
 																													

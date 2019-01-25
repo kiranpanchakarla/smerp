@@ -553,13 +553,13 @@
 									
 										
 											<c:if test="${rfq.status eq 'Draft' || rfq.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft mySubButton"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${rfq.id==null}">
-                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
+                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${rfq.id!=null}">
-                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                       
                                                                       <a
 																			href="<c:url value="/rfq/cancelStage?id=${rfq.id}"/>">
@@ -575,7 +575,7 @@
 																		 <c:if test="${ump.key eq 'RFQ'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve mySubButton"> <i class="icon-check2"></i>Approve</form:button>
                                                                       </c:if></c:if></c:forEach>
                                                                       <!-- Reject -->
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -583,7 +583,7 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                        <c:if test="${rfq.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject mySubButton"> <i class="icon-cross2"></i>Reject</form:button>
                                                                     </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                      
@@ -1432,6 +1432,15 @@ $(document).ready(function(){
 		
 function removeData(index){
 	//alert("ff"+index);
+	var rowCount = $('#itemTbl tr').length-2;
+	if(rowCount==0){
+		alertify.alert("Request For Quotation","Can't Delete this Row");
+		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
+		$('#itemTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
+	}
+	
 	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
 		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	}else{
@@ -1454,6 +1463,15 @@ function removeData1(index){
 
 function removeData2(index){
 	//alert("ff"+index);
+	var rowCount = $('#edit_item_serviceTbl tr').length-2;
+	if(rowCount==0){
+		alertify.alert("Request For Quotation","Can't Delete this Row");
+		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
+		$('#edit_item_serviceTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
+	}
+	
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	$("#form").validator("update");
 }
@@ -1541,7 +1559,30 @@ $('#containerContainingTabs a').on('click', function(e) {
 	});
 	
 	
-$('form.commentForm').on('submit', function(event) {
+//$('form.commentForm').on('submit', function(event) {
+$(".mySubButton").on('click', function() {
+	
+	if($(".mySubButton").hasClass("disabled")){
+		 alertify.error('Please fill mandatory fields');
+		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		$("#form").submit();
+		 return false;
+	  } else {
+		 var subStatus = $(this).val();
+        	if(subStatus == 'DR'){
+        		alertify.message('Draft Successfully');
+				return true;
+			  } else if(subStatus == "SA"){
+				 alertify.success('Saved Successfully');
+				return true;
+			  } else if(subStatus == "APP"){
+				 alertify.success('Ready to Convert RFQ to PO');
+				return true;
+			  } else if(subStatus == "RE"){
+				 alertify.warning('Document Rejected');
+				 return true;
+			  }  
+		  }
     
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;

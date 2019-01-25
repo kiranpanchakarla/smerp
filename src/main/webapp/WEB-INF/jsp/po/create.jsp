@@ -750,13 +750,13 @@
 									
 										
 											<c:if test="${po.status eq 'Draft' || po.id==null }">
-                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft"> <i class="icon-check2"></i> Draft</form:button> 
+                                                                   <form:button type="submit"  id="draft" name="statusType" value="DR" class="btn btn-draft mySubButton"> <i class="icon-check2"></i> Draft</form:button> 
                                                                    </c:if>
                                                                     <c:if test="${po.id==null}">
-                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary"> <i class="icon-check2"></i>Save</form:button>
+                                                                    <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
                                                                     <c:if test="${po.id!=null}">
-                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary "> <i class="icon-check2"></i> Update</form:button>
+                                                                       <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                       <a href="<c:url value="/po/cancelStage?id=${po.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
@@ -769,7 +769,7 @@
 																		 <c:if test="${ump.key eq 'PurchaseOrder'}">
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
-                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve "> <i class="icon-check2"></i>Approve</form:button>
+                                                                      <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve mySubButton"> <i class="icon-check2"></i>Approve</form:button>
                                                                       </c:if></c:if></c:forEach>
   																		<!-- Reject -->
                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -777,7 +777,7 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Reject')}"> 
                                                                        <c:if test="${po.status != 'Cancelled'}">
-                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject "> <i class="icon-cross2"></i>Reject</form:button>
+                                                                      <form:button  type="submit" id="reject" name="statusType" value="RE" class="btn btn-reject mySubButton"> <i class="icon-cross2"></i>Reject</form:button>
                                                                     </c:if>
                                                                      </c:if></c:if></c:forEach>
                                                                       
@@ -1806,8 +1806,31 @@ $('#containerContainingTabs a').on('click', function(e) {
 	});
 	
 	
-$('form.commentForm').on('submit', function(event) {
-    
+//$('form.commentForm').on('submit', function(event) {
+$(".mySubButton").on('click', function() {    
+	
+	if($(".mySubButton").hasClass("disabled")){
+		 alertify.error('Please fill mandatory fields');
+		alertify.alert("Purchase Order","Please fill mandatory fields");
+		$("#form").submit();
+		 return false;
+	  } else {
+		 var subStatus = $(this).val();
+       	if(subStatus == 'DR'){
+       		alertify.message('Draft Successfully');
+				return true;
+			  } else if(subStatus == "SA"){
+				 alertify.success('Saved Successfully');
+				return true;
+			  } else if(subStatus == "APP"){
+				 alertify.success('Ready to Convert PO to Goods Receipt');
+				return true;
+			  } else if(subStatus == "RE"){
+				 alertify.warning('Document Rejected');
+				 return true;
+			  }  
+		  }
+	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
     

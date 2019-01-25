@@ -1035,19 +1035,19 @@
 
 																			<c:if test="${gr.status eq 'Draft' || gr.id==null }">
 																				<form:button type="submit" id="draft"
-																					name="statusType" value="DR" class="btn btn-draft">
+																					name="statusType" value="DR" class="btn btn-draft mySubButton">
 																					<i class="icon-check2"></i> Draft</form:button>
 																			</c:if>
 																			<c:if test="${gr.id==null}">
 																				<form:button type="submit" id="save"
 																					name="statusType" value="SA"
-																					class="btn btn-primary">
+																					class="btn btn-primary mySubButton">
 																					<i class="icon-check2"></i>Save</form:button>
 																			</c:if>
 																			<c:if test="${gr.id!=null}">
 																				<form:button type="submit" id="update"
 																					name="statusType" value="SA"
-																					class="btn btn-primary ">
+																					class="btn btn-primary mySubButton">
 																					<i class="icon-check2"></i> Update</form:button>
 																				<%--  <a href="<c:url value="/gr/cancelStage?id=${gr.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
@@ -1065,7 +1065,7 @@
 																						test="${fn:containsIgnoreCase(permissions,'Approve')}">
 																						<form:button type="submit" id="approve"
 																							name="statusType" value="APP"
-																							class="btn btn-approve ">
+																							class="btn btn-approve mySubButton">
 																							<i class="icon-check2"></i>Approve</form:button>
 																					</c:if>
 																				</c:if>
@@ -1080,7 +1080,7 @@
 																						<c:if test="${gr.status != 'Cancelled'}">
 																							<form:button type="submit" id="reject"
 																								name="statusType" value="RE"
-																								class="btn btn-reject ">
+																								class="btn btn-reject mySubButton">
 																								<i class="icon-cross2"></i>Reject</form:button>
 																						</c:if>
 																					</c:if>
@@ -2105,8 +2105,32 @@ $('#containerContainingTabs a').on('click', function(e) {
 	});
 	
 	
-$('form.commentForm').on('submit', function(event) {
-    
+//$('form.commentForm').on('submit', function(event) {
+  $(".mySubButton").on('click', function() {
+	
+	if($(".mySubButton").hasClass("disabled")){
+		 alertify.error('Please fill mandatory fields');
+		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		$("#form").submit();
+		 return false;
+	  } else {
+		 var subStatus = $(this).val();
+        	if(subStatus == 'DR'){
+        		alertify.message('Draft Successfully');
+				return true;
+			  } else if(subStatus == "SA"){
+				 alertify.success('Saved Successfully');
+				return true;
+			  } else if(subStatus == "APP"){
+				 alertify.success('Ready to Convert Goods Receipt to Goods Return');
+				return true;
+			  } else if(subStatus == "RE"){
+				 alertify.warning('Document Rejected');
+				 return true;
+			  }  
+		  }
+	
+	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
     

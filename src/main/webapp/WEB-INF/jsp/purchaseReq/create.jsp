@@ -402,7 +402,7 @@
 																		 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 																		<c:if test="${fn:containsIgnoreCase(permissions,'Approve')}"> 
                                                                         <c:if test="${purchaseRequest.status != 'Cancelled'}">
-                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve mySubButton"> <i class="icon-check2"></i>Approved</form:button>
+                                                                        <form:button  type="submit" id="approve" name="statusType" value="APP" class="btn btn-approve mySubButton"> <i class="icon-check2"></i>Approve</form:button>
                                                                         </c:if>
                                                                      
                                                                       </c:if></c:if></c:forEach>
@@ -1118,11 +1118,11 @@
 
             function removeData2(index){
             	//alert("ff"+index);
-            	var rowCount = $('#itemTbl tr').length-2;
+            	var rowCount = $('#edit_item_serviceTbl tr').length-2;
             	if(rowCount==0){
             		alertify.alert("Purchase Request","Can't Delete this Row");
             		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
-            		$('#itemTbl input[type="text"]').val('');
+            		$('#edit_item_serviceTbl input[type="text"]').val('');
             		$('.warehouse').prop('selectedIndex',0);
             		return false;
             	}
@@ -1217,7 +1217,7 @@
         
       //  $('form.commentForm').on('submit', function(event) {
          $(".mySubButton").on('click', function() {
-        	
+        	 
         	 /*   var arr = [];
               $(".prodouctNumber").each(function() {
             	 // alert($.inArray($(this).val(), arr));
@@ -1243,15 +1243,16 @@
  		    }); */
 
  		 //  $(function(){
- 			 $("#form").validator("update");
- 			  if($("#save").hasClass("disabled")){
+ 			 
+ 			  if($(".mySubButton").hasClass("disabled")){
  				 alertify.error('Please fill mandatory fields');
  				alertify.alert("Purchase Request","Please fill mandatory fields");
+ 				$("#form").submit();
  				 return false;
  			  } else {
 	 			 var subStatus = $(this).val();
 		         	if(subStatus == 'DR'){
-		         		alertify.success('Draft Successfully');
+		         		alertify.message('Draft Successfully');
 		 				return true;
 		 			  } else if(subStatus == "SA"){
 		 				 alertify.success('Saved Successfully');

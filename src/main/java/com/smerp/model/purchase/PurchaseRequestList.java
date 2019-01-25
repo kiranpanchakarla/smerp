@@ -56,6 +56,9 @@ public class PurchaseRequestList extends AuditModel {
 	@Column(name = "sku_quantity")
 	private String sku;
 	
+	@Column(name = "unit_price")
+    private Double unitPrice;
+	
 	public String getSku() {
 		return sku;
 	}
@@ -108,6 +111,14 @@ public class PurchaseRequestList extends AuditModel {
 
 	
 
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
 	public String getHsn() {
 		return hsn;
 	}
@@ -159,12 +170,8 @@ public class PurchaseRequestList extends AuditModel {
 		return "PurchaseRequestList [id=" + id + ", prodouctNumber=" + prodouctNumber + ", productId=" + productId
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", sku=" + sku + "]";
+				+ sacCode + ", sku=" + sku + ", unitPrice=" + unitPrice + "]";
 	}
 
-	 
-	
-	
-	
 
 }

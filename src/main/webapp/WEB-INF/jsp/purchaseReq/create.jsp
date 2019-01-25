@@ -258,7 +258,13 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
 																															value="${listpurchaseRequestLists.uom}"
-																															class="form-control uom " required="true" ></form:input></div></td>
+																															class="form-control uom " required="true" ></form:input>
+																															<form:input type="hidden"
+                                                                                                                            path="purchaseRequestLists[${count}].unitPrice"  readonly="true"
+                                                                                                                            value="${listpurchaseRequestLists.unitPrice}"
+                                                                                                                            class="form-control unitPrice " required="true" ></form:input>
+																															
+																															</div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].sku"
@@ -518,6 +524,7 @@
     			+'<td>'
     			+'<div class="form-group">'
     			+'<input type="text" name="purchaseRequestLists['+inc+'].uom" readonly="true" class="form-control uom uom'+inc+'" id="uom'+inc+'"   />'
+    			+'<input type="hidden" name="purchaseRequestLists['+inc+'].unitPrice"  class="form-control unitPrice unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -847,6 +854,8 @@
                         //$('.uom').val(uom);
 
                         $(itemParentRow).find(".uom").val(uom);
+                      
+                        $(itemParentRow).find(".unitPrice").val(obj.productCost);
                         
                         var sku=obj.packingUom.uomName;
                       	 $(itemParentRow).find(".sku").val(sku);
@@ -955,6 +964,7 @@
                         //$('.uom').val(uom);
 
                         $(itemParentRow).find(".uom").val(uom);
+                        $(itemParentRow).find(".unitPrice").val(obj.productCost);
                         
                         var sku=obj.packingUom.uomName;
                       	 $(itemParentRow).find(".sku").val(sku);
@@ -1070,6 +1080,16 @@
         
             function removeData(index){
             	//alert("ff"+index);
+            	
+            	var rowCount = $('#itemTbl tr').length-2;
+            	if(rowCount==0){
+            		alertify.alert("Purchase Request","Can't Delete this Row");
+            		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
+            		$('#itemTbl input[type="text"]').val('');
+            		$('.warehouse').prop('selectedIndex',0);
+            		return false;
+            	}
+            	
             	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
             		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
             		
@@ -1098,6 +1118,15 @@
 
             function removeData2(index){
             	//alert("ff"+index);
+            	var rowCount = $('#itemTbl tr').length-2;
+            	if(rowCount==0){
+            		alertify.alert("Purchase Request","Can't Delete this Row");
+            		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
+            		$('#itemTbl input[type="text"]').val('');
+            		$('.warehouse').prop('selectedIndex',0);
+            		return false;
+            	}
+            	
             	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
             	$("#form").validator("update");
             }
@@ -1188,7 +1217,7 @@
         
       //  $('form.commentForm').on('submit', function(event) {
          $(".mySubButton").on('click', function() {
-        	 $('form.commentForm').submit();
+        	
         	 /*   var arr = [];
               $(".prodouctNumber").each(function() {
             	 // alert($.inArray($(this).val(), arr));
@@ -1217,12 +1246,12 @@
  			 $("#form").validator("update");
  			  if($("#save").hasClass("disabled")){
  				 alertify.error('Please fill mandatory fields');
+ 				alertify.alert("Purchase Request","Please fill mandatory fields");
  				 return false;
  			  } else {
 	 			 var subStatus = $(this).val();
 		         	if(subStatus == 'DR'){
-		         		alertify.alert("Purchase Request","Draft Successfully");
-		         		alertify.message('Draft Successfully');
+		         		alertify.success('Draft Successfully');
 		 				return true;
 		 			  } else if(subStatus == "SA"){
 		 				 alertify.success('Saved Successfully');

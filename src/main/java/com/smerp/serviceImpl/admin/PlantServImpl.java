@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smerp.model.admin.Plant;
+import com.smerp.model.admin.User;
 import com.smerp.repository.admin.PlantRepository;
 import com.smerp.service.master.PlantService;
+import com.smerp.util.CheckUserPermissionUtil;
 
 @Service
 public class PlantServImpl implements PlantService {
@@ -15,11 +17,21 @@ public class PlantServImpl implements PlantService {
 	
 	@Autowired
 	PlantRepository plantRepository; 
+	
+	@Autowired
+	CheckUserPermissionUtil checkUserPermissionUtil;
 
 	@Override
 	public List<Plant> findAll() {
-		
-		return plantRepository.findAll();
+		List<Plant> listPlant = null;
+		User user = checkUserPermissionUtil.getUser();
+		boolean checkWarhouse = checkUserPermissionUtil.checkUserPermission(user.getUserId(), 1, 9);
+		if(checkWarhouse==true) {
+			 listPlant = plantRepository.findAll(); 
+		}else {
+			 listPlant = plantRepository.findOneList(user.getPlant().getId());
+		}
+		return listPlant;
 	}
 
 	@Override

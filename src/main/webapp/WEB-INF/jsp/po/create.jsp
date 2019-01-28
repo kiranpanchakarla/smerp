@@ -387,11 +387,11 @@
 																													
 																													<td>${listLineItems.sku}</td>
 																													
-																													<td><div class="form-group">
-																															<form:input type="text"
+																													<td> ${listLineItems.unitPrice}
+																															<form:input type="hidden"
 																															path="purchaseOrderlineItems[${count}].unitPrice" readonly="true"
 																															value="${listLineItems.unitPrice}"  autocomplete="off"
-																															class="form-control unitPrice" ></form:input></div></td>
+																															class="form-control unitPrice" ></form:input></td>
 																													
 																													
 																													    <td><div class="form-group"><form:select class="form-control taxCode"
@@ -466,7 +466,7 @@
 																																items="${plantMap}">
 																																<c:if
 																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
+																												                 	 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
 																														
 																													</c:if>
@@ -503,7 +503,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].sku"
 																															value="${listLineItems.sku}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
+																															class="form-control sku" readonly="true"></form:input></div></td>
 																													
 																															
 																															<td><div class="form-group">
@@ -910,7 +910,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"   readonly="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"   readonly="true" class="form-control  unitPrice validatePrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

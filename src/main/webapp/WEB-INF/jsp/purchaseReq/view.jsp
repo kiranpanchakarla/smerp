@@ -123,10 +123,12 @@
 																						<th>Product Name</th>
 																						<th>Description</th>
 																						<th>UOM</th>
-																						<th>Quantity</th>
+																						<th>SKU</th>
 																						<th>Product Group</th>
-																						<th>Warehouse</th>
 																						<th>HSN</th>
+																						<th>Warehouse</th>
+																						<th>Quantity</th>
+																						
 																				</thead>
 
 																				<c:forEach
@@ -138,15 +140,17 @@
 																						<td>${listpurchaseRequestLists.prodouctNumber}</td>
 																						<td>${listpurchaseRequestLists.description}</td>
 																						<td>${listpurchaseRequestLists.uom}</td>
-																						<td>${listpurchaseRequestLists.requiredQuantity}</td>
+																						<td>${listpurchaseRequestLists.sku}</td>
 																						<td>${listpurchaseRequestLists.productGroup}</td>
+																						<td>${listpurchaseRequestLists.hsn}</td>
 																						<td><c:forEach var="entry"
 																								items="${plantMap}">
 																								<c:if
 																									test="${entry.key ==listpurchaseRequestLists.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																							</c:forEach></td>
-																						<td>${listpurchaseRequestLists.hsn}</td>
+																							<td>${listpurchaseRequestLists.requiredQuantity}</td>
+																						
 																					</tbody>
 																				</c:forEach>
 

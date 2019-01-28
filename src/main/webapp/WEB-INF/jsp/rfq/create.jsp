@@ -431,7 +431,12 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].uom"
 																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
+																															class="form-control uom" readonly="true"></form:input>
+																													    <form:input type="hidden"
+                                                                                                                            path="lineItems[${count}].unitPrice"  readonly="true"
+                                                                                                                            value="${listLineItems.unitPrice}"
+                                                                                                                            class="form-control unitPrice " required="true" ></form:input>
+																															</div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].sku"
@@ -704,6 +709,7 @@ function addItem() {
 			+'<td>'
 			+'<div class="form-group">'
 			+'<input type="text" name="lineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="hidden" name="lineItems['+inc+'].unitPrice"  class="form-control unitPrice unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

@@ -360,28 +360,32 @@ text-align: left;
 											
 										<div class="col-sm-4">
 											<div class="form-group">
-												<label>Discount(%) :</label>
-												${gre.totalDiscount}
+												<div class="col-sm-6"><label>Discount(%) </label></div>
+												<div class="col-sm-6">: ${gre.totalDiscount}</div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Before Discount : </label>
-												${gre.totalBeforeDisAmt}
+												<div class="col-sm-6"><label>Total Before Discount  </label></div>
+												<div class="col-sm-6">: ${gre.totalBeforeDisAmt}</div>
 											</div>
 											<div class="form-group">
-												<label>Freight : </label> ${gre.freight}
-											</div>
-
-											<div class="form-group">
-												<label>Rounding : </label> ${gre.amtRounding}
+												<div class="col-sm-6"><label>Freight  </label> </div>
+												<div class="col-sm-6">: ${gre.freight} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Tax Amount :</label> ${gre.taxAmt}
+												<div class="col-sm-6"><label>Rounding  </label></div>
+												<div class="col-sm-6"> : ${gre.amtRounding}</div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Payment Due : </label> ${gre.totalPayment}
+											<div class="col-sm-6">	<label>Tax Amount </label> </div>
+											<div class="col-sm-6">: ${gre.taxAmt} </div>
+											</div>
+
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
+												<div class="col-sm-6">: ${gre.totalPayment} </div>
 											</div>
 										</div>
 									

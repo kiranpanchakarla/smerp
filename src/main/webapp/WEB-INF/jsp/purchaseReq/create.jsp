@@ -16,7 +16,7 @@
     </head>
 
     <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js" /> type="text/javascript"></script>
-    <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js" /> type="text/javascript"></script>
+  <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js" /> type="text/javascript"></script> -->
     <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js" /> type="text/javascript"></script>
 <script
 	src=<c:url value="/resources/js/scripts/datepicker/bootstrap-datepicker.min.js"/> type="text/javascript"></script>
@@ -443,7 +443,8 @@
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <%--  <%@include file="../loadJs.jsp"%> --%>
-            <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" /> --%>
+          
+    
     </body>
 
     <script type="text/javascript">
@@ -1083,25 +1084,28 @@
             	
             	var rowCount = $('#itemTbl tr').length-2;
             	if(rowCount==0){
-            		alertify.alert("Purchase Request","Can't Delete this Row");
+            		alertify.confirm("Purchase Request",'You will loose your Data, Do you want to Continue?', function(){
             		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
             		$('#itemTbl input[type="text"]').val('');
             		$('.warehouse').prop('selectedIndex',0);
-            		return false;
+            		$("#form").validator("update");
+            		}, function(){
+            		    alertify.error('Cancelled');
+            		 });
+            	}else {
+            		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+                		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+                		
+                	}else{
+                		$('table#itemTbl tr.multTot'+index).remove();
+                		var id = "prodouctNumber"+index;
+                		/* alert(id); */
+                		recipientsArray.splice($.inArray(  $("#"+id).val(''), recipientsArray),1);
+                		//recipientsArray.splice($.inArray($( "#"+id).val(''), recipientsArray),1);
+                	}
+                	$("#form").validator("update");
             	}
             	
-            	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-            		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-            		
-            	}else{
-            	
-            		$('table#itemTbl tr.multTot'+index).remove();
-            		var id = "prodouctNumber"+index;
-            		/* alert(id); */
-            		recipientsArray.splice($.inArray(  $("#"+id).val(''), recipientsArray),1);
-            		//recipientsArray.splice($.inArray($( "#"+id).val(''), recipientsArray),1);
-            	}
-            	$("#form").validator("update");
             }
 
 
@@ -1332,6 +1336,14 @@
     rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
 
-<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+
+<c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
+            
+<script>
+$(document).ready(function(){
+	$.noConflict();
+});
+</script>
     </html>

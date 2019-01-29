@@ -487,10 +487,18 @@ a{
 	background-color: #369;
 	color: #fff;
 	width: 60px;
+	text-align:center;
 }
 .first_strip .toggle_sidemenu_icon a{
-	margin-left: 12px;
+	margin-left: 0px !important;
+    /*display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+    margin-top: 0px; */
 }
+.nav-item i{margin-right: 0px !important;font-size: 24px;}
 .first_strip .toggle_sidemenu_icon:hover{
 	background-color: #f58423;
 	color: #fff;
@@ -947,7 +955,7 @@ table.dataTable.nowrap th, table.dataTable.nowrap td {
     float: right;
 }
 .table th, .table td {
-    padding: 5px !important;
+    padding: 5px 2px !important;
 }
 .full-col-table table th {
     color: #106570;
@@ -1091,4 +1099,21 @@ h2.font-weight-normal {
             cursor:pointer; 
             height:120px; 
             overflow-y:scroll;
-        }  
+}
+/* .card-block {
+    padding: 0.5rem !important;
+} 
+.dashboard-card .card-block {
+    padding: 1.5rem !important;
+}
+
+ */
+.form-control{
+	padding: 0.5rem 0.2rem !important;
+} 
+.login-main .has-icon-left .form-control.input-lg{
+	padding-left: 3.8rem !important;
+} 
+.quality-alert{position: absolute; right: 2px;}
+.gr-main{position: relative;}
+

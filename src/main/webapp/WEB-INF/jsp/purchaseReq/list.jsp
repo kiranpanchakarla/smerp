@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -99,8 +100,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${purchaseRequestsList.user.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
-																	<td>${purchaseRequestsList.createdAt}</td>
-																	<td>${purchaseRequestsList.updatedAt}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.updatedAt}"/></td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>

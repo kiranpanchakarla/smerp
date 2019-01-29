@@ -16,9 +16,9 @@
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
-<script
+<!-- <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
-	type="text/javascript"></script>
+	type="text/javascript"></script> -->
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
@@ -490,11 +490,11 @@
 																																	</form:select>
 																																</div> --%></td>
 
-																															<td><img
+																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
 																																alt="See" id="output" width="15"
 																																height="15"
-																																style="float: left; margin-right: 10px;"
+																																class="quality-alert"
 																																data-toggle="tooltip"
 																																data-placement="top"
 																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
@@ -573,10 +573,10 @@
 																																</div>
 																															</td>
 
-																															<td><img
+																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
-																																alt="See" id="output" width="20"
-																																height="20" data-toggle="tooltip"
+																																alt="See" id="output" width="15"
+																																height="15" data-toggle="tooltip" class="quality-alert"
 																																data-placement="top"
 																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
 																																<c:choose>
@@ -2504,9 +2504,20 @@ $('#freight').keyup(function() {
 	src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/>
 	type="text/javascript"></script>
 
-<link
+<!-- <link
 	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"
 	rel="Stylesheet"></link>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
+
+<link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+
+<c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
+            
+<script>
+$(document).ready(function(){
+	$.noConflict();
+});
+</script>
 
 </html>

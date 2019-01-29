@@ -81,6 +81,7 @@ public class RequestForQuotationController {
 		logger.info("rfq-->" + rfq);
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
 		RequestForQuotation rfqdetails = requestForQuotationService.findLastDocumentNumber();
@@ -115,6 +116,7 @@ public class RequestForQuotationController {
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("rfq", rfq);
 		return "rfq/create";

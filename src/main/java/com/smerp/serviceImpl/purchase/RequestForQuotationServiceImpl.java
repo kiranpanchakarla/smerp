@@ -87,6 +87,16 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			break;
 		}
 
+		 List<LineItems> listItems = requestForQuotation.getLineItems();
+		    if (listItems != null) {
+			for (int i = 0; i < listItems.size(); i++) {
+				if (listItems.get(i).getProdouctNumber() == null) {
+					listItems.remove(i);
+				}
+			}
+			requestForQuotation.setLineItems(listItems);
+		}
+		
 		if (requestForQuotation.getId() != null) { // delete List Of Items.
 			RequestForQuotation requestForListOfItems = requestForQuotationRepository
 					.findById(requestForQuotation.getId()).get();
@@ -94,15 +104,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			
 			if(requestForQuotation.getPurchaseReqId()==null) {  // if PurchaseReqId null delete list items 
 				lineitemsRepository.deleteAll(requestLists);
-			    List<LineItems> listItems = requestForQuotation.getLineItems();
-			    if (listItems != null) {
-				for (int i = 0; i < listItems.size(); i++) {
-					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
-						listItems.remove(i);
-					}
-				}
-				requestForQuotation.setLineItems(listItems);
-			}
+			   
 			
 			}else {
 				requestForQuotation.setLineItems(requestLists);
@@ -179,11 +181,13 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 					line.setProductGroup(prItms.get(i).getProductGroup());
 					line.setDescription(prItms.get(i).getDescription());
 					line.setHsn(prItms.get(i).getHsn());
+					line.setSku(prItms.get(i).getSku());
 					line.setRequiredQuantity(prItms.get(i).getRequiredQuantity());
 					line.setSacCode(prItms.get(i).getSacCode());
 					line.setUom(prItms.get(i).getUom());
 					line.setWarehouse(prItms.get(i).getWarehouse());
 					line.setProductId(prItms.get(i).getProductId());
+					line.setUnitPrice(prItms.get(i).getUnitPrice());
 					lineItems.add(line);
 				}
 			}

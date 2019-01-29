@@ -89,26 +89,29 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			break;
 		}
 
+		List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
+		if (listItems != null) {
+			for (int i = 0; i < listItems.size(); i++) {
+				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getTaxCode() == null) {
+					listItems.remove(i);
+				}
+			}
+			purchaseOrder.setPurchaseOrderlineItems(listItems);
+		}
+		
+		
 		if (purchaseOrder.getId() != null) { // delete List Of Items.
 			PurchaseOrder purchaseOrderlineItems = purchaseOrderRepository
 					.findById(purchaseOrder.getId()).get();
 			List<PurchaseOrderLineItems> requestLists = purchaseOrderlineItems.getPurchaseOrderlineItems();
 			
-			if(requestLists.size()>0 && requestLists!=null) {
-				purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
-				}
+			
 			
 			
 			if(purchaseOrder.getRfqId()==null) {  // if RfqId null remove list items 
-			List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
-			if (listItems != null) {
-				for (int i = 0; i < listItems.size(); i++) {
-					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
-						listItems.remove(i);
+				if(requestLists.size()>0 && requestLists!=null) {
+					purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
 					}
-				}
-				purchaseOrder.setPurchaseOrderlineItems(listItems);
-			}
 			
 			}else {  // Convert mode set Amount
 				List<PurchaseOrderLineItems> header_listItems = purchaseOrder.getPurchaseOrderlineItems();
@@ -122,11 +125,14 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 						line.setHsn(requestLists.get(i).getHsn());
 						line.setRequiredQuantity(requestLists.get(i).getRequiredQuantity());
 						line.setSacCode(requestLists.get(i).getSacCode());
+						line.setSku(requestLists.get(i).getSku());
+						line.setUnitPrice(requestLists.get(i).getUnitPrice());
 						line.setUom(requestLists.get(i).getUom());
 						line.setWarehouse(requestLists.get(i).getWarehouse());
 						line.setProductId(requestLists.get(i).getProductId());
-						line.setUnitPrice(header_listItems.get(i).getUnitPrice());
+						//line.setUnitPrice(header_listItems.get(i).getUnitPrice());
 						line.setTaxCode(header_listItems.get(i).getTaxCode());
+						//line.setTaxCode(requestLists.get(i).getTaxCode());
 						lineItems.add(line);
 					}
 				
@@ -193,6 +199,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setVendorShippingAddress(rfq.getVendorShippingAddress());
 			
 			
+			
 			List<LineItems> rfqItms = rfq.getLineItems();
 			List<PurchaseOrderLineItems> lineItems =new ArrayList<PurchaseOrderLineItems>();
 			if (rfqItms != null) {
@@ -205,10 +212,10 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 					line.setRequiredQuantity(rfqItms.get(i).getRequiredQuantity());
 					line.setSacCode(rfqItms.get(i).getSacCode());
 					line.setUom(rfqItms.get(i).getUom());
+					line.setSku(rfqItms.get(i).getSku());
+					line.setUnitPrice(rfqItms.get(i).getUnitPrice()); // Set Unit Price
 					
-					line.setUnitPrice(77.7); // Set Unit Price
-					
-					line.setSacCode(rfqItms.get(i).getSku());
+					//line.setSacCode(rfqItms.get(i).getSku());
 					
 					line.setWarehouse(rfqItms.get(i).getWarehouse());
 					line.setProductId(rfqItms.get(i).getProductId());

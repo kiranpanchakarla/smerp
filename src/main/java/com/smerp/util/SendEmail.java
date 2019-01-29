@@ -29,6 +29,7 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.admin.DashboardCountService;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -53,6 +54,9 @@ public class SendEmail extends EmailerGenerator{
 	
 	@Autowired
 	GoodsReturnController goodsReturnController;
+	
+	@Autowired
+	DashboardCountService dashboardCountService;
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
@@ -112,7 +116,7 @@ public class SendEmail extends EmailerGenerator{
 			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {
-			logger.error("Failed to process exception email template for Registration email ", e);
+			logger.error("Failed to process exception email template for email ", e);
 			throw new RuntimeException(e);
 		}
 		return out.toString();
@@ -121,10 +125,26 @@ public class SendEmail extends EmailerGenerator{
 	protected String getDashboardBody() {
 		Writer out = new StringWriter();
 		try {
-			  
+			Map<String, Object> input = new HashMap<String, Object>(1);
+			input.put("prCount", dashboardCountService.findAll());
+			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {
-			logger.error("Failed to process exception email template for Registration email ", e);
+			logger.error("Failed to process exception email template for Dashboard email ", e);
+			throw new RuntimeException(e);
+		}
+		return out.toString();
+	}
+	
+	protected String getsendMinQtyProductsEmailBody() {
+		Writer out = new StringWriter();
+		try {
+			Map<String, Object> input = new HashMap<String, Object>(1);
+			input.put("proCount", dashboardCountService.minProductQtyList());
+			getTemplate().process(input, out);
+			out.flush();
+		} catch (Exception e) {
+			logger.error("Failed to process exception email template for Minimum Quantity Products email ", e);
 			throw new RuntimeException(e);
 		}
 		return out.toString();
@@ -315,13 +335,42 @@ public class SendEmail extends EmailerGenerator{
 		};
 	}
 
+	public void sendsendMinQtyProductsEmailEmail() throws Exception {
+		 if (shouldNotify()) {
+			 
+	            try {
+	                mailSender.send(createsendMinQtyProductsEmailMessage());
+	                
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom(getDefaultEmailFromAddress());
+				//logger.info("Sending notification for " + getUser().getUserEmail());
+				message.setTo("k.panchakarla@manuhindia.com");
+				message.setSubject("Products With Minimum Quantity");
+				message.setText(getsendMinQtyProductsEmailBody(), true);
+				
+			}
+
+		};
+	}
+	
 	public void sendDashboardEmail() throws Exception {
 		 if (shouldNotify()) {
-			// logger.info("Sending notification for " + getUser().getUserEmail() + " ...");
+			 
 	            try {
 	                mailSender.send(createDashboardMessage());
-	               // logger.info("Email notification successfully sent for " + mailTo);
-	              //  doPRPostProcessing();
+	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
 	                throw new Exception(e);
@@ -338,7 +387,7 @@ public class SendEmail extends EmailerGenerator{
 				message.setFrom(getDefaultEmailFromAddress());
 				//logger.info("Sending notification for " + getUser().getUserEmail());
 				message.setTo("k.panchakarla@manuhindia.com");
-				message.setSubject("Dashbaord Email Test");
+				message.setSubject("Dashboard Email");
 				message.setText(getDashboardBody(), true);
 			}
 

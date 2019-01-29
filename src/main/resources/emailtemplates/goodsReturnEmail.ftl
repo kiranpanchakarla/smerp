@@ -24,7 +24,7 @@
                 <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px;overflow: hidden;">
-                <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Goods Receipt</h2>
+                <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Goods Return</h2>
                 
                 
     <#if goodsRet??>

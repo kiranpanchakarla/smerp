@@ -97,6 +97,7 @@ public class GoodsReceiptController {
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
@@ -137,6 +138,7 @@ public class GoodsReceiptController {
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("gr", gr);
@@ -186,9 +188,9 @@ public class GoodsReceiptController {
 
 	
 	@PostMapping("/save")
-	public String name(GoodsReceipt requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		logger.info("gr details" + goodsReceiptService.save(requestForQuotation));
+	public String name(GoodsReceipt goodsReceipt) {
+		logger.info("Inside save method" + goodsReceipt);
+		logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
 		return "redirect:list";
 	}
 	

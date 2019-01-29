@@ -59,7 +59,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	private static String modulePO;
 
-	@Value(value = "${module.rfq}")
+	@Value(value = "${module.po}")
 	public void setPO(String prop) {
 		this.modulePO = prop;
 	}

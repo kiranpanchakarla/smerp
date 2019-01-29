@@ -65,6 +65,15 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
             break; 
         } 
 		
+		List<PurchaseRequestList> ltms = purchaseRequest.getPurchaseRequestLists();
+		if (ltms != null) {
+			for (int i = 0; i < ltms.size(); i++) {
+				if (ltms.get(i).getDescription() == null) {
+					ltms.remove(i);
+				}
+			}
+			purchaseRequest.setPurchaseRequestLists(ltms);
+		}
 		
 		if (purchaseRequest.getId() != null) {
 			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
@@ -74,15 +83,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		
 		
 		
-			List<PurchaseRequestList> ltms = purchaseRequest.getPurchaseRequestLists();
-		if (ltms != null) {
-			for (int i = 0; i < ltms.size(); i++) {
-				if (ltms.get(i).getDescription() == null) {
-					ltms.remove(i);
-				}
-			}
-			purchaseRequest.setPurchaseRequestLists(ltms);
-		}
+			
 
 		return purchaseRequestRepository.save(purchaseRequest);
 	}

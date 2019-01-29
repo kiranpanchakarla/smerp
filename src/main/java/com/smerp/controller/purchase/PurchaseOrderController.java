@@ -94,6 +94,7 @@ public class PurchaseOrderController {
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
@@ -130,6 +131,7 @@ public class PurchaseOrderController {
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("po", po);

@@ -98,28 +98,56 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			break;
 		}
 
+		List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+		if (listItems != null) {
+			for (int i = 0; i < listItems.size(); i++) {
+				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null && listItems.get(i).getRequiredQuantity() == null) {
+					listItems.remove(i);
+				}
+			}
+			goodsReceipt.setGoodsReceiptLineItems(listItems);
+		}
+		
 		if (goodsReceipt.getId() != null) { // delete List Of Items.
 			GoodsReceipt goodsReceiptObj = goodsReceiptRepository
 					.findById(goodsReceipt.getId()).get();
 			List<GoodsReceiptLineItems> requestLists = goodsReceiptObj.getGoodsReceiptLineItems();
 			
-			if(requestLists.size()>0 && requestLists!=null) {
-				goodsReceiptLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
-				}
+			
 			
 			
 			if(goodsReceipt.getPoId()==null) {  // if RfqId null remove list items 
-			List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
-			if (listItems != null) {
-				for (int i = 0; i < listItems.size(); i++) {
-					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
-						listItems.remove(i);
+				if(requestLists.size()>0 && requestLists!=null) {
+					goodsReceiptLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
 					}
-				}
-				goodsReceipt.setGoodsReceiptLineItems(listItems);
-			}
 			
 			}else {
+				List<GoodsReceiptLineItems> header_listItems =  goodsReceipt.getGoodsReceiptLineItems();
+				if (requestLists != null) {
+					List<GoodsReceiptLineItems> lineItems =new ArrayList<GoodsReceiptLineItems>();
+					for (int i = 0; i < requestLists.size(); i++) {
+						GoodsReceiptLineItems line = new GoodsReceiptLineItems();
+						line.setProdouctNumber(requestLists.get(i).getProdouctNumber());
+						line.setProductGroup(requestLists.get(i).getProductGroup());
+						line.setDescription(requestLists.get(i).getDescription());
+						line.setHsn(requestLists.get(i).getHsn());
+						line.setRequiredQuantity(requestLists.get(i).getRequiredQuantity());
+						line.setSacCode(requestLists.get(i).getSacCode());
+						line.setSku(requestLists.get(i).getSku());
+						line.setUnitPrice(requestLists.get(i).getUnitPrice());
+						line.setUom(requestLists.get(i).getUom());
+						line.setWarehouse(requestLists.get(i).getWarehouse());
+						line.setProductId(requestLists.get(i).getProductId());
+						//line.setUnitPrice(header_listItems.get(i).getUnitPrice());
+						line.setTaxCode(requestLists.get(i).getTaxCode());
+						//line.setTaxCode(requestLists.get(i).getTaxCode());
+						
+						line.setRequiredQuantity(header_listItems.get(i).getRequiredQuantity());
+						lineItems.add(line);
+					}
+				
+					goodsReceipt.setGoodsReceiptLineItems(lineItems);
+				}
 				 logger.info("convertd Po to GR Data -->" +goodsReceipt);
 			}
 		}
@@ -199,8 +227,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			gr.setVendorContactDetails(po.getVendorContactDetails());
 			gr.setVendorPayTypeAddress(po.getVendorPayTypeAddress());
 			gr.setVendorShippingAddress(po.getVendorShippingAddress());
-			
-		
 			gr.setFreight(po.getFreight());
 			gr.setTotalDiscount(po.getTotalDiscount());
 		
@@ -227,16 +253,14 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
 					line.setRequiredQuantity(0);
-					
 					line.setSacCode(poItms.get(i).getSacCode());
 					line.setUom(poItms.get(i).getUom());
 					line.setWarehouse(poItms.get(i).getWarehouse());
 					line.setProductId(poItms.get(i).getProductId());
 					line.setTaxCode(poItms.get(i).getTaxCode());
 					line.setUnitPrice(poItms.get(i).getUnitPrice());
-					
+					line.setSku(poItms.get(i).getSku());
 					line.setTaxTotal(poItms.get(i).getTaxTotal());
-					
 					line.setTotal(poItms.get(i).getTotal());
 					
 					lineItems.add(line);

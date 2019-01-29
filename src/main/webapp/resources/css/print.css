@@ -17,6 +17,7 @@
 body {
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
 		sans-serif !important;
+		text-transform: capitalize;
 }
 header{
    position: fixed;
@@ -24,6 +25,7 @@ header{
    top: 0; width: 100%; 
    color: black; 
    text-align: center;
+   text-transform: capitalize;
 }
 table {
 	table-layout: auto;
@@ -38,6 +40,7 @@ td {
 	font-size: 8pt;
 	word-wrap: break-word;
 	height: 100%;
+	text-transform: capitalize;
 }
 
 th {
@@ -45,6 +48,7 @@ th {
 	font-size: 7pt;
 	text-align: center;
 	background-color: #bfbfbf !important;
+	text-transform: capitalize;
 }
 
 .label {

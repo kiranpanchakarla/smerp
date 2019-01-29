@@ -16,8 +16,8 @@ public class Scheduler {
 	EmailGenerator emailGenerator;
 
 	private static final Logger logger = LogManager.getLogger(Scheduler.class);
-	//@Scheduled(cron = "0 */4 * * * ?")
-	 public void cronJobSch() throws Exception {
+	//@Scheduled(cron = "0 */30 * * * ?")
+	 public void sendDadhboardEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
 		String strDate = sdf.format(now);
@@ -31,4 +31,22 @@ public class Scheduler {
 			e.printStackTrace();
 		} 
 	}
+	 
+	//@Scheduled(cron = "0 */30 * * * ?")
+	 public void sendMinQtyProductsEmail() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		Date now = new Date();
+		String strDate = sdf.format(now);
+		logger.info("Java cron job expression:: " + strDate);
+
+	 try {
+			RequestContext.initialize();
+			RequestContext.get().getConfigMap().put("mail.template", "minQtyEmail.ftl"); // Sending Email
+			emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendsendMinQtyProductsEmailEmail();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+
 }

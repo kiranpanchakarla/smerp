@@ -98,6 +98,7 @@ public class GoodsReturnController {
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("gre", gre);

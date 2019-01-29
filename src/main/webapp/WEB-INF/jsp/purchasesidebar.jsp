@@ -68,7 +68,7 @@
 				</c:if>
 				
 				<c:if test="${ump.key eq 'Goods Return'}">
-					<li><a href="<c:url value ="/gre/list"/>"><i
+					<li><a href="<c:url value ="/inv/list"/>"><i
 							class="icon-android-cart left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>

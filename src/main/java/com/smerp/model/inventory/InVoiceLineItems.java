@@ -188,4 +188,16 @@ public class InVoiceLineItems extends AuditModel {
 		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
+	@Override
+	public String toString() {
+		return "InVoiceLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
+				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
+	}
+	
+	
+	
+	
+
 }

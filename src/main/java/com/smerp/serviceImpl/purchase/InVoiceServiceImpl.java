@@ -22,6 +22,7 @@ import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.InVoiceLineItemsRepository;
 import com.smerp.repository.purchase.InVoiceRepository;
@@ -54,6 +55,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
+	
+	@Autowired
+	GoodsReceiptRepository goodsReceiptRepository;
+	
 	@Autowired
 	VendorService vendorService;
 	
@@ -98,12 +103,15 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		}
 
 		if (inVoice.getId() != null) { // delete List Of Items.
+			
 			InVoice inVoiceObj = inVoiceRepository
 					.findById(inVoice.getId()).get();
 			List<InVoiceLineItems> requestLists = inVoiceObj.getInVoiceLineItems();
 			
-			if(requestLists.size()>0 && requestLists!=null) {
+			if(requestLists.size()>0 && requestLists!=null  && inVoice.getGrId()==null) {
 				inVoiceLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
+				}else {
+					inVoice.setInVoiceLineItems(requestLists);
 				}
 			
 			
@@ -145,23 +153,12 @@ public class InVoiceServiceImpl  implements InVoiceService {
     		}
 		}
 		
-		/*if(inVoice.getGrId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(inVoice.getGrId());
-		if(!checkQuantityPoGr(po)) {
-			
-			 logger.info("purchaseOrder    COMPLETED -->");
-		} }*/
+		
 		
 		
 		inVoice= inVoiceRepository.save(inVoice);
 		
-		if(inVoice.getGrId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(inVoice.getGrId());
 		
-		String status = setStatusOfPurchaseOrder(inVoice);
-		po.setStatus(status);
-		purchaseOrderRepository.save(po);
-		}
 		
 		return inVoice; 
 		 
@@ -173,15 +170,15 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		/*GoodsReturn dup_gre =goodsReturnRepository.findByPoId(po.getId());  // check PO exist in  GR
-        if(dup_gre==null) { */
+		InVoice dup_inv =inVoiceRepository.findByGrId(gr.getId());  // check PO exist in  GR
+        if(dup_inv==null) {
 		InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
 			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("inv"+(String)dtf.format(now) +"0"));
+		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
 		}
 
 		if (gr != null) {
@@ -215,6 +212,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 					line.setRequiredQuantity(grItms.get(i).getRequiredQuantity());
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
+					line.setSku(grItms.get(i).getSku());
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
@@ -235,10 +233,13 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		inv.setCategory("Item");
 		inv = inVoiceRepository.save(inv);
 		
-	/*	gr.setStatus(EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus());  // Set Partial Complted
-		goodsReceiptRepository.save(gr);*/
+		gr.setStatus(EnumStatusUpdate.INVOICE.getStatus());  // Set Partial Complted
+		goodsReceiptRepository.save(gr);
 		
 		return inv;
+        }else {
+        	return dup_inv;
+        }
      
 	}
 	
@@ -419,55 +420,26 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	public InVoice getListAmount(InVoice inVoice) {
 		logger.info("getListAmount-->");
 		List<InVoiceLineItems> listItems = inVoice.getInVoiceLineItems();
+		
 		List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
-		
-		PurchaseOrder po = null;
-		List<PurchaseOrderLineItems> poItms =null;
-		 List<InVoice> listinVoice =null;
-		if(inVoice.getGrId()!=null) {
-		 po = purchaseOrderService.findById(inVoice.getGrId());
-		 poItms = po.getPurchaseOrderlineItems();
-		listinVoice = inVoiceRepository
-					.findByListGrId(po.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
-		}
-		
-		
 		Double addAmt=0.0;
 		Double addTaxAmt=0.0;
-		Integer grQunatity=0;
+		Integer greQunatity=0;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
-				InVoiceLineItems grlist = listItems.get(i);
-				if(grlist.getUnitPrice()!=null) {
-				addTaxAmt += UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
-				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
-				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
-				
-				if(inVoice.getGrId()!=null) {
-				if(poItms.get(i).getProdouctNumber()!=null ) {
-					 grQunatity = getListGoodsProductCount(listinVoice,  poItms.get(i).getProdouctNumber());
-				}else if(poItms.get(i).getSacCode()!=null ) {
-					 grQunatity = getListGoodsProductCount(listinVoice,  poItms.get(i).getSacCode());
+				InVoiceLineItems grelist = listItems.get(i);
+				if(grelist.getUnitPrice()!=null) {
+				addTaxAmt += UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode());
+				grelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode()));
+				grelist.setTotal(""+UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode()));
 				} 
-				
-				logger.info("poItms.get(i).getRequiredQuantity()-->" + poItms.get(i).getRequiredQuantity());
-				logger.info("grQunatity-->" + grQunatity);
-				grlist.setTempRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
-				
-				
-				}
-				
-			
-				
-				}else {
-				grlist.setTaxTotal("");
-				grlist.setTotal("");	
-				}
-				addListItems.add(grlist);
-			}
+				addListItems.add(grelist);
+			  }
 			inVoice.setInVoiceLineItems(addListItems);
-		}
+			}
+			
+		
 		inVoice.setTotalBeforeDisAmt(addAmt);
 		inVoice.setTaxAmt(""+addTaxAmt);
 		logger.info("addAmt-->" + addAmt); 

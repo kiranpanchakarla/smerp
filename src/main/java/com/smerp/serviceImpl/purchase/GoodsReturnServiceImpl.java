@@ -263,6 +263,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
+					line.setSku(grItms.get(i).getSku());
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());

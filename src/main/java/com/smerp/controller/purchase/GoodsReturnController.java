@@ -33,6 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
+import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
@@ -153,9 +154,9 @@ public class GoodsReturnController {
 	}
 	
 	@PostMapping("/saveGRtoGRE")
-	public String savePRtoRFQ(HttpServletRequest request) {
+	public String savePRtoRFQ(HttpServletRequest request,GoodsReceipt goodsReceipt) {
 		String greId = request.getParameter("greId");
-		logger.info("greId" + greId);
+		logger.info("goodsReceipt" + goodsReceipt);
 		logger.info("greId view-->" + greId);
 		GoodsReturn gre = goodsReturnService.saveGRE(greId);
 		return "redirect:edit?id="+gre.getId();

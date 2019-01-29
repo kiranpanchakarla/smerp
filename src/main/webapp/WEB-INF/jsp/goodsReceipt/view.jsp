@@ -43,8 +43,9 @@ text-align: left;
 						<div class="content-body">
 
 							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
+							<c:url value="/inv/saveGRtoInv" var="createInvoiceUrl" />
 
-							<form:form method="POST" action="${createUrl}" id="form"
+							<form:form method="POST" action="" id="form"
 							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
@@ -140,7 +141,7 @@ text-align: left;
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item active"><a class="nav-link"
+																<li class="nav-item"><a class="nav-link active"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>
@@ -400,11 +401,11 @@ text-align: left;
 									
 									<div class="card-block">
 									<div class="row">
-										<div class="col-sm-12 form-group">
+										<div class="col-sm-12">
 											<div class="row">
-												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
-												         <div class="col-sm-4 form-group has-feedback">
+												         <div class="col-sm-3 form-group has-feedback">
 												        
 									
 										<input type="hidden" name="greId" value="${gr.id}">
@@ -412,50 +413,43 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Goods Receipt'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status != 'Invoiced'}">
 																		 
 														 <c:if test="${checkStatusGr ==true}">
-																		<form:button type="submit" id="convertBtn" name="statusType" value="goods_return"
+																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
 																			class="btn btn-primary mr-1 float-right mySubButton">
 																			<i></i>Goods Return</form:button>
+																			
 											            </c:if>	
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-   									                            
-   									                            
-   									                            
-   									                   
-									
-																
-								                        
 												         
 												         </div>
 												         
-												          <div class="col-sm-2 form-group has-feedback"></div>
+												          <div class="col-sm-3 form-group has-feedback">
 												          
 												          <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'InVoice'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'InVoice'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">
 														
-																		<form:button type="submit" id="convertBtnInvoice" name="statusType" value="in_voice"
+																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">
-																			<i></i>Invoice</form:button>
-																			
+																			<i></i>Invoiced</form:button>
 																	  </c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-												          
-										              </div>
+												          </div>
+										             
 												         
 												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
-												
+												 </div>
 										</div>
 										
 									</div>
@@ -489,7 +483,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 $(".mySubButton").on('click', function() {
 			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
 					function() {
-				$("#form").submit();
+				    $('#form').attr('action', "${createUrl}").submit();
 					}, function() {
 						alertify.error('Cancelled')
 					});
@@ -499,14 +493,16 @@ $(".mySubButton").on('click', function() {
 		
 		
 $(".mySubButtonInv").on('click', function() {
-			alertify.confirm('Goods Return','Are you Sure, Want to Convert Invoice!',
+			alertify.confirm('Invoice','Are you Sure, Want to Convert Invoice!',
 					function() {
-				$("#form").submit();
+				    $('#form').attr('action', "${createInvoiceUrl}").submit();
 					}, function() {
 						alertify.error('Cancelled')
 					});
 
 		});
+		
+		
 		
 		
 

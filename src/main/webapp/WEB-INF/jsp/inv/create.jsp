@@ -399,152 +399,41 @@
 
 																														<c:if test="${inv.category=='Item'}">
 																															<td>${listLineItems.prodouctNumber}
-																																<%-- <div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].prodouctNumber"
-																																		readonly="true"
-																																		value="${listLineItems.prodouctNumber}"
-																																		class="form-control prodouctNumber"></form:input>
-																																</div> --%>
 																															</td>
 
-																															<td>${listLineItems.description}<%-- <div class="form-group">
-																																	<form:input type="text"  
-																																		path="inVoiceLineItems[${count}].description"
-																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.description}"
-																																		class="form-control description validatePrice"></form:input>
-																																</div> --%>
-																															</td>
+																															<td>${listLineItems.description}</td>
 
-																															<td>${listLineItems.uom}<%-- <div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].uom"
-																																		value="${listLineItems.uom}"
-																																		class="form-control uom"
-																																		readonly="true"></form:input>
-																																</div> --%>
+																															<td>${listLineItems.uom}</td>
+																															<td>${listLineItems.sku}</td>
+
+
+
+																															<td>${listLineItems.unitPrice}</td>
+
+
+																															<td>   
+																																${listLineItems.taxCode}  
 																															</td>
 
 
-																															<td>${listLineItems.sku}<%-- <div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].sku"
-																																		value="${listLineItems.sku}"
-																																		class="form-control sku"
-																																		readonly="true"></form:input>
-																																</div> --%>
-																															</td>
+																															<td>${listLineItems.productGroup}</td>
 
-
-
-																															<td>${listLineItems.unitPrice}<form:input
-																																	type="hidden" readonly="true"
-																																	path="inVoiceLineItems[${count}].unitPrice"
-																																	onkeypress="return isNumericKey(event)"
-																																	value="${listLineItems.unitPrice}"
-																																	class="form-control unitPrice validatePrice"></form:input>
-																																</td>
-
-
-																															<td> <form:select
-																																	class="form-control taxCode"
-																																	readonly="true"
-																																	path="inVoiceLineItems[${count}].taxCode">
-																																	<form:option value="" label="Select" />
-
-																																	<form:option value="${listLineItems.taxCode}"></form:option>
-
-																																</form:select>    
-																																  
-																															</td>
-
-
-																															<td>${listLineItems.productGroup}<%-- <div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].productGroup"
-																																		value="${listLineItems.productGroup}"
-																																		class="form-control productGroup"
-																																		readonly="true"></form:input>
-																																</div> --%></td>
-
-																															<td>${listLineItems.hsn}<%-- <div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].hsn"
-																																		value="${listLineItems.hsn}"
-																																		class="form-control hsnVal"
-																																		readonly="true"></form:input>
-																																</div> --%></td>
+																															<td>${listLineItems.hsn}</td>
 
 																															<td><c:forEach var="entry"
 																																	items="${plantMap}">
 																																	<c:if
 																																		test="${entry.key ==listLineItems.warehouse}">
 																												                 	 ${entry.value} 																													 </c:if>
-																																</c:forEach> <%-- <div class="form-group">
-																																	<form:select class="form-control"
-																																		style="width:;" readonly="true"
-																																		path="inVoiceLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div> --%></td>
+																																</c:forEach></td>
 
-																															<td><img
-																																src="${contextPath}/resources/images/portrait/info.png"
-																																alt="See" id="output" width="15"
-																																height="15"
-																																style="float: left; margin-right: 10px;"
-																																data-toggle="tooltip"
-																																data-placement="top"
-																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
-																																<c:choose>
-																																	<c:when
-																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="inVoiceLineItems[${count}].requiredQuantity"
-																																				value="${listLineItems.requiredQuantity}"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" readonly="true"></form:input>
-																																		</div>
-
-																																	</c:when>
-																																	<c:otherwise>
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="inVoiceLineItems[${count}].requiredQuantity"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" required="true"></form:input>
-																																		</div>
-
-																																	</c:otherwise>
-																																</c:choose> <input type="hidden"
-																																value="${listLineItems.requiredQuantity}"
-																																class="original_requiredQuantity">
-																																<input type="hidden"
-																																value="${listLineItems.tempRequiredQuantity}"
-																																class="temp_requiredQuantity"></td>
+																															<td>
+																																${listLineItems.requiredQuantity}
+																																</td>
 																																
-																																<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].taxTotal"
-																																		value="${listLineItems.taxTotal}"
-																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control taxTotal "
-																																		readonly="true"></form:input>
-																																</div> </td>
+																																<td>${listLineItems.taxTotal} </td>
 
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="inVoiceLineItems[${count}].total"
-																																		value="${listLineItems.total}"
-																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control total"
-																																		readonly="true"></form:input>
-																																</div> </td>
+																															<td>${listLineItems.total} </td>
 
 
 
@@ -573,41 +462,9 @@
 																																</div>
 																															</td>
 
-																															<td><img
-																																src="${contextPath}/resources/images/portrait/info.png"
-																																alt="See" id="output" width="20"
-																																height="20" data-toggle="tooltip"
-																																data-placement="top"
-																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
-																																<c:choose>
-																																	<c:when
-																																		test="${listLineItems.requiredQuantity <= 0 && listLineItems.tempRequiredQuantity <= 0}">
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="inVoiceLineItems[${count}].requiredQuantity"
-																																				value="${listLineItems.requiredQuantity}"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" readonly="true"></form:input>
-																																		</div>
-
-																																	</c:when>
-																																	<c:otherwise>
-																																		<div class="form-group">
-																																			<form:input type="text"
-																																				path="inVoiceLineItems[${count}].requiredQuantity"
-																																				onkeypress="return isNumericKey(event)"
-																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" required="true"></form:input>
-																																		</div>
-
-																																	</c:otherwise>
-																																</c:choose> <input type="hidden"
-																																value="${listLineItems.requiredQuantity}"
-																																class="original_requiredQuantity">
-																																<input type="hidden"
-																																value="${listLineItems.tempRequiredQuantity}"
-																																class="temp_requiredQuantity"></td>
+																															<td>
+																																${listLineItems.requiredQuantity}
+																															</td>
 
 																															<!--  -->
 																															<td><div class="form-group">
@@ -2451,7 +2308,7 @@ $('#freight').keyup(function() {
 			   }
 		});
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	/* $(document).on("keyup", ".validateQuantity", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
@@ -2473,7 +2330,7 @@ $('#freight').keyup(function() {
 			 return false;
 		}
 		
-		});
+		}); */
 	
 	
 	/*  $(".requiredQuantity").each(function() {

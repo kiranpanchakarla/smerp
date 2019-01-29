@@ -15,10 +15,10 @@ List<InVoice> findByIsActive(Boolean isActive);
 
 InVoice findTopByOrderByIdDesc();
 
-@Query("SELECT r FROM InVoice r WHERE poId=:id and status!=:status")
+@Query("SELECT r FROM InVoice r WHERE grId=:id and status!=:status")
 List<InVoice> findByListGrId(int id,String status);
 
-@Query("SELECT r FROM InVoice r WHERE poId=:id and status = :status")
+@Query("SELECT r FROM InVoice r WHERE grId=:id and status = :status")
 List<InVoice> findByApproveListGrId(int id ,String status);
 
 InVoice findByGrId(int id);

@@ -116,7 +116,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 			
 			
-			if(goodsReceipt.getPoId()==null) {  // if RfqId null remove list items 
+			if(goodsReceipt.getPoId()==null) {  // if PoId null remove list items 
 				if(requestLists.size()>0 && requestLists!=null) {
 					goodsReceiptLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
 					}

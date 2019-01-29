@@ -4,8 +4,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- END Custom CSS-->
-<div class="first_strip"
-	style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
+<div class="first_strip">
 	<div>
 
 		<ul class="main_menu">
@@ -14,10 +13,8 @@
 					class="icon-menu5"> </i></a></li>
 			<li class="logo-box text-xs-center"><sec:authorize
 					access="isAuthenticated()">
-					<img
-						src="${contextPath}/<sec:authentication property="principal.company.logo" />"
-						style="width: 4%; position: fixed;" />
-
+					<img src="${contextPath}/<sec:authentication property="principal.company.logo" />"
+						class="logo-left-main" width="135px" height="43px" />
 				</sec:authorize></li>
 
 
@@ -272,6 +269,7 @@
 								</ul></li>
 						</ul></li>
 				</ul> </li>-->
+		   
 			<li class="dropdown dropdown-user nav-item edit-user-dropdown">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
@@ -302,6 +300,8 @@
 						class="icon-power3"></i> Logout</a>
 				</div>
 			</li>
+			
+			<li class="float-right dashboard-logo-wrap"><img src=<c:url value="/resources/images/dashboard-logo.png"/> class="logo-right-main" /></li>
 
 		</ul>
 		<div style="clear: both;"></div>

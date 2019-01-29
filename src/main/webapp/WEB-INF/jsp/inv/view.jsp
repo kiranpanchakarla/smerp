@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -42,10 +41,11 @@ text-align: left;
 					<div class="large-12 columns">
 						<div class="content-body">
 
-							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
 
-							<form:form method="POST" action="${createUrl}" id="form"
-							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
+
+
+							<form:form method="POST" action="/gr/save" id="form" class="bv-form commentForm"
+								enctype="multipart/form-data" modelAttribute="inv"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -54,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Goods Receipt</h2>
+													<h2 class="card-title" id="basic-layout-icons">InVoice</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -62,33 +62,33 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>: ${gr.vendor.name}
+																	<label>Name</label>: ${inv.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>: ${gr.vendor.emailId}
+																	<label>Email Id</label>: ${inv.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact</label>: ${gr.vendorContactDetails.contactName}
+																	<label>Contact</label>: ${inv.vendorContactDetails.contactName}
 																</div>
 															</div>
 
-															<form:hidden path="id" />
+														<form:hidden path="id" />
 
 															<div class="row">
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>: ${gr.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${inv.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>: ${gr.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${inv.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																				<label>Document#</label>: ${inv.docNumber}
 																			</div>
 
 															</div>
@@ -99,15 +99,15 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
+																				<label>Ref Doc#</label>: ${inv.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.documentDate}" />
 																			</div>
 																		</div>
 
@@ -117,13 +117,13 @@ text-align: left;
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${gr.status}
+																				<label>Status</label>: ${inv.status}
 																			</div>
 																		</div>
 																		
@@ -166,7 +166,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty goodsReceiptLineItems}">
+																										<c:if test="${not empty inVoiceLineItems}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -174,7 +174,7 @@ text-align: left;
 																							<tr>
 																									
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${gr.category=='Item'}">
+																									<c:if test="${inv.category=='Item'}">
 																									<th>S.no</th>
 																									<th>Product#</th>
 																									<th>Description</th>
@@ -190,7 +190,7 @@ text-align: left;
 																									<th>Quantity</th>
 																									</c:if>
 																									
-																									<c:if test="${gr.category!='Item'}">
+																									<c:if test="${inv.category!='Item'}">
 																									<th>S.No</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
@@ -207,21 +207,21 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${goodsReceiptLineItems}"
+																											<c:forEach items="${inVoiceLineItems}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
+																															path="inVoiceLineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
+																												<form:hidden path="inVoiceLineItems[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
-																													<c:if test="${gr.category=='Item'}">
+																													<c:if test="${inv.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													<td>${listLineItems.description}</td>
 																													<td>${listLineItems.uom}</td>
@@ -247,13 +247,13 @@ text-align: left;
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
+																												<td>${listLineItems.requiredQuantity}</td>
 
 																												
 																														
 																													</c:if>
 																													
-																													<c:if test="${gr.category!='Item'}">
+																													<c:if test="${inv.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
@@ -315,11 +315,11 @@ text-align: left;
 																				<td>
 																					<div id="shippingAddressTable">
 																					
-																					${gr.vendorShippingAddress.addressName}<br>
-																					${gr.vendorShippingAddress.street}
-																					${gr.vendorShippingAddress.city}
-																					${gr.vendorShippingAddress.zipCode}<br>
-																					${gr.vendorShippingAddress.country.name}
+																					${inv.vendorShippingAddress.addressName}<br>
+																					${inv.vendorShippingAddress.street}
+																					${inv.vendorShippingAddress.city}
+																					${inv.vendorShippingAddress.zipCode}<br>
+																					${inv.vendorShippingAddress.country.name}
 																					
 																					
 																					</div>
@@ -331,11 +331,11 @@ text-align: left;
 																				<td>
 																					<div id="payToAddressTable">
 																					
-																					${gr.vendorPayTypeAddress.addressName}<br>
-																					${gr.vendorPayTypeAddress.street}
-																					${gr.vendorPayTypeAddress.city}
-																					${gr.vendorPayTypeAddress.zipCode}<br>
-																					${gr.vendorPayTypeAddress.country.name}
+																					${inv.vendorPayTypeAddress.addressName}<br>
+																					${inv.vendorPayTypeAddress.street}
+																					${inv.vendorPayTypeAddress.city}
+																					${inv.vendorPayTypeAddress.zipCode}<br>
+																					${inv.vendorPayTypeAddress.country.name}
 																					
 																					
 																					</div>
@@ -361,31 +361,31 @@ text-align: left;
 										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="col-sm-6"><label>Discount(%) </label></div>
-											<div class="col-sm-6">:	${gr.totalDiscount} </div>
+												<div class="col-sm-6">: ${inv.totalDiscount}</div>
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Total Before Discount </label> </div>
-											<div class="col-sm-6">:	${gr.totalBeforeDisAmt} </div>
+												<div class="col-sm-6"><label>Total Before Discount  </label></div>
+												<div class="col-sm-6">: ${inv.totalBeforeDisAmt}</div>
 											</div>
 											<div class="form-group">
-												<div class="col-sm-6"><label>Freight  </label></div>
-												<div class="col-sm-6">: ${gr.freight} </div>
-											</div>
-
-											<div class="form-group">
-											<div class="col-sm-6">	<label>Rounding  </label></div>
-											<div class="col-sm-6">: ${gr.amtRounding} </div>
+												<div class="col-sm-6"><label>Freight  </label> </div>
+												<div class="col-sm-6">: ${inv.freight} </div>
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"> <label>Tax Amount </label> </div>
-												<div class="col-sm-6">: ${gr.taxAmt} </div>
+												<div class="col-sm-6"><label>Rounding  </label></div>
+												<div class="col-sm-6"> : ${inv.amtRounding}</div>
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
-											<div class="col-sm-6">: ${gr.totalPayment} </div>
+											<div class="col-sm-6">	<label>Tax Amount </label> </div>
+											<div class="col-sm-6">: ${inv.taxAmt} </div>
+											</div>
+
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
+												<div class="col-sm-6">: ${inv.totalPayment} </div>
 											</div>
 										</div>
 									
@@ -403,57 +403,7 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
-												         <div class="col-sm-4 form-group has-feedback">
-												        
-									
-										<input type="hidden" name="greId" value="${gr.id}">
-									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Goods Receipt'}">
-										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'}">
-																		 
-														 <c:if test="${checkStatusGr ==true}">
-																		<form:button type="submit" id="convertBtn" name="statusType" value="goods_return"
-																			class="btn btn-primary mr-1 float-right mySubButton">
-																			<i></i>Goods Return</form:button>
-											            </c:if>	
-																	</c:if>
-	   										                           </c:if>
-	       								                           </c:if>     
-   									                            </c:forEach>
-   									                            
-   									                            
-   									                            
-   									                   
-									
-																
-								                        
-												         
-												         </div>
-												         
-												          <div class="col-sm-2 form-group has-feedback"></div>
-												          
-												          <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'InVoice'}">
-										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'InVoice'}">
-														
-																		<form:button type="submit" id="convertBtnInvoice" name="statusType" value="in_voice"
-																			class="btn btn-primary mr-1 float-right mySubButtonInv">
-																			<i></i>Invoice</form:button>
-																			
-																	  </c:if>
-	   										                           </c:if>
-	       								                           </c:if>     
-   									                            </c:forEach>
-												          
-										              </div>
-												         
-												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -486,31 +436,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
-$(".mySubButton").on('click', function() {
-			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
-					function() {
-				$("#form").submit();
-					}, function() {
-						alertify.error('Cancelled')
-					});
-
-		});
-		
-		
-		
-$(".mySubButtonInv").on('click', function() {
-			alertify.confirm('Goods Return','Are you Sure, Want to Convert Invoice!',
-					function() {
-				$("#form").submit();
-					}, function() {
-						alertify.error('Cancelled')
-					});
-
-		});
-		
-		
-
-
+	
 	
 function goBack() {
     window.history.back();

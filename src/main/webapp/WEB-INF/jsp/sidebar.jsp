@@ -165,6 +165,12 @@
 							<li class="has_sub"><a href="<c:url value ="/gre/list"/>">Goods
 									Return</a></li>
 						</c:if>
+						
+						<c:if test="${ump.key eq 'InVoice'}">
+							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">InVoice
+									</a></li>
+						</c:if>
+						
 					</c:forEach>
 
 				</ul>

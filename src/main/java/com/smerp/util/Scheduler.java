@@ -16,7 +16,7 @@ public class Scheduler {
 	EmailGenerator emailGenerator;
 
 	private static final Logger logger = LogManager.getLogger(Scheduler.class);
-	//@Scheduled(cron = "0 */30 * * * ?")
+	//@Scheduled(cron = "0 0 */5 * * ?")
 	 public void sendDadhboardEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -32,7 +32,7 @@ public class Scheduler {
 		} 
 	}
 	 
-	//@Scheduled(cron = "0 */30 * * * ?")
+	//@Scheduled(cron = "0 0 */5  * * ?")
 	 public void sendMinQtyProductsEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();

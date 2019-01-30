@@ -129,6 +129,9 @@ public class SendEmail extends EmailerGenerator{
 		try {
 			Map<String, Object> input = new HashMap<String, Object>(1);
 			input.put("prCount", dashboardCountService.findAll());
+			input.put("rfqCount", dashboardCountService.findRFQCount());
+			input.put("poCount", dashboardCountService.findPOCount());
+			input.put("grCount", dashboardCountService.findGoodsReceiptCount());
 			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {
@@ -387,12 +390,11 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				//mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
-				//logger.info("Sending notification for " + getUser().getUserEmail());
-				message.setTo("k.panchakarla@manuhindia.com");
+				message.setTo(getSEND_EMAIL());
 				message.setSubject("Products With Minimum Quantity");
 				message.setText(getsendMinQtyProductsEmailBody(), true);
 				
@@ -417,12 +419,11 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createDashboardMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				//mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				mimeMessage.addRecipients(Message.RecipientType.BCC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
-				//logger.info("Sending notification for " + getUser().getUserEmail());
-				message.setTo("k.panchakarla@manuhindia.com");
+				message.setTo(getSEND_EMAIL());
 				message.setSubject("Dashboard Email");
 				message.setText(getDashboardBody(), true);
 			}

@@ -410,9 +410,9 @@ text-align: left;
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Goods Receipt'}">
+										                           <c:if test="${ump.key eq 'Convert To GRE'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
 	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status != 'Invoiced'}">
 																		 
 														 <c:if test="${checkStatusGr ==true}">
@@ -431,7 +431,7 @@ text-align: left;
 												          <div class="col-sm-3 form-group has-feedback">
 												          
 												          <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Invoice'}">
+										                           <c:if test="${ump.key eq 'Convert To INV'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
 	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">

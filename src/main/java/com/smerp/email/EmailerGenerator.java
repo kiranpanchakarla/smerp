@@ -37,8 +37,17 @@ public abstract class EmailerGenerator implements Emailer {
 	@Value(value = "${brandName}")
 	private static String brandName;
 	
+	@Value("#{'${send.email}'.split(',')}")
+	private String SEND_EMAIL;
 	
-	
+
+	public String getSEND_EMAIL() {
+		return SEND_EMAIL;
+	}
+
+	public void setSEND_EMAIL(String sEND_EMAIL) {
+		SEND_EMAIL = sEND_EMAIL;
+	}
 
 	public String getBccMail() {
 		return bccMail;

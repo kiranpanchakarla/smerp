@@ -31,7 +31,7 @@ public class DepartmentController {
 		@GetMapping(value = "/list")
 		public String list(Model model) {
 			logger.info("Inside DesignationController List Method");
-			model.addAttribute("companyList", companyServices.findAll());
+			model.addAttribute("companyList", companyServices.findByIsActive());
 			model.addAttribute("departmentList",departmentService.findAll());
 			return "department/list";
 		}
@@ -47,7 +47,7 @@ public class DepartmentController {
 		public String create(Model model) {
 			logger.info("Inside DepartmentController create Method");
 			model.addAttribute("department", new Department());
-			model.addAttribute("companyList", companyServices.findAll());
+			model.addAttribute("companyList", companyServices.findByIsActive());
 			model.addAttribute("departmentList", departmentService.findAll());
 			return "department/create";
 		}
@@ -56,7 +56,7 @@ public class DepartmentController {
 		public String GetInfo(Model model, String departmentId) {
 			logger.info("Inside DepartmentController GetInfo Method");
 			model.addAttribute("department", departmentService.getInfo(Integer.parseInt(departmentId)));
-			model.addAttribute("companyList", companyServices.findAll());
+			model.addAttribute("companyList", companyServices.findByIsActive());
 			return "department/create";
 		}
 

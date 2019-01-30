@@ -438,7 +438,7 @@ text-align: left;
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">
-																			<i></i>Invoiced</form:button>
+																			<i></i>Generate Invoice</form:button>
 																	  </c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
@@ -493,7 +493,7 @@ $(".mySubButton").on('click', function() {
 		
 		
 $(".mySubButtonInv").on('click', function() {
-			alertify.confirm('Invoice','Are you Sure, Want to Convert Invoice!',
+			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice!',
 					function() {
 				    $('#form').attr('action', "${createInvoiceUrl}").submit();
 					}, function() {

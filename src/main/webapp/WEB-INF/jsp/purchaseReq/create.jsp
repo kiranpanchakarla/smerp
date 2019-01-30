@@ -449,6 +449,11 @@
 
     <script type="text/javascript">
 
+    var sizeplant = "${planMapSize}";
+    var scriptSelectPlant='';
+    if(sizeplant>1) {
+        scriptSelectPlant ='<option value="">select</option>';
+         }
     
     var recipientsArray = []; 
     
@@ -552,7 +557,7 @@
     			+ '<td>'
     			+'<div class="form-group">'
     			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-    			+'<option value="">select</option>'+
+    			+scriptSelectPlant+
     			<c:forEach items="${planMap}" var="planMap">
     			'<option value="${planMap.key}">${planMap.value}</option>'+
     			</c:forEach>

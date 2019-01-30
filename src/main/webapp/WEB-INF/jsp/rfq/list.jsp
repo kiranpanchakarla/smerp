@@ -70,7 +70,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">RFQ</li>
+														<li class="breadcrumb-item active">Request For Quotation</li>
 													</ol>
 												</div>
 											</div>

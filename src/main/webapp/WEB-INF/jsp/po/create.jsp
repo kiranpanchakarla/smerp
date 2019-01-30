@@ -821,7 +821,11 @@
 
 <script type="text/javascript">
 
-
+var sizeplant = "${planMapSize}";
+var scriptSelectPlant='';
+if(sizeplant>1) {
+    scriptSelectPlant ='<option value="">select</option>';
+     }
 var inc=0;
 var edit_addressCount=0;
 
@@ -955,7 +959,7 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="purchaseOrderlineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+'<option value="">select</option>'+
+			+scriptSelectPlant+
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>

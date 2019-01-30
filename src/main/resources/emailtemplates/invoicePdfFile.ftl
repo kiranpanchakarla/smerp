@@ -37,46 +37,46 @@
 
 
     <div style="z-index:1; width:100%; position: absolute;">
-    <#if gr??>
+    <#if inv??>
         <table style="width:100%">
                 <tr>
                 <td><strong>Name</strong></td>
-                <td>:<#if gr.vendor.name??>&nbsp;${gr.vendor.name}<#else>--</#if></td>
+                <td>:<#if inv.vendor.name??>&nbsp;${inv.vendor.name}<#else>--</#if></td>
                 <td><strong >Email Id</strong></td>
-                <td>:<#if gr.vendor.emailId??>&nbsp;${gr.vendor.emailId}<#else>-- </#if></td>
+                <td>:<#if inv.vendor.emailId??>&nbsp;${inv.vendor.emailId}<#else>-- </#if></td>
                  <td><strong >Contact Person</strong></td>
-                <td>:<#if gr.vendorContactDetails.contactName??>&nbsp;${gr.vendorContactDetails.contactName}<#else>--</#if> </td>
+                <td>:<#if inv.vendorContactDetails.contactName??>&nbsp;${inv.vendorContactDetails.contactName}<#else>--</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong>Pay To</strong></td>
-                <td>:<#if gr.vendorPayTypeAddress.city??>&nbsp;${gr.vendorPayTypeAddress.city}<#else>--</#if></td>
+                <td>:<#if inv.vendorPayTypeAddress.city??>&nbsp;${inv.vendorPayTypeAddress.city}<#else>--</#if></td>
                 <td><strong >Ship From</strong></td>
-                <td>:<#if gr.vendorShippingAddress.city??>&nbsp;${gr.vendorShippingAddress.city}<#else>--</#if></td>
+                <td>:<#if inv.vendorShippingAddress.city??>&nbsp;${inv.vendorShippingAddress.city}<#else>--</#if></td>
                 <td><strong>Doc No.</strong></td>
-                <td>:<#if gr.docNumber??>&nbsp;${gr.docNumber}<#else>--</#if></td>
+                <td>:<#if inv.docNumber??>&nbsp;${inv.docNumber}<#else>--</#if></td>
                 </tr>
                 
                 <tr>
                 <td><strong>Ref Doc No.</strong></td>
-                <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if></td>
+                <td>:<#if inv.referenceDocNumber??>&nbsp;${inv.referenceDocNumber}<#else>--</#if></td>
                 <td><strong >Posting Date</strong></td>
-                <td>:<#if gr.postingDate??>&nbsp;${gr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td>:<#if inv.postingDate??>&nbsp;${inv.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Doc Date</strong></td>
-                <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td>:<#if inv.documentDate??>&nbsp;${inv.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Require Date</strong></td>
-                <td>:<#if gr.requiredDate??>${gr.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td>:<#if inv.requiredDate??>${inv.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
                 </tr>
                 
              
             </table>
                 <br></br>
-                <#if gr.category??>
+                <#if inv.category??>
                  <#assign sno = 1/>
-               <#if gr.category = "Item"> 
+               <#if inv.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
@@ -93,37 +93,37 @@
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
-                <#list gr.goodsReceiptLineItems as goodsReclist>
+                <#list inv.inVoiceLineItems as invoiceList>
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.prodouctNumber??>&nbsp;${goodsReclist.prodouctNumber}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.description??>&nbsp;${goodsReclist.description}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.uom??>&nbsp;${goodsReclist.uom}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.sku??>&nbsp;${goodsReclist.sku}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.prodouctNumber??>&nbsp;${invoiceList.prodouctNumber}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.description??>&nbsp;${invoiceList.description}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.uom??>&nbsp;${invoiceList.uom}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.sku??>&nbsp;${invoiceList.sku}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.unitPrice??>&nbsp;${invoiceList.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
-                  <#if goodsReclist.taxCode??>
+                  <#if invoiceList.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
+                <#if (invoiceList.taxCode) == (key)>
                      <p> ${value}</p>
                      </#if>
                 </#list>
                   </#if>
                 </td>
-                <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
-                <td style="border: solid 1px ;"> <#if goodsReclist.productGroup??>&nbsp;${goodsReclist.productGroup}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.taxTotal??>&nbsp;${invoiceList.taxTotal}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.total??>&nbsp;${invoiceList.total}<#else>--</#if></td>
+                <td style="border: solid 1px ;"> <#if invoiceList.productGroup??>&nbsp;${invoiceList.productGroup}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (goodsReclist.warehouse) == (key)>
+                <#if (invoiceList.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
                 
                 </td>
-                <td style="border: solid 1px ;"><#if goodsReclist.hsn??>&nbsp;${goodsReclist.hsn}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.hsn??>&nbsp;${invoiceList.hsn}<#else>--</#if></td>
                 </tr>
                 </#list>
                 </table>
@@ -140,28 +140,28 @@
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 </tr>
-                <#list gr.goodsReceiptLineItems as goodsReclist>
+                <#list inv.inVoiceLineItems as invoiceList>
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.sacCode??>&nbsp;${goodsReclist.sacCode}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.description??>&nbsp;${goodsReclist.description}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.sacCode??>&nbsp;${invoiceList.sacCode}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.description??>&nbsp;${invoiceList.description}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.unitPrice??>&nbsp;${invoiceList.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
-               <#if goodsReclist.taxCode??>
+               <#if invoiceList.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
+                <#if (invoiceList.taxCode) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
                 </#if>
                 </td>
-                <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.taxTotal??>&nbsp;${invoiceList.taxTotal}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.total??>&nbsp;${invoiceList.total}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
-                <#if (goodsReclist.warehouse) == (key)>
+                <#if (invoiceList.warehouse) == (key)>
                      <p>&nbsp;${value}</p>
                      </#if>
                 </#list>
@@ -177,38 +177,38 @@
                 <td><strong>Shipping From :</strong></td>
                 <td><strong>Pay To :</strong></td>
                 <td><strong>Discount(%)</strong></td>
-                <td>:<#if gr.totalDiscount??>${gr.totalDiscount}<#else>--</#if></td>
+                <td>:<#if inv.totalDiscount??>${inv.totalDiscount}<#else>--</#if></td>
                 </tr>
                                                                                    
                 <tr>
-                <td><#if gr.vendorShippingAddress.addressName??>${gr.vendorShippingAddress.addressName},</#if></td>
-                <td><#if gr.vendorPayTypeAddress.addressName??>${gr.vendorPayTypeAddress.addressName}</#if></td>
+                <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName},</#if></td>
+                <td><#if inv.vendorPayTypeAddress.addressName??>${inv.vendorPayTypeAddress.addressName}</#if></td>
                 <td><strong>Total Before Discount</strong></td>
-                <td>:<#if gr.totalBeforeDisAmt??> ${gr.totalBeforeDisAmt}<#else> --</#if></td>
+                <td>:<#if inv.totalBeforeDisAmt??> ${inv.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.street??>${gr.vendorShippingAddress.street}, </#if></td>
-                 <td> <#if gr.vendorPayTypeAddress.street??>${gr.vendorPayTypeAddress.street},</#if></td>
+                <td><#if inv.vendorShippingAddress.street??>${inv.vendorShippingAddress.street}, </#if></td>
+                 <td> <#if inv.vendorPayTypeAddress.street??>${inv.vendorPayTypeAddress.street},</#if></td>
                  <td><strong>Freight</strong></td>
-                <td>:<#if gr.freight??> ${gr.freight} <#else>--</#if></td>
+                <td>:<#if inv.freight??> ${inv.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.city??>${gr.vendorShippingAddress.city},</#if> </td>
-                <td><#if gr.vendorPayTypeAddress.city??>${gr.vendorPayTypeAddress.city},</#if></td>
+                <td><#if inv.vendorShippingAddress.city??>${inv.vendorShippingAddress.city},</#if> </td>
+                <td><#if inv.vendorPayTypeAddress.city??>${inv.vendorPayTypeAddress.city},</#if></td>
                 <td><strong>Rounding</strong></td>
-                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
+                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.zipCode??>${gr.vendorShippingAddress.zipCode}, </#if></td>
-                <td> <#if gr.vendorPayTypeAddress.zipCode??>${gr.vendorPayTypeAddress.zipCode},</#if></td>
+                <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}, </#if></td>
+                <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode},</#if></td>
                 <td><strong>Tax Amount</strong></td>
-                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
+                <td>:<#if inv.taxAmt??> ${inv.taxAmt}<#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.country.name??>${gr.vendorShippingAddress.country.name}.</#if></td>
-                <td><#if gr.vendorPayTypeAddress.country.name??>${gr.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}.</#if></td>
+                <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}.</#if></td>
                 <td><strong>Total Payment Due</strong></td>
-                <td>:<#if gr.totalPayment??> ${gr.totalPayment}<#else>--</#if></td>
+                <td>:<#if inv.totalPayment??> ${inv.totalPayment}<#else>--</#if></td>
                 </tr>
             </table>
                  

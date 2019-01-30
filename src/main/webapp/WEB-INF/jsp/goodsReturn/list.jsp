@@ -60,7 +60,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">Goods Return List</li>
+														<li class="breadcrumb-item active">Goods Return</li>
 													</ol>
 												</div>
 											</div>

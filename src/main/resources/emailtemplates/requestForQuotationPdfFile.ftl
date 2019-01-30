@@ -76,7 +76,9 @@
                 <tr>
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
@@ -86,7 +88,9 @@
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if rfqlist.prodouctNumber??>&nbsp;${rfqlist.prodouctNumber}</#if></td>
+                <td style="border: solid 1px ;"><#if rfqlist.description??>&nbsp;${rfqlist.description}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.uom??>&nbsp;${rfqlist.uom}</#if></td>
+                <td style="border: solid 1px ;"><#if rfqlist.sku??>&nbsp;${rfqlist.sku}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.requiredQuantity??>&nbsp;${rfqlist.requiredQuantity}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.productGroup??>&nbsp;${rfqlist.productGroup}</#if></td>
                 <td style="border: solid 1px ;">

@@ -199,11 +199,12 @@
 														</form>
 
 														<div>
-															
-																<div class="row">
-												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												      <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
-										       </div>
+															<br></br>
+															 
+													<div class="row">
+												      <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												     
+										              <div class="col-sm-2 form-group has-feedback">
 																<c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Purchase Request'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
@@ -216,9 +217,9 @@
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-																
-																
-																
+																</div>
+														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>		
+														</div>		
 														</div>
 
 													</div>

@@ -451,9 +451,7 @@
 																																	class="form-control taxCode"
 																																	readonly="true"
 																																	path="goodsReceiptLineItems[${count}].taxCode">
-																																	<form:option value="" label="Select" />
-
-																																	<form:option value="${listLineItems.taxCode}"></form:option>
+																		 															<form:option value="${listLineItems.taxCode}"></form:option>
 
 																																</form:select>    
 																																  
@@ -1146,7 +1144,11 @@
 
 <script type="text/javascript">
 
-
+var sizeplant = "${planMapSize}";
+var scriptSelectPlant='';
+if(sizeplant>1) {
+    scriptSelectPlant ='<option value="">select</option>';
+     }
 var inc=0;
 var edit_addressCount=0;
 
@@ -1281,7 +1283,7 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="goodsReceiptLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+'<option value="">select</option>'+
+			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>

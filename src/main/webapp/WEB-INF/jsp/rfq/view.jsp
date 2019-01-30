@@ -322,11 +322,8 @@
 															<div>
 																	
 														<div class="row">
-												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
-										              </div>
-										              
-										              <c:forEach items="${sessionScope.umpmap}" var="ump">
+												          <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												           <div class="col-sm-2 form-group has-feedback">  <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'RFQ'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
@@ -338,9 +335,10 @@
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
-   									                            </c:forEach>
-
-																	
+   									                            </c:forEach></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+										              </div>
+										              
 																</div>
 														</div>
 													</div>

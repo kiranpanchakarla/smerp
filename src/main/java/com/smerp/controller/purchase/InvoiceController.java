@@ -238,8 +238,8 @@ public class InvoiceController {
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-	/*	path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,inv);*/
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForInvoice(pdfUploadedPath,inv);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

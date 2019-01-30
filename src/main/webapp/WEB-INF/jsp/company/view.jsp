@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -16,8 +15,12 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>"> --%>
 
 
-<link href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
+	rel="stylesheet" type="text/css" />
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> -->
 
 
@@ -30,120 +33,112 @@
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6">
-					 
-				</div>
-			</div>
-			<div class="content-body">
-				<!--/ project charts -->
-				<div class="row">
-					<div class="large-12 columns">
 
-							<div class="content-wrapper">
-								<div class="card-header"><div class="content-header row">
-									<div class="col-md-2">
-										<h2 class="content-header-title">Company</h2>
-										</div>
-										<div class="col-md-6">
-										<a class="btn btn-primary" href="<c:url value="/company/getInfo?companyId=${company.id}"/>">Edit</a>
-									</div>
-									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb"><%-- <c:url value="/user/dashboard"/> --%>
-												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Company</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-								</div>
-								<div>
-									<div class="content-body">
-										<!-- Basic Tables start -->
+       <div class="content-body">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="content-body">
+                            <!-- Basic form layout section start -->
+                            <c:url value="/company/save" var="createUrl" />
+                            <form:form method="POST"  action="${createUrl}" class="commentForm" modelAttribute="company" data-toggle="validator" role="form">
+                                <section id="basic-form-layouts">
+                                    <div class="row match-height">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 class="card-title" id="basic-layout-icons">Company</h2>
+                                                </div>
+                                                
+                                                <div class="card-body collapse in create-block">
+                                                    <div class="card-block">
+                                                        <form class="form">
+                                                            <div class="form-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Company Name</label>: ${company.name}
 
-										<div class="card">
-											 
+                                                                    </div>
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Company logo</label>: <img src="${filePath}" alt="Upload Image" id="output" width="100" height="70"> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Company Tagline</label>: ${company.companyTagLine}
+                                                                    </div>
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Email</label>: ${company.emailId}
+                                                                    </div>
+                                                                </div>
+                                                                 
+                                                                 <div class="row">
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>State</label>: ${company.states.name}
+                                                                    </div>
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Phone</label>: ${company.phoneNum}
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>City</label>: ${company.city}
+                                                                    </div>
+                                                                     
+                                                                </div>
+                                                                
+                                                                <%-- <div class="row">
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Plant</label>: ${user.plant}
+                                                                    </div>
+                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                        <label>Role</label>: ${}
+                                                                    </div>
+                                                                </div> --%>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body collapse in">
-                <div class="table-responsive">
-                    <!-- <table class="table table-bordered mb-0 view-table"></table> -->
-                    <table class="table table-bordered mb-0 fixed-width-table">
+                                                                
+                                                                
+                                                                <!--  -->
 
-                        <tr class="odd">
-                            <th>Company Name</th>
-                            <td>${company.name}</td>
-                        </tr>
-                        <tr class="even">
-                            <th >Company logo</th>
-                            <td><p><img  src="${filePath}" alt="See" id="output" width="100" height="70" /></p></td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Company Tagline</th>
-                            <td>${company.companyTagLine}</td>
-                        </tr>
-                        <tr class="even">
-                            <th>Email</th>
-                            <td>${company.emailId}</td>
-                        </tr>
-                        
-                        
-                         <tr class="odd">
-                            <th>State</th>
-                            <td>${company.states.name}</td>
-                        </tr>
-                        
-                        
-                         <tr class="even">
-                            <th>Phone</th>
-                            <td>${company.phoneNum}</td>
-                        </tr>
-                        
-                        
-                         <tr class="odd">
-                            <th>City</th>
-                            <td>${company.city}</td>
-                        </tr>
+                                                            </div>
 
-                    </table>
+                                                        </form>
+
+                                                        <div>
+                                                            <a href="#" onClick="goBack()" class="btn btn-primary">Back </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </section>
+                            </form:form>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
                 </div>
+                <!--/ project charts -->
+                <br>
             </div>
-        </div>
-    </div>
-   
-											
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										<div>
-										<a href="#" onclick="goBack()" class="btn btn-primary"
-											style="float: left;"> Back</a>
-									</div>
-										
-									</div>
-									<br>
-								</div>
-							</div>
-					</div>
-					</div>
-</div></div></div>
-				<footer class="footer footer-static footer-light navbar-border">
-  <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2018 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
-</footer>
+			
+		</div>
+	</div>
+	<footer class="footer footer-static footer-light navbar-border">
+		<p class="clearfix text-muted text-sm-center mb-0 px-2">
+			<span class="float-md-right d-xs-block d-md-inline-block">Copyright
+				&copy; 2018 <a href="#" target="_blank"
+				class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved.
+			</span>
+		</p>
+	</footer>
 
-<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 
 </body>
-	
+
 </html>
 

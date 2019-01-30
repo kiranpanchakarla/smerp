@@ -73,7 +73,7 @@
 													<div class="col-md-6">
 														<c:if test="${inv.id!=null}">
 															<h2 class="card-title" id="basic-layout-icons">Update
-																InVoice</h2>
+																Invoice</h2>
 															<form:input type="hidden" cssClass="form-control"
 																path="id" />
 														</c:if>

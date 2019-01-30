@@ -54,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">InVoice</h2>
+													<h2 class="card-title" id="basic-layout-icons">Invoice</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -140,7 +140,7 @@ text-align: left;
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item"><a class="nav-link active"
+																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>

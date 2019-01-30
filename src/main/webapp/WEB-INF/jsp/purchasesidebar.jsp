@@ -9,6 +9,7 @@
          <%-- <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li> --%>
          <%-- <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li> --%>
         </ul>
+          <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
       </li>
 			<c:forEach items="${sessionScope.umpmap}" var="ump">
 				<c:if test="${ump.key eq 'Purchase Request'}">
@@ -60,16 +61,29 @@
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 
+                 <c:if test="${ump.key eq 'Convert To GRE'  || ump.key eq 'Convert To INV' }">
+                   <c:if test="${oneTimeGoods  ==1}">
+					<li><a href="<c:url value ="/gr/approvedList"/>"><i
+							class="icon-cubes left left"></i><span class="menu_text">Convert GR To GRE/INV</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+							</li>
+					</c:if>
+					  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
+				</c:if>
+
+
+
+
 				<c:if test="${ump.key eq 'Goods Return'}">
 					<li><a href="<c:url value ="/gre/list"/>"><i
-							class="icon-android-cart left left"></i><span class="menu_text">Goods
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Goods
 								Return</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 				
-				<c:if test="${ump.key eq 'Goods Return'}">
+				<c:if test="${ump.key eq 'Invoice'}">
 					<li><a href="<c:url value ="/inv/list"/>"><i
-							class="icon-android-cart left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-moneybag left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 				

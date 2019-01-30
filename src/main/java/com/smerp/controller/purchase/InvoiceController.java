@@ -94,6 +94,7 @@ public class InvoiceController {
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
@@ -135,6 +136,7 @@ public class InvoiceController {
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("inv", inv);
 		return "inv/create";

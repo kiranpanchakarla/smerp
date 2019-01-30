@@ -431,7 +431,7 @@ text-align: left;
 												          <div class="col-sm-3 form-group has-feedback">
 												          
 												          <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'InVoice'}">
+										                           <c:if test="${ump.key eq 'Invoice'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
 	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">

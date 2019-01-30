@@ -261,7 +261,7 @@
 
 																	<ul class="nav nav-tabs" id="containerContainingTabs"
 																		role="tablist">
-																		<li class="nav-item"><a class="nav-link active"
+																		<li class="nav-item active"><a class="nav-link"
 																			id="home-tab" data-toggle="tab" href="#home"
 																			role="tab" aria-controls="home" aria-selected="true">Item
 																				Details</a></li>
@@ -934,7 +934,7 @@
 																			</c:if>
 																			<!-- Approve -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'InVoice'}">
+																				<c:if test="${ump.key eq 'Invoice'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -948,7 +948,7 @@
 																			</c:forEach>
 																			<!-- Reject -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'InVoice'}">
+																				<c:if test="${ump.key eq 'Invoice'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -1002,7 +1002,11 @@
 
 
 <script type="text/javascript">
-
+var sizeplant = "${planMapSize}";
+var scriptSelectPlant='';
+if(sizeplant>1) {
+    scriptSelectPlant ='<option value="">select</option>';
+     }
 
 var inc=0;
 var edit_addressCount=0;
@@ -1138,7 +1142,7 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="inVoiceLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+'<option value="">select</option>'+
+			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>
@@ -1401,7 +1405,8 @@ $(document).ready(function(){
               		$('#shippingAddressTable').html("");
               		vendorShippingAddress($('#vendorAddress').val());
               		
-              	  $('.rm_address').removeClass('has-error has-danger');
+              	  $('#vendorPayToAddress').blur();
+                  $('#vendorAddress').blur();
               	  
                 	
                	 },
@@ -1461,7 +1466,7 @@ $(document).ready(function(){
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
-		        	 ($(this).parents('tr').find('td').find('select').val('')); 
+		          ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
 		        
 		        }
         }else {
@@ -1530,7 +1535,7 @@ $(document).ready(function(){
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
-             	 	 
+             	 	 $(itemParentRow).find('.description').blur();
              	 	 
                 	}
                 	
@@ -1586,7 +1591,7 @@ $(document).ready(function(){
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
  		        	 $(this).val('')
  		        	 ($(this).parents('tr').find('td').find('input').val(''));
- 		        	 ($(this).parents('tr').find('td').find('select').val(''));
+ 		        	 ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
  		        
  		        }
              }
@@ -1651,6 +1656,7 @@ $(document).ready(function(){
                      //$('.productGroup').val(productgroup);
 
                      $(itemParentRow).find(".productGroup").val(productgroup);
+                     $(itemParentRow).find('.prodouctNumber').blur();
        
                  },
                  error: function(e) {
@@ -1851,13 +1857,20 @@ $(document).ready(function(){
 		
 function removeData(index){
 	//alert("ff"+index);
-	setCalculationAmt(index);
-	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-	}else{
-		$('table#itemTbl tr.multTot'+index).remove();
+    setCalculationAmt(index);
+	
+	var rowCount = $('#itemTbl tr').length-2;
+	if(rowCount==0){
+		$('#itemTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
 	}
-	$("#form").validator("update");
+		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+			$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+		}else{
+			$('table#itemTbl tr.multTot'+index).remove();
+		}
+		$("#form").validator("update");
 }
 
 
@@ -1876,6 +1889,13 @@ function removeData1(index){
 function removeData2(index){
 	//alert("ff"+index);
 	setCalculationAmt(index);
+	var rowCount = $('#edit_item_serviceTbl tr').length-2;
+	if(rowCount==0){
+		$('#edit_item_serviceTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
+	}
+	
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	$("#form").validator("update");
 }
@@ -1889,7 +1909,7 @@ function removeData2(index){
 
 $("#items_radio").click(function() {
 	//alert("item");
-	 alertify.confirm("InVoice",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
+	 alertify.confirm("Invoice",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
 		 $("#serviceTbl").hide();
 		 $("#itemTbl").show();
 		 $("#edit_item_serviceTbl").hide();
@@ -1932,7 +1952,7 @@ $("#items_radio").click(function() {
 
 $("#service_radio").click(function() {
 	//alert("service");
-	 alertify.confirm("InVoice",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
+	 alertify.confirm("Invoice",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1998,7 +2018,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Ready to Convert InVoice to Goods Return');
+				 alertify.success('Invoice Successfully');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');
@@ -2015,7 +2035,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 		}
     
 	if(rowCount == 0){
-		alertify.alert("InVoice","Please Select Atleast One Item");
+		alertify.alert("Invoice","Please Select Atleast One Item");
 		 return false;
 	}else{
 		return true;
@@ -2030,7 +2050,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("InVoice","Please Select Atleast One  Service");
+ 		alertify.alert("Invoice","Please Select Atleast One  Service");
  		 return false;
  	}else{
  		return true;
@@ -2065,13 +2085,13 @@ function goBack() {
 	
 
 
-/* $(document).on("change", ".taxCode", function() {
+ $(document).on("change", ".taxCode", function() {
 
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
-	alert("unitPrice--->" +unitPrice);
+	//alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
 	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);
@@ -2101,7 +2121,7 @@ function goBack() {
   	 $("#freight").val("");
  	}
   	 
-	}); */
+	}); 
 	
 	
 	
@@ -2145,7 +2165,7 @@ function goBack() {
 	}); */
 	
 
-$(document).on("change", ".requiredQuantity", function() {
+$(document).on("keyup", ".requiredQuantity", function() {
 	
 	var itemParentRow = $(this).parents(".multTot");
 	 
@@ -2227,7 +2247,7 @@ $(document).on("change", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("InVoice Discount","Please Enter Valid Discount!");
+		alertify.alert("Invoice Discount","Please Enter Valid Discount!");
 		 return false;
 	}
 	
@@ -2325,7 +2345,7 @@ $('#freight').keyup(function() {
 		
 		
 		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("InVoice","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+			alertify.alert("Invoice","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
 			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}

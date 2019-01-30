@@ -1546,7 +1546,8 @@ $(document).ready(function(){
               		$('#shippingAddressTable').html("");
               		vendorShippingAddress($('#vendorAddress').val());
               		
-              	  $('.rm_address').removeClass('has-error has-danger');
+              	  $('#vendorPayToAddress').blur();
+                  $('#vendorAddress').blur();
               	  
                 	
                	 },
@@ -1606,7 +1607,7 @@ $(document).ready(function(){
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
-		        	 ($(this).parents('tr').find('td').find('select').val('')); 
+		          ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
 		        
 		        }
         }else {
@@ -1675,7 +1676,7 @@ $(document).ready(function(){
              	 	//$('.productGroup').val(productgroup);
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
-             	 	 
+             	 	 $(itemParentRow).find('.description').blur();
              	 	 
                 	}
                 	
@@ -1731,7 +1732,7 @@ $(document).ready(function(){
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
  		        	 $(this).val('')
  		        	 ($(this).parents('tr').find('td').find('input').val(''));
- 		        	 ($(this).parents('tr').find('td').find('select').val(''));
+ 		        	 ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
  		        
  		        }
              }
@@ -1796,6 +1797,7 @@ $(document).ready(function(){
                      //$('.productGroup').val(productgroup);
 
                      $(itemParentRow).find(".productGroup").val(productgroup);
+                     $(itemParentRow).find('.prodouctNumber').blur();
        
                  },
                  error: function(e) {
@@ -1996,13 +1998,20 @@ $(document).ready(function(){
 		
 function removeData(index){
 	//alert("ff"+index);
-	setCalculationAmt(index);
-	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-	}else{
-		$('table#itemTbl tr.multTot'+index).remove();
+setCalculationAmt(index);
+	
+	var rowCount = $('#itemTbl tr').length-2;
+	if(rowCount==0){
+		$('#itemTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
 	}
-	$("#form").validator("update");
+		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+			$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+		}else{
+			$('table#itemTbl tr.multTot'+index).remove();
+		}
+		$("#form").validator("update");
 }
 
 
@@ -2021,8 +2030,17 @@ function removeData1(index){
 function removeData2(index){
 	//alert("ff"+index);
 	setCalculationAmt(index);
+	var rowCount = $('#edit_item_serviceTbl tr').length-2;
+	if(rowCount==0){
+		$('#edit_item_serviceTbl input[type="text"]').val('');
+		$('.warehouse').prop('selectedIndex',0);
+		return false;
+	}
+	
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	$("#form").validator("update");
+	
+	
 }
 
 
@@ -2210,13 +2228,13 @@ function goBack() {
 	
 
 
-/* $(document).on("change", ".taxCode", function() {
+ $(document).on("change", ".taxCode", function() {
 
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
-	alert("unitPrice--->" +unitPrice);
+	////alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
 	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);
@@ -2246,7 +2264,7 @@ function goBack() {
   	 $("#freight").val("");
  	}
   	 
-	}); */
+	}); 
 	
 	
 	
@@ -2290,7 +2308,7 @@ function goBack() {
 	}); */
 	
 
-$(document).on("change", ".requiredQuantity", function() {
+$(document).on("keyup", ".requiredQuantity", function() {
 	
 	var itemParentRow = $(this).parents(".multTot");
 	 

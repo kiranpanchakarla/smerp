@@ -449,6 +449,11 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public List<GoodsReceipt> findByIsActive() {
 		return goodsReceiptRepository.findByIsActive(true);
 	}
+	
+	@Override
+	public List<GoodsReceipt> grApprovedList() {
+		return goodsReceiptRepository.grApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),EnumStatusUpdate.GOODS_RETURN.getStatus());
+	}
 
 	@Override
 	public GoodsReceipt findById(int id) {

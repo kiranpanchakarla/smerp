@@ -980,8 +980,10 @@ $(document).ready(function(){
               		$('#shippingAddressTable').html("");
               		vendorShippingAddress($('#vendorAddress').val());
               		
-              	  $('.rm_address').removeClass('has-error has-danger');
-              	  $("#form").validator("update");
+              	  $('#vendorPayToAddress').blur();
+                 $('#vendorAddress').blur();
+              	  
+              	 // $("#form").validator("update");
               	  
                 	
                	 },
@@ -1055,7 +1057,7 @@ $(document).ready(function(){
 		        	   alertify.alert("Request For Quotation","You have already entered the Product Number "+$(this).val());
 		        	/*  $(this).val('') */
 		          ($(this).parents('tr').find('td').find('input').val(''));
-		        	 ($(this).parents('tr').find('td').find('select').val('')); 
+		          ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
 		        
 		        }
         }else {
@@ -1124,7 +1126,7 @@ $(document).ready(function(){
              	 	
              	 	 $(itemParentRow).find(".productGroup").val(productgroup);
              	 	 $(itemParentRow).find(".unitPrice").val(obj.productCost);
-             	 	 
+             	 	 $(itemParentRow).find('.description').blur();
                 	}
                 	
                	 },
@@ -1178,7 +1180,7 @@ $(document).ready(function(){
      		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
      		        	 $(this).val('')
      		        	 ($(this).parents('tr').find('td').find('input').val(''));
-     		        	 ($(this).parents('tr').find('td').find('select').val(''));
+     		        	 ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
      		        
      		        }
                  }
@@ -1242,7 +1244,7 @@ $(document).ready(function(){
 
                          $(itemParentRow).find(".productGroup").val(productgroup);
                          $(itemParentRow).find(".unitPrice").val(obj.productCost);
-                        
+                         $(itemParentRow).find('.prodouctNumber').blur();
            
                      },
                      error: function(e) {
@@ -1441,27 +1443,19 @@ $(document).ready(function(){
 		
 		
 function removeData(index){
-	//alert("ff"+index);
+	
 	var rowCount = $('#itemTbl tr').length-2;
 	if(rowCount==0){
-	alertify.confirm("Request For Quotation",'You will loose your Data, Do you want to Continue?', function(){
-		
-		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
-		$("#form").validator("update");
-		}, function(){
-		    alertify.error('Cancelled');
-		 });
+		return false;
+	}
+		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+			$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 		}else{
-			if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-				$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-			}else{
-				$('table#itemTbl tr.multTot'+index).remove();
-			}
-			
-			$("#form").validator("update");
-		  }
+			$('table#itemTbl tr.multTot'+index).remove();
+		}
+		$("#form").validator("update");
 	}
 	
 	
@@ -1477,18 +1471,15 @@ function removeData1(index){
 
 
 function removeData2(index){
-	//alert("ff"+index);
-	var rowCount = $('#edit_item_serviceTbl tr').length-2;
-	if(rowCount==0){
-		alertify.alert("Request For Quotation","Can't Delete this Row");
-		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
-		$('#edit_item_serviceTbl input[type="text"]').val('');
-		$('.warehouse').prop('selectedIndex',0);
-		return false;
-	}
-	
-	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-	$("#form").validator("update");
+		var rowCount = $('#edit_item_serviceTbl tr').length-2;
+    	if(rowCount==0){
+    		$('#edit_item_serviceTbl input[type="text"]').val('');
+    		$('.warehouse').prop('selectedIndex',0);
+    		return false;
+    	}
+    	
+    	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+    	$("#form").validator("update");
 }
 
 

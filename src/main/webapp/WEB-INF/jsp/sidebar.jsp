@@ -109,6 +109,8 @@
       
       <li> 
      <c:set var="oneTime" value="${oneTime + 1}" scope="page" /> 
+     
+      <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
     
       
        <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -160,14 +162,22 @@
 							<li class="has_sub"><a href="<c:url value ="/gr/list"/>">Goods
 									Receipt</a></li>
 						</c:if>
+						
+						<c:if test="${ump.key eq 'Convert To GRE' || ump.key eq 'Convert To INV' }">
+							  <c:if test="${oneTimeGoods  ==1}">
+							<li class="has_sub"><a
+								href="<c:url value ="/gr/approvedList"/>">Convert GR To GRE/INV</a></li>
+								</c:if>
+								  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
+						</c:if>
 
 						<c:if test="${ump.key eq 'Goods Return'}">
 							<li class="has_sub"><a href="<c:url value ="/gre/list"/>">Goods
 									Return</a></li>
 						</c:if>
 						
-						<c:if test="${ump.key eq 'InVoice'}">
-							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">InVoice
+						<c:if test="${ump.key eq 'Invoice'}">
+							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">Invoice
 									</a></li>
 						</c:if>
 						

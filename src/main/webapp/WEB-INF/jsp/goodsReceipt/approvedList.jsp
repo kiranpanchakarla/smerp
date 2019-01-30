@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -46,25 +47,9 @@
 									<div class="card">
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
-												<div class="col-md-3">
-													<h2 class="content-header-title">Invoice</h2>
+												<div class="col-md-8">
+													<h2 class="content-header-title">Convert GR To Goods Return/Invoice</h2>
 												</div>
-												<div class="col-md-5">
-													<c:forEach items="${sessionScope.umpmap}" var="ump">
-														<c:if test="${ump.key eq 'Invoice'}">
-															<c:set var="permissions" scope="session"
-																value="${ump.value}" />
-															<c:if
-																test="${fn:containsIgnoreCase(permissions,'create')}">
-																<a class="btn btn-primary"
-																	href="<c:url value="/inv/create"/>">Create</a>
-															</c:if>
-														</c:if>
-													</c:forEach>
-
-												</div>
-													
-
 												
 												<div class="col-md-4">
 													<ol class="breadcrumb">
@@ -72,7 +57,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">Invoice</li>
+														<li class="breadcrumb-item active">Convert GR To GRE/INV</li>
 													</ol>
 												</div>
 											</div>
@@ -93,7 +78,7 @@
 																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Invoice Status</th>
+																<th>GR Status</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -105,21 +90,21 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<td>${list.createdAt}</td>
-																	<td>${list.updatedAt}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
-																					<c:if test="${ump.key eq 'Invoice'}">
+																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"
 																							value="${ump.value}" />
 																						<c:choose>
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'update')}">
 																								<a class="btn btn-edit"
-																									href="<c:url value="/inv/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+																									href="<c:url value="/gr/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
 																									class="icon-edit left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -131,7 +116,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'delete')}">
 																								<a class="btn btn-delete" href="#"
-																									onclick="deleteById('<c:out value="${list.id}"/>','/inv/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
+																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
 																									class="icon-bin left"></i></a>
 																							</c:when>
 																							<c:otherwise>
@@ -149,18 +134,11 @@
 																				<a class="btn btn-disable"><i
 																					class="icon-bin left"></i></a>
 																			</c:otherwise>
-																		</c:choose> <c:forEach items="${sessionScope.umpmap}" var="ump">
-																			<c:if test="${ump.key eq 'Invoice'}">
-																				<c:set var="permissions" scope="session"
-																					value="${ump.value}" />
-																				<c:if
-																					test="${fn:containsIgnoreCase(permissions,'view')}">
+																		</c:choose> 
 																					<a class="btn btn-view"
-																						href="<c:url value="/inv/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
+																						href="<c:url value="/gr/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																						class="icon-eye3 left"></i></a>
-																				</c:if>
-																			</c:if>
-																		</c:forEach></td>
+																				</td>
 																</tr>
 															</c:forEach>
 														</tbody>

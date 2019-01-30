@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
@@ -217,6 +218,15 @@ public class GoodsReceiptController {
 		logger.info("list"+list);
 		model.addAttribute("list", list);
 		return "goodsReceipt/list";
+	}
+	
+	
+	@GetMapping(value = "/approvedList")
+	public String approvedList(Model model) {
+		List<GoodsReceipt> list = goodsReceiptService.grApprovedList();
+		logger.info("goodsReceiptService list-->" + list);
+		model.addAttribute("list", list);
+		return "/goodsReceipt/approvedList";
 	}
 
 	public Map<Integer, Object> plantMap() {

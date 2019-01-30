@@ -591,7 +591,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		Integer grQunatity = getListGRQuantityCount(goodsReceipt);
 		Integer greQunatity = getListGREQunatityCount(listGoodsReturn);
 		
-		if(grQunatity > greQunatity)
+		if(grQunatity > 0)
 			return true;
 		else
 			return false;

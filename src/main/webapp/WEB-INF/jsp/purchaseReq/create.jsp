@@ -253,7 +253,7 @@
 																														<form:input type="text"
 																															path="purchaseRequestLists[${count}].description" required="true"
 																															value="${listpurchaseRequestLists.description}"
-																															class="form-control"></form:input></div></td>
+																															class="form-control description"></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
@@ -806,7 +806,7 @@
     		        	   alertify.alert("Purchase Request","You have already entered the Product Number "+($(this).val()));
     		        	 $(this).val('')
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
-    		        	 ($(this).parents('tr').find('td').find('select').val(''));
+    		        	 ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
     		        
     		        }
                 } else {
@@ -872,6 +872,10 @@
                         //$('.productGroup').val(productgroup);
 
                         $(itemParentRow).find(".productGroup").val(productgroup);
+                        
+                        $(itemParentRow).find('.description').blur();
+                        
+
 
                     },
                     error: function(e) {
@@ -915,7 +919,7 @@
     		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
     		        	 $(this).val('')
     		        	 ($(this).parents('tr').find('td').find('input').val(''));
-    		        	 ($(this).parents('tr').find('td').find('select').val(''));
+    		        	 ($(this).parents('tr').find('td').find('.warehouse').prop('selectedIndex',0));
     		        
     		        }
                 }
@@ -982,6 +986,7 @@
 
                         $(itemParentRow).find(".productGroup").val(productgroup);
                         
+                        $(itemParentRow).find('.prodouctNumber').blur();
                      //   $("#form").validator("update");
           
                     },
@@ -1089,28 +1094,16 @@
             	
             	var rowCount = $('#itemTbl tr').length-2;
             	if(rowCount==0){
-            		alertify.confirm("Purchase Request",'You will loose your Data, Do you want to Continue?', function(){
-            		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
             		$('#itemTbl input[type="text"]').val('');
             		$('.warehouse').prop('selectedIndex',0);
-            		$("#form").validator("update");
-            		}, function(){
-            		    alertify.error('Cancelled');
-            		 });
-            	}else {
-            		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-                		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-                		
-                	}else{
-                		$('table#itemTbl tr.multTot'+index).remove();
-                		var id = "prodouctNumber"+index;
-                		/* alert(id); */
-                		recipientsArray.splice($.inArray(  $("#"+id).val(''), recipientsArray),1);
-                		//recipientsArray.splice($.inArray($( "#"+id).val(''), recipientsArray),1);
-                	}
-                	$("#form").validator("update");
+            		return false;
             	}
-            	
+            		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+            			$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+            		}else{
+            			$('table#itemTbl tr.multTot'+index).remove();
+            		}
+            		$("#form").validator("update");
             }
 
 
@@ -1129,8 +1122,6 @@
             	//alert("ff"+index);
             	var rowCount = $('#edit_item_serviceTbl tr').length-2;
             	if(rowCount==0){
-            		alertify.alert("Purchase Request","Can't Delete this Row");
-            		//($('table#itemTbl').parents('tr').find('td').find('input').val(''));
             		$('#edit_item_serviceTbl input[type="text"]').val('');
             		$('.warehouse').prop('selectedIndex',0);
             		return false;

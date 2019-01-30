@@ -442,7 +442,6 @@
 																																		class="form-control taxCode"
 																																		style="width:;" readonly="true"
 																																		path="goodsReturnLineItems[${count}].taxCode">
-																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select>
 																																</div></td>
@@ -647,7 +646,7 @@
 																																	<form:select class="form-control"
 																																		style="width:;" readonly="true"
 																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
+																																		
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>
@@ -748,7 +747,6 @@
 																																	<form:select class="form-control"
 																																		style="width:;" required="true"
 																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>

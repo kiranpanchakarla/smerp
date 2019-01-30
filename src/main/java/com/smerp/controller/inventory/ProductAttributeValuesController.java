@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.smerp.model.admin.Department;
 import com.smerp.model.inventory.ProductAttributeValues;
+import com.smerp.model.inventory.ProductAttributes;
 import com.smerp.service.inventory.ProductAttributeValuesService;
 import com.smerp.service.inventory.ProductAttributesService;
 
@@ -69,5 +73,16 @@ private static final Logger logger = LogManager.getLogger(ProductAttributeValues
 		model.addAttribute("productattributesvaluesObj", attributeValuesService.getInfo(Integer.parseInt(productattributesvaluesId)));
 		return "inventory/productattributevalues/view";
 		
+	}
+	
+	@GetMapping(value = "/isValidProductAttribValue")
+	@ResponseBody
+	public boolean isValidProductAttribValue(String name,String productAttributeId) {
+		
+		Integer productAttribId = Integer.parseInt(productAttributeId);
+
+		boolean valid = attributeValuesService.isValid(name, productAttribId);
+
+		return valid;
 	}
 }

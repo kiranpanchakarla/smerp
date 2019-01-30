@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.inventory.ProductType;
+import com.smerp.model.inventory.UomCategory;
 import com.smerp.service.inventory.ProductTypeService;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -72,4 +74,16 @@ public class ProductTypeController {
 		model.addAttribute("producttypeObj", productTypeService.getInfo(Integer.parseInt(producttypeId)));
 		return "inventory/producttype/view";
 	}
+	
+	@GetMapping(value = "/isValidProductGroupDescription")
+	@ResponseBody
+	public boolean isValidProductGroupDescription(String name) {
+		ProductType productType = productTypeService.findByName(name);
+		if (productType != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

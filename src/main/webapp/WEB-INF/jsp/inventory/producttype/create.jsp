@@ -84,6 +84,7 @@
 																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Description' path="description"
 																			value="${producttypeObj.description}" required="true"
+																			onchange="isValidName('description','/producttype/isValidProductGroupDescription','1_productNo','Product Group Description Alredy Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter Description')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div style="color: red;"

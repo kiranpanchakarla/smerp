@@ -15,6 +15,6 @@ public interface ProductAttributeValuesService {
 	
 	void delete(int id);
 	
-	
+	boolean isValid(String name,Integer productAttribId); 
 	
 }

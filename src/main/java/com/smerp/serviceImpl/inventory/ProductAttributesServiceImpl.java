@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smerp.model.inventory.ProductAttributes;
+import com.smerp.model.inventory.UomCategory;
 import com.smerp.repository.inventory.ProductAttributesRepository;
 import com.smerp.service.inventory.ProductAttributesService;
 @Service
@@ -41,6 +42,11 @@ public class ProductAttributesServiceImpl implements ProductAttributesService {
 	public void delete(int id) {
 		productAttributesRepository.deleteById(id);
 
+	}
+	
+	@Override
+	public ProductAttributes findByName(String name) {
+		return productAttributesRepository.findByName(name);
 	}
 
 }

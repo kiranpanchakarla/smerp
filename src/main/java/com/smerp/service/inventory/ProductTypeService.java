@@ -18,4 +18,6 @@ public interface ProductTypeService {
 	
 	ProductType findLastCodeNumber();
 	
+	ProductType findByName(String description);
+	
 }

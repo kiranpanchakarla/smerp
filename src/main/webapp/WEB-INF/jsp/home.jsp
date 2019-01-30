@@ -278,7 +278,7 @@
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${rfqCount.cancelled}</span>Cancelled </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.approved}</span> Approved</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${rfqCount.rejected}</span> Rejected </li>
-                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li>
+              <%--   <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li> --%>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToPO}</span>Converted to PO</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${rfqCount.total}</span> Total Records </li>
               </ul>

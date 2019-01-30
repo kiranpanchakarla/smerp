@@ -118,7 +118,7 @@ $(document).ready(function(){
 															<div class="form-body">
 
 																<ul class="nav nav-tabs" id="myTab" role="tablist">
-																	<li class="nav-item"><a class="nav-link active"
+																	<li class="nav-item active"><a class="nav-link"
 																		id="general-tab" data-toggle="tab" href="#general"
 																		role="tab" aria-controls="general"
 																		aria-selected="true">General</a></li>

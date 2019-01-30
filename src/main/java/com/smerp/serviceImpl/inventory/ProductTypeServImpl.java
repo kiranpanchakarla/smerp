@@ -51,4 +51,9 @@ public class ProductTypeServImpl implements ProductTypeService {
 		return productTypeRepository.findTopByOrderByIdDesc();
 	}
 	
+	@Override
+	public ProductType findByName(String description) {
+		return productTypeRepository.findByName(description);
+	}
+	
 }

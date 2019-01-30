@@ -70,7 +70,7 @@
 
 																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Attributes' path="attributeName"
-																			required="true"
+																			required="true" onchange="isValidName('attributeName','/productattributes/isValidProductAttributesName','1_attributeName','Product Attribute Alredy Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter productattributes Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  

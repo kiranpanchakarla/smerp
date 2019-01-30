@@ -81,7 +81,7 @@
 
 																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Attributes Values' path="attributeValue"
-																			 required="true"
+																			 required="true" onchange="isValidProductAttrbValue('attributeValue','/productattributesvalues/isValidProductAttribValue','1_errorContainer','Product Attribute Value Already Exists in this Product Attribute')"
 																			oninvalid="this.setCustomValidity('Please Enter uom Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
@@ -166,6 +166,32 @@
 		</footer>
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+		<script type="text/javascript">
+		
+		 function isValidProductAttrbValue(nameId,url,displayId,msg){
+		      var parts = url.split('/');
+		      var answer = parts[parts.length - 1];
+		      
+		      var dataString  ="name="+$('#'+nameId).val()+"&productAttributeId="+ $('#productAttributes').val();
+		      $.ajax({
+		             type:"GET",
+		            /*  url: url, */
+		              url: answer,
+		             data : dataString,
+		             success: function(result){
+		                 if(result==true){
+		                     alertify.warning(msg);
+		                     $('#'+nameId).val('');
+		                     $('#'+displayId).html(msg);
+		                 }else {
+		                     $('#'+displayId).html('');
+		                 }
+		            }});
+		      
+		 }
+		</script>
+		
+		
 </body>
 
 </html>

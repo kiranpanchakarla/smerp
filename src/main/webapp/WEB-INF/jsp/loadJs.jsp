@@ -130,14 +130,13 @@
              data : dataString,
              success: function(result){
                  if(result==true){
-                     alertify.success(msg);
+                     alertify.warning(msg);
                      $('#'+nameId).val('');
                      $('#'+displayId).html(msg);
                  }else {
                      $('#'+displayId).html('');
                  }
             }});
-      
  }
 
   function goBack() {

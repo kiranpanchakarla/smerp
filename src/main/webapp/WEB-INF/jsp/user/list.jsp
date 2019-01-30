@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -95,7 +96,7 @@
 																	<td>${list.desigination.desigination}</td> 
 																	<td>${list.department.name}</td>
 																	<td>${list.userEmail}</td>
-																	<td>${list.createdAt}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'User'}">

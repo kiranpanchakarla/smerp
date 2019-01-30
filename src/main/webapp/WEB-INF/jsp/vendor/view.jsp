@@ -23,9 +23,9 @@
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
-<script
+<!-- <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
-	type="text/javascript"></script>
+	type="text/javascript"></script> -->
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
@@ -86,7 +86,7 @@ $(document).ready(function(){
 
 
 																<ul class="nav nav-tabs" id="myTab" role="tablist">
-																	<li class="nav-item"><a class="nav-link active"
+																	<li class="nav-item active"><a class="nav-link"
 																		id="home-tab" data-toggle="tab" href="#home"
 																		role="tab" aria-controls="home" aria-selected="true">General</a>
 																	</li>
@@ -310,11 +310,11 @@ $(document).ready(function(){
 	</div>
 	</div>
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
+	<c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
 	<script type="text/javascript">
 		function goBack() {
 			window.history.back();
 		}
 	</script>
 </body>
-
 </html>

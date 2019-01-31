@@ -22,7 +22,6 @@
 <link href="<c:url value="/resources/css/datapickercss/bootstrap-datepicker.min.css"/>" rel="stylesheet" type="text/css" />
 
 <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script> 	
-
 	 <style>
         .ui-autocomplete { 
             cursor:pointer; 

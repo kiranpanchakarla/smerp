@@ -11,7 +11,7 @@ import com.smerp.model.master.AuditModel;
 
 @Entity
 @Table(name = "tbl_purchase_order_lineitems")
-public class PurchaseOrderLineItems  extends AuditModel {
+public class PurchaseOrderLineItems extends AuditModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,15 +46,16 @@ public class PurchaseOrderLineItems  extends AuditModel {
 	private String sacCode;
 
 	@Column(name = "unit_price")
-	private Integer unitPrice;
+	private Double unitPrice;
 
 	@Column(name = "tax_code")
-	private Integer taxCode;
-	
-	
-	
+	private Double taxCode;
+
+	@Column(name = "sku_quantity")
+	private String sku;
+
 	private transient String taxTotal;
-	
+
 	private transient String total;
 
 	public Integer getId() {
@@ -136,25 +137,25 @@ public class PurchaseOrderLineItems  extends AuditModel {
 	public void setSacCode(String sacCode) {
 		this.sacCode = sacCode;
 	}
-	
-	public Integer getUnitPrice() {
+
+	public Double getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Integer unitPrice) {
+	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
-	public Integer getTaxCode() {
+	public Double getTaxCode() {
 		return taxCode;
-	}
-
-	public void setTaxCode(Integer taxCode) {
-		this.taxCode = taxCode;
 	}
 
 	public String getTaxTotal() {
 		return taxTotal;
+	}
+
+	public void setTaxCode(Double taxCode) {
+		this.taxCode = taxCode;
 	}
 
 	public void setTaxTotal(String taxTotal) {
@@ -169,15 +170,20 @@ public class PurchaseOrderLineItems  extends AuditModel {
 		this.total = total;
 	}
 
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
 	@Override
 	public String toString() {
 		return "PurchaseOrderLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
 	}
 
-	
-	
-	
 }

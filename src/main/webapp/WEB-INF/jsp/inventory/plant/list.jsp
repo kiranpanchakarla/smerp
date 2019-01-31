@@ -47,7 +47,7 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-3">
-													<h2 class="content-header-title">Plant</h2>
+													<h2 class="content-header-title">Warehouse</h2>
 												</div>
 												<div class="col-md-5">
 													
@@ -67,7 +67,7 @@
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Administration</a>
 														</li>
-														<li class="breadcrumb-item active">Plant</li>
+														<li class="breadcrumb-item active">Warehouse</li>
 													</ol>
 												</div>
 											</div>
@@ -83,7 +83,7 @@
 														<thead>
 															<tr>
 																<th >S.no</th>
-																<th >Plant Name</th>
+																<th >Warehouse Name</th>
 																<th >Actions</th>
 															</tr>
 														</thead>

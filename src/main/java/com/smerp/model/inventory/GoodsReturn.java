@@ -88,8 +88,12 @@ public class GoodsReturn extends AuditModel {
 	@Column(name = "total_payment")
 	private Double totalPayment;
 
+	 
+
 	@Column(name = "freight")
 	private Integer freight;
+	
+	 
 
 	private transient String amtRounding;
 
@@ -291,5 +295,9 @@ public class GoodsReturn extends AuditModel {
 				+ ", grId=" + grId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
 				+ totalPayment + ", freight=" + freight + "]";
 	}
+
+ 
+
+	 
 
 }

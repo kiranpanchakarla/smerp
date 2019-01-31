@@ -73,9 +73,10 @@
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
-                <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
+                <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN</strong></td>
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
@@ -84,6 +85,7 @@
                 <td style="border: solid 1px ;"><#if prlist.prodouctNumber??>&nbsp;${prlist.prodouctNumber}</#if></td>
                 <td style="border: solid 1px ;"><#if prlist.description??>&nbsp;${prlist.description}</#if></td>
                 <td style="border: solid 1px ;"><#if prlist.uom??> &nbsp;${prlist.uom}</#if></td>
+                <td style="border: solid 1px ;"><#if prlist.sku??> &nbsp;${prlist.sku}</#if></td>
                 <td style="border: solid 1px ;"><#if prlist.requiredQuantity??>&nbsp;${prlist.requiredQuantity}</#if></td>
                 <td style="border: solid 1px ;"><#if prlist.productGroup??>&nbsp;${prlist.productGroup}</#if></td>
                 <td style="border: solid 1px ;">
@@ -130,7 +132,7 @@
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
-                                             Copyright &copy; 2018. All rights Reserved.
+                                             Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>
               

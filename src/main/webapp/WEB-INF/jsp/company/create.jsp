@@ -12,7 +12,6 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
@@ -22,7 +21,7 @@
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -67,7 +66,7 @@
 															<div class="row">
 																<div class="col-sm-4 form-group">
 																	<label>Name</label>
-																	<form:input type="text" cssClass="form-control"
+																	<form:input type="text" cssClass="form-control camelCase"
 																		placeholder='Company Name' path="name"
 																		onchange="isValidName('name','/company/isValidCompanyName','1_errorContainer','Company Name Already Exists')"
 																		required="true"
@@ -78,7 +77,7 @@
 
 																<div class="col-sm-4 form-group">
 																	<label>Tagline</label>
-																	<form:input type="text" cssClass="form-control"
+																	<form:input type="text" cssClass="form-control camelCase"
 																		placeholder='Company TagLine' path="companyTagLine"
 																		oninvalid="this.setCustomValidity('Please Enter Company TagLine')"
 																		oninput="setCustomValidity('')" />
@@ -213,7 +212,7 @@
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Street-1</label>
-																				<form:input type="text" cssClass="form-control"
+																				<form:input type="text" cssClass="form-control camelCase"
 																					placeholder='Street1' path="street1"
 																					required="true"
 																					oninvalid="this.setCustomValidity('Please Enter Street1')"
@@ -222,7 +221,7 @@
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Street-2</label>
-																				<form:input type="text" cssClass="form-control"
+																				<form:input type="text" cssClass="form-control camelCase"
 																					placeholder='Street2' path="street2"
 																					oninvalid="this.setCustomValidity('Please Enter Street2')"
 																					oninput="setCustomValidity('')" />
@@ -231,7 +230,7 @@
 
 																			<div class="col-sm-4 form-group">
 																				<label>City</label>
-																				<form:input type="text" cssClass="form-control"
+																				<form:input type="text" cssClass="form-control camelCase"
 																					placeholder='City' path="city" required="true"
 																					oninvalid="this.setCustomValidity('Please Enter City')"
 																					oninput="setCustomValidity('')" />

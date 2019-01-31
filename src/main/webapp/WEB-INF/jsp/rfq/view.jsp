@@ -126,21 +126,10 @@
 																					value="${rfq.requiredDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<div class="input-group">
-																					<div class="inventory-list">
-																						<form:radiobutton cssClass="form-control"
-																							value="Item" path="category" name="category"
-																							id="items_radio" />
-																						<span class="radio-list">Item</span>
-																					</div>
-																					<div class="inventory-list">
-																						<form:radiobutton cssClass="form-control"
-																							value="Services" path="category" name="category"
-																							id="service_radio" />
-																						<span class="radio-list">Services</span>
-																					</div>
-																					<div class="help-block with-errors"></div>
-																				</div>
+																				<label>Type</label>: Product
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Status</label>: ${rfq.status}
 																			</div>
 																		</div>
 
@@ -155,7 +144,7 @@
 
 															<ul class="nav nav-tabs" id="containerContainingTabs"
 																role="tablist">
-																<li class="nav-item"><a class="nav-link active"
+																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>
@@ -182,7 +171,7 @@
 
 																						<!--1 multiply Dynamically Load   -->
 																						<c:if test="${not empty lineItems}">
-																							<table class="table table-bordered table-striped"
+																							<table class="table table-bordered table-striped item-service-table"
 																								id="edit_item_serviceTbl">
 
 																								<thead>
@@ -192,7 +181,9 @@
 																										<c:if test="${rfq.category=='Item'}">
 																											<th>S.no</th> 
 																											<th>Product Name</th>
+																											<th>Description</th>
 																											<th>UOM</th>
+																											<th>SKU</th>
 																											<th>Quantity</th>
 																											<th>Product Group</th>
 																											<th>Warehouse</th>
@@ -227,8 +218,12 @@
 
 																											<c:if test="${rfq.category=='Item'}">
 																												<td>${listLineItems.prodouctNumber}</td>
+																												
+																												<td>${listLineItems.description}</td>
 
 																												<td>${listLineItems.uom}</td>
+																												
+																												<td>${listLineItems.sku}</td>
 
 																												<td>${listLineItems.requiredQuantity}</td>
 
@@ -327,11 +322,8 @@
 															<div>
 																	
 														<div class="row">
-												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
-										              </div>
-										              
-										              <c:forEach items="${sessionScope.umpmap}" var="ump">
+												          <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												           <div class="col-sm-2 form-group has-feedback">  <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'RFQ'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
@@ -343,9 +335,10 @@
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
-   									                            </c:forEach>
-
-																	
+   									                            </c:forEach></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+										              </div>
+										              
 																</div>
 														</div>
 													</div>

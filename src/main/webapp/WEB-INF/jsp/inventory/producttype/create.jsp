@@ -15,7 +15,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -65,12 +65,12 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Product Name</label>
+																	<label for="timesheetinput1">Product Group</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Product Name' path="productName"
-																			value="${producttypeObj.productName}" required="true"
+																			value="${producttypeObj.productName}" required="true" readonly="true"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
@@ -81,9 +81,10 @@
 																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Description</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Description' path="description"
 																			value="${producttypeObj.description}" required="true"
+																			onchange="isValidName('description','/producttype/isValidProductGroupDescription','1_productNo','Product Group Description Alredy Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter Description')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div style="color: red;"
@@ -103,13 +104,13 @@
 																</a> <input type="hidden" name="${_csrf.parameterName}"
 																	value="${_csrf.token}" />
 
-																<c:if test="${producttype.productName!=null}">
+																<c:if test="${producttype.description!=null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Update
 																	</button>
 																</c:if>
 
-																<c:if test="${producttype.productName==null}">
+																<c:if test="${producttype.description==null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Save
 																	</button>
@@ -157,7 +158,7 @@
 		<footer class="footer footer-static footer-light navbar-border">
 			<p class="clearfix text-muted text-sm-center mb-0 px-2">
 				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
+					&copy; 2019 <a href="#" target="_blank"
 					class="text-bold-800 grey darken-2">SMERP </a>, All rights
 					reserved.
 				</span>

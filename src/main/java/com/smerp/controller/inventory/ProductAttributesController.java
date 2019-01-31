@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.smerp.model.inventory.ProductAttributes;
+import com.smerp.model.inventory.UomCategory;
 import com.smerp.service.inventory.ProductAttributesService;
 
 @Controller
@@ -62,5 +65,16 @@ public class ProductAttributesController {
 		logger.info("Inside ProductAttributesController view Method");
 		model.addAttribute("productattributesObj", attributesService.getInfo(Integer.parseInt(productattributesId)));
 		return "inventory/productattributes/view";
+	}
+	
+	@GetMapping(value = "/isValidProductAttributesName")
+	@ResponseBody
+	public boolean isValidProductAttributesName(String name) {
+		ProductAttributes productAttributes = attributesService.findByName(name);
+		if (productAttributes != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -25,7 +25,7 @@
     <div class="content-body"><!-- stats -->
       <div class="row">
       <div class="col-xl-3 col-lg-6 col-xs-12">
-          <div class="card">
+          <div class="card dashboard-card">
           <a href="<c:url value="/company/list"/>">
             <div class="card-body">
               <div class="card-block color-box1">
@@ -45,7 +45,7 @@
         <div >
         <div class="col-xl-3 col-lg-6 col-xs-12">
          <a href="<c:url value="/product/list"/>">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
               <div class="card-block color-box2">
                 <div class="media">
@@ -63,7 +63,7 @@
         
         <div class="col-xl-3 col-lg-6 col-xs-12" >
         <a href="<c:url value="/user/list"/>">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
               <div class="card-block color-box3">
                 <div class="media">
@@ -82,7 +82,7 @@
        
         <div class="col-xl-3 col-lg-6 col-xs-12">
        <a href="<c:url value="/vendor/list"/>">
-          <div class="card">
+          <div class="card dashboard-card">
             <div class="card-body">
               <div class="card-block color-box4">
                 <div class="media">
@@ -278,7 +278,7 @@
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${rfqCount.cancelled}</span>Cancelled </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.approved}</span> Approved</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${rfqCount.rejected}</span> Rejected </li>
-                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li>
+              <%--   <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li> --%>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToPO}</span>Converted to PO</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${rfqCount.total}</span> Total Records </li>
               </ul>

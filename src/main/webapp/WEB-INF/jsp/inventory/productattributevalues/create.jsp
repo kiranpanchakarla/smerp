@@ -15,7 +15,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
  --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -79,9 +79,9 @@
 																	<label for="timesheetinput1">Value</label>
 																	<div>
 
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Product Attributes Values' path="attributeValue"
-																			 required="true"
+																			 required="true" onchange="isValidProductAttrbValue('attributeValue','/productattributesvalues/isValidProductAttribValue','1_errorContainer','Product Attribute Value Already Exists in this Product Attribute')"
 																			oninvalid="this.setCustomValidity('Please Enter uom Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
@@ -158,7 +158,7 @@
 		<footer class="footer footer-static footer-light navbar-border">
 			<p class="clearfix text-muted text-sm-center mb-0 px-2">
 				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
+					&copy; 2019 <a href="#" target="_blank"
 					class="text-bold-800 grey darken-2">SMERP </a>, All rights
 					reserved.
 				</span>
@@ -166,6 +166,32 @@
 		</footer>
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
+		<script type="text/javascript">
+		
+		 function isValidProductAttrbValue(nameId,url,displayId,msg){
+		      var parts = url.split('/');
+		      var answer = parts[parts.length - 1];
+		      
+		      var dataString  ="name="+$('#'+nameId).val()+"&productAttributeId="+ $('#productAttributes').val();
+		      $.ajax({
+		             type:"GET",
+		            /*  url: url, */
+		              url: answer,
+		             data : dataString,
+		             success: function(result){
+		                 if(result==true){
+		                     alertify.warning(msg);
+		                     $('#'+nameId).val('');
+		                     $('#'+displayId).html(msg);
+		                 }else {
+		                     $('#'+displayId).html('');
+		                 }
+		            }});
+		      
+		 }
+		</script>
+		
+		
 </body>
 
 </html>

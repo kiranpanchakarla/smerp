@@ -111,7 +111,9 @@ public class PurchaseRequestController {
 		model.addAttribute("user", user);
 		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		//gets the users first and last name
 		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
@@ -182,8 +184,9 @@ public class PurchaseRequestController {
 		model.addAttribute("user", user);
 		model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
-		//model.addAttribute("planMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
 		

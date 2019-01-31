@@ -12,7 +12,21 @@ public enum EnumStatusUpdate {
 	REJECTED("Rejected"),
 	PARTIALLY_RECEIVED("Partially_Received"),
 	GOODS_RETURN("Goods_Return"),
-	CLOSED("Closed");
+	INVOICE("Invoiced"),
+	CLOSED("Closed"),
+	
+	
+	
+	PR("PR"),
+	RFQ("RFQ"),
+	PO("PO"),
+	GR("GR"),
+	GRE("GRE"),
+	
+	P("P"),
+	V("V"),
+	PG("PG"),
+	PGP("PGP");
 	
 
 	

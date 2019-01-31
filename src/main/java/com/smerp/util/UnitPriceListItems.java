@@ -2,11 +2,11 @@ package com.smerp.util;
 
 public class UnitPriceListItems {
 
-	public static Double getTaxAmt(Integer quantity,Integer unitPrice,Integer taxCode) {
+	public static Double getTaxAmt(Integer quantity,double unitPrice,double taxCode) {
 		return (double) ((quantity * unitPrice) * taxCode / 100);
 	}
 
-	public static Double getTotalAmt(Integer quantity,Integer unitPrice, Integer taxCode) {
+	public static Double getTotalAmt(Integer quantity,double unitPrice, double taxCode) {
 		Double totalValue = (double) ((quantity * unitPrice) + ((quantity * unitPrice) * taxCode /100));
 		return totalValue;
 	}

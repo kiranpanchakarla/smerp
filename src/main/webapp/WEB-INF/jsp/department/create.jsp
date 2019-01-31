@@ -14,6 +14,7 @@
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  	
+ <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 	
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -76,11 +77,11 @@
 																<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Name</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text"  cssClass="form-control camelCase" 
 																			placeholder='Department Name' path="name"
-																			 required="true" onchange="isValidName('name','/department/isValidDepartmentName','1_errorContainer','Department Name Already Exists in this Company')"
+																			 required="true" onchange="isValidDepartmentName('name','/department/isValidDepartmentName','1_errorContainer','Department Name Already Exists in this Company')"
 																			oninvalid="this.setCustomValidity('Please Enter Country Name')"
-																			oninput="setCustomValidity('')" />
+																			oninput="setCustomValidity('')"  />
 																		<!-- <div  
 																			class="help-block with-errors"></div>
 																		  -->
@@ -158,7 +159,7 @@
 		<footer class="footer footer-static footer-light navbar-border">
 			<p class="clearfix text-muted text-sm-center mb-0 px-2">
 				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
+					&copy; 2019 <a href="#" target="_blank"
 					class="text-bold-800 grey darken-2">SMERP </a>, All rights
 					reserved.
 				</span>
@@ -167,13 +168,10 @@
 
 		<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 		<script type="text/javascript">
+		
 		 function isValidDepartmentName(nameId,url,displayId,msg){
-		      
-		      
 		      var parts = url.split('/');
-		     /*  alert(parts); */
 		      var answer = parts[parts.length - 1];
-		    /*   alert(answer); */
 		      
 		      var dataString  ="name="+$('#'+nameId).val()+"&companyId="+ $('#company').val();
 		      $.ajax({
@@ -183,7 +181,7 @@
 		             data : dataString,
 		             success: function(result){
 		                 if(result==true){
-		                     alertify.success(msg);
+		                     alertify.warning(msg);
 		                     $('#'+nameId).val('');
 		                     $('#'+displayId).html(msg);
 		                 }else {

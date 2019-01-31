@@ -69,7 +69,9 @@
                 <tr>
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
@@ -79,7 +81,9 @@
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if rfqlist.prodouctNumber??>&nbsp;${rfqlist.prodouctNumber}</#if></td>
+                <td style="border: solid 1px ;"><#if rfqlist.description??>&nbsp;${rfqlist.description}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.uom??>&nbsp;${rfqlist.uom}</#if></td>
+                <td style="border: solid 1px ;"><#if rfqlist.sku??>&nbsp;${rfqlist.sku}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.requiredQuantity??>&nbsp;${rfqlist.requiredQuantity}</#if></td>
                 <td style="border: solid 1px ;"><#if rfqlist.productGroup??>&nbsp;${rfqlist.productGroup}</#if></td>
                 <td style="border: solid 1px ;">
@@ -159,7 +163,7 @@
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
-                                             Copyright &copy; 2018. All rights Reserved.
+                                             Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>
               

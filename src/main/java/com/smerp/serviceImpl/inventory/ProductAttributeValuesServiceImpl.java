@@ -39,5 +39,26 @@ public class ProductAttributeValuesServiceImpl implements ProductAttributeValues
 	public void delete(int id) {
 		attributesValueRepository.deleteById(id);
 	}
-
+	
+	@Override
+	public boolean isValid(String name, Integer productAttributeId) {
+		boolean isValid = false;
+		List<ProductAttributeValues> productAttributeValues = attributesValueRepository.findByName(name);
+		
+	       int falg=0;
+			for(int j=0; j<productAttributeValues.size();j++) {
+				
+				ProductAttributeValues pAttribvalue =  productAttributeValues.get(j);
+				
+				if(pAttribvalue.getProductAttributes().getId().equals(productAttributeId)) {
+					falg++;
+				}
+				if(falg>=1) {
+					isValid = true;
+				}
+			}
+			 
+		return isValid;
+	}
+	
 }

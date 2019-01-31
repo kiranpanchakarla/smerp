@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.admin.Vendor;
 import com.smerp.model.inventory.ProductType;
 import com.smerp.repository.inventory.ProductTypeRepository;
 import com.smerp.service.inventory.ProductTypeService;
@@ -18,7 +19,7 @@ public class ProductTypeServImpl implements ProductTypeService {
 	@Override
 	public List<ProductType> findAll() {
 		
-		return productTypeRepository.findAll();
+		return productTypeRepository.findAllByOrderByIdAsc();
 	}
 
 	@Override
@@ -44,4 +45,15 @@ public class ProductTypeServImpl implements ProductTypeService {
 		return productTypeRepository.findById(id);
 	} 
 
+	
+	@Override
+	public ProductType findLastCodeNumber() {
+		return productTypeRepository.findTopByOrderByIdDesc();
+	}
+	
+	@Override
+	public ProductType findByName(String description) {
+		return productTypeRepository.findByName(description);
+	}
+	
 }

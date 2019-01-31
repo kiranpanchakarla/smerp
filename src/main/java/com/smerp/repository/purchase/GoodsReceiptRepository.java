@@ -20,6 +20,9 @@ public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Int
 	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status = :status")
 	List<GoodsReceipt> findByApproveListPoId(int id ,String status);
 	
+	@Query("SELECT r FROM GoodsReceipt r WHERE status = :status or status= :gStatus")
+	List<GoodsReceipt> grApprovedList(String status,String gStatus);
+	
 	GoodsReceipt findByPoId(int id);
 
 }

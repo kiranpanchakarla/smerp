@@ -105,7 +105,15 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			logger.info("Type Not Matched:" + goodsReturn.getStatusType());
 			break;
 		}
-
+		List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
+		if (listItems != null) {
+			for (int i = 0; i < listItems.size(); i++) {
+				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
+					listItems.remove(i);
+				}
+			}
+			goodsReturn.setGoodsReturnLineItems(listItems);
+		}
 		if (goodsReturn.getId() != null) { // delete List Of Items.
 			GoodsReturn goodsReturnObj = goodsReturnRepository
 					.findById(goodsReturn.getId()).get();
@@ -117,15 +125,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			
 			
 			if(goodsReturn.getGrId()==null) {  // if RfqId null remove list items 
-			List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
-			if (listItems != null) {
-				for (int i = 0; i < listItems.size(); i++) {
-					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
-						listItems.remove(i);
-					}
-				}
-				goodsReturn.setGoodsReturnLineItems(listItems);
-			}
+			
 			
 			}else {
 				 logger.info("Goods Return Data -->" +goodsReturn);
@@ -249,6 +249,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					line.setProductGroup(grItms.get(i).getProductGroup());
 					line.setDescription(grItms.get(i).getDescription());
 					line.setHsn(grItms.get(i).getHsn());
+					line.setSku(grItms.get(i).getSku());
 					
 				/*	if(poItms.get(i).getProdouctNumber()!=null) {
 						 greQunatity = getListGoodsProductCount(listGoodsReturn,  poItms.get(i).getProdouctNumber());
@@ -262,6 +263,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
+					line.setSku(grItms.get(i).getSku());
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
@@ -589,7 +591,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		Integer grQunatity = getListGRQuantityCount(goodsReceipt);
 		Integer greQunatity = getListGREQunatityCount(listGoodsReturn);
 		
-		if(grQunatity > greQunatity)
+		if(grQunatity > 0)
 			return true;
 		else
 			return false;

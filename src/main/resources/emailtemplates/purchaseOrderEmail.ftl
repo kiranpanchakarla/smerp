@@ -68,12 +68,14 @@
                <#if po.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
-                <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
+                <td style="border: solid 1px ;"><strong >Tax %</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
@@ -84,7 +86,9 @@
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if polist.prodouctNumber??>&nbsp;${polist.prodouctNumber}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if polist.description??>&nbsp;${polist.description}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.uom??>&nbsp;${polist.uom}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if polist.sku??>&nbsp;${polist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.requiredQuantity??>&nbsp;${polist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.unitPrice??>&nbsp;${polist.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
@@ -206,7 +210,7 @@
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
-                                             Copyright &copy; 2018. All rights Reserved.
+                                             Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>
               

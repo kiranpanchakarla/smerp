@@ -27,11 +27,13 @@ import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
+import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
 
 import freemarker.template.TemplateException;
@@ -59,7 +61,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	private static String modulePO;
 
-	@Value(value = "${module.rfq}")
+	@Value(value = "${module.po}")
 	public void setPO(String prop) {
 		this.modulePO = prop;
 	}
@@ -78,6 +80,12 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		this.moduleGRet = prop;
 	}
 	
+	private static String moduleInv;
+
+	@Value(value = "${module.inv}")
+	public void setInv(String prop) {
+		this.moduleInv = prop;
+	}
 	@Autowired
 	HTMLToPDFGenerator hTMLToPDFGenerator;
 	
@@ -98,6 +106,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
+	
+	@Autowired
+	InVoiceService invoiceService;
 	
 	@Autowired
 	GoodsReturnService goodsReturnService;
@@ -281,6 +292,40 @@ public String OfflineHtmlStringToPdfForGoodsReturn(String pdfFilePath,GoodsRetur
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("gr", goodsReturn);
 		input.put("moduleName", moduleGRet);
+		logger.info("plantMap-->" + purchaseOrderController.plantMap());
+		input.put("plantMap", purchaseOrderController.plantMap());
+		input.put("taxCodeMap", purchaseOrderController.taxCode());
+		input.put("user", getUser());
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		getTemplate().process(input, out);
+		ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocumentFromString(out.toString());
+		renderer.layout();
+		renderer.createPDF(os);
+		os.flush();
+		os.close();
+		return file.getAbsolutePath();
+	}
+
+public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoice) throws TemplateException, IOException, DocumentException {
+	
+	invoice = invoiceService.getListAmount(invoice);
+		
+		File sourceFolder = null;
+			sourceFolder = new File(downloadUtil.getDownloadPath());
+		if (!sourceFolder.exists()) {
+			sourceFolder.mkdirs();
+		}
+		File file = null;
+		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		file = new File(sourceFolder + File.separator + "Invoice" + fileStr + ".pdf");
+		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
+		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Invoice);
+		Writer out = new StringWriter();
+		Map<String, Object> input = new HashMap<String, Object>(1);
+		input.put("contextPath", RequestContext.get().getContextPath());
+		input.put("inv", invoice);
+		input.put("moduleName", moduleInv);
 		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());

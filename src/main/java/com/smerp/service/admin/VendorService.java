@@ -23,4 +23,6 @@ public interface VendorService {
 	Vendor findByCode(String vendorCode);
 
 	Vendor findById(int i);
+	
+	Vendor findLastCodeNumber();
 }

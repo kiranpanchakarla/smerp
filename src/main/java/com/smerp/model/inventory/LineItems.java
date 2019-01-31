@@ -47,12 +47,32 @@ public class LineItems extends AuditModel {
 	@Column(name = "warehouse")
 	private Integer warehouse;
 
+	@Column(name = "sku_quantity")
+	private String sku;
 	
+	@Column(name = "unit_price")
+	private Double unitPrice;
 	
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
 	@Column(name="hsn")
     private String hsn;
     
-    @Column(name="sac_code")
+    public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	@Column(name="sac_code")
     private String sacCode;
 
 	public String getUom() {
@@ -141,10 +161,13 @@ public class LineItems extends AuditModel {
 	public String toString() {
 		return "LineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
-				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + "]";
+				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", sku=" + sku + ", unitPrice="
+				+ unitPrice + ", hsn=" + hsn + ", sacCode=" + sacCode + "]";
 	}
 
+	 
+
+	
 	
 
 	

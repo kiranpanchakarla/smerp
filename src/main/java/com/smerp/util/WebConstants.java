@@ -21,4 +21,10 @@ public class WebConstants {
 	public final static String Email_Goods_Return = "goodsReturnEmail.ftl";
 	
 	public final static String Email_Dashboard = "dashboardEmail.ftl";
+	
+	public final static String Email_MinQtyProducts = "minQtyEmail.ftl";
+	
+public final static String offline_Invoice = "invoicePdfFile.ftl";
+	
+	public final static String Email_Invoice = "invoiceEmail.ftl";
 }

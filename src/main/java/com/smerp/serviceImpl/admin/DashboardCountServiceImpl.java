@@ -1,6 +1,7 @@
 package com.smerp.serviceImpl.admin;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.DashboardCount;
+import com.smerp.model.inventory.MinimumQuantityList;
 import com.smerp.service.admin.DashboardCountService;
 
 @Repository
@@ -180,6 +182,53 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	     
 	     logger.info("Goods Receipt Count--------->"+dashboardCount); 
 		return dashboardCount;
+	}
+
+	@Override
+	public List<MinimumQuantityList> minProductQtyList() {
+		String qtysql= "with grWise as(select gol.product_number as grProduct,gol.warehouse as grWarehouse, sum(gol.required_quantity) as receivedQuantity\r\n" + 
+				"from tbl_goods_receipt_lineitems as gol join  tbl_goods_receipt as gr  on gr.id =gol.gr_id  where  gol.product_number!='' and  gr.status in \r\n" + 
+				" ('Approved','Goods_Return')\r\n" + 
+				"group by gol.product_number,gol.warehouse),\r\n" + 
+				"\r\n" + 
+				"\r\n" + 
+				"productWise as (select products.product_no as productNumber,products.minimum as minQty,products.description as productName from tbl_inventory_product as products\r\n" + 
+				" where products.is_delete = true),\r\n" + 
+				"\r\n" + 
+				"warehouseWise as (select plant.plant_name as warehouse, plant.plant_id as warehouseId from tbl_admin_plant as plant),\r\n" + 
+				"\r\n" + 
+				"qtyWise as (Select productWise.productNumber as productNo,productWise.productName as productName,COALESCE(warehouseWise.warehouse,'N/A') as warehouse,\r\n" + 
+				"COALESCE(productWise.minQty,0)as minQty,COALESCE(grWise.receivedQuantity,0)as InStock from productWise \r\n" + 
+				"left outer join grWise on grWise.grProduct = productWise.productNumber \r\n" + 
+				"left outer join warehouseWise on grWise.grWarehouse = warehouseWise.warehouseId)\r\n" + 
+				"\r\n" + 
+				"select qtyWise.productNo,qtyWise.productName,qtyWise.warehouse,qtyWise.minQty, qtyWise.inStock from qtyWise \r\n" + 
+				"where qtyWise.inStock < qtyWise.minQty order by qtyWise.productNo";
+		
+		Query query1 = entityManager.createNativeQuery(qtysql);
+		 
+		logger.info("Product ordered ----> " + query1);
+		logger.info("Product ordered SQL ----> " + qtysql);
+		
+		//List<Object[]>	list1 = query1.getResultList();
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+		
+		List<MinimumQuantityList> productList = new ArrayList<>();
+		
+		 for(Object[] tuple : arrayList) {
+			 MinimumQuantityList prolist = new MinimumQuantityList();
+			 
+			 prolist.setProductNumber(tuple[0].toString());
+			 prolist.setProductName(tuple[1].toString());
+			 prolist.setWarehouse(tuple[2].toString());
+			 prolist.setMinQty(tuple[3] == null ? 0 : ((Integer) tuple[3]).intValue());
+			 prolist.setInStock(tuple[4] == null ? 0 : ((BigInteger) tuple[4]).intValue());
+			 productList.add(prolist);
+		 }
+		
+		return productList;
 	}
 
 }

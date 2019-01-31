@@ -11,7 +11,10 @@ import javax.transaction.Transactional.TxType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+
+import com.smerp.model.admin.User;
 
 
 @Repository
@@ -42,6 +45,9 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 	
 	
 	
+	public User getUser() {
+		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
 	
 	
 }

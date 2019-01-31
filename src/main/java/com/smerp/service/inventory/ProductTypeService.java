@@ -16,4 +16,8 @@ public interface ProductTypeService {
 	
 	ProductType getInfo(int id);
 	
+	ProductType findLastCodeNumber();
+	
+	ProductType findByName(String description);
+	
 }

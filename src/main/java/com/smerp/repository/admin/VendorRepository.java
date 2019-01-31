@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.Vendor;
+import com.smerp.model.inventory.GoodsReceipt;
 
 @Repository
 public interface VendorRepository extends JpaRepository<Vendor, Integer> {
@@ -25,5 +26,8 @@ public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 	
 	@Query("SELECT v FROM Vendor v WHERE LOWER(v.vendorCode) = LOWER(:vendorCode)")
 	Vendor findByCode(String vendorCode);
+	
+	
+	Vendor findTopByOrderByIdDesc();
 	
 }

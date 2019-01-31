@@ -30,5 +30,7 @@ public interface GoodsReceiptService {
 	
 	String setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
 	
+	List<GoodsReceipt> grApprovedList();
+	
 
 }

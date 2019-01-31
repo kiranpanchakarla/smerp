@@ -9,69 +9,91 @@
          <%-- <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li> --%>
          <%-- <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li> --%>
         </ul>
+          <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
       </li>
-       <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Purchase Request'}">
-       <li><a href="<c:url value ="/purchaseReq/list"/>"><i class="icon-shuffle left"></i><span class="menu_text">Purchase Request</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-        <%-- <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value ="/company/list"/>">Companies</a></li>
-         <li class="has_sub"><a href="<c:url value ="/user/list"/>">Users</a></li>
-          <li class="has_sub"><a href="<c:url value ="/vendor/create"/>">Vendor</a></li>
-        </ul> --%>
-      </li>
-      </c:if>
-      </c:forEach>
-      
-      <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Convert To RFQ'}">
-       <li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i class="icon-cubes left left"></i><span class="menu_text">Convert PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-        </c:if>
-       </c:forEach>
-      
-       <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'RFQ'}">
-       <li><a href="<c:url value ="/rfq/list"/>"><i class="icon-record left"></i><span class="menu_text">Request for Quotation</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-       
-       </c:if>
-       </c:forEach>
-        
-       
-       <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'Convert To PO'}">
-		         <li><a href="<c:url value ="/rfq/approvedList"/>"><i class="icon-cubes left"></i><span class="menu_text">Convert RFQ To PO</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-         </c:if>
-         </c:forEach>
-       
-        <c:forEach items="${sessionScope.umpmap}" var="ump">
-			     <c:if test="${ump.key eq 'PurchaseOrder'}">
-                  <li><a href="<c:url value ="/po/list"/>"><i class="icon-cube left left"></i><span class="menu_text">Purchase Order</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-         </c:if>
-         </c:forEach>
-           
-           <c:forEach items="${sessionScope.umpmap}" var="ump">
-			   <c:if test="${ump.key eq 'Convert To GR'}">
-            <li><a href="<c:url value ="/po/approvedList"/>"><i class="icon-cubes left left"></i><span class="menu_text">Convert PO To GR</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-             </c:if>
-           </c:forEach>
-           
-           <c:forEach items="${sessionScope.umpmap}" var="ump">
-			   <c:if test="${ump.key eq 'Goods Receipt'}">
-                 <li><a href="<c:url value ="/gr/list"/>"><i class="icon-android-cart left left"></i><span class="menu_text">Goods Receipt</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-             </c:if>
-           </c:forEach>
-           
-           
-            <c:forEach items="${sessionScope.umpmap}" var="ump">
-			   <c:if test="${ump.key eq 'Goods Return'}">
-                 <li><a href="<c:url value ="/gre/list"/>"><i class="icon-android-cart left left"></i><span class="menu_text">Goods Return</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
-              </c:if>
-           </c:forEach>
-           
-           
-                
-         
-       
-        <%-- <ul class="sub_menu">
+			<c:forEach items="${sessionScope.umpmap}" var="ump">
+				<c:if test="${ump.key eq 'Purchase Request'}">
+					<li><a href="<c:url value ="/purchaseReq/list"/>"><i
+							class="icon-shuffle left"></i><span class="menu_text">Purchase
+								Request</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a></li>
+				</c:if>
+
+				<c:if test="${ump.key eq 'Convert To RFQ'}">
+					<li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i
+							class="icon-cubes left left"></i><span class="menu_text">Convert
+								PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+				<c:if test="${ump.key eq 'RFQ'}">
+					<li><a href="<c:url value ="/rfq/list"/>"><i
+							class="icon-record left"></i><span class="menu_text">Request
+								for Quotation</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+				<c:if test="${ump.key eq 'Convert To PO'}">
+					<li><a href="<c:url value ="/rfq/approvedList"/>"><i
+							class="icon-cubes left"></i><span class="menu_text">Convert
+								RFQ To PO</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+				<c:if test="${ump.key eq 'PurchaseOrder'}">
+					<li><a href="<c:url value ="/po/list"/>"><i
+							class="icon-cube left left"></i><span class="menu_text">Purchase
+								Order</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+				<c:if test="${ump.key eq 'Convert To GR'}">
+					<li><a href="<c:url value ="/po/approvedList"/>"><i
+							class="icon-cubes left left"></i><span class="menu_text">Convert
+								PO To GR</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+				<c:if test="${ump.key eq 'Goods Receipt'}">
+					<li><a href="<c:url value ="/gr/list"/>"><i
+							class="icon-android-cart left left"></i><span class="menu_text">Goods
+								Receipt</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+
+                 <c:if test="${ump.key eq 'Convert To GRE'  || ump.key eq 'Convert To INV' }">
+                   <c:if test="${oneTimeGoods  ==1}">
+					<li><a href="<c:url value ="/gr/approvedList"/>"><i
+							class="icon-cubes left left"></i><span class="menu_text">Convert GR To GRE/INV</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+							</li>
+					</c:if>
+					  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
+				</c:if>
+
+
+
+
+				<c:if test="${ump.key eq 'Goods Return'}">
+					<li><a href="<c:url value ="/gre/list"/>"><i
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Goods
+								Return</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
+				<c:if test="${ump.key eq 'Invoice'}">
+					<li><a href="<c:url value ="/inv/list"/>"><i
+							class="icon-moneybag left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
+			</c:forEach>
+
+
+
+
+
+			<%-- <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value ="/product/productList"/>">Product</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product Type</a></li>
           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Product UOM Category</a></li>

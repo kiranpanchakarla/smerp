@@ -12,7 +12,8 @@
 <title>SMERP</title>
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>    
- --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>    
+ --> <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>
+ <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>    
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -65,7 +66,7 @@
 																	<label for="timesheetinput1">Code</label>
 																	<div>
 
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control capitalCase"
 																			placeholder='State Code' path="code"
 																			 required="true" onchange="isValidName('code','/states/isValidStateCode','1_errorContainer','State Code Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter State Code')"
@@ -77,7 +78,7 @@
 																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput2">Name</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control"
+																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Name' path="name"
 																			 required="true" onchange="isValidName('name','/states/isValidStateName','1_errorContainer','State Name Already Exists')"
 																			oninvalid="this.setCustomValidity('Please Enter State Name')"
@@ -161,7 +162,7 @@
 	<footer class="footer footer-static footer-light navbar-border">
 		<p class="clearfix text-muted text-sm-center mb-0 px-2">
 			<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-				&copy; 2018 <a href="#" target="_blank"
+				&copy; 2019 <a href="#" target="_blank"
 				class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved.
 			</span>
 		</p>

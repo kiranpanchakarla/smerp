@@ -44,7 +44,7 @@ public class DesignationController {
 	public String list(Model model) {
 		logger.info("Inside DesignationController List Method");
 		model.addAttribute("designationList", designationService.findAll());
-		model.addAttribute("companyList", companyServices.findAll());
+		model.addAttribute("companyList", companyServices.findByIsActive());
 		model.addAttribute("departmentList", departmentService.findAll());
 		return "designation/list";
 	}
@@ -60,7 +60,7 @@ public class DesignationController {
 	public String create(Model model) {
 		logger.info("Inside DesignationController create Method");
 		model.addAttribute("designation", new Desigination());
-		model.addAttribute("companyList", companyServices.findAll());
+		model.addAttribute("companyList", companyServices.findByIsActive());
 		model.addAttribute("departmentList", departmentService.findAll());
 		return "designation/create";
 	}
@@ -69,7 +69,7 @@ public class DesignationController {
 	public String GetInfo(Model model, String designationId) {
 		logger.info("Inside DesignationController GetInfo Method");
 		model.addAttribute("designation", designationService.getInfo(Integer.parseInt(designationId)));
-		model.addAttribute("companyList", companyServices.findAll());
+		model.addAttribute("companyList", companyServices.findByIsActive());
 		model.addAttribute("departmentList", departmentService.findAll());
 		return "designation/create";
 	}

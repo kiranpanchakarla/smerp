@@ -12,7 +12,7 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!-- <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
   <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
@@ -53,13 +53,13 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group">
 																		<label>First Name</label>
-																		<form:input type="text" cssClass="form-control" placeholder='First Name' path="firstname" required="true" oninvalid="this.setCustomValidity('Please Enter First Name')" oninput="setCustomValidity('')" />
+																		<form:input type="text" cssClass="form-control camelCase" placeholder='First Name' path="firstname" required="true" oninvalid="this.setCustomValidity('Please Enter First Name')" oninput="setCustomValidity('')" />
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
 																		<label>Last Name</label>
-																		<form:input type="text" cssClass="form-control" placeholder='Last Name' path="lastname" required="true" oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')" />
+																		<form:input type="text" cssClass="form-control camelCase" placeholder='Last Name' path="lastname" required="true" oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')" />
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
@@ -194,6 +194,10 @@
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 </body>
 <script>
+$('.camelCase').keyup(function(){
+	 this.value = capitalize_Words(this.value);
+});
+
 $(document).ready(function() {
  
 	var id = $('#userId').val();

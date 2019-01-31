@@ -43,8 +43,9 @@ text-align: left;
 						<div class="content-body">
 
 							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
+							<c:url value="/inv/saveGRtoInv" var="createInvoiceUrl" />
 
-							<form:form method="POST" action="${createUrl}" id="form"
+							<form:form method="POST" action="" id="form"
 							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
@@ -120,21 +121,11 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-                                                                            <div class="input-group">
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Item" path="category"  name="category"  id="items_radio" 
-																				/>
-                                                                                <span class="radio-list">Item</span>
-                                                                                </div>
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Services" path="category"  name="category" id="service_radio" 
-																				/>	
-                                                                                <span class="radio-list">Services</span></div>
-                                                                                <div class="help-block with-errors"></div>
-                                                                            </div>
-                                                                        </div>
+																				<label>Type</label>: Product
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Status</label>: ${gr.status}
+																			</div>
 																		</div>
 																		
 																		
@@ -186,16 +177,18 @@ text-align: left;
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${gr.category=='Item'}">
 																									<th>S.no</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
+																									<th>Description</th>
 																									<th>UOM</th>
-																									<th>Quantity</th>
+																									<th>SKU</th>
 																									<th>Unit Price</th>
-																									<th>Tax Code</th>
+																									<th>Tax %</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Product Group</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
-																									<th>HSN</th>
+																									<th>Quantity</th>
 																									</c:if>
 																									
 																									<c:if test="${gr.category!='Item'}">
@@ -231,10 +224,10 @@ text-align: left;
 																															
 																													<c:if test="${gr.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
-																													
+																													<td>${listLineItems.description}</td>
 																													<td>${listLineItems.uom}</td>
+																													<td>${listLineItems.sku}</td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
 																													
 																															<td>${listLineItems.unitPrice}</td>
 																															<td><c:forEach var="entry"
@@ -246,6 +239,7 @@ text-align: left;
 																															<td>${listLineItems.total}</td>
 																													
 																														<td>${listLineItems.productGroup}</td>
+																														<td>${listLineItems.hsn}</td>
 
 																												<td><c:forEach var="entry"
 																														items="${plantMap}">
@@ -253,8 +247,10 @@ text-align: left;
 																															test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
+																													
+																													<td>${listLineItems.requiredQuantity}</td>
 
-																												<td>${listLineItems.hsn}</td>
+																												
 																														
 																													</c:if>
 																													
@@ -365,28 +361,32 @@ text-align: left;
 											
 										<div class="col-sm-4">
 											<div class="form-group">
-												<label>Discount(%) :</label>
-												${gr.totalDiscount}
+												<div class="col-sm-6"><label>Discount(%) </label></div>
+											<div class="col-sm-6">:	${gr.totalDiscount} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Before Discount : </label>
-												${gr.totalBeforeDisAmt}
+											<div class="col-sm-6">	<label>Total Before Discount </label> </div>
+											<div class="col-sm-6">:	${gr.totalBeforeDisAmt} </div>
 											</div>
 											<div class="form-group">
-												<label>Freight : </label> ${gr.freight}
-											</div>
-
-											<div class="form-group">
-												<label>Rounding : </label> ${gr.amtRounding}
+												<div class="col-sm-6"><label>Freight  </label></div>
+												<div class="col-sm-6">: ${gr.freight} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Tax Amount :</label> ${gr.taxAmt}
+											<div class="col-sm-6">	<label>Rounding  </label></div>
+											<div class="col-sm-6">: ${gr.amtRounding} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Payment Due : </label> ${gr.totalPayment}
+												<div class="col-sm-6"> <label>Tax Amount </label> </div>
+												<div class="col-sm-6">: ${gr.taxAmt} </div>
+											</div>
+
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
+											<div class="col-sm-6">: ${gr.totalPayment} </div>
 											</div>
 										</div>
 									
@@ -401,39 +401,55 @@ text-align: left;
 									
 									<div class="card-block">
 									<div class="row">
-										<div class="col-sm-12 form-group">
+										<div class="col-sm-12">
 											<div class="row">
-												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
-												         <div class="col-sm-4 form-group has-feedback">
+												         <div class="col-sm-3 form-group has-feedback">
 												        
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Goods Receipt'}">
+										                           <c:if test="${ump.key eq 'Convert To GRE'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'}">
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status != 'Invoiced'}">
 																		 
 														 <c:if test="${checkStatusGr ==true}">
-																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
+																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
+																			class="btn btn-primary mr-1 float-right mySubButton">
 																			<i></i>Goods Return</form:button>
-											</c:if>	
-																		 
+																			
+											            </c:if>	
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-									
-																
-								                        
 												         
 												         </div>
 												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-3 form-group has-feedback">
+												          
+												          <c:forEach items="${sessionScope.umpmap}" var="ump">
+										                           <c:if test="${ump.key eq 'Convert To INV'}">
+										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">
+														
+																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
+																			class="btn btn-primary mr-1 float-right mySubButtonInv">
+																			<i></i>Generate Invoice</form:button>
+																	  </c:if>
+	   										                           </c:if>
+	       								                           </c:if>     
+   									                            </c:forEach>
+												          </div>
+										             
+												         
+												         
+												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
-												
+												 </div>
 										</div>
 										
 									</div>
@@ -464,18 +480,32 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
-$('#convertBtn').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+$(".mySubButton").on('click', function() {
 			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
 					function() {
-						form.submit();
+				    $('#form').attr('action', "${createUrl}").submit();
 					}, function() {
 						alertify.error('Cancelled')
 					});
 
 		});
+		
+		
+		
+$(".mySubButtonInv").on('click', function() {
+			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice!',
+					function() {
+				    $('#form').attr('action', "${createInvoiceUrl}").submit();
+					}, function() {
+						alertify.error('Cancelled')
+					});
+
+		});
+		
+		
+		
+		
+
 
 	
 function goBack() {

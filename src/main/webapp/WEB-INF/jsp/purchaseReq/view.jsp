@@ -94,12 +94,16 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: ${purchaseRequest.type}
+																		<label>Type</label>: Product <%-- ${purchaseRequest.type} --%>
 
 																	</div>
-																	
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Remark</label>:${purchaseRequest.remarks}
+																		<label>Status</label>: ${purchaseRequest.status}
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-sm-6 form-group has-feedback">
+																		<label>Remark</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
 
@@ -119,10 +123,12 @@
 																						<th>Product Name</th>
 																						<th>Description</th>
 																						<th>UOM</th>
-																						<th>Quantity</th>
+																						<th>SKU</th>
 																						<th>Product Group</th>
-																						<th>Warehouse</th>
 																						<th>HSN</th>
+																						<th>Warehouse</th>
+																						<th>Quantity</th>
+																						
 																				</thead>
 
 																				<c:forEach
@@ -134,15 +140,17 @@
 																						<td>${listpurchaseRequestLists.prodouctNumber}</td>
 																						<td>${listpurchaseRequestLists.description}</td>
 																						<td>${listpurchaseRequestLists.uom}</td>
-																						<td>${listpurchaseRequestLists.requiredQuantity}</td>
+																						<td>${listpurchaseRequestLists.sku}</td>
 																						<td>${listpurchaseRequestLists.productGroup}</td>
+																						<td>${listpurchaseRequestLists.hsn}</td>
 																						<td><c:forEach var="entry"
 																								items="${plantMap}">
 																								<c:if
 																									test="${entry.key ==listpurchaseRequestLists.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																							</c:forEach></td>
-																						<td>${listpurchaseRequestLists.hsn}</td>
+																							<td>${listpurchaseRequestLists.requiredQuantity}</td>
+																						
 																					</tbody>
 																				</c:forEach>
 
@@ -191,11 +199,12 @@
 														</form>
 
 														<div>
-															
-																<div class="row">
-												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												      <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
-										       </div>
+															<br></br>
+															 
+													<div class="row">
+												      <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												     
+										              <div class="col-sm-2 form-group has-feedback">
 																<c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Purchase Request'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
@@ -208,9 +217,9 @@
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-																
-																
-																
+																</div>
+														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>		
+														</div>		
 														</div>
 
 													</div>

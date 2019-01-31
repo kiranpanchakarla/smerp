@@ -46,11 +46,22 @@ public class GoodsReturnLineItems extends AuditModel {
 	private String sacCode;
 
 	@Column(name = "unit_price")
-	private Integer unitPrice;
+	private Double unitPrice;
 
 	@Column(name = "tax_code")
-	private Integer taxCode;
+	private Double taxCode;
 	
+	@Column(name = "sku_quantity")
+    private String sku;
+	
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
 	private transient Integer tempRequiredQuantity;
 	
 	private transient String taxTotal;
@@ -140,19 +151,21 @@ public class GoodsReturnLineItems extends AuditModel {
 		this.sacCode = sacCode;
 	}
 	
-	public Integer getUnitPrice() {
+	
+
+	public Double getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Integer unitPrice) {
+	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
-	public Integer getTaxCode() {
+	public Double getTaxCode() {
 		return taxCode;
 	}
 
-	public void setTaxCode(Integer taxCode) {
+	public void setTaxCode(Double taxCode) {
 		this.taxCode = taxCode;
 	}
 
@@ -182,12 +195,13 @@ public class GoodsReturnLineItems extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "GoodsReceiptLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+		return "GoodsReturnLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", tempRequiredQuantity="
-				+ tempRequiredQuantity + ", taxTotal=" + taxTotal + ", total=" + total + "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
 	}
+
+	 
 
 
 

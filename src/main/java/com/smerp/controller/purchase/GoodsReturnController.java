@@ -33,6 +33,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
+import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
@@ -94,9 +95,11 @@ public class GoodsReturnController {
 		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		model.addAttribute("gre", gre);
@@ -151,9 +154,9 @@ public class GoodsReturnController {
 	}
 	
 	@PostMapping("/saveGRtoGRE")
-	public String savePRtoRFQ(HttpServletRequest request) {
+	public String savePRtoRFQ(HttpServletRequest request,GoodsReceipt goodsReceipt) {
 		String greId = request.getParameter("greId");
-		logger.info("greId" + greId);
+		logger.info("goodsReceipt" + goodsReceipt);
 		logger.info("greId view-->" + greId);
 		GoodsReturn gre = goodsReturnService.saveGRE(greId);
 		return "redirect:edit?id="+gre.getId();
@@ -179,7 +182,7 @@ public class GoodsReturnController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Integer, Object> taxCode() {
+	public Map<Double, Object> taxCode() {
 		
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		

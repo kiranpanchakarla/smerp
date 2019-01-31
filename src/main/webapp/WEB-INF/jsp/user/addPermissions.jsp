@@ -231,7 +231,7 @@ function changePermission(permissionId){
      }
 }
 
-for(var i=0;i<=12;i++) {
+for(var i=0;i<=15;i++) {
 	if($('.permissions'+i+':checked').length == $('.permissions'+i).length){
         $(".module"+i).prop('checked',true);
     }else{

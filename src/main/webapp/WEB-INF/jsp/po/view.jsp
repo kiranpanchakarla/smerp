@@ -123,21 +123,11 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-                                                                            <div class="input-group">
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Item" path="category"  name="category"  id="items_radio" 
-																				/>
-                                                                                <span class="radio-list">Item</span>
-                                                                                </div>
-                                                                                <div class="inventory-list">
-                                                                                <form:radiobutton cssClass="form-control"
-																					 value="Services" path="category"  name="category" id="service_radio" 
-																				/>	
-                                                                                <span class="radio-list">Services</span></div>
-                                                                                <div class="help-block with-errors"></div>
-                                                                            </div>
-                                                                        </div>
+																				<label>Type</label>: Product
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Status</label>: ${po.status}
+																			</div>
 																		</div>
 																		
 																		
@@ -153,7 +143,7 @@ text-align: left;
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item"><a class="nav-link active"
+																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>
@@ -189,16 +179,19 @@ text-align: left;
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${po.category=='Item'}">
 																									<th>S.no</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
+																									<th>Description</th>
 																									<th>UOM</th>
-																									<th>Quantity</th>
+																									<th>SKU</th>
 																									<th>Unit Price</th>
-																									<th>Tax Code</th>
+																									<th>Tax %</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Product Group</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
-																									<th>HSN</th>
+																									<th>Quantity</th>
+																									
 																									</c:if>
 																									
 																									<c:if test="${po.category!='Item'}">
@@ -212,7 +205,7 @@ text-align: left;
 																									<th>Total</th>
 																									<th>Warehouse</th>
 																									</c:if>
-																									<th>Action</th>
+																									
 																								</tr>
 																							</thead>
 																										
@@ -234,10 +227,10 @@ text-align: left;
 																															
 																													<c:if test="${po.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
-																													
+																													<td>${listLineItems.description}</td>
 																													<td>${listLineItems.uom}</td>
+																													<td>${listLineItems.sku}</td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
 																													
 																															<td>${listLineItems.unitPrice}</td>
 																															<td><c:forEach var="entry"
@@ -249,6 +242,7 @@ text-align: left;
 																															<td>${listLineItems.total}</td>
 																													
 																														<td>${listLineItems.productGroup}</td>
+																														<td>${listLineItems.hsn}</td>
 
 																												<td><c:forEach var="entry"
 																														items="${plantMap}">
@@ -256,9 +250,11 @@ text-align: left;
 																															test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
+																													
+																													<td>${listLineItems.requiredQuantity}</td>
 
-																												<td>${listLineItems.hsn}</td>
-																														<td>--</td>	
+																												
+																														 
 																													</c:if>
 																													
 																													<c:if test="${po.category!='Item'}">
@@ -285,7 +281,7 @@ text-align: left;
 																																	test="${entry.key ==listLineItems.warehouse}">
 																													 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
-																														<td>--</td>		
+																															
 																													</c:if>
 																												
 																												</tr>
@@ -368,28 +364,42 @@ text-align: left;
 											
 										<div class="col-sm-4">
 											<div class="form-group">
-												<label>Discount(%) :</label>
-												${po.totalDiscount}
+											<div class="col-sm-6">
+												<label>Discount(%)</label>
+												</div>
+												<div class="col-sm-6">
+												: ${po.totalDiscount}
+												</div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Before Discount : </label>
-												${po.totalBeforeDisAmt}
+											<div class="col-sm-6">
+												<label>Total Before Discount  </label>
+												</div>
+												<div class="col-sm-6">
+												: ${po.totalBeforeDisAmt}
+												</div>
 											</div>
 											<div class="form-group">
-												<label>Freight : </label> ${po.freight}
+											<div class="col-sm-6">
+												<label>Freight  </label> 
+												</div>
+												<div class="col-sm-6">: ${po.freight}</div>
 											</div>
 
 											<div class="form-group">
-												<label>Rounding : </label> ${po.amtRounding}
+												<div class="col-sm-6"><label>Rounding  </label></div>
+												<div class="col-sm-6">: ${po.amtRounding} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Tax Amount :</label> ${po.taxAmt}
+												<div class="col-sm-6"><label>Tax Amount </label> </div>
+												<div class="col-sm-6">: ${po.taxAmt} </div>
 											</div>
 
 											<div class="form-group">
-												<label>Total Payment Due : </label> ${po.totalPayment}
+											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
+											<div class="col-sm-6">: ${po.totalPayment} </div>
 											</div>
 										</div>
 									

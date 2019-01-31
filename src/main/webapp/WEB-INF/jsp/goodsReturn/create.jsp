@@ -16,9 +16,9 @@
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
-<script
+<!-- <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
-	type="text/javascript"></script>
+	type="text/javascript"></script> -->
 <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/>
 	type="text/javascript"></script>
@@ -69,12 +69,19 @@
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
+												<div class="col-md-6">
 													<c:if test="${gre.id!=null}">
 														<h2 class="card-title" id="basic-layout-icons">Update
 															Goods Return</h2>
 														<form:input type="hidden" cssClass="form-control"
 															path="id" />
 													</c:if>
+													</div>
+													<div class="col-md-6">
+														<c:if test="${gre.id!=null}">
+														 	<a  class="btn btn-primary float-right"> ${gre.status} </a>
+														</c:if>
+													</div>
 													<c:if test="${gre.id==null}">
 														<h2 class="card-title" id="basic-layout-icons">Create
 															New Goods Return</h2>
@@ -247,7 +254,7 @@
 
 																	<ul class="nav nav-tabs" id="containerContainingTabs"
 																		role="tablist">
-																		<li class="nav-item"><a class="nav-link active"
+																		<li class="nav-item active"><a class="nav-link"
 																			id="home-tab" data-toggle="tab" href="#home"
 																			role="tab" aria-controls="home" aria-selected="true">Item
 																				Details</a></li>
@@ -273,16 +280,18 @@
 																										<tr>
 																											<!-- <th>S.No</th> -->
 																											<th style="display: none;">Product Id</th>
-																											<th>Product No.</th>
+																											<th>Product#</th>
+																											<th>Description</th>
 																											<th>UOM</th>
-																											<th>Quantity</th>
+																											<th>SKU</th>
 																											<th>Unit Price</th>
-																											<th>Tax Code</th>
+																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Product Group</th>
-																											<th>Warehouse</th>
+																											<th>Group</th>
 																											<th>HSN</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																											<th>Action</th>
 																										</tr>
 																									</thead>
@@ -329,16 +338,18 @@
 																												<!-- <th>S.No</th> -->
 																												<th style="display: none;">Product Id</th>
 																												<c:if test="${gre.category=='Item'}">
-																													<th>Product No.</th>
+																													<th>Product#</th>
+																													<th>Description</th>
 																													<th>UOM</th>
-																													<th>Quantity</th>
+																													<th>SKU</th>
 																													<th>Unit Price</th>
-																													<th>Tax Code</th>
+																													<th>Tax %</th>
 																													<th>Tax Total</th>
 																													<th>Total</th>
-																													<th>Product Group</th>
+																													<th>Group</th>
+																													<th>HSN Code</th>
 																													<th>Warehouse</th>
-																													<th>HSN</th>
+																													<th>Quantity</th>
 																												</c:if>
 
 																												<c:if test="${gre.category!='Item'}">
@@ -364,7 +375,7 @@
 																												var="listLineItems">
 
 
-																												<c:if test="${gre.grId!=null}">
+																												<c:if test="${gre.grId!=null}"> 
 
 																													<tr class="multTot multTot${count}">
 																														<td style="display: none;"><div
@@ -388,7 +399,15 @@
 																																		class="form-control prodouctNumber"></form:input>
 																																</div></td>
 
-
+																															<td>
+																																<div class="form-group">
+																																	<form:input type="text"  
+																																		path="goodsReturnLineItems[${count}].description"
+																																		readonly="true"
+																																		value="${listLineItems.description}"
+																																		class="form-control description validatePrice"></form:input>
+																																</div>
+																															</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -399,11 +418,84 @@
 																																</div></td>
 
 
-																															<td><img
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReturnLineItems[${count}].sku"
+																																		value="${listLineItems.sku}"
+																																		class="form-control sku"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text" readonly="true"
+																																		path="goodsReturnLineItems[${count}].unitPrice"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.unitPrice}" 
+																																		class="form-control unitPrice validatePrice"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:select
+																																		class="form-control taxCode"
+																																		style="width:;" readonly="true"
+																																		path="goodsReturnLineItems[${count}].taxCode">
+																																		<form:options items="${taxCodeMap}" />
+																																	</form:select>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReturnLineItems[${count}].taxTotal"
+																																		value="${listLineItems.taxTotal}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control taxTotal "
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReturnLineItems[${count}].total"
+																																		value="${listLineItems.total}"
+																																		onkeypress="return isNumericKey(event)"
+																																		class="form-control total"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReturnLineItems[${count}].productGroup"
+																																		value="${listLineItems.productGroup}"
+																																		class="form-control productGroup"
+																																		readonly="true"></form:input>
+																																</div></td>
+																															
+																															<td><div class="form-group">
+																																	<form:input type="text"
+																																		path="goodsReturnLineItems[${count}].hsn"
+																																		value="${listLineItems.hsn}"
+																																		class="form-control hsnVal"
+																																		readonly="true"></form:input>
+																																</div></td>
+
+																															<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" readonly="true"
+																																		path="goodsReturnLineItems[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+																																
+																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
 																																alt="See" id="output" width="15"
 																																height="15"
-																																style="float: left; margin-right: 10px;"
+																																class="quality-alert"
 																																data-toggle="tooltip"
 																																data-placement="top"
 																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
@@ -439,71 +531,7 @@
 
 																															</td>
 
-
-
-																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
-																																		path="goodsReturnLineItems[${count}].unitPrice"
-																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.unitPrice}"
-																																		class="form-control unitPrice validatePrice"></form:input>
-																																</div></td>
-
-
-																															<td><div class="form-group">
-																																	<form:select
-																																		class="form-control taxCode"
-																																		style="width:;" readonly="true"
-																																		path="goodsReturnLineItems[${count}].taxCode">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
-																																</div></td>
-
-
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="goodsReturnLineItems[${count}].taxTotal"
-																																		value="${listLineItems.taxTotal}"
-																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control taxTotal "
-																																		readonly="true"></form:input>
-																																</div></td>
-
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="goodsReturnLineItems[${count}].total"
-																																		value="${listLineItems.total}"
-																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control total"
-																																		readonly="true"></form:input>
-																																</div></td>
-
-
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="goodsReturnLineItems[${count}].productGroup"
-																																		value="${listLineItems.productGroup}"
-																																		class="form-control productGroup"
-																																		readonly="true"></form:input>
-																																</div></td>
-
-																															<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		style="width:;" readonly="true"
-																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
-
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="goodsReturnLineItems[${count}].hsn"
-																																		value="${listLineItems.hsn}"
-																																		class="form-control hsnVal"
-																																		readonly="true"></form:input>
-																																</div></td>
+																															
 
 																														</c:if>
 
@@ -530,11 +558,11 @@
 																																</div>
 																															</td>
 
-																															<td><img
+																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
-																																alt="See" id="output" width="20"
-																																height="20" data-toggle="tooltip"
-																																data-placement="top"
+																																alt="See" id="output" width="15"
+																																height="15" data-toggle="tooltip"
+																																data-placement="top" class="quality-alert"
 																																title="Pending Quantity   ${listLineItems.tempRequiredQuantity}" />
 																																<c:choose>
 																																	<c:when
@@ -618,7 +646,7 @@
 																																	<form:select class="form-control"
 																																		style="width:;" readonly="true"
 																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
+																																		
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>
@@ -719,7 +747,6 @@
 																																	<form:select class="form-control"
 																																		style="width:;" required="true"
 																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
 																																</div></td>
@@ -784,8 +811,7 @@
 																																		path="goodsReturnLineItems[${count}].taxTotal"
 																																		value="${listLineItems.taxTotal}"
 																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control taxTotal"
-																																		readonly="true"></form:input>
+																																		class="form-control taxTotal" readonly="true"></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
@@ -962,19 +988,19 @@
 
 																			<c:if test="${gre.status eq 'Draft' || gre.id==null }">
 																				<form:button type="submit" id="draft"
-																					name="statusType" value="DR" class="btn btn-draft">
+																					name="statusType" value="DR" class="btn btn-draft mySubButton">
 																					<i class="icon-check2"></i> Draft</form:button>
 																			</c:if>
 																			<c:if test="${gre.id==null}">
 																				<form:button type="submit" id="save"
 																					name="statusType" value="SA"
-																					class="btn btn-primary">
+																					class="btn btn-primary mySubButton">
 																					<i class="icon-check2"></i>Save</form:button>
 																			</c:if>
 																			<c:if test="${gre.id!=null}">
 																				<form:button type="submit" id="update"
 																					name="statusType" value="SA"
-																					class="btn btn-primary ">
+																					class="btn btn-primary mySubButton">
 																					<i class="icon-check2"></i> Update</form:button>
 																				<%--  <a href="<c:url value="/gr/cancelStage?id=${gre.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
@@ -992,7 +1018,7 @@
 																						test="${fn:containsIgnoreCase(permissions,'Approve')}">
 																						<form:button type="submit" id="approve"
 																							name="statusType" value="APP"
-																							class="btn btn-approve ">
+																							class="btn btn-approve mySubButton">
 																							<i class="icon-check2"></i>Approve</form:button>
 																					</c:if>
 																				</c:if>
@@ -1007,7 +1033,7 @@
 																						<c:if test="${gre.status != 'Cancelled'}">
 																							<form:button type="submit" id="reject"
 																								name="statusType" value="RE"
-																								class="btn btn-reject ">
+																								class="btn btn-reject mySubButton">
 																								<i class="icon-cross2"></i>Reject</form:button>
 																						</c:if>
 																					</c:if>
@@ -1054,7 +1080,11 @@
 
 <script type="text/javascript">
 
-
+var sizeplant = "${planMapSize}";
+var scriptSelectPlant='';
+if(sizeplant>1) {
+    scriptSelectPlant ='<option value="">select</option>';
+     }
 var inc=0;
 var edit_addressCount=0;
 
@@ -1123,6 +1153,11 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
+			+'<td>'
+			+'<div class="form-group">'
+			+'<input type="text" name="goodsReturnLineItems['+inc+'].description" readonly="true" class="form-control description '+inc+'" id="description'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
@@ -1130,6 +1165,11 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
+			+'<td>'
+			+'<div class="form-group">'
+			+'<input type="text" name="goodsReturnLineItems['+inc+'].sku" class="form-control sku sku'+inc+'" id="sku'+inc+'"  readonly="true"  />'
+			+ '</div>'
+			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
@@ -1140,7 +1180,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReturnLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="goodsReturnLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"  readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1180,7 +1220,7 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="goodsReturnLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+'<option value="">select</option>'+
+			+scriptSelectPlant+
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>
@@ -1497,11 +1537,13 @@ $(document).ready(function(){
 		        
 		        }
         }else {
+        	if($(this).val()!=""){
+        
         	 alertify.alert("Purchase Order",$(this).val() +  "Product Number Does Not Exists!");  
         	 ($(this).parents('tr').find('td').find('input').val(''));
         	 ($(this).parents('tr').find('td').find('select').val('')); 
         }
-		        
+            }     
 		    });
      });
 	
@@ -1534,15 +1576,22 @@ $(document).ready(function(){
                 
                 	//$(itemParentRow).find(".prodouctNumber").val(obj.productNo);
                 	$(itemParentRow).find(".productId").val(obj.id);
-            	
-                
-                	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
-                	
-                	var uom=obj.purchasingUom.uomName;
-                	//alert("uom"+uom);
-                	//$('.uom').val(uom);
-                	
-                	 $(itemParentRow).find(".uom").val(uom);
+
+                    
+                 $(itemParentRow).find(".description").val(obj.description);
+               	 $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
+               	
+               	var uom=obj.purchasingUom.uomName;
+               	var sku=obj.packingUom.uomName;
+               
+               	//alert("uom"+uom);
+               	//$('.uom').val(uom);
+               	
+               	 $(itemParentRow).find(".uom").val(uom);
+               	 
+               	 $(itemParentRow).find(".sku").val(sku);
+             	var unitPrice=obj.productCost;
+               	 $(itemParentRow).find(".unitPrice").val(unitPrice);
                 	
              	 //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
              	 //	var productgroup=obj.productCategory.categoryType;
@@ -1562,6 +1611,126 @@ $(document).ready(function(){
                  }
                 });
 		}
+	
+    	/*  Discription List */
+	    var descriptionList = [];
+       var getDescription = ${descriptionList};
+       var availabledescTags = [];
+         $.each(getDescription, function(index, value) {
+          availabledescTags.push(value.toString());
+      });   
+
+          $(document).on("focus", ".description", function() {
+   			var itemParentRow = $(this).parents(".multTot");
+   			//alert("itemParentRow"+itemParentRow);
+   			
+   			$(this).autocomplete({
+   		        source: availabledescTags,
+   		        minLength: 0,
+   	            scroll: true, 
+   	            select: function(event, ui) {
+   		        	var name = ui.item.value;
+   		        	//alert(name);
+   		            autocompleteandchangedesc(name,itemParentRow);
+   		         
+   		       		 },
+   				}).focus(function() {
+   		            $(this).autocomplete("search", "");
+   		        });
+   			});   
+         
+          $(document).on("blur", ".description", function() {
+         	var itemParentRow = $(this).parents(".multTot");
+         
+         	
+         	var arr=[];
+         	 $(".description").each(function() {
+             	 
+             	  if(availabledescTags.includes($(this).val()) == true) 	 {
+ 		        if ($.inArray($(this).val(), arr) == -1){
+ 		            arr.push($(this).val());
+ 		           
+ 		       	// var isDluplicate = true;
+ 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		        }else{
+ 		        	   var isDluplicate = false;
+ 		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
+ 		        	 $(this).val('')
+ 		        	 ($(this).parents('tr').find('td').find('input').val(''));
+ 		        	 ($(this).parents('tr').find('td').find('select').val(''));
+ 		        
+ 		        }
+             }
+             	  else
+             	  {
+             		 if($(this).val()!=""){
+                  	 alertify.alert("No Entry Found",$(this).val() +  " Product Description Does Not Exists!");  
+                  	  ($(this).parents('tr').find('td').find('input').val(''));
+                  	   ($(this).parents('tr').find('td').find('select').val(''));
+             		 }
+                  }   
+ 		      
+ 		    });
+                     	
+         	
+         });
+      
+         //get the product information based on product  description
+          function autocompleteandchangedesc(name1, itemParentRow) {
+             //alert(name);
+
+             $.ajax({
+                 type: "GET",
+                 data: {name: name1},
+                 async: false,
+                 url: "<c:url value="/product/getProductInfoByDescription"/>", 
+                 success: function(response) {
+                     console.log(response);
+
+                     var obj = JSON.parse(response);
+
+                     //var myJSON = JSON.stringify(obj);
+
+	                       var hsndata=0;
+	                	
+	                	if(obj.hsnCode!=null) {
+	                		hsndata=obj.hsnCode;
+	                	}
+                     //alert("hsnCode"+hsndata.hsnCode);
+                     //	$('.hsnVal').val(hsndata.hsnCode);
+                     $(itemParentRow).find(".hsnVal").val(hsndata.hsnCode);
+
+                    // $(itemParentRow).find(".prodouctNumber").val(obj.description);
+                     $(itemParentRow).find(".productId").val(obj.id);
+                     $(itemParentRow).find(".prodouctNumber").val(obj.productNo);
+                     //$(itemParentRow).find(".prodouctNumber").val(obj.description);
+
+                     // $(itemParentRow).find(".productGroup").val(obj.producttype.name);
+                     var sku=obj.packingUom.uomName;
+            	
+                     var uom = obj.purchasingUom.uomName;
+                     //alert("uom" + uom);
+                     //$('.uom').val(uom);
+
+                     $(itemParentRow).find(".uom").val(uom);
+                     $(itemParentRow).find(".sku").val(sku);
+                     var unitPrice=obj.productCost;
+                   	 $(itemParentRow).find(".unitPrice").val(unitPrice);
+                     //  $(".uom").append($("<option></option>").attr("value",uom).text(uom)); 
+                   //  var productgroup = obj.productCategory.categoryType;
+                     var productgroup=obj.productGroup.productName;
+                     //$('.productGroup').val(productgroup);
+
+                     $(itemParentRow).find(".productGroup").val(productgroup);
+       
+                 },
+                 error: function(e) {
+                     //  alert('Error: ' + e);
+                 }
+             });
+                      
+         }   
+   /* End of Description List  */ 
 	
     	$('#vendorAddress').on('change', function() {
     		var shippingId=$('#vendorAddress').val();
@@ -1883,8 +2052,31 @@ $('#containerContainingTabs a').on('click', function(e) {
 	});
 	
 	
-$('form.commentForm').on('submit', function(event) {
-    
+//$('form.commentForm').on('submit', function(event) {
+  $(".mySubButton").on('click', function() {
+	
+	if($(".mySubButton").hasClass("disabled")){
+		 alertify.error('Please fill mandatory fields');
+		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		$("#form").submit();
+		 return false;
+	  } else {
+		 var subStatus = $(this).val();
+        	if(subStatus == 'DR'){
+        		alertify.message('Draft Successfully');
+				return true;
+			  } else if(subStatus == "SA"){
+				 alertify.success('Saved Successfully');
+				return true;
+			  } else if(subStatus == "APP"){
+				 alertify.success('Approved Return');
+				return true;
+			  } else if(subStatus == "RE"){
+				 alertify.warning('Document Rejected');
+				 return true;
+			  }  
+		  }
+	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
     
@@ -2236,9 +2428,19 @@ $('#freight').keyup(function() {
 	src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/>
 	type="text/javascript"></script>
 
-<link
+<!-- <link
 	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"
 	rel="Stylesheet"></link>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 
+<link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
+<script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+
+<c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
+            
+<script>
+$(document).ready(function(){
+	$.noConflict();
+});
+</script>
 </html>

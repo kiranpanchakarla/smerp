@@ -81,7 +81,9 @@
                 <tr>
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
@@ -95,7 +97,9 @@
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.prodouctNumber??>&nbsp;${goodsRetlist.prodouctNumber}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if goodsRetlist.description??>&nbsp;${goodsRetlist.description}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.uom??>&nbsp;${goodsRetlist.uom}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if goodsRetlist.sku??>&nbsp;${goodsRetlist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.requiredQuantity??>&nbsp;${goodsRetlist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.unitPrice??>&nbsp;${goodsRetlist.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">

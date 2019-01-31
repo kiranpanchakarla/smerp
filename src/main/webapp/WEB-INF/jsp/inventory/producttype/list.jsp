@@ -83,7 +83,7 @@
 														<thead>
 															<tr>
 																<th >S.no</th>
-																<th >Product Name</th>
+																<th >Product Group</th>
 																<th >Description</th>
 																<th >Actions</th>
 															</tr>

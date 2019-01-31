@@ -1,18 +1,11 @@
 package com.smerp.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.smerp.model.inventory.PurchaseOrder;
-import com.smerp.model.inventory.RequestForQuotation;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
 public class GenerateDocNumber {
 	
@@ -58,10 +51,47 @@ public class GenerateDocNumber {
     return newOrderId;
   }
 	
+	
+	
+	
+	public static String autoGenereater(String type, String docVal) {
+        String res;
+        if(type.equalsIgnoreCase(""+EnumStatusUpdate.V)  &&  docVal.equalsIgnoreCase("")) {
+            return "V0001";
+        }  else if(type.equalsIgnoreCase(""+EnumStatusUpdate.PG)  &&  docVal.equalsIgnoreCase("")) {
+            return "PG0001";
+        }else if(type.startsWith(""+EnumStatusUpdate.PGP)  &&  docVal.length()<7) {
+            return docVal+"P0001";
+        } else {
+            String splitFirst;
+            if(type.startsWith(""+EnumStatusUpdate.PGP)) {
+                splitFirst = docVal.substring(5);
+            }else {
+                splitFirst = docVal;
+            }
+            Pattern pattern = Pattern.compile("(?<=\\D)(?=\\d)", Pattern.CASE_INSENSITIVE);
+            String[] result = pattern.split(splitFirst);
+            long num = Long.parseLong(result[1])+1;
+                if(num<10) {
+                    res = "000"+num;
+                } else if(num<100) {
+                    res = "00"+num;
+                } else if(num<1000) {
+                    res = "0"+num;
+                } else {
+                    res = String.valueOf(num);
+                }
+            if(type.startsWith(""+EnumStatusUpdate.PGP)) {
+                res = docVal.substring(0,5) + result[0] + res;
+            }else {
+                res = result[0] + res;
+            }
+        }
+        return res;
+    } 
+	
 	public static void main(String[] args) {
-		System.out.println(documentNumberGeneration("RFQ2018120112"));
+		System.out.println(autoGenereater("PGP","PG0001P0001"));
 	}
-	
-	
 	
 }

@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -69,7 +70,7 @@
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">Purchase Order List</li>
+														<li class="breadcrumb-item active">Purchase Order</li>
 													</ol>
 												</div>
 											</div>
@@ -102,8 +103,8 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<td>${list.createdAt}</td>
-																	<td>${list.updatedAt}</td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
 																	<%-- <td>
 																	<c:if test="${list.status != 'Approved'}">
@@ -113,7 +114,7 @@
 														    		<a class ="btn btn-view" href="<c:url value="/po/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>	 --%>
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'    && list.status != 'Completed'  && list.status != 'Closed' && list.status != 'Partially_Received' }">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'ConvertedToPO'  && list.status != 'Cancelled'  && list.status != 'Rejected'    && list.status != 'Completed'  && list.status != 'Closed' && list.status != 'Partially_Received' }">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'PurchaseOrder'}">
 																						<c:set var="permissions" scope="session"

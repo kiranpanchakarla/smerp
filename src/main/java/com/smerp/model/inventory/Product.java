@@ -148,7 +148,7 @@ public class Product extends AuditModel {
 	private String valuationMethod;
 	
 	@Column(name="product_cost")
-	private double productCost;
+	private Double productCost;
 	
 	@Column(name="is_delete")
 	private Boolean isActive = true;
@@ -347,11 +347,11 @@ public class Product extends AuditModel {
 		this.valuationMethod = valuationMethod;
 	}
 
-	public double getProductCost() {
+	public Double getProductCost() {
 		return productCost;
 	}
 
-	public void setProductCost(double productCost) {
+	public void setProductCost(Double productCost) {
 		this.productCost = productCost;
 	}
 

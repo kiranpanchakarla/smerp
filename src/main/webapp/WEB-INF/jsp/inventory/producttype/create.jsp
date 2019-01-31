@@ -104,13 +104,13 @@
 																</a> <input type="hidden" name="${_csrf.parameterName}"
 																	value="${_csrf.token}" />
 
-																<c:if test="${producttype.productName!=null}">
+																<c:if test="${producttype.description!=null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Update
 																	</button>
 																</c:if>
 
-																<c:if test="${producttype.productName==null}">
+																<c:if test="${producttype.description==null}">
 																	<button type="submit" class="btn btn-primary">
 																		<i class="icon-check2"></i> Save
 																	</button>
@@ -158,7 +158,7 @@
 		<footer class="footer footer-static footer-light navbar-border">
 			<p class="clearfix text-muted text-sm-center mb-0 px-2">
 				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
+					&copy; 2019 <a href="#" target="_blank"
 					class="text-bold-800 grey darken-2">SMERP </a>, All rights
 					reserved.
 				</span>

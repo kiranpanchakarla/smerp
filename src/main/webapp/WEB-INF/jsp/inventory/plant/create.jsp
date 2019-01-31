@@ -49,11 +49,11 @@
 											<div class="card">
 												<div class="card-header">
 													<c:if test="${plant.id==null}">
-														<h2 class="card-title" id="basic-layout-icons">Create New Plant</h2>
+														<h2 class="card-title" id="basic-layout-icons">Create New Warehouse</h2>
 													</c:if>
 
 													<c:if test="${plant.id!=null}">
-														<h2 class="card-title" id="basic-layout-icons">Update Plant Details</h2>
+														<h2 class="card-title" id="basic-layout-icons">Update Warehouse Details</h2>
 													</c:if>
 												</div>
 
@@ -65,11 +65,11 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Plant Name</label>
+																	<label for="timesheetinput1">Warehouse Name</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control camelCase"
-																			placeholder='Plant Name' path="plantName"
+																			placeholder='Warehouse Name' path="plantName"
 																			required="true"
 																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
 																			oninput="setCustomValidity('')" />
@@ -145,7 +145,7 @@
 		<footer class="footer footer-static footer-light navbar-border">
 			<p class="clearfix text-muted text-sm-center mb-0 px-2">
 				<span class="float-md-right d-xs-block d-md-inline-block">Copyright
-					&copy; 2018 <a href="#" target="_blank"
+					&copy; 2019 <a href="#" target="_blank"
 					class="text-bold-800 grey darken-2">SMERP </a>, All rights
 					reserved.
 				</span>

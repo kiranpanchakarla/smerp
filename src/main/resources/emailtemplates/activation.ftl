@@ -53,7 +53,7 @@
           </tr>
           <tr>
             <td align="center" valign="top" style="font-size:11px">Email Sent by <br>
-              Copyright &copy; 2018. All rights Reserved</td>
+              Copyright &copy; 2019. All rights Reserved</td>
           </tr>
         </table></td>
       </tr>

@@ -30,6 +30,7 @@
                  <#assign sno = 1/>
                  
                 <#if proCount??>
+                <#if proCount?size!=0>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
@@ -54,6 +55,7 @@
                <#else>
                 <p style="text-align: left;font-family: inherit;">Good News !!! All Products have minimum required quantity. </p>
               
+               </#if>
                </#if>
                
                

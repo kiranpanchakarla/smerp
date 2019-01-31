@@ -44,7 +44,7 @@
 			 	  
 			 	  <c:forEach items="${sessionScope.umpmap}" var="ump">  	 
 			 	 <c:if test="${ump.key eq 'Vendor'}">
-					<li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendor</a></li>
+					<li class="has_sub"><a href="<c:url value ="/vendor/list"/>">Vendors</a></li>
 			 	</c:if>
 			 	 </c:forEach>  
    		 
@@ -65,7 +65,7 @@
         <ul class="sub_menu">
         <c:forEach items="${sessionScope.umpmap}" var="ump">
                     <c:if test="${ump.key eq 'Product'}">
-					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Product</a></li>
+					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Products</a></li>
 				   </c:if>	 
 					
           </c:forEach> 
@@ -76,10 +76,10 @@
 					 <c:if test="${ump.key eq 'Admin Master'}">
 					  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
-					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Group</a></li>
-          			 <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse/Plant</a></li>
+					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Groups</a></li>
+          			 <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
-         			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Category</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Categories</a></li>
          			 
          			  </c:if>
           </c:forEach> 

@@ -30,6 +30,9 @@ public abstract class EmailerGenerator implements Emailer {
 	@Value("#{'${support.email.bcc}'.split(',')}")
 	private String SUPPORT_BCC_EMAIL;
 	
+	@Value("#{'${support.email.cc}'.split(',')}")
+	private String SUPPORT_CC_EMAIL;
+	
 	private  String bccMail;
 	
 	private  String ccMail;
@@ -67,6 +70,15 @@ public abstract class EmailerGenerator implements Emailer {
     
 	public void setSUPPORT_BCC_EMAIL(String sUPPORT_BCC_EMAIL) {
 		SUPPORT_BCC_EMAIL = sUPPORT_BCC_EMAIL;
+	}
+    
+	
+	public String getSUPPORT_CC_EMAIL() {
+		return SUPPORT_CC_EMAIL;
+	}
+
+	public void setSUPPORT_CC_EMAIL(String sUPPORT_CC_EMAIL) {
+		SUPPORT_CC_EMAIL = sUPPORT_CC_EMAIL;
 	}
 
 	public void setBccMail(String bccMail) {

@@ -210,7 +210,7 @@
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
-                                             Copyright &copy; 2018. All rights Reserved.
+                                             Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>
               

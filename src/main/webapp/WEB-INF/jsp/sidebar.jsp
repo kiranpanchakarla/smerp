@@ -238,6 +238,17 @@
 							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">Invoice
 									</a></li>
 						</c:if>
+					
+						<c:if test="${ump.key eq 'Convert To CM'}">
+							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">Convert To CM
+									</a></li>
+						</c:if>
+					
+						
+						<c:if test="${ump.key eq 'Credit Memo'}">
+							<li class="has_sub"><a href="<c:url value ="/creditMemo/list"/>">Credit Memo
+									</a></li>
+						</c:if>
 						
 					</c:forEach>
 

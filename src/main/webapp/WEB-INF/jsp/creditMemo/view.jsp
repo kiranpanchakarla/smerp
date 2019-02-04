@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -44,9 +43,9 @@ text-align: left;
 
 
 
-							<c:url value="/creditMemo/saveInvtoCre" var="createUrl" />
-							<form:form method="POST" action="" id="form" class="bv-form commentForm"
-								enctype="multipart/form-data" modelAttribute="inv"
+
+							<form:form method="POST" action="/gr/save" id="form" class="bv-form commentForm"
+								enctype="multipart/form-data" modelAttribute="cre"
 								data-toggle="validator" role="form" >
 								<section id="basic-form-layouts">
 									<div class="row match-height">
@@ -55,7 +54,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Invoice</h2>
+													<h2 class="card-title" id="basic-layout-icons">CreditMemo</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -63,15 +62,15 @@ text-align: left;
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Name</label>: ${inv.vendor.name}
+																	<label>Name</label>: ${cre.vendor.name}
 																	
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Email Id</label>: ${inv.vendor.emailId}
+																	<label>Email Id</label>: ${cre.vendor.emailId}
 																	
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact</label>: ${inv.vendorContactDetails.contactName}
+																	<label>Contact</label>: ${cre.vendorContactDetails.contactName}
 																</div>
 															</div>
 
@@ -81,15 +80,15 @@ text-align: left;
 																
 
 																<div class="col-sm-4 form-group">
-																	<label>Pay To</label>: ${inv.vendorPayTypeAddress.city}
+																	<label>Pay To</label>: ${cre.vendorPayTypeAddress.city}
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Ship From</label>: ${inv.vendorShippingAddress.city}
+																	<label>Ship From</label>: ${cre.vendorShippingAddress.city}
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${inv.docNumber}
+																				<label>Document#</label>: ${cre.docNumber}
 																			</div>
 
 															</div>
@@ -100,15 +99,15 @@ text-align: left;
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${inv.referenceDocNumber}
+																				<label>Ref Doc#</label>: ${cre.referenceDocNumber}
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.postingDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.documentDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.documentDate}" />
 																			</div>
 																		</div>
 
@@ -118,13 +117,13 @@ text-align: left;
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.requiredDate}" />
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${inv.status}
+																				<label>Status</label>: ${cre.status}
 																			</div>
 																		</div>
 																		
@@ -167,7 +166,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty inVoiceLineItems}">
+																										<c:if test="${not empty creditMemoLineItems}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -175,7 +174,7 @@ text-align: left;
 																							<tr>
 																									
 																									<th style="display: none;">Product Id</th>
-																									<c:if test="${inv.category=='Item'}">
+																									<c:if test="${cre.category=='Item'}">
 																									<th>S.no</th>
 																									<th>Product#</th>
 																									<th>Description</th>
@@ -191,7 +190,7 @@ text-align: left;
 																									<th>Quantity</th>
 																									</c:if>
 																									
-																									<c:if test="${inv.category!='Item'}">
+																									<c:if test="${cre.category!='Item'}">
 																									<th>S.No</th>
 																									<th>SAC Code</th>
 																									<th>Description</th>
@@ -208,21 +207,21 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${inVoiceLineItems}"
+																											<c:forEach items="${creditMemoLineItems}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="inVoiceLineItems[${count}].productId"
+																															path="creditMemoLineItems[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="inVoiceLineItems[${count}].id"/>	
+																												<form:hidden path="creditMemoLineItems[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
-																													<c:if test="${inv.category=='Item'}">
+																													<c:if test="${cre.category=='Item'}">
 																													<td>${listLineItems.prodouctNumber}</td>
 																													<td>${listLineItems.description}</td>
 																													<td>${listLineItems.uom}</td>
@@ -254,7 +253,7 @@ text-align: left;
 																														
 																													</c:if>
 																													
-																													<c:if test="${inv.category!='Item'}">
+																													<c:if test="${cre.category!='Item'}">
 																													<td>${listLineItems.sacCode}</td>
 																													
 																													<td>${listLineItems.description}</td>
@@ -316,11 +315,11 @@ text-align: left;
 																				<td>
 																					<div id="shippingAddressTable">
 																					
-																					${inv.vendorShippingAddress.addressName}<br>
-																					${inv.vendorShippingAddress.street}
-																					${inv.vendorShippingAddress.city}
-																					${inv.vendorShippingAddress.zipCode}<br>
-																					${inv.vendorShippingAddress.country.name}
+																					${cre.vendorShippingAddress.addressName}<br>
+																					${cre.vendorShippingAddress.street}
+																					${cre.vendorShippingAddress.city}
+																					${cre.vendorShippingAddress.zipCode}<br>
+																					${cre.vendorShippingAddress.country.name}
 																					
 																					
 																					</div>
@@ -332,11 +331,11 @@ text-align: left;
 																				<td>
 																					<div id="payToAddressTable">
 																					
-																					${inv.vendorPayTypeAddress.addressName}<br>
-																					${inv.vendorPayTypeAddress.street}
-																					${inv.vendorPayTypeAddress.city}
-																					${inv.vendorPayTypeAddress.zipCode}<br>
-																					${inv.vendorPayTypeAddress.country.name}
+																					${cre.vendorPayTypeAddress.addressName}<br>
+																					${cre.vendorPayTypeAddress.street}
+																					${cre.vendorPayTypeAddress.city}
+																					${cre.vendorPayTypeAddress.zipCode}<br>
+																					${cre.vendorPayTypeAddress.country.name}
 																					
 																					
 																					</div>
@@ -362,31 +361,31 @@ text-align: left;
 										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="col-sm-6"><label>Discount(%) </label></div>
-												<div class="col-sm-6">: ${inv.totalDiscount}</div>
+												<div class="col-sm-6">: ${cre.totalDiscount}</div>
 											</div>
 
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Before Discount  </label></div>
-												<div class="col-sm-6">: ${inv.totalBeforeDisAmt}</div>
+												<div class="col-sm-6">: ${cre.totalBeforeDisAmt}</div>
 											</div>
 											<div class="form-group">
 												<div class="col-sm-6"><label>Freight  </label> </div>
-												<div class="col-sm-6">: ${inv.freight} </div>
-											</div>
-
-											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${inv.amtRounding}</div>
+												<div class="col-sm-6">: ${cre.freight} </div>
 											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
-											<div class="col-sm-6">: ${inv.taxAmt} </div>
+											<div class="col-sm-6">: ${cre.taxAmt} </div>
 											</div>
 
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
-												<div class="col-sm-6">: ${inv.totalPayment} </div>
+												<div class="col-sm-6">: ${cre.totalPayment} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounding  </label></div>
+												<div class="col-sm-6"> : ${cre.amtRounding}</div>
 											</div>
 										</div>
 									
@@ -403,34 +402,8 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12 form-group">
 											<div class="row">
-												          <div class="col-sm-4 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
-												          <div class="col-sm-4 form-group has-feedback">
-												        
-									
-										<input type="hidden" name="invId" value="${inv.id}">
-									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Convert To CM'}"> 
-										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
-										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Goods_Return'  || inv.status != 'Invoiced'}">
-																		 
-														 <c:if test="${checkStatusInv ==true}">
-																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
-																			class="btn btn-primary mr-1 float-right mySubButton">
-																			<i></i>Credit Memo</form:button>
-																			
-											            </c:if>	
-																	</c:if>
-	   										                           </c:if>
-	       								                           </c:if>     
-   									                            </c:forEach>
-												         
-												         </div>
-												         
-												         
-												         
-												          <div class="col-sm-4 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/cre/downloadPdf?id=${cre.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -462,16 +435,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 	$('#containerContainingTabs a').removeClass('active');
 	theThis.addClass('active');
 	});
-
-$(".mySubButton").on('click', function() {
-	alertify.confirm('InVoice','Are you Sure, Want to CrdeitMemo!',
-			function() {
-		    $('#form').attr('action', "${createUrl}").submit();
-			}, function() {
-				alertify.error('Cancelled')
-			});
-
-});
+	
 	
 	
 function goBack() {

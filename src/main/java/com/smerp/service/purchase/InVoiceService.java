@@ -2,6 +2,7 @@ package com.smerp.service.purchase;
 
 import java.util.List;
 
+import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.PurchaseOrder;
 
@@ -28,6 +29,8 @@ public interface InVoiceService {
 	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	
 	String setStatusOfPurchaseOrder(InVoice InVoice);
+	
+	List<InVoice> invApprovedList();
 	
 
 }

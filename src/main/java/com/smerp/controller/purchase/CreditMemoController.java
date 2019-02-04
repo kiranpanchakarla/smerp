@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +31,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
@@ -42,17 +40,15 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.CreditMemoService;
-import com.smerp.service.purchase.InVoiceService;
 import com.smerp.util.ContextUtil;
-import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
 
 @Controller
-@RequestMapping("/inv")
-public class InvoiceController {
+@RequestMapping("/creditMemo")
+public class CreditMemoController {
 
-	private static final Logger logger = LogManager.getLogger(GoodsReceiptController.class);
+	private static final Logger logger = LogManager.getLogger(GoodsReturnController.class);
 
 	private static String pdfUploadedPath;
 	
@@ -63,15 +59,11 @@ public class InvoiceController {
 	ProductService productService;
 
 	@Autowired
-	private VendorService vendorService;
+	VendorService vendorService;
 
-		
-	@Autowired
-	InVoiceService inVoiceService;
-	
 	@Autowired
 	CreditMemoService creditMemoService;
-	
+
 	@Autowired
 	SacService sacService;
 	
@@ -80,9 +72,6 @@ public class InvoiceController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
-	
-	
-
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -90,48 +79,16 @@ public class InvoiceController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
-	@GetMapping("/create")
-	public String create(Model model, InVoice inv) throws JsonProcessingException {
-		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("inv-->" + inv);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
-		ObjectMapper mapper = new ObjectMapper();
-		model.addAttribute("plantMap", plantMap());
-		model.addAttribute("plantMapSize", plantMap().size());
-		model.addAttribute("taxCodeMap", taxCode());
-		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-       
-		InVoice invDetails = inVoiceService.findLastDocumentNumber();
-		if (invDetails != null && invDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(invDetails.getDocNumber()));
-		} else {
-	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-	    LocalDateTime now = LocalDateTime.now();
-	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
-		}
-		logger.info("invDetails-->" + invDetails);
-		model.addAttribute("productList",
-				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
-		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
-		logger.info("mapper-->" + mapper);
-
-		model.addAttribute("inv", inv);
-		return "inv/create";
-	}
-
-	
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		logger.info("11111 inv-->");
-		logger.info("New inv-->" + inv);
-		inv = inVoiceService.getListAmount(inv);  // set Amt Calculation  
-		logger.info("inv-->" + inv);
-		ObjectMapper mapper = poloadData(model, inv);
+		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
+		logger.info("11111 cre-->");
+		logger.info("New cre-->" + cre);
+		cre = creditMemoService.getListAmount(cre);  // set Amt Calculation  
+		logger.info("cre-->" + cre);
+		ObjectMapper mapper = poloadData(model, cre);
 		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -139,94 +96,81 @@ public class InvoiceController {
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
-		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("plantMapSize", plantMap().size());
+		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-		model.addAttribute("inv", inv);
-		return "inv/create";
+		model.addAttribute("cre", cre);
+		return "creditMemo/create";
 	}
 
-	private ObjectMapper poloadData(Model model, InVoice inv) {
+	private ObjectMapper poloadData(Model model, CreditMemo cre) {
 		ObjectMapper mapper = new ObjectMapper();
 		VendorAddress vendorPayTypeAddress=new VendorAddress();
 		VendorAddress vendorShippingAddress =new VendorAddress();
-		if(inv.getVendorPayTypeAddress()!=null && inv.getVendorPayTypeAddress()!=null) {
-		 vendorPayTypeAddress = inv.getVendorPayTypeAddress();
-		 vendorShippingAddress = inv.getVendorShippingAddress();
+		if(cre.getVendorPayTypeAddress()!=null && cre.getVendorPayTypeAddress()!=null) {
+		 vendorPayTypeAddress = cre.getVendorPayTypeAddress();
+		 vendorShippingAddress = cre.getVendorShippingAddress();
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
 		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
 		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-	
-		
-		model.addAttribute("inVoiceLineItems", inv.getInVoiceLineItems());
+		model.addAttribute("creditMemoLineItems", cre.getCreditMemoLineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		inv = inVoiceService.getListAmount(inv);
-		logger.info("inv-->" + inv);
-		poloadData(model, inv);
+		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
+		cre = creditMemoService.getListAmount(cre);
+		logger.info("cre-->" + cre);
+		poloadData(model, cre);
 		// model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
-		model.addAttribute("inv", inv);
+		model.addAttribute("cre", cre);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
-		return "inv/view";
+		return "creditMemo/view";
 	}
 
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
-
 		logger.info("Delete msg");
-		inVoiceService.delete(id);
+		creditMemoService.delete(id);
 		return "redirect:list";
 	}
 
 	
 	@PostMapping("/save")
-	public String name(InVoice requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		logger.info("inv details" + inVoiceService.save(requestForQuotation));
+	public String name(CreditMemo creditMemo) {
+		logger.info("Inside save method" + creditMemo);
+		logger.info("cre details" + creditMemoService.save(creditMemo));
 		return "redirect:list";
 	}
 	
-	@PostMapping("/saveGRtoInv")
-	public String saveGRtoInv(HttpServletRequest request) {
-		String greId = request.getParameter("greId");
-		logger.info("greId" + greId);
-		logger.info("greId view-->" + greId);
-		InVoice inv = inVoiceService.saveInv(greId);
-		return "redirect:edit?id="+inv.getId();
+	@PostMapping("/saveInvtoCre")
+	public String savePRtoRFQ(HttpServletRequest request,InVoice inVoice) {
+		String invId = request.getParameter("invId");
+		logger.info("inVoice" + inVoice);
+		logger.info("invId view-->" + invId);
+		CreditMemo cre = creditMemoService.saveCM(invId);
+		return "redirect:edit?id="+cre.getId();
 	}
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
 		
-		logger.info("inv details" + inVoiceService.saveCancelStage(id));
+		logger.info("cre details" + creditMemoService.saveCancelStage(id));
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<InVoice> list = inVoiceService.findByIsActive();
+		List<CreditMemo> list = creditMemoService.findByIsActive();
 		logger.info("list"+list);
 		model.addAttribute("list", list);
-		return "inv/list";
-	}
-	
-	
-	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
-		List<InVoice> list = inVoiceService.invApprovedList();
-		logger.info("InVoice list-->" + list);
-		model.addAttribute("list", list);
-		return "/inv/approvedList";
+		return "creditMemo/list";
 	}
 
 	public Map<Integer, Object> plantMap() {
@@ -247,14 +191,14 @@ public class InvoiceController {
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
 		logger.info("id -->" + id);
-		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		logger.info("InVoice -->" + inv);
+		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
+		logger.info("creditMemo -->" + cre);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForInvoice(pdfUploadedPath,inv);
+		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForGoodsReturn(pdfUploadedPath,cre);*/
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

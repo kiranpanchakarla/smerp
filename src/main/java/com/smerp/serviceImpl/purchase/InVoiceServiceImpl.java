@@ -433,6 +433,12 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	public List<InVoice> findByIsActive() {
 		return inVoiceRepository.findByIsActive(true);
 	}
+	
+	@Override
+	public List<InVoice> invApprovedList() {
+		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+	}
+	
 
 	@Override
 	public InVoice findById(int id) {

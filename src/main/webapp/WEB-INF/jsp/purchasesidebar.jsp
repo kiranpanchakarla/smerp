@@ -87,6 +87,18 @@
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 				
+				<c:if test="${ump.key eq 'Convert To CM'}">
+					<li><a href="<c:url value ="/inv/list"/>"><i
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Convert To CM</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
+				<c:if test="${ump.key eq 'Credit Memo'}">
+					<li><a href="<c:url value ="/creditMemo/list"/>"><i
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Credit Memo</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
 			</c:forEach>
 
 

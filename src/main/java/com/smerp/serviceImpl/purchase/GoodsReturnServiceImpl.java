@@ -128,11 +128,26 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			
 			
 			}else {
+				
+				
 				 logger.info("Goods Return Data -->" +goodsReturn);
+			}
+			if(goodsReturn.getGrId()!=null) {
+			GoodsReceipt gr = goodsReceiptService.findById(goodsReturn.getGrId());
+			
+			Vendor vendor = vendorService.findById(gr.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
+
+			goodsReturn.setVendor(vendor);
+			goodsReturn.setVendorContactDetails(vendorsContactDetails);
+			goodsReturn.setVendorShippingAddress(vendorShippingAddress);
+			goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
 			}
 		}
          logger.info("goodsReturn -->" +goodsReturn);
-		Vendor vendor = vendorService.findById(goodsReturn.getVendor().getId());
+		/*Vendor vendor = vendorService.findById(goodsReturn.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReturn.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReturn.getVendorPayTypeAddress().getId());
 		
@@ -141,7 +156,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		goodsReturn.setVendor(vendor);
 		goodsReturn.setVendorContactDetails(vendorsContactDetails);
 		goodsReturn.setVendorShippingAddress(vendorShippingAddress);
-		goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
+		goodsReturn.setVendorPayTypeAddress(vendorPayAddress);*/
 		
 		if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("APP")) {
 			try {

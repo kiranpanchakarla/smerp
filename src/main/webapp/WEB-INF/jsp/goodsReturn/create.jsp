@@ -98,8 +98,8 @@
 																		<label>Name</label>
 																		<form:input type="text"
 																			cssClass="form-control vendorname"
-																			placeholder='Vendor Name' path="vendor.name"
-																			required="true" autocomplete="off" />
+																			placeholder='Vendor Name' path="vendor.name" 
+																			disabled="true" readonly="true" />
 																	</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
 																	<div class="col-sm-4 form-group">
@@ -111,14 +111,13 @@
 																	<div class="col-sm-4 form-group">
 																		<label>Contact</label>
 
-																		<form:select path="vendorContactDetails.id"
+																		<form:select path="vendorContactDetails.id" disabled="true" readonly="true"
 																			id="vendorContactDetails" cssClass="form-control"
 																			oninvalid="this.setCustomValidity('Please Select State ')"
 																			oninput="setCustomValidity('')">
-																			<form:option value="">Select</form:option>
+																			<form:option value=""></form:option>
 																		</form:select>
-																		<div style="color: red;" id="1_errorContainer"
-																			class="help-block with-errors"></div>
+																		 
 																	</div>
 																</div>
 
@@ -131,7 +130,7 @@
 																		<label>Pay To</label>
 																		<form:select path="vendorPayTypeAddress.id"
 																			id="vendorPayToAddress" cssClass="form-control"
-																			required="true">
+																			disabled="true" readonly="true">
 																			<form:option value="">Select</form:option>
 																		</form:select>
 																	</div>
@@ -140,7 +139,7 @@
 																		<label>Ship From</label>
 																		<form:select path="vendorShippingAddress.id"
 																			id="vendorAddress" cssClass="form-control"
-																			required="true">
+																			disabled="true" readonly="true">
 																			<form:option value="">Select</form:option>
 																		</form:select>
 																	</div>
@@ -149,7 +148,7 @@
 																		<label>Doc Number</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
-																			readonly="true" />
+																			readonly="true"/>
 																	</div>
 
 																</div>
@@ -163,20 +162,20 @@
 																					<label>Ref Doc No.</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number'
-																						path="referenceDocNumber" />
+																						path="referenceDocNumber" readonly="true" />
 																				</div>
 																				<div class="col-sm-4 form-group">
 																					<label>Posting Date</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Posting Date' path="postingDate"
-																						autocomplete="off" required="true" />
+																						readonly="true" />
 
 																				</div>
 																				<div class="col-sm-4 form-group">
 																					<label>Doc Date</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Document Date' path="documentDate"
-																						autocomplete="off" required="true" />
+																						readonly="true" />
 
 																				</div>
 																			</div>
@@ -190,7 +189,7 @@
 																					<form:input type="text" cssClass="form-control"
 																						id="require_date" placeholder='Required Date'
 																						autocomplete="off" path="requiredDate"
-																						required="true" />
+																						readonly="true" />
 
 																				</div>
 																				<div class="col-sm-4 form-group">&nbsp;</div>
@@ -905,7 +904,7 @@
 																				<div class="create-block">
 																					<div class="form-group">
 																						<label>Remark</label>
-																						<form:textarea type="text" cssClass="form-control"
+																						<form:input type="text" cssClass="form-control"
 																							placeholder='Enter your Remark'
 																							autocomplete="off" path="remark" />
 																					</div>
@@ -913,62 +912,69 @@
 																			</div>
 																			<div class="col-sm-4">&nbsp;</div>
 
-																			<div class="col-sm-4">
-																				<div class="form-group">
-																					<label>Discount(%) :</label>
+																			<div class="col-sm-4 create-po-wrap">
+																			
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Discount(%)</label>
 
 
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
-																						id="totalDiscount" placeholder='Total  DisCount '
+																						id="totalDiscount" placeholder='Total Discount '
 																						path="totalDiscount" autocomplete="off"
 																						readonly="true"
 																						onkeypress="return isNumericKey1(event)" />
 
 
 
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Before Discount : </label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Total Before Discount</label>
 
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Total Before Dis '
+																						placeholder='Total Before Discount '
 																						path="totalBeforeDisAmt" autocomplete="off"
 																						readonly="true" />
 
 
-																				</div>
-																				<div class="form-group">
-																					<label>Freight : </label>
+																				</div></div>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Freight</label>
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
 																						placeholder='Freight' path="freight"
 																						onkeypress="return isNumericKey(event)"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Rounding : </label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div>
-
-																				<div class="form-group">
-																					<label>Tax Amount :</label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Tax Amount</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Payment Due : </label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Total Payment Due</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Payment Due'
 																						path="totalPayment" autocomplete="off"
 																						readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				<div class="row">
+																					<div class="col-sm-12 form-group">
+																					<label>Rounding</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 																			</div>
 																		</div>
 
@@ -1173,7 +1179,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReturnLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="goodsReturnLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

@@ -374,11 +374,6 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${gre.amtRounding}</div>
-											</div>
-
-											<div class="form-group">
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
 											<div class="col-sm-6">: ${gre.taxAmt} </div>
 											</div>
@@ -386,6 +381,11 @@ text-align: left;
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
 												<div class="col-sm-6">: ${gre.totalPayment} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounding  </label></div>
+												<div class="col-sm-6"> : ${gre.amtRounding}</div>
 											</div>
 										</div>
 									

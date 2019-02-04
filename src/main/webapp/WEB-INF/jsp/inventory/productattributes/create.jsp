@@ -65,7 +65,7 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Product Attributes</label>
+																	<label for="timesheetinput1">Attributes</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control camelCase"

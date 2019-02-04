@@ -87,7 +87,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				pr = purchaseRequest;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -212,7 +212,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				rfq = requestForQuotation;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -242,7 +242,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				po = purchaseOrder;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -272,7 +272,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRec = goodsReceipt;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -302,7 +302,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -346,7 +346,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				inv = invoice;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -362,7 +362,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -391,7 +391,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(getSEND_EMAIL());
@@ -420,7 +420,7 @@ public class SendEmail extends EmailerGenerator{
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
 				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
-				mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(getSEND_EMAIL());

@@ -96,7 +96,7 @@
 																	<td>${list.desigination.desigination}</td> 
 																	<td>${list.department.name}</td>
 																	<td>${list.userEmail}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${list.createdAt}"/></td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'User'}">

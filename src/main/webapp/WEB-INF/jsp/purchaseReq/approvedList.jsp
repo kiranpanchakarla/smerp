@@ -91,8 +91,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${purchaseRequestsList.user.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${purchaseRequestsList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${purchaseRequestsList.updatedAt}"/></td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<td>
 																			<a class="btn btn-view">&nbsp;</a>

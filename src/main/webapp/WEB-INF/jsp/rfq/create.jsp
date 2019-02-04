@@ -91,6 +91,7 @@
 													<div class="card-block">
 													<form class="form">
 														<div class="form-body">
+														 
 															<div class="row">
 																<div class="col-sm-4 form-group">
 																	<label>Name</label>
@@ -107,7 +108,7 @@
 																		path="vendor.emailId"   />
 																</div>
                                                                 <div class="col-sm-4 form-group">
-																	<label>Contact Person </label>
+																	<label>Contact</label>
 
 																	<form:select path="vendorContactDetails.id"
 																		id="vendorContactDetails" cssClass="form-control"
@@ -144,7 +145,7 @@
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document Number</label>
+																				<label>Doc Number</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
@@ -158,7 +159,7 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document Number</label>
+																				<label>Ref Doc#</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber"  />
@@ -171,7 +172,7 @@
 																				
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>
+																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Date' path="documentDate"
 																					autocomplete="off" required="true" />
@@ -192,13 +193,13 @@
 																			</div>
                                                                             <div class="col-sm-4 form-group">
                                                                           <label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control camelCase"
+                                                                            <form:input type="text" cssClass="form-control camelCase"
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div>
 																		</div>
 																		
-																		
+																		 
 																		<div class="row" id="radioDiv">
 																			<div class="col-sm-6 form-group">
 																			<div class="input-group">
@@ -749,7 +750,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

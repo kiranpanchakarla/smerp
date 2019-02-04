@@ -90,8 +90,8 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>

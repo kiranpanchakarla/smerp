@@ -65,7 +65,7 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Product Group</label>
+																	<label for="timesheetinput1">Group</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control"

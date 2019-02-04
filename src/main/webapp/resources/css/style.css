@@ -1143,3 +1143,14 @@ h2.font-weight-normal {
 .dropdown.dropdown-user.nav-item:hover a {
     color: #ef752d !important;
 }
+
+.create-po-wrap .form-group label {
+    float: left;
+    display: inline-block;
+    width: 45%;
+}
+
+.create-po-wrap input, .create-po-wrap select {
+    float: left;
+    width: 55%;
+}

@@ -48,14 +48,14 @@
 													<h2 class="content-header-title">Company</h2>
 												</div>
 												<div class="col-md-6">
-												<c:forEach items="${sessionScope.umpmap}" var="ump">
+												<%-- <c:forEach items="${sessionScope.umpmap}" var="ump">
 										 <c:if test="${ump.key eq 'Company'}">
 										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
 	        									<a class="btn btn-primary" href="<c:url value="/company/create"/>">Create</a>
 	   										 </c:if>
 	       								</c:if>     
-   									 </c:forEach>
+   									 </c:forEach> --%>
 													 
 												</div>
 												<div class="col-md-4">
@@ -95,8 +95,8 @@
 																	<td>${companyList.gstinVat}</td>
 																	<td>${companyList.city}</td>
 																	<td>${companyList.webSite}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${companyList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${companyList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${companyList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${companyList.updatedAt}"/></td>
 																	<td >
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Company'}">
@@ -104,9 +104,9 @@
 																		<c:if test="${fn:containsIgnoreCase(permissions,'update')}"> 
 																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-edit left"></i></a>  
 																	 </c:if>
-									   								<c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
+									   								<%-- <c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin left"></i></a>
-															    	 </c:if> 
+															    	 </c:if>  --%>
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 															    	<a  class ="btn btn-view" href="<c:url value="/company/view?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i class="icon-eye3 left"></i></a>
 																	 </c:if> 

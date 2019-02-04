@@ -65,7 +65,7 @@
               
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
-              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
+               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP, do not reply. <br>
                                              Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>

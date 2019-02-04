@@ -96,6 +96,8 @@
 														<form class="form">
 															<div class="form-body">
 																<div class="row">
+																<!-- Direct Creation Start  -->
+																<c:if test="${gr.poId == null}">
 																	<div class="col-sm-4 form-group">
 																		<label>Name</label>
 																		<form:input type="text"
@@ -195,9 +197,115 @@
 																						required="true" />
 
 																				</div>
-																				<div class="col-sm-4 form-group">&nbsp;</div>
+																				</div> 
+																				
+																				</c:if>
+																			<!-- Direct Creation END -->
+																			
+																			<!-- PO to GR Conversion  -->
+																			
+																			<c:if test="${gr.poId!=null}">
+																			
+																			<div class="col-sm-4 form-group">
+																		<label>Name</label>
+																		<form:input type="text" disabled="true"
+																			cssClass="form-control vendorname camelCase"
+																			placeholder='Vendor Name' path="vendor.name"  readonly="true"/>
+																	</div>
+																	<form:hidden path="vendor.id" id="vendordata" />
+																	<div class="col-sm-4 form-group">
+																		<label>Email Id</label>
+																		<form:input type="text"  readonly="true"
+																			cssClass="form-control emailId"
+																			placeholder='Email Id' path="vendor.emailId" />
+																	</div>
+																	<div class="col-sm-4 form-group">
+																		<label>Contact</label>
+
+																		<form:select path="vendorContactDetails.id" disabled="true"
+																			id="vendorContactDetails" cssClass="form-control" readonly="true" 
+																			oninvalid="this.setCustomValidity('Please Select State ')"
+																			oninput="setCustomValidity('')">
+																			<form:option value=""></form:option>
+																		</form:select>
+																		 
+																	</div>
+																</div>
+
+																<form:hidden path="id" />
+
+																<div class="row">
 
 
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Pay To</label>
+																		<form:select path="vendorPayTypeAddress.id"
+																			id="vendorPayToAddress" cssClass="form-control"
+																			 readonly="true" disabled="true">
+																			<form:option value=""></form:option>
+																		</form:select>
+																	</div>
+
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Ship From</label>
+																		<form:select path="vendorShippingAddress.id"
+																			id="vendorAddress" cssClass="form-control"
+																			 readonly="true" disabled="true">
+																			<form:option value=""></form:option>
+																		</form:select>
+																	</div>
+
+																	<div class="col-sm-4 form-group">
+																		<label>Doc Number</label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='Document Number' path="docNumber"
+																			readonly="true" />
+																	</div>
+
+																</div>
+
+																<div class="card-body collapse in">
+																	<div class="card-block-in">
+																		<div class="form-body">
+
+																			<div class="row">
+																				<div class="col-sm-4 form-group">
+																					<label>Ref Doc No.</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number' readonly="true"
+																						path="referenceDocNumber" />
+																				</div>
+																				<div class="col-sm-4 form-group">
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control" readonly="true"
+																						placeholder='Posting Date' path="postingDate" />
+
+																				</div>
+																				<div class="col-sm-4 form-group">
+																					<label>Doc Date</label>
+																					<form:input type="text" cssClass="form-control" readonly="true"
+																						placeholder='Document Date' path="documentDate" />
+
+																				</div>
+																			</div>
+
+
+
+
+																			<div class="row">
+																				<div class="col-sm-4 form-group">
+																					<label>Required Date</label>
+																					<form:input type="text" cssClass="form-control" readonly="true"
+																						id="require_date" placeholder='Required Date'
+																						autocomplete="off" path="requiredDate" />
+
+																				</div>
+																				</div> 
+																			
+																			</c:if>
+																			
+																			<!-- PO to GR Conversion END -->
+																				<div class="row">
 																				<div class="row" id="radioDiv">
 																					<div class="card-block" style="clear: both;">
 																						<div class="col-sm-6 form-group">
@@ -296,7 +404,7 @@
 																											<th>Tax Total</th>
 																											<th>Total</th>
 																											<th>Group</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																											<th>Warehouse</th>
 																											<th>Quantity</th>
 																											<th>Action</th>
@@ -364,7 +472,7 @@
 																													<th>Description</th>
 																													<th>Quantity</th>
 																													<th>Unit Price</th>
-																													<th>Tax Code</th>
+																													<th>Tax %</th>
 																													<th>Tax Total</th>
 																													<th>Total</th>
 																													<th>Warehouse</th>
@@ -938,7 +1046,7 @@
 																				<div class="create-block">
 																					<div class="form-group">
 																						<label>Remark</label>
-																						<form:textarea type="text"
+																						<form:input type="text"
 																							cssClass="form-control camelCase"
 																							placeholder='Enter your Remark'
 																							autocomplete="off" path="remark" />
@@ -947,15 +1055,16 @@
 																			</div>
 																			<div class="col-sm-4">&nbsp;</div>
 
-																			<div class="col-sm-4">
-																				<div class="form-group">
-																					<label>Discount(%) :</label>
+																			<div class="col-sm-4 create-po-wrap">
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Discount(%)</label>
 																					<c:choose>
 																						<c:when test="${gr.poId!=null}">
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								id="totalDiscount"
-																								placeholder='Total  DisCount '
+																								placeholder='Total Discount '
 																								path="totalDiscount" autocomplete="off"
 																								readonly="true"
 																								onkeypress="return isNumericKey1(event)" />
@@ -964,30 +1073,30 @@
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								id="totalDiscount"
-																								placeholder='Total  DisCount '
+																								placeholder='Total Discount '
 																								path="totalDiscount" autocomplete="off"
 																								onkeypress="return isNumericKey1(event)" />
 																						</c:otherwise>
 																					</c:choose>
 
 
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Before Discount : </label>
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Total Before Discount</label>
 
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Total Before Dis '
+																						placeholder='Total Before Discount '
 																						path="totalBeforeDisAmt" autocomplete="off"
 																						readonly="true" />
 
 
-																				</div>
-
-
-
-																				<div class="form-group">
-																					<label>Freight : </label>
+																				</div></div>
+ 
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Freight</label>
 																					<c:choose>
 																						<c:when test="${gr.poId!=null}">
 																							<form:input type="text"
@@ -1004,34 +1113,33 @@
 																								autocomplete="off" />
 																						</c:otherwise>
 																					</c:choose>
-																				</div>
+																				</div></div>
 
 
-
-
-
-
-																				<div class="form-group">
-																					<label>Rounding : </label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div>
-
-																				<div class="form-group">
-																					<label>Tax Amount :</label>
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Tax Amount</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Payment Due : </label>
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Total Payment Due</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Payment Due'
 																						path="totalPayment" autocomplete="off"
 																						readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Rounding</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 																			</div>
 																		</div>
 
@@ -1144,7 +1252,7 @@
 
 <script type="text/javascript">
 
-var sizeplant = "${planMapSize}";
+var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
     scriptSelectPlant ='<option value="">select</option>';
@@ -1293,7 +1401,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

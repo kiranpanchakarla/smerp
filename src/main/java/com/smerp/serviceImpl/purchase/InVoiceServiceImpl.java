@@ -129,9 +129,35 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			}else {
 				 logger.info("convertd Po to GR Data -->" +inVoice);
 			}
+			 if(inVoice.getGrId() != null) { 
+				 GoodsReceipt gr = goodsReceiptService.findById(inVoice.getGrId());
+	        	
+				 Vendor vendor = vendorService.findById(gr.getVendor().getId());
+	     		VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
+	     		VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
+	     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
+
+	     		inVoice.setVendor(vendor);
+	     		inVoice.setVendorContactDetails(vendorsContactDetails);
+	     		inVoice.setVendorShippingAddress(vendorShippingAddress);
+	     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+	         }
 		}
          logger.info("inVoice -->" +inVoice);
-		Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+		
+         if(inVoice.getGrId()==null) { 
+        	 Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+     		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
+     		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
+     		
+     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(inVoice.getVendorContactDetails().getId());
+
+     		inVoice.setVendor(vendor);
+     		inVoice.setVendorContactDetails(vendorsContactDetails);
+     		inVoice.setVendorShippingAddress(vendorShippingAddress);
+     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+         }
+        Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
 		

@@ -65,7 +65,7 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Currency Name</label>
+																	<label for="timesheetinput1">Name</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control capitalCase"
@@ -79,8 +79,7 @@
 																	</div>
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Currency
-																		Description</label>
+																	<label for="timesheetinput2"> Description</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Currency Description' path="description"

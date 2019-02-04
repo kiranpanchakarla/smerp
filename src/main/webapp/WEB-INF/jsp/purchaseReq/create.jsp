@@ -316,7 +316,7 @@
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
-																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"  required="true"
+																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}" maxlength='5'  required="true"
 																															class="form-control validatePrice"></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:select class="form-control"
@@ -360,7 +360,7 @@
 																				<div class="row">
 																			<div class="col-sm-4 form-group">
                                                                           <label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control camelCase"
+                                                                            <form:input type="text" cssClass="form-control camelCase"
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remarks"  />
                                                                            </div>
@@ -567,7 +567,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			

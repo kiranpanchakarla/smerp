@@ -99,6 +99,17 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			purchaseOrder.setPurchaseOrderlineItems(listItems);
 		}
 		
+		if(purchaseOrder.getRfqId()==null) {
+			Vendor vendor = vendorService.findById(purchaseOrder.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(purchaseOrder.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(purchaseOrder.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(purchaseOrder.getVendorContactDetails().getId());
+
+			purchaseOrder.setVendor(vendor);
+			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
+			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
+			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+		}
 		
 		if (purchaseOrder.getId() != null) { // delete List Of Items.
 			PurchaseOrder purchaseOrderlineItems = purchaseOrderRepository
@@ -112,6 +123,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				if(requestLists.size()>0 && requestLists!=null) {
 					purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
 					}
+				
 			
 			}else {  // Convert mode set Amount
 				List<PurchaseOrderLineItems> header_listItems = purchaseOrder.getPurchaseOrderlineItems();
@@ -139,19 +151,22 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 					purchaseOrder.setPurchaseOrderlineItems(lineItems);
 				}
 			}
+		
+			
+			if(purchaseOrder.getRfqId()!=null) {
+			RequestForQuotation rfq = requestForQuotationService.findById(purchaseOrder.getRfqId());  
+			Vendor vendor = vendorService.findById(rfq.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(rfq.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(rfq.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(rfq.getVendorContactDetails().getId());
+
+			purchaseOrder.setVendor(vendor);
+			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
+			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
+			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+			}
 		}
 
-		Vendor vendor = vendorService.findById(purchaseOrder.getVendor().getId());
-		VendorAddress vendorShippingAddress = vendorAddressService.findById(purchaseOrder.getVendorShippingAddress().getId());
-		VendorAddress vendorPayAddress = vendorAddressService.findById(purchaseOrder.getVendorPayTypeAddress().getId());
-		
-		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(purchaseOrder.getVendorContactDetails().getId());
-
-		purchaseOrder.setVendor(vendor);
-		purchaseOrder.setVendorContactDetails(vendorsContactDetails);
-		purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
-		purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
-		
 		if(purchaseOrder.getStatusType()!=null &&  purchaseOrder.getStatusType().equals("APP")) {
 			try {
 			   	purchaseOrder =getListAmount(purchaseOrder);

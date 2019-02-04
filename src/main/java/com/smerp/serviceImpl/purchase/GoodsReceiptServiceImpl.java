@@ -108,6 +108,18 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			goodsReceipt.setGoodsReceiptLineItems(listItems);
 		}
 		
+		if (goodsReceipt.getId() == null) {
+			Vendor vendor = vendorService.findById(goodsReceipt.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReceipt.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReceipt.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(goodsReceipt.getVendorContactDetails().getId());
+
+			goodsReceipt.setVendor(vendor);
+			goodsReceipt.setVendorContactDetails(vendorsContactDetails);
+			goodsReceipt.setVendorShippingAddress(vendorShippingAddress);
+			goodsReceipt.setVendorPayTypeAddress(vendorPayAddress);
+		}
+		
 		if (goodsReceipt.getId() != null) { // delete List Of Items.
 			GoodsReceipt goodsReceiptObj = goodsReceiptRepository
 					.findById(goodsReceipt.getId()).get();
@@ -150,18 +162,24 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				}
 				 logger.info("convertd Po to GR Data -->" +goodsReceipt);
 			}
+			
+			if(goodsReceipt.getPoId()!=null) {
+				PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+				
+				Vendor vendor = vendorService.findById(po.getVendor().getId());
+				VendorAddress vendorShippingAddress = vendorAddressService.findById(po.getVendorShippingAddress().getId());
+				VendorAddress vendorPayAddress = vendorAddressService.findById(po.getVendorPayTypeAddress().getId());
+				VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(po.getVendorContactDetails().getId());
+
+				goodsReceipt.setVendor(vendor);
+				goodsReceipt.setVendorContactDetails(vendorsContactDetails);
+				goodsReceipt.setVendorShippingAddress(vendorShippingAddress);
+				goodsReceipt.setVendorPayTypeAddress(vendorPayAddress);
+			}
+			
 		}
          logger.info("goodsReceipt -->" +goodsReceipt);
-		Vendor vendor = vendorService.findById(goodsReceipt.getVendor().getId());
-		VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReceipt.getVendorShippingAddress().getId());
-		VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReceipt.getVendorPayTypeAddress().getId());
 		
-		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(goodsReceipt.getVendorContactDetails().getId());
-
-		goodsReceipt.setVendor(vendor);
-		goodsReceipt.setVendorContactDetails(vendorsContactDetails);
-		goodsReceipt.setVendorShippingAddress(vendorShippingAddress);
-		goodsReceipt.setVendorPayTypeAddress(vendorPayAddress);
 		
 		if(goodsReceipt.getStatusType()!=null &&  goodsReceipt.getStatusType().equals("APP")) {
 			try {

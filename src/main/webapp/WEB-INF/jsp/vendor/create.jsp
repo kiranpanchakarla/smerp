@@ -76,7 +76,7 @@ $(document).ready(function(){
 														<div class="form-body">
 															<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label>Vendor Code</label>
+																	<label>Code</label>
 																	<form:input type="text" class="form-control camelCase"
 																		placeholder='Vendor Code' path="vendorCode" value=""
 																		onchange="isValidName('vendorCode','/vendor/isValidVendorCode','1_errorContainer','Vendor Code Already Exists')"
@@ -87,7 +87,7 @@ $(document).ready(function(){
 																</div>
 
 																<div class="col-sm-4 form-group">
-																	<label>Vendor Name</label>
+																	<label>Name</label>
 																	<form:input type="text" class="form-control camelCase"
 																		placeholder='Vendor Name' path="name" value=""
 																		onchange="isValidName('name','/vendor/isValidVendorName','1_errorContainer','Vendor Name Already Exists')"

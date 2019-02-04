@@ -132,7 +132,7 @@ $(document).ready(function(){
 																		<div class="col-sm-6 form-group">
 																		<div class="inventory-list">
 																			<!-- <label>With old Tax Liable</label> -->
-																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" required="true" /><span class="radio-list">Withholding Tax Liable</span>
+																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable"  /><span class="radio-list">Withholding Tax Liable</span>
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		</div>
@@ -243,11 +243,14 @@ $(document).ready(function(){
 																	
 																	<div class="row">
                                                                         <div class="col-sm-6 form-group">
-                                                                            <label>Preferred Vendor</label>
-                                                                            <form:input path="preferredVendor" placeholder ="Please Select Vendor Name" class="form-control vendorname camelCase" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
-                                                                            <!-- <div  class="help-block with-errors"></div> -->
-                                                                        </div>
-																	
+                                                                           <label>Preferred Vendor</label>
+                                                                           <form:input path="preferredVendor"
+                                                                           placeholder ="Please Select Vendor Name"
+                                                                           class="form-control vendorname camelCase"
+                                                                           required="true" autocomplete="off" />
+
+                                                                           <!-- <div  class="help-block with-errors"></div> -->
+                                                                       </div>
 																		<div class="col-sm-6 form-group">
 																			<label>Purchasing UOM </label>
 																			

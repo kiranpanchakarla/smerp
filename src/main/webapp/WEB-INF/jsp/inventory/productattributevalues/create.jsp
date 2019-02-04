@@ -66,7 +66,7 @@
 																<div class="row">
 																<div class="col-sm-4 form-group">
 																
-																    <label>Product Attributes</label>
+																    <label>Attributes</label>
 																		<form:select id="productAttributes" path="productAttributes.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
 																			<c:forEach items="${productAttributesList}" var="productAttributesList">

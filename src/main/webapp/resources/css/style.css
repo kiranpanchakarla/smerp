@@ -1153,4 +1153,69 @@ h2.font-weight-normal {
 .create-po-wrap input, .create-po-wrap select {
     float: left;
     width: 55%;
+ }
+
+.po-wrap-list li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 5px;
+    width: auto;
+    vertical-align: top
 }
+
+.po-wrap-list {
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+.po-wrap-list li:last-child {
+    width: auto;
+}
+
+.po-wrap-list li:last-child ul {
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+}
+
+.po-wrap-list li:last-child li {
+    width: auto;
+}
+.po-wrap-list label {
+    float: left;
+    display: inline-block;
+    width: auto;
+    padding-right: 5px;
+}
+.po-wrap-list select, .po-wrap-list input[type="text"], .po-wrap-list input[type="date"] {
+    float: left;
+    width: 60%;
+}
+.po-wrap-list.last-list select, .po-wrap-list.last-list input[type=text] {
+    width: auto;
+}
+.last-list-full{width: 85% !important;}
+.card-dashboard .form {
+    margin-bottom: 0px;
+}
+.po-list-dashboard .form-group {
+    margin-bottom: 0px;
+}
+.full-group input[type="text"]{width:100% !important;}
+.po-wrap-list select {
+    padding: 1px !important;
+}
+.po-wrap-list .btn {
+    font-size: 13px;
+    padding: 0.3rem 0.7rem;
+    vertical-align: top;
+}
+.po-wrap-list input[type="text"], .po-wrap-list input[type="date"] {
+    padding: 2px !important;
+    vertical-align: top;
+    line-height: 0px !important;
+}
+.po-wrap-list select {
+    height: auto !important;
+}
+.po-list-dashboard{padding: 0.5rem 1.5rem !important;}
+

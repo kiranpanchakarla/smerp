@@ -15,22 +15,33 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.smerp.model.admin.Department;
+import com.smerp.model.admin.User;
 import com.smerp.model.master.AuditModel;
 
 @Entity
-@Table(name="tbl_inventory_goods_issue")
-public class InventoryGoodsIssue extends AuditModel {
+@Table(name="tbl_inventory_goods_transfer")
+public class InventoryGoodsTransfer extends AuditModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id" , nullable = false , unique = true)
 	private Integer id;
+	
+	@Column(name="business_partner")
+    private String businessPartner;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="user_id", referencedColumnName = "user_id")
+	private User user;
+	
+	 
 	
 	@Column(name="doc_number")
     private String docNumber;
@@ -57,8 +68,8 @@ public class InventoryGoodsIssue extends AuditModel {
 	private String remarks;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "inv_goods_issue_id", referencedColumnName = "id" )
-	private List<InventoryGoodsIssueList> inventoryGoodsIssueList;
+	@JoinColumn(name = "inv_goods_transfer_id", referencedColumnName = "id" )
+	private List<InventoryGoodsTransferList> inventoryGoodsTransferList;
 	 
 	@Column(name="is_active")
 	private Boolean isActive = true;
@@ -68,6 +79,17 @@ public class InventoryGoodsIssue extends AuditModel {
 
 	@Column(name = "total_payment")
 	private Double totalPayment ;
+	
+	@Column(name = "to_warehouse")
+	private Integer toWarehouse;
+
+	public Integer getToWarehouse() {
+		return toWarehouse;
+	}
+
+	public void setToWarehouse(Integer toWarehouse) {
+		this.toWarehouse = toWarehouse;
+	}
 
 	public String getStatusType() {
 		return statusType;
@@ -144,14 +166,6 @@ public class InventoryGoodsIssue extends AuditModel {
 		this.remarks = remarks;
 	}
 
-	 public List<InventoryGoodsIssueList> getInventoryGoodsIssueList() {
-		return inventoryGoodsIssueList;
-	}
-
-	public void setInventoryGoodsIssueList(List<InventoryGoodsIssueList> inventoryGoodsIssueList) {
-		this.inventoryGoodsIssueList = inventoryGoodsIssueList;
-	} 
-
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -213,4 +227,32 @@ public class InventoryGoodsIssue extends AuditModel {
 	public void setTotalBeforeDisAmt(Double totalBeforeDisAmt) {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
+	
+	public String getBusinessPartner() {
+		return businessPartner;
+	}
+
+	public void setBusinessPartner(String businessPartner) {
+		this.businessPartner = businessPartner;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<InventoryGoodsTransferList> getInventoryGoodsTransferList() {
+		return inventoryGoodsTransferList;
+	}
+
+	public void setInventoryGoodsTransferList(List<InventoryGoodsTransferList> inventoryGoodsTransferList) {
+		this.inventoryGoodsTransferList = inventoryGoodsTransferList;
+	}
+	
+	
+
 }

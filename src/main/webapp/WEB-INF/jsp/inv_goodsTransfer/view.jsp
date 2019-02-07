@@ -55,7 +55,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Inventory Goods Issue</h2>
+													<h2 class="card-title" id="basic-layout-icons">Inventory Goods Receipt</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -129,7 +129,7 @@ text-align: left;
 																						
                                                                                     
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty inventoryGoodsIssueList}">
+																										<c:if test="${not empty inventoryGoodsReceiptList}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -141,16 +141,16 @@ text-align: left;
 																									<th>S.no</th>
 																									<th>Product#</th>
 																									<th>Description</th>
-																											<th>Quantity</th>
-																											<th>Unit Price</th>
-																											<th>Tax %</th>
-																											<th>Tax Total</th>
-																											<th>Total</th>
-																											<th>Warehouse</th>
-																											<th>Department</th>
-																											<th>Group</th>
-																											<th>HSN</th>
-																											<th>UOM</th>
+																									<th>UOM</th>
+																									<th>SKU</th>
+																									<th>Unit Price</th>
+																									<th>Tax %</th>
+																									<th>Tax Total</th>
+																									<th>Total</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
+																									<th>Warehouse</th>
+																									<th>Quantity</th>
 																									
 																									
 																									
@@ -160,25 +160,26 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${inventoryGoodsIssueList}"
+																											<c:forEach items="${inventoryGoodsReceiptList}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="inventoryGoodsIssueList[${count}].productId"
+																															path="inventoryGoodsReceiptList[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="inventoryGoodsIssueList[${count}].id"/>	
+																												<form:hidden path="inventoryGoodsReceiptList[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																													
 																													<td>${listLineItems.productNumber}</td>
 																													<td>${listLineItems.description}</td>
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.uom}</td>
+																													<td>${listLineItems.sku}</td>
 																													
-																													 
+																													
 																															<td>${listLineItems.unitPrice}</td>
 																															<td><c:forEach var="entry"
 																																items="${taxCodeMap}">
@@ -188,7 +189,8 @@ text-align: left;
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
-																														
+																														<td>${listLineItems.productGroup}</td>
+																														<td>${listLineItems.hsn}</td>
 
 																												<td><c:forEach var="entry"
 																														items="${plantMap}">
@@ -197,17 +199,8 @@ text-align: left;
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
 																													
-																													<td><c:forEach var="entry1"
-																														items="${deptMap}">
-																														<c:if
-																															test="${entry1.key ==listLineItems.department}">
-																													 ${entry1.value} 																													 </c:if>
-																													</c:forEach></td>
-																													<td>${listLineItems.productGroup}</td>
-																													<td>${listLineItems.uom}</td>
-																													
-																														<td>${listLineItems.hsn}</td>
-																													
+																													<td>${listLineItems.requiredQuantity}</td>
+
 																												
 																													
 																													
@@ -253,7 +246,8 @@ text-align: left;
 										<div class="col-sm-4 create-po-wrap">
 										
 											<div class="row">
-											<div class="col-sm-6 form-group"> <label>Discount(%) </label></div>
+											<div class="col-sm-6 form-group">
+											<label>Discount(%) </label></div>
 											<div class="col-sm-6">:	${gr.totalDiscount} </div>
 											</div>
 
@@ -285,7 +279,13 @@ text-align: left;
 										</div>
 									
 									</div>		
-									 		<!--Calculation Part  -->
+											
+											
+											
+											
+											
+											
+											<!--Calculation Part  -->
 									
 									<div class="card-block">
 									<div class="row">
@@ -308,7 +308,7 @@ text-align: left;
 										             
 												         
 												         
-												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgi/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												 </div>
 										</div>

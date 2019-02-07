@@ -62,15 +62,15 @@
                 <td style="border: solid 1px ;"><strong >S.no</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Name</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
-                <td style="border: solid 1px ;"><strong >UOM</strong></td>
-                <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
+                <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
+                <td style="border: solid 1px ;"><strong >Department</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
-                <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
+                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
                 <#list gr.inventoryGoodsIssueList as goodsReclist>
@@ -78,8 +78,6 @@
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.productNumber??>&nbsp;${goodsReclist.productNumber}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.description??>&nbsp;${goodsReclist.description}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.uom??>&nbsp;${goodsReclist.uom}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if goodsReclist.sku??>&nbsp;${goodsReclist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
@@ -87,14 +85,13 @@
                 <#list taxCodeMap as key, value>
                 <#if (goodsReclist.taxCode) == (key)>
                      <p> ${value}</p>
-                     </#if>
+                      </#if>
                 </#list>
                   </#if>
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
-                <td style="border: solid 1px ;"> <#if goodsReclist.productGroup??>&nbsp;${goodsReclist.productGroup}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                 <td style="border: solid 1px ;">
                 
                 <#list plantMap as key, value>
                 <#if (goodsReclist.warehouse) == (key)>
@@ -103,6 +100,18 @@
                 </#list>
                 
                 </td>
+                 <td style="border: solid 1px ;">
+                
+                <#list deptMap as key, value>
+                <#if (goodsReclist.department) == (key)>
+                     <p>&nbsp;${value}</p>
+                      </#if>
+                </#list>
+                
+                </td>
+                <td style="border: solid 1px ;"> <#if goodsReclist.productGroup??>&nbsp;${goodsReclist.productGroup}<#else>--</#if></td>
+               
+                <td style="border: solid 1px ;"><#if goodsReclist.uom??>&nbsp;${goodsReclist.uom}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.hsn??>&nbsp;${goodsReclist.hsn}<#else>--</#if></td>
                 </tr>
                 </#list>

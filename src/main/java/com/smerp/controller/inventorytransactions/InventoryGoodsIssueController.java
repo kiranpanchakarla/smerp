@@ -30,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.repository.admin.TaxCodeRepository;
+import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.master.PlantService;
@@ -62,6 +64,9 @@ public class InventoryGoodsIssueController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	DepartmentService departmentService;
 
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
@@ -87,6 +92,10 @@ public class InventoryGoodsIssueController {
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
+	
+	public Map<Integer, Object> deptMap() {
+		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
+	}
 
 	@GetMapping(value = "/create")
 	public String create(Model model, InventoryGoodsIssue invGoodsIssue) throws JsonProcessingException {
@@ -96,7 +105,9 @@ public class InventoryGoodsIssueController {
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("plantMap", plantMap());
+		model.addAttribute("deptMap",deptMap());
 		model.addAttribute("plantMapSize", plantMap().size());
+		model.addAttribute("departmentListSize", deptMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		InventoryGoodsIssue invgr = inventoryGoodsIssueService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
@@ -147,7 +158,12 @@ public class InventoryGoodsIssueController {
 			model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 			model.addAttribute("plantMap", plantMap());
 			model.addAttribute("plantMapSize", plantMap().size());
+			model.addAttribute("deptMap", deptMap());
+			model.addAttribute("departmentListSize", deptMap().size());
 			model.addAttribute("taxCodeMap", taxCode());
+			model.addAttribute("productList",
+					mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+			model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 			 
 			model.addAttribute("gr", invGR);
 			return "inv_goodsIssue/create";
@@ -162,6 +178,7 @@ public class InventoryGoodsIssueController {
 				model.addAttribute("gr", invGR);
 				model.addAttribute("plantMap", plantMap());
 				model.addAttribute("taxCodeMap", taxCode());
+				model.addAttribute("deptMap", deptMap());
 				return "inv_goodsIssue/view";
 			}
 		 

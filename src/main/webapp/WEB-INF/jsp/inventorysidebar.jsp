@@ -24,11 +24,11 @@
 							class="icon-ios-arrow-right right"></i></a>
 			<%--	</c:if> --%>
 
-				<%-- <c:if test="${ump.key eq 'RFQ'}">
-					<li><a href="<c:url value =""/>"><i
-							class="icon-record left"></i><span class="menu_text">Inventory Transfer</span><span class="menu_text_pad">&nbsp;</span><i
+				<%-- <c:if test="${ump.key eq 'RFQ'}"> --%>
+					<li><a href="<c:url value ="/invgt/list"/>"><i
+							class="icon-record left"></i><span class="menu_text">Goods Transfer</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
-				</c:if> --%>
+				<%-- </c:if> --%>
 
 				<%-- <c:if test="${ump.key eq 'Convert To PO'}">
 					<li><a href="<c:url value ="/rfq/approvedList"/>"><i

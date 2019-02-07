@@ -260,7 +260,7 @@
            <ul class="sub_menu">
            <li class="has_sub"><a href="<c:url value ="/invgr/list"/>">Goods Receipt</a></li>
             <li class="has_sub"><a href="<c:url value ="/invgi/list"/>">Goods Issue</a></li>
-              <li class="has_sub"><a href="<c:url value =""/>">Inventory Transfer</a></li>
+              <li class="has_sub"><a href="<c:url value ="/invgt/list"/>">Goods Transfer</a></li>
               </ul>
              </li>
           <%--  <li class="has_sub"><a href="<c:url value =""/>">Approval Templates</a></li> --%>

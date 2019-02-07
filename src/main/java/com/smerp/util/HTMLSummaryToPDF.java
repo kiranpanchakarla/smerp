@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,7 @@ import com.smerp.controller.purchase.PurchaseOrderController;
 import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
+import com.smerp.model.admin.Department;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -34,6 +36,7 @@ import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.service.purchase.CreditMemoService;
@@ -135,6 +138,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	@Autowired
 	InventoryGoodsIssueService inventoryGoodsIssueService;
+	
+	@Autowired
+	DepartmentService departmentService;
 	
  /*    
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
@@ -454,6 +460,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		logger.info("plantMap-->" + purchaseOrderController.plantMap());
     		input.put("plantMap", purchaseOrderController.plantMap());
     		input.put("taxCodeMap", purchaseOrderController.taxCode());
+    		input.put("deptMap", deptMap());
     		input.put("user", getUser());
     		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     		getTemplate().process(input, out);
@@ -465,6 +472,9 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		os.close();
     		return file.getAbsolutePath();
     	}
+    public Map<Integer, Object> deptMap() {
+		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
+	}
 	@Override
 	protected MimeMessagePreparator createMessage(String mailTo) {
 		// TODO Auto-generated method stub

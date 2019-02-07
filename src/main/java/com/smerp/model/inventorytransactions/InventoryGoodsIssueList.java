@@ -2,11 +2,15 @@ package com.smerp.model.inventorytransactions;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.smerp.model.admin.Department;
 import com.smerp.model.master.AuditModel;
 
 @Entity
@@ -182,4 +186,16 @@ public class InventoryGoodsIssueList extends AuditModel {
 	public void setTotal(String total) {
 		this.total = total;
 	}
+	
+	public Integer getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Integer department) {
+		this.department = department;
+	}
+
+	
+	@Column(name="department_id")
+	private Integer department;
 }

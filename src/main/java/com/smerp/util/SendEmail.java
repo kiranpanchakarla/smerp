@@ -4,6 +4,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -17,12 +19,14 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.smerp.controller.inventorytransactions.InventoryGoodsIssueController;
 import com.smerp.controller.purchase.GoodsReceiptController;
 import com.smerp.controller.purchase.GoodsReturnController;
 import com.smerp.controller.purchase.PurchaseOrderController;
 import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
+import com.smerp.model.admin.Department;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -34,6 +38,7 @@ import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DashboardCountService;
+import com.smerp.service.admin.DepartmentService;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -60,6 +65,9 @@ public class SendEmail extends EmailerGenerator{
 	GoodsReturnController goodsReturnController;
 	
 	@Autowired
+	DepartmentService departmentService;
+	
+	@Autowired
 	DashboardCountService dashboardCountService;
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
@@ -73,6 +81,10 @@ public class SendEmail extends EmailerGenerator{
 	private CreditMemo credit;
 	private InventoryGoodsReceipt invgr;
 	private InventoryGoodsIssue invgi;
+	
+	public Map<Integer, Object> deptMap() {
+		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
+	}
 	
 	public void sendPREmail(PurchaseRequest purchaseRequest) throws Exception {
 		 if (shouldNotify()) {
@@ -120,6 +132,7 @@ public class SendEmail extends EmailerGenerator{
 			input.put("credit", getCreditMemo());
 			input.put("gr", getInventoryGoodsReceipt());
 			input.put("gr", getInventoryGoodsIssue());
+			input.put("deptMap", deptMap());
 			input.put("plantMap", purchaseRequestController.plantMap());
 			input.put("taxCodeMap", purchaseOrderController.taxCode());
 			input.put("contextPath", RequestContext.get().getContextPath());

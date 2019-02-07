@@ -59,7 +59,7 @@
 					<div class="large-12 columns">
 						<div class="content-body">
 
-							<c:url value="/invgi/save" var="createUrl" />
+							<c:url value="/invgt/save" var="createUrl" />
 							<form:form method="POST" action="${createUrl}" id="form"
 								class="bv-form commentForm" enctype="multipart/form-data"
 								modelAttribute="gr" data-toggle="validator" role="form">
@@ -72,14 +72,14 @@
 													<div class="col-md-6">
 														<c:if test="${gr.id!=null}">
 															<h2 class="card-title" id="basic-layout-icons">Update
-																Inventory Goods Issue</h2>
+																Inventory Goods Transfer</h2>
 															<form:input type="hidden" cssClass="form-control"
 																path="id" />
 														</c:if>
 
 														<c:if test="${gr.id==null}">
 															<h2 class="card-title" id="basic-layout-icons">Create
-																Inventory New Goods Issue</h2>
+																Inventory New Goods Transfer</h2>
 														</c:if>
 													</div>
 													<div class="col-md-6">
@@ -95,10 +95,16 @@
 														<form class="form">
 															<div class="form-body">
 																 
-
 																<form:hidden path="id" />
 
-															<div class="row">
+																<div class="row">
+																
+																<div class="col-sm-6 form-group">
+																                <label>Business Partner</label>
+																					<form:input type="text" cssClass="form-control"
+																						value="${user.company.name}" readonly = "true" path="businessPartner" />
+																				</div>
+
 
 																	<div class="col-sm-6 form-group">
 																		<label>Doc Number</label>
@@ -107,8 +113,20 @@
 																			readonly="true" />
 																	</div>
 																	
+																</div>
+																
+																<div class="row">
+
 																	<div class="col-sm-6 form-group">
-																                <label>Ref Doc No.</label>
+																		<label>Name</label>
+																		<form:input type="text" class="form-control"  
+																		 path="user.username" readonly="true" value="${user.username}" 
+																		  required="true" oninput="setCustomValidity('')" />
+                                                                            <form:hidden path="user.userId" class="userId" />
+																	</div>
+																	
+																	<div class="col-sm-6 form-group">
+																                <label>Status</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Doc Number'
 																						path="referenceDocNumber" />
@@ -131,6 +149,18 @@
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Document Date' path="documentDate"
 																						autocomplete="off" required="true" />
+
+																				</div> 
+																				
+																				
+																				<div class="col-sm-6 form-group">
+																					<label>Ship To</label>
+																					<form:select class="form-control"
+																					  required="true"
+																					 path="toWarehouse">
+																					 <form:option value="" label="Select" />
+																					 <form:options items="${plantMap}" />
+																					 </form:select>
 
 																				</div> 
 																				 
@@ -157,16 +187,14 @@
 																											<th style="display: none;">Product Id</th>
 																											<th>Product#</th>
 																											<th>Description</th>
+																											<th>Ship From</th>
+																											<th>Ship To</th>
 																											<th>Quantity</th>
-																											<th>Unit Price</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Warehouse</th>
-																											<th>Department</th>
-																											<th>Group</th>
-																											<th>HSN</th>
 																											<th>UOM</th>
+																											<th>HSN Code</th>
 																											<th>Action</th>
 																										</tr>
 																									</thead>
@@ -176,7 +204,7 @@
 																								</table>
   
 																								<!--1 multiply Dynamically Load   -->
-																							 	<c:if test="${not empty inventoryGoodsIssueList}"> 
+																							 	<c:if test="${not empty inventoryGoodsTransferList}"> 
 																									 <form:hidden path="id" /> 
 																									<table
 																										class="table table-bordered table-striped item-service-table"
@@ -189,16 +217,15 @@
 																												 
 																											<th>Product#</th>
 																											<th>Description</th>
-																											<th>Quantity</th>
-																											<th>Unit Price</th>
+																											<th>UOM</th>
+																											<th>SKU</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Warehouse</th>
-																											<th>Department</th>
 																											<th>Group</th>
-																											<th>HSN</th>
-																											<th>UOM</th>
+																											<th>HSN Code</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																											<th>Action</th>
 																												 
 
@@ -207,23 +234,23 @@
 
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${inventoryGoodsIssueList}"
+																											<c:forEach items="${inventoryGoodsTransferList}"
 																												var="listLineItems">
   
 																													<tr class="multTot multTot${count}">
 																														<td style="display: none;"><div
 																																class="form-group">
 																																<form:input type="hidden"
-																																	path="inventoryGoodsIssueList[${count}].productId"
+																																	path="inventoryGoodsTransferList[${count}].productId"
 																																	value="${listLineItems.productId}"
 																																	class="form-control productId"></form:input>
 																															</div> <form:hidden
-																																path="inventoryGoodsIssueList[${count}].id" />
+																																path="inventoryGoodsTransferList[${count}].id" />
 																														</td>
  
 																															<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].productNumber"
+																																		path="inventoryGoodsTransferList[${count}].productNumber"
 																																		required="true"
 																																		value="${listLineItems.productNumber}"
 																																		class="form-control productNumber"></form:input>
@@ -232,18 +259,44 @@
 																															<td>
 																																<div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].description"
+																																		path="inventoryGoodsTransferList[${count}].description"
 																																		onkeypress="return isNumericKey(event)"
 																																		required="true"
 																																		value="${listLineItems.description}"
 																																		class="form-control description validatePrice"></form:input>
 																																</div>
 																															</td>
-
-																																
+																															
 																																<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" required="true"
+																																		path="inventoryGoodsTransferList[${count}].fromWarehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+																																
+																																	<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" required="true"
+																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+																																
+																																	<td><div class="form-group">
+																																	<form:select class="form-control"
+																																		style="width:;" required="true"
+																																		path="inventoryGoodsTransferList[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+																																	<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].requiredQuantity"
+																																		path="inventoryGoodsTransferList[${count}].requiredQuantity"
 																																		value="${listLineItems.requiredQuantity}"
 																																		onkeypress="return isNumericKey(event)"
 																																		class="form-control requiredQuantity validatePrice"
@@ -252,19 +305,10 @@
 
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
-																																		path="inventoryGoodsIssueList[${count}].unitPrice"
-																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.unitPrice}"
-																																		class="form-control unitPrice validatePrice"></form:input>
-																																</div></td>
-
-
-																															<td><div class="form-group">
 																																	<form:select
 																																		class="form-control taxCode"
-																																		 required="true"
-																																		path="inventoryGoodsIssueList[${count}].taxCode">
+																																		style="width:;" required="true"
+																																		path="inventoryGoodsTransferList[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select>
@@ -273,7 +317,7 @@
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].taxTotal"
+																																		path="inventoryGoodsTransferList[${count}].taxTotal"
 																																		value="${listLineItems.taxTotal}"
 																																		onkeypress="return isNumericKey(event)"
 																																		class="form-control taxTotal "
@@ -282,58 +326,29 @@
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].total"
+																																		path="inventoryGoodsTransferList[${count}].total"
 																																		value="${listLineItems.total}"
 																																		onkeypress="return isNumericKey(event)"
 																																		class="form-control total"
 																																		readonly="true"></form:input>
 																																</div></td>
-																																
-																																
-																															<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		  required="true"
-																																		path="inventoryGoodsIssueList[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
-																																
-																																<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		  required="true"
-																																		path="inventoryGoodsIssueList[${count}].department">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${deptMap}" />
-																																	</form:select>
-																																</div></td>
 
-
-																															<td><div class="form-group">
-																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].productGroup"
-																																		value="${listLineItems.productGroup}"
-																																		class="form-control productGroup"
-																																		readonly="true"></form:input>
-																																</div></td>
-																																
 																																<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].uom"
+																																		path="inventoryGoodsTransferList[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
+																																
+																																<td><div class="form-group">
 																																	<form:input type="text"
-																																		path="inventoryGoodsIssueList[${count}].hsn"
+																																		path="inventoryGoodsTransferList[${count}].hsn"
 																																		value="${listLineItems.hsn}"
 																																		class="form-control hsnVal"
 																																		readonly="true"></form:input>
 																																</div></td>
-
-
  
 																														<td class="text-center"><a
 																															onclick="removeData2(${count})"
@@ -468,7 +483,7 @@
 
 																		<div class="text-xs-center">
 
-																			<a href="<c:url value="/invgi/list"/>"
+																			<a href="<c:url value="/invgt/list"/>"
 																				class="btn btn-primary float-left"> Back </a>
 
 
@@ -498,7 +513,7 @@
 																			</c:if>
 																			<!-- Approve -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -512,7 +527,7 @@
 																			</c:forEach>
 																			<!-- Reject -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -572,12 +587,6 @@ var scriptSelectPlant='';
 if(sizeplant>1) {
     scriptSelectPlant ='<option value="">select</option>';
      }
-var sizeplant = "${departmentListSize}";
-var scriptSelectDept='';
-if(sizeplant>1) {
-    scriptSelectDept ='<option value="">select</option>';
-     } 
-     
 var inc=0;
 var edit_addressCount=0;
 
@@ -617,38 +626,61 @@ function addItem() {
 	        
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].productNumber" autocomplete="off"  class="form-control productNumber productNumber'+inc+'" required="true" id="productNumber'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].productNumber" autocomplete="off"  class="form-control productNumber productNumber'+inc+'" required="true" id="productNumber'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td style="display:none;">'
 			+'<div class="form-group">'
-			+'<input type="hidden" name="inventoryGoodsIssueList['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
+			+'<input type="hidden" name="inventoryGoodsTransferList['+inc+'].productId" class="form-control productId productId'+inc+'" id="productId'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].description" required="true" autocomplete="off"  class="form-control description '+inc+'" id="description'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].description" required="true" autocomplete="off"  class="form-control description '+inc+'" id="description'+inc+'"   />'
+			+ '</div>'
+			+'</td>'
+			
+			+ '<td>'
+			+'<div class="form-group">'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="fromWarehouse'+inc+'" >'
+			+ scriptSelectPlant +
+			<c:forEach items="${plantMap}" var="plantMap">
+			'<option value="${plantMap.key}">${plantMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</div>'
+			+ '</td>'
+			
+			+ '<td>'
+			+'<div class="form-group">'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].toWarehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			+ scriptSelectPlant +
+			<c:forEach items="${plantMap}" var="plantMap">
+			'<option value="${plantMap.key}">${plantMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</div>'
+			+ '</td>'
+			
+
+			+'<td>'
+			+'<div class="form-group">'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
-			+ '</div>'
-			+'</td>'
-			
-			+'<td>'
-			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
@@ -660,53 +692,26 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].taxTotal" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control  taxTotal'+inc+' taxTotal" id="taxTotal'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].total" onkeypress="return isNumericKey(event)"  readonly="true" class="form-control total'+inc+' total" id="total'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
-			
-			+ '<td>'
-			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+ scriptSelectPlant +
-			<c:forEach items="${plantMap}" var="plantMap">
-			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
-			+ '</select>'
-			+ '</div>'
-			+ '</td>'
-			
-			+ '<td>'
-			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].department" required="true" class="form-control department'+inc+' department"  id="department'+inc+'" >'
-			+ scriptSelectDept +
-			<c:forEach items="${deptMap}" var="deptMap">
-			'<option value="${deptMap.key}">${deptMap.value}</option>'+
-			</c:forEach>
-			+ '</select>'
-			+ '</div>'
-			+ '</td>'
+			 
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].productGroup" readonly="true" class="form-control  productGroup productGroup'+inc+'" id="productGroup'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
-			+ '</div>'
-			+'</td>'
-			
-			+'<td>'
-			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].hsn" readonly="true" class="form-control hsnVal hsn'+inc+'" id="hsn'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1084,7 +1089,7 @@ function removeData2(index){
 
 $("#items_radio").click(function() {
 	//alert("item");
-	 alertify.confirm("Goods Receipt",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
+	 alertify.confirm("Goods Transfer",'Are you Sure Want to Change  Item ,Service will be removed ', function(){
 		 $("#serviceTbl").hide();
 		 $("#itemTbl").show();
 		 $("#edit_item_serviceTbl").hide();
@@ -1127,7 +1132,7 @@ $("#items_radio").click(function() {
 
 $("#service_radio").click(function() {
 	//alert("service");
-	 alertify.confirm("Goods Receipt",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
+	 alertify.confirm("Goods Transfer",'Are you Sure Want to Change Service ,Items will be removed! ', function(){
 	$("#serviceTbl").show();
 	 $("#itemTbl").hide();
 	 $("#edit_item_serviceTbl").hide();
@@ -1210,7 +1215,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 		}
     
 	if(rowCount == 0){
-		alertify.alert("Goods Receipt","Please Select Atleast One Item");
+		alertify.alert("Goods Transfer","Please Select Atleast One Item");
 		 return false;
 	}else{
 		return true;
@@ -1225,7 +1230,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 			} 
 	 
  	if(rowCount1 == 0){
- 		alertify.alert("Goods Receipt","Please Select Atleast One  Service");
+ 		alertify.alert("Goods Transfer","Please Select Atleast One  Service");
  		 return false;
  	}else{
  		return true;
@@ -1422,7 +1427,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	
 	}else {
 		 $("#totalDiscount").val("");
-		alertify.alert("Goods Receipt Discount","Please Enter Valid Discount!");
+		alertify.alert("Goods Transfer Discount","Please Enter Valid Discount!");
 		 return false;
 	}
 	
@@ -1520,7 +1525,7 @@ $('#freight').keyup(function() {
 		
 		
 		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+			alertify.alert("Goods Transfer","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
 			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}

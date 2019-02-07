@@ -10,10 +10,8 @@ import javax.persistence.Table;
 import com.smerp.model.master.AuditModel;
 
 @Entity
-@Table(name="tbl_inventory_goods_receipt_list")
-public class InventoryGoodsReceiptList extends AuditModel{
-
-	
+@Table(name="tbl_inventory_goods_transfer_list")
+public class InventoryGoodsTransferList extends AuditModel{
 
 	/**
 	 * 
@@ -34,6 +32,12 @@ public class InventoryGoodsReceiptList extends AuditModel{
 	@Column(name="description")
 	private String description;
 	
+	@Column(name = "from_warehouse")
+	private Integer fromWarehouse;
+	
+	@Column(name = "to_warehouse")
+	private Integer toWarehouse;
+	
 	@Column(name="uom")
 	private String uom;
 	
@@ -43,20 +47,39 @@ public class InventoryGoodsReceiptList extends AuditModel{
 	@Column(name="product_group")
 	private String productGroup;
 	
-	@Column(name="ware_house")
-	private Integer warehouse;
 	
 	@Column(name="hsn")
 	private String hsn;
 	
-	@Column(name="sac_code")
-	private String sacCode;
-
 	@Column(name = "sku_quantity")
 	private String sku;
 	
 	@Column(name = "unit_price")
 	private Double unitPrice;
+
+	public Integer getFromWarehouse() {
+		return fromWarehouse;
+	}
+
+	public void setFromWarehouse(Integer fromWarehouse) {
+		this.fromWarehouse = fromWarehouse;
+	}
+
+	public Integer getToWarehouse() {
+		return toWarehouse;
+	}
+
+	public void setToWarehouse(Integer toWarehouse) {
+		this.toWarehouse = toWarehouse;
+	}
+
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 
 	@Column(name = "tax_code")
 	private Double taxCode;
@@ -117,13 +140,6 @@ public class InventoryGoodsReceiptList extends AuditModel{
 		this.productGroup = productGroup;
 	}
 
-	public Integer getWarehouse() {
-		return warehouse;
-	}
-
-	public void setWarehouse(Integer warehouse) {
-		this.warehouse = warehouse;
-	}
 
 	public String getHsn() {
 		return hsn;
@@ -133,13 +149,7 @@ public class InventoryGoodsReceiptList extends AuditModel{
 		this.hsn = hsn;
 	}
 
-	public String getSacCode() {
-		return sacCode;
-	}
-
-	public void setSacCode(String sacCode) {
-		this.sacCode = sacCode;
-	}
+	 
 
 	public String getSku() {
 		return sku;
@@ -149,13 +159,6 @@ public class InventoryGoodsReceiptList extends AuditModel{
 		this.sku = sku;
 	}
 
-	public Double getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(Double unitPrice) {
-		this.unitPrice = unitPrice;
-	}
 
 	public Double getTaxCode() {
 		return taxCode;
@@ -184,6 +187,4 @@ public class InventoryGoodsReceiptList extends AuditModel{
 	public void setTotal(String total) {
 		this.total = total;
 	}
-	
-	
 }

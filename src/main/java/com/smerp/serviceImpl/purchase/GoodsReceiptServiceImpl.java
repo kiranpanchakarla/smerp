@@ -211,11 +211,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		goodsReceipt= goodsReceiptRepository.save(goodsReceipt);
 		
 		if(goodsReceipt.getPoId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
-		
-		String status = setStatusOfPurchaseOrder(goodsReceipt);
-		po.setStatus(status);
-		purchaseOrderRepository.save(po);
+			PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update
+			 logger.info("goodsReceipt -->" +goodsReceipt);
 		}
 		
 		return goodsReceipt; 
@@ -314,10 +311,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	@Override
-	public String  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
+	public PurchaseOrder  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
 		logger.info("set Status-->");
 		String status="";
-		PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReceipt.getPoId());
+		/*PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReceipt.getPoId());
 		
 		List<GoodsReceiptLineItems> grListItems = goodsReceipt.getGoodsReceiptLineItems();
 		List<PurchaseOrderLineItems> poListItems = purchaseOrder.getPurchaseOrderlineItems();
@@ -351,9 +348,48 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
         }
 		}else {  // No gr list
         	status = EnumStatusUpdate.APPROVEED.getStatus();
-        }
+        }*/
+		
+		
+		String sqlList= "select * from vw_purchase_order_pending_qty where id=  "+goodsReceipt.getPoId();
+		Integer pendingQuantity=0;
+		Integer prQuantity=0;
+		Integer grQuantity=0;
+		Integer returnQuantity=0;
+		Integer creditQuantity=0;
+		
+	 	logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		 List<Object[]>	list = queryList.getResultList();
+			
+			logger.info("List Size -----> " + list.size());
+		     for(Object[] tuple : list) {
+		    	 prQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[3].toString()))));
+		    	 grQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
+		    	 returnQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[5].toString()))));
+		    	 creditQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[6].toString()))));
+		    	 pendingQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[8].toString()))));
+		     }
+	     
+		 	logger.info("prQuantity ----> " + prQuantity);
+		 	logger.info("grQuantity ----> " + grQuantity);
+		 	logger.info("returnQuantity ----> " + returnQuantity);
+		 	logger.info("creditQuantity ----> " + creditQuantity);
+		 	logger.info("pendingQuantity ----> " + pendingQuantity);
+		    if(grQuantity!=0) {
+			if(pendingQuantity > 0)
+				 status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
+			else
+				 status = EnumStatusUpdate.COMPLETED.getStatus();
+		    }else {
+		    	status = EnumStatusUpdate.APPROVEED.getStatus();
+		    }
     	logger.info("status-->" + status);
-		return status;
+    	
+        PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+		po.setStatus(status);
+		
+		return purchaseOrderRepository.save(po);
 	}
 
 	private Map<String, Integer> prepareMapForProductQunatityPR(PurchaseOrder purchaseOrder,List<PurchaseOrderLineItems> poListItems) {

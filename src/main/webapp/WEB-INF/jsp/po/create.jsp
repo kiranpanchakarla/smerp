@@ -866,12 +866,12 @@
                                                                     </c:if>
                                                                     <c:if test="${po.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
-                                                                      <a href="<c:url value="/po/cancelStage?id=${po.id}"/>">
+                                                                     <%--  <a href="<c:url value="/po/cancelStage?id=${po.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
 																		</a>
-																		 
+																		  --%>
                                                                       </c:if>
                                                                       <!-- Approve -->
                                                                       <c:forEach items="${sessionScope.umpmap}" var="ump">

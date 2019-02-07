@@ -388,7 +388,7 @@
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                         
  																		  <a
-																			href="<c:url value="/purchaseReq/cancelStage?id=${purchaseRequest.id}"/>">
+																			href="<c:url value="/purchaseReq/list"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>

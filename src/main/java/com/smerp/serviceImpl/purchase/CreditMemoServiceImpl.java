@@ -23,9 +23,6 @@ import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.CreditMemoLineItems;
 import com.smerp.model.inventory.GoodsReceipt;
-import com.smerp.model.inventory.GoodsReceiptLineItems;
-import com.smerp.model.inventory.GoodsReturn;
-import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
@@ -39,6 +36,7 @@ import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.CreditMemoService;
+import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.EmailGenerator;
@@ -81,6 +79,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	@Autowired
 	GoodsReceiptRepository goodsReceiptRepository;
+	
+	@Autowired
+	GoodsReceiptService goodsReceiptService;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
@@ -150,8 +151,11 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		creditMemo.setVendorContactDetails(vendorsContactDetails);
 		creditMemo.setVendorShippingAddress(vendorShippingAddress);
 		creditMemo.setVendorPayTypeAddress(vendorPayAddress);
-		logger.info("00000:" );
          } }
+		
+		
+		creditMemo= creditMemoRepository.save(creditMemo);
+		
 		if(creditMemo.getStatusType()!=null &&  creditMemo.getStatusType().equals("APP")) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
@@ -162,16 +166,15 @@ public class CreditMemoServiceImpl implements CreditMemoService{
     			e.printStackTrace();
     		}
 		
-			/*logger.info("111111:" );
-			InVoice updategr = updateInVoiceQunatity(creditMemo.getInvId(),creditMemo);
-		
-			if(updategr.getGrId()!=null) {
-				PurchaseOrder po = purchaseOrderService.findById(updategr.getGrId());
+			if(creditMemo.getInvId()!=null) {
+				InVoice invoice  = inVoiceRepository.findById(creditMemo.getInvId()).get();
 				
-			String status = inVoiceService.setStatusOfPurchaseOrder(updategr);  // change Status
-				po.setStatus(status);
-				purchaseOrderRepository.save(po);
-				}*/
+				if(invoice.getGrId()!=null) {
+					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId()).get();
+					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
+					 logger.info("purchaseOrder -->" +purchaseOrder);
+				}
+			}
 			
 		}
 		else if(creditMemo.getStatusType()!=null &&  creditMemo.getStatusType().equals("RE")) {
@@ -184,27 +187,8 @@ public class CreditMemoServiceImpl implements CreditMemoService{
     			e.printStackTrace();
     		}
 		}
-		logger.info("222222:" );
 		
 		
-		
-		
-		// update goods Recipt Qunatity.
-		// change status PO
-		
-		
-		/*InVoice updategr = updateQunatity(creditMemo.getInvId(),creditMemo);
-		
-		if(updategr.getPoId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(updategr.getPoId());
-		
-		String status = inVoiceService.setStatusOfPurchaseOrder(updategr);
-		po.setStatus(status);
-		purchaseOrderRepository.save(po);
-		}*/
-		
-		creditMemo= creditMemoRepository.save(creditMemo);
-		logger.info("3333:" );
 		return creditMemo; 
 		 
 	}
@@ -639,8 +623,8 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				.findByListInvId(creditMemo.getId(),EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listCreditMemo-->" +listCreditMemo);
 		
-	/*	String status = setStatusOfPurchaseOrder(listCreditMemo.get(0));
-		logger.info("status-->" +status); //Test the Status if you want  */
+		String status = setStatusOfPurchaseOrder(listCreditMemo.get(0));
+		logger.info("status-->" +status); //Test the Status if you want  
 		
 		Integer invQunatity = getListInvQuantityCount(creditMemo);
 		Integer creQunatity = getListCMQunatityCount(listCreditMemo);

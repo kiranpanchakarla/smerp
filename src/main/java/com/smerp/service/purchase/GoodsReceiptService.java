@@ -8,11 +8,11 @@ import com.smerp.model.inventory.PurchaseOrder;
 
 public interface GoodsReceiptService {
 
-	GoodsReceipt save(GoodsReceipt purchaseOrder);
+	GoodsReceipt save(GoodsReceipt goodsReceipt);
 
-	GoodsReceipt saveGR(String purchaseId);
+	GoodsReceipt saveGR(String goodsReceiptId);
 
-	GoodsReceipt saveCancelStage(String purchaseId);
+	GoodsReceipt saveCancelStage(String goodsReceiptId);
 
 	GoodsReceipt findLastDocumentNumber();
 
@@ -28,11 +28,11 @@ public interface GoodsReceiptService {
 
 	List<GoodsReceipt> findByIsActive();
 	
-	GoodsReceipt getListAmount(GoodsReceipt purchaseOrder);
+	GoodsReceipt getListAmount(GoodsReceipt goodsReceipt);
 	
 	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	
-	String setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
+	PurchaseOrder setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
 	
 	List<GoodsReceipt> grApprovedList();
 	

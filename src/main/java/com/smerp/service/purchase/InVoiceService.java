@@ -2,17 +2,15 @@ package com.smerp.service.purchase;
 
 import java.util.List;
 
-import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoice;
-import com.smerp.model.inventory.PurchaseOrder;
 
 public interface InVoiceService {
 
-	InVoice save(InVoice purchaseOrder);
+	InVoice save(InVoice inVoice);
 
-	InVoice saveInv(String purchaseId);
+	InVoice saveInv(String invoiceId);
 
-	InVoice saveCancelStage(String purchaseId);
+	InVoice saveCancelStage(String invoiceId);
 
 	InVoice findLastDocumentNumber();
 
@@ -26,14 +24,10 @@ public interface InVoiceService {
 
 	List<InVoice> findByIsActive();
 	
-	InVoice getListAmount(InVoice purchaseOrder);
-	/*InVoice getInVoiceRequireQuantityById(InVoice purchaseOrder);*/
+	InVoice getListAmount(InVoice inVoice);
 	
-	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
-	
-	String setStatusOfPurchaseOrder(InVoice InVoice);
+	/*Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);*/
 	
 	List<InVoice> invApprovedList();
-	
 
 }

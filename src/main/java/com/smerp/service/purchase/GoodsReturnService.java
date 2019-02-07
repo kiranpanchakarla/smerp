@@ -7,11 +7,11 @@ import com.smerp.model.inventory.GoodsReturn;
 
 public interface GoodsReturnService {
 
-	GoodsReturn save(GoodsReturn purchaseOrder);
+	GoodsReturn save(GoodsReturn goodsReturn);
 
-	GoodsReturn saveGRE(String purchaseId);
+	GoodsReturn saveGRE(String goodsReturnId);
 
-	GoodsReturn saveCancelStage(String purchaseId);
+	GoodsReturn saveCancelStage(String goodsReturnId);
 
 	GoodsReturn findLastDocumentNumber();
 
@@ -25,7 +25,7 @@ public interface GoodsReturnService {
 
 	List<GoodsReturn> findByIsActive();
 	
-	GoodsReturn getListAmount(GoodsReturn purchaseOrder);
+	GoodsReturn getListAmount(GoodsReturn goodsReturn);
 	
 	Boolean checkQuantityGr(GoodsReceipt goodsReceipt);
 	

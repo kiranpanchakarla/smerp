@@ -173,7 +173,7 @@ public class InvoiceController {
 		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());
-		model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
+		//model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
 		model.addAttribute("inv", inv);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());

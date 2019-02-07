@@ -424,19 +424,19 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${po.status eq 'Approved' || po.status eq 'Partially_Received'}">
-																		 
+																		  <c:if test="${po.status != 'Open'  && po.status != 'Draft' && po.status != 'Rejected'}">
+																		  
 																		   <c:if test="${checkStatusPoGr ==true}">
 									<input type="hidden" name="poId" value="${po.id}">
 																		<form:button type="button" id="convertBtn"
 																			class="btn btn-primary mr-1 float-right">
 																			<i></i>Convert To GR</form:button>
 																			
-								                           </c:if>	
+								                                          </c:if>	</c:if>
 																		 
 																	</c:if>
 	   										                           </c:if>
-	       								                           </c:if>     
+	       								                         <%--   </c:if>     --%> 
    									                            </c:forEach>
 												         
 												         

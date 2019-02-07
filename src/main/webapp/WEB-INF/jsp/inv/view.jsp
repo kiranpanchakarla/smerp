@@ -413,14 +413,14 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To CM'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Goods_Return'  || inv.status != 'Invoiced'}">
+	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Credit Memo'}">
 																		 
-														 <c:if test="${checkStatusInv ==true}">
-																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
+														<%--  <c:if test="${checkStatusInv ==true}"> --%>
+																		<form:button type="button" id="convertBtn" name="statusType" value="Credit Memo"
 																			class="btn btn-primary mr-1 float-right mySubButton">
 																			<i></i>Credit Memo</form:button>
 																			
-											            </c:if>	
+											          <%--   </c:if>	 --%>
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     

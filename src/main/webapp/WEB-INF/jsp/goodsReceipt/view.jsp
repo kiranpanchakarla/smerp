@@ -248,7 +248,7 @@ text-align: left;
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}</td>
 
 																												
 																														
@@ -259,7 +259,7 @@ text-align: left;
 																													
 																													<td>${listLineItems.description}</td>
 																															
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}</td>
 																													
 																													<td>${listLineItems.unitPrice}</td>
 																												<td><c:forEach var="entry"
@@ -414,7 +414,7 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To GRE'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status != 'Invoiced'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
 																		 
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
@@ -435,7 +435,8 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To INV'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">
+	        									                        
+	        									                        <c:if test="${gr.status == 'Approved' &&  gr.status != 'Invoiced'}">
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">

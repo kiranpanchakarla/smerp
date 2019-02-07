@@ -7,11 +7,11 @@ import com.smerp.model.inventory.CreditMemo;
 
 public interface CreditMemoService {
 
-	CreditMemo save(CreditMemo purchaseOrder);
+	CreditMemo save(CreditMemo creditMemo);
 
-	CreditMemo saveCM(String purchaseId);
+	CreditMemo saveCM(String creditMemoId);
 
-	CreditMemo saveCancelStage(String purchaseId);
+	CreditMemo saveCancelStage(String creditMemoId);
 
 	CreditMemo findLastDocumentNumber();
 
@@ -25,7 +25,7 @@ public interface CreditMemoService {
 
 	List<CreditMemo> findByIsActive();
 	
-	CreditMemo getListAmount(CreditMemo purchaseOrder);
+	CreditMemo getListAmount(CreditMemo creditMemo);
 	
 	Boolean checkQuantityInv(InVoice InVoice);
 	

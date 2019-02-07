@@ -164,6 +164,9 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		goodsReturn.setVendorShippingAddress(vendorShippingAddress);
 		goodsReturn.setVendorPayTypeAddress(vendorPayAddress);*/
 		
+         
+         goodsReturn= goodsReturnRepository.save(goodsReturn);
+         
 		if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("APP")) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
@@ -174,15 +177,21 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
     			e.printStackTrace();
     		}
 		
-			GoodsReceipt updategr = updateGoodsReceiptQunatity(goodsReturn.getGrId(),goodsReturn);
+			/*GoodsReceipt updategr = updateGoodsReceiptQunatity(goodsReturn.getGrId(),goodsReturn);*/  
 		
-			if(updategr.getPoId()!=null) {
+			/*if(updategr.getPoId()!=null) {
 				PurchaseOrder po = purchaseOrderService.findById(updategr.getPoId());
 				
 				String status = goodsReceiptService.setStatusOfPurchaseOrder(updategr);
 				po.setStatus(status);
 				purchaseOrderRepository.save(po);
-				}
+				}*/
+			
+			if(goodsReturn.getGrId()!=null) {
+			GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(goodsReturn.getGrId()).get();
+			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
+			 logger.info("purchaseOrder -->" +purchaseOrder);
+			}
 			
 		}
 		else if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("RE")) {
@@ -197,24 +206,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		}
 	
 		
-		
-		
-		
-		// update goods Recipt Qunatity.
-		// change status PO
-		
-		
-		/*GoodsReceipt updategr = updateQunatity(goodsReturn.getGrId(),goodsReturn);
-		
-		if(updategr.getPoId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(updategr.getPoId());
-		
-		String status = goodsReceiptService.setStatusOfPurchaseOrder(updategr);
-		po.setStatus(status);
-		purchaseOrderRepository.save(po);
-		}*/
-		
-		goodsReturn= goodsReturnRepository.save(goodsReturn);
 		
 		return goodsReturn; 
 		 
@@ -762,7 +753,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 			}
 			
-			
+			/*
 public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsReturnObj) {
 				
 				GoodsReceipt goodsReceiptObj = goodsReceiptRepository.findById(grId).get();
@@ -791,7 +782,7 @@ public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsRet
 				goodsReceiptObj.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());
 				goodsReceiptObj= goodsReceiptRepository.save(goodsReceiptObj);
 				return goodsReceiptObj;
-			}
+			}*/
 
 }
 

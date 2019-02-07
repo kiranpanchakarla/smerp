@@ -240,7 +240,7 @@
 						</c:if>
 					
 						<c:if test="${ump.key eq 'Convert To CM'}">
-							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">Convert To CM
+							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert To CM
 									</a></li>
 						</c:if>
 					
@@ -254,7 +254,18 @@
 
 				</ul>
       </li>
-      
+      <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <!--  <ul class="sub_menu">
+          <li class="has_sub"><a>Transactions<i class="icon-ios-arrow-right right"></i></a> -->
+           <ul class="sub_menu">
+           <li class="has_sub"><a href="<c:url value ="/invgr/list"/>">Goods Receipt</a></li>
+            <li class="has_sub"><a href="<c:url value ="/invgi/list"/>">Goods Issue</a></li>
+              <li class="has_sub"><a href="<c:url value =""/>">Inventory Transfer</a></li>
+              </ul>
+             </li>
+          <%--  <li class="has_sub"><a href="<c:url value =""/>">Approval Templates</a></li> --%>
+        <!-- </ul>
+      </li>  -->
      <%--  <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Approval Procedures</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value =""/>">Approval Stages</a></li>

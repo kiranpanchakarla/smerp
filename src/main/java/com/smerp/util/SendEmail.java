@@ -24,11 +24,14 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
+import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DashboardCountService;
 
@@ -61,14 +64,16 @@ public class SendEmail extends EmailerGenerator{
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
-	PurchaseRequest pr;
-	RequestForQuotation rfq;
-	PurchaseOrder po;
-	GoodsReceipt goodsRec;
-	GoodsReturn goodsRet;
-	InVoice inv;
+	private PurchaseRequest pr;
+	private RequestForQuotation rfq;
+	private PurchaseOrder po;
+	private GoodsReceipt goodsRec;
+	private GoodsReturn goodsRet;
+	private InVoice inv;
+	private CreditMemo credit;
+	private InventoryGoodsReceipt invgr;
+	private InventoryGoodsIssue invgi;
 	
-
 	public void sendPREmail(PurchaseRequest purchaseRequest) throws Exception {
 		 if (shouldNotify()) {
 	            logger.info("Sending notification for " + purchaseRequest.getReferenceUser().getUserEmail() + " ...");
@@ -112,6 +117,9 @@ public class SendEmail extends EmailerGenerator{
 			input.put("goodsRec", getGoodsRec());
 			input.put("goodsRet", getGoodsRet());
 			input.put("inv", getInvoice());
+			input.put("credit", getCreditMemo());
+			input.put("gr", getInventoryGoodsReceipt());
+			input.put("gr", getInventoryGoodsIssue());
 			input.put("plantMap", purchaseRequestController.plantMap());
 			input.put("taxCodeMap", purchaseOrderController.taxCode());
 			input.put("contextPath", RequestContext.get().getContextPath());
@@ -186,6 +194,16 @@ public class SendEmail extends EmailerGenerator{
 	public InVoice getInvoice() {
 		return inv;
 	}
+	public CreditMemo getCreditMemo() {
+		return credit;
+	}
+	
+	public InventoryGoodsReceipt getInventoryGoodsReceipt() {
+		return invgr;
+	}
+	public InventoryGoodsIssue getInventoryGoodsIssue() {
+		return invgi;
+	}
 	
 	@Override
 	protected MimeMessagePreparator createMessage(String mailTo) {
@@ -211,7 +229,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				rfq = requestForQuotation;
@@ -241,7 +259,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createPOMessage(PurchaseOrder purchaseOrder) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				po = purchaseOrder;
@@ -271,7 +289,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createGoodsReceiptMessage(GoodsReceipt goodsReceipt) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRec = goodsReceipt;
@@ -301,7 +319,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createGoodsReturnMessage(GoodsReturn goodsReturn) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
@@ -345,7 +363,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createInvoiceMessage(InVoice invoice) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				inv = invoice;
@@ -361,7 +379,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createGoodsReturnRejectMessage(GoodsReturn goodsReturn) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
@@ -390,7 +408,7 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
@@ -419,13 +437,103 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createDashboardMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(getSEND_EMAIL());
 				message.setSubject("Dashboard Email");
 				message.setText(getDashboardBody(), true);
+			}
+
+		};
+	}
+	
+	public void sendCreditMemoEmail(CreditMemo creditMemo) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createCreditMemoMessage(creditMemo));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createCreditMemoMessage(CreditMemo creditMemo) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				credit = creditMemo;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("Credit Memo : " + credit.getDocNumber() + "  Status :" + credit.getStatus());
+				message.setText(getBody(), true);
+			}
+
+		};
+	}
+	
+	public void sendInvGoodsReceiptEmail(InventoryGoodsReceipt inventoryGoodsReceipt) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createInvGoodsReceiptMessage(inventoryGoodsReceipt));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createInvGoodsReceiptMessage(InventoryGoodsReceipt inventoryGoodsReceipt) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				invgr = inventoryGoodsReceipt;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("Inventory Goods Receipt :" + inventoryGoodsReceipt.getDocNumber() + " Status :" + inventoryGoodsReceipt.getStatus());
+				message.setText(getBody(), true);
+			}
+
+		};
+	}
+	
+	public void sendInvGoodsIssueEmail(InventoryGoodsIssue inventoryGoodsIssue) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createInvGoodsIssueMessage(inventoryGoodsIssue));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createInvGoodsIssueMessage(InventoryGoodsIssue inventoryGoodsIssue) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				invgi = inventoryGoodsIssue;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("Inventory Goods Issue :" + inventoryGoodsIssue.getDocNumber() + " Status :" + inventoryGoodsIssue.getStatus());
+				message.setText(getBody(), true);
 			}
 
 		};

@@ -116,13 +116,12 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 					.findById(purchaseOrder.getId()).get();
 			List<PurchaseOrderLineItems> requestLists = purchaseOrderlineItems.getPurchaseOrderlineItems();
 			
-			
+			if(requestLists.size()>0 && requestLists!=null) {
+				purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
+				}
 			
 			
 			if(purchaseOrder.getRfqId()==null) {  // if RfqId null remove list items 
-				if(requestLists.size()>0 && requestLists!=null) {
-					purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
-					}
 				
 			
 			}else {  // Convert mode set Amount

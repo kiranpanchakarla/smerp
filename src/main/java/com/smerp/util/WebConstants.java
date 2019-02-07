@@ -24,7 +24,19 @@ public class WebConstants {
 	
 	public final static String Email_MinQtyProducts = "minQtyEmail.ftl";
 	
-public final static String offline_Invoice = "invoicePdfFile.ftl";
+    public final static String offline_Invoice = "invoicePdfFile.ftl";
 	
 	public final static String Email_Invoice = "invoiceEmail.ftl";
+	
+	public final static String offline_Credit_Memo = "creditMemoPdfFile.ftl";
+		
+	public final static String Email_Credit_Memo = "creditMemoEmail.ftl";
+	
+    public final static String offline_Inv_Goods_Receipt = "invgoodsReceiptPdfFile.ftl";
+	
+	public final static String Email_Inv_Goods_Receipt = "invgoodsReceiptEmail.ftl";
+	
+	public final static String offline_Inv_Goods_Issue = "invgoodsIssuePdfFile.ftl";
+		
+    public final static String Email_Inv_Goods_Issue = "invgoodsIssueEmail.ftl";
 }

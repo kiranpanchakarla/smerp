@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -7,18 +6,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 </head>
+
+
 <link
 	href="<c:url value="/resources/css/dataTables/buttons.dataTables.min.css"/>"
 	rel="stylesheet" type="text/css" />
 <link
 	href="<c:url value="/resources/css/dataTables/jquery.dataTables.min.css"/>"
 	rel="stylesheet" type="text/css" />
+
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
@@ -29,9 +32,7 @@
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6"></div>
-			</div>
+
 			<div class="content-body">
 				<!--/ project charts -->
 				<div class="row">
@@ -44,25 +45,23 @@
 									<!-- Basic Tables start -->
 
 									<div class="card">
-										<div class="card-header">
+										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-8">
-													<h2 class="content-header-title">Convert PO  To GR </h2>
+													<h2 class="content-header-title">Convert Invoice to Credit Memo</h2>
 												</div>
-												<%-- <div class="col-md-5">
-													<a class="btn btn-primary"
-														href="<c:url value="/po/create"/>">Create</a>
-												</div> --%>
+												
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a
 															href="<c:url value="/dashboard"/>">Home</a></li>
 														<%-- <li class="breadcrumb-item"><a
 															href="<c:url value="/purchase"/>">Purchase</a></li> --%>
-														<li class="breadcrumb-item active">Convert PO  To GR</li>
+														<li class="breadcrumb-item active">Convert INV to CM</li>
 													</ol>
 												</div>
 											</div>
+
 										</div>
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
@@ -73,19 +72,18 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>Sno</th>
+																<th>S.no</th>
 																<th>Vendor Name</th>
 																<th>Email Id</th>
 																<th>Document Number</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>PO Status</th>
-																<th>Convert to GR</th>
+																<th>INV Status</th>
+																<th>Convert to CM</th>
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${purchaseOrderList}"
-																var="list">
+															<c:forEach items="${list}" var="list">
 																<tr>
 																	<td><c:set var="count" value="${count + 1}"
 																			scope="page" /> <c:out value="${count}" /></td>
@@ -95,20 +93,52 @@
 																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${list.createdAt}"/></td>
 																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
-																	<td>
-																			
-																				 <a class="btn btn-view"
-																		href="<c:url value="/po/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
-																			class="icon-eye3 left"></i></a>  
-																				  
-																	</td>
-																 
-																  <%--  <td> <c:if test="${list.status != 'Completed' }"><a class="btn btn-delete" href="#"
-																		onclick="deleteById('<c:out value="${list.id}"/>','/po/delete')"><i
-																			class="icon-bin left"></i></a></c:if></td>
-																		<td>	 <a class="btn btn-view"
-																		href="<c:url value="/po/view?rfqId=${list.id}"/>"><i
-																			class="icon-eye3 left"></i></a></td> --%>
+																	
+																	<td><c:choose>
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
+																				<c:forEach items="${sessionScope.umpmap}" var="ump">
+																					<c:if test="${ump.key eq 'Goods Receipt'}">
+																						<c:set var="permissions" scope="session"
+																							value="${ump.value}" />
+																						<c:choose>
+																							<c:when
+																								test="${fn:containsIgnoreCase(permissions,'update')}">
+																								<a class="btn btn-edit"
+																									href="<c:url value="/gr/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+																									class="icon-edit left"></i></a>
+																							</c:when>
+																							<c:otherwise>
+																								<a class="btn btn-disable"><i
+																									class="icon-bin left"></i></a>
+																							</c:otherwise>
+																						</c:choose>
+																						<c:choose>
+																							<c:when
+																								test="${fn:containsIgnoreCase(permissions,'delete')}">
+																								<a class="btn btn-delete" href="#"
+																									onclick="deleteById('<c:out value="${list.id}"/>','/user/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
+																									class="icon-bin left"></i></a>
+																							</c:when>
+																							<c:otherwise>
+																								<a class="btn btn-disable"><i
+																									class="icon-bin left"></i></a>
+																							</c:otherwise>
+																						</c:choose>
+
+																					</c:if>
+																				</c:forEach>
+																			</c:when>
+																			<c:otherwise>
+																				<a class="btn btn-disable"><i
+																					class="icon-edit left"></i></a>
+																				<a class="btn btn-disable"><i
+																					class="icon-bin left"></i></a>
+																			</c:otherwise>
+																		</c:choose> 
+																					<a class="btn btn-view"
+																						href="<c:url value="/gr/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
+																						class="icon-eye3 left"></i></a>
+																				</td>
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -135,7 +165,6 @@
 		$(document).ready(function() {
 			$('#example').DataTable({
 				"scrollX" : true
-
 			});
 		});
 		$(document).ready(function(){
@@ -143,6 +172,7 @@
 		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
+
 
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>
@@ -153,6 +183,7 @@
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
 		type="text/javascript"></script>
+
 </body>
 
 </html>

@@ -1588,7 +1588,7 @@ $(document).ready(function(){
                    //  var productgroup = obj.productCategory.categoryType;
                      var productgroup=obj.productGroup.productName;
                      //$('.productGroup').val(productgroup);
-
+                      $(itemParentRow).find(".unitPrice").val(obj.productCost);
                      $(itemParentRow).find(".productGroup").val(productgroup);
                      $(itemParentRow).find('.prodouctNumber').blur();
        

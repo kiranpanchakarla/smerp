@@ -157,7 +157,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			   	creditMemo =getListAmount(creditMemo);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		   // emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
+    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}

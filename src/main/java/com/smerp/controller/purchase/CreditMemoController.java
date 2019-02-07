@@ -197,8 +197,8 @@ public class CreditMemoController {
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForCreditMemo(pdfUploadedPath,cre);*/
+		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForCreditMemo(pdfUploadedPath,cre);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

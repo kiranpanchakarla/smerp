@@ -506,48 +506,48 @@
 
 
 																														<c:if test="${gr.category=='Item'}">
-																															<td>${listLineItems.prodouctNumber}
-																																<%-- <div class="form-group">
+																															<td> 
+																																  <div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].prodouctNumber"
 																																		readonly="true"
 																																		value="${listLineItems.prodouctNumber}"
 																																		class="form-control prodouctNumber"></form:input>
-																																</div> --%>
+																																</div>  
 																															</td>
 
-																															<td>${listLineItems.description}<%-- <div class="form-group">
+																															<td>  <div class="form-group">
 																																	<form:input type="text"  
 																																		path="goodsReceiptLineItems[${count}].description"
 																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.description}"
+																																		value="${listLineItems.description}" readonly="true"
 																																		class="form-control description validatePrice"></form:input>
-																																</div> --%>
+																																</div> 
 																															</td>
 
-																															<td>${listLineItems.uom}<%-- <div class="form-group">
+																															<td> <div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
 																																		readonly="true"></form:input>
-																																</div> --%>
+																																</div>  
 																															</td>
 
 
-																															<td>${listLineItems.sku}<%-- <div class="form-group">
+																															<td>  <div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].sku"
 																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
-																																</div> --%>
+																																</div>  
 																															</td>
 
 
 
-																															<td>${listLineItems.unitPrice}<form:input
-																																	type="hidden" readonly="true"
+																															<td> <form:input
+																																	type="text" readonly="true"
 																																	path="goodsReceiptLineItems[${count}].unitPrice"
 																																	onkeypress="return isNumericKey(event)"
 																																	value="${listLineItems.unitPrice}"
@@ -566,35 +566,42 @@
 																															</td>
 
 
-																															<td>${listLineItems.productGroup}<%-- <div class="form-group">
+																															<td> <div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].productGroup"
 																																		value="${listLineItems.productGroup}"
 																																		class="form-control productGroup"
 																																		readonly="true"></form:input>
-																																</div> --%></td>
+																																</div>  </td>
 
-																															<td>${listLineItems.hsn}<%-- <div class="form-group">
+																															<td> <div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].hsn"
 																																		value="${listLineItems.hsn}"
 																																		class="form-control hsnVal"
 																																		readonly="true"></form:input>
-																																</div> --%></td>
+																																</div>  </td>
 
-																															<td><c:forEach var="entry"
-																																	items="${plantMap}">
+																															<td> <%-- div class="form-group">
+																																	<form:select class="form-control"
+																																		  readonly="true"
+																																		path="goodsReceiptLineItems[${count}].warehouse">
+																																		  <c:forEach var="entry"
+																																	     items="${plantMap}">
 																																	<c:if
-																																		test="${entry.key ==listLineItems.warehouse}">
+																																		test="${entry.key == listLineItems.warehouse}">
 																												                 	 ${entry.value} 																													 </c:if>
-																																</c:forEach> <%-- <div class="form-group">
+																																    </c:forEach>  
+																																  <form:option value="${plantMap}"></form:option>  
+																																	</form:select>
+																																</div> --%> <div class="form-group">
 																																	<form:select class="form-control"
 																																		style="width:;" readonly="true"
 																																		path="goodsReceiptLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
+																																		 
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div> --%></td>
+																																</div> </td>
 
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"

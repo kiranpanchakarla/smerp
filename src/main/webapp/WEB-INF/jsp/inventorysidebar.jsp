@@ -11,29 +11,26 @@
         </ul>
           <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
       </li>
-			<c:forEach items="${sessionScope.umpmap}" var="ump">
-				<c:if test="${ump.key eq 'Purchase Request'}">
-					<li><a href="<c:url value ="/purchaseReq/list"/>"><i
-							class="icon-shuffle left"></i><span class="menu_text">Purchase
-								Request</span><span class="menu_text_pad">&nbsp;</span><i
+			<%-- <c:forEach items="${sessionScope.umpmap}" var="ump">
+				<c:if test="${ump.key eq 'Purchase Request'}"> --%>
+					<li><a href="<c:url value ="/invgr/list"/>"><i
+							class="icon-shuffle left"></i><span class="menu_text">Goods Receipt</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a></li>
-				</c:if>
+				<%-- </c:if> --%>
 
-				<c:if test="${ump.key eq 'Convert To RFQ'}">
-					<li><a href="<c:url value ="/purchaseReq/approvedList"/>"><i
-							class="icon-cubes left left"></i><span class="menu_text">Convert
-								PR To RFQ</span><span class="menu_text_pad">&nbsp;</span><i
+				<%-- <c:if test="${ump.key eq 'Convert To RFQ'}">--%>
+					<li><a href="<c:url value ="/invgi/list"/>"><i
+							class="icon-cubes left left"></i><span class="menu_text">Goods Issue</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
-				</c:if>
+			<%--	</c:if> --%>
 
-				<c:if test="${ump.key eq 'RFQ'}">
-					<li><a href="<c:url value ="/rfq/list"/>"><i
-							class="icon-record left"></i><span class="menu_text">Request
-								for Quotation</span><span class="menu_text_pad">&nbsp;</span><i
+				<%-- <c:if test="${ump.key eq 'RFQ'}">
+					<li><a href="<c:url value =""/>"><i
+							class="icon-record left"></i><span class="menu_text">Inventory Transfer</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
-				</c:if>
+				</c:if> --%>
 
-				<c:if test="${ump.key eq 'Convert To PO'}">
+				<%-- <c:if test="${ump.key eq 'Convert To PO'}">
 					<li><a href="<c:url value ="/rfq/approvedList"/>"><i
 							class="icon-cubes left"></i><span class="menu_text">Convert
 								RFQ To PO</span><span class="menu_text_pad">&nbsp;</span><i
@@ -85,21 +82,9 @@
 					<li><a href="<c:url value ="/inv/list"/>"><i
 							class="icon-moneybag left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
-				</c:if>
+				</c:if> --%>
 				
-				<c:if test="${ump.key eq 'Convert To CM'}">
-					<li><a href="<c:url value ="/inv/approvedList"/>"><i
-							class="icon-arrow-return-left left left"></i><span class="menu_text">Convert To CM</span><span class="menu_text_pad">&nbsp;</span><i
-							class="icon-ios-arrow-right right"></i></a>
-				</c:if>
-				
-				<c:if test="${ump.key eq 'Credit Memo'}">
-					<li><a href="<c:url value ="/creditMemo/list"/>"><i
-							class="icon-ei-credit-card left left"></i><span class="menu_text">Credit Memo</span><span class="menu_text_pad">&nbsp;</span><i
-							class="icon-ios-arrow-right right"></i></a>
-				</c:if>
-				
-			</c:forEach>
+		<%-- 	</c:forEach> --%>
 
 
 

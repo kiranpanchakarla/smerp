@@ -988,7 +988,7 @@
 
 																		<div class="text-xs-center">
 
-																			<a href="<c:url value="/cre/list"/>"
+																			<a href="<c:url value="/creditMemo/list"/>"
 																				class="btn btn-primary float-left"> Back </a>
 
 

@@ -141,7 +141,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			if(goodsReceipt.getPoId()==null) {  // if PoId null remove list items 
 				
 			
-			}else {
+			}else {/*
 				List<GoodsReceiptLineItems> header_listItems =  goodsReceipt.getGoodsReceiptLineItems();
 				if (requestLists != null) {
 					List<GoodsReceiptLineItems> lineItems =new ArrayList<GoodsReceiptLineItems>();
@@ -169,7 +169,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					goodsReceipt.setGoodsReceiptLineItems(lineItems);
 				}
 				 logger.info("convertd Po to GR Data -->" +goodsReceipt);
-			}
+			*/}
 			
 			if(goodsReceipt.getPoId()!=null) {
 				PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());

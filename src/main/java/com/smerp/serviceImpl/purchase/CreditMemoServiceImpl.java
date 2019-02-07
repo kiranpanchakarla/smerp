@@ -8,6 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +81,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	@Autowired
 	GoodsReceiptRepository goodsReceiptRepository;
+	
+	@PersistenceContext    
+	private EntityManager entityManager;
 
 	@Autowired
 	EmailGenerator emailGenerator;
@@ -150,12 +157,12 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			   	creditMemo =getListAmount(creditMemo);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		    // emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(creditMemo);
+    		   // emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
 		
-			logger.info("111111:" );
+			/*logger.info("111111:" );
 			InVoice updategr = updateInVoiceQunatity(creditMemo.getInvId(),creditMemo);
 		
 			if(updategr.getGrId()!=null) {
@@ -164,7 +171,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			String status = inVoiceService.setStatusOfPurchaseOrder(updategr);  // change Status
 				po.setStatus(status);
 				purchaseOrderRepository.save(po);
-				}
+				}*/
 			
 		}
 		else if(creditMemo.getStatusType()!=null &&  creditMemo.getStatusType().equals("RE")) {
@@ -508,12 +515,12 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				
 				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
 				logger.info("creQunatity-->" + creQunatity);
-				if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+				/*if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					crelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - creQunatity);
 					}else 
 					{
 						crelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity());
-					}
+					}*/
 				
 				}else {
 				crelist.setTaxTotal("");
@@ -540,6 +547,50 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		creditMemo.setTotalPayment(total_amt);
 	
 	return creditMemo;
+	}
+	
+	
+	
+	
+	@Override
+	public CreditMemo getCreditMemoById(int id) {
+		CreditMemo creditMemo = creditMemoRepository.findById(id).get();
+		
+	     
+	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId();
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<CreditMemoLineItems> listItems = creditMemo.getCreditMemoLineItems();
+			
+			List<CreditMemoLineItems> addListItems = new ArrayList<CreditMemoLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 CreditMemoLineItems crelist = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			CreditMemoLineItems invlist = listItems.get(i);
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			crelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    			//grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
+					//grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
+					break;
+					}
+	    		}
+	    		addListItems.add(crelist);
+	    		j++;
+	     }
+	     
+	 	creditMemo.setCreditMemoLineItems(addListItems);
+	     
+	     /*Set Lists*/
+		return creditMemo;
 	}
 	
 	
@@ -704,7 +755,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}
 			
 			
-      public InVoice updateInVoiceQunatity(Integer inId,CreditMemo creditMemoObj) {
+    /*  public InVoice updateInVoiceQunatity(Integer inId,CreditMemo creditMemoObj) {
 				
 				InVoice invoiceObj = inVoiceRepository.findById(inId).get();
 				int grId = 0;
@@ -767,7 +818,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				goodsReceiptObj= goodsReceiptRepository.save(goodsReceiptObj);
 				}
 				return invoiceObj;
-			}
+			}*/
       
      
       

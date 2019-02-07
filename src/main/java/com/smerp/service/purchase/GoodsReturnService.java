@@ -18,6 +18,8 @@ public interface GoodsReturnService {
 	List<GoodsReturn> findAll();
 
 	GoodsReturn findById(int id);
+	
+	GoodsReturn getGoodsReturnById(int id);
 
 	GoodsReturn delete(int id);
 

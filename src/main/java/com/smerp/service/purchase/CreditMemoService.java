@@ -18,6 +18,8 @@ public interface CreditMemoService {
 	List<CreditMemo> findAll();
 
 	CreditMemo findById(int id);
+	
+	CreditMemo getCreditMemoById(int id);
 
 	CreditMemo delete(int id);
 

@@ -8,6 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,7 @@ import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
+import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
@@ -28,6 +33,7 @@ import com.smerp.repository.purchase.InVoiceLineItemsRepository;
 import com.smerp.repository.purchase.InVoiceRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
@@ -76,6 +82,12 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@PersistenceContext    
+	private EntityManager entityManager;
+	
+	@Autowired
+	ProductService  productService;
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -445,6 +457,110 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		return inVoiceRepository.findById(id).get();
 	}
 	
+	
+	@Override
+	public InVoice getInVoiceById(int id) {
+		InVoice invoice = inVoiceRepository.findById(id).get();
+		/*Set Headers*/
+		
+		String sql= " select total_inv_amount_product_tax,total_inv_amount_before_discount,total_discount,freight,total_inv_amount_after_discount"
+				+ " ,total_inv_amount_after_discount_rounding from vw_invoice_amount where id= " +id;
+		
+		logger.info("sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+	     for(Object[] tuple : list) {
+	    	 invoice.setTaxAmt(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 invoice.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
+	    	// invoice.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
+	    	 //invoice.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 invoice.setTotalPayment(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+	    	 invoice.setAmtRounding(tuple[5] == null ? "0" : ( tuple[5]).toString());
+	     }
+	     
+	     /*--Set Headers--*/
+	     
+	     
+	     /*--Set Lists--*/
+	     
+	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
+			
+			List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 InVoiceLineItems grelist = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			InVoiceLineItems invlist = listItems.get(i);
+	    			
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			grelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    			grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
+					grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
+					break;
+					}
+	    		}
+	    		addListItems.add(grelist);
+	    		j++;
+	     }
+	     
+	 	invoice.setInVoiceLineItems(addListItems);
+	     
+	     /*Set Lists*/
+		return invoice;
+	}
+	
+	/*@Override
+	public InVoice getInVoiceRequireQuantityById(int id) {
+		InVoice invoice = inVoiceRepository.findById(id).get();
+		
+		String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
+			
+			List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 InVoiceLineItems grelist = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			InVoiceLineItems invlist = listItems.get(i);
+	    			
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			grelist.setRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    			grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
+					grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
+					break;
+					}
+	    		}
+	    		addListItems.add(grelist);
+	    		j++;
+	     }
+	     
+	 	invoice.setInVoiceLineItems(addListItems);
+	 	
+	 	return invoice;
+	}*/
 	
 	
 	

@@ -138,7 +138,7 @@
 																					class="icon-bin left"></i></a>
 																			</c:otherwise>
 																		</c:choose> <c:forEach items="${sessionScope.umpmap}" var="ump">
-																			<c:if test="${ump.key eq 'CreditMemo'}">
+																			<c:if test="${ump.key eq 'Credit Memo'}">
 																				<c:set var="permissions" scope="session"
 																					value="${ump.value}" />
 																				<c:if

@@ -8,6 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
+import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.CreditMemoLineItems;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.GoodsReturn;
@@ -75,7 +80,8 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	GoodsReceiptRepository goodsReceiptRepository;
 
 	
-	
+	@PersistenceContext    
+	private EntityManager entityManager;
 	
 	
 	@Autowired
@@ -482,6 +488,43 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	
 	@Override
+	public GoodsReturn getGoodsReturnById(int id) {
+		GoodsReturn goodsReturn = goodsReturnRepository.findById(id).get();
+	     
+	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId();
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
+			
+			List<GoodsReturnLineItems> addListItems = new ArrayList<GoodsReturnLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 GoodsReturnLineItems crelist = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			GoodsReturnLineItems invlist = listItems.get(i);
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			crelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+					break;
+					}
+	    		}
+	    		addListItems.add(crelist);
+	    		j++;
+	     }
+	     
+	 	goodsReturn.setGoodsReturnLineItems(addListItems);
+	     
+		return goodsReturn;
+	}
+	
+	@Override
 	public GoodsReturn getListAmount(GoodsReturn goodsReturn) {
 		logger.info("getListAmount-->");
 		List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
@@ -520,12 +563,12 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				
 				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
 				logger.info("greQunatity-->" + greQunatity);
-				if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+				/*if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - greQunatity);
 					}else 
 					{
 						grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity());
-					}
+					}*/
 				
 				}else {
 				grelist.setTaxTotal("");

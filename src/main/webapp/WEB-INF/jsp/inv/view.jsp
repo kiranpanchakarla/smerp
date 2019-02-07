@@ -248,7 +248,7 @@ text-align: left;
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
 																													
-																												<td>${listLineItems.requiredQuantity}</td>
+																												<td>${listLineItems.tempRequiredQuantity}</td>
 
 																												
 																														
@@ -259,7 +259,7 @@ text-align: left;
 																													
 																													<td>${listLineItems.description}</td>
 																															
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}</td>
 																													
 																													<td>${listLineItems.unitPrice}</td>
 																												<td><c:forEach var="entry"

@@ -19,6 +19,10 @@ public interface GoodsReceiptService {
 	List<GoodsReceipt> findAll();
 
 	GoodsReceipt findById(int id);
+	
+	GoodsReceipt getGoodsReceiptById(int id);
+	
+	GoodsReceipt getGoodsReceiptViewById(int id);
 
 	GoodsReceipt delete(int id);
 

@@ -83,7 +83,7 @@ public class CreditMemoController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
+		CreditMemo cre = creditMemoService.getCreditMemoById(Integer.parseInt(id));
 		logger.info("11111 cre-->");
 		logger.info("New cre-->" + cre);
 		cre = creditMemoService.getListAmount(cre);  // set Amt Calculation  
@@ -198,7 +198,7 @@ public class CreditMemoController {
 		String path = "";
 		
 		/*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForGoodsReturn(pdfUploadedPath,cre);*/
+                .OfflineHtmlStringToPdfForCreditMemo(pdfUploadedPath,cre);*/
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

@@ -8,6 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +25,8 @@ import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
+import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
@@ -69,6 +74,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Autowired
 	PurchaseOrderRepository purchaseOrderRepository;
+	
+	@PersistenceContext    
+	private EntityManager entityManager;
 	
 	@Autowired
 	EmailGenerator emailGenerator;
@@ -125,13 +133,13 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					.findById(goodsReceipt.getId()).get();
 			List<GoodsReceiptLineItems> requestLists = goodsReceiptObj.getGoodsReceiptLineItems();
 			
-			
+			if(requestLists.size()>0 && requestLists!=null) {
+				goodsReceiptLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
+				}
 			
 			
 			if(goodsReceipt.getPoId()==null) {  // if PoId null remove list items 
-				if(requestLists.size()>0 && requestLists!=null) {
-					goodsReceiptLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
-					}
+				
 			
 			}else {
 				List<GoodsReceiptLineItems> header_listItems =  goodsReceipt.getGoodsReceiptLineItems();
@@ -479,6 +487,107 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	}
 	
 	
+	@Override
+	public GoodsReceipt getGoodsReceiptById(int id) {
+		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
+	     
+	 	String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " +goodsReceipt.getPoId();
+		String productNumber =""; 
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+			
+			List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 GoodsReceiptLineItems greList = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			GoodsReceiptLineItems invlist = listItems.get(i);
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			greList.setTempRequiredQuantity(tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString())));
+					break;
+					}
+	    		}
+	    		addListItems.add(greList);
+	    		j++;
+	     }
+	     
+	     goodsReceipt.setGoodsReceiptLineItems(addListItems);
+	     
+		return goodsReceipt;
+	}
+	
+	
+	
+	
+	@Override
+	public GoodsReceipt getGoodsReceiptViewById(int id) {
+		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
+		/*Set Headers*/
+		
+		String sql= " select total_gr_amount_product_tax,total_gr_amount_before_discount,total_discount,freight,total_gr_amount_after_discount"
+				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +id;
+		
+		logger.info("sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+	     for(Object[] tuple : list) {
+	    	 goodsReceipt.setTaxAmt(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 goodsReceipt.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
+	    	// goodsReceipt.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
+	    	 //goodsReceipt.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 goodsReceipt.setTotalPayment(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+	    	 goodsReceipt.setAmtRounding(tuple[5] == null ? "0" : ( tuple[5]).toString());
+	     }
+	     
+	     /*--Set Headers--*/
+	     
+	     
+	     /*--Set Lists--*/
+	     
+	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +id;
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+			
+			List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 GoodsReceiptLineItems grelist = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			GoodsReceiptLineItems invlist = listItems.get(i);
+	    			
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			grelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    			grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
+					grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
+					break;
+					}
+	    		}
+	    		addListItems.add(grelist);
+	    		j++;
+	     }
+	     
+	 	goodsReceipt.setGoodsReceiptLineItems(addListItems);
+	     
+	     /*Set Lists*/
+		return goodsReceipt;
+	}
 	
 	
 	@Override
@@ -510,7 +619,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
 				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
 				
-				if(goodsReceipt.getPoId()!=null) {
+				/*if(goodsReceipt.getPoId()!=null) {
 				if(poItms.get(i).getProdouctNumber()!=null ) {
 					 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
 				}else if(poItms.get(i).getSacCode()!=null ) {
@@ -522,7 +631,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				grlist.setTempRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
 				
 				
-				}
+				}*/
 				
 			
 				
@@ -593,23 +702,61 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder) {
-		List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
+	/*	List<GoodsReceipt> listGoodsReceipt = goodsReceiptRepository
 				.findByListPoId(purchaseOrder.getId(),EnumStatusUpdate.REJECTED.getStatus());
-		logger.info("listGoodsReceipt-->" +listGoodsReceipt);
+		logger.info("listGoodsReceipt-->" +listGoodsReceipt);*/
 		
 		/*String status = setStatusOfPurchaseOrder(listGoodsReceipt.get(0));
 		logger.info("status-->" +status); //Test the Status if you want  
-*/		
-		Integer prQunatity = getListPoQuantityCount(purchaseOrder);
-		Integer grQunatity = getListGRQunatityCount(listGoodsReceipt);
+	
+		//Integer prQunatity = getListPoQuantityCount(purchaseOrder);
+		//Integer grQunatity = getListGRQunatityCount(listGoodsReceipt);
 		
-		if(prQunatity > grQunatity)
+		
+		/*String sqlList= " select pending_quantity from vw_purchase_order_pending_qty where id= " +purchaseOrder.getId();
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+			
+		Integer pendingQuantity=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 pendingQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[0].toString()))));
+	     }*/
+	     
+		String sqlList= "select * from vw_purchase_order_pending_qty where id=  "+purchaseOrder.getId();
+		Integer pendingQuantity=0;
+		Integer prQuantity=0;
+		Integer grQuantity=0;
+		Integer returnQuantity=0;
+		Integer creditQuantity=0;
+		
+	 	logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		 List<Object[]>	list = queryList.getResultList();
+			
+			logger.info("List Size -----> " + list.size());
+		     for(Object[] tuple : list) {
+		    	 prQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[3].toString()))));
+		    	 grQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
+		    	 returnQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[5].toString()))));
+		    	 creditQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[6].toString()))));
+		    	 pendingQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[8].toString()))));
+		     }
+	     
+		 	logger.info("prQuantity ----> " + prQuantity);
+		 	logger.info("grQuantity ----> " + grQuantity);
+		 	logger.info("returnQuantity ----> " + returnQuantity);
+		 	logger.info("creditQuantity ----> " + creditQuantity);
+		 	logger.info("pendingQuantity ----> " + pendingQuantity);
+		
+		if(pendingQuantity > 0)
 			return true;
 		else
 			return false;
 	}
 
-	private Integer getListGRQunatityCount(List<GoodsReceipt> listGoodsReceipt) {
+	/*private Integer getListGRQunatityCount(List<GoodsReceipt> listGoodsReceipt) {
 	
 		Integer grQunatity=0;
 		if (listGoodsReceipt != null) {
@@ -626,7 +773,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
 		logger.info("grQunatity===>" +grQunatity);
 		return grQunatity;
-	}
+	}*/
 
 	
 
@@ -657,7 +804,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	
-	private Integer getListPoQuantityCount(PurchaseOrder purchaseOrder) {
+	/*private Integer getListPoQuantityCount(PurchaseOrder purchaseOrder) {
 		List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
 		Integer prQunatity=0;
 		if (listItems != null) {
@@ -671,7 +818,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		
 		logger.info("prQunatity===>" +prQunatity);
 		return prQunatity;
-	}
+	}*/
 	
 	
 	

@@ -167,8 +167,9 @@ public class InvoiceController {
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		inv = inVoiceService.getListAmount(inv);
+		InVoice inv = inVoiceService.getInVoiceById(Integer.parseInt(id));
+		logger.info("inv-->" + inv);
+		//inv = inVoiceService.getListAmount(inv);
 		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());

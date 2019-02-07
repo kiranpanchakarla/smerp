@@ -19,12 +19,15 @@ public interface InVoiceService {
 	List<InVoice> findAll();
 
 	InVoice findById(int id);
+	
+	InVoice getInVoiceById(int id);
 
 	InVoice delete(int id);
 
 	List<InVoice> findByIsActive();
 	
 	InVoice getListAmount(InVoice purchaseOrder);
+	/*InVoice getInVoiceRequireQuantityById(InVoice purchaseOrder);*/
 	
 	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	

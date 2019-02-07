@@ -86,7 +86,7 @@ public class GoodsReturnController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		GoodsReturn gre = goodsReturnService.findById(Integer.parseInt(id));
+		GoodsReturn gre = goodsReturnService.getGoodsReturnById(Integer.parseInt(id));
 		logger.info("11111 gre-->");
 		logger.info("New gre-->" + gre);
 		gre = goodsReturnService.getListAmount(gre);  // set Amt Calculation  

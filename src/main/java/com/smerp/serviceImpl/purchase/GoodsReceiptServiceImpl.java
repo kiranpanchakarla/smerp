@@ -189,7 +189,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
          logger.info("goodsReceipt -->" +goodsReceipt);
 		
 		
-		if(goodsReceipt.getStatusType()!=null &&  goodsReceipt.getStatusType().equals("APP")) {
+		 if(goodsReceipt.getStatus()!=null &&  goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			try {
 			   	goodsReceipt =getListAmount(goodsReceipt);
     			 RequestContext.initialize();
@@ -198,7 +198,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}
+		}else if(goodsReceipt.getStatus()!=null &&  goodsReceipt.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			 
+		 }
 		
 		/*if(goodsReceipt.getPoId()!=null) {
 		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());

@@ -166,7 +166,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			}
 		}
 
-		if(purchaseOrder.getStatusType()!=null &&  purchaseOrder.getStatusType().equals("APP")) {
+		 if(purchaseOrder.getStatus()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			try {
 			   	purchaseOrder =getListAmount(purchaseOrder);
     			 RequestContext.initialize();
@@ -175,7 +175,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}
+		}else if(purchaseOrder.getStatus()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			 
+		 }
 		 
 		return purchaseOrderRepository.save(purchaseOrder); 
 		 

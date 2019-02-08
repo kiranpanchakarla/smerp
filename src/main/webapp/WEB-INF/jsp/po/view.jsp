@@ -543,18 +543,18 @@ text-align: left;
 			alert("id:"+id);
 		 	$.ajax({
 		 		type:"GET",
-	            /*  url: url, */
+	              url: url, 
 	              url: "showHistoryById",
 	             data : id,
 	             success: function(result){
 	            	 alert("ok");
-	                /*  if(result==true){
+	                  if(result==true){
 	                     alertify.warning(msg);
 	                     $('#'+nameId).val('');
 	                     $('#'+displayId).html(msg);
 	                 }else {
 	                     $('#'+displayId).html('');
-	                 } */
+	                 } 
 	            }});
 			
 		} */

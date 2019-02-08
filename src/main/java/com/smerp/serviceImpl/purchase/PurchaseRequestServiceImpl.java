@@ -49,13 +49,6 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
             break; 
         case "APP": 
         	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
-        	try {
-      			 RequestContext.initialize();
-      		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
-      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
-      		} catch (Exception e) {
-      			e.printStackTrace();
-      		}
             break; 
         case "CA":
         	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());
@@ -76,15 +69,24 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		}
 		
 		if (purchaseRequest.getId() != null) {
-			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
-			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
+			PurchaseRequest purchaseRequest_Obj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest_Obj.getPurchaseRequestLists();
 				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
 		}
 		
-		
-		
-			
-
+		 if(purchaseRequest.getStatus()!=null &&  purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+			 try {
+      			 RequestContext.initialize();
+      		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
+      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
+      		} catch (Exception e) {
+      			e.printStackTrace();
+      		}
+			 
+		 }else if(purchaseRequest.getStatus()!=null &&  purchaseRequest.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			 
+		 }
+		 
 		return purchaseRequestRepository.save(purchaseRequest);
 	}
 

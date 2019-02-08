@@ -155,8 +155,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		
 		
 		creditMemo= creditMemoRepository.save(creditMemo);
-		
-		if(creditMemo.getStatusType()!=null &&  creditMemo.getStatusType().equals("APP")) {
+		 if(creditMemo.getStatus()!=null &&  creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
     			 RequestContext.initialize();
@@ -172,12 +171,14 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				if(invoice.getGrId()!=null) {
 					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-					 logger.info("purchaseOrder -->" +purchaseOrder);
+					invoice.setStatus(EnumStatusUpdate.INVOICE.getStatus());  // Set INVOICE
+					inVoiceRepository.save(invoice);
+					logger.info("purchaseOrder -->" +purchaseOrder);
 				}
 			}
 			
 		}
-		else if(creditMemo.getStatusType()!=null &&  creditMemo.getStatusType().equals("RE")) {
+			else if(creditMemo.getStatus()!=null &&  creditMemo.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
     			 RequestContext.initialize();
@@ -291,7 +292,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	
 	
-	public String  setStatusOfPurchaseOrder(CreditMemo creditMemo) {
+	/*public String  setStatusOfPurchaseOrder(CreditMemo creditMemo) {
 		logger.info("set Status-->");
 		String status="";
 		//PurchaseOrder purchaseOrder = purchaseOrderService.findById(creditMemo.getPoId());
@@ -331,7 +332,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
         }
     	logger.info("status-->" + status);
 		return status;
-	}
+	}*/
 
 	private Map<String, Integer> prepareMapForProductQunatityPR(PurchaseOrder purchaseOrder,List<PurchaseOrderLineItems> poListItems) {
 		 Map<String, Integer> poListData =new LinkedHashMap<>();
@@ -617,7 +618,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	}*/
 	
 	
-	@Override
+	/*@Override
 	public Boolean checkQuantityInv(InVoice creditMemo) {
 		List<CreditMemo> listCreditMemo = creditMemoRepository
 				.findByListInvId(creditMemo.getId(),EnumStatusUpdate.REJECTED.getStatus());
@@ -633,7 +634,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			return true;
 		else
 			return false;
-	}
+	}*/
 
 	private Integer getListCMQunatityCount(List<CreditMemo> listCreditMemo) {
 	

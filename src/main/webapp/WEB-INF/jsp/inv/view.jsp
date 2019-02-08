@@ -57,7 +57,7 @@ text-align: left;
 
 													<h2 class="card-title" id="basic-layout-icons">Invoice</h2>
 												</div>
-
+<c:set var="productQuantity" value="${productQuantity + 0}" scope="page" /> 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
@@ -250,8 +250,7 @@ text-align: left;
 																													
 																												<td>${listLineItems.tempRequiredQuantity}</td>
 
-																												
-																														
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
 																													</c:if>
 																													
 																													<c:if test="${inv.category!='Item'}">
@@ -260,7 +259,7 @@ text-align: left;
 																													<td>${listLineItems.description}</td>
 																															
 																													<td>${listLineItems.tempRequiredQuantity}</td>
-																													
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
 																													<td>${listLineItems.unitPrice}</td>
 																												<td><c:forEach var="entry"
 																														items="${taxCodeMap}">
@@ -406,8 +405,7 @@ text-align: left;
 												          <div class="col-sm-4 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
 												          <div class="col-sm-4 form-group has-feedback">
-												        
-									
+									 <c:if test="${productQuantity !=0}">
 										<input type="hidden" name="invId" value="${inv.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Convert To CM'}"> 
@@ -425,7 +423,7 @@ text-align: left;
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach>
-												         
+										  </c:if>     	         
 												         </div>
 												         
 												         

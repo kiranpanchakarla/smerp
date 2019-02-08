@@ -27,7 +27,7 @@ public interface CreditMemoService {
 	
 	CreditMemo getListAmount(CreditMemo creditMemo);
 	
-	Boolean checkQuantityInv(InVoice InVoice);
+	/*Boolean checkQuantityInv(InVoice InVoice);*/
 	
 
 }

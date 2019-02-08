@@ -180,7 +180,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		inVoice.setVendorShippingAddress(vendorShippingAddress);
 		inVoice.setVendorPayTypeAddress(vendorPayAddress);
 		
-		if(inVoice.getStatusType()!=null &&  inVoice.getStatusType().equals("APP")) {
+		 if(inVoice.getStatus()!=null &&  inVoice.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			try {
 			   	inVoice =getListAmount(inVoice);
     			 RequestContext.initialize();

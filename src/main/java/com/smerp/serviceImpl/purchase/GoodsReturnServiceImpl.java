@@ -130,14 +130,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				}
 			
 			
-			if(goodsReturn.getGrId()==null) {  // if RfqId null remove list items 
 			
-			
-			}else {
-				
-				
-				 logger.info("Goods Return Data -->" +goodsReturn);
-			}
 			if(goodsReturn.getGrId()!=null) {
 			GoodsReceipt gr = goodsReceiptService.findById(goodsReturn.getGrId());
 			
@@ -167,7 +160,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
          
          goodsReturn= goodsReturnRepository.save(goodsReturn);
          
-		if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("APP")) {
+		if(goodsReturn.getStatus()!=null &&  goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
     			 RequestContext.initialize();
@@ -190,11 +183,13 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			if(goodsReturn.getGrId()!=null) {
 			GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(goodsReturn.getGrId()).get();
 			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-			 logger.info("purchaseOrder -->" +purchaseOrder);
+			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
+			goodsReceiptRepository.save(goodsReceipt);
+			logger.info("purchaseOrder -->" +purchaseOrder);
 			}
 			
 		}
-		else if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("RE")) {
+		else if(goodsReturn.getStatus()!=null &&  goodsReturn.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
     			 RequestContext.initialize();

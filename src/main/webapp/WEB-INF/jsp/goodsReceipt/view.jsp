@@ -58,6 +58,8 @@ text-align: left;
 													<h2 class="card-title" id="basic-layout-icons">Goods Receipt</h2>
 												</div>
 
+<c:set var="productQuantity" value="${productQuantity + 0}" scope="page" /> 
+
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
@@ -248,7 +250,10 @@ text-align: left;
 																													 ${entry.value} 																													 </c:if>
 																													</c:forEach></td>
 																													
-																													<td>${listLineItems.tempRequiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}
+																													
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
+																													</td>
 
 																												
 																														
@@ -259,7 +264,13 @@ text-align: left;
 																													
 																													<td>${listLineItems.description}</td>
 																															
-																													<td>${listLineItems.tempRequiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}
+																													
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
+																													
+																													</td>
+																													
+																													
 																													
 																													<td>${listLineItems.unitPrice}</td>
 																												<td><c:forEach var="entry"
@@ -396,8 +407,6 @@ text-align: left;
 											
 											
 											
-											
-											
 											<!--Calculation Part  -->
 									
 									<div class="card-block">
@@ -406,8 +415,12 @@ text-align: left;
 											<div class="row">
 												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
+												         
+												         
+												         
+												         <c:choose>
+														<c:when test="${productQuantity !=0}">
 												         <div class="col-sm-3 form-group has-feedback">
-												        
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -446,10 +459,22 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												          </div>
-										             
+							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												        </c:when>
+												       <c:otherwise>
+												       
+												       <div class="col-sm-3 form-group has-feedback"></div>
+												       <div class="col-sm-3 form-group has-feedback"></div>
+												       <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												       
+												       
+												       </c:otherwise> 
+												        
+												        
+												        
+												        
+												        </c:choose>
 												         
-												         
-												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												 </div>
 										</div>

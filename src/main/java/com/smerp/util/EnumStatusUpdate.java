@@ -16,7 +16,16 @@ public enum EnumStatusUpdate {
 	INVOICE("Invoiced"),
 	CLOSED("Closed"),
 	
-	
+	CREATE("Create"),
+	CREATED("Created"),
+	UPDATE("Update"),
+	UPDATED("Updated"),
+	DRAFTED("Drafted"),
+	APPROVE("Approve"),
+	REJECT("Reject"),
+	SAVED("Saved"),
+	CANCEL("Cancel"),
+	PDFDOWNLOAD("PDF Downloaded"),
 	
 	PR("PR"),
 	RFQ("RFQ"),

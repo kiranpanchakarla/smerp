@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +30,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itextpdf.text.DocumentException;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.purchase.PurchaseRequest;
@@ -61,7 +58,7 @@ public class PurchaseRequestController {
 		this.pdfUploadedPath = pdf;
 	}
 	
-	private String barcodePath;
+	/*private String barcodePath;
 	
 	@Value(value = "${file.barcodeupload.path}")
 	public void setPropBarCode(String barcodePath) {
@@ -74,7 +71,7 @@ public class PurchaseRequestController {
 	public void setPropnewBarCode(String pdfbarcodePath) {
 		this.pdfbarcodePath = pdfbarcodePath;
 	}
-	
+	*/
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestController.class);
 
 	@Autowired
@@ -133,9 +130,9 @@ public class PurchaseRequestController {
 	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) throws IOException {
 		logger.info("purchaseRequest save-->" + purchaseRequest);
 		
-		if (purchaseRequest.getId() == null) {
+		/*if (purchaseRequest.getId() == null) {
 		purchaseRequest.setBarCodeImgPath(barCodeGeneration.downloadbarcodeImpge(purchaseRequest.getDocNumber(), barcodePath));
-		}
+		}*/
 		purchaseRequestService.save(purchaseRequest);
 		return "redirect:list";
 	}

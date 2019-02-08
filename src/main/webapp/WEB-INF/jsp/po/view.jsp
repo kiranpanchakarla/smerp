@@ -56,9 +56,41 @@ text-align: left;
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-
+													<div class="col-md-12">
 													<h2 class="card-title" id="basic-layout-icons">Purchase Order</h2>
+													</div>
+													
 												</div>
+
+												<!-- Modal -->
+											  <div class="modal fade" id="myModal" role="dialog">
+											    <div class="modal-dialog">
+											    
+											      <!-- Modal content-->
+											      <div class="modal-content">
+											        <div class="modal-header">
+											        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+											          <h4 class="modal-title">Purchase Order History</h4>
+											        </div>
+											        <div class="modal-body" style="height:250px;overflow-y:scroll">
+												<c:forEach items="${poahList}" var="poahListvar">
+											 	<ul class="popup-content">
+												  <li>
+													
+													 <b> <fmt:formatDate pattern = "dd/MM/yyyy hh:mm a"  value = "${poahListvar.createdDate}"/> :</b> ${poahListvar.activity} : ${poahListvar.log} by ${poahListvar.createdBy}
+													
+												   </li>
+												</ul> 
+												</c:forEach>
+											        </div>
+											        <div class="modal-footer">
+											          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											        </div>
+											      </div>
+											      
+											    </div>
+											  </div>
+
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -135,13 +167,12 @@ text-align: left;
 																</div>
 															</div>
 															
-															<div class="row">
+															<!--  <div class="row">
+															 <a class="btn po-hist-btn" data-toggle="modal" data-target="#myModal"> History </a>
 																			
-																			
-															</div>
+															</div>  -->
 																		
 															
-
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
 																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -424,19 +455,19 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-																		  <c:if test="${po.status != 'Open'  && po.status != 'Draft' && po.status != 'Rejected'}">
-																		  
+	        									                        <c:if test="${po.status != 'Open'  && po.status != 'Draft' && po.status != 'Rejected'}">
+																		 
 																		   <c:if test="${checkStatusPoGr ==true}">
 									<input type="hidden" name="poId" value="${po.id}">
 																		<form:button type="button" id="convertBtn"
 																			class="btn btn-primary mr-1 float-right">
 																			<i></i>Convert To GR</form:button>
 																			
-								                                          </c:if>	</c:if>
+								                           </c:if>	
 																		 
 																	</c:if>
 	   										                           </c:if>
-	       								                         <%--   </c:if>     --%> 
+	       								                           </c:if>     
    									                            </c:forEach>
 												         
 												         
@@ -504,6 +535,31 @@ text-align: left;
 		function goBack() {
 			window.history.back();
 		}
+		
+		
+	/* 	function showHistory(po_id){
+			
+			var id = po_id;
+			alert("id:"+id);
+		 	$.ajax({
+		 		type:"GET",
+	            /*  url: url, */
+	              url: "showHistoryById",
+	             data : id,
+	             success: function(result){
+	            	 alert("ok");
+	                /*  if(result==true){
+	                     alertify.warning(msg);
+	                     $('#'+nameId).val('');
+	                     $('#'+displayId).html(msg);
+	                 }else {
+	                     $('#'+displayId).html('');
+	                 } */
+	            }});
+			
+		} */
+		
+		
 	</script>
 
 	

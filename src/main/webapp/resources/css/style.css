@@ -1218,4 +1218,7 @@ h2.font-weight-normal {
     height: auto !important;
 }
 .po-list-dashboard{padding: 0.5rem 1.5rem !important;}
-
+.po-hist-btn {padding: 0rem 1rem 0.5rem;color:#a94442 !important; font-weight: 500;}
+.popup-content li { position: relative; padding-left: 20px; list-style:none; } 
+.popup-content li:before { position: absolute; content: "\ea0b"; font-family: 'icomoon' !important; top: 0px; left: 0;color: #106570; font-weight: bold; } 
+.popup-content { margin-bottom: 0px; padding-left: 10px; }

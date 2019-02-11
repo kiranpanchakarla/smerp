@@ -125,7 +125,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			if(purchaseOrder.getRfqId()==null) {  // if RfqId null remove list items 
 				
 			
-			}else {  // Convert mode set Amount
+			}else {/*  // Convert mode set Amount
 				List<PurchaseOrderLineItems> header_listItems = purchaseOrder.getPurchaseOrderlineItems();
 				if (requestLists != null) {
 					List<PurchaseOrderLineItems> lineItems =new ArrayList<PurchaseOrderLineItems>();
@@ -150,7 +150,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				
 					purchaseOrder.setPurchaseOrderlineItems(lineItems);
 				}
-			}
+			*/}
 		
 			
 			if(purchaseOrder.getRfqId()!=null) {
@@ -207,6 +207,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setCategory(rfq.getCategory());
 			po.setRemark(rfq.getRemark());
 			po.setReferenceDocNumber(rfq.getDocNumber());
+			po.setPRDocNumber(rfq.getReferenceDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
 			po.setRfqId(rfq.getId());
 			po.setIsActive(true);

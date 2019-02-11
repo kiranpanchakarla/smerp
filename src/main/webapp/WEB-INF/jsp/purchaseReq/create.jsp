@@ -85,8 +85,8 @@
                                                                             <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate' required="true" path="postingDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
+                                                                         
+                                                                    
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Plant</label>
                                                                             <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" 
@@ -103,8 +103,7 @@
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate' required="true" path="documentDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
+                                                                   
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Email- ID</label>
                                                                             <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
@@ -119,9 +118,8 @@
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-6 form-group">
+                                                                    
+                                                                        <div class="col-sm-6 form-group" style="visibility: hidden;">
                                                                             <div class="input-group">
                                                                                 <%-- <div class="col-sm-3 form-group">
                                                                                     <form:radiobutton name="type" path="type" id="items_radio"  value="Item" />

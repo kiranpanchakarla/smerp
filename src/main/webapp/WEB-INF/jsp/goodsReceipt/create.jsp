@@ -595,7 +595,7 @@
 																																  <form:option value="${plantMap}"></form:option>  
 																																	</form:select>
 																																</div> --%> <div class="form-group">
-																																	<form:select class="form-control"
+																																	<form:select class="form-control warehouse"
 																																		style="width:;" readonly="true"
 																																		path="goodsReceiptLineItems[${count}].warehouse">
 																																		 
@@ -2119,6 +2119,7 @@ setCalculationAmt(index);
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -2149,6 +2150,7 @@ function removeData2(index){
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	

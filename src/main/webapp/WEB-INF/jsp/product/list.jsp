@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -77,11 +78,13 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																	<th>S.no</th>
+																	<th>S.No</th>
 																	<th>Product Number</th>
 																	<th>Description</th>
 																	<th>Product Group</th>
 																	<th>UOM Group</th>
+																	<th>Created Date</th>
+																    <th>Modified Date</th>
 																	<th>Actions</th>
 																	
 																</tr>
@@ -95,7 +98,8 @@
 																	<td>${productList.description}</td>
 																	<td>${productList.productGroup.productName}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
-																	
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productList.updatedAt}"/></td>
 																	<td >
 																	  <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Product'}">

@@ -137,7 +137,7 @@
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Doc Number</label>
+																				<label>PO Doc#</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
@@ -151,7 +151,7 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc No.</label>
+																				<label>RFQ Doc#</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber"  />
@@ -240,14 +240,14 @@
 																		<form:option value="" ></form:option>
 																	</form:select>
 																</div>
-                                                                
-                                                                <div class="col-sm-4 form-group">
-																				<label>Doc Number</label>
-																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Number' path="docNumber"
-																					readonly="true" />
+                                                               
+                                                               <div class="col-sm-4 form-group">
+																				<label>Posting Date</label>
+																				<form:input type="text" cssClass="form-control" readonly="true"
+																					placeholder='Posting Date' path="createdAt" />
+																				
 																			</div>
-
+																			
 															</div>
 
 															<div class="card-body collapse in">
@@ -255,36 +255,49 @@
 																	<div class="form-body">
 
 																		<div class="row">
+																		 <div class="col-sm-4 form-group">
+																				<label>PO Doc #</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='Document Number' path="docNumber"
+																					readonly="true" />
+																			</div>
+																			
+																			
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc No.</label>
+																				<label>RFQ Doc #</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number' readonly="true"
 																					path="referenceDocNumber"  />
 																			</div>
+                                                                            
                                                                             <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>
-																				<form:input type="text" cssClass="form-control" readonly="true"
-																					placeholder='Posting Date' path="postingDate" />
-																				
-																			</div>
-																			<div class="col-sm-4 form-group">
+																				<label>PR Doc #</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='PR Document Number' readonly="true"
+																					path="PRDocNumber"  />
+																			</div>	
+																			
+																			
+																		</div>
+				
+																		<div class="row">
+																		
+																		
+																		 <div class="col-sm-4 form-group">
 																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control" readonly="true"
 																					placeholder='Document Date' path="documentDate"  />
 																				
 																			</div>
-																		</div>
-
-
-
-
-																		<div class="row">
+																			
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control" readonly="true"
 																					id="require_date" path="requiredDate"   />
 																			
 																			</div>
+																			
+																	
                                                                             
 																		</div>
 																		
@@ -651,8 +664,8 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																														
-																														<td><div class="form-group"><form:select class="form-control"
-																															style="width:;" required="true"
+																														<td><div class="form-group"><form:select class="form-control warehouse"
+																															  required="true"
 																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${plantMap}" />
@@ -1796,7 +1809,9 @@ function removeData(index){
 	var rowCount = $('#itemTbl tr').length-2;
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
+		//alert($('.warehouse').val());
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1826,7 +1841,10 @@ function removeData2(index){
 	var rowCount = $('#edit_item_serviceTbl tr').length-2;
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
+		//alert($('.warehouse').val());
 		$('.warehouse').prop('selectedIndex',0);
+		alert($('.taxCode').val());
+		//$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	
@@ -2048,7 +2066,7 @@ $(document).on("change", ".taxCode", function() {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
   	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalPayment").val(sum_total);
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
  	}
@@ -2089,7 +2107,7 @@ $(document).on("keyup", ".unitPrice", function() {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
   	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalPayment").val(sum_total);
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
     	}
@@ -2127,7 +2145,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
   	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(Math.round(sum_total));
+  	 $("#totalPayment").val(sum_total);
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
     	}
@@ -2147,7 +2165,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 		totalPayment += parseFloat($("#freight").val());
 	}
 	if(totalAmt!="") {
-	 $("#totalPayment").val(Math.round(totalPayment));
+	 $("#totalPayment").val(totalPayment);
 	 $("#amtRounding").val( Math.round(totalPayment));
 	}
 	
@@ -2188,7 +2206,7 @@ $('#freight').keyup(function() {
 	
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
-	 $("#totalPayment").val(Math.round(finalValue));
+	 $("#totalPayment").val(finalValue);
 	 $("#amtRounding").val( Math.round(finalValue));
 	}
 });
@@ -2222,7 +2240,7 @@ $('#freight').keyup(function() {
 			totalPayment += parseFloat($("#freight").val());
 		}
 		if(sum_total!="") {
-		 $("#totalPayment").val(Math.round(totalPayment));
+		 $("#totalPayment").val(totalPayment);
 		 $("#amtRounding").val( Math.round(totalPayment));
 		}
 	

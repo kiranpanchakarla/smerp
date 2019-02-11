@@ -9,18 +9,18 @@ import com.smerp.model.inventory.GoodsReceipt;
 
 public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Integer> {
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE isActive=:isActive order by createdAt asc")
+	@Query("SELECT r FROM GoodsReceipt r WHERE isActive=:isActive order by createdAt desc")
 	List<GoodsReceipt> findByIsActive(Boolean isActive);
 	
 	GoodsReceipt findTopByOrderByIdDesc();
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status!=:status")
+	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status!=:status order by createdAt desc")
 	List<GoodsReceipt> findByListPoId(int id,String status);
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status = :status")
+	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:id and status = :status order by createdAt desc")
 	List<GoodsReceipt> findByApproveListPoId(int id ,String status);
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE status = :status or status= :gStatus")
+	@Query("SELECT r FROM GoodsReceipt r WHERE status = :status or status= :gStatus order by createdAt desc")
 	List<GoodsReceipt> grApprovedList(String status,String gStatus);
 	
 	GoodsReceipt findByPoId(int id);

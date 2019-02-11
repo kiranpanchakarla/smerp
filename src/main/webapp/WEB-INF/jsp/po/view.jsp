@@ -1,4 +1,4 @@
-
+	
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -123,37 +123,51 @@ text-align: left;
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${po.docNumber}
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.createdAt}" />
 																			</div>
-
 															</div>
 
 															<div class="card-body collapse in">
 																<div class="card-block-in">
 																	<div class="form-body">
-
-																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${po.referenceDocNumber}
+																	
+																	<div class="row">
+																	<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${po.docNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.postingDate}" />
-																			</div>
+																  
 																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${po.referenceDocNumber}
+																			</div>	
+																			
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${po.PRDocNumber}
+																			</div>	
+																			
+																	</div>
+																	
+																	<div class="row">
+																	 <div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.documentDate}" />
 																			</div>
+																	
+												                	
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>Required Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
+																			</div>
+																			
 																		</div>
 
 
 
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
-																			</div>
+																			
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>

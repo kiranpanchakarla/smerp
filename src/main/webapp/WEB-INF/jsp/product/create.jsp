@@ -618,10 +618,19 @@ $(document).ready(function(){
   		  $("#maximim").change(function(){
        				  if(parseInt($('#maximim').val()) <= parseInt($('#minimun').val())){
        					 $('#maximim').val('');
-       					alertify.success('Enter Greater than Min Vlaue');
+       					alertify.warning('Entered Value which is lower than Minimum Value');
        				  }
        				// alert(status);
        	            }); 
+  		  
+  		  $("#minimun").change(function(){
+  			  /* alert(parseInt($('#minimun').val())); */
+				  if(parseInt($('#minimun').val()) > parseInt($('#maximim').val())){
+					 $('#minimun').val('');
+					alertify.warning('Entered Value is Greater than Maximum Value');
+				  }
+				// alert(status);
+	            }); 
 
   		var vendorNames=[];
         var vendorNamesList=${vendorNamesList};

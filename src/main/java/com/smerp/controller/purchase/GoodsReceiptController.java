@@ -126,7 +126,10 @@ public class GoodsReceiptController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		GoodsReceipt gr = goodsReceiptService.getGoodsReceiptById(Integer.parseInt(id));
+		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
+		if(gr.getPoId() != null) {
+		 gr = goodsReceiptService.getGoodsReceiptById(Integer.parseInt(id));
+		}
 		logger.info("11111 gr-->");
 		logger.info("New gr-->" + gr);
 		gr = goodsReceiptService.getListAmount(gr);  // set Amt Calculation  
@@ -168,7 +171,7 @@ public class GoodsReceiptController {
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
 		GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(Integer.parseInt(id));
-		//gr = goodsReceiptService.getListAmount(gr);
+		gr = goodsReceiptService.getListAmount(gr);
 		logger.info("gr-->" + gr);
 		poloadData(model, gr);
 		// model.addAttribute("categoryMap", categoryMap());

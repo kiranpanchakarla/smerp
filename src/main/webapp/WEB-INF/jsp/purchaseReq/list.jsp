@@ -82,9 +82,9 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>User Name</th>
-																<th>Document Number</th>
+																<th>Document No</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
@@ -100,8 +100,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${purchaseRequestsList.user.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${purchaseRequestsList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy" value="${purchaseRequestsList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.updatedAt}"/></td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>

@@ -8,7 +8,7 @@ import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 
 public interface InventoryGoodsIssueRepository extends JpaRepository<InventoryGoodsIssue,Integer> {
 
-	@Query("SELECT r FROM InventoryGoodsIssue r WHERE isActive=:isActive order by createdAt asc")
+	@Query("SELECT r FROM InventoryGoodsIssue r WHERE isActive=:isActive order by createdAt Desc")
 	List<InventoryGoodsIssue> findByIsActive(Boolean isActive);
 	
 	InventoryGoodsIssue findTopByOrderByIdDesc();

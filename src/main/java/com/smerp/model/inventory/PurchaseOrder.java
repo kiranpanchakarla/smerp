@@ -47,6 +47,9 @@ public class PurchaseOrder extends AuditModel {
 	private String status;
 
 	private transient String statusType;
+	
+	@Column(name = "PR_doc_number")
+	private String PRDocNumber;
 
 	@Column(name = "reference_doc_number")
 	private String referenceDocNumber;
@@ -100,6 +103,14 @@ public class PurchaseOrder extends AuditModel {
 	private transient Double totalBeforeDisAmt ;
 	
 	
+
+	public String getPRDocNumber() {
+		return PRDocNumber;
+	}
+
+	public void setPRDocNumber(String pRDocNumber) {
+		PRDocNumber = pRDocNumber;
+	}
 
 	public Integer getId() {
 		return id;

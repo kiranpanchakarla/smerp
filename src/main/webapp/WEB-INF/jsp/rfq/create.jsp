@@ -77,9 +77,6 @@
 												 <c:if test="${rfq.id!=null}">
 												 <a  class="btn btn-primary float-right"> ${rfq.status} </a>
 												</c:if>
-												<c:if test="${rfq.id==null}">
-												</c:if>
-												
 												</div>
 												
 												
@@ -119,9 +116,11 @@
 																	<div style="color: red;" id="1_errorContainer"
 																		class="help-block with-errors"></div>
 																</div>
+																
+																<form:hidden path="id" />
 															</div>
 
-															<form:hidden path="id" />
+															
 
 															<div class="row">
 																
@@ -145,7 +144,7 @@
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Doc Number</label>
+																				<label>RFQ Doc#</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Document Number' path="docNumber"
 																					readonly="true" />
@@ -159,18 +158,19 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>
+																				<label>PR Doc#</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber"  />
 																			</div>
+																			 
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" required="true" />
-																				
+																					autocomplete="off" readonly="true" disabled ="true" />
 																			</div>
+																			 
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control"
@@ -868,6 +868,7 @@ $(document).ready(function(){
 			var shippingAddressId='${vendorShippingAddressId}';
 			//alert("payTypeAddressId"+payTypeAddressId);
 			//alert("shippingAddressId"+shippingAddressId);
+			
 			 
 		}else{
 		$('#postingDate').datepicker("setDate", "0"); //"0" for current date

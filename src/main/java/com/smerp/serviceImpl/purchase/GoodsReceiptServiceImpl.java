@@ -211,14 +211,14 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		} }*/
 		
 		
-		goodsReceipt= goodsReceiptRepository.save(goodsReceipt);
+		//goodsReceipt= goodsReceiptRepository.save(goodsReceipt);
 		
 		if(goodsReceipt.getPoId()!=null) {
 			PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update
 			 logger.info("goodsReceipt -->" +goodsReceipt);
 		}
 		
-		return goodsReceipt; 
+		return goodsReceiptRepository.save(goodsReceipt);
 		 
 	}
 

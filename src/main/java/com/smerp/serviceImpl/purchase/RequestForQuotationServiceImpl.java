@@ -92,6 +92,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			requestForQuotation.setLineItems(listItems);

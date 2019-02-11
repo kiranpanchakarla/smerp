@@ -37,11 +37,8 @@ public class InventoryGoodsTransfer extends AuditModel {
 	@Column(name="business_partner")
     private String businessPartner;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="user_id", referencedColumnName = "user_id")
-	private User user;
-	
-	 
+	@Column(name="user_name")
+	private String user;
 	
 	@Column(name="doc_number")
     private String docNumber;
@@ -237,11 +234,11 @@ public class InventoryGoodsTransfer extends AuditModel {
 	}
 
 
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

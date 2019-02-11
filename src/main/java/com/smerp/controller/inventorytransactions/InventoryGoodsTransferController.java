@@ -191,8 +191,8 @@ public class InventoryGoodsTransferController {
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
-		 /*path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
-                .OfflineHtmlStringToPdfForInvGoodsTransfer(pdfUploadedPath,invGR); */
+		 path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
+                .OfflineHtmlStringToPdfForInvGoodsTransfer(pdfUploadedPath,invGR);
 				
 		logger.info("path " +path);
 		response.setContentType("text/html");

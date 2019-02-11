@@ -42,8 +42,8 @@ text-align: left;
 					<div class="large-12 columns">
 						<div class="content-body">
 
-							<c:url value="/gre/saveGRtoGRE" var="createUrl" />
-							<c:url value="/inv/saveGRtoInv" var="createInvoiceUrl" />
+							<%-- <c:url value="/gre/saveGRtoGRE" var="createUrl" />
+							<c:url value="/inv/saveGRtoInv" var="createInvoiceUrl" /> --%>
 
 							<form:form method="POST" action="" id="form"
 							 class="bv-form commentForm" enctype="multipart/form-data" modelAttribute="gr"
@@ -55,7 +55,7 @@ text-align: left;
 											<div class="card-box">
 												<div class="card-header">
 
-													<h2 class="card-title" id="basic-layout-icons">Inventory Goods Receipt</h2>
+													<h2 class="card-title" id="basic-layout-icons">Inventory Goods Transfer</h2>
 												</div>
 
 												<div class="card-body collapse in create-block">
@@ -64,36 +64,68 @@ text-align: left;
 															
 
 															<form:hidden path="id" />
-
+															
 															<div class="row">
 																
-                                                                
-                                                                <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																<div class="col-sm-6 form-group">
+																                <label>Business Partner</label>: ${gr.businessPartner}
+																					 
+																				</div>
+
+
+																	<div class="col-sm-6 form-group">
+																		<label>Doc Number</label>: ${gr.docNumber}
+																		 
+																	</div>
+																	
 																</div>
-																	 
-																<div class="col-sm-4"><label>Status</label> : ${gr.status}</div>
-																<div class="col-sm-4 create-po-wrap">
-																		
-																			
-																			
-                                                                          <div class="row">
-																                <div class="col-sm-12 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
-																			</div></div>
-																			
-																			<div class="row">
-																                <div class="col-sm-12 form-group">
-																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
-																			</div></div>
-																			
-																			<div class="row">
-																                <div class="col-sm-12 form-group">
-																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
-																			</div></div>
-																		</div>
+																
+																<div class="row">
+																
+																<div class="col-sm-6 form-group">
+																                <label>Name</label>: ${gr.user}
+																					 
+																				</div>
+
+
+																	<div class="col-sm-6 form-group">
+																		<label>Status</label>: ${gr.status}
+																		 
+																	</div>
+																	
+																</div>
+																
+																<div class="row">
+																
+																<div class="col-sm-6 form-group">
+																                <label>Posting Date</label>: ${gr.postingDate}
+																					 
+																				</div>
+
+
+																	<div class="col-sm-6 form-group">
+																		<label>Doc Date</label>: ${gr.documentDate}
+																		 
+																	</div>
+																	
+																</div>
+																
+																<div class="row">
+																
+																<div class="col-sm-6 form-group">
+																                <label>Ship to</label>: <c:forEach var="entry"
+																														items="${plantMap}">
+																														<c:if
+																															test="${entry.key ==gr.toWarehouse}">
+																													 ${entry.value} 																													 </c:if>
+																													</c:forEach>  
+																					 
+																				</div>
+ 
+																	
+																</div>
+
+															 
 
 															</div>
 
@@ -129,7 +161,7 @@ text-align: left;
 																						
                                                                                     
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty inventoryGoodsReceiptList}">
+																										<c:if test="${not empty inventoryGoodsTransferList}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -141,16 +173,15 @@ text-align: left;
 																									<th>S.no</th>
 																									<th>Product#</th>
 																									<th>Description</th>
-																									<th>UOM</th>
-																									<th>SKU</th>
+																									<th>Ship From</th>
+																									<th>Ship To</th>
+																									<th>Quantity</th>
 																									<th>Unit Price</th>
 																									<th>Tax %</th>
 																									<th>Tax Total</th>
 																									<th>Total</th>
-																									<th>Group</th>
+																									<th>UOM</th>
 																									<th>HSN Code</th>
-																									<th>Warehouse</th>
-																									<th>Quantity</th>
 																									
 																									
 																									
@@ -160,27 +191,39 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${inventoryGoodsReceiptList}"
+																											<c:forEach items="${inventoryGoodsTransferList}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
 																												<td style="display: none;"><form:input
 																															type="hidden"
-																															path="inventoryGoodsReceiptList[${count}].productId"
+																															path="inventoryGoodsTransferList[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="inventoryGoodsReceiptList[${count}].id"/>	
+																												<form:hidden path="inventoryGoodsTransferList[${count}].id"/>	
 																															</td>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																													
 																													<td>${listLineItems.productNumber}</td>
 																													<td>${listLineItems.description}</td>
-																													<td>${listLineItems.uom}</td>
-																													<td>${listLineItems.sku}</td>
+																														<td><c:forEach var="entry"
+																														items="${plantMap}">
+																														<c:if
+																															test="${entry.key ==listLineItems.fromWarehouse}">
+																													 ${entry.value} 																													 </c:if>
+																													</c:forEach></td>
+																														<td><c:forEach var="entry"
+																														items="${plantMap}">
+																														<c:if
+																															test="${entry.key ==listLineItems.toWarehouse}">
+																													 ${entry.value} 																													 </c:if>
+																													</c:forEach></td>
 																													
+																													 
+																													<td>${listLineItems.requiredQuantity}</td>
 																													
-																															<td>${listLineItems.unitPrice}</td>
+																															 <td>${listLineItems.unitPrice}</td>
 																															<td><c:forEach var="entry"
 																																items="${taxCodeMap}">
 																																<c:if test="${entry.key ==listLineItems.taxCode}">
@@ -189,20 +232,9 @@ text-align: left;
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
-																														<td>${listLineItems.productGroup}</td>
+																														<td>${listLineItems.uom}</td>
 																														<td>${listLineItems.hsn}</td>
-
-																												<td><c:forEach var="entry"
-																														items="${plantMap}">
-																														<c:if
-																															test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
-																													</c:forEach></td>
-																													
-																													<td>${listLineItems.requiredQuantity}</td>
-
-																												
-																													
+ 
 																													
 																												
 																												</tr>
@@ -308,7 +340,7 @@ text-align: left;
 										             
 												         
 												         
-												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgt/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												 </div>
 										</div>

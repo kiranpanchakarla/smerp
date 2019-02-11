@@ -449,7 +449,7 @@ text-align: left;
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
 	        									                        
-	        									                        <c:if test="${gr.status == 'Approved' &&  gr.status != 'Invoiced'}">
+	        									                        <c:if test="${(gr.status == 'Approved' || gr.status == 'Goods_Return') &&  gr.status != 'Invoiced' }">
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">

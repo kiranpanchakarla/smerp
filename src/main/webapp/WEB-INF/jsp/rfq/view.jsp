@@ -70,7 +70,7 @@
 
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Contact Person </label>:
+																	<label>Contact</label>:
 																	${rfq.vendorContactDetails.contactName}
 																</div>
 															</div>
@@ -101,7 +101,7 @@
 
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document#</label>:
+																				<label>Ref Doc#</label>:
 																				${rfq.referenceDocNumber}
 																			</div>
 																			<div class="col-sm-4 form-group">
@@ -110,7 +110,7 @@
 																					value="${rfq.postingDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>:
+																				<label>Doc Date</label>:
 																				<fmt:formatDate pattern="dd/MM/yyyy"
 																					value="${rfq.documentDate}" />
 																			</div>

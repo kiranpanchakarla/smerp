@@ -94,6 +94,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getTaxCode() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			purchaseOrder.setPurchaseOrderlineItems(listItems);

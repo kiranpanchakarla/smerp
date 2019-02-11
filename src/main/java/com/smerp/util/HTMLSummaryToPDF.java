@@ -35,10 +35,12 @@ import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
+import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
+import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
@@ -138,6 +140,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	
 	@Autowired
 	InventoryGoodsIssueService inventoryGoodsIssueService;
+	
+	@Autowired
+	InventoryGoodsTransferService inventoryGoodsTransferService;
 	
 	@Autowired
 	DepartmentService departmentService;
@@ -421,7 +426,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 		Writer out = new StringWriter();
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
-		input.put("gr", inventoryGoodsReceipt);
+		input.put("gr", invGR);
 		input.put("moduleName", moduleCredit);
 		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());
@@ -455,7 +460,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		Writer out = new StringWriter();
     		Map<String, Object> input = new HashMap<String, Object>(1);
     		input.put("contextPath", RequestContext.get().getContextPath());
-    		input.put("gr", inventoryGoodsIssue);
+    		input.put("gr", invGR);
     		input.put("moduleName", moduleCredit);
     		logger.info("plantMap-->" + purchaseOrderController.plantMap());
     		input.put("plantMap", purchaseOrderController.plantMap());
@@ -475,6 +480,41 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     public Map<Integer, Object> deptMap() {
 		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
 	}
+    
+ public String OfflineHtmlStringToPdfForInvGoodsTransfer(String pdfFilePath,InventoryGoodsTransfer inventoryGoodsTransfer) throws TemplateException, IOException, DocumentException {
+    	
+	 InventoryGoodsTransfer invGR = inventoryGoodsTransferService.getListAmount(inventoryGoodsTransfer);
+    		
+    		File sourceFolder = null;
+    			sourceFolder = new File(downloadUtil.getDownloadPath());
+    		if (!sourceFolder.exists()) {
+    			sourceFolder.mkdirs();
+    		}
+    		File file = null;
+    		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    		file = new File(sourceFolder + File.separator + "GoodsTransfer" + fileStr + ".pdf");
+    		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
+    		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Inv_Goods_Transfer);
+    		Writer out = new StringWriter();
+    		Map<String, Object> input = new HashMap<String, Object>(1);
+    		input.put("contextPath", RequestContext.get().getContextPath());
+    		input.put("gr", invGR);
+    		input.put("moduleName", moduleCredit);
+    		logger.info("plantMap-->" + purchaseOrderController.plantMap());
+    		input.put("plantMap", purchaseOrderController.plantMap());
+    		input.put("taxCodeMap", purchaseOrderController.taxCode());
+    		input.put("deptMap", deptMap());
+    		input.put("user", getUser());
+    		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    		getTemplate().process(input, out);
+    		ITextRenderer renderer = new ITextRenderer();
+    		renderer.setDocumentFromString(out.toString());
+    		renderer.layout();
+    		renderer.createPDF(os);
+    		os.flush();
+    		os.close();
+    		return file.getAbsolutePath();
+    	}
 	@Override
 	protected MimeMessagePreparator createMessage(String mailTo) {
 		// TODO Auto-generated method stub

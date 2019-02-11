@@ -39,4 +39,8 @@ public class WebConstants {
 	public final static String offline_Inv_Goods_Issue = "invgoodsIssuePdfFile.ftl";
 		
     public final static String Email_Inv_Goods_Issue = "invgoodsIssueEmail.ftl";
+    
+    public final static String offline_Inv_Goods_Transfer = "invgoodsTransferPdfFile.ftl";
+	
+    public final static String Email_Inv_Goods_Transfer = "invgoodsTransferEmail.ftl";
 }

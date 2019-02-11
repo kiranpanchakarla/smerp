@@ -112,7 +112,7 @@
 																	<td><c:choose>
 																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
-																					<c:if test="${ump.key eq 'Goods Transfer'}">
+																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"
 																							value="${ump.value}" />
 																						<c:choose>
@@ -150,7 +150,7 @@
 																					class="icon-bin left"></i></a>
 																			</c:otherwise>
 																		</c:choose> <c:forEach items="${sessionScope.umpmap}" var="ump">
-																			<c:if test="${ump.key eq 'Goods Transfer'}">
+																			<c:if test="${ump.key eq 'Goods Receipt'}">
 																				<c:set var="permissions" scope="session"
 																					value="${ump.value}" />
 																				<c:if

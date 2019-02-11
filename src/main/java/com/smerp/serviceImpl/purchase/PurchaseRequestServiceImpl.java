@@ -63,6 +63,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 			for (int i = 0; i < ltms.size(); i++) {
 				if (ltms.get(i).getDescription() == null) {
 					ltms.remove(i);
+					i--;
 				}
 			}
 			purchaseRequest.setPurchaseRequestLists(ltms);

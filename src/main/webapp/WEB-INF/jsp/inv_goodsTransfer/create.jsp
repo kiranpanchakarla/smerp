@@ -120,9 +120,9 @@
 																	<div class="col-sm-6 form-group">
 																		<label>Name</label>
 																		<form:input type="text" class="form-control"  
-																		 path="user.username" readonly="true" value="${user.username}" 
+																		 path="user" readonly="true" value="${user.username}" 
 																		  required="true" oninput="setCustomValidity('')" />
-                                                                            <form:hidden path="user.userId" class="userId" />
+                                                                            
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
@@ -155,7 +155,7 @@
 																				
 																				<div class="col-sm-6 form-group">
 																					<label>Ship To</label>
-																					<form:select class="form-control"
+																					<form:select class="form-control" id="warehouseId" onchange="wareHouseValidation()"
 																					  required="true"
 																					 path="toWarehouse">
 																					 <form:option value="" label="Select" />
@@ -190,6 +190,7 @@
 																											<th>Ship From</th>
 																											<th>Ship To</th>
 																											<th>Quantity</th>
+																											<th>Unit Price</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
@@ -217,15 +218,15 @@
 																												 
 																											<th>Product#</th>
 																											<th>Description</th>
-																											<th>UOM</th>
-																											<th>SKU</th>
+																											<th>Ship From</th>
+																											<th>Ship To</th>
+																											<th>Quantity</th>
+																											<th>Unit Price</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Group</th>
+																											<th>UOM</th>
 																											<th>HSN Code</th>
-																											<th>Warehouse</th>
-																											<th>Quantity</th>
 																											<th>Action</th>
 																												 
 
@@ -286,15 +287,6 @@
 																																</div></td>
 																																
 																																	<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		style="width:;" required="true"
-																																		path="inventoryGoodsTransferList[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
-
-																																	<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="inventoryGoodsTransferList[${count}].requiredQuantity"
 																																		value="${listLineItems.requiredQuantity}"
@@ -302,7 +294,14 @@
 																																		class="form-control requiredQuantity validatePrice"
 																																		autocomplete="off" required="true"></form:input>
 																																</div></td>
-
+																																
+																																<td><div class="form-group">
+																																	<form:input type="text" readonly="true"
+																																		path="inventoryGoodsTransferList[${count}].unitPrice"
+																																		onkeypress="return isNumericKey(event)"
+																																		value="${listLineItems.unitPrice}"
+																																		class="form-control unitPrice validatePrice"></form:input>
+																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:select
@@ -513,7 +512,7 @@
 																			</c:if>
 																			<!-- Approve -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Transfer'}">
+																				<c:if test="${ump.key eq 'Goods Receipt'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -527,7 +526,7 @@
 																			</c:forEach>
 																			<!-- Reject -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Transfer'}">
+																				<c:if test="${ump.key eq 'Goods Receipt'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -581,6 +580,32 @@
 
 
 <script type="text/javascript">
+
+
+
+
+
+
+
+function wareHouseValidation() {
+	
+	var val = $("#warehouseId").val();	
+	
+	var warhouseName=  $("#warehouseId option:selected").text();
+	
+	var addToRow = '<option value='+val+'>'+warhouseName+'</option>'; 
+	alert(addToRow);
+		/*  var val = $("#title"+index).val();
+		 if(val=='Mr') {
+		$("#gender"+index+" option[value='Male']").attr('selected', true);
+	    $("#gender"+index+" option[value='Female']").attr('selected', false);
+		}else {
+	    $("#gender"+index+" option[value='Female']").attr('selected', true);
+	  $("#gender"+index+" option[value='Male']").attr('selected', false);
+		} */
+		 
+		 
+	  }
 
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
@@ -644,7 +669,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="fromWarehouse'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   class="form-control fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
 			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
@@ -655,7 +680,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsTransferList['+inc+'].toWarehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].toWarehouse" required="true"   class="form-control toWarehouse'+inc+' toWarehouse"  id="toWarehouse'+inc+'" >'
 			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+

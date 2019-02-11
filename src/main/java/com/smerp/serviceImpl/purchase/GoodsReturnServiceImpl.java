@@ -116,6 +116,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			goodsReturn.setGoodsReturnLineItems(listItems);

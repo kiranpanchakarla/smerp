@@ -67,7 +67,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 				inventoryGoodsTransfer =getListAmount(inventoryGoodsTransfer);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "invgoodsTransferEmail.ftl");  //Sending Email
-    		     //emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendInvGoodsTransferEmail(inventoryGoodsTransfer);
+    		      emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendInvGoodsTransferEmail(inventoryGoodsTransfer);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}

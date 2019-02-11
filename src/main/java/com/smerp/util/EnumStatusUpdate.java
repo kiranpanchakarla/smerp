@@ -12,7 +12,7 @@ public enum EnumStatusUpdate {
 	REJECTED("Rejected"),
 	PARTIALLY_RECEIVED("Partially_Received"),
 	GOODS_RETURN("Goods_Return"),
-	CREDITMEMO("CreditMemo"),
+	CREDITMEMO("Credit Memo"),
 	INVOICE("Invoiced"),
 	CLOSED("Closed"),
 	

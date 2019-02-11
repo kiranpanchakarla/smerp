@@ -111,6 +111,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null && listItems.get(i).getRequiredQuantity() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			goodsReceipt.setGoodsReceiptLineItems(listItems);

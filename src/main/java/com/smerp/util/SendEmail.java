@@ -36,6 +36,7 @@ import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
+import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DashboardCountService;
 import com.smerp.service.admin.DepartmentService;
@@ -81,6 +82,7 @@ public class SendEmail extends EmailerGenerator{
 	private CreditMemo credit;
 	private InventoryGoodsReceipt invgr;
 	private InventoryGoodsIssue invgi;
+	private InventoryGoodsTransfer invgt;
 	
 	public Map<Integer, Object> deptMap() {
 		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
@@ -132,6 +134,7 @@ public class SendEmail extends EmailerGenerator{
 			input.put("credit", getCreditMemo());
 			input.put("gr", getInventoryGoodsReceipt());
 			input.put("gr", getInventoryGoodsIssue());
+			input.put("gr", getInventoryGoodsTransfer());
 			input.put("deptMap", deptMap());
 			input.put("plantMap", purchaseRequestController.plantMap());
 			input.put("taxCodeMap", purchaseOrderController.taxCode());
@@ -216,6 +219,9 @@ public class SendEmail extends EmailerGenerator{
 	}
 	public InventoryGoodsIssue getInventoryGoodsIssue() {
 		return invgi;
+	}
+	public InventoryGoodsTransfer getInventoryGoodsTransfer() {
+		return invgt;
 	}
 	
 	@Override
@@ -546,6 +552,36 @@ public class SendEmail extends EmailerGenerator{
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(getUser().getUserEmail());
 				message.setSubject("Inventory Goods Issue :" + inventoryGoodsIssue.getDocNumber() + " Status :" + inventoryGoodsIssue.getStatus());
+				message.setText(getBody(), true);
+			}
+
+		};
+	}
+	
+	public void sendInvGoodsTransferEmail(InventoryGoodsTransfer inventoryGoodsTransfer) throws Exception {
+		 if (shouldNotify()) {
+	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            try {
+	                mailSender.send(createInvGoodsTransferMessage(inventoryGoodsTransfer));
+	               // logger.info("Email notification successfully sent for " + mailTo);
+	              //  doPRPostProcessing();
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	
+	protected MimeMessagePreparator createInvGoodsTransferMessage(InventoryGoodsTransfer inventoryGoodsTransfer) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				invgt = inventoryGoodsTransfer;
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(getUser().getUserEmail());
+				message.setSubject("Inventory Goods Transfer :" + inventoryGoodsTransfer.getDocNumber() + " Status :" + inventoryGoodsTransfer.getStatus());
 				message.setText(getBody(), true);
 			}
 

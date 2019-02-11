@@ -118,6 +118,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			creditMemo.setCreditMemoLineItems(listItems);
@@ -171,7 +172,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				if(invoice.getGrId()!=null) {
 					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-					invoice.setStatus(EnumStatusUpdate.INVOICE.getStatus());  // Set INVOICE
+					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
 					inVoiceRepository.save(invoice);
 					logger.info("purchaseOrder -->" +purchaseOrder);
 				}

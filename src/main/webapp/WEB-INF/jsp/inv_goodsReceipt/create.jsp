@@ -250,7 +250,7 @@
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="inventoryGoodsReceiptList[${count}].sku"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
 																																</div></td>

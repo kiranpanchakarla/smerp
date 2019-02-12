@@ -168,7 +168,7 @@
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" readonly="true" disabled ="true" />
+																					autocomplete="off" readonly="true" />
 																			</div>
 																			 
 																			<div class="col-sm-4 form-group">

@@ -125,7 +125,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			if(purchaseOrder.getRfqId()==null) {  // if RfqId null remove list items 
 				
 			
-			}else {/*  // Convert mode set Amount
+			}else {  // Convert mode set Amount
 				List<PurchaseOrderLineItems> header_listItems = purchaseOrder.getPurchaseOrderlineItems();
 				if (requestLists != null) {
 					List<PurchaseOrderLineItems> lineItems =new ArrayList<PurchaseOrderLineItems>();
@@ -150,11 +150,12 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				
 					purchaseOrder.setPurchaseOrderlineItems(lineItems);
 				}
-			*/}
+			}
 		
 			
 			if(purchaseOrder.getRfqId()!=null) {
-			RequestForQuotation rfq = requestForQuotationService.findById(purchaseOrder.getRfqId());  
+			RequestForQuotation rfq = purchaseOrder.getRfqId();  
+			//requestForQuotationService.findById(purchaseOrder.getRfqId().getId())
 			Vendor vendor = vendorService.findById(rfq.getVendor().getId());
 			VendorAddress vendorShippingAddress = vendorAddressService.findById(rfq.getVendorShippingAddress().getId());
 			VendorAddress vendorPayAddress = vendorAddressService.findById(rfq.getVendorPayTypeAddress().getId());
@@ -189,7 +190,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 		PurchaseOrder po = new PurchaseOrder();
 		RequestForQuotation rfq = requestForQuotationService.findById((Integer.parseInt(rfqId)));
-		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq.getId());  // check RFQ exist in PO
+		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq);  // check RFQ exist in PO
         if(dup_po==null) { 
 		PurchaseOrder podetails = findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
@@ -207,9 +208,8 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setCategory(rfq.getCategory());
 			po.setRemark(rfq.getRemark());
 			po.setReferenceDocNumber(rfq.getDocNumber());
-			po.setPRDocNumber(rfq.getReferenceDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
-			po.setRfqId(rfq.getId());
+			po.setRfqId(rfq);
 			po.setIsActive(true);
 			po.setVendor(rfq.getVendor());
 			po.setVendorContactDetails(rfq.getVendorContactDetails());

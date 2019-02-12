@@ -89,10 +89,13 @@ text-align: left;
 																<div class="col-sm-4 form-group">
 																	<label>Ship From</label>: ${gr.vendorShippingAddress.city}
 																</div>
-                                                                
-                                                                <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																
+																<div class="col-sm-4 form-group">
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
 																			</div>
+                                                                
+                                                               
 
 															</div>
 
@@ -101,27 +104,43 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
+																		
+																		 <div class="col-sm-4 form-group">
+																				<label>Gr Doc#</label>: ${gr.docNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${gr.referenceDocNumber}
+																			</div>
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${gr.poId.rfqId.docNumber}
+																			</div>
+                                                                            
+                                                                            
+                                                                            </div>
+                                                                            <div class="row">
+                                                                            
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${gr.poId.rfqId.purchaseReqId.docNumber}
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
 																			</div>
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>Required Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
+																			</div>
+																			
 																		</div>
 
 
 
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
-																			</div>
+																			
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>

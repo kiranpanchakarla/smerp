@@ -97,8 +97,8 @@
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
 																	<td>${plant.plantName}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${plant.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${plant.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${plant.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${plant.updatedAt}"/></td>
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 												<c:if test="${ump.key eq 'Admin Master'}">

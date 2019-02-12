@@ -148,7 +148,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		RequestForQuotation rfq = new RequestForQuotation();
 		PurchaseRequest prq = purchaseRequestService.getInfo(Integer.parseInt(purchaseId));
 		
-		RequestForQuotation dup_rfq =requestForQuotationRepository.findByPurchaseReqId(prq.getId());  // check PR exist in RFQ
+		RequestForQuotation dup_rfq =requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
         if(dup_rfq==null) { 
 		RequestForQuotation rfqdetails = findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
@@ -168,7 +168,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			rfq.setRemark(prq.getRemarks());
 			rfq.setReferenceDocNumber(prq.getDocNumber());
 			rfq.setRequiredDate(prq.getRequiredDate());
-			rfq.setPurchaseReqId(prq.getId());
+			rfq.setPurchaseReqId(prq);
 			rfq.setIsActive(true);
 			
 			

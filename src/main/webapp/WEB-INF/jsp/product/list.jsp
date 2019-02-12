@@ -98,8 +98,8 @@
 																	<td>${productList.description}</td>
 																	<td>${productList.productGroup.productName}</td>
 																	<td>${productList.uomCategory.uomCategoryName}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productList.updatedAt}"/></td>
 																	<td >
 																	  <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Product'}">

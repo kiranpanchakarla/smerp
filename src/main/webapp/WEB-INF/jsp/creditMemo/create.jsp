@@ -145,11 +145,12 @@
 																	</div>
 
 																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Document Number' path="docNumber"
-																			readonly="true"/>
-																	</div>
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Posting Date' path="postingDate"
+																						readonly="true" />
+
+																				</div>
 
 																</div>
 
@@ -158,23 +159,61 @@
 																		<div class="form-body">
 
 																			<div class="row">
+																			
+																			<div class="col-sm-4 form-group">
+																		<label>CM Doc#</label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='Document Number' path="docNumber"
+																			readonly="true"/>
+																	</div>
 																				<div class="col-sm-4 form-group">
-																					<label>Ref Doc No.</label>
+																					<label>INV Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number'
 																						path="referenceDocNumber" readonly="true" />
 																				</div>
+																				
 																				<div class="col-sm-4 form-group">
-																					<label>Posting Date</label>
+																					<label>Gr Doc#</label>
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Posting Date' path="postingDate"
-																						readonly="true" />
-
+																						placeholder='Reference Document Number' 
+																						path="GrdocNumber"  value="${cre.invId.grId.docNumber}" readonly="true" />
 																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PO Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="POdocNumber" value="${cre.invId.grId.poId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>RFQ Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="RFQdocNumber" value="${cre.invId.grId.poId.rfqId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PR Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="PRdocNumber" value="${cre.invId.grId.poId.rfqId.purchaseReqId.docNumber}" readonly="true" />
+																				</div>
+																				
 																				<div class="col-sm-4 form-group">
 																					<label>Doc Date</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Document Date' path="documentDate"
+																						readonly="true" />
+
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>Required Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						id="require_date" placeholder='Required Date'
+																						autocomplete="off" path="requiredDate"
 																						readonly="true" />
 
 																				</div>
@@ -184,15 +223,8 @@
 
 
 																			<div class="row">
-																				<div class="col-sm-4 form-group">
-																					<label>Required Date</label>
-																					<form:input type="text" cssClass="form-control"
-																						id="require_date" placeholder='Required Date'
-																						autocomplete="off" path="requiredDate"
-																						readonly="true" />
-
-																				</div>
-																				<div class="col-sm-4 form-group">&nbsp;</div>
+																				
+																				 
 
 
 																				<div class="row" id="radioDiv">

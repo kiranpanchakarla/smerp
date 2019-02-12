@@ -99,8 +99,8 @@
 																			value="${count}" /></td>
 																	<td>${uom.uomName}</td>
 																	<td>${uom.uomCategory.uomCategoryName}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${uom.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${uom.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${uom.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${uom.updatedAt}"/></td>
 																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">

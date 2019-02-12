@@ -96,8 +96,8 @@
 																			value="${count}" /></td>
 																	<td >${department.company.name}</td>
 																	<td >${department.name}</td> 
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${department.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${department.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${department.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${department.updatedAt}"/></td>
 																	<td >
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 												<c:if test="${ump.key eq 'Admin Master'}">

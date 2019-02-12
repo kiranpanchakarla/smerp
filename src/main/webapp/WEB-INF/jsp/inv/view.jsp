@@ -57,7 +57,7 @@ text-align: left;
 
 													<h2 class="card-title" id="basic-layout-icons">Invoice</h2>
 												</div>
-<c:set var="productQuantity" value="${productQuantity + 0}" scope="page" /> 
+                                                <c:set var="productQuantity" value="${productQuantity + 0}" scope="page" /> 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
@@ -87,10 +87,11 @@ text-align: left;
 																<div class="col-sm-4 form-group">
 																	<label>Ship From</label>: ${inv.vendorShippingAddress.city}
 																</div>
-                                                                
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${inv.docNumber}
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.postingDate}" />
 																			</div>
+                                                               
 
 															</div>
 
@@ -99,13 +100,22 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
+																		 <div class="col-sm-4 form-group">
+																				<label>INV Doc#</label>: ${inv.docNumber}
+																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${inv.referenceDocNumber}
+																				<label>GR Doc#</label>: ${inv.referenceDocNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.postingDate}" />
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${inv.grId.poId.docNumber}
 																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${inv.grId.poId.rfqId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${inv.grId.poId.rfqId.purchaseReqId.docNumber}
+																			</div>
+                                                                            
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.documentDate}" />

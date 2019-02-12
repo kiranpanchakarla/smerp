@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.RequestForQuotation;
 
 public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, Integer> {
 	
@@ -15,7 +16,7 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, I
 	PurchaseOrder findTopByOrderByIdDesc();
 	
 	
-	PurchaseOrder findByRfqId(int id);
+	PurchaseOrder findByRfqId(RequestForQuotation rfq);
 	
 	//PurchaseOrder findByrfqId(Integer rfqId);
 	

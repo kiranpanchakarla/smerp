@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.admin.Vendor;
@@ -76,8 +77,9 @@ public class InVoice extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "gr_id")
-	private Integer grId;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "gr_id")
+	private GoodsReceipt grId;
 
 	@Column(name = "remark")
 	private String remark;
@@ -96,6 +98,38 @@ public class InVoice extends AuditModel {
 	private transient String taxAmt;
 
 	private transient Double totalBeforeDisAmt;
+	
+	private transient String POdocNumber;
+	
+	private transient String RFQdocNumber;
+	
+	private transient String PRdocNumber;
+	
+	
+
+	public String getPOdocNumber() {
+		return POdocNumber;
+	}
+
+	public void setPOdocNumber(String pOdocNumber) {
+		POdocNumber = pOdocNumber;
+	}
+
+	public String getRFQdocNumber() {
+		return RFQdocNumber;
+	}
+
+	public void setRFQdocNumber(String rFQdocNumber) {
+		RFQdocNumber = rFQdocNumber;
+	}
+
+	public String getPRdocNumber() {
+		return PRdocNumber;
+	}
+
+	public void setPRdocNumber(String pRdocNumber) {
+		PRdocNumber = pRdocNumber;
+	}
 
 	public Integer getId() {
 		return id;
@@ -263,11 +297,11 @@ public class InVoice extends AuditModel {
 		return taxAmt;
 	}
 
-	public Integer getGrId() {
+	public GoodsReceipt getGrId() {
 		return grId;
 	}
 
-	public void setGrId(Integer grId) {
+	public void setGrId(GoodsReceipt grId) {
 		this.grId = grId;
 	}
 

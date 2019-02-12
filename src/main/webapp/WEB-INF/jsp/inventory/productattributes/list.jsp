@@ -97,8 +97,8 @@
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
 																	<td>${productattributes.attributeName}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productattributes.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${productattributes.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productattributes.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productattributes.updatedAt}"/></td>
 																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">

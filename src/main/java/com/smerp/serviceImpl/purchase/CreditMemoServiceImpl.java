@@ -142,7 +142,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		
          logger.info("creditMemo -->" +creditMemo);
          if(creditMemo.getInvId()!=null) {
- 			InVoice inv = inVoiceService.findById(creditMemo.getInvId());
+ 			InVoice inv = creditMemo.getInvId();
 		Vendor vendor = vendorService.findById(inv.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(inv.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(inv.getVendorPayTypeAddress().getId());
@@ -167,10 +167,10 @@ public class CreditMemoServiceImpl implements CreditMemoService{
     		}
 		
 			if(creditMemo.getInvId()!=null) {
-				InVoice invoice  = inVoiceRepository.findById(creditMemo.getInvId()).get();
+				InVoice invoice  = creditMemo.getInvId();
 				
 				if(invoice.getGrId()!=null) {
-					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId()).get();
+					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId().getId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
 					inVoiceRepository.save(invoice);
@@ -220,7 +220,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			inv.setRemark(in.getRemark());
 			inv.setReferenceDocNumber(in.getDocNumber());
 			inv.setRequiredDate(in.getRequiredDate());
-			inv.setInvId(in.getId());
+			inv.setInvId(in);
 			inv.setIsActive(true);
 			inv.setVendor(in.getVendor());
 			inv.setVendorContactDetails(in.getVendorContactDetails());
@@ -473,10 +473,10 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		List<InVoiceLineItems> grItms =null;
 		 List<CreditMemo> listCreditMemo =null;
 		if(creditMemo.getInvId()!=null) {
-			in = inVoiceService.findById(creditMemo.getInvId());
+			in = creditMemo.getInvId();
 			grItms = in.getInVoiceLineItems();
 		listCreditMemo = creditMemoRepository
-					.findByListInvId(in.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
+					.findByListInvId(in,EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
 		}
 		
 		
@@ -543,7 +543,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		CreditMemo creditMemo = creditMemoRepository.findById(id).get();
 		
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId();
+	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId().getId();
 		String productNumber =""; 
 		Integer creditmemoQuantity=0;
 		logger.info("sqlList ----> " + sqlList);

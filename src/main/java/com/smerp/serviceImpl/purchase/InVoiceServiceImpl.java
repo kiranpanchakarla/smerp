@@ -143,7 +143,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 				 logger.info("convertd Po to GR Data -->" +inVoice);
 			}
 			 if(inVoice.getGrId() != null) { 
-				 GoodsReceipt gr = goodsReceiptService.findById(inVoice.getGrId());
+				 GoodsReceipt gr = inVoice.getGrId();
 	        	
 				 Vendor vendor = vendorService.findById(gr.getVendor().getId());
 	     		VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
@@ -209,7 +209,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		InVoice dup_inv =inVoiceRepository.findByGrId(gr.getId());  // check PO exist in  GR
+		InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check PO exist in  GR
         if(dup_inv==null) {
 		InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
@@ -228,7 +228,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setRemark(gr.getRemark());
 			inv.setReferenceDocNumber(gr.getDocNumber());
 			inv.setRequiredDate(gr.getRequiredDate());
-			inv.setGrId(gr.getId());
+			inv.setGrId(gr);
 			inv.setIsActive(true);
 			inv.setVendor(gr.getVendor());
 			inv.setVendorContactDetails(gr.getVendorContactDetails());
@@ -279,7 +279,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		/*Set Headers*/
 		
 		String sql= " select total_gr_amount_product_tax,total_gr_amount_before_discount,total_discount,freight,total_gr_amount_after_discount"
-				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +inv.getGrId();
+				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +inv.getGrId().getId();
 		
 		logger.info("sql ----> " + sql);
 		Query query = entityManager.createNativeQuery(sql);
@@ -300,7 +300,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     
 	     /*--Set Lists--*/
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +inv.getGrId();
+	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +inv.getGrId().getId();
 		String productNumber =""; 
 		Integer creditmemoQuantity=0;
 		logger.info("sqlList ----> " + sqlList);

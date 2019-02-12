@@ -143,7 +143,7 @@ text-align: left;
 																			
 																			
 																			<div class="col-sm-4 form-group">
-																				<label>PR Doc#</label>: ${po.PRDocNumber}
+																				<label>PR Doc#</label>: ${po.rfqId.purchaseReqId.docNumber}
 																			</div>	
 																			
 																	</div>

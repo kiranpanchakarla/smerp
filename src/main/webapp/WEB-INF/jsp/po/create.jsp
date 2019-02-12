@@ -244,7 +244,7 @@
                                                                <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control" readonly="true"
-																					placeholder='Posting Date' path="createdAt" />
+																					placeholder='Posting Date' path="postingDate" />
 																				
 																			</div>
 																			
@@ -274,7 +274,7 @@
 																				<label>PR Doc #</label>
 																				<form:input type="text" cssClass="form-control"
 																					placeholder='PR Document Number' readonly="true"
-																					path="PRDocNumber"  />
+																					path="PRDocNumber" value="${po.rfqId.purchaseReqId.docNumber}"  />
 																			</div>	
 																			
 																			

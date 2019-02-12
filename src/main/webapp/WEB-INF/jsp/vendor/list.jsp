@@ -97,8 +97,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${vendorList.name}</td>
 																	<td>${vendorList.vendorCode}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${vendorList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${vendorList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${vendorList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${vendorList.updatedAt}"/></td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Vendor'}">

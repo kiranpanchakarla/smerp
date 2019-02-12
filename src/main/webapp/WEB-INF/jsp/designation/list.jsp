@@ -98,8 +98,8 @@
 																	<td >${designation.desigination}</td>
 																	<td >${designation.company.name}</td>
 																	<td >${designation.department.name}</td> 
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${designation.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${designation.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${designation.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${designation.updatedAt}"/></td>
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 												<c:if test="${ump.key eq 'Admin Master'}">

@@ -133,7 +133,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			
 			
 			if(goodsReturn.getGrId()!=null) {
-			GoodsReceipt gr = goodsReceiptService.findById(goodsReturn.getGrId());
+			GoodsReceipt gr = goodsReturn.getGrId();
 			
 			Vendor vendor = vendorService.findById(gr.getVendor().getId());
 			VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
@@ -182,7 +182,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				}*/
 			
 			if(goodsReturn.getGrId()!=null) {
-			GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(goodsReturn.getGrId()).get();
+			GoodsReceipt goodsReceipt =  goodsReturn.getGrId();
 			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
 			goodsReceiptRepository.save(goodsReceipt);
@@ -232,7 +232,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			gre.setRemark(gr.getRemark());
 			gre.setReferenceDocNumber(gr.getDocNumber());
 			gre.setRequiredDate(gr.getRequiredDate());
-			gre.setGrId(gr.getId());
+			gre.setGrId(gr);
 			gre.setIsActive(true);
 			gre.setVendor(gr.getVendor());
 			gre.setVendorContactDetails(gr.getVendorContactDetails());
@@ -478,7 +478,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	public GoodsReturn getGoodsReturnById(int id) {
 		GoodsReturn goodsReturn = goodsReturnRepository.findById(id).get();
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId();
+	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId().getId();
 		String productNumber =""; 
 		Integer creditmemoQuantity=0;
 		logger.info("sqlList ----> " + sqlList);
@@ -522,10 +522,10 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		List<GoodsReceiptLineItems> grItms =null;
 		 List<GoodsReturn> listGoodsReturn =null;
 		if(goodsReturn.getGrId()!=null) {
-			gr = goodsReceiptService.findById(goodsReturn.getGrId());
+			gr = goodsReturn.getGrId();
 			grItms = gr.getGoodsReceiptLineItems();
 		listGoodsReturn = goodsReturnRepository
-					.findByListgrId(gr.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
+					.findByListgrId(gr,EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
 		}
 		
 		
@@ -627,7 +627,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	@Override
 	public Boolean checkQuantityGr(GoodsReceipt goodsReceipt) {
 		List<GoodsReturn> listGoodsReturn = goodsReturnRepository
-				.findByListgrId(goodsReceipt.getId(),EnumStatusUpdate.REJECTED.getStatus());
+				.findByListgrId(goodsReceipt,EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listGoodsReturn-->" +listGoodsReturn);
 		
 	/*	String status = setStatusOfPurchaseOrder(listGoodsReturn.get(0));

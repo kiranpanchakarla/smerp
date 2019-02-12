@@ -76,8 +76,9 @@ public class CreditMemo extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "inv_id")
-	private Integer invId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "inv_id")
+	private InVoice invId;
 
 	@Column(name = "remark")
 	private String remark;
@@ -96,6 +97,48 @@ public class CreditMemo extends AuditModel {
 	private transient String taxAmt;
 
 	private transient Double totalBeforeDisAmt;
+	
+	private transient String GrdocNumber;
+	
+	private transient String POdocNumber;
+	
+	private transient String RFQdocNumber;
+	
+	private transient String PRdocNumber;
+	
+	
+
+	public String getGrdocNumber() {
+		return GrdocNumber;
+	}
+
+	public void setGrdocNumber(String grdocNumber) {
+		GrdocNumber = grdocNumber;
+	}
+
+	public String getPOdocNumber() {
+		return POdocNumber;
+	}
+
+	public void setPOdocNumber(String pOdocNumber) {
+		POdocNumber = pOdocNumber;
+	}
+
+	public String getRFQdocNumber() {
+		return RFQdocNumber;
+	}
+
+	public void setRFQdocNumber(String rFQdocNumber) {
+		RFQdocNumber = rFQdocNumber;
+	}
+
+	public String getPRdocNumber() {
+		return PRdocNumber;
+	}
+
+	public void setPRdocNumber(String pRdocNumber) {
+		PRdocNumber = pRdocNumber;
+	}
 
 	public Integer getId() {
 		return id;
@@ -273,11 +316,11 @@ public class CreditMemo extends AuditModel {
 		this.totalPayment = totalPayment;
 	}
 
-	public Integer getInvId() {
+	public InVoice getInvId() {
 		return invId;
 	}
 
-	public void setInvId(Integer invId) {
+	public void setInvId(InVoice invId) {
 		this.invId = invId;
 	}
 

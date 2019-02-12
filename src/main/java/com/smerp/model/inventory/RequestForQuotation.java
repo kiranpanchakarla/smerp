@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.master.AuditModel;
+import com.smerp.model.purchase.PurchaseRequest;
 
 @Entity
 @Table(name="tbl_admin_rfq")
@@ -47,10 +49,13 @@ public class RequestForQuotation extends AuditModel {
 	
 	@Column(name="reference_doc_number")
 	private String referenceDocNumber;
+	
 	@Column(name="posting_date")
 	private Date postingDate;
+	
 	@Column(name="document_date")
 	private Date documentDate;
+	
 	@Column(name="required_date")
 	private Date requiredDate;
 	
@@ -72,20 +77,20 @@ public class RequestForQuotation extends AuditModel {
 	@Column(name="is_active")
 	private Boolean isActive = true;
 	
-	@Column(name="purchase_req_id")
-    private Integer purchaseReqId;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="purchase_req_id")
+    private PurchaseRequest purchaseReqId;
 	
 	
 	@Column(name="remark")
     private String remark;
+ 
 	
-	
-	
-	
-	public Integer getPurchaseReqId() {
+	 
+	public PurchaseRequest getPurchaseReqId() {
 		return purchaseReqId;
 	}
-	public void setPurchaseReqId(Integer purchaseReqId) {
+	public void setPurchaseReqId(PurchaseRequest purchaseReqId) {
 		this.purchaseReqId = purchaseReqId;
 	}
 	public String getStatusType() {
@@ -187,16 +192,7 @@ public class RequestForQuotation extends AuditModel {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	@Override
-	public String toString() {
-		return "RequestForQuotation [id=" + id + ", vendor=" + vendor + ", lineItems=" + lineItems + ", docNumber="
-				+ docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber + ", postingDate="
-				+ postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
-				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
-				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ ", remark=" + remark + "]";
-	}
-	 
+
 	
 	
 	

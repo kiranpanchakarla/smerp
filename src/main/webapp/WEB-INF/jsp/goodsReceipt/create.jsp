@@ -150,7 +150,7 @@
 																	</div>
 
 																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>
+																		<label>GR Doc#</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
 																			readonly="true" />
@@ -254,14 +254,15 @@
 																			<form:option value=""></form:option>
 																		</form:select>
 																	</div>
-
+																	
 																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Document Number' path="docNumber"
-																			readonly="true" />
-																	</div>
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control" readonly="true"
+																						placeholder='Posting Date' path="postingDate" />
 
+																				</div>
+
+																	
 																</div>
 
 																<div class="card-body collapse in">
@@ -269,30 +270,49 @@
 																		<div class="form-body">
 
 																			<div class="row">
+																			
+																			<div class="col-sm-4 form-group">
+																		<label>GR Doc#</label>
+																		<form:input type="text" cssClass="form-control"
+																			placeholder='Document Number' path="docNumber"
+																			readonly="true" />
+																	</div>
+																			
 																				<div class="col-sm-4 form-group">
-																					<label>Ref Doc No.</label>
+																					<label>PO Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number' readonly="true"
 																						path="referenceDocNumber" />
 																				</div>
+																				
 																				<div class="col-sm-4 form-group">
-																					<label>Posting Date</label>
-																					<form:input type="text" cssClass="form-control" readonly="true"
-																						placeholder='Posting Date' path="postingDate" />
-
-																				</div>
-																				<div class="col-sm-4 form-group">
-																					<label>Doc Date</label>
-																					<form:input type="text" cssClass="form-control" readonly="true"
-																						placeholder='Document Date' path="documentDate" />
-
-																				</div>
+																				<label>RFQ Doc #</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='PR Document Number' readonly="true"
+																					path="RFQdocNumber" value="${gr.poId.rfqId.docNumber}"  />
+																			</div>	
+																				
 																			</div>
 
 
 
 
 																			<div class="row">
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc #</label>
+																				<form:input type="text" cssClass="form-control"
+																					placeholder='PR Document Number' readonly="true"
+																					path="PRdocNumber" value="${gr.poId.rfqId.purchaseReqId.docNumber}"  />
+																			</div>	
+																			
+																			<div class="col-sm-4 form-group">
+																					<label>Doc Date</label>
+																					<form:input type="text" cssClass="form-control" readonly="true"
+																						placeholder='Document Date' path="documentDate" />
+
+																				</div>
+																			
 																				<div class="col-sm-4 form-group">
 																					<label>Required Date</label>
 																					<form:input type="text" cssClass="form-control" readonly="true"
@@ -454,17 +474,17 @@
 																												<th style="display: none;">Product Id</th>
 																												<c:if test="${gr.category=='Item'}">
 																													<th>Product#</th>
-																													<th>Description</th>
-																													<th>UOM</th>
-																													<th>SKU</th>
-																													<th>Unit Price</th>
-																													<th>Tax %</th>
-																													<th>Group</th>
-																													<th>HSN Code</th>
-																													<th>Warehouse</th>
-																													<th>Quantity</th>
-																													<th>Tax Total</th>
-																													<th>Total</th>
+																											<th>Description</th>
+																											<th>UOM</th>
+																											<th>SKU</th>
+																											<th>Unit Price</th>
+																											<th>Tax %</th>
+																											<th>Tax Total</th>
+																											<th>Total</th>
+																											<th>Group</th>
+																											<th>HSN Code</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																												</c:if>
 
 																												<c:if test="${gr.category!='Item'}">

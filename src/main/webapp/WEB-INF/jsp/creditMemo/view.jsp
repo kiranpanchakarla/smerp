@@ -86,10 +86,11 @@ text-align: left;
 																<div class="col-sm-4 form-group">
 																	<label>Ship From</label>: ${cre.vendorShippingAddress.city}
 																</div>
-                                                                
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${cre.docNumber}
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.postingDate}" />
 																			</div>
+                                                                
 
 															</div>
 
@@ -98,23 +99,36 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${cre.referenceDocNumber}
-																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.postingDate}" />
+																		<div class="col-sm-4 form-group">
+																				<label>CM Doc#</label>: ${cre.docNumber}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Doc Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.documentDate}" />
+																				<label>INV Doc#</label>: ${cre.referenceDocNumber}
 																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>GR Doc#</label>: ${cre.invId.grId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${cre.invId.grId.poId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${cre.invId.grId.poId.rfqId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${cre.invId.grId.poId.rfqId.purchaseReqId.docNumber}
+																			</div>
+                                                                            
+																			
 																		</div>
 
 
 
 
 																		<div class="row">
+																		<div class="col-sm-4 form-group">
+																				<label>Doc Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.documentDate}" />
+																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Required Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.requiredDate}" />

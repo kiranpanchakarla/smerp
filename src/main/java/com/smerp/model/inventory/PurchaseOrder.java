@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -25,6 +26,11 @@ import com.smerp.model.master.AuditModel;
 @Entity
 @Table(name = "tbl_purchase_order")
 public class PurchaseOrder extends AuditModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,9 +54,6 @@ public class PurchaseOrder extends AuditModel {
 
 	private transient String statusType;
 	
-	@Column(name = "PR_doc_number")
-	private String PRDocNumber;
-
 	@Column(name = "reference_doc_number")
 	private String referenceDocNumber;
 
@@ -81,8 +84,9 @@ public class PurchaseOrder extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "rfq_id")
-	private Integer rfqId;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "rfq_id")
+	private RequestForQuotation rfqId;
 
 	@Column(name = "remark")
 	private String remark;
@@ -100,18 +104,10 @@ public class PurchaseOrder extends AuditModel {
     
     private transient String taxAmt;
 	
-	private transient Double totalBeforeDisAmt ;
+	private transient Double totalBeforeDisAmt;
 	
+	private transient String PRDocNumber;
 	
-
-	public String getPRDocNumber() {
-		return PRDocNumber;
-	}
-
-	public void setPRDocNumber(String pRDocNumber) {
-		PRDocNumber = pRDocNumber;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -232,11 +228,11 @@ public class PurchaseOrder extends AuditModel {
 		this.isActive = isActive;
 	}
 
-	public Integer getRfqId() {
+	public RequestForQuotation getRfqId() {
 		return rfqId;
 	}
 
-	public void setRfqId(Integer rfqId) {
+	public void setRfqId(RequestForQuotation rfqId) {
 		this.rfqId = rfqId;
 	}
 
@@ -257,6 +253,14 @@ public class PurchaseOrder extends AuditModel {
 	}
 
 	
+
+	public String getPRDocNumber() {
+		return PRDocNumber;
+	}
+
+	public void setPRDocNumber(String pRDocNumber) {
+		PRDocNumber = pRDocNumber;
+	}
 
 	public Double getTotalBeforeDisAmt() {
 		return totalBeforeDisAmt;

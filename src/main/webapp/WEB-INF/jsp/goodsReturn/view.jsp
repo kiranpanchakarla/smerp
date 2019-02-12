@@ -87,8 +87,9 @@ text-align: left;
 																	<label>Ship From</label>: ${gre.vendorShippingAddress.city}
 																</div>
                                                                 
-                                                                <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gre.docNumber}
+                                                               <div class="col-sm-4 form-group">
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.postingDate}" />
 																			</div>
 
 															</div>
@@ -98,13 +99,25 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
+																		
+																		 <div class="col-sm-4 form-group">
+																				<label>GRE Doc#</label>: ${gre.docNumber}
+																			</div>
+																		
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gre.referenceDocNumber}
+																				<label>GR Doc#</label>: ${gre.referenceDocNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.postingDate}" />
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${gre.grId.poId.docNumber}
 																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${gre.grId.poId.rfqId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${gre.grId.poId.rfqId.purchaseReqId.docNumber}
+																			</div>
+                                                                            
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.documentDate}" />

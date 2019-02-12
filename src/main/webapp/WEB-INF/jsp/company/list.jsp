@@ -95,8 +95,8 @@
 																	<td>${companyList.gstinVat}</td>
 																	<td>${companyList.city}</td>
 																	<td>${companyList.webSite}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${companyList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${companyList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${companyList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${companyList.updatedAt}"/></td>
 																	<td >
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Company'}">

@@ -173,7 +173,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			*/}
 			
 			if(goodsReceipt.getPoId()!=null) {
-				PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+				PurchaseOrder po = goodsReceipt.getPoId();
 				
 				Vendor vendor = vendorService.findById(po.getVendor().getId());
 				VendorAddress vendorShippingAddress = vendorAddressService.findById(po.getVendorShippingAddress().getId());
@@ -247,7 +247,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			gr.setRemark(po.getRemark());
 			gr.setReferenceDocNumber(po.getDocNumber());
 			gr.setRequiredDate(po.getRequiredDate());
-			gr.setPoId(po.getId());
+			gr.setPoId(po);
 			gr.setIsActive(true);
 			gr.setVendor(po.getVendor());
 			gr.setVendorContactDetails(po.getVendorContactDetails());
@@ -354,7 +354,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
         }*/
 		
 		
-		String sqlList= "select * from vw_purchase_order_pending_qty where id=  "+goodsReceipt.getPoId();
+		String sqlList= "select * from vw_purchase_order_pending_qty where id=  "+goodsReceipt.getPoId().getId();
 		Integer pendingQuantity=0;
 		Integer prQuantity=0;
 		Integer grQuantity=0;
@@ -389,7 +389,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		    }
     	logger.info("status-->" + status);
     	
-        PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
+        PurchaseOrder po = goodsReceipt.getPoId();
 		po.setStatus(status);
 		
 		return purchaseOrderRepository.save(po);
@@ -530,7 +530,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public GoodsReceipt getGoodsReceiptById(int id) {
 		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
 	     
-	 	String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " +goodsReceipt.getPoId();
+	 	String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " + goodsReceipt.getPoId().getId();
 		String productNumber =""; 
 		logger.info("sqlList ----> " + sqlList);
 		Query queryList = entityManager.createNativeQuery(sqlList);
@@ -639,10 +639,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		List<PurchaseOrderLineItems> poItms =null;
 		 List<GoodsReceipt> listGoodsReceipt =null;
 		if(goodsReceipt.getPoId()!=null) {
-		 po = purchaseOrderService.findById(goodsReceipt.getPoId());
+		 po = goodsReceipt.getPoId();
 		 poItms = po.getPurchaseOrderlineItems();
 		listGoodsReceipt = goodsReceiptRepository
-					.findByListPoId(po.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
+					.findByListPoId(po,EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
 		}
 		
 		

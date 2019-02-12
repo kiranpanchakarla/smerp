@@ -251,13 +251,16 @@
 																			<form:option value="">Select</form:option>
 																		</form:select>
 																	</div>
-
+																	
 																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Document Number' path="docNumber"
-																			readonly="true" />
-																	</div>
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Posting Date' path="postingDate"
+																						autocomplete="off" readonly="true" />
+
+																				</div>
+
+																	
 
 																</div>
 
@@ -266,19 +269,42 @@
 																		<div class="form-body">
 
 																			<div class="row">
+																				
 																				<div class="col-sm-4 form-group">
-																					<label>Ref Doc No.</label>
+																		         <label>INV Doc#</label>
+																		          <form:input type="text" cssClass="form-control"
+																			      placeholder='Document Number' path="docNumber"
+																			      readonly="true" />
+																	            </div>
+																	            
+																				<div class="col-sm-4 form-group">
+																					<label>Gr Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number' 
 																						path="referenceDocNumber" readonly="true" />
 																				</div>
+																				
 																				<div class="col-sm-4 form-group">
-																					<label>Posting Date</label>
+																					<label>PO Doc#</label>
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Posting Date' path="postingDate"
-																						autocomplete="off" readonly="true" />
-
+																						placeholder='Reference Document Number'
+																						path="POdocNumber" value="${inv.grId.poId.docNumber}" readonly="true" />
 																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>RFQ Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="RFQdocNumber" value="${inv.grId.poId.rfqId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PR Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="PRdocNumber" value="${inv.grId.poId.rfqId.purchaseReqId.docNumber}" readonly="true" />
+																				</div>
+																				
 																				<div class="col-sm-4 form-group">
 																					<label>Doc Date</label>
 																					<form:input type="text" cssClass="form-control"
@@ -450,17 +476,17 @@
 																												<th style="display: none;">Product Id</th>
 																												<c:if test="${inv.category=='Item'}">
 																													<th>Product#</th>
-																													<th>Description</th>
-																													<th>UOM</th>
-																													<th>SKU</th>
-																													<th>Unit Price</th>
-																													<th>Tax %</th>
-																													<th>Group</th>
-																													<th>HSN Code</th>
-																													<th>Warehouse</th>
-																													<th>Quantity</th>
-																													<th>Tax Total</th>
-																													<th>Total</th>
+																											<th>Description</th>
+																											<th>UOM</th>
+																											<th>SKU</th>
+																											<th>Unit Price</th>
+																											<th>Tax %</th>
+																											<th>Tax Total</th>
+																											<th>Total</th>
+																											<th>Group</th>
+																											<th>HSN Code</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																												</c:if>
 
 																												<c:if test="${inv.category!='Item'}">

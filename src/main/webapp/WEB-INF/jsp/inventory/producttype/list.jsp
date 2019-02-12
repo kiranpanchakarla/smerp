@@ -99,8 +99,8 @@
 																			value="${count}" /></td>
 																	<td>${producttype.productName}</td>
 																	<td>${producttype.description}</td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${producttype.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${producttype.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${producttype.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${producttype.updatedAt}"/></td>
 																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">

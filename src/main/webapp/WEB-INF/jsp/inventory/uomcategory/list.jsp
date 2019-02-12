@@ -97,8 +97,8 @@
 																			value="${count + 1}" scope="page" /> <c:out
 																			value="${count}" /></td>
 																	<td>${uomcategory.uomCategoryName}</td>
-																	 <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${uomcategory.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${uomcategory.updatedAt}"/></td>
+																	 <td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${uomcategory.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${uomcategory.updatedAt}"/></td>
 																	
 																	
 																	<td >   

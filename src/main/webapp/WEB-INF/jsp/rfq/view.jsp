@@ -88,10 +88,13 @@
 																	<label>Ship From</label>:
 																	${rfq.vendorShippingAddress.city}
 																</div>
-
 																<div class="col-sm-4 form-group">
-																	<label>Document#</label>: ${rfq.docNumber}
-																</div>
+																				<label>Posting Date</label>:
+																				<fmt:formatDate pattern="dd/MM/yyyy"
+																					value="${rfq.postingDate}" />
+																			</div>
+
+																
 
 															</div>
 
@@ -100,15 +103,14 @@
 																	<div class="form-body">
 
 																		<div class="row">
+																		<div class="col-sm-4 form-group">
+																	<label>RFQ Doc#</label>: ${rfq.docNumber}
+																</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>:
+																				<label>PR Doc#</label>:
 																				${rfq.referenceDocNumber}
 																			</div>
-																			<div class="col-sm-4 form-group">
-																				<label>Posting Date</label>:
-																				<fmt:formatDate pattern="dd/MM/yyyy"
-																					value="${rfq.postingDate}" />
-																			</div>
+																			
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>:
 																				<fmt:formatDate pattern="dd/MM/yyyy"

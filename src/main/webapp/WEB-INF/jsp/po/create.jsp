@@ -766,16 +766,39 @@
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
-
-																	<table class="table fixed-width-table">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
+																	
+																	
+																	</div>
+                                     
+																	<!-- <table class="table fixed-width-table">
 																		<thead>
-																			<tr>
+																			  <tr>
 																				<th style="vertical-align: top; !important">Shipping
 																					From</th>
 																				<td>
 																					<div id="shippingAddressTable"></div>
 																				</td>
-																			</tr>
+																			</tr>  
 																			<tr>
 																				<th style="vertical-align: top; !important">Pay
 																					To</th>
@@ -784,7 +807,7 @@
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> -->
 																</div>
 											<br>
 											
@@ -826,7 +849,7 @@
                                                                 <div class="col-sm-12 form-group">
 																 	<label>Freight</label>  
 																  <form:input type="text" cssClass="form-control validatePrice"
-																					placeholder='Freight' path="freight"  onkeypress="return isNumericKey(event)"
+																					placeholder='Freight' path="freight"  onkeypress="return isNumericKey1(event)"
 																					autocomplete="off"  />  
 																</div></div>
 																
@@ -839,6 +862,22 @@
 																</div></div>
 																
 																<div class="row">
+																<div class="col-sm-12 form-group">
+																 	<label>Total</label> 
+																 	<form:input type="text" cssClass="form-control"
+																					  path="amtRounding"
+																					autocomplete="off" readonly="true" />  
+																</div></div>
+																
+																<div class="row">
+																<div class="col-sm-12 form-group">
+																 	<label>Rounded Off</label> 
+																 	<form:input type="text" cssClass="form-control"
+																					placeholder='Rounding' path="roundedOff"
+																					autocomplete="off" readonly="true" />  
+																</div></div>
+																
+																<div class="row">
 																 <div class="col-sm-12 form-group">
 																 <label>Total Payment Due</label>  
 																 <form:input type="text" cssClass="form-control"
@@ -846,13 +885,7 @@
 																					autocomplete="off" readonly="true" /> 
 																</div></div>
 																
-																<div class="row">
-																<div class="col-sm-12 form-group">
-																 	<label>Rounding</label> 
-																 	<form:input type="text" cssClass="form-control"
-																					placeholder='Rounding' path="amtRounding"
-																					autocomplete="off" readonly="true" />  
-																</div></div>
+																
 																
 													</div>			 
 										 </div>
@@ -1886,6 +1919,7 @@ $("#items_radio").click(function() {
 		  $('#totalBeforeDisAmt').val("");
 		  $('#freight').val("");
 		  $('#amtRounding').val("");
+		  $('#roundedOff').val("");
 		  $('#taxAmt').val("");
 		  $('#totalPayment').val("");
 		  $('#totalDiscount').val("");
@@ -1930,6 +1964,7 @@ $("#service_radio").click(function() {
 	  $('#totalBeforeDisAmt').val("");
 	  $('#freight').val("");
 	  $('#amtRounding').val("");
+	  $('#roundedOff').val("");
 	  $('#taxAmt').val("");
 	  $('#totalPayment').val("");
 	  $('#totalDiscount').val("");
@@ -2065,8 +2100,8 @@ $(document).on("change", ".taxCode", function() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(sum_total);
+  	 $("#amtRounding").val(sum_total);
+  	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
  	}
@@ -2106,10 +2141,11 @@ $(document).on("keyup", ".unitPrice", function() {
   	if( tax !="Select"  && !isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(sum_total);
+  	 $("#amtRounding").val(sum_total);
+  	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
+  	$("#roundedOff").val(Math.round(sum_total) - sum_total );
     	}
 	});
 	
@@ -2144,10 +2180,11 @@ $(document).on("keyup", ".requiredQuantity", function() {
   	if( tax !="Select"  && !isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
-  	 $("#totalPayment").val(sum_total);
+  	 $("#amtRounding").val(sum_total);
+  	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
+  	$("#roundedOff").val(Math.round(sum_total) - sum_total );
     	}
 	});
 
@@ -2160,13 +2197,15 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	if(discount_val<100){
 	var discount = Number(discount_val) / 100;
 	var totalPayment = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
+	
     
 	if( $("#freight").val()!="") {
 		totalPayment += parseFloat($("#freight").val());
 	}
 	if(totalAmt!="") {
-	 $("#totalPayment").val(totalPayment);
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#totalPayment").val(Math.round(totalPayment));
+	 $("#amtRounding").val(parseFloat(totalPayment).toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2) );
 	}
 	
 	}else {
@@ -2194,7 +2233,7 @@ $('#freight').keyup(function() {
 	
 	var totalAmt = $("#totalBeforeDisAmt").val();
 	var discount_val = $("#totalDiscount").val();
-	var freight = $(this).val();
+	var freight =  $(this).val();
 	
 //alert("discount_val" +discount_val);
 //alert("freight" +freight);
@@ -2202,12 +2241,14 @@ $('#freight').keyup(function() {
 	if( discount_val !="" && $("#totalDiscount").val()!="") {
 		var discount = Number(discount_val) / 100;
 		totalAmt = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
+		
 	}
 	
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
-	 $("#totalPayment").val(finalValue);
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#totalPayment").val(Math.round(finalValue));
+	 $("#amtRounding").val( parseFloat(finalValue).toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
 });
 	
@@ -2237,11 +2278,12 @@ $('#freight').keyup(function() {
 		var totalPayment = parseFloat(sum_total) - parseFloat(sum_total * discount);
 	    
 		if( $("#freight").val()!="") {
-			totalPayment += parseFloat($("#freight").val());
+			totalPayment += parseFloat(Math.round($("#freight").val()));
 		}
 		if(sum_total!="") {
-		 $("#totalPayment").val(totalPayment);
-		 $("#amtRounding").val( Math.round(totalPayment));
+		 $("#totalPayment").val(Math.round(totalPayment));
+		 $("#amtRounding").val( totalPayment);
+		 $("#rounderOff").val(Math.round(totalPayment) - totalPayment);
 		}
 	
 	}

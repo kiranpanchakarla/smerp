@@ -319,8 +319,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${gre.vendorShippingAddress.addressName}<br>
+																					${gre.vendorShippingAddress.street}
+																					${gre.vendorShippingAddress.city}
+																					${gre.vendorShippingAddress.zipCode}<br>
+																					${gre.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${gre.vendorPayTypeAddress.addressName}<br>
+																					${gre.vendorPayTypeAddress.street}
+																					${gre.vendorPayTypeAddress.city}
+																					${gre.vendorPayTypeAddress.zipCode}<br>
+																					${gre.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${gre.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -355,7 +384,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -390,16 +419,23 @@ text-align: left;
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
 											<div class="col-sm-6">: ${gre.taxAmt} </div>
 											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6"> : ${gre.amtRounding}</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${gre.totalPayment - gre.amtRounding}"/></div>
+											</div>
 
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
 												<div class="col-sm-6">: ${gre.totalPayment} </div>
 											</div>
 											
-											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${gre.amtRounding}</div>
-											</div>
+											
 										</div>
 									
 									</div>		

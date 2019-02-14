@@ -143,7 +143,7 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		logger.info("goodsIssue.getFreight()-->" + inventoryGoodsIssue.getFreight());
 		Double total_amt=0.0;
 		if(inventoryGoodsIssue.getTotalDiscount()==null) inventoryGoodsIssue.setTotalDiscount(0.0);
-		if(inventoryGoodsIssue.getFreight()==null) inventoryGoodsIssue.setFreight(0);
+		if(inventoryGoodsIssue.getFreight()==null) inventoryGoodsIssue.setFreight(0.0);
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsIssue.getTotalDiscount(), inventoryGoodsIssue.getFreight());

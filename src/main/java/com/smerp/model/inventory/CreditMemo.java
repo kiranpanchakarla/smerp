@@ -90,7 +90,28 @@ public class CreditMemo extends AuditModel {
 	private Double totalPayment;
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
+	
+	@Column(name = "deliver_to")
+	private String deliverTo;
+	
+	private transient String roundedOff;
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
+	}
 
 	private transient String amtRounding;
 
@@ -284,11 +305,11 @@ public class CreditMemo extends AuditModel {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 

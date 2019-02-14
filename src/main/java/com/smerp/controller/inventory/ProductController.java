@@ -135,7 +135,7 @@ public class ProductController {
 	@GetMapping(value = "/view")
 	public String view(String productId, Model model) {
 		Product product=productService.getInfo(Integer.parseInt(productId));
-		List<ProductQuantity> productQuantity = productQuantityService.findProductOrderedQuantity(product.getProductNo());
+		List<ProductQuantity> productQuantity = productQuantityService.findProductOrderedQuantity(product.getId());
 		model.addAttribute("product",product);
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("hsnList", hsnService.findAll());

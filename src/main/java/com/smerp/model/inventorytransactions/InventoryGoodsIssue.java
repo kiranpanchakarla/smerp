@@ -78,7 +78,7 @@ public class InventoryGoodsIssue extends AuditModel {
 	}
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
 
 	public Integer getId() {
 		return id;
@@ -176,11 +176,11 @@ public class InventoryGoodsIssue extends AuditModel {
 		this.totalPayment = totalPayment;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 	

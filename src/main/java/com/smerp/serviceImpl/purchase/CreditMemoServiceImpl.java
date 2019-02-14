@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -218,6 +219,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			inv.setPostingDate(in.getPostingDate());
 			inv.setCategory(in.getCategory());
 			inv.setRemark(in.getRemark());
+			inv.setDeliverTo(in.getDeliverTo());
 			inv.setReferenceDocNumber(in.getDocNumber());
 			inv.setRequiredDate(in.getRequiredDate());
 			inv.setInvId(in);
@@ -524,18 +526,27 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		logger.info("creditMemo.getTotalDiscount()-->" + creditMemo.getTotalDiscount());
 		logger.info("creditMemo.getFreight()-->" + creditMemo.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
 		if(creditMemo.getTotalDiscount()==null) creditMemo.setTotalDiscount(0.0);
-		if(creditMemo.getFreight()==null) creditMemo.setFreight(0);
-			
-			
+		if(creditMemo.getFreight()==null) creditMemo.setFreight(0.0);
+		
+		
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, creditMemo.getTotalDiscount(), creditMemo.getFreight());
-		creditMemo.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
+		 if(creditMemo.getInvId() != null) {
+				total_payment =(double) Math.round(total_amt);
+			}else {
+				total_payment = creditMemo.getTotalPayment();
+			}
+		 logger.info("creditMemo.total_payment()-->" + total_payment);
+			logger.info("creditMemo.total_amt()-->" + total_amt);
+		creditMemo.setAmtRounding(""+df2.format(total_amt));
 		creditMemo.setTotalPayment(total_amt);
+		creditMemo.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return creditMemo;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	@Override
@@ -543,40 +554,34 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		CreditMemo creditMemo = creditMemoRepository.findById(id).get();
 		
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId().getId();
-		String productNumber =""; 
-		Integer creditmemoQuantity=0;
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<CreditMemoLineItems> listItems = creditMemo.getCreditMemoLineItems();
-			
-			List<CreditMemoLineItems> addListItems = new ArrayList<CreditMemoLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
+	 	String sqlList= " select product_number,inv_final_quantity,creditmemo_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId().getId();
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
-	    	 CreditMemoLineItems crelist = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			CreditMemoLineItems invlist = listItems.get(i);
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			crelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
-	    			//grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
-					//grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
-					break;
-					}
-	    		}
-	    		addListItems.add(crelist);
-	    		j++;
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
 	     }
+	    
+	     List<CreditMemoLineItems> listItems = creditMemo.getCreditMemoLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 CreditMemoLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
+	                 }
+	        }
+	    }
+	     creditMemo.setCreditMemoLineItems(listItems);
 	     
-	 	creditMemo.setCreditMemoLineItems(addListItems);
-	     
-	     /*Set Lists*/
-		return creditMemo;
+	     return creditMemo;
 	}
 	
 	

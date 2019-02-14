@@ -337,8 +337,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${gr.vendorShippingAddress.addressName}<br>
+																					${gr.vendorShippingAddress.street}
+																					${gr.vendorShippingAddress.city}
+																					${gr.vendorShippingAddress.zipCode}<br>
+																					${gr.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${gr.vendorPayTypeAddress.addressName}<br>
+																					${gr.vendorPayTypeAddress.street}
+																					${gr.vendorPayTypeAddress.city}
+																					${gr.vendorPayTypeAddress.zipCode}<br>
+																					${gr.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${gr.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -373,7 +402,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -408,16 +437,23 @@ text-align: left;
 												<div class="col-sm-6"> <label>Tax Amount </label> </div>
 												<div class="col-sm-6">: ${gr.taxAmt} </div>
 											</div>
+											
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Total  </label></div>
+											<div class="col-sm-6">: ${gr.amtRounding} </div>
+											</div>
+											
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Rounded Off  </label></div>
+											<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${gr.totalPayment - gr.amtRounding}"/></div>
+											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
 											<div class="col-sm-6">: ${gr.totalPayment} </div>
 											</div>
 											
-											<div class="form-group">
-											<div class="col-sm-6">	<label>Rounding  </label></div>
-											<div class="col-sm-6">: ${gr.amtRounding} </div>
-											</div>
+											
 											
 										</div>
 									
@@ -439,15 +475,16 @@ text-align: left;
 												         
 												         <c:choose>
 														<c:when test="${productQuantity !=0}">
+													
 												         <div class="col-sm-3 form-group has-feedback">
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Convert To GRE'}"> 
+										                           <c:if test="${ump.key eq 'Convert To GRE'}">  
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
 	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
-																		 
+																		
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
 																			class="btn btn-primary mr-1 float-right mySubButton">

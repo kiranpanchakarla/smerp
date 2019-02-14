@@ -170,6 +170,7 @@ public class GoodsReceiptController {
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
+		
 		GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(Integer.parseInt(id));
 		gr = goodsReceiptService.getListAmount(gr);
 		logger.info("gr-->" + gr);

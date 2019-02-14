@@ -90,12 +90,13 @@ public class GoodsReturn extends AuditModel {
 	@Column(name = "total_payment")
 	private Double totalPayment;
 
-	 
+	@Column(name = "deliver_to")
+	private String deliverTo;
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
 	
-	 
+	 private transient String roundedOff;
 
 	private transient String amtRounding;
 
@@ -110,6 +111,22 @@ public class GoodsReturn extends AuditModel {
 	private transient String PRdocNumber;
 	
 	
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
+	}
 
 	public String getPOdocNumber() {
 		return POdocNumber;
@@ -279,11 +296,11 @@ public class GoodsReturn extends AuditModel {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 

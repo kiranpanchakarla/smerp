@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -230,6 +231,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			gre.setPostingDate(gr.getPostingDate());
 			gre.setCategory(gr.getCategory());
 			gre.setRemark(gr.getRemark());
+			gre.setDeliverTo(gr.getDeliverTo());
 			gre.setReferenceDocNumber(gr.getDocNumber());
 			gre.setRequiredDate(gr.getRequiredDate());
 			gre.setGrId(gr);
@@ -478,37 +480,33 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	public GoodsReturn getGoodsReturnById(int id) {
 		GoodsReturn goodsReturn = goodsReturnRepository.findById(id).get();
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId().getId();
-		String productNumber =""; 
-		Integer creditmemoQuantity=0;
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
-			
-			List<GoodsReturnLineItems> addListItems = new ArrayList<GoodsReturnLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
+	 	String sqlList= " select product_number,current_quantity,creditmemo_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId().getId();
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
-	    	 GoodsReturnLineItems crelist = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			GoodsReturnLineItems invlist = listItems.get(i);
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			crelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
-					break;
-					}
-	    		}
-	    		addListItems.add(crelist);
-	    		j++;
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
 	     }
-	     
-	 	goodsReturn.setGoodsReturnLineItems(addListItems);
-	     
-		return goodsReturn;
+	    
+	     List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 GoodsReturnLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
+	                 }
+	        }
+	    }
+	     goodsReturn.setGoodsReturnLineItems(listItems);
+	    return goodsReturn;
 	}
 	
 	@Override
@@ -573,18 +571,25 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		logger.info("goodsReturn.getTotalDiscount()-->" + goodsReturn.getTotalDiscount());
 		logger.info("goodsReturn.getFreight()-->" + goodsReturn.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
 		if(goodsReturn.getTotalDiscount()==null) goodsReturn.setTotalDiscount(0.0);
-		if(goodsReturn.getFreight()==null) goodsReturn.setFreight(0);
+		if(goodsReturn.getFreight()==null) goodsReturn.setFreight(0.0);
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReturn.getTotalDiscount(), goodsReturn.getFreight());
-		goodsReturn.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
-		goodsReturn.setTotalPayment(total_amt);
+		 if(goodsReturn.getGrId() != null) {
+				total_payment = (double) Math.round(total_amt);
+			}else {
+				total_payment = goodsReturn.getTotalPayment();
+			}
+		goodsReturn.setAmtRounding(""+df2.format(total_amt));
+		goodsReturn.setTotalPayment(total_payment);
+		goodsReturn.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return goodsReturn;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	

@@ -897,8 +897,28 @@
 
 																		<div class="tab-pane" id="profile" role="tabpanel"
 																			aria-labelledby="profile-tab">
+																			
+																			<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
 
-																			<table class="table fixed-width-table">
+																			<!-- <table class="table fixed-width-table">
 																				<thead>
 																					<tr>
 																						<th style="vertical-align: top; !important">Shipping
@@ -915,7 +935,7 @@
 																						</td>
 																					</tr>
 																				</thead>
-																			</table>
+																			</table> -->
 																		</div>
 																		<br>
 
@@ -986,14 +1006,14 @@
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" readonly="true" />
 																						</c:when>
 																						<c:otherwise>
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" />
 																						</c:otherwise>
 																					</c:choose>
@@ -1006,6 +1026,22 @@
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
 																				</div></div>
+																				
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Total</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
+																				
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Rounded Off</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="roundedOff"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 
 																				<div class="row">
 															                 	<div class="col-sm-12 form-group">
@@ -1016,13 +1052,7 @@
 																						readonly="true" />
 																				</div></div>
 																				
-																				<div class="row">
-															                 	<div class="col-sm-12 form-group">
-																					<label>Rounding</label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div></div>
+																				
 																				
 																			</div>
 																		</div>
@@ -2249,7 +2279,7 @@ function goBack() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total.toFixed(2));
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -2349,7 +2379,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   		}
   		if(totalAmt!="") {
   		 $("#totalPayment").val(Math.round(totalPayment));
-  		 $("#amtRounding").val( Math.round(totalPayment));
+  		 $("#amtRounding").val(totalPayment.toFixed(2));
   		}
   		
   		}
@@ -2376,7 +2406,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#amtRounding").val(totalPayment.toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	
 	}else {
@@ -2417,7 +2448,8 @@ $('#freight').keyup(function() {
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
 	 $("#totalPayment").val(Math.round(finalValue));
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#amtRounding").val(finalValue.toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
 });
 	
@@ -2451,7 +2483,7 @@ $('#freight').keyup(function() {
 		}
 		if(sum_total!="") {
 		 $("#totalPayment").val(Math.round(totalPayment));
-		 $("#amtRounding").val( Math.round(totalPayment));
+		 $("#amtRounding").val(totalPayment.toFixed(2));
 		}
 	
 	}

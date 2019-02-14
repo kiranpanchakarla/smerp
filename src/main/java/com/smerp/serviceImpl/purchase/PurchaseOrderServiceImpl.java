@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -297,7 +298,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		return purchaseOrderRepository.findById(id).get();
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 	@Override
 	public PurchaseOrder getListAmount(PurchaseOrder purchaseOrder) {
@@ -306,6 +307,8 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		List<PurchaseOrderLineItems> addListItems = new ArrayList<PurchaseOrderLineItems>();
 		Double addAmt=0.0;
 		Double addTaxAmt=0.0;
+		Double total = 0.0;
+		Double total_payment = 0.0;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				PurchaseOrderLineItems polist = listItems.get(i);
@@ -324,10 +327,17 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			purchaseOrder.setPurchaseOrderlineItems(addListItems);
 			
 		}
+		
 		purchaseOrder.setTotalBeforeDisAmt(addAmt);
 		purchaseOrder.setTaxAmt(""+addTaxAmt);
+		
 		if(purchaseOrder.getTotalPayment()!=null) {
-		purchaseOrder.setAmtRounding(""+purchaseOrder.getTotalPayment());
+			//total = ((addAmt - ( (addAmt * purchaseOrder.getTotalDiscount())/100 )) + purchaseOrder.getFreight());
+		  total = UnitPriceListItems.getTotalPaymentAmt(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight());
+		  logger.info("total ---> " + total);
+		  logger.info("(purchaseOrder.getTotalPayment() ---> " + purchaseOrder.getTotalPayment());
+		  purchaseOrder.setAmtRounding(""+ total);
+		  purchaseOrder.setRoundedOff(""+ df2.format(purchaseOrder.getTotalPayment() - total));
 		}
 	
 	return purchaseOrder;

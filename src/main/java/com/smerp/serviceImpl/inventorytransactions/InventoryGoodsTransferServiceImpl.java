@@ -144,7 +144,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		logger.info("goodsTransfer.getFreight()-->" + inventoryGoodsTransfer.getFreight());
 		Double total_amt=0.0;
 		if(inventoryGoodsTransfer.getTotalDiscount()==null) inventoryGoodsTransfer.setTotalDiscount(0.0);
-		if(inventoryGoodsTransfer.getFreight()==null) inventoryGoodsTransfer.setFreight(0);
+		if(inventoryGoodsTransfer.getFreight()==null) inventoryGoodsTransfer.setFreight(0.0);
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsTransfer.getTotalDiscount(), inventoryGoodsTransfer.getFreight());
 		 inventoryGoodsTransfer.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
 		 inventoryGoodsTransfer.setTotalPayment(total_amt);

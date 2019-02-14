@@ -90,6 +90,17 @@ public class PurchaseOrder extends AuditModel {
 
 	@Column(name = "remark")
 	private String remark;
+	
+	@Column(name = "deliver_to")
+	private String deliverTo;
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
 
 	@Column(name = "total_discount")
 	private Double totalDiscount;
@@ -98,9 +109,11 @@ public class PurchaseOrder extends AuditModel {
 	private Double totalPayment ;
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
 	
     private transient String amtRounding;
+    
+    private transient String roundedOff;
     
     private transient String taxAmt;
 	
@@ -270,11 +283,11 @@ public class PurchaseOrder extends AuditModel {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 
@@ -304,6 +317,16 @@ public class PurchaseOrder extends AuditModel {
 
 	public void setTotalPayment(Double totalPayment) {
 		this.totalPayment = totalPayment;
+	}
+	
+	
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
 	}
 
 	@Override

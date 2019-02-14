@@ -316,8 +316,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${inv.vendorShippingAddress.addressName}<br>
+																					${inv.vendorShippingAddress.street}
+																					${inv.vendorShippingAddress.city}
+																					${inv.vendorShippingAddress.zipCode}<br>
+																					${inv.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${inv.vendorPayTypeAddress.addressName}<br>
+																					${inv.vendorPayTypeAddress.street}
+																					${inv.vendorPayTypeAddress.city}
+																					${inv.vendorPayTypeAddress.zipCode}<br>
+																					${inv.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${inv.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -352,7 +381,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -383,14 +412,20 @@ text-align: left;
 												<div class="col-sm-6">: ${inv.freight} </div>
 											</div>
 
-											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${inv.amtRounding}</div>
-											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
 											<div class="col-sm-6">: ${inv.taxAmt} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6"> : ${inv.amtRounding}</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPayment - inv.amtRounding}"/></div>
 											</div>
 
 											<div class="form-group">

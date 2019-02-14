@@ -169,7 +169,7 @@ public class InvoiceController {
 		logger.info("id-->" + id);
 		InVoice inv = inVoiceService.getInVoiceById(Integer.parseInt(id));
 		logger.info("inv-->" + inv);
-		//inv = inVoiceService.getListAmount(inv);
+		inv = inVoiceService.getListAmount(inv);
 		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());

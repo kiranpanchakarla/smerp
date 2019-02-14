@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -245,6 +246,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			gr.setPostingDate(po.getPostingDate());
 			gr.setCategory(po.getCategory());
 			gr.setRemark(po.getRemark());
+			gr.setDeliverTo(po.getDeliverTo());
 			gr.setReferenceDocNumber(po.getDocNumber());
 			gr.setRequiredDate(po.getRequiredDate());
 			gr.setPoId(po);
@@ -317,6 +319,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	public PurchaseOrder  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
 		logger.info("set Status-->");
 		String status="";
+		PurchaseOrder dup_po = new PurchaseOrder ();
 		/*PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReceipt.getPoId());
 		
 		List<GoodsReceiptLineItems> grListItems = goodsReceipt.getGoodsReceiptLineItems();
@@ -353,7 +356,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
         	status = EnumStatusUpdate.APPROVEED.getStatus();
         }*/
 		
-		
+		if(goodsReceipt!=null && goodsReceipt.getPoId()!=null) {
 		String sqlList= "select * from vw_purchase_order_pending_qty where id=  "+goodsReceipt.getPoId().getId();
 		Integer pendingQuantity=0;
 		Integer prQuantity=0;
@@ -393,6 +396,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		po.setStatus(status);
 		
 		return purchaseOrderRepository.save(po);
+		}else {
+			return	dup_po;
+		}
 	}
 
 	private Map<String, Integer> prepareMapForProductQunatityPR(PurchaseOrder purchaseOrder,List<PurchaseOrderLineItems> poListItems) {
@@ -527,39 +533,36 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	@Override
-	public GoodsReceipt getGoodsReceiptById(int id) {
-		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
-	     
-	 	String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " + goodsReceipt.getPoId().getId();
-		String productNumber =""; 
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
-			
-			List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
-	     for(Object[] tuple : invoiceList) {
-	    	 GoodsReceiptLineItems greList = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			GoodsReceiptLineItems invlist = listItems.get(i);
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			greList.setTempRequiredQuantity(tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString())));
-					break;
-					}
-	    		}
-	    		addListItems.add(greList);
-	    		j++;
-	     }
-	     
-	     goodsReceipt.setGoodsReceiptLineItems(addListItems);
-	     
-		return goodsReceipt;
-	}
+	public GoodsReceipt getGoodsReceiptById(int id) {GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
+    
+    String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " + goodsReceipt.getPoId().getId();
+   String productNumber ="";
+   logger.info("sqlList ----> " + sqlList);
+   Query queryList = entityManager.createNativeQuery(sqlList);
+     List<Object[]>    invoiceList = queryList.getResultList();
+       
+   logger.info("invoiceList Size -----> " + invoiceList.size());
+   
+    Map<String, Integer> poListData = new LinkedHashMap<>();
+    for(Object[] tuple : invoiceList) {
+        productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+        poListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
+    }
+   
+    List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+    for (int i = 0; i < listItems.size(); i++) {
+        GoodsReceiptLineItems invlist = listItems.get(i);
+       
+       for(Map.Entry m:poListData.entrySet()){
+              logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+              if(invlist.getProdouctNumber().equals(m.getKey())) {
+                  invlist.setTempRequiredQuantity((Integer)m.getValue());    
+                }
+       }
+   }
+    goodsReceipt.setGoodsReceiptLineItems(listItems);
+   return goodsReceipt;
+   }
 	
 	
 	
@@ -582,8 +585,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	    	 goodsReceipt.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
 	    	// goodsReceipt.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
 	    	 //goodsReceipt.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
-	    	 goodsReceipt.setTotalPayment(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
-	    	 goodsReceipt.setAmtRounding(tuple[5] == null ? "0" : ( tuple[5]).toString());
+	    	 goodsReceipt.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
+	    	 goodsReceipt.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	
 	     }
 	     
 	     /*--Set Headers--*/
@@ -591,41 +595,38 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	     
 	     /*--Set Lists--*/
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +id;
-		String productNumber =""; 
-		Integer creditmemoQuantity=0;
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
-			
-			List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
-	     for(Object[] tuple : invoiceList) {
-	    	 GoodsReceiptLineItems grelist = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			GoodsReceiptLineItems invlist = listItems.get(i);
-	    			
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			grelist.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
-	    			grelist.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
-					grelist.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
-					break;
-					}
-	    		}
-	    		addListItems.add(grelist);
-	    		j++;
-	     }
+	       
+         String sqlList= " select product_number,current_quantity from vw_goods_received_lineitems_amount where id= " + id;
+       
+         String productNumber ="";
+        logger.info("sqlList ----> " + sqlList);
+        Query queryList = entityManager.createNativeQuery(sqlList);
+          List<Object[]>    invoiceList = queryList.getResultList();
+            
+        logger.info("invoiceList Size -----> " + invoiceList.size());
+        
+         Map<String, Integer> poListData = new LinkedHashMap<>();
+         for(Object[] tuple : invoiceList) {
+             productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+             poListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
+         }
+        
+         List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
+         for (int i = 0; i < listItems.size(); i++) {
+             GoodsReceiptLineItems invlist = listItems.get(i);
+            
+            for(Map.Entry m:poListData.entrySet()){
+                   logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+                   if(invlist.getProdouctNumber().equals(m.getKey())) {
+                       invlist.setTempRequiredQuantity((Integer)m.getValue());    
+                     }
+            }
+        }
+         goodsReceipt.setGoodsReceiptLineItems(listItems);
+	        
 	     
-	 	goodsReceipt.setGoodsReceiptLineItems(addListItems);
-	     
-	     /*Set Lists*/
-		return goodsReceipt;
+	        
+        return goodsReceipt;
 	}
 	
 	
@@ -688,18 +689,31 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		logger.info("goodsReceipt.getTotalDiscount()-->" + goodsReceipt.getTotalDiscount());
 		logger.info("goodsReceipt.getFreight()-->" + goodsReceipt.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
+		
 		if(goodsReceipt.getTotalDiscount()==null) goodsReceipt.setTotalDiscount(0.0);
-		if(goodsReceipt.getFreight()==null) goodsReceipt.setFreight(0);
+		if(goodsReceipt.getFreight()==null) goodsReceipt.setFreight(0.0);
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
-		goodsReceipt.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
-		goodsReceipt.setTotalPayment(total_amt);
-	
+		//goodsReceipt.setAmtRounding(""+df2.format(total_amt));
+		//goodsReceipt.setTotalPayment(total_amt);
+		if(goodsReceipt.getPoId() != null) {
+			total_payment = (double) Math.round(total_amt);
+			logger.info("goodsReceipt.getTotalPayment() after rounding -->" + total_payment);
+		}else {
+			total_payment = (double) Math.round(goodsReceipt.getTotalPayment());
+			logger.info("goodsReceipt.getTotalPayment() no rounding -->" + total_payment);
+		}
+	//	goodsReceipt.setTotalPayment(total_payment);
+		logger.info("goodsReceipt.getTotalPayment()-->" + goodsReceipt.getTotalPayment());
+		logger.info("goodsReceipt.getTotalPayment()-->" + total_payment);
+	//	goodsReceipt.setRoundedOff("" + df2.format(total_payment - total_amt));
+		 
 	return goodsReceipt;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	

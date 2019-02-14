@@ -7,7 +7,6 @@ import com.smerp.model.admin.ProductQuantity;
 
 public interface ProductQuantityService {
 
-	 List<ProductQuantity> findProductOrderedQuantity(@Param("name")String name);
+	 List<ProductQuantity> findProductOrderedQuantity(@Param("id")Integer id);
 	 
-	 ProductQuantity findProductReceivedQuantity(@Param("name")String name);
 }

@@ -320,8 +320,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${cre.vendorShippingAddress.addressName}<br>
+																					${cre.vendorShippingAddress.street}
+																					${cre.vendorShippingAddress.city}
+																					${cre.vendorShippingAddress.zipCode}<br>
+																					${cre.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${cre.vendorPayTypeAddress.addressName}<br>
+																					${cre.vendorPayTypeAddress.street}
+																					${cre.vendorPayTypeAddress.city}
+																					${cre.vendorPayTypeAddress.zipCode}<br>
+																					${cre.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${cre.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -356,7 +385,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -391,16 +420,24 @@ text-align: left;
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
 											<div class="col-sm-6">: ${cre.taxAmt} </div>
 											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6"> : ${cre.amtRounding}</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${cre.totalPayment - cre.amtRounding}"/>
+												</div>
+											</div>
 
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
 												<div class="col-sm-6">: ${cre.totalPayment} </div>
 											</div>
 											
-											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${cre.amtRounding}</div>
-											</div>
+											
 										</div>
 									
 									</div>		

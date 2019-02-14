@@ -355,8 +355,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${po.vendorShippingAddress.addressName}<br>
+																					${po.vendorShippingAddress.street}
+																					${po.vendorShippingAddress.city}
+																					${po.vendorShippingAddress.zipCode}<br>
+																					${po.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${po.vendorPayTypeAddress.addressName}<br>
+																					${po.vendorPayTypeAddress.street}
+																					${po.vendorPayTypeAddress.city}
+																					${po.vendorPayTypeAddress.zipCode}<br>
+																					${po.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${po.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -391,7 +420,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -436,16 +465,23 @@ text-align: left;
 												<div class="col-sm-6"><label>Tax Amount </label> </div>
 												<div class="col-sm-6">: ${po.taxAmt} </div>
 											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6">: ${po.amtRounding} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${po.totalPayment - po.amtRounding}"/></div>
+											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
 											<div class="col-sm-6">: ${po.totalPayment} </div>
 											</div>
 											
-											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6">: ${po.amtRounding} </div>
-											</div>
+											
 										</div>
 									
 									</div>		

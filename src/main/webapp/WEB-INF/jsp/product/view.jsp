@@ -280,24 +280,10 @@
 																							<tbody>
 																								<td><c:set var="index" value="${index + 1}"
 																										scope="page" /> <c:out value="${index}" /></td>
-																								<td>${product.warehouseName}</td>
-																								<td>${product.poToGr + product.directGr }</td>
-																								<td><c:choose>
-																										<c:when test="${product.ordered > 0}">  ${product.ordered - product.poToGr }
-																						       </c:when>
-																										<c:otherwise>
-       																									0 
-       																			                    	</c:otherwise>
-																									</c:choose></td>
-																								
-																								<%-- <td>0</td> --%>
-																					        	<td><c:choose>
-																										<c:when test="${product.ordered > 0}">  ${product.ordered  + product.directGr}
-																						       </c:when>
-																										<c:otherwise>
-       																									${product.poToGr + product.directGr } 
-       																			                    	</c:otherwise>
-																									</c:choose></td> 
+																								<td>${product.warehouse}</td>
+																								<td>${product.inStock }</td>
+																								<td> ${product.ordered} </td>
+																					        	<td>${product.avaliableQuantity} </td> 
 
 																							</tbody>
 																						</c:forEach>

@@ -146,7 +146,7 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 		logger.info("goodsReceipt.getFreight()-->" + inventoryGoodsReceipt.getFreight());
 		Double total_amt=0.0;
 		if(inventoryGoodsReceipt.getTotalDiscount()==null) inventoryGoodsReceipt.setTotalDiscount(0.0);
-		if(inventoryGoodsReceipt.getFreight()==null) inventoryGoodsReceipt.setFreight(0);
+		if(inventoryGoodsReceipt.getFreight()==null) inventoryGoodsReceipt.setFreight(0.0);
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsReceipt.getTotalDiscount(), inventoryGoodsReceipt.getFreight());

@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
+import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.Product;
@@ -226,6 +228,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setPostingDate(gr.getPostingDate());
 			inv.setCategory(gr.getCategory());
 			inv.setRemark(gr.getRemark());
+			inv.setDeliverTo(gr.getDeliverTo());
 			inv.setReferenceDocNumber(gr.getDocNumber());
 			inv.setRequiredDate(gr.getRequiredDate());
 			inv.setGrId(gr);
@@ -291,47 +294,42 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	    	 inv.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
 	    	// goodsReceipt.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
 	    	 //goodsReceipt.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
-	    	 inv.setTotalPayment(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
-	    	 inv.setAmtRounding(tuple[5] == null ? "0" : ( tuple[5]).toString());
+	    	 inv.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 inv.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
 	     }
-	     
+	     logger.info("List Size -----> " + inv.getTotalPayment());
 	     /*--Set Headers--*/
 	     
 	     
 	     /*--Set Lists--*/
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,current_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +inv.getGrId().getId();
-		String productNumber =""; 
-		Integer creditmemoQuantity=0;
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<InVoiceLineItems> listItems = inv.getInVoiceLineItems();
-			
-			List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
+	 	String sqlList= " select product_number,current_quantity,creditmemo_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +inv.getGrId().getId();
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
-	    	 InVoiceLineItems invList = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			InVoiceLineItems invlist = listItems.get(i);
-	    			
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			invList.setRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
-	    			invList.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
-					invList.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
-					break;
-					}
-	    		}
-	    		addListItems.add(invList);
-	    		j++;
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
 	     }
-	     
-	     inv.setInVoiceLineItems(addListItems);
+	    
+	     List<InVoiceLineItems> listItems = inv.getInVoiceLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 InVoiceLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setRequiredQuantity((Integer)m.getValue());    
+	                 }
+	        }
+	    }
+	     inv.setInVoiceLineItems(listItems);
+	   
 	    
 		
 		/*SetRequiredQuantity*/
@@ -543,8 +541,8 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	    	 invoice.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
 	    	// invoice.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
 	    	 //invoice.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
-	    	 invoice.setTotalPayment(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
-	    	 invoice.setAmtRounding(tuple[5] == null ? "0" : ( tuple[5]).toString());
+	    	 invoice.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 invoice.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
 	     }
 	     
 	     /*--Set Headers--*/
@@ -552,41 +550,35 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     
 	     /*--Set Lists--*/
 	     
-	 	String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
-		String productNumber =""; 
-		Integer creditmemoQuantity=0;
-		logger.info("sqlList ----> " + sqlList);
-		Query queryList = entityManager.createNativeQuery(sqlList);
-		  List<Object[]>	invoiceList = queryList.getResultList();
-		  
-		  List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
-			
-			List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
-		logger.info("invoiceList Size -----> " + invoiceList.size());
-		int j=0;
+	 	String sqlList= " select product_number,inv_final_quantity,creditmemo_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
-	    	 InVoiceLineItems invList = listItems.get(j);
-	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
-	    	 
-	    		for (int i = 0; i < listItems.size(); i++) {
-	    			InVoiceLineItems invlist = listItems.get(i);
-	    			
-	    			if(productNumber.equals(invlist.getProdouctNumber())) {
-	    			invList.setTempRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
-	    			invList.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
-					invList.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
-					break;
-					}
-	    		}
-	    		addListItems.add(invList);
-	    		j++;
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
 	     }
+	    
+	     List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 InVoiceLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
+	                   
+	                 }
+	        }
+	    }
+	     invoice.setInVoiceLineItems(listItems);
 	     
-	 	invoice.setInVoiceLineItems(addListItems);
-	     
-	     /*Set Lists*/
-		return invoice;
+	     return invoice;
 	}
 	
 	/*@Override
@@ -661,18 +653,26 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		logger.info("inVoice.getTotalDiscount()-->" + inVoice.getTotalDiscount());
 		logger.info("inVoice.getFreight()-->" + inVoice.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
 		if(inVoice.getTotalDiscount()==null) inVoice.setTotalDiscount(0.0);
-		if(inVoice.getFreight()==null) inVoice.setFreight(0);
+		if(inVoice.getFreight()==null) inVoice.setFreight(0.0);
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inVoice.getTotalDiscount(), inVoice.getFreight());
-		inVoice.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
+		 
+		 if(inVoice.getGrId() != null) {
+				total_payment =(double) Math.round(total_amt);
+			}else {
+				total_payment = inVoice.getTotalPayment();
+			}
+		inVoice.setAmtRounding(""+df2.format(total_amt));
 		inVoice.setTotalPayment(total_amt);
+		inVoice.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return inVoice;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	

@@ -29,5 +29,7 @@ public interface InVoiceService {
 	/*Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);*/
 	
 	List<InVoice> invApprovedList();
+	
+	boolean findByDocNumber(String invDocNum);
 
 }

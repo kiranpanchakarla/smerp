@@ -90,6 +90,16 @@ public class GenerateDocNumber {
         return res;
     } 
 	
+	
+	public  static String documentNumberGeneration(String olddocumentNumber,Integer num){
+        Pattern pattern = Pattern.compile("(?<=\\D)(?=\\d)", Pattern.CASE_INSENSITIVE);
+        String[] result = pattern.split(olddocumentNumber);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+          LocalDateTime now = LocalDateTime.now();
+        String newOrderId = result[0]+(String)dtf.format(now)+(num);
+    return newOrderId;
+  }
+	
 	public static void main(String[] args) {
 		System.out.println(autoGenereater("PGP","PG0001P0001"));
 	}

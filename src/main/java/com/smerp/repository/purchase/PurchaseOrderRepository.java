@@ -28,5 +28,5 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, I
 	@Query("SELECT r FROM PurchaseOrder r WHERE id=:id and status='Approved'")
 	PurchaseOrder findByApproveId(Integer id);
 
-
+	List<PurchaseOrder> findByDocNumber(String docNumber);
 }

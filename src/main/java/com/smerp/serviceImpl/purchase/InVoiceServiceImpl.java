@@ -41,6 +41,7 @@ import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -90,6 +91,9 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	ProductService  productService;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -194,12 +198,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
     		}
 		}
 		
-		
-		
-		
 		inVoice= inVoiceRepository.save(inVoice);
-		
-		
 		
 		return inVoice; 
 		 
@@ -213,13 +212,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		logger.info("grId" + grId);
 		InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check PO exist in  GR
         if(dup_inv==null) {
-		InVoice greDetails = findLastDocumentNumber();
+        	Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+        	InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
+			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
+		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (gr != null) {
@@ -270,7 +270,6 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setInVoiceLineItems(lineItems);
 			
 			/*inv= getListAmount(inv);*/ // Set Amount....Like Tax Total Amt
-			
 			
 		}
 		logger.info("inv" + inv);
@@ -832,5 +831,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 			}
 
+	@Override
+	public boolean findByDocNumber(String invDocNum) {
+		List<InVoice> invList = inVoiceRepository.findByDocNumber(invDocNum);
+		if(invList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 			
 }

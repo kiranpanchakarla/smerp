@@ -34,7 +34,6 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 		logger.info("sql-->" +sql);
 		Query query = entityManager.createNativeQuery(sql);
 	     List<Object[]>	list= query.getResultList();
-	     System.out.println(list.size());
 	    if(list.size()>0) {
 	    	return true;
 	    }else {

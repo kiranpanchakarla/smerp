@@ -28,7 +28,6 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	@Autowired
 	PurchaseRequestListRepository purchaseRequestListRepository;
 	
-	
 	@Autowired
 	EmailGenerator emailGenerator;
 	
@@ -133,7 +132,15 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		return purchaseRequestRepository.findById(purchaseReqId).get();
 	}
 
-	
+	@Override
+	public boolean findByDocNumber(String prNo) {
+		List<PurchaseRequest> prList = purchaseRequestRepository.findByDocNumber(prNo);
+		if(prList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
  
 }

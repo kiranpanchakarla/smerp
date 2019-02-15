@@ -36,5 +36,5 @@ public interface GoodsReceiptService {
 	
 	List<GoodsReceipt> grApprovedList();
 	
-
+	boolean findByDocNumber(String grDocNum);
 }

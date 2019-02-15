@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +48,7 @@ import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderActivityHistoryService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -87,7 +88,10 @@ public class PurchaseOrderController {
 	
 	@Autowired
 	private PurchaseOrderActivityHistoryService purchaseOrderActivityHistoryService;
-
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -105,14 +109,19 @@ public class PurchaseOrderController {
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-       
+       		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+		logger.info("PO count-->" + count);
+		
 		PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
-			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
+			logger.info("podetails-->" + po);
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
+		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("podetails-->" + podetails);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -204,10 +213,29 @@ public class PurchaseOrderController {
 	}
 	
 	@PostMapping("/save")
-	public String name(PurchaseOrder requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		PurchaseOrder po = purchaseOrderService.save(requestForQuotation);
-		logger.info("po details" + po);
+	public String name(PurchaseOrder purchaseOrder) {
+		logger.info("Inside save method" + purchaseOrder);
+		PurchaseOrder po = null;
+		if(purchaseOrder.getId()==null) {
+			boolean status = purchaseOrderService.findByDocNumber(purchaseOrder.getDocNumber());
+			if(!status) {
+			po = purchaseOrderService.save(purchaseOrder);
+			logger.info("po details" + po);
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+				logger.info("count-->" + count);
+				
+				PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
+				if (podetails != null && podetails.getDocNumber() != null) {
+					//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+					purchaseOrder.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
+				}
+				po = purchaseOrderService.save(purchaseOrder);
+			}
+		}else {
+			po = purchaseOrderService.save(purchaseOrder);
+			logger.info("po details" + po);
+		}
 		try {
 			savePoActivityHistory(po);
 		}catch(Exception e) {
@@ -231,7 +259,6 @@ public class PurchaseOrderController {
 	   return "redirect:edit?id="+po.getId();
 	}
 
-	
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model) {
 		List<PurchaseOrder> purchaseOrderList = purchaseOrderService.poApprovedList();
@@ -383,5 +410,5 @@ public class PurchaseOrderController {
 			}
 			return null;
 		} */
-
+		
 }

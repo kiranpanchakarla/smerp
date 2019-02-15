@@ -29,6 +29,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -64,6 +65,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -192,14 +196,15 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		PurchaseOrder po = new PurchaseOrder();
 		RequestForQuotation rfq = requestForQuotationService.findById((Integer.parseInt(rfqId)));
 		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq);  // check RFQ exist in PO
-        if(dup_po==null) { 
-		PurchaseOrder podetails = findLastDocumentNumber();
+        if(dup_po==null) {
+	        Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+			PurchaseOrder podetails = findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
-			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
+		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (rfq != null) {
@@ -352,6 +357,14 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		return purchaseOrder;
 	}
 
-
+	@Override
+	public boolean findByDocNumber(String docNum) {
+		List<PurchaseOrder> poList = purchaseOrderRepository.findByDocNumber(docNum);
+		if(poList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

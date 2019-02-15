@@ -16,6 +16,6 @@ public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest
 
 	PurchaseRequest findTopByOrderByIdDesc();
 	
-	
+	List<PurchaseRequest> findByDocNumber(String docNumber);
 
 }

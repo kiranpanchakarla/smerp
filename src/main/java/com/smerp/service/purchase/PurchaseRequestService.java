@@ -20,7 +20,7 @@ public interface PurchaseRequestService {
 
 	PurchaseRequest getInfo(int purchaseReqId);
 	
-	
+	boolean findByDocNumber(String pr);
 	
 
 }

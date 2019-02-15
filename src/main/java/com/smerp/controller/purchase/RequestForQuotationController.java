@@ -32,6 +32,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -39,6 +40,8 @@ import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -68,6 +71,9 @@ public class RequestForQuotationController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -84,13 +90,16 @@ public class RequestForQuotationController {
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
+		logger.info("PO count-->" + count);
+		
 		RequestForQuotation rfqdetails = requestForQuotationService.findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
-			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
+			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber(),count));
 		} else {
 			  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 			    LocalDateTime now = LocalDateTime.now();
-			    rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
+			    rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("rfqdetails-->" + rfqdetails);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -160,11 +169,30 @@ public class RequestForQuotationController {
 		return "redirect:list";
 	}
 
-	
 	@PostMapping("/save")
 	public String name(RequestForQuotation requestForQuotation) {
 		logger.info("Inside save method" + requestForQuotation);
-		logger.info("rfq details" + requestForQuotationService.save(requestForQuotation));
+		
+		if(requestForQuotation.getId()==null) {
+			boolean status = requestForQuotationService.findByDocNumber(requestForQuotation.getDocNumber());
+			if(!status) {
+				requestForQuotation = requestForQuotationService.save(requestForQuotation);
+				logger.info("rfq details" +requestForQuotation);
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
+				logger.info("count-->" + count);
+				
+				RequestForQuotation rfq = requestForQuotationService.findLastDocumentNumber();
+				if (rfq != null && rfq.getDocNumber() != null) {
+					//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfq.getDocNumber()));
+					requestForQuotation.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfq.getDocNumber(),count));
+				}
+				requestForQuotation = requestForQuotationService.save(requestForQuotation);
+			}
+		}else {
+			logger.info("rfq details" + requestForQuotationService.save(requestForQuotation));
+		}
+		
 		return "redirect:list";
 	}
 	

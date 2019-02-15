@@ -26,5 +26,7 @@ public interface RequestForQuotationService {
 	List<RequestForQuotation> findByIsActive();
 	
 	List<RequestForQuotation> rfqApprovedList();
+	
+	boolean findByDocNumber(String rfqDocNum);
 
 }

@@ -44,6 +44,8 @@ import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -81,9 +83,9 @@ public class InvoiceController {
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
 	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 	
-
-
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -102,13 +104,16 @@ public class InvoiceController {
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+		logger.info("Inv count-->" + count);
+		
 		InVoice invDetails = inVoiceService.findLastDocumentNumber();
 		if (invDetails != null && invDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(invDetails.getDocNumber()));
+			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(invDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
+	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("invDetails-->" + invDetails);
 		model.addAttribute("productList",
@@ -120,8 +125,6 @@ public class InvoiceController {
 		model.addAttribute("inv", inv);
 		return "inv/create";
 	}
-
-	
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
@@ -190,9 +193,25 @@ public class InvoiceController {
 
 	
 	@PostMapping("/save")
-	public String name(InVoice requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		logger.info("inv details" + inVoiceService.save(requestForQuotation));
+	public String name(InVoice invoice) {
+		logger.info("Inside save method" + invoice);
+		
+		if(invoice.getId() == null) {
+			boolean status = inVoiceService.findByDocNumber(invoice.getDocNumber());
+			if(!status) {
+				logger.info("inv details" + inVoiceService.save(invoice));
+			}else {
+				Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+				InVoice invdetails = inVoiceService.findLastDocumentNumber();
+				if (invdetails != null && invdetails.getDocNumber() != null) {
+					invoice.setDocNumber(GenerateDocNumber.documentNumberGeneration(invdetails.getDocNumber(),count));
+				}
+				logger.info("inv details" + inVoiceService.save(invoice));
+			}
+		}else {
+			logger.info("inv details" + inVoiceService.save(invoice));
+		}
+		
 		return "redirect:list";
 	}
 	

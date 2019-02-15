@@ -27,6 +27,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -61,6 +62,10 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
 	
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
@@ -149,14 +154,15 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		PurchaseRequest prq = purchaseRequestService.getInfo(Integer.parseInt(purchaseId));
 		
 		RequestForQuotation dup_rfq =requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
-        if(dup_rfq==null) { 
-		RequestForQuotation rfqdetails = findLastDocumentNumber();
+        if(dup_rfq==null) {
+        	Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
+        	RequestForQuotation rfqdetails = findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
-			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
+			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber(),count));
 		} else {
 			  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 			  LocalDateTime now = LocalDateTime.now();
-			  rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
+			  rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (prq != null) {
@@ -170,9 +176,6 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			rfq.setRequiredDate(prq.getRequiredDate());
 			rfq.setPurchaseReqId(prq);
 			rfq.setIsActive(true);
-			
-			
-			
 			
 			List<PurchaseRequestList> prItms = prq.getPurchaseRequestLists();
 			List<LineItems> lineItems =new ArrayList<LineItems>();
@@ -195,7 +198,6 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			}
 			
 			rfq.setLineItems(lineItems);
-			
 		}
 		
 		rfq.setCategory("Item");
@@ -256,6 +258,16 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		requestForQuotation.setIsActive(false);
 		requestForQuotationRepository.save(requestForQuotation);
 		return requestForQuotation;
+	}
+	
+	@Override
+	public boolean findByDocNumber(String rfqDocNum) {
+		List<RequestForQuotation> requestForQuotation = requestForQuotationRepository.findByDocNumber(rfqDocNum);
+		if(requestForQuotation.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

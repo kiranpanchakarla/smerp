@@ -40,6 +40,7 @@ import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -89,6 +90,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public CreditMemo save(CreditMemo creditMemo) {
@@ -190,10 +194,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
     			e.printStackTrace();
     		}
 		}
-		
-		
 		return creditMemo; 
-		 
 	}
 
 	@Override
@@ -204,13 +205,14 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		logger.info("inId" + inId);
 		/*CreditMemo dup_gre =creditMemoRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gre==null) { */
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.CM.getStatus());
 		CreditMemo greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
+			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("CM"+(String)dtf.format(now) +"0"));
+		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("CM"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (in != null) {
@@ -229,7 +231,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			inv.setVendorPayTypeAddress(in.getVendorPayTypeAddress());
 			inv.setVendorShippingAddress(in.getVendorShippingAddress());
 			
-		
 			inv.setFreight(in.getFreight());
 			inv.setTotalDiscount(in.getTotalDiscount());
 		
@@ -255,7 +256,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 						 creQunatity = getListGoodsProductCount(listCreditMemo,  poItms.get(i).getSacCode());
 					}*/
 					
-				
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - creQunatity);
 					line.setRequiredQuantity(0);
 					

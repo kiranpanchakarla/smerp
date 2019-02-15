@@ -79,7 +79,6 @@ public class CreditMemoController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
-
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
@@ -140,7 +139,6 @@ public class CreditMemoController {
 		return "redirect:list";
 	}
 
-	
 	@PostMapping("/save")
 	public String name(CreditMemo creditMemo) {
 		logger.info("Inside save method" + creditMemo);

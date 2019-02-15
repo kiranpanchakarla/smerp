@@ -25,5 +25,7 @@ public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Int
 	List<GoodsReceipt> grApprovedList(String status,String gStatus);
 	
 	GoodsReceipt findByPoId(PurchaseOrder purchaseOrder);
+	
+	List<GoodsReceipt> findByDocNumber(String grDocNum);
 
 }

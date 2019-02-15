@@ -40,6 +40,7 @@ import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -75,18 +76,18 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
-	
-	
+		
 	@Autowired
 	GoodsReceiptRepository goodsReceiptRepository;
-
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
-	
-	
+		
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
@@ -216,13 +217,14 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		logger.info("grId" + grId);
 		/*GoodsReturn dup_gre =goodsReturnRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gre==null) { */
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GRE.getStatus());
 		GoodsReturn greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
-			gre.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
+			gre.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		gre.setDocNumber(GenerateDocNumber.documentNumberGeneration("GRE"+(String)dtf.format(now) +"0"));
+		gre.setDocNumber(GenerateDocNumber.documentNumberGeneration("GRE"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (gr != null) {

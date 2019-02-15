@@ -44,6 +44,8 @@ import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -81,8 +83,8 @@ public class GoodsReceiptController {
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
 	
-	
-
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -102,13 +104,16 @@ public class GoodsReceiptController {
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
+		logger.info("GR count-->" + count);
+		
 		GoodsReceipt grDetails = goodsReceiptService.findLastDocumentNumber();
 		if (grDetails != null && grDetails.getDocNumber() != null) {
-			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration(grDetails.getDocNumber()));
+			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration(grDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0"));
+	    gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("grDetails-->" + grDetails);
 		model.addAttribute("productList",
@@ -195,7 +200,23 @@ public class GoodsReceiptController {
 	@PostMapping("/save")
 	public String name(GoodsReceipt goodsReceipt) {
 		logger.info("Inside save method" + goodsReceipt);
-		logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+		
+		if(goodsReceipt.getId()==null) {
+			boolean status = goodsReceiptService.findByDocNumber(goodsReceipt.getDocNumber());
+			if(!status) {
+				logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+			}else {
+				Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
+				GoodsReceipt grdetails = goodsReceiptService.findLastDocumentNumber();
+				if (grdetails != null && grdetails.getDocNumber() != null) {
+					goodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(grdetails.getDocNumber(),count));
+				}
+				logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+			}
+		}else {
+			logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+		}
+		
 		return "redirect:list";
 	}
 	

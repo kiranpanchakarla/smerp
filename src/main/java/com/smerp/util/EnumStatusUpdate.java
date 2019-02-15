@@ -32,6 +32,8 @@ public enum EnumStatusUpdate {
 	PO("PO"),
 	GR("GR"),
 	GRE("GRE"),
+	INV("INV"),
+	CM("CM"),
 	
 	P("P"),
 	V("V"),

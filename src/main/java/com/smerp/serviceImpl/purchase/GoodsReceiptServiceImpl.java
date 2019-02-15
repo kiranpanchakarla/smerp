@@ -39,6 +39,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -81,6 +82,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
@@ -231,13 +235,14 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		logger.info("po" + po);
 		/*GoodsReceipt dup_gr =goodsReceiptRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gr==null) { */
+        Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
 		GoodsReceipt grDetails = findLastDocumentNumber();
 		if (grDetails != null && grDetails.getDocNumber() != null) {
-			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration(grDetails.getDocNumber()));
+			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration(grDetails.getDocNumber(),count));
 		} else {
-	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-	    LocalDateTime now = LocalDateTime.now();
-		gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0"));
+		    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+		    LocalDateTime now = LocalDateTime.now();
+			gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (po != null) {
@@ -914,7 +919,15 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 			}
 
-			
+	@Override
+	public boolean findByDocNumber(String grDocNum) {
+		List<GoodsReceipt> grList = goodsReceiptRepository.findByDocNumber(grDocNum);
+		if(grList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 			
 
 }

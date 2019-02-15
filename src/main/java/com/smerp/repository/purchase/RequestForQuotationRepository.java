@@ -19,5 +19,5 @@ public interface RequestForQuotationRepository extends JpaRepository<RequestForQ
 	
 	RequestForQuotation findByPurchaseReqId(PurchaseRequest purchaseReqId);
 	
-	
+	List<RequestForQuotation> findByDocNumber(String rfqDocNum);
 }

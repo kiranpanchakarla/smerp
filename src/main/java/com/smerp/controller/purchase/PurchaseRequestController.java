@@ -35,6 +35,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.UserService;
 import com.smerp.service.inventory.ProductService;
@@ -43,6 +44,8 @@ import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.util.BarCodeGeneration;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -94,6 +97,9 @@ public class PurchaseRequestController {
 	
 	@Autowired
 	BarCodeGeneration barCodeGeneration;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -114,13 +120,18 @@ public class PurchaseRequestController {
 		//gets the users first and last name
 		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
 		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
+		logger.info("PO count-->" + count);
+		
 		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
-			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
+			//purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
+			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber(),count));
 		} else {
 			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 			 LocalDateTime now = LocalDateTime.now();
-			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0"));
+			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0",count));
 		}
 		model.addAttribute("purchaseRequest", purchaseRequest);
 		return "/purchaseReq/create";
@@ -128,12 +139,32 @@ public class PurchaseRequestController {
 
 	@PostMapping(value = "/save")
 	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) throws IOException {
-		logger.info("purchaseRequest save-->" + purchaseRequest);
+		
 		
 		/*if (purchaseRequest.getId() == null) {
 		purchaseRequest.setBarCodeImgPath(barCodeGeneration.downloadbarcodeImpge(purchaseRequest.getDocNumber(), barcodePath));
 		}*/
-		purchaseRequestService.save(purchaseRequest);
+		if(purchaseRequest.getId() == null) {
+			boolean status = purchaseRequestService.findByDocNumber(purchaseRequest.getDocNumber());
+			if(!status) {
+				purchaseRequest = purchaseRequestService.save(purchaseRequest);
+				logger.info("purchaseRequest save-->" + purchaseRequest);
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
+				logger.info("count-->" + count);
+				
+				PurchaseRequest prdetails = purchaseRequestService.findLastDocumentNumber();
+				if (prdetails != null && prdetails.getDocNumber() != null) {
+					purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(prdetails.getDocNumber(),count));
+				}
+				purchaseRequest = purchaseRequestService.save(purchaseRequest);
+				logger.info("purchaseRequest save-->" + purchaseRequest);
+			}
+		}else {
+			purchaseRequestService.save(purchaseRequest);
+			logger.info("purchaseRequest save-->" + purchaseRequest);
+		}
+		
 		return "redirect:list";
 	}
 

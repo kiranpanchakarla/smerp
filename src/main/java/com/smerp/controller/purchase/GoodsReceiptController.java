@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.GoodsReceipt;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
@@ -177,8 +178,13 @@ public class GoodsReceiptController {
 		logger.info("id-->" + id);
 		
 		GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(Integer.parseInt(id));
-		gr = goodsReceiptService.getListAmount(gr);
+		//gr = goodsReceiptService.getListAmount(gr);
 		logger.info("gr-->" + gr);
+		
+		List<LineItemsBean> lineItemsBean = goodsReceiptService.getLineItemsBean(Integer.parseInt(id));
+		logger.info("lineItemsBean-->" + lineItemsBean);
+		
+		model.addAttribute("lineItemsBean",lineItemsBean);
 		poloadData(model, gr);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("checkStatusGr", goodsReturnService.checkQuantityGr(gr));

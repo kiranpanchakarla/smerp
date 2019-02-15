@@ -52,10 +52,10 @@ public class ProductQuantityServiceImpl implements ProductQuantityService {
 			 ProductQuantity productQuantity = new ProductQuantity();
 			  
 			 productQuantity.setProductId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
-			 productQuantity.setWarehouse((tuple[2]).toString());
-			 productQuantity.setInStock((Integer)(tuple[3] == null ? 0 : (Integer.parseInt((tuple[3].toString())))));
-			 productQuantity.setOrdered((Integer)(tuple[4] == null ? 0 : (Integer.parseInt((tuple[4].toString())))));
-			 productQuantity.setAvaliableQuantity((Integer)(tuple[5] == null ? 0 : (Integer.parseInt((tuple[5].toString())))));
+			 productQuantity.setWarehouse((tuple[3]).toString());
+			 productQuantity.setInStock((Integer)(tuple[4] == null ? 0 : (Integer.parseInt((tuple[4].toString())))));
+			 productQuantity.setOrdered((Integer)(tuple[5] == null ? 0 : (Integer.parseInt((tuple[5].toString())))));
+			 productQuantity.setAvaliableQuantity((Integer)(tuple[6] == null ? 0 : (Integer.parseInt((tuple[6].toString())))));
 			 productQuantities.add(productQuantity);
 		 }
 	 

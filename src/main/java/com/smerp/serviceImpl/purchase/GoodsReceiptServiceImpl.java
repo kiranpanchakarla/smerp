@@ -28,6 +28,7 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoiceLineItems;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
@@ -597,42 +598,49 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	     
 	     /*--Set Headers--*/
 	     
-	     
-	     /*--Set Lists--*/
-	     
-	       
-         String sqlList= " select product_number,current_quantity from vw_goods_received_lineitems_amount where id= " + id;
-       
-         String productNumber ="";
-        logger.info("sqlList ----> " + sqlList);
-        Query queryList = entityManager.createNativeQuery(sqlList);
-          List<Object[]>    invoiceList = queryList.getResultList();
-            
-        logger.info("invoiceList Size -----> " + invoiceList.size());
-        
-         Map<String, Integer> poListData = new LinkedHashMap<>();
-         for(Object[] tuple : invoiceList) {
-             productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-             poListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
-         }
-        
-         List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
-         for (int i = 0; i < listItems.size(); i++) {
-             GoodsReceiptLineItems invlist = listItems.get(i);
-            
-            for(Map.Entry m:poListData.entrySet()){
-                   logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
-                   if(invlist.getProdouctNumber().equals(m.getKey())) {
-                       invlist.setTempRequiredQuantity((Integer)m.getValue());    
-                     }
-            }
-        }
-         goodsReceipt.setGoodsReceiptLineItems(listItems);
-	        
-	     
 	        
         return goodsReceipt;
 	}
+	
+	
+	@Override
+	public List<LineItemsBean> getLineItemsBean(int id) {
+		
+	     /*--Set Lists--*/
+		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
+	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
+	 			"tax_code,product_tax,product_cost_tax,product_group,hsn,warehouse,current_quantity\r\n" + 
+	 			"from vw_goods_received_lineitems_amount where id=" +id;
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    logger.info("1----> " );
+	    
+	     for(Object[] tuple : invoiceList) {
+	    	 LineItemsBean ineItemsObj = new LineItemsBean();
+	    	 ineItemsObj.setProdouctNumber(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 ineItemsObj.setDescription(tuple[1] == null ? "0" : ( tuple[1]).toString());
+	    	 ineItemsObj.setUom(tuple[2] == null ? "0" : ( tuple[2]).toString());
+	    	 ineItemsObj.setSku(tuple[3] == null ? "0" : ( tuple[3]).toString());
+	    	 ineItemsObj.setUnitPrice(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+	    	 ineItemsObj.setTaxCode(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 ineItemsObj.setTaxTotal(tuple[6] == null ? "0" : ( tuple[6]).toString());
+	    	 ineItemsObj.setTotal(tuple[7] == null ? "0" : ( tuple[7]).toString());
+	    	 ineItemsObj.setProductGroup(tuple[8] == null ? "0" : ( tuple[8]).toString());
+	    	 ineItemsObj.setHsn(tuple[9] == null ? "0" : ( tuple[9]).toString());
+	    	 ineItemsObj.setWarehouse(tuple[10] == null ? 0 :Integer.parseInt(tuple[10].toString()));
+	    	 ineItemsObj.setRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 ineItemsObj.setTempRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 addListItems.add(ineItemsObj);
+	         
+	     }
+	     
+	     return addListItems;
+	}
+	
+	
 	
 	
 	@Override

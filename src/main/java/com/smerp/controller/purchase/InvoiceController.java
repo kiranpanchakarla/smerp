@@ -33,8 +33,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
@@ -172,12 +172,17 @@ public class InvoiceController {
 		logger.info("id-->" + id);
 		InVoice inv = inVoiceService.getInVoiceById(Integer.parseInt(id));
 		logger.info("inv-->" + inv);
-		inv = inVoiceService.getListAmount(inv);
+		
+		
+		List<LineItemsBean> lineItemsBean = inVoiceService.getLineItemsBean(Integer.parseInt(id));
+		logger.info("lineItemsBean-->" + lineItemsBean);
+		//inv = inVoiceService.getListAmount(inv);
 		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());
 		//model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
 		model.addAttribute("inv", inv);
+		model.addAttribute("lineItemsBean",lineItemsBean);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
 		return "inv/view";

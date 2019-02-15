@@ -1,60 +1,33 @@
 package com.smerp.model.inventory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class LineItemsBean {
 
-import com.smerp.model.master.AuditModel;
-
-@Entity
-@Table(name = "tbl_goods_receipt_lineitems")
-public class GoodsReceiptLineItems extends AuditModel {
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false, unique = true)
 	private Integer id;
 
-	@Column(name = "product_id")
 	private Integer productId;
 
-	@Column(name = "product_number")
 	private String prodouctNumber;
 
-	@Column(name = "description")
 	private String description;
 
-	@Column(name = "uom")
 	private String uom;
 
-	@Column(name = "required_quantity")
 	private Integer requiredQuantity;
 
-	@Column(name = "product_group")
 	private String productGroup;
 
-	@Column(name = "warehouse")
 	private Integer warehouse;
 
-	@Column(name = "hsn")
 	private String hsn;
 
-	@Column(name = "sac_code")
 	private String sacCode;
 
-	@Column(name = "unit_price")
 	private Double unitPrice;
 
-	@Column(name = "tax_code")
 	private Double taxCode;
-	
-	@Column(name = "sku_quantity")
-    private String sku;
-	
+
+	private String sku;
+
 	public String getSku() {
 		return sku;
 	}
@@ -64,12 +37,10 @@ public class GoodsReceiptLineItems extends AuditModel {
 	}
 
 	private transient Integer tempRequiredQuantity;
-	
+
 	private transient String taxTotal;
-	
+
 	private transient String total;
-	
-	
 
 	public Integer getId() {
 		return id;
@@ -150,8 +121,6 @@ public class GoodsReceiptLineItems extends AuditModel {
 	public void setSacCode(String sacCode) {
 		this.sacCode = sacCode;
 	}
-	
-	
 
 	public Double getUnitPrice() {
 		return unitPrice;
@@ -184,9 +153,6 @@ public class GoodsReceiptLineItems extends AuditModel {
 	public void setTotal(String total) {
 		this.total = total;
 	}
-	
-	
-	
 
 	public Integer getTempRequiredQuantity() {
 		return tempRequiredQuantity;
@@ -198,16 +164,10 @@ public class GoodsReceiptLineItems extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "GoodsReceiptLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+		return "InVoiceLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku
-				+ ", tempRequiredQuantity=" + tempRequiredQuantity + ", taxTotal=" + taxTotal + ", total=" + total
-				+ "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
 	}
-
 	
-
-	 
-
 }

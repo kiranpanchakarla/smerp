@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +22,9 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
-import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
-import com.smerp.model.inventory.Product;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
@@ -547,38 +545,48 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     /*--Set Headers--*/
 	     
 	     
+	     return invoice;
+	}
+	
+	@Override
+	public List<LineItemsBean> getLineItemsBean(int id) {
+		
 	     /*--Set Lists--*/
-	     
-	 	String sqlList= " select product_number,inv_final_quantity,creditmemo_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
-	 	String productNumber ="";
+		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
+	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
+	 			"tax_code,inv_product_tax,inv_amount_tax,product_group,hsn,warehouse,inv_final_quantity\r\n" + 
+	 			"from vw_invoice_lineitems_amount where id=" +id;
 	    logger.info("sqlList ----> " + sqlList);
 	    Query queryList = entityManager.createNativeQuery(sqlList);
 	      List<Object[]>    invoiceList = queryList.getResultList();
 	        
 	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    logger.info("1----> " );
 	    
-	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
-	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
-	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
+	    	 LineItemsBean ineItemsObj = new LineItemsBean();
+	    	 ineItemsObj.setProdouctNumber(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 ineItemsObj.setDescription(tuple[1] == null ? "0" : ( tuple[1]).toString());
+	    	 ineItemsObj.setUom(tuple[2] == null ? "0" : ( tuple[2]).toString());
+	    	 ineItemsObj.setSku(tuple[3] == null ? "0" : ( tuple[3]).toString());
+	    	 ineItemsObj.setUnitPrice(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+	    	 ineItemsObj.setTaxCode(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 ineItemsObj.setTaxTotal(tuple[6] == null ? "0" : ( tuple[6]).toString());
+	    	 ineItemsObj.setTotal(tuple[7] == null ? "0" : ( tuple[7]).toString());
+	    	 ineItemsObj.setProductGroup(tuple[8] == null ? "0" : ( tuple[8]).toString());
+	    	 ineItemsObj.setHsn(tuple[9] == null ? "0" : ( tuple[9]).toString());
+	    	 ineItemsObj.setWarehouse(tuple[10] == null ? 0 :Integer.parseInt(tuple[10].toString()));
+	    	 ineItemsObj.setRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 ineItemsObj.setTempRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 addListItems.add(ineItemsObj);
+	         
 	     }
-	    
-	     List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
-	     for (int i = 0; i < listItems.size(); i++) {
-	    	 InVoiceLineItems invlist = listItems.get(i);
-	        
-	        for(Map.Entry m:grListData.entrySet()){
-	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
-	               if(invlist.getProdouctNumber().equals(m.getKey())) {
-	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
-	                   
-	                 }
-	        }
-	    }
-	     invoice.setInVoiceLineItems(listItems);
 	     
-	     return invoice;
+	     return addListItems;
 	}
+	
+	
+	
 	
 	/*@Override
 	public InVoice getInVoiceRequireQuantityById(int id) {

@@ -3,7 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.GoodsReceipt;
-import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 
 public interface GoodsReceiptService {
@@ -35,6 +35,8 @@ public interface GoodsReceiptService {
 	PurchaseOrder setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
 	
 	List<GoodsReceipt> grApprovedList();
+	
+	List<LineItemsBean> getLineItemsBean(int id);
 	
 	boolean findByDocNumber(String grDocNum);
 }

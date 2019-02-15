@@ -188,7 +188,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty goodsReceiptLineItems}">
+																										<c:if test="${not empty lineItemsBean}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -229,17 +229,17 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${goodsReceiptLineItems}"
+																											<c:forEach items="${lineItemsBean}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
-																												<td style="display: none;"><form:input
+																												<%-- <td style="display: none;"><form:input
 																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
+																															path="lineItemsBean[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
-																															</td>
+																												<form:hidden path="lineItemsBean[${count}].id"/>	
+																															</td> --%>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															

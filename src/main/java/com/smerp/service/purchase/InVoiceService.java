@@ -3,6 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.LineItemsBean;
 
 public interface InVoiceService {
 
@@ -31,5 +32,7 @@ public interface InVoiceService {
 	List<InVoice> invApprovedList();
 	
 	boolean findByDocNumber(String invDocNum);
+	
+	List<LineItemsBean> getLineItemsBean (int id);
 
 }

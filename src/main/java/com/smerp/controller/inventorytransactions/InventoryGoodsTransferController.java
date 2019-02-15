@@ -84,6 +84,9 @@ public class InventoryGoodsTransferController {
 		model.addAttribute("user", getUser());
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
+		
+		model.addAttribute("findPlantAll", findPlantAll());
+		
 		model.addAttribute("taxCodeMap", taxCode());
 		InventoryGoodsTransfer invgr = inventoryGoodsTransferService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
@@ -135,6 +138,7 @@ public class InventoryGoodsTransferController {
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
+		model.addAttribute("findPlantAll", findPlantAll());
 		model.addAttribute("taxCodeMap", taxCode());
 		 
 		model.addAttribute("gr", invGR);
@@ -174,6 +178,10 @@ public class InventoryGoodsTransferController {
 
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
+	}
+	
+	public Map<Integer, Object> findPlantAll() {
+		return plantService.findPlantAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
 	private User getUser() {

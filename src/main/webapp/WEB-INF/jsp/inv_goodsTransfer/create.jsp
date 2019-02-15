@@ -159,7 +159,7 @@
 																					  required="true"
 																					 path="toWarehouse">
 																					 <form:option value="" label="Select" />
-																					 <form:options items="${plantMap}" />
+																					 <form:options items="${findPlantAll}" />
 																					 </form:select>
 
 																				</div> 
@@ -282,7 +282,7 @@
 																																		style="width:;" required="true"
 																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
 																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
+																																		<form:options items="${findPlantAll}" />
 																																	</form:select>
 																																</div></td>
 																																
@@ -512,7 +512,7 @@
 																			</c:if>
 																			<!-- Approve -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Inventory Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -526,7 +526,7 @@
 																			</c:forEach>
 																			<!-- Reject -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Inventory Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -582,30 +582,24 @@
 <script type="text/javascript">
 
 
-
-
-
-
-
 function wareHouseValidation() {
 	
-	var val = $("#warehouseId").val();	
-	
-	var warhouseName=  $("#warehouseId option:selected").text();
-	
-	var addToRow = '<option value='+val+'>'+warhouseName+'</option>'; 
-	alert(addToRow);
-		/*  var val = $("#title"+index).val();
-		 if(val=='Mr') {
-		$("#gender"+index+" option[value='Male']").attr('selected', true);
-	    $("#gender"+index+" option[value='Female']").attr('selected', false);
-		}else {
-	    $("#gender"+index+" option[value='Female']").attr('selected', true);
-	  $("#gender"+index+" option[value='Male']").attr('selected', false);
-		} */
-		 
-		 
+	wareHouseChangeInLineItems();
+
 	  }
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	for (var i = 0; i < incCount; i++) { 
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+		}
+}  
+	  
 
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
@@ -681,10 +675,11 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="inventoryGoodsTransferList['+inc+'].toWarehouse" required="true"   class="form-control toWarehouse'+inc+' toWarehouse"  id="toWarehouse'+inc+'" >'
-			+ scriptSelectPlant +
-			<c:forEach items="${plantMap}" var="plantMap">
-			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			//+ scriptSelectPlant +
+		//	<c:forEach items="${findPlantAll}" var="findPlantAll">
+		//	'<option value="${findPlantAll.key}">${findPlantAll.value}</option>'+
+		//	+'<option value="" id="abcd">abcdf</option>'+
+		//	</c:forEach>
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -754,6 +749,7 @@ function addItem() {
 		inc++;
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
+		wareHouseChangeInLineItems();
 	}
 
 

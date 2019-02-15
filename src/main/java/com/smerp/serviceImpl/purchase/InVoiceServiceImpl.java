@@ -185,7 +185,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		inVoice.setVendorShippingAddress(vendorShippingAddress);
 		inVoice.setVendorPayTypeAddress(vendorPayAddress);
 		
-		 if(inVoice.getStatus()!=null &&  inVoice.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		 if(inVoice.getStatus()!=null &&  !inVoice.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	inVoice =getListAmount(inVoice);
     			 RequestContext.initialize();
@@ -291,8 +291,9 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	    	 inv.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
 	    	// goodsReceipt.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
 	    	 //goodsReceipt.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
-	    	 inv.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
 	    	 inv.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
+	    	 inv.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	
 	     }
 	     logger.info("List Size -----> " + inv.getTotalPayment());
 	     /*--Set Headers--*/
@@ -673,7 +674,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 				total_payment = inVoice.getTotalPayment();
 			}
 		inVoice.setAmtRounding(""+df2.format(total_amt));
-		inVoice.setTotalPayment(total_amt);
+		//inVoice.setTotalPayment(total_amt);
 		inVoice.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return inVoice;

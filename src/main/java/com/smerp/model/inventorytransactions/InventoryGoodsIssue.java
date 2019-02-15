@@ -213,4 +213,28 @@ public class InventoryGoodsIssue extends AuditModel {
 	public void setTotalBeforeDisAmt(Double totalBeforeDisAmt) {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
+	
+	@Column(name = "deliver_to")
+	private String deliverTo;
+	
+	private transient String roundedOff;
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
+	}
+	
+	
+	
 }

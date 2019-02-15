@@ -173,7 +173,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			}
 		}
 
-		 if(purchaseOrder.getStatus()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		 if(purchaseOrder.getStatus()!=null &&  !purchaseOrder.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	purchaseOrder =getListAmount(purchaseOrder);
     			 RequestContext.initialize();
@@ -182,9 +182,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}else if(purchaseOrder.getStatus()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-			 
-		 }
+		} 
 		 
 		return purchaseOrderRepository.save(purchaseOrder); 
 		 

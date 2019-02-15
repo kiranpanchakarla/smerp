@@ -163,7 +163,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
          
          goodsReturn= goodsReturnRepository.save(goodsReturn);
          
-		if(goodsReturn.getStatus()!=null &&  goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		if(goodsReturn.getStatus()!=null &&  !goodsReturn.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
     			 RequestContext.initialize();
@@ -183,7 +183,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				purchaseOrderRepository.save(po);
 				}*/
 			
-			if(goodsReturn.getGrId()!=null) {
+			if(goodsReturn.getGrId()!=null  && goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			GoodsReceipt goodsReceipt =  goodsReturn.getGrId();
 			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
@@ -192,19 +192,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			}
 			
 		}
-		else if(goodsReturn.getStatus()!=null &&  goodsReturn.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-			try {
-			   	goodsReturn =getListAmount(goodsReturn);
-    			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnRejectEmail(goodsReturn);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-		}
-	
-		
-		
 		return goodsReturn; 
 		 
 	}

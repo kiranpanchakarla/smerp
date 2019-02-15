@@ -182,20 +182,21 @@
                 <td>:<#if inv.freight??> ${inv.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if inv.vendorShippingAddress.city??>${inv.vendorShippingAddress.city},</#if> </td>
-                <td><#if inv.vendorPayTypeAddress.city??>${inv.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
-                </tr>
-                <tr>
                 <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if inv.taxAmt??> ${inv.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if inv.roundedOff??> ${inv.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if inv.totalPayment??> ${inv.totalPayment}<#else>--</#if></td>
                 </tr>

@@ -193,20 +193,21 @@
                 <td>:<#if credit.freight??> ${credit.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.city??>${credit.vendorShippingAddress.city},</#if> </td>
-                <td><#if credit.vendorPayTypeAddress.city??>${credit.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
-                </tr>
-                <tr>
                 <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if credit.vendorShippingAddress.country.name??>${credit.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if credit.vendorPayTypeAddress.country.name??>${credit.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if credit.roundedOff??> ${credit.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if credit.totalPayment??> ${credit.totalPayment}<#else>--</#if></td>
                 </tr>

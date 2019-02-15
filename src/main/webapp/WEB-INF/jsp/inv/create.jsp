@@ -544,6 +544,10 @@
 																															<td>   
 																																${listLineItems.taxCode}  
 																															</td>
+																															
+																																<td>${listLineItems.taxTotal} </td>
+
+																															<td>${listLineItems.total} </td>
 
 
 																															<td>${listLineItems.productGroup}</td>
@@ -557,13 +561,10 @@
 																												                 	 ${entry.value} 																													 </c:if>
 																																</c:forEach></td>
 
+																																
 																															<td>
 																																${listLineItems.requiredQuantity}
-																																</td>
-																																
-																																<td>${listLineItems.taxTotal} </td>
-
-																															<td>${listLineItems.total} </td>
+																															</td>
 
 
 
@@ -2176,16 +2177,16 @@ $('#containerContainingTabs a').on('click', function(e) {
 	  } else {
 		 var subStatus = $(this).val();
         	if(subStatus == 'DR'){
-        		alertify.message('Draft Successfully');
+        		alertify.message('Draft Successfully',20000);
 				return true;
 			  } else if(subStatus == "SA"){
-				 alertify.success('Saved Successfully');
+				 alertify.success('Saved Successfully',20000);
 				return true;
 			  } else if(subStatus == "APP"){
 				 alertify.success('Invoice Successfully');
 				return true;
 			  } else if(subStatus == "RE"){
-				 alertify.warning('Document Rejected');
+				 alertify.warning('Document Rejected',20000);
 				 return true;
 			  }  
 		  }

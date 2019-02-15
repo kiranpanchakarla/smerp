@@ -74,7 +74,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
 		}
 		
-		 if(purchaseRequest.getStatus()!=null &&  purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		 if(purchaseRequest.getStatus()!=null &&  !purchaseRequest.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			 try {
       			 RequestContext.initialize();
       		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
@@ -83,9 +83,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
       			e.printStackTrace();
       		}
 			 
-		 }else if(purchaseRequest.getStatus()!=null &&  purchaseRequest.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-			 
-		 }
+		 } 
 		 
 		return purchaseRequestRepository.save(purchaseRequest);
 	}

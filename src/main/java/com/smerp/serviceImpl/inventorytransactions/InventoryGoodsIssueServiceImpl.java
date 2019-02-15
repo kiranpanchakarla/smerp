@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.inventorytransactions;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -145,12 +146,14 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		if(inventoryGoodsIssue.getTotalDiscount()==null) inventoryGoodsIssue.setTotalDiscount(0.0);
 		if(inventoryGoodsIssue.getFreight()==null) inventoryGoodsIssue.setFreight(0.0);
 			
-			
+	     
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsIssue.getTotalDiscount(), inventoryGoodsIssue.getFreight());
-		 inventoryGoodsIssue.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
-		 inventoryGoodsIssue.setTotalPayment(total_amt);
+		 inventoryGoodsIssue.setAmtRounding("" + total_amt);
+		 inventoryGoodsIssue.setTotalPayment(inventoryGoodsIssue.getTotalPayment());
+		 inventoryGoodsIssue.setRoundedOff("" + df2.format(inventoryGoodsIssue.getTotalPayment() - total_amt));
 	
 	return inventoryGoodsIssue;
 	}
 
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 }

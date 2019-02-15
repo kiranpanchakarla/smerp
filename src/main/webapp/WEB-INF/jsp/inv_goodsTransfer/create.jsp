@@ -452,6 +452,22 @@
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
 																				</div></div>
+																				
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Total</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
+																				
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Rounded Off</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="roundedOff"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 
 																				<div class="row">
 																                <div class="col-sm-12 form-group">
@@ -462,13 +478,7 @@
 																						readonly="true" />
 																				</div></div>
 																				
-																				<div class="row">
-																                <div class="col-sm-12 form-group">
-																					<label>Rounding</label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div></div>
+																				
 																			</div>
 																		</div>
 
@@ -585,7 +595,8 @@
 function wareHouseValidation() {
 	
 	wareHouseChangeInLineItems();
-
+	warehouseAlert();
+   // alert($("#warehouseId").val());
 	  }
 	  
 function wareHouseChangeInLineItems(){
@@ -597,8 +608,26 @@ function wareHouseChangeInLineItems(){
 			
 			$('#toWarehouse'+i).empty();
 			$('#toWarehouse'+i).append(addToRow);
+			
+			//$('#fromWarehouse'+i).empty();
+			//$('#fromWarehouse'+i).detach(addToRow);
+			 
 		}
-}  
+} 
+
+/* function warehouseAlert(){
+	var incCount = inc;
+	var to = $("#warehouseId").val();
+	for (var i = 0; i < incCount; i++) { 
+		
+		
+		  var from = $('#fromWarehouse').val();
+			if(to = from ){
+				alertify.alert("Inventory Goods Transfer"," Warehouse Selected Twice!"  );
+			}  
+			 
+		}
+} */
 	  
 
 var sizeplant = "${plantMapSize}";
@@ -750,6 +779,7 @@ function addItem() {
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 		wareHouseChangeInLineItems();
+		warehouseAlert();
 	}
 
 
@@ -1316,7 +1346,7 @@ function goBack() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total.toFixed(2));
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -1416,7 +1446,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   		}
   		if(totalAmt!="") {
   		 $("#totalPayment").val(Math.round(totalPayment));
-  		 $("#amtRounding").val( Math.round(totalPayment));
+  		 $("#amtRounding").val(totalPayment.toFixed(2));
   		}
   		
   		}
@@ -1443,7 +1473,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#amtRounding").val(totalPayment.toFixed(2));
+	 $("#totalPayment").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	
 	}else {
@@ -1484,7 +1515,8 @@ $('#freight').keyup(function() {
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
 	 $("#totalPayment").val(Math.round(finalValue));
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#amtRounding").val(finalValue.toFixed(2));
+	 $("#totalPayment").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
 });
 	
@@ -1518,7 +1550,7 @@ $('#freight').keyup(function() {
 		}
 		if(sum_total!="") {
 		 $("#totalPayment").val(Math.round(totalPayment));
-		 $("#amtRounding").val( Math.round(totalPayment));
+		 $("#amtRounding").val(totalPayment.toFixed(2));
 		}
 	
 	}

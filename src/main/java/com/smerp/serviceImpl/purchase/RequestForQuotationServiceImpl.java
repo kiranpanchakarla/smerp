@@ -132,7 +132,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		requestForQuotation.setVendorShippingAddress(vendorShippingAddress);
 		requestForQuotation.setVendorPayTypeAddress(vendorPayAddress);
 		
-	 if(requestForQuotation.getStatus()!=null &&  requestForQuotation.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+	 if(requestForQuotation.getStatus()!=null &&  !requestForQuotation.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "requestForQuotationEmail.ftl");  //Sending Email
@@ -140,9 +140,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-	}else if(requestForQuotation.getStatus()!=null &&  requestForQuotation.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-		 
-	 }
+	} 
 
 		return requestForQuotationRepository.save(requestForQuotation);
 	}

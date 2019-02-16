@@ -2,6 +2,10 @@ package com.smerp.serviceImpl.admin;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,9 @@ public class VendorServImpl  implements VendorService {
 
 	@Autowired
 	VendorRepository vendorRepository;
+	
+	@PersistenceContext    
+	private EntityManager entityManager;
 	
 	private static final Logger logger = LogManager.getLogger(VendorServImpl.class);
 
@@ -78,6 +85,28 @@ public class VendorServImpl  implements VendorService {
 		return vendorRepository.findById(id);
 	}
 
+	@Override
+	public String getTotalAmt(int id) {
+		
+		String sql= " select ih.vendor_id ,sum(vil.inv_amount_tax) inv_amount_tax FROM tbl_invoice ih " + 
+				" JOIN vw_invoice_lineitems_amount vil ON ih.id = vil.id " + 
+				" where ih.status!= 'Rejected' " + 
+				" group by ih.vendor_id having ih.vendor_id= " +id;
+		
+		logger.info("sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+		String amount = "";
+	     for(Object[] tuple : list) {
+	    	 amount = tuple[1] == null ? "0" : (tuple[1]).toString();
+	     }
+		
+		
+		return amount;
+	}
+	
 
 	@Override
 	public Vendor findByCode(String vendorCode) {

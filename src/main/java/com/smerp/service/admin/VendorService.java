@@ -25,4 +25,6 @@ public interface VendorService {
 	Vendor findById(int i);
 	
 	Vendor findLastCodeNumber();
+	
+	String getTotalAmt(int i);
 }

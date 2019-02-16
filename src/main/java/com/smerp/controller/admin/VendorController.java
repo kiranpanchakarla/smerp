@@ -97,6 +97,8 @@ public class VendorController {
 	public String view(String vendorId, Model model, HttpServletRequest request) {
 		logger.info("Id" + vendorId);
 		Vendor vendor = vendorService.getInfo(Integer.parseInt(vendorId));
+		
+		model.addAttribute("totalAmt", vendorService.getTotalAmt(Integer.parseInt(vendorId)));
 		model.addAttribute("vendor", vendor);
 		return "vendor/view";
 	}

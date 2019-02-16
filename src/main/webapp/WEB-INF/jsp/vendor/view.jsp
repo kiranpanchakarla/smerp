@@ -72,15 +72,19 @@ $(document).ready(function(){
 														<form class="form">
 															<div class="form-body">
 																<div class="row">
-																	<div class="col-sm-4 form-group has-feedback">
+																	<div class="col-sm-3 form-group has-feedback">
 																		<label>Vendor Code</label>: ${vendor.vendorCode}
 
 																	</div>
-																	<div class="col-sm-4 form-group has-feedback">
+																	<div class="col-sm-3 form-group has-feedback">
 																		<label>Vendor Name</label>: ${vendor.name}
 																	</div>
-																	<div class="col-sm-4 form-group has-feedback">
+																	<div class="col-sm-3 form-group has-feedback">
 																		<label>Group</label>: ${vendor.groupName}
+																	</div>
+																	
+																	<div class="col-sm-3 form-group has-feedback">
+																		<label>Payment</label>: ${totalAmt}
 																	</div>
 																</div>
 

@@ -196,7 +196,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
          logger.info("goodsReceipt -->" +goodsReceipt);
 		
 		
-		 if(goodsReceipt.getStatus()!=null &&  goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		 if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReceipt =getListAmount(goodsReceipt);
     			 RequestContext.initialize();
@@ -205,9 +205,13 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}else if(goodsReceipt.getStatus()!=null &&  goodsReceipt.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-			 
-		 }
+		
+			if(goodsReceipt.getPoId()!=null  && goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+				PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update
+				 logger.info("goodsReceipt -->" +goodsReceipt);
+			}
+		 
+		 } 
 		
 		/*if(goodsReceipt.getPoId()!=null) {
 		PurchaseOrder po = purchaseOrderService.findById(goodsReceipt.getPoId());
@@ -219,10 +223,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		
 		//goodsReceipt= goodsReceiptRepository.save(goodsReceipt);
 		
-		if(goodsReceipt.getPoId()!=null) {
-			PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update
-			 logger.info("goodsReceipt -->" +goodsReceipt);
-		}
+		
 		
 		return goodsReceiptRepository.save(goodsReceipt);
 		 
@@ -709,7 +710,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 			
 		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
-		//goodsReceipt.setAmtRounding(""+df2.format(total_amt));
+		goodsReceipt.setAmtRounding(""+df2.format(total_amt));
 		//goodsReceipt.setTotalPayment(total_amt);
 		if(goodsReceipt.getPoId() != null) {
 			total_payment = (double) Math.round(total_amt);
@@ -721,7 +722,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	//	goodsReceipt.setTotalPayment(total_payment);
 		logger.info("goodsReceipt.getTotalPayment()-->" + goodsReceipt.getTotalPayment());
 		logger.info("goodsReceipt.getTotalPayment()-->" + total_payment);
-	//	goodsReceipt.setRoundedOff("" + df2.format(total_payment - total_amt));
+		goodsReceipt.setRoundedOff("" + df2.format(total_payment - total_amt));
 		 
 	return goodsReceipt;
 	}

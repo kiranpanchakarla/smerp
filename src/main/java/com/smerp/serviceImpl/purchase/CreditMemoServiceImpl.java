@@ -161,11 +161,11 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		
 		
 		creditMemo= creditMemoRepository.save(creditMemo);
-		 if(creditMemo.getStatus()!=null &&  creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
     			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
+    		     RequestContext.get().getConfigMap().put("mail.template", "creditMemoEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
     		} catch (Exception e) {
     			e.printStackTrace();
@@ -174,7 +174,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			if(creditMemo.getInvId()!=null) {
 				InVoice invoice  = creditMemo.getInvId();
 				
-				if(invoice.getGrId()!=null) {
+				if(invoice.getGrId()!=null && creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId().getId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
@@ -184,16 +184,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}
 			
 		}
-			else if(creditMemo.getStatus()!=null &&  creditMemo.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
-			try {
-			   	creditMemo =getListAmount(creditMemo);
-    			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		  //   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnRejectEmail(creditMemo);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-		}
+			
 		return creditMemo; 
 	}
 

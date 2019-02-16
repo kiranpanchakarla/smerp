@@ -254,7 +254,7 @@
 
 				</ul>
       </li>
-      <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+      <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Inventory Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
        <!--  <ul class="sub_menu">
           <li class="has_sub"><a>Transactions<i class="icon-ios-arrow-right right"></i></a> -->
            <ul class="sub_menu">

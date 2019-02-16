@@ -23,7 +23,7 @@
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px;overflow: hidden;">
-                <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">creditoice</h2>
+                <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Credit Memo</h2>
                 
                 
     <#if credit??>
@@ -182,20 +182,21 @@
                 <td>:<#if credit.freight??> ${credit.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.city??>${credit.vendorShippingAddress.city},</#if> </td>
-                <td><#if credit.vendorPayTypeAddress.city??>${credit.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
-                </tr>
-                <tr>
                 <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if credit.vendorShippingAddress.country.name??>${credit.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if credit.vendorPayTypeAddress.country.name??>${credit.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if credit.roundedOff??> ${credit.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if credit.totalPayment??> ${credit.totalPayment}<#else>--</#if></td>
                 </tr>

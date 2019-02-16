@@ -3,6 +3,7 @@ package com.smerp.util;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.User;
+import com.smerp.model.emailids.EmailId;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
@@ -40,6 +42,8 @@ import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DashboardCountService;
 import com.smerp.service.admin.DepartmentService;
+import com.smerp.service.emailids.EmailIdService;
+import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -71,6 +75,9 @@ public class SendEmail extends EmailerGenerator{
 	@Autowired
 	DashboardCountService dashboardCountService;
 	
+	@Autowired
+	EmailIdService emailIdService;
+	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
 	private PurchaseRequest pr;
@@ -83,6 +90,10 @@ public class SendEmail extends EmailerGenerator{
 	private InventoryGoodsReceipt invgr;
 	private InventoryGoodsIssue invgi;
 	private InventoryGoodsTransfer invgt;
+	
+	private String toEmail = "";
+	private String ccEmail = "";
+	private String bccEmail = "";
 	
 	public Map<Integer, Object> deptMap() {
 		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
@@ -105,12 +116,31 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createPRMessage(PurchaseRequest purchaseRequest) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || purchaseRequest.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					logger.info(toEmail);
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(purchaseRequest.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				//String SendTo = getUser().getUserEmail() + "," + toEmail;
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
+				
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				pr = purchaseRequest;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("PurchaseRequest :" + pr.getDocNumber() + " Status :" + pr.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -248,12 +278,28 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createRFQMessage(RequestForQuotation requestForQuotation) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(requestForQuotation.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || requestForQuotation.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(requestForQuotation.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				rfq = requestForQuotation;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("RequestForQuotation :" + rfq.getDocNumber() + " Status :" + rfq.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -278,12 +324,29 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createPOMessage(PurchaseOrder purchaseOrder) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(purchaseOrder.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PO.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PO.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(purchaseOrder.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PO.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PO.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				po = purchaseOrder;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				
+				message.setTo(recipientList);
 				message.setSubject("Purchase Order :" + po.getDocNumber() + " Status :" + po.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -308,12 +371,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createGoodsReceiptMessage(GoodsReceipt goodsReceipt) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || goodsReceipt.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.GR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(goodsReceipt.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.GR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRec = goodsReceipt;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("GoodsReceipt :" + goodsRec.getDocNumber() + " Status :" + goodsRec.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -338,12 +416,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createGoodsReturnMessage(GoodsReturn goodsReturn) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || goodsReturn.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.GRE.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GRE.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(goodsReturn.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.GRE.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GRE.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("GoodsReturn :" + goodsRet.getDocNumber() + " Status :" + goodsRet.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -382,12 +475,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createInvoiceMessage(InVoice invoice) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(invoice.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || invoice.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INV.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INV.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(invoice.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INV.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INV.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				inv = invoice;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("Invoice : " + inv.getDocNumber() + "  Status :" + inv.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -427,11 +535,20 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				 
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				//toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getSEND_EMAIL());
+				message.setTo(recipientList);
 				message.setSubject("Products With Minimum Quantity");
 				message.setText(getsendMinQtyProductsEmailBody(), true);
 				
@@ -485,12 +602,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createCreditMemoMessage(CreditMemo creditMemo) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				InternetAddress[] myBccList = InternetAddress.parse(getDefaultBccEmailFromAddress());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || creditMemo.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.CM.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.CM.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(creditMemo.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.CM.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.CM.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				credit = creditMemo;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("Credit Memo : " + credit.getDocNumber() + "  Status :" + credit.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -515,12 +647,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createInvGoodsReceiptMessage(InventoryGoodsReceipt inventoryGoodsReceipt) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(inventoryGoodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || inventoryGoodsReceipt.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(inventoryGoodsReceipt.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+				//	ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgr = inventoryGoodsReceipt;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("Inventory Goods Receipt :" + inventoryGoodsReceipt.getDocNumber() + " Status :" + inventoryGoodsReceipt.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -545,12 +692,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createInvGoodsIssueMessage(InventoryGoodsIssue inventoryGoodsIssue) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(inventoryGoodsIssue.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || inventoryGoodsIssue.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGI.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGI.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(inventoryGoodsIssue.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGI.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGI.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgi = inventoryGoodsIssue;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("Inventory Goods Issue :" + inventoryGoodsIssue.getDocNumber() + " Status :" + inventoryGoodsIssue.getStatus());
 				message.setText(getBody(), true);
 			}
@@ -575,12 +737,27 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createInvGoodsTransferMessage(InventoryGoodsTransfer inventoryGoodsTransfer) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myBccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
+				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
+				if(inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGT.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGT.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
+				}
+				else if(inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
+					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.INVGT.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGT.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+				}  
+				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				toEmail += "," + getUser().getUserEmail();
+				String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgt = inventoryGoodsTransfer;
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(getUser().getUserEmail());
+				message.setTo(recipientList);
 				message.setSubject("Inventory Goods Transfer :" + inventoryGoodsTransfer.getDocNumber() + " Status :" + inventoryGoodsTransfer.getStatus());
 				message.setText(getBody(), true);
 			}

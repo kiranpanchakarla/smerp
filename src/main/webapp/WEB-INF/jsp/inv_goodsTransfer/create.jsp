@@ -159,7 +159,7 @@
 																					  required="true"
 																					 path="toWarehouse">
 																					 <form:option value="" label="Select" />
-																					 <form:options items="${plantMap}" />
+																					 <form:options items="${findPlantAll}" />
 																					 </form:select>
 
 																				</div> 
@@ -282,7 +282,7 @@
 																																		style="width:;" required="true"
 																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
 																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
+																																		<form:options items="${findPlantAll}" />
 																																	</form:select>
 																																</div></td>
 																																
@@ -452,6 +452,22 @@
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
 																				</div></div>
+																				
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Total</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
+																				
+																				<div class="row">
+																                <div class="col-sm-12 form-group">
+																					<label>Rounded Off</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="roundedOff"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 
 																				<div class="row">
 																                <div class="col-sm-12 form-group">
@@ -462,13 +478,7 @@
 																						readonly="true" />
 																				</div></div>
 																				
-																				<div class="row">
-																                <div class="col-sm-12 form-group">
-																					<label>Rounding</label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div></div>
+																				
 																			</div>
 																		</div>
 
@@ -512,7 +522,7 @@
 																			</c:if>
 																			<!-- Approve -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Inventory Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -526,7 +536,7 @@
 																			</c:forEach>
 																			<!-- Reject -->
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
-																				<c:if test="${ump.key eq 'Goods Receipt'}">
+																				<c:if test="${ump.key eq 'Inventory Goods Transfer'}">
 																					<c:set var="permissions" scope="session"
 																						value="${ump.value}" />
 																					<c:if
@@ -582,30 +592,43 @@
 <script type="text/javascript">
 
 
-
-
-
-
-
 function wareHouseValidation() {
 	
-	var val = $("#warehouseId").val();	
-	
-	var warhouseName=  $("#warehouseId option:selected").text();
-	
-	var addToRow = '<option value='+val+'>'+warhouseName+'</option>'; 
-	alert(addToRow);
-		/*  var val = $("#title"+index).val();
-		 if(val=='Mr') {
-		$("#gender"+index+" option[value='Male']").attr('selected', true);
-	    $("#gender"+index+" option[value='Female']").attr('selected', false);
-		}else {
-	    $("#gender"+index+" option[value='Female']").attr('selected', true);
-	  $("#gender"+index+" option[value='Male']").attr('selected', false);
-		} */
-		 
-		 
+	wareHouseChangeInLineItems();
+	warehouseAlert();
+   // alert($("#warehouseId").val());
 	  }
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	for (var i = 0; i < incCount; i++) { 
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+			
+			//$('#fromWarehouse'+i).empty();
+			//$('#fromWarehouse'+i).detach(addToRow);
+			 
+		}
+} 
+
+/* function warehouseAlert(){
+	var incCount = inc;
+	var to = $("#warehouseId").val();
+	for (var i = 0; i < incCount; i++) { 
+		
+		
+		  var from = $('#fromWarehouse').val();
+			if(to = from ){
+				alertify.alert("Inventory Goods Transfer"," Warehouse Selected Twice!"  );
+			}  
+			 
+		}
+} */
+	  
 
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
@@ -681,10 +704,11 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="inventoryGoodsTransferList['+inc+'].toWarehouse" required="true"   class="form-control toWarehouse'+inc+' toWarehouse"  id="toWarehouse'+inc+'" >'
-			+ scriptSelectPlant +
-			<c:forEach items="${plantMap}" var="plantMap">
-			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			//+ scriptSelectPlant +
+		//	<c:forEach items="${findPlantAll}" var="findPlantAll">
+		//	'<option value="${findPlantAll.key}">${findPlantAll.value}</option>'+
+		//	+'<option value="" id="abcd">abcdf</option>'+
+		//	</c:forEach>
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -754,6 +778,8 @@ function addItem() {
 		inc++;
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
+		wareHouseChangeInLineItems();
+		warehouseAlert();
 	}
 
 
@@ -1320,7 +1346,7 @@ function goBack() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total.toFixed(2));
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -1420,7 +1446,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   		}
   		if(totalAmt!="") {
   		 $("#totalPayment").val(Math.round(totalPayment));
-  		 $("#amtRounding").val( Math.round(totalPayment));
+  		 $("#amtRounding").val(totalPayment.toFixed(2));
   		}
   		
   		}
@@ -1447,7 +1473,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#amtRounding").val(totalPayment.toFixed(2));
+	 $("#totalPayment").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	
 	}else {
@@ -1488,7 +1515,8 @@ $('#freight').keyup(function() {
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
 	 $("#totalPayment").val(Math.round(finalValue));
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#amtRounding").val(finalValue.toFixed(2));
+	 $("#totalPayment").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
 });
 	
@@ -1522,7 +1550,7 @@ $('#freight').keyup(function() {
 		}
 		if(sum_total!="") {
 		 $("#totalPayment").val(Math.round(totalPayment));
-		 $("#amtRounding").val( Math.round(totalPayment));
+		 $("#amtRounding").val(totalPayment.toFixed(2));
 		}
 	
 	}

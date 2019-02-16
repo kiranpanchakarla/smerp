@@ -33,6 +33,13 @@ public class PlantServImpl implements PlantService {
 		}
 		return listPlant;
 	}
+	
+	
+	
+	@Override
+	public List<Plant> findPlantAll() {
+		return plantRepository.findAll();
+	}
 
 	@Override
 	public Plant save(Plant plant) {

@@ -15,7 +15,9 @@ public enum EnumStatusUpdate {
 	CREDITMEMO("Credit Memo"),
 	INVOICE("Invoiced"),
 	CLOSED("Closed"),
-	
+	APPROVAL("Approved-Rejected"),
+	PRODUCTQTY("Product Quantity"),
+	DASHBOARD("DashBoard"),
 	CREATE("Create"),
 	CREATED("Created"),
 	UPDATE("Update"),
@@ -34,7 +36,9 @@ public enum EnumStatusUpdate {
 	GRE("GRE"),
 	INV("INV"),
 	CM("CM"),
-	
+	INVGR("INVGR"),
+	INVGI("INVGI"),
+	INVGT("INVGT"),
 	P("P"),
 	V("V"),
 	PG("PG"),

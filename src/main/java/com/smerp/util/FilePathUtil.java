@@ -34,8 +34,12 @@ public class FilePathUtil {
 		}
 		fullPath = file + File.separator+multipartFile.getOriginalFilename().substring(0, multipartFile.getOriginalFilename().lastIndexOf("."))+DateFormat.getTime()+"."+FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
-		if (fullPath.length() > 1 && Character.isLetter(fullPath.charAt(0)) && fullPath.charAt(1) == ':') {
+		/*if (fullPath.length() > 1 && Character.isLetter(fullPath.charAt(0)) && fullPath.charAt(1) == ':') {
 			pathToSave = fullPath.substring(3);
+		}*/
+		
+		if (fullPath.length() > 1) {
+			pathToSave = fullPath.substring(1);
 		}
 		
 		responseObj.put("fullPath", fullPath);

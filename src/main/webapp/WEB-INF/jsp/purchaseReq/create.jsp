@@ -67,8 +67,14 @@
                                                                             <form:input type="text" class="form-control" placeholder='docNumber' path="docNumber" value="" autocomplete="off" readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Doc No.')" oninput="setCustomValidity('')" />
                                                                             
                                                                         </div>  
-                                                                        <div class="col-sm-6 form-group has-feedback">
+                                                                       <div class="col-sm-6 form-group has-feedback">
+                                                                            <label>Email- ID</label>
+                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
                                                                             
+                                                                            value="${purchaseRequest.referenceUser.userEmail}"
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
+                                                                            <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -105,15 +111,7 @@
                                                                             <div style="color:red;" class="help-block with-errors"></div>
                                                                         </div>
                                                                    
-                                                                        <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>Email- ID</label>
-                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
-                                                                            
-                                                                            value="${purchaseRequest.referenceUser.userEmail}"
-                                                                            
-                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
-                                                                        </div>
+                                                                       
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Require Date</label>
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />

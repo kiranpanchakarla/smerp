@@ -270,7 +270,7 @@
 																															
 																																<td><div class="form-group">
 																																	<form:select class="form-control"
-																																		style="width:;" required="true"
+																																		style="width:;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})"
 																																		path="inventoryGoodsTransferList[${count}].fromWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
@@ -279,7 +279,7 @@
 																																
 																																	<td><div class="form-group">
 																																	<form:select class="form-control"
-																																		style="width:;" required="true"
+																																		style="width:;" required="true" id="toWarehouse${count}"
 																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${findPlantAll}" />
@@ -692,7 +692,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   class="form-control fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   onchange="fromHouse('+inc+')"   class="form-control fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
 			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
@@ -1588,6 +1588,17 @@ $('#freight').keyup(function() {
 		}
 		
 		});
+	
+	function fromHouse(index){
+		
+		var fromData=  $("#fromWarehouse"+index+" option:selected").text();
+		var toData=  $("#toWarehouse"+index+" option:selected").text();
+	
+		if(fromData==toData){
+			alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
+			$("#fromWarehouse"+index).prop('selectedIndex',0);
+		}
+	}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

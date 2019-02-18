@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.PurchaseOrder;
@@ -115,11 +116,14 @@ public class PurchaseRequestController {
 		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
-		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		  ObjectMapper mapper = new ObjectMapper();
+		  
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		//gets the users first and last name
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
-		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		model.addAttribute("usersList", mapper.writeValueAsString(userService.findFirstNames()));
+		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		
 		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
 		logger.info("PO count-->" + count);
@@ -213,10 +217,12 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
-		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
-		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		   ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("usersList", mapper.writeValueAsString(userService.findFirstNames()));
+		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		
 		purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
 		model.addAttribute("purchaseRequestLists", purchaseRequest.getPurchaseRequestLists());

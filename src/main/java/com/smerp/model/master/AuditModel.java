@@ -25,12 +25,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.smerp.model.admin.User;
 
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @EnableJpaAuditing
 @JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt","created_uid","updated_uid"},
+        value = {"createdAt", "updatedAt","createdBy","lastModifiedBy"},
         allowGetters = true
 )
 
@@ -70,6 +69,7 @@ public class AuditModel  implements Serializable {
     	 if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			 User user= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			 this.createdBy = user;
+			 this.lastModifiedBy = user;
     	 }else {
     		 this.createdBy = null;
     	 }

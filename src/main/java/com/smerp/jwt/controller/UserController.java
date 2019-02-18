@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.jwt.models.Constants;
 import com.smerp.model.admin.Company;
 import com.smerp.model.admin.Department;
@@ -36,6 +37,7 @@ import com.smerp.model.admin.Role;
 import com.smerp.model.admin.UPM;
 import com.smerp.model.admin.User;
 import com.smerp.model.admin.UserModulePermission;
+import com.smerp.model.inventory.Product;
 import com.smerp.repository.admin.UserModulePermissionService;
 import com.smerp.service.UserService;
 import com.smerp.service.admin.CompanyServices;
@@ -340,7 +342,17 @@ public class UserController {
 	@RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
 	@ResponseBody
 	private String getUserDetailsByUserName(@RequestParam("username") String username) throws JsonProcessingException {
-		return new ObjectMapper().writeValueAsString(userService.findByName(username));
+		
+		User user =userService.findByName(username);
+        logger.info("user Obj-->" + user );
+        if(user!=null) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        logger.info(mapper.writeValueAsString(user));
+        return mapper.writeValueAsString(user);
+        }else {
+        	return "";
+        }
 		
 	}
 

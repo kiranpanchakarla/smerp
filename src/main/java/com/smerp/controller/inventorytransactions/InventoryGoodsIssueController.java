@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.inventory.TaxCode;
@@ -118,9 +119,10 @@ public class InventoryGoodsIssueController {
 	    invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGI"+(String)dtf.format(now) +"0"));
 		}
 		logger.info("IGR Details-->" + invGoodsIssue);
+		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("gr", invGoodsIssue);
 		return "inv_goodsIssue/create";
 	}
@@ -154,8 +156,9 @@ public class InventoryGoodsIssueController {
 			InventoryGoodsIssue invGR = inventoryGoodsIssueService.findById(Integer.parseInt(id));
 			invGR = inventoryGoodsIssueService.getListAmount(invGR);
 			ObjectMapper mapper = poloadData(model, invGR);
+			mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 			model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-			model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+			model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 			model.addAttribute("plantMap", plantMap());
 			model.addAttribute("plantMapSize", plantMap().size());
 			model.addAttribute("deptMap", deptMap());
@@ -163,7 +166,7 @@ public class InventoryGoodsIssueController {
 			model.addAttribute("taxCodeMap", taxCode());
 			model.addAttribute("productList",
 					mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-			model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+			model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 			 
 			model.addAttribute("gr", invGR);
 			return "inv_goodsIssue/create";

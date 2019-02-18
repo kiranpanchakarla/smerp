@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.master.HSNCode;
 import com.smerp.model.master.SACCode;
 import com.smerp.service.master.SacService;
@@ -82,7 +83,9 @@ public class SacCodeController {
     @ResponseBody
     private String getSacDetailsBySacCode(@RequestParam("sacCode") String sacCode) throws JsonProcessingException {
         logger.info("sacCode"+ sacCode);
-        return new ObjectMapper().writeValueAsString(sacService.findBySacCode(sacCode));
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        return  mapper.writeValueAsString(sacService.findBySacCode(sacCode));
         
     }
 	

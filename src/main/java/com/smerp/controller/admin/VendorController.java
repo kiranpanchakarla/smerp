@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Vendor;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
@@ -97,7 +98,6 @@ public class VendorController {
 	public String view(String vendorId, Model model, HttpServletRequest request) {
 		logger.info("Id" + vendorId);
 		Vendor vendor = vendorService.getInfo(Integer.parseInt(vendorId));
-		
 		model.addAttribute("totalAmt", vendorService.getTotalAmt(Integer.parseInt(vendorId)));
 		model.addAttribute("vendor", vendor);
 		return "vendor/view";
@@ -138,14 +138,18 @@ public class VendorController {
 	@RequestMapping(value = "/getVendorInfo", method = RequestMethod.GET)
 	@ResponseBody
 	private String getInvoiceListByInvNumber(@RequestParam("vendorname") String vendorname) throws JsonProcessingException {
-		return new ObjectMapper().writeValueAsString(vendorService.findByName(vendorname));
+		 ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		return  mapper.writeValueAsString(vendorService.findByName(vendorname));
 		
 	}
 	
 	@RequestMapping(value = "/getShippingAddressInfo", method = RequestMethod.GET)
 	@ResponseBody
 	private String getShippingAddressInfo(@RequestParam("shippingId") String shippingId) throws JsonProcessingException {
-		return new ObjectMapper().writeValueAsString(vendorAddressService.findById(Integer.parseInt(shippingId)));
+		 ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		return mapper.writeValueAsString(vendorAddressService.findById(Integer.parseInt(shippingId)));
 		
 	}
 	

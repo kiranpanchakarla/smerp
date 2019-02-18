@@ -16,12 +16,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 
 @Entity
 @Table(name="tbl_admin_user")
-public class User extends AuditModel {
+public class User extends UserAuditModel {
 	/**
 	 * 
 	 */

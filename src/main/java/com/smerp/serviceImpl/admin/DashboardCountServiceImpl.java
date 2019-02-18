@@ -40,9 +40,9 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 			    " rejected as ( select count(*) as totalCnt8 from tbl_purchase_purchase_req where status='Rejected' and is_active=true)" +
 			    " select countWise.totalCnt1 ,openCnt.totalCnt2,cancelledCnt.totalCnt3,draftCnt.totalCnt4,approvedCnt.totalCnt5,convertedToRFQCnt.totalCnt6,completed.totalCnt7,rejected.totalCnt8" +
 			    " from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,convertedToRFQCnt,completed,rejected ";
-		
+		logger.info("Sql ----> " + sql);
 		Query query = entityManager.createNativeQuery(sql);
-		logger.info("Query ----> " + query);
+		
 		logger.info("sql ----> " + sql);
 		  List<Object[]>	list = query.getResultList();
 		

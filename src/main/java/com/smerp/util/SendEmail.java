@@ -863,7 +863,7 @@ public class SendEmail extends EmailerGenerator{
 				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
 				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				if(toEmail != null) {
+				if(toEmail != null && !toEmail.equals("")) {
 					toEmail += "," + getUser().getUserEmail();
 				}else {
 					toEmail =  getUser().getUserEmail();

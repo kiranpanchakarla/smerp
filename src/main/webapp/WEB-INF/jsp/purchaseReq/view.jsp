@@ -52,11 +52,12 @@
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>User</label>: ${purchaseRequest.user.username}
+																		<label>Doc No</label>: ${purchaseRequest.docNumber}
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Doc No</label>: ${purchaseRequest.docNumber}
+																		<label>Email- ID</label>:
+																		${purchaseRequest.user.userEmail}
 																	</div>
 																</div>
 																<div class="row">
@@ -83,8 +84,7 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Email- ID</label>:
-																		${purchaseRequest.user.userEmail}
+																		
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Require Date</label>:

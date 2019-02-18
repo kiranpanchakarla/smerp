@@ -149,17 +149,17 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 
 	@Override
 	public DashboardCount findGoodsReceiptCount() {
-		String sql= "with countWise as ( select count(*) as totalCnt1 from tbl_goods_return where  is_active=true) ,\r\n" + 
-				"    openCnt as ( select count(*) as totalCnt2 from tbl_goods_return where status='Open' and is_active=true) ,\r\n" + 
-				"    cancelledCnt as ( select count(*) as totalCnt3 from tbl_goods_return where status='Cancelled' and is_active=true ) ,\r\n" + 
-				"    draftCnt as ( select count(*) as totalCnt4 from tbl_goods_return where status='Draft' and is_active=true) ,\r\n" + 
-				"    approvedCnt as ( select count(*) as totalCnt5 from tbl_goods_return where status='Approved' and is_active=true) ,\r\n" + 
-				"    convertedToRFQCnt as ( select count(*) as totalCnt6 from tbl_goods_return where status='ConvertedToRFQ' and is_active=true),\r\n" + 
-				"    completed as ( select count(*) as totalCnt7 from tbl_goods_return where status='Completed' and is_active=true),\r\n" + 
-				"    rejected as ( select count(*) as totalCnt8 from tbl_goods_return where status='Rejected' and is_active=true),\r\n" + 
-				"    convertedToPO as ( select count(*) as totalCnt9 from tbl_goods_return where status='ConvertedToPO' and is_active=true)\r\n" + 
+		String sql= "with countWise as ( select count(*) as totalCnt1 from tbl_goods_receipt where  is_active=true) ,\r\n" + 
+				"    openCnt as ( select count(*) as totalCnt2 from tbl_goods_receipt where status='Open' and is_active=true) ,\r\n" + 
+				"    cancelledCnt as ( select count(*) as totalCnt3 from tbl_goods_receipt where status='Cancelled' and is_active=true ) ,\r\n" + 
+				"    draftCnt as ( select count(*) as totalCnt4 from tbl_goods_receipt where status='Draft' and is_active=true) ,\r\n" + 
+				"    approvedCnt as ( select count(*) as totalCnt5 from tbl_goods_receipt where status='Approved' and is_active=true) ,\r\n" + 
+				"    convertedToRFQCnt as ( select count(*) as totalCnt6 from tbl_goods_receipt where status='ConvertedToRFQ' and is_active=true),\r\n" + 
+				"    completed as ( select count(*) as totalCnt7 from tbl_goods_receipt where status='Completed' and is_active=true),\r\n" + 
+				"    rejected as ( select count(*) as totalCnt8 from tbl_goods_receipt where status='Rejected' and is_active=true),\r\n" + 
+				"    convertedToPO as ( select count(*) as totalCnt9 from tbl_goods_receipt where status='ConvertedToPO' and is_active=true)\r\n" + 
 				"select countWise.totalCnt1 ,openCnt.totalCnt2,cancelledCnt.totalCnt3,draftCnt.totalCnt4,approvedCnt.totalCnt5,completed.totalCnt7,rejected.totalCnt8\r\n" + 
-				"from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,completed,rejected ";
+				"from countWise,openCnt,cancelledCnt,draftCnt,approvedCnt,completed,rejected";
 		
 		Query query = entityManager.createNativeQuery(sql);
 		logger.info("Query ----> " + query);

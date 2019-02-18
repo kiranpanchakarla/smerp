@@ -104,7 +104,7 @@
 																							<c:when
 																								test="${fn:containsIgnoreCase(permissions,'update')}">
 																								<a class="btn btn-edit"
-																									href="<c:url value="/gr/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+																									href="<c:url value="/inv/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
 																									class="icon-edit left"></i></a>
 																							</c:when>
 																							<c:otherwise>

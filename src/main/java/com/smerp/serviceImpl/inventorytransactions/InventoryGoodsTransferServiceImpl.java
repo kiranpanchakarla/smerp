@@ -63,7 +63,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 			inventoryGoodsTransfer.setInventoryGoodsTransferList(listItems);
 		} 
 		
-		if(inventoryGoodsTransfer.getStatusType()!=null &&  !inventoryGoodsTransfer.getStatusType().equals("DRAFT")) {
+		if(inventoryGoodsTransfer.getStatus()!=null &&  !inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 				inventoryGoodsTransfer =getListAmount(inventoryGoodsTransfer);
     			 RequestContext.initialize();

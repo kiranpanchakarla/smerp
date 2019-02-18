@@ -597,11 +597,11 @@ function wareHouseValidation() {
 	wareHouseChangeInLineItems();
 	//warehouseAlert();
    // alert($("#warehouseId").val());
-	  }
+}
 	  
 function wareHouseChangeInLineItems(){
 	var incCount = inc;
-	for (var i = 0; i < incCount; i++) { 
+	for (var i = 0; i < incCount; i++) {
 			var val = $("#warehouseId").val();
 			var warhouseName=  $("#warehouseId option:selected").text();
 			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
@@ -609,11 +609,20 @@ function wareHouseChangeInLineItems(){
 			$('#toWarehouse'+i).empty();
 			$('#toWarehouse'+i).append(addToRow);
 			
-			//$('#fromWarehouse'+i).empty();
-			//$('#fromWarehouse'+i).detach(addToRow);
-			 
+			fromHouse(i);
 		}
 } 
+
+function fromHouse(index){
+	
+	var fromData=  $("#fromWarehouse"+index+" option:selected").text();
+	var toData=  $("#toWarehouse"+index+" option:selected").text();
+
+	if(fromData==toData){
+		alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
+		$("#fromWarehouse"+index).prop('selectedIndex',0);
+	}
+}
 
 /* function warehouseAlert(){
 	var incCount = inc;
@@ -779,7 +788,6 @@ function addItem() {
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 		wareHouseChangeInLineItems();
-		//warehouseAlert();
 	}
 
 
@@ -1589,16 +1597,7 @@ $('#freight').keyup(function() {
 		
 		});
 	
-	function fromHouse(index){
-		
-		var fromData=  $("#fromWarehouse"+index+" option:selected").text();
-		var toData=  $("#toWarehouse"+index+" option:selected").text();
 	
-		if(fromData==toData){
-			alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
-			$("#fromWarehouse"+index).prop('selectedIndex',0);
-		}
-	}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

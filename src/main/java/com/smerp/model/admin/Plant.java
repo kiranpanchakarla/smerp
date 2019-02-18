@@ -7,13 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 
 
 @Entity
 @Table(name="tbl_admin_plant")
-public class Plant extends AuditModel {
+public class Plant extends UserAuditModel {
 
 	
 	/**

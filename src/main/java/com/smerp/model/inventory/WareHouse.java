@@ -10,13 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.States;
+import com.smerp.model.master.UserAuditModel;
 
 
 @Entity
 @Table(name="tbl_inventory_ware_house")
-public class WareHouse extends AuditModel {
+public class WareHouse extends UserAuditModel {
 	
 	
 	

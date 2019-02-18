@@ -7,11 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_goods_receipt_lineitems")
-public class GoodsReceiptLineItems extends AuditModel {
+public class GoodsReceiptLineItems extends UserAuditModel {
 
 
 	@Id

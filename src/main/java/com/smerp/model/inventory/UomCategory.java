@@ -8,12 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_inventory_uom_Category")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UomCategory extends AuditModel {
+public class UomCategory extends UserAuditModel {
 
 	/**
 	 * 

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_hsn_codes_master")
-public class HSNCode extends AuditModel {
+public class HSNCode extends UserAuditModel {
 	
 	/**
 	 * 

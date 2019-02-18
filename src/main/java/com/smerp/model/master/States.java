@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_states_master")
-public class States extends AuditModel {
+public class States extends UserAuditModel {
 	
 	/**
 	 * 

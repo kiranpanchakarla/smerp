@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_sac_codes_master")
-public class SACCode extends AuditModel {
+public class SACCode extends UserAuditModel {
 	
 	
 	/**

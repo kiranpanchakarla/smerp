@@ -10,12 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 
 @Entity
 @Table(name="tbl_inventory_product_attribute_values")
-public class ProductAttributeValues extends AuditModel {
+public class ProductAttributeValues extends UserAuditModel {
 	
 	/**
 	 * 

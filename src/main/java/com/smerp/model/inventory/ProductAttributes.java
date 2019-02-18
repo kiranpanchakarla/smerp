@@ -7,12 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 
 @Entity
 @Table(name="tbl_inventory_product_attributes")
-public class ProductAttributes extends AuditModel {
+public class ProductAttributes extends UserAuditModel {
 	
 	
 	/**

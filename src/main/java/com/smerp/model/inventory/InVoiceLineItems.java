@@ -7,11 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_invoice_lineitems")
-public class InVoiceLineItems extends AuditModel {
+public class InVoiceLineItems extends UserAuditModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

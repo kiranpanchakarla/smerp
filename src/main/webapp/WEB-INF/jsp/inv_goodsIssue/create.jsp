@@ -1047,6 +1047,7 @@ setCalculationAmt(index);
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1077,6 +1078,8 @@ function removeData2(index){
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
+		$('.department').prop('selectedIndex',0);
 		return false;
 	}
 	

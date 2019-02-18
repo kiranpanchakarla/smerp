@@ -121,7 +121,7 @@ public class SendEmail extends EmailerGenerator{
 				if(purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || purchaseRequest.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
 					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
-					logger.info(toEmail);
+					
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.PR.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
 				}
 				else if(purchaseRequest.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
@@ -133,9 +133,23 @@ public class SendEmail extends EmailerGenerator{
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
 				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
 				//String SendTo = getUser().getUserEmail() + "," + toEmail;
-				toEmail += "," + getUser().getUserEmail();
-				String[] recipientList = toEmail.split(",");
 				
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
+				
+				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("purchaseRequest ID ---> "+ purchaseRequest.getId());
+				logger.info("purchaseRequest Doc Number ---> "+ purchaseRequest.getDocNumber() );
+				logger.info("purchaseRequest Status ---> " + purchaseRequest.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList.toString());
+				//logger.info("purchaseRequest Created By  ---> "+ purchaseRequest.getCreatedBy().getUsername());
+			//	logger.info("purchaseRequest Last Updated By  ---> "+ purchaseRequest.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				pr = purchaseRequest;
@@ -288,13 +302,26 @@ public class SendEmail extends EmailerGenerator{
 				else if(requestForQuotation.getStatus().equals(EnumStatusUpdate.OPEN.getStatus())) {
 					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
+					logger.info(toEmail);
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail = getUser().getUserEmail();
+				}
+				
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("requestForQuotation ID ---> "+ requestForQuotation.getId());
+				logger.info("requestForQuotation Doc Number ---> "+ requestForQuotation.getDocNumber() );
+				logger.info("requestForQuotation Status ---> " + requestForQuotation.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("requestForQuotation Created By  ---> "+ requestForQuotation.getCreatedBy().getUsername());
+				//logger.info("requestForQuotation Last Updated By  ---> "+ requestForQuotation.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				rfq = requestForQuotation;
@@ -336,11 +363,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PO.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("purchaseOrder ID ---> "+ purchaseOrder.getId());
+				logger.info("purchaseOrder Doc Number ---> "+ purchaseOrder.getDocNumber() );
+				logger.info("purchaseOrder Status ---> " + purchaseOrder.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("purchaseOrder Created By  ---> "+ purchaseOrder.getCreatedBy().getUsername());
+				//logger.info("purchaseOrder Last Updated By  ---> "+ purchaseOrder.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				po = purchaseOrder;
@@ -383,11 +422,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("goodsReceipt ID ---> "+ goodsReceipt.getId());
+				logger.info("goodsReceipt Doc Number ---> "+ goodsReceipt.getDocNumber() );
+				logger.info("goodsReceipt Status ---> " + goodsReceipt.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("goodsReceipt Created By  ---> "+ goodsReceipt.getCreatedBy().getUsername());
+				//logger.info("goodsReceipt Last Updated By  ---> "+ goodsReceipt.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRec = goodsReceipt;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -428,11 +479,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.GRE.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("goodsReturn ID ---> "+ goodsReturn.getId());
+				logger.info("goodsReturn Doc Number ---> "+ goodsReturn.getDocNumber() );
+				logger.info("goodsReturn Status ---> " + goodsReturn.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("goodsReturn Created By  ---> "+ goodsReturn.getCreatedBy().getUsername());
+				//logger.info("goodsReturn Last Updated By  ---> "+ goodsReturn.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				goodsRet = goodsReturn;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -487,11 +550,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INV.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("invoice ID ---> "+ invoice.getId());
+				logger.info("invoice Doc Number ---> "+ invoice.getDocNumber() );
+				logger.info("invoice Status ---> " + invoice.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("invoice Created By  ---> "+ invoice.getCreatedBy().getUsername());
+				//logger.info("invoice Last Updated By  ---> "+ invoice.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				inv = invoice;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -541,14 +616,14 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
 				 
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
 				//toEmail += "," + getUser().getUserEmail();
-				String[] recipientList = toEmail.split(",");
+				//String[] recipientList = toEmail.split(",");
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(recipientList);
+				message.setTo(toEmail);
 				message.setSubject("Products With Minimum Quantity");
 				message.setText(getsendMinQtyProductsEmailBody(), true);
 				
@@ -614,11 +689,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.CM.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("creditMemo ID ---> "+ creditMemo.getId());
+				logger.info("creditMemo Doc Number ---> "+ creditMemo.getDocNumber() );
+				logger.info("creditMemo Status ---> " + creditMemo.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("creditMemo Created By  ---> "+ creditMemo.getCreatedBy().getUsername());
+				//logger.info("creditMemo Last Updated By  ---> "+ creditMemo.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				credit = creditMemo;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -632,7 +719,7 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendInvGoodsReceiptEmail(InventoryGoodsReceipt inventoryGoodsReceipt) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
+	            //logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createInvGoodsReceiptMessage(inventoryGoodsReceipt));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -659,11 +746,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGR.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("creditMemo ID ---> "+ inventoryGoodsReceipt.getId());
+				logger.info("creditMemo Doc Number ---> "+ inventoryGoodsReceipt.getDocNumber() );
+				logger.info("creditMemo Status ---> " + inventoryGoodsReceipt.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("creditMemo Created By  ---> "+ inventoryGoodsReceipt.getCreatedBy().getUsername());
+				//logger.info("creditMemo Last Updated By  ---> "+ inventoryGoodsReceipt.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgr = inventoryGoodsReceipt;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -704,11 +803,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGI.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				///mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("inventoryGoodsIssue ID ---> "+ inventoryGoodsIssue.getId());
+				logger.info("inventoryGoodsIssue Doc Number ---> "+ inventoryGoodsIssue.getDocNumber() );
+				logger.info("inventoryGoodsIssue Status ---> " + inventoryGoodsIssue.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("inventoryGoodsIssue Created By  ---> "+ inventoryGoodsIssue.getCreatedBy().getUsername());
+				//logger.info("inventoryGoodsIssue Last Updated By  ---> "+ inventoryGoodsIssue.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgi = inventoryGoodsIssue;
 				message.setFrom(getDefaultEmailFromAddress());
@@ -749,11 +860,23 @@ public class SendEmail extends EmailerGenerator{
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGT.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.OPEN.getStatus());
 				}  
-				mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				toEmail += "," + getUser().getUserEmail();
+				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
+				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
+				if(toEmail != null) {
+					toEmail += "," + getUser().getUserEmail();
+				}else {
+					toEmail =  getUser().getUserEmail();
+					
+				}
 				String[] recipientList = toEmail.split(",");
+				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("inventoryGoodsTransfer ID ---> "+ inventoryGoodsTransfer.getId());
+				logger.info("inventoryGoodsTransfer Doc Number ---> "+ inventoryGoodsTransfer.getDocNumber() );
+				logger.info("inventoryGoodsTransfer Status ---> " + inventoryGoodsTransfer.getStatus());
+				logger.info("Email Send To ---> "  +  toEmail);
+				//logger.info("inventoryGoodsTransfer Created By  ---> "+ inventoryGoodsTransfer.getCreatedBy().getUsername());
+				//logger.info("inventoryGoodsTransfer Last Updated By  ---> "+ inventoryGoodsTransfer.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				invgt = inventoryGoodsTransfer;
 				message.setFrom(getDefaultEmailFromAddress());

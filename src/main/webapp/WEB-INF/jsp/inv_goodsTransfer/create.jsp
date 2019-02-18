@@ -595,7 +595,7 @@
 function wareHouseValidation() {
 	
 	wareHouseChangeInLineItems();
-	warehouseAlert();
+	//warehouseAlert();
    // alert($("#warehouseId").val());
 	  }
 	  
@@ -779,7 +779,7 @@ function addItem() {
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 		wareHouseChangeInLineItems();
-		warehouseAlert();
+		//warehouseAlert();
 	}
 
 
@@ -1091,7 +1091,9 @@ setCalculationAmt(index);
 	var rowCount = $('#itemTbl tr').length-2;
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
-		$('.warehouse').prop('selectedIndex',0);
+		$('.fromWarehouse').prop('selectedIndex',0);
+		$('.toWarehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1121,7 +1123,9 @@ function removeData2(index){
 	var rowCount = $('#edit_item_serviceTbl tr').length-2;
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
-		$('.warehouse').prop('selectedIndex',0);
+		$('.fromWarehouse').prop('selectedIndex',0);
+		$('.toWarehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	

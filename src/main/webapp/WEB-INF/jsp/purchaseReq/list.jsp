@@ -107,7 +107,7 @@
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
 																	<td>
 																	  <c:choose>
-																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Cancelled' }">
+																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Rejected' }">
 																			
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">

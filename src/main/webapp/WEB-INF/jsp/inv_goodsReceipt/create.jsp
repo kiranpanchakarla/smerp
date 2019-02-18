@@ -1032,6 +1032,7 @@ setCalculationAmt(index);
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1062,6 +1063,7 @@ function removeData2(index){
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	
@@ -1413,7 +1415,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val(totalPayment.toFixed(2)););
+	 $("#amtRounding").val(totalPayment.toFixed(2));
 	 $("#totalPayment").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	

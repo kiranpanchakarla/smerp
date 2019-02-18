@@ -58,16 +58,17 @@
                                                             <form class="form">
                                                                 <div class="form-body">
                                                                     <div class="row">
-                                                                        <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>User</label>
-                                                                            <form:input type="text" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
+                                                                          <div class="col-sm-6 form-group has-feedback">
+                                                                            <!-- <label>User</label> -->
+                                                                            <form:input type="hidden" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.userId" class="userId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
-                                                                        </div>
-                                                                        <div class="col-sm-6 form-group has-feedback">
+                                          
                                                                             <label>Doc No</label>
                                                                             <form:input type="text" class="form-control" placeholder='docNumber' path="docNumber" value="" autocomplete="off" readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Doc No.')" oninput="setCustomValidity('')" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            
+                                                                        </div>  
+                                                                        <div class="col-sm-6 form-group has-feedback">
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -382,18 +383,18 @@
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
-                                                                    <c:if test="${purchaseRequest.id!=null}">
+                                                                   <c:if test="${purchaseRequest.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                         
- 																		  <a
+ 																		<%--   <a
 																			href="<c:url value="/purchaseReq/list"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
-																		</a>
+																		</a> --%>
 																		
 																		
-                                                                      </c:if>
+                                                                      </c:if>  
                                                                       <!-- Approve -->
                                                                        <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request' }">

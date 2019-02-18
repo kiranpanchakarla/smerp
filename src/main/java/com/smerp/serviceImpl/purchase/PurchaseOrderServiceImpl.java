@@ -308,10 +308,10 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		
 		List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
 		List<PurchaseOrderLineItems> addListItems = new ArrayList<PurchaseOrderLineItems>();
-		Double addAmt=0.0;
-		Double addTaxAmt=0.0;
-		Double total = 0.0;
-		Double total_payment = 0.0;
+		Double addAmt=0.00;
+		Double addTaxAmt=0.00;
+		Double total = 0.00;
+		Double total_payment = 0.00;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				PurchaseOrderLineItems polist = listItems.get(i);
@@ -334,11 +334,11 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		purchaseOrder.setTotalBeforeDisAmt(addAmt);
 		purchaseOrder.setTaxAmt(""+addTaxAmt);
 		
-		if(purchaseOrder.getTotalPayment()!=null) {
+		if(purchaseOrder.getTotalPayment()!=null ) {
 			//total = ((addAmt - ( (addAmt * purchaseOrder.getTotalDiscount())/100 )) + purchaseOrder.getFreight());
 		  total = UnitPriceListItems.getTotalPaymentAmt(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight());
 		  logger.info("total ---> " + total);
-		  logger.info("(purchaseOrder.getTotalPayment() ---> " + purchaseOrder.getTotalPayment());
+		  logger.info("(purchaseOrder.getTotalPayment() ---> " + df2.format(purchaseOrder.getTotalPayment()));
 		  purchaseOrder.setAmtRounding(""+ total);
 		  purchaseOrder.setRoundedOff(""+ df2.format(purchaseOrder.getTotalPayment() - total));
 		}

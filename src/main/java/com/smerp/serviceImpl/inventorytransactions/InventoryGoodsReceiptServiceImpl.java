@@ -65,7 +65,7 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 			inventoryGoodsReceipt.setInventoryGoodsReceiptList(listItems);
 		} 
 		
-		if(inventoryGoodsReceipt.getStatusType()!=null &&  inventoryGoodsReceipt.getStatusType().equals("APP")) {
+		if(inventoryGoodsReceipt.getStatusType()!=null &&  !inventoryGoodsReceipt.getStatusType().equals("DRAFT")) {
 			try {
 				inventoryGoodsReceipt =getListAmount(inventoryGoodsReceipt);
     			 RequestContext.initialize();

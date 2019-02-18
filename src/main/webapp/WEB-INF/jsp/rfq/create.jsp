@@ -563,18 +563,18 @@
                                                                     <c:if test="${rfq.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
-                                                                    <c:if test="${rfq.id!=null}">
+                                                                     <c:if test="${rfq.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                       
-                                                                      <a
+                                                                      <%-- <a
 																			href="<c:url value="/rfq/cancelStage?id=${rfq.id}"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
-																		</a>
+																		</a> --%>
 																		
 																		
-                                                                      </c:if>
+                                                                      </c:if> 
                                                                       <!-- Approve -->
                                                                        <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'RFQ'}">
@@ -1589,6 +1589,8 @@ $(".mySubButton").on('click', function() {
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
+        	
+        	
 		  }
     
     if ($('#items_radio').is(":checked") == true) {

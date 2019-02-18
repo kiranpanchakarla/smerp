@@ -62,7 +62,7 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 			inventoryGoodsIssue.setInventoryGoodsIssueList(listItems);
 		} 
 		
-		if(inventoryGoodsIssue.getStatusType()!=null &&  inventoryGoodsIssue.getStatusType().equals("APP")) {
+		if(inventoryGoodsIssue.getStatusType()!=null &&  !inventoryGoodsIssue.getStatusType().equals("DRAFT")) {
 			try {
 				inventoryGoodsIssue =getListAmount(inventoryGoodsIssue);
     			 RequestContext.initialize();

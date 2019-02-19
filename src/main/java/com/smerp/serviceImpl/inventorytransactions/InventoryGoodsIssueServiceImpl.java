@@ -156,4 +156,14 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	}
 
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
+	
+	@Override
+	public boolean findByDocNumber(String docNum) {
+		List<InventoryGoodsIssue> igi = inventoryGoodsIssueRepository.findByDocNumber(docNum);
+		if(igi.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

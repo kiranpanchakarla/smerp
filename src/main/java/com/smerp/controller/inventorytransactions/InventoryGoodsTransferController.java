@@ -36,12 +36,15 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -69,6 +72,9 @@ public class InventoryGoodsTransferController {
 	@Autowired
 	InventoryGoodsTransferService inventoryGoodsTransferService;
 	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -90,13 +96,17 @@ public class InventoryGoodsTransferController {
 		model.addAttribute("findPlantAll", findPlantAll());
 		
 		model.addAttribute("taxCodeMap", taxCode());
+		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGT.getStatus());
+		logger.info("IGT count-->" + count);
+		
 		InventoryGoodsTransfer invgr = inventoryGoodsTransferService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
-			invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber()));
+			invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGT"+(String)dtf.format(now) +"0"));
+	    invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGT"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("IGR Details-->" + invGoodsTransfer);
 		model.addAttribute("productList",
@@ -117,7 +127,25 @@ public class InventoryGoodsTransferController {
 	@PostMapping("/save")
 	public String saveInvGR(InventoryGoodsTransfer invGoodsTransfer) {
 		logger.info("Inside save method" + invGoodsTransfer);
-		logger.info("gr details" + inventoryGoodsTransferService.save(invGoodsTransfer));		
+		
+		if(invGoodsTransfer.getId() == null) {
+			boolean status = inventoryGoodsTransferService.findByDocNumber(invGoodsTransfer.getDocNumber());
+			if(!status) {
+				logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGT.getStatus());
+				logger.info("count-->" + count);
+				
+				InventoryGoodsTransfer igtdetails = inventoryGoodsTransferService.findLastDocumentNumber();
+				if (igtdetails != null && igtdetails.getDocNumber() != null) {
+					invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration(igtdetails.getDocNumber(),count));
+				}
+				logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));
+			}
+		}else {
+			logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));	
+		}
+				
 		return "redirect:list";
 	}
 	

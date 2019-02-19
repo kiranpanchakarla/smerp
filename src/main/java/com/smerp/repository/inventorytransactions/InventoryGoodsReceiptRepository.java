@@ -13,5 +13,6 @@ public interface InventoryGoodsReceiptRepository extends JpaRepository<Inventory
 	List<InventoryGoodsReceipt> findByIsActive(Boolean isActive);
 	
 	InventoryGoodsReceipt findTopByOrderByIdDesc();
-	
+
+	List<InventoryGoodsReceipt> findByDocNumber(String docNum);
 }

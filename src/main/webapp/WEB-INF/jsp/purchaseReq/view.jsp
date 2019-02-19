@@ -218,7 +218,7 @@
 	       								                           </c:if>     
    									                            </c:forEach>
 																</div>
-														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>		
+														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>		
 														</div>		
 														</div>
 
@@ -250,8 +250,22 @@
 		$('#convertBtn').on('click', function(event) {
 			event.preventDefault();
 			  alertify.confirm('Are you Sure, Want To Convert PR to RFQ', function(){
+				  
+				  $.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
+				  
 				  form.submit();
 			  }, function(){
+				  setTimeout($.unblockUI, 1000);
 		          alertify.error('Cancelled')
 		       });
 		 
@@ -259,6 +273,7 @@
 		
 		
 	</script>
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

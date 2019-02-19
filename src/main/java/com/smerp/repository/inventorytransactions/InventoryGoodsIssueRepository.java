@@ -12,4 +12,6 @@ public interface InventoryGoodsIssueRepository extends JpaRepository<InventoryGo
 	List<InventoryGoodsIssue> findByIsActive(Boolean isActive);
 	
 	InventoryGoodsIssue findTopByOrderByIdDesc();
+	
+	List<InventoryGoodsIssue> findByDocNumber(String docNum);
 }

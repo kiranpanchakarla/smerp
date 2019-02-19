@@ -473,7 +473,7 @@ text-align: left;
 												         
 												         
 												         
-												          <div class="col-sm-4 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-4 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -509,8 +509,20 @@ $('#containerContainingTabs a').on('click', function(e) {
 $(".mySubButton").on('click', function() {
 	alertify.confirm('InVoice','Are you Sure, Want to CrdeitMemo!',
 			function() {
+			$.blockUI({ css: {
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        },
+	        message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+	        });
 		    $('#form').attr('action', "${createUrl}").submit();
 			}, function() {
+				setTimeout($.unblockUI, 1000);
 				alertify.error('Cancelled')
 			});
 
@@ -522,7 +534,7 @@ function goBack() {
 }
 </script>
 	
-	
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>	
 	
 </body>
 

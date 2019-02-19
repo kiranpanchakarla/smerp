@@ -526,7 +526,7 @@ text-align: left;
 												         
 												         </div>
 												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -575,8 +575,21 @@ text-align: left;
 					event.preventDefault();
 					alertify.confirm('Convert PO to GR','Are you Sure, Want to Convert  PO  to GR',
 							function() {
+								$.blockUI({ css: {
+					                 border: 'none', 
+					                 padding: '15px', 
+					                 backgroundColor: '#000', 
+					                 '-webkit-border-radius': '10px', 
+					                 '-moz-border-radius': '10px', 
+					                 opacity: .5, 
+					                 color: '#fff' 
+					             },
+					             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+					             });
+								
 								form.submit();
 							}, function() {
+								setTimeout($.unblockUI, 1000);
 								alertify.error('Cancelled')
 							});
 
@@ -608,11 +621,11 @@ text-align: left;
 	            }});
 			
 		} */
-		
+
 		
 	</script>
 
-	
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 	
 </body>
 

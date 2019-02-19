@@ -93,7 +93,17 @@
       var answer = parts[parts.length - 1];
       /* alert(answer);
              */
-            
+             $.blockUI({ css: {
+                 border: 'none', 
+                 padding: '15px', 
+                 backgroundColor: '#000', 
+                 '-webkit-border-radius': '10px', 
+                 '-moz-border-radius': '10px', 
+                 opacity: .5, 
+                 color: '#fff' 
+             },
+             message: "<h3>Deleting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+             }); 
             
               var dataString  = "id="+id;
                    $.ajax({
@@ -109,7 +119,8 @@
                       }});
                   
               }, function(){
-          alertify.error('Cancelled')
+          alertify.error('Cancelled');
+          setTimeout($.unblockUI, 1000);
        });
   }
 
@@ -213,6 +224,36 @@
      //  setTimeout($.unblockUI, 3000);
 });
 
+ 
+ $(document).on("click", ".btn-dele",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Deleting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+     //  setTimeout($.unblockUI, 3000);
+});
+ 
+ $(document).on("click", ".pdfdownload",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Downloading <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+     	 setTimeout($.unblockUI, 2000);
+});
  
   function goBack() {
       window.history.back();

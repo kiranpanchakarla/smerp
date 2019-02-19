@@ -12,4 +12,6 @@ public interface InventoryGoodsTransferRepository extends JpaRepository<Inventor
 	List<InventoryGoodsTransfer> findByIsActive(Boolean isActive);
 	
 	InventoryGoodsTransfer findTopByOrderByIdDesc();
+	
+	List<InventoryGoodsTransfer> findByDocNumber(String docNum);
 }

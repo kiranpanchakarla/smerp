@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
-import com.smerp.model.admin.VendorAddress;
-import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.repository.admin.TaxCodeRepository;
@@ -39,6 +40,8 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -65,6 +68,9 @@ public class InventoryGoodsReceiptController {
 
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -83,13 +89,17 @@ public class InventoryGoodsReceiptController {
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
+		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGR.getStatus());
+		logger.info("PO count-->" + count);
+		
 		InventoryGoodsReceipt invgr = inventoryGoodsReceiptService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
-			invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber()));
+			invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGR"+(String)dtf.format(now) +"0"));
+	    invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGR"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("IGR Details-->" + invGoodsReceipt);
 		model.addAttribute("productList",
@@ -110,7 +120,24 @@ public class InventoryGoodsReceiptController {
 	@PostMapping("/save")
 	public String saveInvGR(InventoryGoodsReceipt invGoodsReceipt) {
 		logger.info("Inside save method" + invGoodsReceipt);
-		logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));		
+		
+		if(invGoodsReceipt.getId() == null) {
+			boolean status = inventoryGoodsReceiptService.findByDocNumber(invGoodsReceipt.getDocNumber());
+			if(!status) {
+				logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGR.getStatus());
+				logger.info("count-->" + count);
+				
+				InventoryGoodsReceipt grdetails = inventoryGoodsReceiptService.findLastDocumentNumber();
+				if (grdetails != null && grdetails.getDocNumber() != null) {
+					invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(grdetails.getDocNumber(),count));
+				}
+				logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));
+			}
+		}else {
+			logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));	
+		}
 		return "redirect:list";
 	}
 	

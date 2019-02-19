@@ -159,4 +159,14 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 	}
 
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
+	
+	@Override
+	public boolean findByDocNumber(String docNum) {
+		List<InventoryGoodsReceipt> invGR = inventoryGoodsReceiptRepository.findByDocNumber(docNum);
+		if(invGR.size()>0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

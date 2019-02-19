@@ -20,4 +20,6 @@ public interface InventoryGoodsReceiptService {
 	
 	InventoryGoodsReceipt getListAmount(InventoryGoodsReceipt inventoryGoodsReceipt);
 	
+	boolean findByDocNumber(String docNum);
+	
 	}

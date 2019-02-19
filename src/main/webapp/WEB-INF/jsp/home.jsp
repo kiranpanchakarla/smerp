@@ -217,7 +217,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Purchase Request</h4>
+                <h4 class="card-title" style="text-align: center;"><a href="<c:url value="/purchaseReq/list"/>">Purchase Request</a></h4>
               </div>
               <ul class="list-group list-group-flush">
                <%--   <a id="example" onchange="setStatus('Open')" href="<c:url value="/purchaseReq/list?purchaseReqStatus=Open"/>"> --%>

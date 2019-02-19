@@ -308,7 +308,7 @@ text-align: left;
 										             
 												         
 												         
-												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/invgr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												 </div>
 										</div>
@@ -344,8 +344,20 @@ $('#containerContainingTabs a').on('click', function(e) {
 $(".mySubButton").on('click', function() {
 			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
 					function() {
+					$.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
 				    $('#form').attr('action', "${createUrl}").submit();
 					}, function() {
+						setTimeout($.unblockUI, 1000);
 						alertify.error('Cancelled')
 					});
 
@@ -356,8 +368,20 @@ $(".mySubButton").on('click', function() {
 $(".mySubButtonInv").on('click', function() {
 			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice!',
 					function() {
+					$.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
 				    $('#form').attr('action', "${createInvoiceUrl}").submit();
 					}, function() {
+						setTimeout($.unblockUI, 1000);
 						alertify.error('Cancelled')
 					});
 
@@ -374,7 +398,7 @@ function goBack() {
 }
 </script>
 	
-	
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 	
 </body>
 

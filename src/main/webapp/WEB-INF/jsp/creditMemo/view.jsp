@@ -454,7 +454,7 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/creditMemo/downloadPdf?id=${cre.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/creditMemo/downloadPdf?id=${cre.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -493,7 +493,8 @@ function goBack() {
     window.history.back();
 }
 </script>
-	
+
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 	
 	
 </body>

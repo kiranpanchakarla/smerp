@@ -18,4 +18,6 @@ public interface InventoryGoodsIssueService {
 	InventoryGoodsIssue findLastDocumentNumber();
 	
 	InventoryGoodsIssue getListAmount(InventoryGoodsIssue inventoryGoodsIssue);
+	
+	boolean findByDocNumber(String docNum);
 }

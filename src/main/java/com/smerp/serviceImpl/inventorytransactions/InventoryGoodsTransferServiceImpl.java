@@ -155,4 +155,14 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	}
 
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
+	
+	@Override
+	public boolean findByDocNumber(String docNum) {
+		List<InventoryGoodsTransfer> igt = inventoryGoodsTransferRepository.findByDocNumber(docNum);
+		if(igt.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

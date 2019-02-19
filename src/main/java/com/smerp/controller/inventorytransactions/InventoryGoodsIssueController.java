@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -42,6 +43,8 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -71,6 +74,9 @@ public class InventoryGoodsIssueController {
 
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -110,13 +116,17 @@ public class InventoryGoodsIssueController {
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("departmentListSize", deptMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
+		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGI.getStatus());
+		logger.info("IGI count-->" + count);
+		
 		InventoryGoodsIssue invgr = inventoryGoodsIssueService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
-			invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber()));
+			invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration(invgr.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGI"+(String)dtf.format(now) +"0"));
+	    invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGI"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("IGR Details-->" + invGoodsIssue);
 		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -138,7 +148,24 @@ public class InventoryGoodsIssueController {
 	@PostMapping("/save")
 	public String saveInvGI(InventoryGoodsIssue invGoodsIssue) {
 		logger.info("Inside save method" + invGoodsIssue);
-		logger.info("gr details" + inventoryGoodsIssueService.save(invGoodsIssue));		
+		
+		if(invGoodsIssue.getId() == null) {
+			boolean status = inventoryGoodsIssueService.findByDocNumber(invGoodsIssue.getDocNumber());
+			if(!status) {
+				logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGI.getStatus());
+				logger.info("count-->" + count);
+				
+				InventoryGoodsIssue igidetails = inventoryGoodsIssueService.findLastDocumentNumber();
+				if (igidetails != null && igidetails.getDocNumber() != null) {
+					invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration(igidetails.getDocNumber(),count));
+				}
+				logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));
+			}
+		}else {
+			logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));	
+		}
 		return "redirect:list";
 	}
 	

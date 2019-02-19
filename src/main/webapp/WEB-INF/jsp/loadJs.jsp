@@ -14,7 +14,9 @@
 <script src=<c:url value="/resources/vendors/js/charts/chart.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/core/app-menu.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/core/app.js"/> type="text/javascript"></script> 
+<!-- <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>  -->
 <!-- <script src=<c:url value="/resources/js/scripts/pages/dashboard-lite.js"/> type="text/javascript"></script>   -->
+
 
 <script src=<c:url value="/resources/js/bootstrap.min.js"/> type="text/javascript"></script>
 
@@ -33,15 +35,12 @@
 
 <script src=<c:url value="/resources/components/alertifyjs/alertify.min.js"/> type="text/javascript"></script>  
 <!-- <script type="text/javascript" src="/resources/components/alertifyjs/alertify.min.js"></script> -->
+
 <!-- alertfy-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <script>
-
-
-
-
 
   $(document).ready(function(){
 	 
@@ -138,7 +137,83 @@
                  }
             }});
  }
+ 
+ $(document).on("click", "#draft",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Drafting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+      // setTimeout($.unblockUI, 9000);
+});
+ 
+ $(document).on("click", "#save",function(e){		
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Saving <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+       //setTimeout($.unblockUI, 9000);
+});
+ 
+ $(document).on("click", "#update",function(e){		
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Saving <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+	 //  setTimeout($.unblockUI, 3000);
+});
+ 
+ $(document).on("click", ".btn-approve",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Approving <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+     //  setTimeout($.unblockUI, 3000);
+});
+ 
+ $(document).on("click", ".btn-reject",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Rejecting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+     //  setTimeout($.unblockUI, 3000);
+});
 
+ 
   function goBack() {
       window.history.back();
   }

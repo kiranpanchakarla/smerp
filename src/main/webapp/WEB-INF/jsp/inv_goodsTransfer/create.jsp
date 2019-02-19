@@ -11,10 +11,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
-
-
+	
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
 	type="text/javascript"></script>
+	
+
 <!-- <script
 	src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/>
 	type="text/javascript"></script> -->
@@ -38,6 +39,7 @@
 .table td a i {
 	line-height: 35px;
 }
+
 </style>
 
 
@@ -270,7 +272,7 @@
 																															
 																																<td><div class="form-group">
 																																	<form:select class="form-control"
-																																		style="width:;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})"
+																																		style="width:;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})" 
 																																		path="inventoryGoodsTransferList[${count}].fromWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
@@ -573,13 +575,8 @@
 	</div>
 
 
-
 	<c:import url="/WEB-INF/jsp/footer.jsp" />
-
-
-
-
-
+<%-- <img src="<c:url value='/resources/images/ajax-loader.gif'/>" id="img" style="display:none"/ > --%>
 
 </body>
 <!-- alertfy-->
@@ -1253,7 +1250,8 @@ $('#containerContainingTabs a').on('click', function(e) {
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		 	//showLoadingImage();
+		  var subStatus = $(this).val();
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -1266,10 +1264,9 @@ $('#containerContainingTabs a').on('click', function(e) {
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');
 				 return true;
-			  }  
+			  }
 		  }
-	
-	
+	 
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
     
@@ -1301,9 +1298,35 @@ $('#containerContainingTabs a').on('click', function(e) {
 	  }
     
 });
+  
+ /*  function showWaitPanel() {
+	  alert("showWait");
+  
+      $.blockUI({ message: 
+    	   "<h3>Loading... <img src="/resources/images/ajax-loader.gif"' border='0'/></h3>" 
+    	   src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/>
+    	  "<h1><img src="<c:url value='/images/ajax-loader.gif'/>" /> Just a moment...</h1>"
+    	  });
+      }
+   */
+  
+  
+  /* function showLoadingImage(){
+		 $.blockUI({ css: {
+	            border: 'none', 
+	            padding: '15px', 
+	            backgroundColor: '#000', 
+	            '-webkit-border-radius': '10px', 
+	            '-moz-border-radius': '10px', 
+	            opacity: .5, 
+	            color: '#fff' 
+	        },
+	        message: "<h3>Loading <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+	        }); 
+	      //  setTimeout($.unblockUI, 3000);
+	 } */
 
-function isNumericKey(evt)
-{
+function isNumericKey(evt) {
 	var charCode = (evt.which) ? evt.which : evt.keyCode;
 	if ( charCode > 31 
 	&& (charCode < 48 || charCode > 57))
@@ -1573,7 +1596,7 @@ $('#freight').keyup(function() {
 			   }
 		});
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
@@ -1610,8 +1633,9 @@ $('#freight').keyup(function() {
 			}
 	 }); */
 	
-	
-	
+	 
+	 
+	 
 	</script>
 
 <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
@@ -1635,7 +1659,9 @@ $('#freight').keyup(function() {
 
 <link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
-
+<!-- <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>  -->
+<!-- <script src="http://malsup.github.io/jquery.blockUI.js"/> -->
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script> 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
             
 <script>

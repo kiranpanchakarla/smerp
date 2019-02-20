@@ -93,9 +93,9 @@
                 <td style="border: solid 1px ;"><#if goodsRetlist.unitPrice??>&nbsp;${goodsRetlist.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;">
                   <#if goodsRetlist.taxCode??>
-                <#list taxCodeMap as key, value>
-                <#if (goodsRetlist.taxCode) == (key)>
-                     <p> ${value}</p>
+               <#list taxCodeMap as key, value>
+                <#if (polist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
                   </#if>

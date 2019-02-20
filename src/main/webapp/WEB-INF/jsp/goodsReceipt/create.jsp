@@ -575,13 +575,19 @@
 																																</td>
 
 
-																															<td> <form:select
-																																	class="form-control taxCode"
-																																	readonly="true"
-																																	path="goodsReceiptLineItems[${count}].taxCode">
-																		 															<form:option value="${listLineItems.taxCode}"></form:option>
-
-																																</form:select>    
+																															<td> <select class="form-control taxCode" readonly="true"
+																															name="goodsReceiptLineItems[${count}].taxCode" >
+																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select> 
 																																  
 																															</td>
 																															
@@ -862,14 +868,31 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="goodsReceiptLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
-																																</div></td>
+																																	</form:select> --%>
+																																			<select class="form-control taxCode"
+																																				required="true"
+																																				name="goodsReceiptLineItems[${count}].taxCode">
+																																				<c:forEach var="taxCodeMap"
+																																					items="${taxCodeMap}">
+																																					<c:choose>
+																																					<c:when
+																																						test="${taxCodeMap.value == listLineItems.taxCode}">
+																																						<option value="${taxCodeMap.value}"
+																																							selected>${taxCodeMap.key}</option>
+																																					</c:when>
+																																					<c:otherwise>
+																																						<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																																					</c:otherwise>
+																																				</c:choose>
+																																				</c:forEach>
+																																			</select>
+																																		</div></td>
 
 
 																															<td><div class="form-group">
@@ -965,14 +988,31 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="goodsReceiptLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
-																																</div></td>
+																																	</form:select> --%>
+																																			<select class="form-control taxCode"
+																																				required="true"
+																																				name="purchaseOrderlineItems[${count}].taxCode">
+																																				<c:forEach var="taxCodeMap"
+																																					items="${taxCodeMap}">
+																																					<c:choose>
+																																						<c:when
+																																							test="${taxCodeMap.value == listLineItems.taxCode}">
+																																							<option value="${taxCodeMap.key}"
+																																								selected>${taxCodeMap.value}</option>
+																																						</c:when>
+																																						<c:otherwise>
+																																							<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>
+																																						</c:otherwise>
+																																					</c:choose>
+																																				</c:forEach>
+																																			</select>
+																																		</div></td>
 
 
 																															<td><div class="form-group">
@@ -1415,7 +1455,7 @@ function addItem() {
 			+ '<select  name="goodsReceiptLineItems['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -1520,7 +1560,7 @@ function addItem() {
 			+ '<select  name="goodsReceiptLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -2402,7 +2442,7 @@ function goBack() {
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	////alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
@@ -2485,7 +2525,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	//alert("requiredQuantity" +requiredQuantity);
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	if(tax=='') {
         tax=  $(itemParentRow).find(".taxCode").val();
    }

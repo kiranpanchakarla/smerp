@@ -98,7 +98,7 @@
 																<tr>
 																	<td><c:set var="count" value="${count + 1}"
 																			scope="page" /> <c:out value="${count}" /></td>
-																	<td>${purchaseRequestsList.user.username}</td>
+																	<td>${purchaseRequestsList.referenceUser.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
 																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${purchaseRequestsList.createdAt}"/></td>
 																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${purchaseRequestsList.updatedAt}"/></td>

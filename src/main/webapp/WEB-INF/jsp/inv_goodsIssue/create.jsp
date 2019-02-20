@@ -262,13 +262,28 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		 required="true"
 																																		path="inventoryGoodsIssueList[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	 <select class="form-control taxCode" required="true"
+																															name="inventoryGoodsIssueList[${count}].taxCode" >
+																															<option  value="" >Select</option>	
+																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
+																													</c:when>
+																													<c:otherwise>
+																													<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select> 
 																																</div></td>
 
 
@@ -662,7 +677,7 @@ function addItem() {
 			+ '<select  name="inventoryGoodsIssueList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -1279,7 +1294,7 @@ function goBack() {
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	////alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
@@ -1361,7 +1376,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	//alert("requiredQuantity" +requiredQuantity);
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	if(tax=='') {
         tax=  $(itemParentRow).find(".taxCode").val();
    }

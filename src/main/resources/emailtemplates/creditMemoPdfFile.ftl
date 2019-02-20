@@ -105,8 +105,8 @@
                 <td style="border: solid 1px ;">
                   <#if creditoiceList.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (creditoiceList.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (creditoiceList.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
                   </#if>

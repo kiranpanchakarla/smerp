@@ -167,15 +167,15 @@
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Posting Date' path="postingDate"
-																					autocomplete="off" readonly="true" />
+																					placeholder='Posting Date' path="postingDate" required="true"
+																					autocomplete="off" />
 																			</div>
 																			 
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Date' path="documentDate"
-																					autocomplete="off" required="true" />
+																					placeholder='Document Date' path="documentDate" required="true"
+																					autocomplete="off"  />
 																				
 																			</div>
 																		</div>
@@ -188,7 +188,7 @@
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					id="require_date" placeholder='Required Date'
-																					autocomplete="off" path="requiredDate" required="true" />
+																					autocomplete="off" path="requiredDate"  required="true" />
 																			
 																			</div>
                                                                             <div class="col-sm-4 form-group">

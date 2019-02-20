@@ -74,8 +74,8 @@
                 <td style="border: solid 1px ;">
                   <#if goodsReclist.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (goodsReclist.taxCode) ==   (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
                   </#if>

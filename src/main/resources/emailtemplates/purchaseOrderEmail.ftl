@@ -93,8 +93,8 @@
                 <td style="border: solid 1px ;">
                   <#if polist.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (polist.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (polist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
                   </#if>

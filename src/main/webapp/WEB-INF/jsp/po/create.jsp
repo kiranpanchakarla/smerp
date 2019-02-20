@@ -507,19 +507,40 @@
 																													
 																													<td>${listLineItems.sku}</td>
 																													
-																													<td> ${listLineItems.unitPrice}
-																															<form:input type="hidden"
-																															path="purchaseOrderlineItems[${count}].unitPrice" readonly="true"
+																													<td> <%-- ${listLineItems.unitPrice} --%>
+																															<form:input type="text"
+																															path="purchaseOrderlineItems[${count}].unitPrice"
 																															value="${listLineItems.unitPrice}"  autocomplete="off"
 																															class="form-control unitPrice" ></form:input></td>
 																													
 																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
+																													    <td><div class="form-group">
+																													    
+																													    <%-- <form:select class="form-control taxCode"
 																															 required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
+																														</form:select> --%>
+																														
+																													 <select class="form-control taxCode" required="true"
+																															name="purchaseOrderlineItems[${count}].taxCode" >
+																															<option  value="" >Select</option>	
+																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
+																													</c:when>
+																													<c:otherwise>
+																													<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select> 
+																														
+																														
+																														</div></td>
 																													
 																															
 																															<td><div class="form-group"><form:input type="text"
@@ -559,16 +580,20 @@
 																													<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice"  autocomplete="off"
-																															value="${listLineItems.unitPrice}"  readonly="true"
+																															value="${listLineItems.unitPrice}" 
 																															class="form-control unitPrice" ></form:input></div></td>
 																													
 																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
+																													    <td><div class="form-group">
+																													   <%--  <form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
+																														</form:select> --%>
+																														
+																														
+																														</div></td>
 																													
 																															
 																															<td><div class="form-group"><form:input type="text"
@@ -629,16 +654,41 @@
 																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}" required ="true"  readonly="true"
+																															value="${listLineItems.unitPrice}" required ="true" 
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
+																													    <td><div class="form-group"><%-- <form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
+																														</form:select> --%>
+																														<%-- <select class="form-control taxCode" required="true"
+																															name="purchaseOrderlineItems[${count}].taxCode" >
+																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																														<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																														</c:forEach>
+																														</select> --%>
+																														
+																														
+																														<select class="form-control taxCode" required="true"
+																															name="purchaseOrderlineItems[${count}].taxCode" >
+																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																													
+																													<c:choose>
+																													<c:when
+																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
+																													</c:when>
+																													<c:otherwise>
+																													<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																													</c:otherwise>
+																													</c:choose>	
+																														</c:forEach>
+																														</select>
+																														
+																														</div></td>
 																													
 																															
 																															<td><div class="form-group"><form:input type="text"
@@ -698,17 +748,19 @@
 																													
 																													<td><div class="form-group">
 																															<form:input type="text"
-																															path="purchaseOrderlineItems[${count}].unitPrice"  readonly="true"
+																															path="purchaseOrderlineItems[${count}].unitPrice"  
 																															value="${listLineItems.unitPrice}" onkeypress="return isNumericKey(event)"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
-																													    <td><div class="form-group"><form:select class="form-control taxCode"
+																													    <td><div class="form-group">
+																													    <%-- <form:select class="form-control taxCode"
 																															style="width:;" required="true"
 																															path="purchaseOrderlineItems[${count}].taxCode">
 																															<form:option value="" label="Select" />
 																															<form:options items="${taxCodeMap}" />
-																														</form:select></div></td>
+																														</form:select> --%>
+																														</div></td>
 																													
 																															
 																															<td><div class="form-group"><form:input type="text"
@@ -1069,7 +1121,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"   readonly="true" class="form-control  unitPrice validatePrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"    class="form-control  unitPrice validatePrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1079,7 +1131,7 @@ function addItem() {
 			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -1173,7 +1225,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"  readonly="true" class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off"  onkeypress="return isNumericKey(event)"   class="form-control validatePrice unitPrice  unitPrice'+inc+'" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -2076,7 +2128,7 @@ $(document).on("change", ".taxCode", function() {
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
 	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);
@@ -2116,7 +2168,7 @@ $(document).on("keyup", ".unitPrice", function() {
 	
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 //	alert("tax--->" +tax);
 	var tax_amt = Number(tax) / 100;
 	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
@@ -2155,7 +2207,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	 
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 //	alert("tax--->" +tax);
 	var tax_amt = Number(tax) / 100;
 	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);

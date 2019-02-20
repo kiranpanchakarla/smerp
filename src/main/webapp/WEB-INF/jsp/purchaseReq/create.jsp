@@ -25,7 +25,6 @@
     <link href="<c:url value=" /resources/css/datapickercss/bootstrap-datepicker.min.css "/>" rel="stylesheet" type="text/css" />
     <script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
 
-	
     <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns">
         <c:import url="/WEB-INF/jsp/header.jsp" />
 
@@ -75,7 +74,7 @@
                                                                             value="${purchaseRequest.referenceUser.userEmail}"
                                                                             
                                                                               readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                           <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -86,12 +85,12 @@
                                                                             
                                                                              required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
                                                                               <form:hidden path="referenceUser.userId" class="referenceUserId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Posting Date</label>
-                                                                            <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate'  path="postingDate" value=""  readonly="true"/>
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate' required="true" path="postingDate" value="" />
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                          
                                                                     
@@ -104,19 +103,19 @@
                                                                             
                                                                               readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.plant.id" class="plantId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Doc Date</label>
-                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate'  path="documentDate" value="" readonly="true" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate' required="true" path="documentDate" value="" />
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                    
                                                                        
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Require Date</label>
-                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate'  path="requiredDate" value="" readonly="true" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />
+                                                                           <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                     
                                                                         <div class="col-sm-6 form-group" style="visibility: hidden;">
@@ -141,7 +140,7 @@
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div> 
 
-                                                                                <div style="color:red;" class="help-block with-errors"></div>
+                                                                               <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -651,21 +650,25 @@
     	 $('.referenceUserId').val(${user.userId}); 
     	 
     	
-    	/*  $('#documentDate').datepicker({
+    	$('#postingDate').datepicker({
+            dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
+       }).datepicker( "option", { setDate:"0",
+               maxDate:'+3y -1d',
+               minDate:'0' } );
+    	
+    	
+    	 $('#documentDate').datepicker({
              dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
         }).datepicker( "option", { setDate:"0",
                 maxDate:'+3y -1d',
-                minDate:'0' } ); */
+                minDate:'0' } );
          
          $('#requiredDate').datepicker({
                 dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
            }).datepicker( "option", { setDate:0,
                    maxDate:'+3y -1d',
                    minDate:'0' } );
-    	
-     
 
-         
     	
             var date = new Date();
             var today = new Date(date.getDate(), date.getFullYear(), date.getMonth());
@@ -679,23 +682,14 @@
                 autocompleteuserDetails(userName);
 
             }else{
-            	
-            	$('#postingDate').datepicker({
-                    dateFormat: 'dd/mm/yy' ,   //    dateFormat: 'MM dd, yy'
-               }).datepicker( "option", { setDate:"0",
-                       maxDate:'+3y -1d',
-                       minDate:'0' } );
-            	
         		$('#postingDate').datepicker("setDate", "0"); //"0" for current date
         		$('#documentDate').datepicker("setDate", "0"); //"0" for current date
         		$('#requiredDate').datepicker("setDate", "10"); //"after 10" for current date
-        		
-        		  $('#postingDate').datepicker({
-          			  dateFormat: 'dd/mm/yy' 
-          				  });
         	}
 
-          
+            $('#postingDate').datepicker({
+  			  dateFormat: 'dd/mm/yy' 
+  				  });
   			
   		  $('#documentDate').datepicker({
   			  dateFormat: 'dd/mm/yy' 
@@ -706,68 +700,6 @@
   			  dateFormat: 'dd/mm/yy' 
   		  });
             
-  		  
-  		$(document).on("change", "#documentDate", function() {
-  			var documentDate = $("#documentDate").val();
-  			var requiredDate = $("#requiredDate").val();
-  			
-  			var date_1 = documentDate.substring(0, 2);
-  	        var month_1 = documentDate.substring(3, 5);
-  	        var year_1 = documentDate.substring(6, 10);
-  	        
-  	      var date_2 = requiredDate.substring(0, 2);
-	      var month_2 = requiredDate.substring(3, 5);
-	      var year_2 = requiredDate.substring(6, 10);
-  	       
-  	      
-  	     var invDate = new Date(year_1, month_1 - 1, date_1);
-
-         var dueDateVal = new Date(year_2, month_2 - 1, date_2);
-         
-        // $('#requiredDate').datepicker("setDate", dueDateVal );
-         $('#requiredDate').datepicker("setDate", dueDateVal );	
-         
-         $("#requiredDate").datepicker({
-             dateFormat: "dd/mm/yy",
-             defaultDate: dueDateVal,
-             onSelect: function () {
-                 selectedDate = $.datepicker.formatDate("dd/mm/yy", $(this).datepicker('getDate'));
-             }
-         });
-        // alert(invDate);
-        
-       
-         
-      
-  			
-  			/* var start_date = new Date($("#documentDate").attr('value'));
-  			alert(start_date);
-  			
-  			var stringval = start_date;
-  			var testdate;
-  			try {
-  			  testdate = $.datepicker.parseDate('mm/dd/yy', stringval);
-  			             // Notice 'yy' indicates a 4-digit year value
-  			} catch (e)
-  			{
-  			 alert(stringval + ' is not valid.  Format must be MM/DD/YYYY ');
-  			} */
-  			
-  		});
-  		
-  		 $("#documentDate").datepicker({
- 			minDate: 0,
- 			onSelect: function(selectedDate) {
- 				alert(selectedDate);
- 				var nextDay = new Date(selectedDate);
- 				nextDay.setDate(nextDay.getDate() + 10);
- 			  $("#requiredDate").datepicker("option","minDate", nextDay);
- 			}
- 		});
-  		  
-  		  
-  		  
-  		  
             var userNames = [];
             var userNamesList = ${usersList};
             var availableTagsusernames = [];
@@ -1397,6 +1329,7 @@
 <link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
 <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
+
 <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
             
 <script>

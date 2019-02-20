@@ -90,7 +90,7 @@ public class InventoryGoodsReceiptController {
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		
-		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGR.getStatus());
+		Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGR.getStatus());
 		logger.info("PO count-->" + count);
 		
 		InventoryGoodsReceipt invgr = inventoryGoodsReceiptService.findLastDocumentNumber();
@@ -126,7 +126,7 @@ public class InventoryGoodsReceiptController {
 			if(!status) {
 				logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));
 			}else {
-				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGR.getStatus());
+				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGR.getStatus());
 				logger.info("count-->" + count);
 				
 				InventoryGoodsReceipt grdetails = inventoryGoodsReceiptService.findLastDocumentNumber();

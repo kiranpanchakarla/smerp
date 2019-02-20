@@ -97,7 +97,7 @@ public class InventoryGoodsTransferController {
 		
 		model.addAttribute("taxCodeMap", taxCode());
 		
-		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGT.getStatus());
+		Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGT.getStatus());
 		logger.info("IGT count-->" + count);
 		
 		InventoryGoodsTransfer invgr = inventoryGoodsTransferService.findLastDocumentNumber();
@@ -133,7 +133,7 @@ public class InventoryGoodsTransferController {
 			if(!status) {
 				logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));
 			}else {
-				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGT.getStatus());
+				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGT.getStatus());
 				logger.info("count-->" + count);
 				
 				InventoryGoodsTransfer igtdetails = inventoryGoodsTransferService.findLastDocumentNumber();

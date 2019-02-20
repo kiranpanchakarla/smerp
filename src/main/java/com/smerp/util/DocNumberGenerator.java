@@ -29,4 +29,11 @@ public class DocNumberGenerator extends Thread {
 		logger.info("docNumAutoGenerate status-->"+ docNumAutoGenerateService.updateCountByDocType(docType,docCount+1));
     return docCount+1;
   }
+	
+	public synchronized Integer getDocNoCountByDocType(String docType){ // This Synchronized method used by IGR,IGI,IGT
+		Integer	docCount = docNumAutoGenerateService.getCountByDocType(docType);
+		logger.info("Count value:"+docCount);
+		logger.info("docNumAutoGenerate status-->"+ docNumAutoGenerateService.updateCountByDocType(docType,docCount+1));
+    return docCount+1;
+  }
 }

@@ -117,7 +117,7 @@ public class InventoryGoodsIssueController {
 		model.addAttribute("departmentListSize", deptMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		
-		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGI.getStatus());
+		Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGI.getStatus());
 		logger.info("IGI count-->" + count);
 		
 		InventoryGoodsIssue invgr = inventoryGoodsIssueService.findLastDocumentNumber();
@@ -154,7 +154,7 @@ public class InventoryGoodsIssueController {
 			if(!status) {
 				logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));
 			}else {
-				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.IGI.getStatus());
+				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGI.getStatus());
 				logger.info("count-->" + count);
 				
 				InventoryGoodsIssue igidetails = inventoryGoodsIssueService.findLastDocumentNumber();

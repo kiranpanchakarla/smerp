@@ -270,7 +270,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Request For Quotation</h4>
+                <h4 class="card-title" style="text-align: center;"><a href="<c:url value="/rfq/list"/>">Request For Quotation</a></h4>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${rfqCount.open}</span> Open </li>
@@ -325,7 +325,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Purchase Order</h4>
+                <h4 class="card-title" style="text-align: center;"><a href="<c:url value="/po/list"/>">Purchase Order</a></h4>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${poCount.open}</span> Open </li>
@@ -373,7 +373,7 @@
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
-                <h4 class="card-title" style="text-align: center;">Goods Receipt</h4>
+                <h4 class="card-title" style="text-align: center;"><a href="<c:url value="/gr/list"/>">Goods Receipt</a></h4>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${grCount.open}</span> Open </li>

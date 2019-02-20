@@ -515,7 +515,7 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												          </div>
-							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 												        </c:when>
 												       <c:otherwise>
 												       

@@ -258,6 +258,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
+					line.setTaxDescription(grItms.get(i).getTaxDescription());
 					line.setUnitPrice(grItms.get(i).getUnitPrice());
 					line.setTaxTotal(grItms.get(i).getTaxTotal());
 					line.setTotal(grItms.get(i).getTotal());
@@ -643,7 +644,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				InVoiceLineItems invList = listItems.get(i);
-				if(invList.getUnitPrice()!=null) {
+				if(invList.getUnitPrice()!=null && invList.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode());
 				addAmt +=UnitPriceListItems.getTotalAmt(invList.getRequiredQuantity(),invList.getUnitPrice(), invList.getTaxCode());
 				invList.setTaxTotal(""+UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode()));

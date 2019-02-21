@@ -278,6 +278,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					line.setProductGroup(poItms.get(i).getProductGroup());
 					line.setDescription(poItms.get(i).getDescription());
 					line.setHsn(poItms.get(i).getHsn());
+					line.setTaxDescription(poItms.get(i).getTaxDescription());
 					
 				/*	if(poItms.get(i).getProdouctNumber()!=null) {
 						 grQunatity = getListGoodsProductCount(listGoodsReceipt,  poItms.get(i).getProdouctNumber());
@@ -287,7 +288,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					
 				
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - grQunatity);
-					line.setRequiredQuantity(0);
+					//line.setRequiredQuantity(0);
 					line.setSacCode(poItms.get(i).getSacCode());
 					line.setUom(poItms.get(i).getUom());
 					line.setWarehouse(poItms.get(i).getWarehouse());
@@ -297,6 +298,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					line.setSku(poItms.get(i).getSku());
 					line.setTaxTotal(poItms.get(i).getTaxTotal());
 					line.setTotal(poItms.get(i).getTotal());
+					
 					
 					lineItems.add(line);
 				}
@@ -667,7 +669,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				GoodsReceiptLineItems grlist = listItems.get(i);
-				if(grlist.getUnitPrice()!=null) {
+				if(grlist.getUnitPrice()!=null && grlist.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode());
 				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));

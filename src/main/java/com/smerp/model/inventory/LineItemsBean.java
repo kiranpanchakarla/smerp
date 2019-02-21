@@ -25,6 +25,8 @@ public class LineItemsBean {
 	private Double unitPrice;
 
 	private Double taxCode;
+	
+	private String taxDescription;
 
 	private String sku;
 
@@ -162,12 +164,23 @@ public class LineItemsBean {
 		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
+	
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
 	@Override
 	public String toString() {
-		return "InVoiceLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
+		return "LineItemsBean [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", taxDescription=" + taxDescription
+				+ ", sku=" + sku + "]";
 	}
-	
+
+
 }

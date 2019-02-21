@@ -52,6 +52,9 @@ public class GoodsReceiptLineItems extends UserAuditModel {
 	@Column(name = "tax_code")
 	private Double taxCode;
 	
+	@Column(name = "tax_description")
+	private String taxDescription;
+	
 	@Column(name = "sku_quantity")
     private String sku;
 	
@@ -196,15 +199,26 @@ public class GoodsReceiptLineItems extends UserAuditModel {
 		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "GoodsReceiptLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku
-				+ ", tempRequiredQuantity=" + tempRequiredQuantity + ", taxTotal=" + taxTotal + ", total=" + total
-				+ "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", taxDescription=" + taxDescription
+				+ ", sku=" + sku + "]";
 	}
+
+
+
+	
 
 	
 

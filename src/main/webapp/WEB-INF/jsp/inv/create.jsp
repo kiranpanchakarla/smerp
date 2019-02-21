@@ -546,13 +546,14 @@
 																																			items="${taxCodeMap}">
 																																			<c:choose>
 																																				<c:when
-																																					test="${taxCodeMap.value == listLineItems.taxCode}">
+																																					test="${taxCodeMap.key == listLineItems.taxDescription}">
 																																					${taxCodeMap.key}
 																																				</c:when>
 																																				<c:otherwise>
 																																				</c:otherwise>
 																																			</c:choose>
 																																		</c:forEach>
+																																		
 																															</td>
 																															
 																																<td>${listLineItems.taxTotal} </td>
@@ -740,7 +741,7 @@
 																																			items="${taxCodeMap}">
 																																			<c:choose>
 																																				<c:when
-																																					test="${taxCodeMap.value == listLineItems.taxCode}">
+																																					test="${taxCodeMap.key == listLineItems.taxDescription}">
 																																					<option value="${taxCodeMap.value}"
 																																						selected>${taxCodeMap.key}</option>
 																																				</c:when>
@@ -750,6 +751,8 @@
 																																			</c:choose>
 																																		</c:forEach>
 																																	</select>
+																																<input type="hidden" name="inVoiceLineItems[${count}].taxDescription"  class="taxDescription"  value="${listLineItems.taxDescription}"   />
+																																	
 																																</div></td>
 
 
@@ -855,7 +858,7 @@
 																																	</form:select> --%>
 																																	<select class="form-control taxCode"
 																																		required="true"
-																																		name="purchaseOrderlineItems[${count}].taxCode">
+																																		name="inVoiceLineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
 																																			<c:choose>
@@ -1318,6 +1321,7 @@ function addItem() {
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+'<input type="hidden" name="inVoiceLineItems['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
 			+ '</td>'
 			
@@ -2301,6 +2305,9 @@ function goBack() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
+
+	var taxDescription=  $(itemParentRow).find(".taxCode option:selected").text();
+		$(itemParentRow).find(".taxDescription").val(taxDescription);
 	//alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);

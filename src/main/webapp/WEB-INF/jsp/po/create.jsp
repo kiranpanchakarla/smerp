@@ -529,7 +529,7 @@
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													  <c:choose>
 																													<c:when
-																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																														test="${taxCodeMap.key == listLineItems.taxDescription}">
 																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
 																													</c:when>
 																													<c:otherwise>
@@ -538,7 +538,7 @@
 																														</c:choose>
 																														</c:forEach>
 																														</select> 
-																														
+																														<input type="hidden" name="purchaseOrderlineItems[${count}].taxDescription"  class="taxDescription"  value="${listLineItems.taxDescription}"  />
 																														
 																														</div></td>
 																													
@@ -678,7 +678,7 @@
 																													
 																													<c:choose>
 																													<c:when
-																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																														test="${taxCodeMap.key == listLineItems.taxDescription}">
 																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
 																													</c:when>
 																													<c:otherwise>
@@ -687,7 +687,7 @@
 																													</c:choose>	
 																														</c:forEach>
 																														</select>
-																														
+																														<input type="hidden" name="purchaseOrderlineItems[${count}].taxDescription"  class="taxDescription" class="taxDescription"  value="${listLineItems.taxDescription}"    />
 																														</div></td>
 																													
 																															
@@ -1134,6 +1134,7 @@ function addItem() {
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
 			+ '</td>'
 			
@@ -2129,6 +2130,10 @@ $(document).on("change", ".taxCode", function() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
+	
+	var taxDescription=  $(itemParentRow).find(".taxCode option:selected").text();
+	$(itemParentRow).find(".taxDescription").val(taxDescription);
+	
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
 	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);

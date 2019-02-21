@@ -258,7 +258,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					
 				
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - greQunatity);
-					line.setRequiredQuantity(0);
+					//line.setRequiredQuantity(0);
 					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
@@ -266,6 +266,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
+					line.setTaxDescription(grItms.get(i).getTaxDescription());
 					line.setUnitPrice(grItms.get(i).getUnitPrice());
 					
 					line.setTaxTotal(grItms.get(i).getTaxTotal());
@@ -522,7 +523,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				GoodsReturnLineItems grelist = listItems.get(i);
-				if(grelist.getUnitPrice()!=null) {
+				if(grelist.getRequiredQuantity()!=null && grelist.getUnitPrice()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode());
 				addAmt +=UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode());
 				grelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode()));

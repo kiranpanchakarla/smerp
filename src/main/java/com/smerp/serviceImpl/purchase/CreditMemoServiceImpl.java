@@ -248,7 +248,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					}*/
 					
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - creQunatity);
-					line.setRequiredQuantity(0);
+					//line.setRequiredQuantity(0);
 					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
@@ -256,6 +256,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
+					line.setTaxDescription(grItms.get(i).getTaxDescription());
 					line.setUnitPrice(grItms.get(i).getUnitPrice());
 					
 					line.setTaxTotal(grItms.get(i).getTaxTotal());
@@ -479,7 +480,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				CreditMemoLineItems crelist = listItems.get(i);
-				if(crelist.getUnitPrice()!=null) {
+				if(crelist.getUnitPrice()!=null && crelist.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(),crelist.getTaxCode());
 				addAmt +=UnitPriceListItems.getTotalAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(), crelist.getTaxCode());
 				crelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(),crelist.getTaxCode()));

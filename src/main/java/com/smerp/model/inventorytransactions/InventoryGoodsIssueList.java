@@ -62,6 +62,12 @@ public class InventoryGoodsIssueList extends AuditModel {
 
 	@Column(name = "tax_code")
 	private Double taxCode;
+	
+	@Column(name = "tax_description")
+	private String taxDescription;
+	
+	@Column(name="department_id")
+	private Integer department;
 
 	public Integer getId() {
 		return id;
@@ -195,7 +201,23 @@ public class InventoryGoodsIssueList extends AuditModel {
 		this.department = department;
 	}
 
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
+	@Override
+	public String toString() {
+		return "InventoryGoodsIssueList [id=" + id + ", productNumber=" + productNumber + ", productId=" + productId
+				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
+				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
+				+ sacCode + ", sku=" + sku + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", taxDescription="
+				+ taxDescription + ", department=" + department + "]";
+	}
+
 	
-	@Column(name="department_id")
-	private Integer department;
+
 }

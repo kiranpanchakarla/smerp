@@ -313,13 +313,14 @@
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
-																																	<select class="form-control taxCode" required="true"
-																															name="inventoryGoodsReceiptList[${count}].taxCode" >
+																																	 <select class="form-control taxCode" required="true"
+																															name="inventoryGoodsTransferList[${count}].taxCode" >
 																															<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
+																														
 																													  <c:choose>
 																													<c:when
-																														test="${taxCodeMap.value == listLineItems.taxCode}">
+																														test="${taxCodeMap.key == listLineItems.taxDescription}">
 																													<option  value="${taxCodeMap.value}" selected>${taxCodeMap.key}</option>
 																													</c:when>
 																													<c:otherwise>
@@ -328,6 +329,8 @@
 																														</c:choose>
 																														</c:forEach>
 																														</select> 
+																														<input type="hidden" name="inventoryGoodsTransferList[${count}].taxDescription"  class="taxDescription"  value="${listLineItems.taxDescription}"  />
+																														
 																																</div></td>
 
 
@@ -719,6 +722,7 @@ function addItem() {
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+'<input type="hidden" name="inventoryGoodsTransferList['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
 			+ '</td>'
 			
@@ -1372,6 +1376,9 @@ function goBack() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
+
+	var taxDescription=  $(itemParentRow).find(".taxCode option:selected").text();
+		$(itemParentRow).find(".taxDescription").val(taxDescription);
 	////alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);

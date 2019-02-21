@@ -56,6 +56,13 @@ public class InventoryGoodsTransferList extends AuditModel{
 	
 	@Column(name = "unit_price")
 	private Double unitPrice;
+	
+	
+	@Column(name = "tax_code")
+	private Double taxCode;
+	
+	@Column(name = "tax_description")
+	private String taxDescription;
 
 	public Integer getFromWarehouse() {
 		return fromWarehouse;
@@ -81,8 +88,7 @@ public class InventoryGoodsTransferList extends AuditModel{
 		this.unitPrice = unitPrice;
 	}
 
-	@Column(name = "tax_code")
-	private Double taxCode;
+	
 
 	public Integer getId() {
 		return id;
@@ -187,4 +193,24 @@ public class InventoryGoodsTransferList extends AuditModel{
 	public void setTotal(String total) {
 		this.total = total;
 	}
+
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
+	@Override
+	public String toString() {
+		return "InventoryGoodsTransferList [id=" + id + ", productNumber=" + productNumber + ", productId=" + productId
+				+ ", description=" + description + ", fromWarehouse=" + fromWarehouse + ", toWarehouse=" + toWarehouse
+				+ ", uom=" + uom + ", requiredQuantity=" + requiredQuantity + ", productGroup=" + productGroup
+				+ ", hsn=" + hsn + ", sku=" + sku + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode
+				+ ", taxDescription=" + taxDescription + "]";
+	}
+	
+	
+	
 }

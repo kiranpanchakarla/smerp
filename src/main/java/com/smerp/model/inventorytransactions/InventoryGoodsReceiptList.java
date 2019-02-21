@@ -60,6 +60,10 @@ public class InventoryGoodsReceiptList extends AuditModel{
 
 	@Column(name = "tax_code")
 	private Double taxCode;
+	
+	
+	@Column(name = "tax_description")
+	private String taxDescription;
 
 	public Integer getId() {
 		return id;
@@ -184,6 +188,25 @@ public class InventoryGoodsReceiptList extends AuditModel{
 	public void setTotal(String total) {
 		this.total = total;
 	}
+
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
+	@Override
+	public String toString() {
+		return "InventoryGoodsReceiptList [id=" + id + ", productNumber=" + productNumber + ", productId=" + productId
+				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
+				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
+				+ sacCode + ", sku=" + sku + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", taxDescription="
+				+ taxDescription + "]";
+	}
+	
+	
 	
 	
 }

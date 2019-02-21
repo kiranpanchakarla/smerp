@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.PurchaseOrder;
@@ -160,6 +162,9 @@ public class RequestForQuotationController {
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("rfq", rfq);
 		model.addAttribute("plantMap", plantMap());
+		
+		Integer noOfRfqs = requestForQuotationService.getRFQListCount(rfq.getPurchaseReqId());
+		model.addAttribute("noOfRfqs", noOfRfqs);
 		return "rfq/view";
 	}
 
@@ -262,6 +267,14 @@ public class RequestForQuotationController {
 		}
 		fileInputStream.close();
 		out.close();
+	}
+	
+	@GetMapping(value = "/isVendorNameExistWithDocNum")
+	@ResponseBody
+	public boolean isVendorNameExistWithDocNum(String vendorName,String refDocNum) {
+		logger.info("Vendor Name" + vendorName);
+		boolean isExist = requestForQuotationService.isVendorNameExistWithDocNum(vendorName,refDocNum);
+		return isExist;
 	}
 
 }

@@ -375,8 +375,31 @@
 			theThis.addClass('active');
 		});
 
+		var noOfRFQ = ${noOfRfqs};
 		$('#convertBtn').on('click',function(event) {
 					event.preventDefault();
+					
+					if(noOfRFQ>1){
+						alertify.confirm('Are you Sure, Want to Convert RFQ to PO ? <br> Other RFQs will be turned into inactive',
+								function() {
+									$.blockUI({ css: {
+						                 border: 'none', 
+						                 padding: '15px', 
+						                 backgroundColor: '#000', 
+						                 '-webkit-border-radius': '10px', 
+						                 '-moz-border-radius': '10px', 
+						                 opacity: .5, 
+						                 color: '#fff' 
+						             },
+						             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+						             });
+									
+									form.submit();
+								}, function() {
+									setTimeout($.unblockUI, 1000);
+									alertify.error('Cancelled')
+								});
+					}else{
 					alertify.confirm('Are you Sure, Want to Convert RFQ to PO',
 							function() {
 								$.blockUI({ css: {
@@ -396,6 +419,7 @@
 								setTimeout($.unblockUI, 1000);
 								alertify.error('Cancelled')
 							});
+					}
 
 				});
 

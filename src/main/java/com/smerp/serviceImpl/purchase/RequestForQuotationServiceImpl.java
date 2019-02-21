@@ -151,7 +151,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		RequestForQuotation rfq = new RequestForQuotation();
 		PurchaseRequest prq = purchaseRequestService.getInfo(Integer.parseInt(purchaseId));
 		
-		RequestForQuotation dup_rfq =requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
+		RequestForQuotation dup_rfq = null; //requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
         if(dup_rfq==null) {
         	Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
         	RequestForQuotation rfqdetails = findLastDocumentNumber();
@@ -201,7 +201,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		rfq.setCategory("Item");
 		rfq = requestForQuotationRepository.save(rfq);
 		
-		prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+		//prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
 		prq.setType("Item");
 		purchaseRequestRepository.save(prq);
 		
@@ -266,6 +266,30 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		}else {
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean isVendorNameExistWithDocNum(String vendorName, String refDocNum) {
+		List<RequestForQuotation> requestForQuotation = requestForQuotationRepository.findByDocNumber(vendorName,refDocNum);
+		if(requestForQuotation.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public List<RequestForQuotation> getRFQListById(PurchaseRequest prId){
+		List<RequestForQuotation> rfqList = requestForQuotationRepository.getRFQListById(prId);
+		return rfqList;
+	}
+	
+	@Override
+	public Integer getRFQListCount(PurchaseRequest prId){
+		List<RequestForQuotation> rfqList = requestForQuotationRepository.getRFQListById(prId);
+		Integer noOfRfq = rfqList.size();
+		logger.info("No of RFQ's are:"+noOfRfq);
+		return noOfRfq;
 	}
 
 }

@@ -27,7 +27,7 @@ public enum EnumStatusUpdate {
 	REJECT("Reject"),
 	SAVED("Saved"),
 	CANCEL("Cancel"),
-	PDFDOWNLOAD("PDF Downloaded"),
+	PDFDOWNLOAD("PDF_Downloaded"),
 	
 	PR("PR"),
 	RFQ("RFQ"),

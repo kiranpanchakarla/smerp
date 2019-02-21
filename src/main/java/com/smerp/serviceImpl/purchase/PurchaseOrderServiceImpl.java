@@ -21,8 +21,10 @@ import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.PurchaseOrderLineItemsRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
+import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
@@ -68,6 +70,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private PurchaseRequestRepository purchaseRequestRepository;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -254,6 +259,26 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		rfq.setCategory("Item");
 		rfq.setStatus(EnumStatusUpdate.CONVERTRFQTOPO.getStatus());
 		requestForQuotationRepository.save(rfq);
+		
+		PurchaseRequest pr = new PurchaseRequest();
+		pr = po.getRfqId().getPurchaseReqId();
+		if(pr!=null) {
+			pr.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+			purchaseRequestRepository.save(pr);
+			
+			PurchaseRequest prRfqRef = po.getRfqId().getPurchaseReqId();
+			
+			List<RequestForQuotation> rfqList =  requestForQuotationService.getRFQListById(prRfqRef);
+			
+			for(RequestForQuotation rfqItem:rfqList) {
+				if(!rfqItem.getStatus().equalsIgnoreCase(EnumStatusUpdate.CONVERTRFQTOPO.getStatus())) {
+					rfqItem.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+					logger.info("rfq-->" + rfq);
+					rfqItem.setIsActive(false);
+				}
+			}
+			
+		}
 		
 		return po;
         }else {

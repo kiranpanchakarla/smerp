@@ -94,7 +94,7 @@
 																	<label>Name</label>
 																	<form:input type="text"
 																		cssClass="form-control vendorname camelCase"
-																		placeholder='Vendor Name' path="vendor.name"
+																		placeholder='Vendor Name' id="vendorName" path="vendor.name"
 																		required="true" autocomplete="off" />
 																</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
@@ -159,23 +159,32 @@
 																		<div class="row">
 																			<div class="col-sm-4 form-group">
 																				<label>PR Doc#</label>
-																				<form:input type="text" cssClass="form-control"
+																				<c:choose>
+																				    <c:when test="${rfq.purchaseReqId.id==null}">
+																				      <form:input type="text" cssClass="form-control"
 																					placeholder='Reference Document Number'
 																					path="referenceDocNumber"  />
+																				    </c:when>    
+																				    <c:otherwise>
+																				       <form:input type="text" cssClass="form-control"
+																					placeholder='Reference Document Number'
+																					path="referenceDocNumber" readonly="true" />
+																				    </c:otherwise>
+																				</c:choose>
 																			</div>
 																			 
                                                                             <div class="col-sm-4 form-group">
 																				<label>Posting Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Posting Date' path="postingDate" required="true"
-																					autocomplete="off" />
+																					placeholder='Posting Date' path="postingDate"
+																					autocomplete="off" readonly="true" />
 																			</div>
 																			 
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>
 																				<form:input type="text" cssClass="form-control"
-																					placeholder='Document Date' path="documentDate" required="true"
-																					autocomplete="off"  />
+																					placeholder='Document Date' path="documentDate"
+																					autocomplete="off" required="true" />
 																				
 																			</div>
 																		</div>
@@ -188,7 +197,7 @@
 																				<label>Required Date</label>
 																				<form:input type="text" cssClass="form-control"
 																					id="require_date" placeholder='Required Date'
-																					autocomplete="off" path="requiredDate"  required="true" />
+																					autocomplete="off" path="requiredDate" required="true" />
 																			
 																			</div>
                                                                             <div class="col-sm-4 form-group">
@@ -917,6 +926,9 @@ $(document).ready(function(){
 		            scroll: true, 
 		            select: function(event, ui) {
 			        	var vendorname = ui.item.value;
+			        	var docNum = $('#referenceDocNumber').val();
+			        	if(docNum!="")
+			        		isValidVendorWithRefDoc(vendorname,docNum);
 			            autocompletevendorDetails(vendorname);
 			       		 },
 				}).focus(function() {
@@ -924,75 +936,92 @@ $(document).ready(function(){
 		        });
 			      
 				});
+			
+		function isValidVendorWithRefDoc(vendorname,docNum){
+			var dataString  ="vendorName="+vendorname+"&refDocNum="+ docNum;
+			$.ajax({
+				   type: "GET",
+	    			data: dataString,
+	                url: "<c:url value="/rfq/isVendorNameExistWithDocNum"/>", 
+	                success: function (response) {
+	                	if(response == true){
+	                		alertify.error("Vendor Name Already Exist with PR Doc Number");
+	                		$('#vendorName').val("");
+	                		$('#vendorName').blur();
+	                	}else{
+	                	//	$("#vendorPayToAddress").append($("<option></option>").attr("value",0);
+	                		//$('#vendor.name').val()="";
+	                	}
+	                }
+			});
+		}
 			 
 		
 		//get the vendor information based on vendor name
     	function autocompletevendorDetails(vendorname){
-			//alert(vendorname);
-			//$("#vendorContactDetails").html("");
-		//	 $("#vendorAddress").html("");
-		
-		
 			
-    	 $.ajax({
-			   type: "GET",
-    			data: {vendorname :vendorname}, 
-    			async : false,
-                url: "<c:url value="/vendor/getVendorInfo"/>", 
-                success: function (response) {
-                	console.log("vendor details"+response);
-                	var obj =JSON.parse(response);
-                	
-                	$('#vendordata').val(obj.id);
-                	
-                	$('.emailId').val(obj.emailId);
-                	var vendorcontactdetails=obj.vendorContactDetails;
-                	var vendoraddress=obj.vendorAddress;
-                	   $("#vendorContactDetails").html('');
-                	$.each(vendorcontactdetails, function( index, value ) {
-                		//  alert( index + ": " + JSON.stringify(value) );
-                		 //   alert(value.contactName)
-                		    $("#vendorContactDetails").append($("<option></option>").attr("value",value.id).text(value.contactName)); 
-                		});
-                	  
-                	 $("#vendorAddress").html('');
-                     $("#vendorPayToAddress").html('');
-                   //  alert("vendoraddress-->"+vendoraddress);
-                	  $.each(vendoraddress, function( index, value ) {
-              		//alert( index + ": " + JSON.stringify(value) );
-              		 if(value.payTo!=null &&  value.shipFrom!=null   ){
-          		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-          		  	     $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-          			 }else if(value.payTo!=null &&  ("payTo".localeCompare(value.payTo)==0)){
-          				//alert("Payto"+value.payTo);
-          				 $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-          			 }else if(value.shipFrom!=null &&  ("shipFrom".localeCompare(value.shipFrom)==0) ){
-          		  	//	alert("Shipping");
-          				 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
-          			   } 
-              			 
-              		  });
-                	  
-                	
-                  	$('#payToAddressTable').html("");
-                  	vendorPayTypeAddress($('#vendorPayToAddress').val());
-                  	
-                	  
-              		$('#shippingAddressTable').html("");
-              		vendorShippingAddress($('#vendorAddress').val());
-              		
-              	  $('#vendorPayToAddress').blur();
-                 $('#vendorAddress').blur();
-              	  
-              	 // $("#form").validator("update");
-              	  
-                	
-               	 },
-                error: function(e){
-                // alert('Error: ' + e);
-                 }
-                });
+		
+			$.ajax({
+				   type: "GET",
+	    			data: {vendorname :vendorname}, 
+	    			async : false,
+	                url: "<c:url value="/vendor/getVendorInfo"/>", 
+	                success: function (response) {
+	                	console.log("vendor details"+response);
+	                	var obj =JSON.parse(response);
+	                	
+	                	$('#vendordata').val(obj.id);
+	                	
+	                	$('.emailId').val(obj.emailId);
+	                	var vendorcontactdetails=obj.vendorContactDetails;
+	                	var vendoraddress=obj.vendorAddress;
+	                	   $("#vendorContactDetails").html('');
+	                	$.each(vendorcontactdetails, function( index, value ) {
+	                		//  alert( index + ": " + JSON.stringify(value) );
+	                		 //   alert(value.contactName)
+	                		    $("#vendorContactDetails").append($("<option></option>").attr("value",value.id).text(value.contactName)); 
+	                		});
+	                	  
+	                	 $("#vendorAddress").html('');
+	                     $("#vendorPayToAddress").html('');
+	                   //  alert("vendoraddress-->"+vendoraddress);
+	                	  $.each(vendoraddress, function( index, value ) {
+	              		//alert( index + ": " + JSON.stringify(value) );
+	              		 if(value.payTo!=null &&  value.shipFrom!=null   ){
+	          		  		 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+	          		  	     $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+	          			 }else if(value.payTo!=null &&  ("payTo".localeCompare(value.payTo)==0)){
+	          				//alert("Payto"+value.payTo);
+	          				 $("#vendorPayToAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+	          			 }else if(value.shipFrom!=null &&  ("shipFrom".localeCompare(value.shipFrom)==0) ){
+	          		  	//	alert("Shipping");
+	          				 $("#vendorAddress").append($("<option></option>").attr("value",value.id).text(value.city)); 
+	          			   } 
+	              			 
+	              		  });
+	                	  
+	                	
+	                  	$('#payToAddressTable').html("");
+	                  	vendorPayTypeAddress($('#vendorPayToAddress').val());
+	                  	
+	                	  
+	              		$('#shippingAddressTable').html("");
+	              		vendorShippingAddress($('#vendorAddress').val());
+	              		
+	              	  $('#vendorPayToAddress').blur();
+	                 $('#vendorAddress').blur();
+	              	  
+	              	 // $("#form").validator("update");
+	              	  
+	                	
+	               	 },
+	                error: function(e){
+	                // alert('Error: ' + e);
+	                 }
+	                });
+			
 		}
+		
 		
 	 
 

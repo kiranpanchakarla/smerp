@@ -20,4 +20,10 @@ public interface RequestForQuotationRepository extends JpaRepository<RequestForQ
 	RequestForQuotation findByPurchaseReqId(PurchaseRequest purchaseReqId);
 	
 	List<RequestForQuotation> findByDocNumber(String rfqDocNum);
+	
+	@Query("SELECT r FROM RequestForQuotation r WHERE vendor.name=:vendorName and referenceDocNumber=:refDocNum")
+	List<RequestForQuotation> findByDocNumber(String vendorName, String refDocNum);
+	
+	@Query("SELECT r FROM RequestForQuotation r WHERE purchaseReqId=:prId")
+	List<RequestForQuotation> getRFQListById(PurchaseRequest prId);
 }

@@ -612,7 +612,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	     /*--Set Lists--*/
 		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
 	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
-	 			"tax_code,product_tax,product_cost_tax,product_group,hsn,warehouse,current_quantity\r\n" + 
+	 			"tax_code,product_tax,product_cost_tax,product_group,hsn,warehouse,current_quantity,tax_description \r\n" + 
 	 			"from vw_goods_received_lineitems_amount where id=" +id;
 	    logger.info("sqlList ----> " + sqlList);
 	    Query queryList = entityManager.createNativeQuery(sqlList);
@@ -636,6 +636,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	    	 ineItemsObj.setWarehouse(tuple[10] == null ? 0 :Integer.parseInt(tuple[10].toString()));
 	    	 ineItemsObj.setRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
 	    	 ineItemsObj.setTempRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 ineItemsObj.setTaxDescription(tuple[12] == null ? "0" : ( tuple[12]).toString());
 	    	 addListItems.add(ineItemsObj);
 	         
 	     }

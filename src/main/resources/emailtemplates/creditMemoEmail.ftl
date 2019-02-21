@@ -58,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if credit.requiredDate??>${credit.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if credit.status??> ${credit.status}</#if></td>
                 </tr>
                 
              
@@ -91,15 +93,7 @@
                 <td style="border: solid 1px ;"><#if creditoiceList.sku??>&nbsp;${creditoiceList.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if creditoiceList.requiredQuantity??>&nbsp;${creditoiceList.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if creditoiceList.unitPrice??>&nbsp;${creditoiceList.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
-                  <#if creditoiceList.taxCode??>
-                <#list taxCodeMap as key, value>
-                <#if (creditoiceList.taxCode) == (value)>
-                     <p> ${key}</p>
-                     </#if>
-                </#list>
-                  </#if>
-                </td>
+                <td style="border: solid 1px ;"><#if creditoiceList.taxDescription??>&nbsp;${creditoiceList.taxDescription}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if creditoiceList.taxTotal??>&nbsp;${creditoiceList.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if creditoiceList.total??>&nbsp;${creditoiceList.total}<#else>--</#if></td>
                 <td style="border: solid 1px ;"> <#if creditoiceList.productGroup??>&nbsp;${creditoiceList.productGroup}<#else>--</#if></td>

@@ -58,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if goodsRec.requiredDate??>${goodsRec.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if goodsRec.status??> ${goodsRec.status}</#if></td>
                 </tr>
                 
              
@@ -91,14 +93,15 @@
                 <td style="border: solid 1px ;"><#if goodsReclist.sku??>&nbsp;${goodsReclist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if goodsReclist.taxDescription??>&nbsp;${goodsReclist.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if goodsReclist.taxCode??>
                 <#list taxCodeMap as key, value>
                 <#if (goodsReclist.taxCode) == (value)>
                      <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
@@ -136,14 +139,15 @@
                 <td style="border: solid 1px ;"><#if goodsReclist.description??>&nbsp;${goodsReclist.description}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
-               <#if goodsReclist.taxCode??>
-                <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
-                     <p>&nbsp;${value}</p>
+              	 <td style="border: solid 1px ;"><#if goodsReclist.taxDescription??>&nbsp;${goodsReclist.taxDescription}<#else>--</#if>
+                 <!-- 
+                  <#if goodsReclist.taxCode??>
+               <#list taxCodeMap as key, value>
+                <#if (goodsReclist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>

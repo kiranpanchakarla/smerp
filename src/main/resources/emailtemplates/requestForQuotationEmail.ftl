@@ -56,6 +56,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td><#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td><strong>Status</strong></td>
+			    <td>: <#if rfq.status??> ${rfq.status}</#if></td>
                 </tr>
                 
              

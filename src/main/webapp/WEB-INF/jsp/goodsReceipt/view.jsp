@@ -251,11 +251,13 @@ text-align: left;
 																													
 																													
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
 																																<c:if test="${entry.value ==listLineItems.taxCode}">
 																													            ${entry.key} 																													 </c:if>
-																															</c:forEach></td>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
@@ -264,8 +266,9 @@ text-align: left;
 
 																												<td><c:forEach var="entry"
 																														items="${plantMap}">
-																														<c:if test="${entry.value ==listLineItems.taxCode}">
-																													            ${entry.key} 																													 </c:if>
+																														<c:if
+																															test="${entry.key ==listLineItems.warehouse}">
+																													 ${entry.value} 																												 </c:if>
 																													</c:forEach></td>
 																													
 																													<td>${listLineItems.tempRequiredQuantity}
@@ -291,12 +294,13 @@ text-align: left;
 																													
 																													
 																													<td>${listLineItems.unitPrice}</td>
-																												<td><c:forEach var="entry"
-																														items="${taxCodeMap}">
-																														<c:if
-																															test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
-																													</c:forEach></td>
+																												<td><%-- <c:forEach var="entry"
+																																items="${taxCodeMap}">
+																																<c:if test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																												<td>${listLineItems.taxTotal}</td>
 																												<td>${listLineItems.total}</td>
 
@@ -305,7 +309,7 @@ text-align: left;
 																																items="${plantMap}">
 																																<c:if
 																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
+																													                 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
 																														
 																													</c:if>

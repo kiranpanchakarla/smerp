@@ -65,4 +65,12 @@ public class PlantServImpl implements PlantService {
 		
 	}
 
+
+
+	@Override
+	public Plant findByName(String name) {
+		// TODO Auto-generated method stub
+		return plantRepository.findByName(name);
+	}
+
 }

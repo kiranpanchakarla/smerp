@@ -57,6 +57,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if po.requiredDate??>${po.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                 <td><strong>Status</strong></td>
+				<td>: <#if po.status??> ${po.status}</#if></td>
                 </tr>
                 
              
@@ -90,14 +92,14 @@
                 <td style="border: solid 1px ;"><#if polist.sku??>&nbsp;${polist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.requiredQuantity??>&nbsp;${polist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.unitPrice??>&nbsp;${polist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
-                  <#if polist.taxCode??>
+                <td style="border: solid 1px ;"><#if polist.taxDescription??>&nbsp;${polist.taxDescription}<#else>--</#if>
+                 <!--  <#if polist.taxCode??>
                 <#list taxCodeMap as key, value>
                 <#if (polist.taxCode) == (value)>
                      <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if polist.taxTotal??>&nbsp;${polist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.total??>&nbsp;${polist.total}<#else>--</#if></td>

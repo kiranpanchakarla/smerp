@@ -106,14 +106,15 @@
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if goodsReclist.taxDescription??>&nbsp;${goodsReclist.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if goodsReclist.taxCode??>
                 <#list taxCodeMap as key, value>
                 <#if (goodsReclist.taxCode) ==  (value)>
                      <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
@@ -139,16 +140,16 @@
                 </tr>
                 
                 <tr>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
+                </tr>
+                <tr>
+               <td><strong>Rounded Off</strong></td>
+                <td>:<#if gr.roundedOff??> ${gr.roundedOff}<#else>--</#if></td>
                 </tr>
                 <tr>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if gr.totalPayment??> ${gr.totalPayment}<#else>--</#if></td>
-                </tr>
-                <tr>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
                 </tr>
             </table>
      

@@ -83,8 +83,8 @@
 																	 <th>Designation</th>
 																	<th>Department</th>
 																	<th>Email Id</th>
-																	<th>Created By</th>
-																	<th>Modified By</th>
+																	<th>Created Date</th>
+																	<th>Modified Date</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>

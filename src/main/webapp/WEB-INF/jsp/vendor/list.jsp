@@ -85,8 +85,8 @@
 																<th>S.No</th>
 																<th>Vendor Name</th>
 																<th>VendorCode</th>
-																<th>Created</th>
-																<th>Modified</th>
+																<th>Created Date</th>
+																<th>Modified Date</th>
 																<th>Actions</th>
 															</tr>
 														</thead>

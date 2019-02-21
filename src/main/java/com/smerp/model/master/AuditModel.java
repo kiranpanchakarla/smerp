@@ -28,10 +28,10 @@ import com.smerp.model.admin.User;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @EnableJpaAuditing
-@JsonIgnoreProperties(
+/*@JsonIgnoreProperties(
         value = {"createdAt", "updatedAt","createdBy","lastModifiedBy"},
         allowGetters = true
-)
+)*/
 
 public class AuditModel  implements Serializable {
 

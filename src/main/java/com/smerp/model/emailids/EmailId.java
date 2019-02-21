@@ -28,8 +28,8 @@ public class EmailId {
 	@Column(name = "cc_email")
 	private String ccEmail;
 	
-	@Column(name = "bcc_email")
-	private String bccEmail;
+	@Column(name = "to_email_YML")
+	private String toEmailYML;
 
 	public Integer getId() {
 		return id;
@@ -71,19 +71,21 @@ public class EmailId {
 		this.ccEmail = ccEmail;
 	}
 
-	public String getBccEmail() {
-		return bccEmail;
+	public String getToEmailYML() {
+		return toEmailYML;
 	}
 
-	public void setBccEmail(String bccEmail) {
-		this.bccEmail = bccEmail;
+	public void setToEmailYML(String toEmailYML) {
+		this.toEmailYML = toEmailYML;
 	}
 
 	@Override
 	public String toString() {
 		return "EmailId [id=" + id + ", moduleName=" + moduleName + ", operation=" + operation + ", toEmail=" + toEmail
-				+ ", ccEmail=" + ccEmail + ", bccEmail=" + bccEmail + "]";
+				+ ", ccEmail=" + ccEmail + ", toEmailYML=" + toEmailYML + "]";
 	}
+
+	 
 	
 	
 }

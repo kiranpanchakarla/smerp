@@ -18,5 +18,7 @@ public interface PlantService {
 	
 	void delete(int id);
 	
+	Plant findByName(String name);
+	
 
 }

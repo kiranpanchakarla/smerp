@@ -136,7 +136,7 @@
 																			</c:otherwise>
 																		</c:choose> 
 																					<a class="btn btn-view"
-																						href="<c:url value="/gr/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
+																						href="<c:url value="/inv/view?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i
 																						class="icon-eye3 left"></i></a>
 																				</td>
 																</tr>

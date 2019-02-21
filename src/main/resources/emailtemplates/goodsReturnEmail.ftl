@@ -58,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if goodsRet.requiredDate??>${goodsRet.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if goodsRet.status??> ${goodsRet.status}</#if></td>
                 </tr>
                 
              
@@ -91,14 +93,15 @@
                 <td style="border: solid 1px ;"><#if goodsRetlist.sku??>&nbsp;${goodsRetlist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.requiredQuantity??>&nbsp;${goodsRetlist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.unitPrice??>&nbsp;${goodsRetlist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if goodsRetlist.taxDescription??>&nbsp;${goodsRetlist.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if goodsRetlist.taxCode??>
                <#list taxCodeMap as key, value>
-                <#if (polist.taxCode) == (value)>
+                <#if (goodsRetlist.taxCode) == (value)>
                      <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.taxTotal??>&nbsp;${goodsRetlist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.total??>&nbsp;${goodsRetlist.total}<#else>--</#if></td>

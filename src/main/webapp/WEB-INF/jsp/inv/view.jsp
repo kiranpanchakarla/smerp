@@ -240,11 +240,13 @@ text-align: left;
 																													
 																													
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
 																																<c:if test="${entry.value ==listLineItems.taxCode}">
 																													            ${entry.key} 																													 </c:if>
-																															</c:forEach></td>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													

@@ -58,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if inv.requiredDate??>${inv.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if inv.status??> ${inv.status}</#if></td>
                 </tr>
                 
              
@@ -91,14 +93,15 @@
                 <td style="border: solid 1px ;"><#if invoiceList.sku??>&nbsp;${invoiceList.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.unitPrice??>&nbsp;${invoiceList.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if invoiceList.taxDescription??>&nbsp;${invoiceList.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if invoiceList.taxCode??>
                 <#list taxCodeMap as key, value>
                 <#if (invoiceList.taxCode) == (value)>
                      <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if invoiceList.taxTotal??>&nbsp;${invoiceList.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.total??>&nbsp;${invoiceList.total}<#else>--</#if></td>

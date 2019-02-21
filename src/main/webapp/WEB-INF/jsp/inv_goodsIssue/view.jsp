@@ -180,11 +180,13 @@ text-align: left;
 																													
 																													 
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
 																																<c:if test="${entry.value ==listLineItems.taxCode}">
 																													            ${entry.key} 																													 </c:if>
-																															</c:forEach></td>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
@@ -253,7 +255,8 @@ text-align: left;
 										<div class="col-sm-4 create-po-wrap">
 										
 											<div class="row">
-											<div class="col-sm-6 form-group"> <label>Discount(%) </label></div>
+											 
+											<div class="col-sm-6"><label>Discount(%) </label></div>
 											<div class="col-sm-6">:	${gr.totalDiscount} </div>
 											</div>
 
@@ -273,16 +276,22 @@ text-align: left;
 											</div>
 
 											<div class="row">
+											<div class="col-sm-6">	<label>Total  </label></div>
+											<div class="col-sm-6">: ${gr.amtRounding} </div>
+											</div>
+											
+											<div class="row">
+											<div class="col-sm-6">	<label>Rounded Off  </label></div>
+											<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${gr.totalPayment - gr.amtRounding}"/></div>
+											
+											</div>
+											
+											<div class="row">
 											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
 											<div class="col-sm-6">: ${gr.totalPayment} </div>
 											</div>
 											
-											<div class="row">
-											<div class="col-sm-6">	<label>Rounding  </label></div>
-											<div class="col-sm-6">: ${gr.amtRounding} </div>
-											</div>
-											
-										</div>
+										 </div>
 									
 									</div>		
 									 		<!--Calculation Part  -->

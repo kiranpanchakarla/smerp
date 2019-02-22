@@ -130,8 +130,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			creditMemo.setCreditMemoLineItems(listItems);
 		}
 		if (creditMemo.getId() != null) { // delete List Of Items.
-			CreditMemo creditMemoObj = creditMemoRepository
-					.findById(creditMemo.getId()).get();
+			CreditMemo creditMemoObj = creditMemoRepository.findById(creditMemo.getId()).get();
 			List<CreditMemoLineItems> requestLists = creditMemoObj.getCreditMemoLineItems();
 			
 			if(requestLists.size()>0 && requestLists!=null) {
@@ -165,11 +164,11 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
-			   	if(creditMemo.getId()!=null) {
+			   /*	if(creditMemo.getId()!=null) {
 			   		CreditMemo creditMemoObj = creditMemoRepository.findById(creditMemo.getId()).get();
 					logger.info(creditMemoObj.getCreatedBy().getUserEmail());
 					creditMemo.setCreatedBy(creditMemoObj.getCreatedBy());
-				 }
+				 }*/
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "creditMemoEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);

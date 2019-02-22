@@ -26,23 +26,23 @@
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Inventory Goods Receipt</h2>
                 
                 
-    <#if gr??>
+    <#if invgr??>
         <table style="width:100%">
                 
                 <tr>
                  <td><strong >Document Number</strong></td>
-                <td>:<#if gr.docNumber??>&nbsp;${gr.docNumber}<#else>--</#if></td>
+                <td>:<#if invgr.docNumber??>&nbsp;${invgr.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
-				<td>: <#if gr.status??> ${gr.status}</#if></td>
+				<td>: <#if invgr.status??> ${invgr.status}</#if></td>
                 </tr>
                 
                 <tr>
                 <td><strong >Posting Date</strong></td>
-                <td>:<#if gr.postingDate??>&nbsp;${gr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td>:<#if invgr.postingDate??>&nbsp;${invgr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Doc Date</strong></td>
-                <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td>:<#if invgr.documentDate??>&nbsp;${invgr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong>Ref Doc No.</strong></td>
-                <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if></td>
+                <td>:<#if invgr.referenceDocNumber??>&nbsp;${invgr.referenceDocNumber}<#else>--</#if></td>
                 </tr>
                  
             </table>
@@ -60,11 +60,11 @@
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Product group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
-                <#list gr.inventoryGoodsReceiptList as goodsReclist>
+                <#list invgr.inventoryGoodsReceiptList as goodsReclist>
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.productNumber??>&nbsp;${goodsReclist.productNumber}<#else>--</#if></td>
@@ -103,28 +103,28 @@
                 <table style="width:30%; float: right;" >
                 <tr>
                 <td><strong>Discount(%)</strong></td>
-                <td>:<#if gr.totalDiscount??>${gr.totalDiscount}<#else>--</#if></td>
+                <td>:<#if invgr.totalDiscount??>${invgr.totalDiscount}<#else>--</#if></td>
                 </tr>
                                                                                    
                 <tr>
                 <td><strong>Total Invoice Amount</strong></td>
-                <td>:<#if gr.totalBeforeDisAmt??> ${gr.totalBeforeDisAmt}<#else> --</#if></td>
+                <td>:<#if invgr.totalBeforeDisAmt??> ${invgr.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
                  <td><strong>Freight</strong></td>
-                <td>:<#if gr.freight??> ${gr.freight} <#else>--</#if></td>
+                <td>:<#if invgr.freight??> ${invgr.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
                <td><strong>Total</strong></td>
-                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
+                <td>:<#if invgr.amtRounding??> ${invgr.amtRounding}<#else>-- </#if></td>
                 </tr>
                 <tr>
                <td><strong>Rounded Off</strong></td>
-                <td>:<#if gr.roundedOff??> ${gr.roundedOff}<#else>--</#if></td>
+                <td>:<#if invgr.roundedOff??> ${invgr.roundedOff}<#else>--</#if></td>
                 </tr>
                 <tr>
                 <td><strong>Total Payment Due</strong></td>
-                <td>:<#if gr.totalPayment??> ${gr.totalPayment}<#else>--</#if></td>
+                <td>:<#if invgr.totalPayment??> ${invgr.totalPayment}<#else>--</#if></td>
                 </tr>
             </table>
                  

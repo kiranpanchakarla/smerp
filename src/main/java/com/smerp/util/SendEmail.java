@@ -241,8 +241,8 @@ public class SendEmail extends EmailerGenerator{
 			input.put("goodsRet", getGoodsRet());
 			input.put("inv", getInvoice());
 			input.put("credit", getCreditMemo());
-			input.put("gr", getInventoryGoodsReceipt());
-			input.put("gr", getInventoryGoodsIssue());
+			input.put("invgr", getInventoryGoodsReceipt());
+			input.put("invgi", getInventoryGoodsIssue());
 			input.put("gr", getInventoryGoodsTransfer());
 			input.put("deptMap", deptMap());
 			input.put("plantMap", purchaseRequestController.plantMap());
@@ -568,11 +568,11 @@ public class SendEmail extends EmailerGenerator{
 					
 				}
 				
-				String createUser =  goodsReturn.getCreatedBy()!=null? goodsReturn.getCreatedBy().getUserEmail():"";
+				/*String createUser =  goodsReturn.getCreatedBy()!=null? goodsReturn.getCreatedBy().getUserEmail():"";
 				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
-				}
+				}*/
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("goodsReturn ID ---> "+ goodsReturn.getId());
@@ -789,11 +789,11 @@ public class SendEmail extends EmailerGenerator{
 					
 				}
 				
-				String createUser =  creditMemo.getCreatedBy()!=null? creditMemo.getCreatedBy().getUserEmail():"";
+				/*String createUser =  creditMemo.getCreatedBy()!=null? creditMemo.getCreatedBy().getUserEmail():"";
 				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
-				}
+				}*/
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("creditMemo ID ---> "+ creditMemo.getId());

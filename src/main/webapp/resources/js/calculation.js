@@ -142,6 +142,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   	sum_total += parseFloat(discAmt) + parseFloat(sum_tax_total);
   	
   	if( tax !="Select"  && !isNaN(sum_total)) {
+  		sum_total += invoiceAmt;
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(invoiceAmt).toFixed(2));
   	 $("#amtRounding").val(sum_total);
@@ -227,7 +228,7 @@ $('#freight').keyup(function() {
 	}
 	
 	if(totalAmt!="") {
-	var finalValue =  Number(totalAmt) + Number(freight);
+	var finalValue =  Number(totalAmt) + Number(freight) + Number(taxAmt) ;
 	 $("#totalPayment").val(Math.round(finalValue));
 	 $("#amtRounding").val( parseFloat(finalValue).toFixed(2));
 	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));

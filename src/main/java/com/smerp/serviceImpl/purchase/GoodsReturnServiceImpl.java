@@ -167,11 +167,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if(goodsReturn.getStatus()!=null &&  !goodsReturn.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
-			   	if(goodsReturn.getId()!=null) {
+			   	/*if(goodsReturn.getId()!=null) {
 			   		GoodsReturn goodsReturnObj = goodsReturnRepository.findById(goodsReturn.getId()).get();
 					logger.info(goodsReturnObj.getCreatedBy().getUserEmail());
 					goodsReturn.setCreatedBy(goodsReturnObj.getCreatedBy());
-				 }
+				 }*/
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(goodsReturn);

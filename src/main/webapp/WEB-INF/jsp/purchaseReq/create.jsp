@@ -744,6 +744,15 @@
                     }
                 });
             }
+            
+            $(document).on("blur", ".username", function() {
+          	  if(availableTagsusernames.includes($(this).val()) == true) 	 {
+          		//alert("true");
+          } else {
+       	   alertify.alert("Purchase Request","Please Select Valid User! "+($(this).val()));
+       	   $(".username").val("");
+               }   
+              });
 
             var productList = [];
             var name  = {};

@@ -532,6 +532,7 @@
 																													    <td><div class="form-group">
 																														<select class="form-control taxCode" required="true"
 																															name="purchaseOrderlineItems[${count}].taxCode" >
+																														<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													
 																													<c:choose>

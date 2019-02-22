@@ -161,6 +161,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		
 		
 		creditMemo= creditMemoRepository.save(creditMemo);
+		
 		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
@@ -179,12 +180,17 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			if(creditMemo.getInvId()!=null) {
 				InVoice invoice  = creditMemo.getInvId();
 				
-				if(invoice.getGrId()!=null && creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+				if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+					
+					if(invoice.getGrId()!=null) {
 					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId().getId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
+					logger.info("purchaseOrder -->" +purchaseOrder);
+					}
+					
 					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
 					inVoiceRepository.save(invoice);
-					logger.info("purchaseOrder -->" +purchaseOrder);
+					
 				}
 			}
 			

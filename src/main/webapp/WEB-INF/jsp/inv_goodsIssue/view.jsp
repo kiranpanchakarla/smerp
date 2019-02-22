@@ -261,7 +261,7 @@ text-align: left;
 											</div>
 
 											<div class="row">
-											<div class="col-sm-6">	<label>Total Before Discount </label> </div>
+											<div class="col-sm-6">	<label>Total Invoice Amount </label> </div>
 											<div class="col-sm-6">:	${gr.totalBeforeDisAmt} </div>
 											</div>
 											

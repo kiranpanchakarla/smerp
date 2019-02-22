@@ -418,7 +418,7 @@
 
 																				<div class="row">
 																                <div class="col-sm-12 form-group">
-																					<label>Total Before Discount</label>
+																					<label>Total Invoice Amount</label>
 
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Before Discount '
@@ -1562,6 +1562,8 @@ $('#freight').keyup(function() {
 	
 	
 	</script>
+	
+	<script src=<c:url value="/resources/js/calculation.js"/> type="text/javascript"></script>
 
 <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
 

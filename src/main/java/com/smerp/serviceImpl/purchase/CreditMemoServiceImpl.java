@@ -28,6 +28,7 @@ import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.CreditMemoLineItemsRepository;
 import com.smerp.repository.purchase.CreditMemoRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
@@ -164,6 +165,11 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	creditMemo =getListAmount(creditMemo);
+			   	if(creditMemo.getId()!=null) {
+			   		CreditMemo creditMemoObj = creditMemoRepository.findById(creditMemo.getId()).get();
+					logger.info(creditMemoObj.getCreatedBy().getUserEmail());
+					creditMemo.setCreatedBy(creditMemoObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "creditMemoEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);

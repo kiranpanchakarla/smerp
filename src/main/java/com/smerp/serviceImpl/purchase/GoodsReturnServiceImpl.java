@@ -30,6 +30,7 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
@@ -166,6 +167,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if(goodsReturn.getStatus()!=null &&  !goodsReturn.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
+			   	if(goodsReturn.getId()!=null) {
+			   		GoodsReturn goodsReturnObj = goodsReturnRepository.findById(goodsReturn.getId()).get();
+					logger.info(goodsReturnObj.getCreatedBy().getUserEmail());
+					goodsReturn.setCreatedBy(goodsReturnObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(goodsReturn);

@@ -134,6 +134,11 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		
 	 if(requestForQuotation.getStatus()!=null &&  !requestForQuotation.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				if(requestForQuotation.getId()!=null) {
+					RequestForQuotation requestForQuotationObj = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
+					logger.info(requestForQuotationObj.getCreatedBy().getUserEmail());
+					requestForQuotation.setCreatedBy(requestForQuotationObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "requestForQuotationEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendRFQEmail(requestForQuotation);

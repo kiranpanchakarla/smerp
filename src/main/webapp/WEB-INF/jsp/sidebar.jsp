@@ -99,7 +99,7 @@
          <li><a href="<c:url value ="/country/list"/>">Countries</a></li>
            <li><a href="<c:url value ="/hsncode/list"/>">HSN Code</a></li>
           <li><a href="<c:url value ="/languages/list"/>">Languages</a></li>
-           <li><a href="<c:url value ="/saccode/list"/>">SAC Code</a></li>
+           <%-- <li><a href="<c:url value ="/saccode/list"/>">SAC Code</a></li> --%>
            <li><a href="<c:url value ="/states/list"/>">States</a></li>
            <li><a href="<c:url value ="/timezone/list"/>">Timezones</a></li>
          </c:if>

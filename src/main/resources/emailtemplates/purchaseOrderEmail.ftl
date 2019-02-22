@@ -173,7 +173,7 @@
                 <tr>
                 <td><#if po.vendorShippingAddress.addressName??>${po.vendorShippingAddress.addressName},</#if></td>
                 <td><#if po.vendorPayTypeAddress.addressName??>${po.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if po.totalBeforeDisAmt??> ${po.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>

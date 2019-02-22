@@ -27,6 +27,7 @@ import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.InVoiceLineItemsRepository;
@@ -188,6 +189,11 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		 if(inVoice.getStatus()!=null &&  !inVoice.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	inVoice =getListAmount(inVoice);
+			   	if(inVoice.getId()!=null) {
+			   		InVoice inVoiceObj = inVoiceRepository.findById(inVoice.getId()).get();
+					logger.info(inVoiceObj.getCreatedBy().getUserEmail());
+					inVoice.setCreatedBy(inVoiceObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "inVoiceEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendInvoiceEmail(inVoice);
@@ -527,7 +533,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice invoice = inVoiceRepository.findById(id).get();
 		/*Set Headers*/
 		
-		String sql= " select total_inv_amount_product_tax,total_inv_amount_before_discount,total_discount,freight,total_inv_amount_after_discount"
+		String sql= " select total_inv_amount_product_tax,total_inv_amount_product,total_discount,freight,total_inv_amount_after_discount"
 				+ " ,total_inv_amount_after_discount_rounding from vw_invoice_amount where id= " +id;
 		
 		logger.info("sql ----> " + sql);
@@ -556,7 +562,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     /*--Set Lists--*/
 		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
 	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
-	 			"tax_code,inv_product_tax,inv_amount_tax,product_group,hsn,warehouse,inv_final_quantity,tax_description \r\n" + 
+	 			"tax_code,inv_product_tax,inv_product_amount,product_group,hsn,warehouse,inv_final_quantity,tax_description \r\n" + 
 	 			"from vw_invoice_lineitems_amount where id=" +id;
 	    logger.info("sqlList ----> " + sqlList);
 	    Query queryList = entityManager.createNativeQuery(sqlList);

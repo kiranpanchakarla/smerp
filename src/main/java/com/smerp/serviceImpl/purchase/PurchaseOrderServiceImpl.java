@@ -180,7 +180,14 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 		 if(purchaseOrder.getStatus()!=null &&  !purchaseOrder.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				
+				
 			   	purchaseOrder =getListAmount(purchaseOrder);
+			   	if(purchaseOrder.getId()!=null) {
+					PurchaseOrder purchaseOrderObj = purchaseOrderRepository.findById(purchaseOrder.getId()).get();
+					logger.info(purchaseOrderObj.getCreatedBy().getUserEmail());
+					purchaseOrder.setCreatedBy(purchaseOrderObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "purchaseOrderEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPOEmail(purchaseOrder);
@@ -359,13 +366,15 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		purchaseOrder.setTotalBeforeDisAmt(addAmt);
 		purchaseOrder.setTaxAmt(""+addTaxAmt);
 		
-		if(purchaseOrder.getTotalPayment()!=null ) {
+		if(purchaseOrder.getTotalPayment()!=null && purchaseOrder.getTotalPayment() != 0) {
 			//total = ((addAmt - ( (addAmt * purchaseOrder.getTotalDiscount())/100 )) + purchaseOrder.getFreight());
 		  total = UnitPriceListItems.getTotalAmtPayment(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight(),addTaxAmt);
 		  logger.info("total ---> " + total);
 		  logger.info("(purchaseOrder.getTotalPayment() ---> " + df2.format(purchaseOrder.getTotalPayment()));
 		  purchaseOrder.setAmtRounding(""+ total);
 		  purchaseOrder.setRoundedOff(""+ df2.format(purchaseOrder.getTotalPayment() - total));
+		}else {
+			purchaseOrder.setAmtRounding(""+ 0.0);
 		}
 	
 	return purchaseOrder;

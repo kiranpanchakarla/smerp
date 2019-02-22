@@ -450,7 +450,7 @@ text-align: left;
 
 											<div class="form-group">
 											<div class="col-sm-6">
-												<label>Total Before Discount  </label>
+												<label>Total Invoice Amount  </label>
 												</div>
 												<div class="col-sm-6">
 												: ${po.totalBeforeDisAmt}

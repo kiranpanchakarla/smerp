@@ -1039,7 +1039,7 @@
 
 																				<div class="row">
 																				<div class="col-sm-12 form-group">
-																					<label>Total Before Discount</label>
+																					<label>Total Invoice Amount</label>
 
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Before Discount '

@@ -31,6 +31,7 @@ import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
@@ -199,6 +200,12 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReceipt =getListAmount(goodsReceipt);
+			   	
+			   	if(goodsReceipt.getId()!=null) {
+					GoodsReceipt goodsReceiptObj = goodsReceiptRepository.findById(goodsReceipt.getId()).get();
+					logger.info(goodsReceiptObj.getCreatedBy().getUserEmail());
+					goodsReceipt.setCreatedBy(goodsReceiptObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReceiptEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReceiptEmail(goodsReceipt);
@@ -612,7 +619,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	     /*--Set Lists--*/
 		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
 	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
-	 			"tax_code,product_tax,product_cost_tax,product_group,hsn,warehouse,current_quantity,tax_description \r\n" + 
+	 			"tax_code,product_tax,product_cost,product_group,hsn,warehouse,current_quantity,tax_description \r\n" + 
 	 			"from vw_goods_received_lineitems_amount where id=" +id;
 	    logger.info("sqlList ----> " + sqlList);
 	    Query queryList = entityManager.createNativeQuery(sqlList);

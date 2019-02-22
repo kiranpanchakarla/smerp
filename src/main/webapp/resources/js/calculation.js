@@ -232,6 +232,7 @@ $('#freight').keyup(function() {
 	 $("#amtRounding").val( parseFloat(finalValue).toFixed(2));
 	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
+	
 });
 	
 	function setCalculationAmt(index){

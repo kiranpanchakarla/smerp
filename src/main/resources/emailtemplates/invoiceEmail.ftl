@@ -175,7 +175,7 @@
                 <tr>
                 <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName},</#if></td>
                 <td><#if inv.vendorPayTypeAddress.addressName??>${inv.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if inv.totalBeforeDisAmt??> ${inv.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>

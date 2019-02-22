@@ -84,28 +84,20 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		
+																		<label>Status</label>: ${purchaseRequest.status}
 																	</div>
+																	
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Require Date</label>:
 																		<fmt:formatDate pattern="dd/MM/yyyy"
 																			value="${purchaseRequest.requiredDate}" />
 																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: Product <%-- ${purchaseRequest.type} --%>
-
-																	</div>
-																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Status</label>: ${purchaseRequest.status}
-																	</div>
-																</div>
-																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Remark</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
+																 
+																
 
 																<!--  -->
 																<input type="hidden" id="addressCount" value="0">

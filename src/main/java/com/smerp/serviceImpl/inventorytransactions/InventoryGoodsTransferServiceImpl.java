@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransferList;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.inventorytransactions.InventoryGoodsTransferRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.util.EmailGenerator;
@@ -65,6 +66,11 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		
 		if(inventoryGoodsTransfer.getStatus()!=null &&  !inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				 if(inventoryGoodsTransfer.getId()!=null) {
+						InventoryGoodsTransfer inventoryGoodsTransferObj = inventoryGoodsTransferRepository.findById(inventoryGoodsTransfer.getId()).get();
+						logger.info(inventoryGoodsTransferObj.getCreatedBy().getUserEmail());
+						inventoryGoodsTransfer.setCreatedBy(inventoryGoodsTransferObj.getCreatedBy());
+					 }
 				inventoryGoodsTransfer =getListAmount(inventoryGoodsTransfer);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "invgoodsTransferEmail.ftl");  //Sending Email

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceiptList;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.inventorytransactions.InventoryGoodsReceiptRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.util.EmailGenerator;
@@ -67,6 +68,11 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 		
 		if(inventoryGoodsReceipt.getStatus()!=null &&  !inventoryGoodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				 if(inventoryGoodsReceipt.getId()!=null) {
+						InventoryGoodsReceipt inventoryGoodsReceiptObj = inventoryGoodsReceiptRepository.findById(inventoryGoodsReceipt.getId()).get();
+						logger.info(inventoryGoodsReceiptObj.getCreatedBy().getUserEmail());
+						inventoryGoodsReceipt.setCreatedBy(inventoryGoodsReceiptObj.getCreatedBy());
+					 }
 				inventoryGoodsReceipt =getListAmount(inventoryGoodsReceipt);
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "invgoodsReceiptEmail.ftl");  //Sending Email

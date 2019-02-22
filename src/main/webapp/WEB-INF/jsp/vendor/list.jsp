@@ -166,6 +166,7 @@
 	<script
 		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
 		type="text/javascript"></script>
+		<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

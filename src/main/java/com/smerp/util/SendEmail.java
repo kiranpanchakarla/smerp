@@ -60,9 +60,6 @@ public class SendEmail extends EmailerGenerator{
 	PurchaseRequestController purchaseRequestController;
 	
 	@Autowired
-	PurchaseRequestRepository purchaseRequestRepository;
-	
-	@Autowired
 	RequestForQuotationController rfqController;
 
 	@Autowired
@@ -117,8 +114,7 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendPREmail(PurchaseRequest purchaseRequest) throws Exception {
 		
-		/*PurchaseRequest purchaseRequestObj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
-		logger.info(purchaseRequestObj.getCreatedBy().getUserEmail());*/
+	
 		 if (shouldNotify()) {
 	            logger.info("Sending notification for " + purchaseRequest.getReferenceUser().getUserEmail() + " ...");
 	            try {
@@ -192,21 +188,30 @@ public class SendEmail extends EmailerGenerator{
 					getToEmails(EnumStatusUpdate.PR.getStatus(),EnumStatusUpdate.APPROVAL.getStatus(),id);
 					
 				}
-				 
-				 
+				logger.info("Before Send To ---> "  +  toEmail);
+				//logger.info("Before Send To ---> "  +  purchaseRequest.getCreatedBy()!=null? purchaseRequest.getCreatedBy().getUserEmail():"");
+				/*+ getUser().getUserEmail() + ","*/
+				
+				
 				if(toEmail != null) {
-					toEmail += "," + getUser().getUserEmail() /*+ ","+ purchaseRequest.getCreatedBy().getUserEmail()*/ ;
+					toEmail =toEmail+ ","+getUser().getUserEmail() ;
 				}else {
 					toEmail =  getUser().getUserEmail();
-					
+				}
+				String createUser =  purchaseRequest.getCreatedBy()!=null? purchaseRequest.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
 				}
 				
+				
+				logger.info("Email Send To ---> "  +  toEmail);
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("purchaseRequest ID ---> "+ purchaseRequest.getId());
 				logger.info("purchaseRequest Doc Number ---> "+ purchaseRequest.getDocNumber() );
 				logger.info("purchaseRequest Status ---> " + purchaseRequest.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				
 				logger.info("Email Send To ---> "  +  recipientList.toString());
 				//logger.info("purchaseRequest Created By  ---> "+ purchaseRequest.getCreatedBy().getUsername());
 			//	logger.info("purchaseRequest Last Updated By  ---> "+ purchaseRequest.getLastModifiedBy().getUsername());
@@ -358,9 +363,9 @@ public class SendEmail extends EmailerGenerator{
 				
 				if(requestForQuotation.getStatus().equals(EnumStatusUpdate.OPEN.getStatus()))
 				{
-					getToEmails(EnumStatusUpdate.PR.getStatus(),EnumStatusUpdate.OPEN.getStatus(),id);
+					getToEmails(EnumStatusUpdate.RFQ.getStatus(),EnumStatusUpdate.OPEN.getStatus(),id);
 				}else {
-					getToEmails(EnumStatusUpdate.PR.getStatus(),EnumStatusUpdate.APPROVAL.getStatus(),id);
+					getToEmails(EnumStatusUpdate.RFQ.getStatus(),EnumStatusUpdate.APPROVAL.getStatus(),id);
 					
 				}
 				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
@@ -370,6 +375,12 @@ public class SendEmail extends EmailerGenerator{
 					toEmail += "," + getUser().getUserEmail();
 				}else {
 					toEmail = getUser().getUserEmail();
+				}
+				
+				String createUser =  requestForQuotation.getCreatedBy()!=null? requestForQuotation.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail + "," + createUser ;
 				}
 				
 				String[] recipientList = toEmail.split(",");
@@ -427,6 +438,13 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 					
 				}
+				
+				String createUser =  purchaseOrder.getCreatedBy()!=null? purchaseOrder.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
+				}
+				
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("purchaseOrder ID ---> "+ purchaseOrder.getId());
@@ -485,6 +503,14 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 					
 				}
+				
+				String createUser =  goodsReceipt.getCreatedBy()!=null? goodsReceipt.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
+				}
+				
+				
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("goodsReceipt ID ---> "+ goodsReceipt.getId());
@@ -540,6 +566,12 @@ public class SendEmail extends EmailerGenerator{
 				}else {
 					toEmail =  getUser().getUserEmail();
 					
+				}
+				
+				String createUser =  goodsReturn.getCreatedBy()!=null? goodsReturn.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
@@ -611,6 +643,13 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 					
 				}
+				
+				String createUser =  invoice.getCreatedBy()!=null? invoice.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
+				}
+				
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("invoice ID ---> "+ invoice.getId());
@@ -749,6 +788,12 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 					
 				}
+				
+				String createUser =  creditMemo.getCreatedBy()!=null? creditMemo.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
+				}
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("creditMemo ID ---> "+ creditMemo.getId());
@@ -804,6 +849,12 @@ public class SendEmail extends EmailerGenerator{
 				}else {
 					toEmail =  getUser().getUserEmail();
 					
+				}
+				
+				String createUser =  inventoryGoodsReceipt.getCreatedBy()!=null? inventoryGoodsReceipt.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
@@ -861,6 +912,12 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 					
 				}
+				
+				String createUser =  inventoryGoodsIssue.getCreatedBy()!=null? inventoryGoodsIssue.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
+				}
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("inventoryGoodsIssue ID ---> "+ inventoryGoodsIssue.getId());
@@ -916,6 +973,12 @@ public class SendEmail extends EmailerGenerator{
 				}else {
 					toEmail =  getUser().getUserEmail();
 					
+				}
+				
+				String createUser =  inventoryGoodsTransfer.getCreatedBy()!=null? inventoryGoodsTransfer.getCreatedBy().getUserEmail():"";
+				logger.info("createUser ---> "  +  createUser);
+				if(!createUser.isEmpty()) {
+					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");

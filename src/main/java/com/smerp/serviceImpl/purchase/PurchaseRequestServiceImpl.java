@@ -76,6 +76,11 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		
 		 if(purchaseRequest.getStatus()!=null &&  !purchaseRequest.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			 try {
+				 if(purchaseRequest.getId()!=null) {
+					PurchaseRequest purchaseRequestObj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+					logger.info(purchaseRequestObj.getCreatedBy().getUserEmail());
+					purchaseRequest.setCreatedBy(purchaseRequestObj.getCreatedBy());
+				 }
       			 RequestContext.initialize();
       		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
       		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);

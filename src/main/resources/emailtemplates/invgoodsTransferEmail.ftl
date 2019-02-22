@@ -131,7 +131,7 @@
                 </tr>
                                                                                    
                 <tr>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if gr.totalBeforeDisAmt??> ${gr.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>

@@ -410,7 +410,7 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"><label>Total Before Discount  </label></div>
+												<div class="col-sm-6"><label>Total Invoice Amount  </label></div>
 												<div class="col-sm-6">: ${cre.totalBeforeDisAmt}</div>
 											</div>
 											<div class="form-group">

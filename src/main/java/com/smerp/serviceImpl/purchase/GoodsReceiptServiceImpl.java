@@ -196,6 +196,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
          logger.info("goodsReceipt -->" +goodsReceipt);
 		
+         
+         goodsReceipt = goodsReceiptRepository.save(goodsReceipt);
+         
 		
 		 if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
@@ -232,7 +235,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		
 		
 		
-		return goodsReceiptRepository.save(goodsReceipt);
+		return goodsReceipt;
 		 
 	}
 

@@ -581,7 +581,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
 		/*Set Headers*/
 		
-		String sql= " select total_gr_amount_product_tax,total_gr_amount_before_discount,total_discount,freight,total_gr_amount_after_discount"
+		String sql= " select total_gr_amount_product_tax,total_gr_amount_product_cost,total_discount,freight,total_gr_amount_after_discount"
 				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +id;
 		
 		logger.info("sql ----> " + sql);

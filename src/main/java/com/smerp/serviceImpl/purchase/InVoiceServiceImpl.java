@@ -279,7 +279,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		
 		/*Set Headers*/
 		
-		String sql= " select total_gr_amount_product_tax,total_gr_amount_before_discount,total_discount,freight,total_gr_amount_after_discount"
+		String sql= " select total_gr_amount_product_tax,total_gr_amount_product_cost,total_discount,freight,total_gr_amount_after_discount"
 				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +inv.getGrId().getId();
 		
 		logger.info("sql ----> " + sql);

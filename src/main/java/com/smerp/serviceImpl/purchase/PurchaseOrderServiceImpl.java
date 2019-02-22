@@ -342,9 +342,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				PurchaseOrderLineItems polist = listItems.get(i);
 				if(polist.getUnitPrice()!=null  && polist.getTaxCode()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(polist.getRequiredQuantity(),polist.getUnitPrice());
 				polist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode()));
-				polist.setTotal(""+UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode()));
+				polist.setTotal(""+UnitPriceListItems.getTotalINVAmt(polist.getRequiredQuantity(),polist.getUnitPrice()));
 				}else {
 				polist.setTaxTotal("");
 				polist.setTotal("");	
@@ -361,7 +361,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		
 		if(purchaseOrder.getTotalPayment()!=null ) {
 			//total = ((addAmt - ( (addAmt * purchaseOrder.getTotalDiscount())/100 )) + purchaseOrder.getFreight());
-		  total = UnitPriceListItems.getTotalPaymentAmt(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight());
+		  total = UnitPriceListItems.getTotalAmtPayment(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight(),addTaxAmt);
 		  logger.info("total ---> " + total);
 		  logger.info("(purchaseOrder.getTotalPayment() ---> " + df2.format(purchaseOrder.getTotalPayment()));
 		  purchaseOrder.setAmtRounding(""+ total);

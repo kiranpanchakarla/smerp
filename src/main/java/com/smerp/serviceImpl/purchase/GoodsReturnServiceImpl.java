@@ -525,9 +525,9 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				GoodsReturnLineItems grelist = listItems.get(i);
 				if(grelist.getRequiredQuantity()!=null && grelist.getUnitPrice()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice());
 				grelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode()));
-				grelist.setTotal(""+UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode()));
+				grelist.setTotal(""+UnitPriceListItems.getTotalINVAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice()));
 				
 				if(goodsReturn.getGrId()!=null) {
 				if(grItms.get(i).getProdouctNumber()!=null ) {
@@ -566,7 +566,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if(goodsReturn.getFreight()==null) goodsReturn.setFreight(0.0);
 			
 			
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReturn.getTotalDiscount(), goodsReturn.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, goodsReturn.getTotalDiscount(), goodsReturn.getFreight(),addTaxAmt);
 		 if(goodsReturn.getGrId() != null) {
 				total_payment = (double) Math.round(total_amt);
 			}else {

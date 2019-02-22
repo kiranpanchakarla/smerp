@@ -125,9 +125,9 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 				InventoryGoodsTransferList grlist = listItems.get(i);
 				if(grlist.getUnitPrice()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice());
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
-				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
+				grlist.setTotal(""+UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice()));
 				 
 				
 				}else {
@@ -146,7 +146,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		Double total_amt=0.0;
 		if(inventoryGoodsTransfer.getTotalDiscount()==null) inventoryGoodsTransfer.setTotalDiscount(0.0);
 		if(inventoryGoodsTransfer.getFreight()==null) inventoryGoodsTransfer.setFreight(0.0);
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsTransfer.getTotalDiscount(), inventoryGoodsTransfer.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, inventoryGoodsTransfer.getTotalDiscount(), inventoryGoodsTransfer.getFreight(),addTaxAmt);
 		 inventoryGoodsTransfer.setAmtRounding("" + total_amt);
 		 inventoryGoodsTransfer.setTotalPayment(inventoryGoodsTransfer.getTotalPayment());
 		 inventoryGoodsTransfer.setRoundedOff("" + df2.format(inventoryGoodsTransfer.getTotalPayment() - total_amt));

@@ -482,9 +482,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				CreditMemoLineItems crelist = listItems.get(i);
 				if(crelist.getUnitPrice()!=null && crelist.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(),crelist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(), crelist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice());
 				crelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(),crelist.getTaxCode()));
-				crelist.setTotal(""+UnitPriceListItems.getTotalAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice(), crelist.getTaxCode()));
+				crelist.setTotal(""+UnitPriceListItems.getTotalINVAmt(crelist.getRequiredQuantity(),crelist.getUnitPrice()));
 				
 				if(creditMemo.getInvId()!=null) {
 				if(grItms.get(i).getProdouctNumber()!=null ) {
@@ -523,7 +523,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		if(creditMemo.getFreight()==null) creditMemo.setFreight(0.0);
 		
 		
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, creditMemo.getTotalDiscount(), creditMemo.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, creditMemo.getTotalDiscount(), creditMemo.getFreight(),addTaxAmt);
 		 if(creditMemo.getInvId() != null) {
 				total_payment =(double) Math.round(total_amt);
 			}else {

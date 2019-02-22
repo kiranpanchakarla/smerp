@@ -124,9 +124,9 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 				InventoryGoodsIssueList grlist = listItems.get(i);
 				if(grlist.getUnitPrice()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice());
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
-				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
+				grlist.setTotal(""+UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice()));
 				 
 				
 				}else {
@@ -147,7 +147,7 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		if(inventoryGoodsIssue.getFreight()==null) inventoryGoodsIssue.setFreight(0.0);
 			
 	     
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inventoryGoodsIssue.getTotalDiscount(), inventoryGoodsIssue.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, inventoryGoodsIssue.getTotalDiscount(), inventoryGoodsIssue.getFreight(),addTaxAmt);
 		 inventoryGoodsIssue.setAmtRounding("" + total_amt);
 		 inventoryGoodsIssue.setTotalPayment(inventoryGoodsIssue.getTotalPayment());
 		 inventoryGoodsIssue.setRoundedOff("" + df2.format(inventoryGoodsIssue.getTotalPayment() - total_amt));

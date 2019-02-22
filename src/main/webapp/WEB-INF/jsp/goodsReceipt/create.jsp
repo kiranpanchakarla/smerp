@@ -2438,7 +2438,7 @@ function goBack() {
 	
 	
 	
-
+/* 
 
  $(document).on("change", ".taxCode", function() {
 
@@ -2524,7 +2524,7 @@ function goBack() {
 	}); */
 	
 
-$(document).on("keyup", ".requiredQuantity", function() {
+/* $(document).on("keyup", ".requiredQuantity", function() {
 	
 	var itemParentRow = $(this).parents(".multTot");
 	 
@@ -2587,9 +2587,9 @@ $(document).on("keyup", ".requiredQuantity", function() {
     	}
 	});
 
+	 */
 	
-	
-	$('#totalDiscount').keyup(function() {
+	/* $('#totalDiscount').keyup(function() {
 	var totalAmt = $("#totalBeforeDisAmt").val();
 	var discount_val = $("#totalDiscount").val();
 	
@@ -2682,13 +2682,15 @@ $('#freight').keyup(function() {
 		 $("#amtRounding").val(totalPayment);
 		}
 	
-	}
+	} 
 	
 	$(document).on("keypress", ".validatePrice", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
-		});
+		}); */
+	
+	
 	
 	$(document).on("keyup", ".validateQuantity", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){
@@ -2728,7 +2730,7 @@ $('#freight').keyup(function() {
 	
 	
 	</script>
-
+<script src=<c:url value="/resources/js/calculation.js"/> type="text/javascript"></script>
 <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
 
 <!-- alertifyjs -->

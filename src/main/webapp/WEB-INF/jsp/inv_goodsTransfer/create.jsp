@@ -1367,7 +1367,7 @@ function goBack() {
 }
 	
 	
-	
+/* 	
 
 
  $(document).on("change", ".taxCode", function() {
@@ -1411,7 +1411,7 @@ function goBack() {
   	 
 	}); 
 	
-	
+	 */
 	
 
 /* $(document).on("keyup", ".unitPrice", function() {
@@ -1452,7 +1452,7 @@ function goBack() {
     	}
 	}); */
 	
-
+/* 
 $(document).on("keyup", ".requiredQuantity", function() {
 	
 	var itemParentRow = $(this).parents(".multTot");
@@ -1617,7 +1617,7 @@ $('#freight').keyup(function() {
 			      return false;
 			   }
 		});
-	
+	 */
 	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;

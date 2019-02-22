@@ -647,9 +647,9 @@ public class InVoiceServiceImpl  implements InVoiceService {
 				InVoiceLineItems invList = listItems.get(i);
 				if(invList.getUnitPrice()!=null && invList.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(invList.getRequiredQuantity(),invList.getUnitPrice(), invList.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(invList.getRequiredQuantity(),invList.getUnitPrice());
 				invList.setTaxTotal(""+UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode()));
-				invList.setTotal(""+UnitPriceListItems.getTotalAmt(invList.getRequiredQuantity(),invList.getUnitPrice(), invList.getTaxCode()));
+				invList.setTotal(""+UnitPriceListItems.getTotalINVAmt(invList.getRequiredQuantity(),invList.getUnitPrice()));
 				} 
 				addListItems.add(invList);
 			  }
@@ -668,7 +668,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		if(inVoice.getFreight()==null) inVoice.setFreight(0.0);
 			
 			
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inVoice.getTotalDiscount(), inVoice.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, inVoice.getTotalDiscount(), inVoice.getFreight(),addTaxAmt);
 		 
 		 if(inVoice.getGrId() != null) {
 				total_payment =(double) Math.round(total_amt);

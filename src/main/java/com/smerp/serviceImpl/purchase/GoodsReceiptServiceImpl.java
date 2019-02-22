@@ -672,9 +672,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				GoodsReceiptLineItems grlist = listItems.get(i);
 				if(grlist.getUnitPrice()!=null && grlist.getRequiredQuantity()!=null) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice());
 				grlist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(),grlist.getTaxCode()));
-				grlist.setTotal(""+UnitPriceListItems.getTotalAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice(), grlist.getTaxCode()));
+				grlist.setTotal(""+UnitPriceListItems.getTotalINVAmt(grlist.getRequiredQuantity(),grlist.getUnitPrice()));
 				
 				/*if(goodsReceipt.getPoId()!=null) {
 				if(poItms.get(i).getProdouctNumber()!=null ) {
@@ -712,7 +712,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		if(goodsReceipt.getFreight()==null) goodsReceipt.setFreight(0.0);
 			
 			
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight());
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, goodsReceipt.getTotalDiscount(), goodsReceipt.getFreight(),addTaxAmt);
 		goodsReceipt.setAmtRounding(""+df2.format(total_amt));
 		//goodsReceipt.setTotalPayment(total_amt);
 		if(goodsReceipt.getPoId() != null) {

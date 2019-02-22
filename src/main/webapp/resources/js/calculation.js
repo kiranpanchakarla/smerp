@@ -126,6 +126,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
  	//alert(discount);
   	if(!isNaN(discount)  && discount!="" ){
   		discAmt = parseFloat(invoiceAmt) - parseFloat(invoiceAmt * discount/100);
+  	}else{
+  		discAmt = parseFloat(invoiceAmt) ;
   	}
   	
   //	alert("cccc"+invoiceAmt);
@@ -142,7 +144,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   	sum_total += parseFloat(discAmt) + parseFloat(sum_tax_total);
   	
   	if( tax !="Select"  && !isNaN(sum_total)) {
-  		sum_total += invoiceAmt;
+  		//sum_total += invoiceAmt;
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(invoiceAmt).toFixed(2));
   	 $("#amtRounding").val(sum_total);

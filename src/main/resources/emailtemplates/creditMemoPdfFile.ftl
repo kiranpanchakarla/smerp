@@ -189,6 +189,12 @@
                 <td>:<#if credit.freight??> ${credit.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
+                <td><#if credit.vendorShippingAddress.city??>${credit.vendorShippingAddress.city},</#if> </td>
+                <td><#if credit.vendorPayTypeAddress.city??>${credit.vendorPayTypeAddress.city},</#if></td>
+                 <td><strong>Tax Amount</strong></td>
+                <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
+                </tr>
+                <tr>
                 <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode},</#if></td>
                 <td><strong>Total</strong></td>

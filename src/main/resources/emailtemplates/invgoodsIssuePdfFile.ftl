@@ -120,7 +120,7 @@
                 </#list>
                 </table>
                 <br></br><br></br>
-                <table style="width:30%; float: right;" >
+                <table style="width:40%; float: right;" >
                 <tr>
                 <td><strong>Discount(%)</strong></td>
                 <td>:<#if gr.totalDiscount??>${gr.totalDiscount}<#else>--</#if></td>
@@ -134,12 +134,16 @@
                  <td><strong>Freight</strong></td>
                 <td>:<#if gr.freight??> ${gr.freight} <#else>--</#if></td>
                 </tr>
+                 <tr>
+                 <td><strong>Tax Amount</strong></td>
+                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
+                </tr>
                 <tr>
                 <td><strong>Total</strong></td>
                 <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
                 </tr>
                 <tr>
-               <td><strong>Rounded Off</strong></td>
+                <td><strong>Rounded Off</strong></td>
                 <td>:<#if gr.roundedOff??> ${gr.roundedOff}<#else>--</#if></td>
                 </tr>
                 <tr>

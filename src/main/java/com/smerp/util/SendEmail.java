@@ -468,7 +468,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendGoodsReceiptEmail(GoodsReceipt goodsReceipt) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createGoodsReceiptMessage(goodsReceipt));
 	               // logger.info("Email notification successfully sent for " + mailTo);

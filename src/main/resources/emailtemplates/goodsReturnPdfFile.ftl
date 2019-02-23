@@ -196,6 +196,12 @@
                 <td>:<#if gr.freight??> ${gr.freight} <#else>--</#if></td>
                 </tr>
                  <tr>
+                <td><#if gr.vendorShippingAddress.city??>${gr.vendorShippingAddress.city},</#if> </td>
+                <td><#if gr.vendorPayTypeAddress.city??>${gr.vendorPayTypeAddress.city},</#if></td>
+                 <td><strong>Tax Amount</strong></td>
+                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
+                </tr>
+                <tr>
                 <td><#if gr.vendorShippingAddress.zipCode??>${gr.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if gr.vendorPayTypeAddress.zipCode??>${gr.vendorPayTypeAddress.zipCode},</#if></td>
                 <td><strong>Total</strong></td>

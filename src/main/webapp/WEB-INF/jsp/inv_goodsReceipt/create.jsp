@@ -256,7 +256,7 @@
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
+																																	<form:input type="text"
 																																		path="inventoryGoodsReceiptList[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -435,7 +435,7 @@
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" />
 																						 
 																				</div></div>
@@ -662,7 +662,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsReceiptList['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsReceiptList['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

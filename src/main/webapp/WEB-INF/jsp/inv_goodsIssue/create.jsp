@@ -444,7 +444,7 @@
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" />
 																						 
 																				</div></div>

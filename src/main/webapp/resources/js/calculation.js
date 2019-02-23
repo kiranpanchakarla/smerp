@@ -174,11 +174,12 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var discount = Number(discount_val) / 100;
 	var discountAmt = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
 	var totalPayment = parseFloat(discountAmt) + parseFloat(taxAmt);
-	
+	//alert(totalPayment);
     
 	if( $("#freight").val()!="") {
 		totalPayment += parseFloat($("#freight").val());
 	}
+	//alert(totalPayment);
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
 	 $("#amtRounding").val(parseFloat(totalPayment).toFixed(2));
@@ -221,16 +222,18 @@ $('#freight').keyup(function() {
 	
 //alert("discount_val" +discount_val);
 //alert("freight" +freight);
-//alert("totalAmt" +totalAmt);
+   // alert("totalAmt" +totalAmt);
+	
 	if( discount_val !="" && $("#totalDiscount").val()!="") {
 		var discount = Number(discount_val) / 100;
 		var discountAmt = parseFloat(totalAmt) - parseFloat(totalAmt * discount);
 		totalAmt = parseFloat(discountAmt) +  parseFloat(taxAmt);
-		
+	}else{
+		totalAmt += parseFloat(taxAmt);
 	}
 	
 	if(totalAmt!="") {
-	var finalValue =  Number(totalAmt) + Number(freight) + Number(taxAmt) ;
+	 var finalValue =  Number(totalAmt) + Number(freight) ;
 	 $("#totalPayment").val(Math.round(finalValue));
 	 $("#amtRounding").val( parseFloat(finalValue).toFixed(2));
 	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));

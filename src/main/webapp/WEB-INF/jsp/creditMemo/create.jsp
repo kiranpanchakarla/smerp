@@ -2511,19 +2511,25 @@ $('#freight').keyup(function() {
 		var itemParentRow = $(this).parents(".multTot");
 		 
 		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
-		
+	//	alert("quea.."+original_requiredQuantity);
 		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
-		
+		//alert("change_requiredQuantity.."+change_requiredQuantity);
 		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
 		
 	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
 		
+		if(change_requiredQuantity>0){
+			if(temp_requiredQuantity<remain_requiredQuantity){
+				alertify.alert("CreditMemo","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+				 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
+				 return false;
+			}
+		}else{
+			alertify.alert("CreditMemo","Avaliable "+temp_requiredQuantity + ". Please Enter more than 0(zero)");
+			($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
+			return false;
+			}
 		
-		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("CreditMemo","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
-			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			 return false;
-		}
 		
 		});
 	

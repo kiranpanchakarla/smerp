@@ -1222,3 +1222,10 @@ h2.font-weight-normal {
 .popup-content li { position: relative; padding-left: 20px; list-style:none; } 
 .popup-content li:before { position: absolute; content: "\ea0b"; font-family: 'icomoon' !important; top: 0px; left: 0;color: #106570; font-weight: bold; } 
 .popup-content { margin-bottom: 0px; padding-left: 10px; }
+
+#edit_item_serviceTbl select {
+    width: 120px !important;
+}
+.table-responsive .form-group {
+    margin-bottom: 0px;
+}

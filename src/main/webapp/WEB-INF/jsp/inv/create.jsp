@@ -705,19 +705,19 @@
 																																		path="inVoiceLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
-																																		readonly="true"></form:input>
+																																		></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="inVoiceLineItems[${count}].sku"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
+																																	<form:input type="text"
 																																		path="inVoiceLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -1295,7 +1295,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inVoiceLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="inVoiceLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1308,7 +1308,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inVoiceLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="inVoiceLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

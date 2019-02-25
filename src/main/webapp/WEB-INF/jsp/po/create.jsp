@@ -663,7 +663,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
 																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
+																															class="form-control uom"></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].sku"
@@ -1129,7 +1129,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'" />'
 			+ '</div>'
 			+'</td>'
 			

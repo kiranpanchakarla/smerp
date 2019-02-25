@@ -847,19 +847,19 @@
 																																		path="goodsReceiptLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
-																																		readonly="true"></form:input>
+																																		></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].sku"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
+																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -1434,7 +1434,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1447,7 +1447,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -2361,11 +2361,35 @@ $('#containerContainingTabs a').on('click', function(e) {
 	
 	if($(".mySubButton").hasClass("disabled")){
 		 alertify.error('Please fill mandatory fields');
-		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		alertify.alert("Goods Receipt","Please fill mandatory fields");
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		  var subStatus = $(this).val();
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
+		  }
+		  
+		if(flag == true){
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -2373,14 +2397,18 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Ready to Convert Goods Receipt to Goods Return');
+				 alertify.success('Approved Return');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
-		  }
-	
+		  
+	   } else{
+		  alertify.alert("Goods Receipt","Quantity Required For Atleast One Product");
+			return false;
+	  	}   
+	}
 	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
@@ -2692,7 +2720,7 @@ $('#freight').keyup(function() {
 	
 	
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }

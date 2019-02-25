@@ -2181,11 +2181,35 @@ $('#containerContainingTabs a').on('click', function(e) {
 	
 	if($(".mySubButton").hasClass("disabled")){
 		 alertify.error('Please fill mandatory fields');
-		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		alertify.alert("Credit Memo","Please fill mandatory fields");
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		  var subStatus = $(this).val();
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
+		  }
+		  
+		if(flag == true){
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -2199,6 +2223,11 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
+		  
+	   } else{
+		  alertify.alert("Credit Memo","Quantity Required For Atleast One Product");
+			return false;
+	  	}  
 		  }
 	
     if ($('#items_radio').is(":checked") == true) {
@@ -2518,17 +2547,12 @@ $('#freight').keyup(function() {
 		
 	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
 		
-		if(change_requiredQuantity>0){
 			if(temp_requiredQuantity<remain_requiredQuantity){
 				alertify.alert("CreditMemo","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
 				 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 				 return false;
 			}
-		}else{
-			alertify.alert("CreditMemo","Avaliable "+temp_requiredQuantity + ". Please Enter more than 0(zero)");
-			($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			return false;
-			}
+		
 		
 		
 		});

@@ -2175,11 +2175,35 @@ $('#containerContainingTabs a').on('click', function(e) {
 	
 	if($(".mySubButton").hasClass("disabled")){
 		 alertify.error('Please fill mandatory fields');
-		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		alertify.alert("Goods Return","Please fill mandatory fields");
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		  var subStatus = $(this).val();
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
+		  }
+		  
+		if(flag == true){
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -2193,7 +2217,12 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
-		  }
+		  
+	   } else{
+		  alertify.alert("Goods Return","Quantity Required For Atleast One Product");
+			return false;
+	  	} 
+	}
 	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
@@ -2497,7 +2526,7 @@ $('#freight').keyup(function() {
 			   }
 		}); */
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
@@ -2512,13 +2541,12 @@ $('#freight').keyup(function() {
 		
 	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
 		
-		
-		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Return","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
-			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			 return false;
-		}
-		
+	  
+			if(temp_requiredQuantity<remain_requiredQuantity){
+				alertify.alert("Goods Return","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+				 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
+				 return false;
+			}
 		});
 	
 	

@@ -75,7 +75,7 @@
 															<tr>
 																<th>S.no</th>
 																<th>Created By</th>
-																<th>Document Number</th>
+																<th>Document No</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
@@ -91,8 +91,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${purchaseRequestsList.user.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.updatedAt}"/></td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<td>
 																			<a class="btn btn-view">&nbsp;</a>

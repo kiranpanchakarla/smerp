@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,12 +22,15 @@ import org.springframework.stereotype.Service;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
+import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.CreditMemoLineItems;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
@@ -34,6 +41,7 @@ import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -69,17 +77,18 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
-	
-	
+		
 	@Autowired
 	GoodsReceiptRepository goodsReceiptRepository;
-
 	
-	
-	
-	
+	@PersistenceContext    
+	private EntityManager entityManager;
+		
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
@@ -110,6 +119,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			goodsReturn.setGoodsReturnLineItems(listItems);
@@ -124,15 +134,23 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				}
 			
 			
-			if(goodsReturn.getGrId()==null) {  // if RfqId null remove list items 
 			
+			if(goodsReturn.getGrId()!=null) {
+			GoodsReceipt gr = goodsReturn.getGrId();
 			
-			}else {
-				 logger.info("Goods Return Data -->" +goodsReturn);
+			Vendor vendor = vendorService.findById(gr.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
+
+			goodsReturn.setVendor(vendor);
+			goodsReturn.setVendorContactDetails(vendorsContactDetails);
+			goodsReturn.setVendorShippingAddress(vendorShippingAddress);
+			goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
 			}
 		}
          logger.info("goodsReturn -->" +goodsReturn);
-		Vendor vendor = vendorService.findById(goodsReturn.getVendor().getId());
+		/*Vendor vendor = vendorService.findById(goodsReturn.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReturn.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReturn.getVendorPayTypeAddress().getId());
 		
@@ -141,11 +159,19 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		goodsReturn.setVendor(vendor);
 		goodsReturn.setVendorContactDetails(vendorsContactDetails);
 		goodsReturn.setVendorShippingAddress(vendorShippingAddress);
-		goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
+		goodsReturn.setVendorPayTypeAddress(vendorPayAddress);*/
 		
-		if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("APP")) {
+         
+         goodsReturn= goodsReturnRepository.save(goodsReturn);
+         
+		if(goodsReturn.getStatus()!=null &&  !goodsReturn.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	goodsReturn =getListAmount(goodsReturn);
+			   	/*if(goodsReturn.getId()!=null) {
+			   		GoodsReturn goodsReturnObj = goodsReturnRepository.findById(goodsReturn.getId()).get();
+					logger.info(goodsReturnObj.getCreatedBy().getUserEmail());
+					goodsReturn.setCreatedBy(goodsReturnObj.getCreatedBy());
+				 }*/
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnEmail(goodsReturn);
@@ -153,48 +179,25 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
     			e.printStackTrace();
     		}
 		
-			GoodsReceipt updategr = updateGoodsReceiptQunatity(goodsReturn.getGrId(),goodsReturn);
+			/*GoodsReceipt updategr = updateGoodsReceiptQunatity(goodsReturn.getGrId(),goodsReturn);*/  
 		
-			if(updategr.getPoId()!=null) {
+			/*if(updategr.getPoId()!=null) {
 				PurchaseOrder po = purchaseOrderService.findById(updategr.getPoId());
 				
 				String status = goodsReceiptService.setStatusOfPurchaseOrder(updategr);
 				po.setStatus(status);
 				purchaseOrderRepository.save(po);
-				}
+				}*/
+			
+			if(goodsReturn.getGrId()!=null  && goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+			GoodsReceipt goodsReceipt =  goodsReturn.getGrId();
+			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
+			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
+			goodsReceiptRepository.save(goodsReceipt);
+			logger.info("purchaseOrder -->" +purchaseOrder);
+			}
 			
 		}
-		else if(goodsReturn.getStatusType()!=null &&  goodsReturn.getStatusType().equals("RE")) {
-			try {
-			   	goodsReturn =getListAmount(goodsReturn);
-    			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReturnEmail.ftl");  //Sending Email
-    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReturnRejectEmail(goodsReturn);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
-		}
-	
-		
-		
-		
-		
-		// update goods Recipt Qunatity.
-		// change status PO
-		
-		
-		/*GoodsReceipt updategr = updateQunatity(goodsReturn.getGrId(),goodsReturn);
-		
-		if(updategr.getPoId()!=null) {
-		PurchaseOrder po = purchaseOrderService.findById(updategr.getPoId());
-		
-		String status = goodsReceiptService.setStatusOfPurchaseOrder(updategr);
-		po.setStatus(status);
-		purchaseOrderRepository.save(po);
-		}*/
-		
-		goodsReturn= goodsReturnRepository.save(goodsReturn);
-		
 		return goodsReturn; 
 		 
 	}
@@ -207,13 +210,14 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		logger.info("grId" + grId);
 		/*GoodsReturn dup_gre =goodsReturnRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gre==null) { */
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GRE.getStatus());
 		GoodsReturn greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
-			gre.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
+			gre.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		gre.setDocNumber(GenerateDocNumber.documentNumberGeneration("GRE"+(String)dtf.format(now) +"0"));
+		gre.setDocNumber(GenerateDocNumber.documentNumberGeneration("GRE"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (gr != null) {
@@ -222,9 +226,10 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			gre.setPostingDate(gr.getPostingDate());
 			gre.setCategory(gr.getCategory());
 			gre.setRemark(gr.getRemark());
+			gre.setDeliverTo(gr.getDeliverTo());
 			gre.setReferenceDocNumber(gr.getDocNumber());
 			gre.setRequiredDate(gr.getRequiredDate());
-			gre.setGrId(gr.getId());
+			gre.setGrId(gr);
 			gre.setIsActive(true);
 			gre.setVendor(gr.getVendor());
 			gre.setVendorContactDetails(gr.getVendorContactDetails());
@@ -259,7 +264,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					
 				
 					//line.setRequiredQuantity(poItms.get(i).getRequiredQuantity() - greQunatity);
-					line.setRequiredQuantity(0);
+					//line.setRequiredQuantity(0);
 					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
@@ -267,6 +272,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
+					line.setTaxDescription(grItms.get(i).getTaxDescription());
 					line.setUnitPrice(grItms.get(i).getUnitPrice());
 					
 					line.setTaxTotal(grItms.get(i).getTaxTotal());
@@ -467,6 +473,39 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	
 	@Override
+	public GoodsReturn getGoodsReturnById(int id) {
+		GoodsReturn goodsReturn = goodsReturnRepository.findById(id).get();
+	     
+	 	String sqlList= " select product_number,current_quantity,creditmemo_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId().getId();
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
+	     for(Object[] tuple : invoiceList) {
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
+	     }
+	    
+	     List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 GoodsReturnLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
+	                 }
+	        }
+	    }
+	     goodsReturn.setGoodsReturnLineItems(listItems);
+	    return goodsReturn;
+	}
+	
+	@Override
 	public GoodsReturn getListAmount(GoodsReturn goodsReturn) {
 		logger.info("getListAmount-->");
 		List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
@@ -477,10 +516,10 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		List<GoodsReceiptLineItems> grItms =null;
 		 List<GoodsReturn> listGoodsReturn =null;
 		if(goodsReturn.getGrId()!=null) {
-			gr = goodsReceiptService.findById(goodsReturn.getGrId());
+			gr = goodsReturn.getGrId();
 			grItms = gr.getGoodsReceiptLineItems();
 		listGoodsReturn = goodsReturnRepository
-					.findByListgrId(gr.getId(),EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
+					.findByListgrId(gr,EnumStatusUpdate.REJECTED.getStatus());  // check Multiple  Quantity
 		}
 		
 		
@@ -490,11 +529,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				GoodsReturnLineItems grelist = listItems.get(i);
-				if(grelist.getUnitPrice()!=null) {
+				if(grelist.getRequiredQuantity()!=null && grelist.getUnitPrice()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice());
 				grelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode()));
-				grelist.setTotal(""+UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode()));
+				grelist.setTotal(""+UnitPriceListItems.getTotalINVAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice()));
 				
 				if(goodsReturn.getGrId()!=null) {
 				if(grItms.get(i).getProdouctNumber()!=null ) {
@@ -505,12 +544,12 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				
 				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
 				logger.info("greQunatity-->" + greQunatity);
-				if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+				/*if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - greQunatity);
 					}else 
 					{
 						grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity());
-					}
+					}*/
 				
 				}else {
 				grelist.setTaxTotal("");
@@ -528,18 +567,25 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		logger.info("goodsReturn.getTotalDiscount()-->" + goodsReturn.getTotalDiscount());
 		logger.info("goodsReturn.getFreight()-->" + goodsReturn.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
 		if(goodsReturn.getTotalDiscount()==null) goodsReturn.setTotalDiscount(0.0);
-		if(goodsReturn.getFreight()==null) goodsReturn.setFreight(0);
+		if(goodsReturn.getFreight()==null) goodsReturn.setFreight(0.0);
 			
 			
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, goodsReturn.getTotalDiscount(), goodsReturn.getFreight());
-		goodsReturn.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
-		goodsReturn.setTotalPayment(total_amt);
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, goodsReturn.getTotalDiscount(), goodsReturn.getFreight(),addTaxAmt);
+		 if(goodsReturn.getGrId() != null) {
+				total_payment = (double) Math.round(total_amt);
+			}else {
+				total_payment = goodsReturn.getTotalPayment();
+			}
+		goodsReturn.setAmtRounding(""+df2.format(total_amt));
+		goodsReturn.setTotalPayment(total_payment);
+		goodsReturn.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return goodsReturn;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	
@@ -582,7 +628,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	@Override
 	public Boolean checkQuantityGr(GoodsReceipt goodsReceipt) {
 		List<GoodsReturn> listGoodsReturn = goodsReturnRepository
-				.findByListgrId(goodsReceipt.getId(),EnumStatusUpdate.REJECTED.getStatus());
+				.findByListgrId(goodsReceipt,EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listGoodsReturn-->" +listGoodsReturn);
 		
 	/*	String status = setStatusOfPurchaseOrder(listGoodsReturn.get(0));
@@ -704,7 +750,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 			}
 			
-			
+			/*
 public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsReturnObj) {
 				
 				GoodsReceipt goodsReceiptObj = goodsReceiptRepository.findById(grId).get();
@@ -733,7 +779,7 @@ public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsRet
 				goodsReceiptObj.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());
 				goodsReceiptObj= goodsReceiptRepository.save(goodsReceiptObj);
 				return goodsReceiptObj;
-			}
+			}*/
 
 }
 

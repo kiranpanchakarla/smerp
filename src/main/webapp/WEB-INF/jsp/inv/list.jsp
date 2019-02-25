@@ -88,7 +88,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>Vendor Name</th>
 																<th>Email Id</th>
 																<th>Document Number</th>
@@ -106,12 +106,12 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'  && list.status != 'Credit Memo'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Invoice'}">
 																						<c:set var="permissions" scope="session"
@@ -206,7 +206,7 @@
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
 		type="text/javascript"></script>
-
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

@@ -48,14 +48,14 @@
 													<h2 class="content-header-title">Company</h2>
 												</div>
 												<div class="col-md-6">
-												<c:forEach items="${sessionScope.umpmap}" var="ump">
+												<%-- <c:forEach items="${sessionScope.umpmap}" var="ump">
 										 <c:if test="${ump.key eq 'Company'}">
 										 <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	<c:if test="${fn:containsIgnoreCase(permissions,'create')}">
 	        									<a class="btn btn-primary" href="<c:url value="/company/create"/>">Create</a>
 	   										 </c:if>
 	       								</c:if>     
-   									 </c:forEach>
+   									 </c:forEach> --%>
 													 
 												</div>
 												<div class="col-md-4">
@@ -76,13 +76,13 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>S.no</th>
+																    <th>S.No</th>
 																	<th>Name</th>
 																	<th>GSTIN</th>
 																	<th>City</th>
 																	<th>Website</th>
-																	<th>Created</th>
-																	<th>Modified</th>
+																	<th>Created Date</th>
+																	<th>Modified Date</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -95,8 +95,8 @@
 																	<td>${companyList.gstinVat}</td>
 																	<td>${companyList.city}</td>
 																	<td>${companyList.webSite}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${companyList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${companyList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${companyList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${companyList.updatedAt}"/></td>
 																	<td >
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Company'}">
@@ -104,9 +104,9 @@
 																		<c:if test="${fn:containsIgnoreCase(permissions,'update')}"> 
 																	<a class ="btn btn-edit" href="<c:url value="/company/getInfo?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-edit left"></i></a>  
 																	 </c:if>
-									   								<c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
+									   								<%-- <c:if test="${fn:containsIgnoreCase(permissions,'delete')}"> 
 																	<a  class ="btn btn-delete" href="#"  onclick="deleteById('<c:out value="${companyList.id}"/>','/company/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin left"></i></a>
-															    	 </c:if> 
+															    	 </c:if>  --%>
 									   								<c:if test="${fn:containsIgnoreCase(permissions,'view')}">
 															    	<a  class ="btn btn-view" href="<c:url value="/company/view?companyId=${companyList.id}"/>" data-toggle="tooltip" data-placement="top" title="View"><i class="icon-eye3 left"></i></a>
 																	 </c:if> 
@@ -150,7 +150,7 @@ $(document).ready(function(){
 <script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
-
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 	
 </html>

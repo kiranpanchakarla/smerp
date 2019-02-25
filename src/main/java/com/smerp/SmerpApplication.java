@@ -1,5 +1,9 @@
 package com.smerp;
 
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -54,5 +58,10 @@ public class SmerpApplication extends SpringBootServletInitializer {
 	public BCryptPasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+	 
+	@PostConstruct
+	void start() {
+	    TimeZone.setDefault(TimeZone.getTimeZone("GMT+5:30"));
+	}
+	 
 }

@@ -25,50 +25,19 @@ public class ProductQuantityServiceImpl implements ProductQuantityService {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductQuantity> findProductOrderedQuantity(@Param("name")String name) {
+	public List<ProductQuantity> findProductOrderedQuantity(@Param("id")Integer id) {
 		
-		String posql= " with prWise as (select polist.product_number as prProduct ,polist.warehouse as prwarehouse,sum(polist.required_quantity) as productQuantity\r\n" + 
-				"from tbl_purchase_order_lineitems as polist join  tbl_purchase_order as po  on po.id =polist.po_id  \r\n" + 
-				"and polist.product_number =" + "'" + name + "'" + " and  po.status in ('Approved','Partially_Received','Completed')  \r\n" + 
-				"group by polist.product_number,polist.warehouse order by polist.warehouse),\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"grWise as(select grlist.product_number as grproduct,       \r\n" + 
-				"grlist.warehouse as grwarehouse,sum(grlist.required_quantity)\r\n" + 
-				" as receivedQuantity from tbl_goods_receipt_lineitems as grlist \r\n" + 
-				" join tbl_goods_receipt as gr on gr.id = grlist.gr_id and grlist.product_number ="+"'"+name +"'" + " and gr.status in \r\n" + 
-				" ('Approved','Goods_Return')  and gr.reference_doc_number != '' \r\n" + 
-				"  group by grlist.product_number,grlist.warehouse order by grlist.product_number), "
-				+ "directgrWise as(select grlist.product_number as grproduct,       \r\n" + 
-				"grlist.warehouse as grwarehouse,sum(grlist.required_quantity)\r\n" + 
-				" as directQuantity from tbl_goods_receipt_lineitems as grlist \r\n" + 
-				" join tbl_goods_receipt as gr on gr.id = grlist.gr_id and grlist.product_number =" + "'" + name+ "'" + " and gr.status in \r\n" + 
-				" ('Approved','Goods_Return') and gr.reference_doc_number = '' \r\n" + 
-				"  group by grlist.product_number,grlist.warehouse order by grlist.product_number),\r\n" + 
-				"\r\n" + 
-				" warehouseWise as (select plant.plant_name as warehouse, plant.plant_id as warehouseId from tbl_admin_plant as plant)\r\n" + 
-				"\r\n" + 
-				"select warehouseWise.warehouseId,warehouseWise.warehouse\r\n" + 
-				",COALESCE(prWise.productQuantity,0) as po,\r\n" + 
-				"COALESCE(grWise.receivedQuantity,0)as gr,\r\n" + 
-				"COALESCE(directgrWise.directQuantity,0)as directgr\r\n" + 
-				" from\r\n" + 
-				"warehouseWise \r\n" + 
-				"left join directgrWise on  directgrWise.grwarehouse = warehouseWise.warehouseId\r\n" + 
-				"left join grWise on  grWise.grwarehouse = warehouseWise.warehouseId\r\n" + 
-				"left join prWise on   prWise.prwarehouse= warehouseWise.warehouseId\r\n" + 
-				"\r\n" + 
-				"order by warehouseWise.warehouseId";
+		String productsql= " select * from vw_inventory_product_quantity where product_id = '" + id + " ' ";
 		
 		
 		 
 		
 		
-		Query query1 = entityManager.createNativeQuery(posql);
+		Query query1 = entityManager.createNativeQuery(productsql);
 		 
 		logger.info("Product ordered ----> " + query1);
 		
-		logger.info("Product ordered SQL ----> " + posql);
+		logger.info("Product ordered SQL ----> " + productsql);
 		
 		 
 		//List<Object[]>	list1 = query1.getResultList();
@@ -82,23 +51,19 @@ public class ProductQuantityServiceImpl implements ProductQuantityService {
 		 for(Object[] tuple : arrayList) {
 			 ProductQuantity productQuantity = new ProductQuantity();
 			  
-			 productQuantity.setWarehouseCode(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
-			 productQuantity.setWarehouseName((tuple[1]).toString());
-			 productQuantity.setOrdered(tuple[2] == null ? 0 : ((BigInteger) tuple[2]).intValue());
-			 productQuantity.setPoToGr(tuple[3] == null ? 0 : ((BigInteger) tuple[3]).intValue());
-			 productQuantity.setDirectGr(tuple[4] == null ? 0 : ((BigInteger) tuple[4]).intValue());
+			 productQuantity.setProductId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 productQuantity.setWarehouse((tuple[3]).toString());
+			 productQuantity.setInStock((Integer)(tuple[4] == null ? 0 : (Integer.parseInt((tuple[4].toString())))));
+			 productQuantity.setOrdered((Integer)(tuple[5] == null ? 0 : (Integer.parseInt((tuple[5].toString())))));
+			 productQuantity.setAvaliableQuantity((Integer)(tuple[6] == null ? 0 : (Integer.parseInt((tuple[6].toString())))));
 			 productQuantities.add(productQuantity);
 		 }
-	
+	 
 		 logger.info("PR Count--------->"+productQuantities); 
 		 
 		return productQuantities;
 	}
 
-	@Override
-	public ProductQuantity findProductReceivedQuantity(String name) {
-		return null;
 	 
-	}
 
 }

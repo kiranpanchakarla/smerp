@@ -31,17 +31,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
+import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -67,7 +72,9 @@ public class InvoiceController {
 	@Autowired
 	InVoiceService inVoiceService;
 	
-
+	@Autowired
+	CreditMemoService creditMemoService;
+	
 	@Autowired
 	SacService sacService;
 	
@@ -77,9 +84,9 @@ public class InvoiceController {
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
 	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 	
-
-
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -93,31 +100,33 @@ public class InvoiceController {
 		logger.info("taxCode()-->" + taxCode());
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
+		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+		logger.info("Inv count-->" + count);
+		
 		InVoice invDetails = inVoiceService.findLastDocumentNumber();
 		if (invDetails != null && invDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(invDetails.getDocNumber()));
+			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(invDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
+	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("invDetails-->" + invDetails);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("inv", inv);
 		return "inv/create";
 	}
-
-	
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
@@ -128,10 +137,10 @@ public class InvoiceController {
 		inv = inVoiceService.getListAmount(inv);  // set Amt Calculation  
 		logger.info("inv-->" + inv);
 		ObjectMapper mapper = poloadData(model, inv);
-		
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
@@ -163,13 +172,19 @@ public class InvoiceController {
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		inv = inVoiceService.getListAmount(inv);
+		InVoice inv = inVoiceService.getInVoiceById(Integer.parseInt(id));
+		logger.info("inv-->" + inv);
+		
+		
+		List<LineItemsBean> lineItemsBean = inVoiceService.getLineItemsBean(Integer.parseInt(id));
+		logger.info("lineItemsBean-->" + lineItemsBean);
+		//inv = inVoiceService.getListAmount(inv);
 		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());
-		//model.addAttribute("checkStatusGr", goodsReturnService.checkQuantityGr(inv));
+		//model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
 		model.addAttribute("inv", inv);
+		model.addAttribute("lineItemsBean",lineItemsBean);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
 		return "inv/view";
@@ -185,9 +200,25 @@ public class InvoiceController {
 
 	
 	@PostMapping("/save")
-	public String name(InVoice requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		logger.info("inv details" + inVoiceService.save(requestForQuotation));
+	public String name(InVoice invoice) {
+		logger.info("Inside save method" + invoice);
+		
+		if(invoice.getId() == null) {
+			boolean status = inVoiceService.findByDocNumber(invoice.getDocNumber());
+			if(!status) {
+				logger.info("inv details" + inVoiceService.save(invoice));
+			}else {
+				Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+				InVoice invdetails = inVoiceService.findLastDocumentNumber();
+				if (invdetails != null && invdetails.getDocNumber() != null) {
+					invoice.setDocNumber(GenerateDocNumber.documentNumberGeneration(invdetails.getDocNumber(),count));
+				}
+				logger.info("inv details" + inVoiceService.save(invoice));
+			}
+		}else {
+			logger.info("inv details" + inVoiceService.save(invoice));
+		}
+		
 		return "redirect:list";
 	}
 	
@@ -215,18 +246,29 @@ public class InvoiceController {
 		model.addAttribute("list", list);
 		return "inv/list";
 	}
+	
+	
+	@GetMapping(value = "/approvedList")
+	public String approvedList(Model model) {
+		List<InVoice> list = inVoiceService.invApprovedList();
+		logger.info("InVoice list-->" + list);
+		model.addAttribute("list", list);
+		return "/inv/approvedList";
+	}
 
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Double, Object> taxCode() {
-		
+	public Map<Object,Double> taxCode() {
+				
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		
-		return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
+		return taxCodeRepository.findAll().stream().collect(Collectors.toMap(TaxCode::getDescription, TaxCode::getTaxCode));
+		
+		/*return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
                 (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
-                TreeMap::new));  // for Sorted Values
+                TreeMap::new));*/  // for Sorted Values
 	}
 	
 	@RequestMapping("/downloadPdf")

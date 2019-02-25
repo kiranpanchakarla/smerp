@@ -96,6 +96,8 @@
 														<form class="form">
 															<div class="form-body">
 																<div class="row">
+																<!-- Direct Creation Start -->
+																<c:if test="${inv.grId == null}">
 																	<div class="col-sm-4 form-group">
 																		<label>Name</label>
 																		<form:input type="text"
@@ -195,9 +197,137 @@
 																						required="true" />
 
 																				</div>
-																				<div class="col-sm-4 form-group">&nbsp;</div>
+																				</c:if>
+																				<!-- Direct Creation END -->
+
+																			<!-- Conversion Start -->
+																			<c:if test="${inv.grId!=null}">
+																			<div class="col-sm-4 form-group">
+																		<label>Name</label>
+																		<form:input type="text"
+																			cssClass="form-control vendorname camelCase"
+																			placeholder='Vendor Name' path="vendor.name"
+																			readonly="true" disabled = "true" />
+																	</div>
+																	<form:hidden path="vendor.id" id="vendordata" />
+																	<div class="col-sm-4 form-group">
+																		<label>Email Id</label>
+																		<form:input type="text"
+																			cssClass="form-control emailId" readonly="true"
+																			placeholder='Email Id' path="vendor.emailId" />
+																	</div>
+																	<div class="col-sm-4 form-group">
+																		<label>Contact</label>
+
+																		<form:select path="vendorContactDetails.id" readonly="true" disabled = "true"
+																			id="vendorContactDetails" cssClass="form-control"
+																			oninvalid="this.setCustomValidity('Please Select State ')"
+																			oninput="setCustomValidity('')">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																		 
+																	</div>
+																</div>
+
+																<form:hidden path="id" />
+
+																<div class="row">
 
 
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Pay To</label>
+																		<form:select path="vendorPayTypeAddress.id"
+																			id="vendorPayToAddress" cssClass="form-control"
+																			readonly="true" disabled = "true">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																	</div>
+
+																	<div class="col-sm-4 form-group rm_address">
+																		<label>Ship From</label>
+																		<form:select path="vendorShippingAddress.id"
+																			id="vendorAddress" cssClass="form-control"
+																			readonly="true" disabled = "true">
+																			<form:option value="">Select</form:option>
+																		</form:select>
+																	</div>
+																	
+																	<div class="col-sm-4 form-group">
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Posting Date' path="postingDate"
+																						autocomplete="off" readonly="true" />
+
+																				</div>
+
+																	
+
+																</div>
+
+																<div class="card-body collapse in">
+																	<div class="card-block-in">
+																		<div class="form-body">
+
+																			<div class="row">
+																				
+																				<div class="col-sm-4 form-group">
+																		         <label>INV Doc#</label>
+																		          <form:input type="text" cssClass="form-control"
+																			      placeholder='Document Number' path="docNumber"
+																			      readonly="true" />
+																	            </div>
+																	            
+																				<div class="col-sm-4 form-group">
+																					<label>Gr Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number' 
+																						path="referenceDocNumber" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PO Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="POdocNumber" value="${inv.grId.poId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>RFQ Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="RFQdocNumber" value="${inv.grId.poId.rfqId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PR Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="PRdocNumber" value="${inv.grId.poId.rfqId.purchaseReqId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>Doc Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Document Date' path="documentDate"
+																						autocomplete="off" readonly="true" />
+
+																				</div>
+																			</div>
+
+
+
+
+																			<div class="row">
+																				<div class="col-sm-4 form-group">
+																					<label>Required Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						id="require_date" placeholder='Required Date'
+																						autocomplete="off" path="requiredDate"
+																						readonly="true" />
+
+																				</div>
+																			</c:if>
+																			<!-- COnversion END -->
 																				<div class="row" id="radioDiv">
 																					<div class="card-block" style="clear: both;">
 																						<div class="col-sm-6 form-group">
@@ -346,17 +476,17 @@
 																												<th style="display: none;">Product Id</th>
 																												<c:if test="${inv.category=='Item'}">
 																													<th>Product#</th>
-																													<th>Description</th>
-																													<th>UOM</th>
-																													<th>SKU</th>
-																													<th>Unit Price</th>
-																													<th>Tax %</th>
-																													<th>Group</th>
-																													<th>HSN Code</th>
-																													<th>Warehouse</th>
-																													<th>Quantity</th>
-																													<th>Tax Total</th>
-																													<th>Total</th>
+																											<th>Description</th>
+																											<th>UOM</th>
+																											<th>SKU</th>
+																											<th>Unit Price</th>
+																											<th>Tax %</th>
+																											<th>Tax Total</th>
+																											<th>Total</th>
+																											<th>Group</th>
+																											<th>HSN Code</th>
+																											<th>Warehouse</th>
+																											<th>Quantity</th>
 																												</c:if>
 
 																												<c:if test="${inv.category!='Item'}">
@@ -412,8 +542,23 @@
 
 
 																															<td>   
-																																${listLineItems.taxCode}  
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.key == listLineItems.taxDescription}">
+																																					${taxCodeMap.key}
+																																				</c:when>
+																																				<c:otherwise>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																		
 																															</td>
+																															
+																																<td>${listLineItems.taxTotal} </td>
+
+																															<td>${listLineItems.total} </td>
 
 
 																															<td>${listLineItems.productGroup}</td>
@@ -427,13 +572,10 @@
 																												                 	 ${entry.value} 																													 </c:if>
 																																</c:forEach></td>
 
+																																
 																															<td>
 																																${listLineItems.requiredQuantity}
-																																</td>
-																																
-																																<td>${listLineItems.taxTotal} </td>
-
-																															<td>${listLineItems.total} </td>
+																															</td>
 
 
 
@@ -513,7 +655,7 @@
 																															<!--  -->
 
 																															<td><div class="form-group">
-																																	<form:select class="form-control"
+																																	<form:select class="form-control warehouse"
 																																		style="width:;" readonly="true"
 																																		path="inVoiceLineItems[${count}].warehouse">
 																																		<form:option value="" label="Select" />
@@ -584,13 +726,33 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="inVoiceLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	
+																																	<select class="form-control taxCode"
+																																		required="true"
+																																		name="inVoiceLineItems[${count}].taxCode">
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.key == listLineItems.taxDescription}">
+																																					<option value="${taxCodeMap.value}"
+																																						selected>${taxCodeMap.key}</option>
+																																				</c:when>
+																																				<c:otherwise>
+																																					<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																	</select>
+																																<input type="hidden" name="inVoiceLineItems[${count}].taxDescription"  class="taxDescription"  value="${listLineItems.taxDescription}"   />
+																																	
 																																</div></td>
 
 
@@ -630,7 +792,7 @@
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:select class="form-control"
+																																	<form:select class="form-control warehouse"
 																																		style="width:;" required="true"
 																																		path="inVoiceLineItems[${count}].warehouse">
 																																		<form:option value="" label="Select" />
@@ -687,13 +849,30 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="inVoiceLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	<select class="form-control taxCode"
+																																		required="true"
+																																		name="inVoiceLineItems[${count}].taxCode">
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.value == listLineItems.taxCode}">
+																																					<option value="${taxCodeMap.key}"
+																																						selected>${taxCodeMap.value}</option>
+																																				</c:when>
+																																				<c:otherwise>
+																																					<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																	</select>
 																																</div></td>
 
 
@@ -767,8 +946,28 @@
 
 																		<div class="tab-pane" id="profile" role="tabpanel"
 																			aria-labelledby="profile-tab">
+																			
+																			<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
 
-																			<table class="table fixed-width-table">
+																			<!-- <table class="table fixed-width-table">
 																				<thead>
 																					<tr>
 																						<th style="vertical-align: top; !important">Shipping
@@ -785,7 +984,7 @@
 																						</td>
 																					</tr>
 																				</thead>
-																			</table>
+																			</table> -->
 																		</div>
 																		<br>
 
@@ -797,7 +996,7 @@
 																				<div class="create-block">
 																					<div class="form-group">
 																						<label>Remark</label>
-																						<form:textarea type="text"
+																						<form:input type="text"
 																							cssClass="form-control camelCase"
 																							placeholder='Enter your Remark'
 																							autocomplete="off" path="remark" />
@@ -806,9 +1005,11 @@
 																			</div>
 																			<div class="col-sm-4">&nbsp;</div>
 
-																			<div class="col-sm-4">
-																				<div class="form-group">
-																					<label>Discount(%) :</label>
+																			<div class="col-sm-4 create-po-wrap">
+																				
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Discount(%)</label>
 																					<c:choose>
 																						<c:when test="${inv.grId!=null}">
 																							<form:input type="text"
@@ -823,79 +1024,89 @@
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								id="totalDiscount"
-																								placeholder='Total  DisCount '
+																								placeholder='Total  Discount '
 																								path="totalDiscount" autocomplete="off"
 																								onkeypress="return isNumericKey1(event)" />
 																						</c:otherwise>
 																					</c:choose>
 
 
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Before Discount : </label>
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Total Invoice Amount</label>
 
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Total Before Dis '
+																						placeholder='Total Before Discount '
 																						path="totalBeforeDisAmt" autocomplete="off"
 																						readonly="true" />
 
 
-																				</div>
+																				</div></div>
 
 
 
-																				<div class="form-group">
-																					<label>Freight : </label>
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Freight</label>
 																					<c:choose>
 																						<c:when test="${inv.grId!=null}">
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" readonly="true" />
 																						</c:when>
 																						<c:otherwise>
 																							<form:input type="text"
 																								cssClass="form-control validatePrice"
 																								placeholder='Freight' path="freight"
-																								onkeypress="return isNumericKey(event)"
+																								onkeypress="return isNumericKey1(event)"
 																								autocomplete="off" />
 																						</c:otherwise>
 																					</c:choose>
-																				</div>
+																				</div></div>
 
-
-
-
-
-
-																				<div class="form-group">
-																					<label>Rounding : </label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div>
-
-																				<div class="form-group">
-																					<label>Tax Amount :</label>
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Tax Amount</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Total</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
+																				
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Rounded Off</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="roundedOff"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Payment Due : </label>
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Total Payment Due</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Payment Due'
 																						path="totalPayment" autocomplete="off"
 																						readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				
+																				
 																			</div>
 																		</div>
 
-
-
+																				
 
 
 
@@ -1002,12 +1213,12 @@
 
 
 <script type="text/javascript">
-var sizeplant = "${planMapSize}";
+var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
-    scriptSelectPlant ='<option value="">select</option>';
+    scriptSelectPlant ='<option value="">Select</option>';
      }
-
+ 
 var inc=0;
 var edit_addressCount=0;
 
@@ -1107,9 +1318,10 @@ function addItem() {
 			+ '<select  name="inVoiceLineItems['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+'<input type="hidden" name="inVoiceLineItems['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
 			+ '</td>'
 			
@@ -1152,7 +1364,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inVoiceLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="inVoiceLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5" required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1212,7 +1424,7 @@ function addItem() {
 			+ '<select  name="inVoiceLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -1863,6 +2075,7 @@ function removeData(index){
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1893,6 +2106,7 @@ function removeData2(index){
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
+		$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	
@@ -2012,16 +2226,16 @@ $('#containerContainingTabs a').on('click', function(e) {
 	  } else {
 		 var subStatus = $(this).val();
         	if(subStatus == 'DR'){
-        		alertify.message('Draft Successfully');
+        		alertify.message('Draft Successfully',20000);
 				return true;
 			  } else if(subStatus == "SA"){
-				 alertify.success('Saved Successfully');
+				 alertify.success('Saved Successfully',20000);
 				return true;
 			  } else if(subStatus == "APP"){
 				 alertify.success('Invoice Successfully');
 				return true;
 			  } else if(subStatus == "RE"){
-				 alertify.warning('Document Rejected');
+				 alertify.warning('Document Rejected',20000);
 				 return true;
 			  }  
 		  }
@@ -2082,7 +2296,7 @@ function goBack() {
 }
 	
 	
-	
+/* 	
 
 
  $(document).on("change", ".taxCode", function() {
@@ -2090,7 +2304,10 @@ function goBack() {
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
+
+	var taxDescription=  $(itemParentRow).find(".taxCode option:selected").text();
+		$(itemParentRow).find(".taxDescription").val(taxDescription);
 	//alert("unitPrice--->" +unitPrice);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
@@ -2115,7 +2332,7 @@ function goBack() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total.toFixed(2));
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -2124,7 +2341,7 @@ function goBack() {
 	}); 
 	
 	
-	
+	 */
 
 /* $(document).on("keyup", ".unitPrice", function() {
 	 var itemParentRow = $(this).parents(".multTot");
@@ -2164,7 +2381,7 @@ function goBack() {
     	}
 	}); */
 	
-
+/* 
 $(document).on("keyup", ".requiredQuantity", function() {
 	
 	var itemParentRow = $(this).parents(".multTot");
@@ -2172,7 +2389,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	//alert("requiredQuantity" +requiredQuantity);
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	if(tax=='') {
         tax=  $(itemParentRow).find(".taxCode").val();
    }
@@ -2215,7 +2432,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   		}
   		if(totalAmt!="") {
   		 $("#totalPayment").val(Math.round(totalPayment));
-  		 $("#amtRounding").val( Math.round(totalPayment));
+  		 $("#amtRounding").val(totalPayment.toFixed(2));
   		}
   		
   		}
@@ -2242,7 +2459,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#amtRounding").val(totalPayment.toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	
 	}else {
@@ -2283,7 +2501,8 @@ $('#freight').keyup(function() {
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
 	 $("#totalPayment").val(Math.round(finalValue));
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#amtRounding").val(finalValue.toFixed(2));
+	 $("#roundedOff").val(parseFloat(Math.round(finalValue) - finalValue).toFixed(2));
 	}
 });
 	
@@ -2317,7 +2536,7 @@ $('#freight').keyup(function() {
 		}
 		if(sum_total!="") {
 		 $("#totalPayment").val(Math.round(totalPayment));
-		 $("#amtRounding").val( Math.round(totalPayment));
+		 $("#amtRounding").val(totalPayment.toFixed(2));
 		}
 	
 	}
@@ -2326,7 +2545,7 @@ $('#freight').keyup(function() {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
-		});
+		}); */
 	
 	/* $(document).on("keyup", ".validateQuantity", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){
@@ -2366,6 +2585,8 @@ $('#freight').keyup(function() {
 	
 	
 	</script>
+	
+	<script src=<c:url value="/resources/js/calculation.js"/> type="text/javascript"></script>
 
 <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
 
@@ -2388,6 +2609,7 @@ $('#freight').keyup(function() {
 
 <link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
             

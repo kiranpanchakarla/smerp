@@ -78,12 +78,13 @@
 															style="width: 100%">
 															<thead>
 																<tr>
-																    <th>S.no</th>
+																    <th>S.No</th>
 																	<th>Name</th>
 																	 <th>Designation</th>
 																	<th>Department</th>
 																	<th>Email Id</th>
-																	<th>Created</th>
+																	<th>Created Date</th>
+																	<th>Modified Date</th>
 																	<th>Actions</th>
 																</tr>
 															</thead>
@@ -96,7 +97,8 @@
 																	<td>${list.desigination.desigination}</td> 
 																	<td>${list.department.name}</td>
 																	<td>${list.userEmail}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.updatedAt}"/></td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'User'}">
@@ -147,7 +149,7 @@
 
 $(document).ready(function() {
 	  $('#example').DataTable( {
-		  "scrollX": true
+		  "scrollX" : true
 	    } );
 } );
 $(document).ready(function(){
@@ -160,7 +162,7 @@ $(document).ready(function(){
 <script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
-
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 	
 </html>

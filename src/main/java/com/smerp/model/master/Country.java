@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="tbl_country_master")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Country extends AuditModel {
+public class Country extends UserAuditModel {
 
 	/**
 	 * 

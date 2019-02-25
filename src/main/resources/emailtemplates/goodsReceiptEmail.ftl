@@ -21,7 +21,6 @@
               </tr>
               <tr>
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
-                <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px;overflow: hidden;">
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Goods Receipt</h2>
@@ -59,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if goodsRec.requiredDate??>${goodsRec.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if goodsRec.status??> ${goodsRec.status}</#if></td>
                 </tr>
                 
              
@@ -92,14 +93,15 @@
                 <td style="border: solid 1px ;"><#if goodsReclist.sku??>&nbsp;${goodsReclist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if goodsReclist.taxDescription??>&nbsp;${goodsReclist.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if goodsReclist.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (goodsReclist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
@@ -137,14 +139,15 @@
                 <td style="border: solid 1px ;"><#if goodsReclist.description??>&nbsp;${goodsReclist.description}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.requiredQuantity??>&nbsp;${goodsReclist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.unitPrice??>&nbsp;${goodsReclist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
-               <#if goodsReclist.taxCode??>
-                <#list taxCodeMap as key, value>
-                <#if (goodsReclist.taxCode) == (key)>
-                     <p>&nbsp;${value}</p>
+              	 <td style="border: solid 1px ;"><#if goodsReclist.taxDescription??>&nbsp;${goodsReclist.taxDescription}<#else>--</#if>
+                 <!-- 
+                  <#if goodsReclist.taxCode??>
+               <#list taxCodeMap as key, value>
+                <#if (goodsReclist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsReclist.taxTotal??>&nbsp;${goodsReclist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsReclist.total??>&nbsp;${goodsReclist.total}<#else>--</#if></td>
@@ -173,7 +176,7 @@
                 <tr>
                 <td><#if goodsRec.vendorShippingAddress.addressName??>${goodsRec.vendorShippingAddress.addressName},</#if></td>
                 <td><#if goodsRec.vendorPayTypeAddress.addressName??>${goodsRec.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if goodsRec.totalBeforeDisAmt??> ${goodsRec.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
@@ -183,20 +186,21 @@
                 <td>:<#if goodsRec.freight??> ${goodsRec.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if goodsRec.vendorShippingAddress.city??>${goodsRec.vendorShippingAddress.city},</#if> </td>
-                <td><#if goodsRec.vendorPayTypeAddress.city??>${goodsRec.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if goodsRec.amtRounding??> ${goodsRec.amtRounding}<#else>-- </#if></td>
-                </tr>
-                <tr>
                 <td><#if goodsRec.vendorShippingAddress.zipCode??>${goodsRec.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if goodsRec.vendorPayTypeAddress.zipCode??>${goodsRec.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if goodsRec.taxAmt??> ${goodsRec.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if goodsRec.amtRounding??> ${goodsRec.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if goodsRec.vendorShippingAddress.country.name??>${goodsRec.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if goodsRec.vendorPayTypeAddress.country.name??>${goodsRec.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if goodsRec.roundedOff??> ${goodsRec.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if goodsRec.totalPayment??> ${goodsRec.totalPayment}<#else>--</#if></td>
                 </tr>
@@ -212,7 +216,8 @@
               
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
-              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
+              <p style="text-align: center;font-family: inherit;">This is an automatically generated email, please do not reply ...<br>
+              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP<br>
                                              Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>

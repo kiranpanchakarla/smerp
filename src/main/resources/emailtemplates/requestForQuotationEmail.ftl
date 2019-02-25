@@ -21,7 +21,6 @@
               </tr>
               <tr>
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
-                <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px">
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Request For Quotation</h2>
@@ -57,6 +56,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td><#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td><strong>Status</strong></td>
+			    <td>: <#if rfq.status??> ${rfq.status}</#if></td>
                 </tr>
                 
              
@@ -162,7 +163,7 @@
               
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
-              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
+               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP, do not reply. <br>
                                              Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>

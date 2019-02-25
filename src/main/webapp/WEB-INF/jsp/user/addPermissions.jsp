@@ -79,15 +79,15 @@
 													<!-- <div class="row bold-text" align="center">
 											              Select All <input type="checkbox" id="ckbCheckAll" class="ckbCheckAll" />					
 								                     </div> -->
-																<div class="col-xs-12 col-sm-12">
+																
 																	<c:set var="count" value="0" scope="page" />
 																	<c:forEach items="${ump}" var="map"  varStatus="loop">
 																	  
-																	  <div class="row col-xs-2 bold-text">
+																	  <div class="col-md-3 bold-text">
 																	  <input type="checkbox" class="module${count}"  onclick="setAllPermission(${count})"   />	
 																	  <input type="hidden" name="userModulePermission[${count}].module" readonly="readonly"   value="${map.key.id}" />${map.key.moduleName}
 																	  </div>
-																	  <div class="row col-xs-10 bold-value">
+																	  <div class="col-md-9 bold-value">
 																		 <c:forEach items="${map.value}" var="permissions">
 																		
 																		
@@ -122,7 +122,7 @@
 																	</c:forEach>
 																	  <input type="hidden" name="userId" value="${user.userId}">
 																	  
-																</div>
+																
 													</div>  
 													
 													<br><br>
@@ -231,7 +231,7 @@ function changePermission(permissionId){
      }
 }
 
-for(var i=0;i<=15;i++) {
+for(var i=0;i<=21;i++) {
 	if($('.permissions'+i+':checked').length == $('.permissions'+i).length){
         $(".module"+i).prop('checked',true);
     }else{

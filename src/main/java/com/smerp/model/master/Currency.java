@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="tbl_currencies_master")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Currency extends AuditModel {
+public class Currency extends UserAuditModel {
 
     /**
      *

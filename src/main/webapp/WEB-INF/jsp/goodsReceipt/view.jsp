@@ -58,6 +58,8 @@ text-align: left;
 													<h2 class="card-title" id="basic-layout-icons">Goods Receipt</h2>
 												</div>
 
+<c:set var="productQuantity" value="${productQuantity + 0}" scope="page" /> 
+
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
 														<div class="form-body">
@@ -87,10 +89,13 @@ text-align: left;
 																<div class="col-sm-4 form-group">
 																	<label>Ship From</label>: ${gr.vendorShippingAddress.city}
 																</div>
-                                                                
-                                                                <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																
+																<div class="col-sm-4 form-group">
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
 																			</div>
+                                                                
+                                                               
 
 															</div>
 
@@ -99,27 +104,43 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
+																		
+																		 <div class="col-sm-4 form-group">
+																				<label>Gr Doc#</label>: ${gr.docNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${gr.referenceDocNumber}
+																			</div>
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${gr.poId.rfqId.docNumber}
+																			</div>
+                                                                            
+                                                                            
+                                                                            </div>
+                                                                            <div class="row">
+                                                                            
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${gr.poId.rfqId.purchaseReqId.docNumber}
 																			</div>
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
 																			</div>
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>Required Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
+																			</div>
+																			
 																		</div>
 
 
 
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.requiredDate}" />
-																			</div>
+																			
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>
@@ -167,7 +188,7 @@ text-align: left;
                                                                                             
                                                                                             
 																										<!--1 multiply Dynamically Load   -->
-																										<c:if test="${not empty goodsReceiptLineItems}">
+																										<c:if test="${not empty lineItemsBean}">
 																						<table class="table table-bordered table-striped"
 																							id="edit_item_serviceTbl">   
 																										
@@ -208,17 +229,17 @@ text-align: left;
 																										
 																										<tbody>
 																											<c:set var="count" value="0" scope="page" />
-																											<c:forEach items="${goodsReceiptLineItems}"
+																											<c:forEach items="${lineItemsBean}"
 																												var="listLineItems">
 																												
 																												  <tr class="multTot multTot${count}">
-																												<td style="display: none;"><form:input
+																												<%-- <td style="display: none;"><form:input
 																															type="hidden"
-																															path="goodsReceiptLineItems[${count}].productId"
+																															path="lineItemsBean[${count}].productId"
 																															value="${listLineItems.productId}"
 																															class="form-control productId"></form:input>
-																												<form:hidden path="goodsReceiptLineItems[${count}].id"/>	
-																															</td>
+																												<form:hidden path="lineItemsBean[${count}].id"/>	
+																															</td> --%>
 																													<td><c:set var="index" value="${index + 1}"
 																								                  scope="page" /> <c:out value="${index}" /></td>
 																															
@@ -230,11 +251,13 @@ text-align: left;
 																													
 																													
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
-																																<c:if test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
+																																<c:if test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
@@ -245,10 +268,13 @@ text-align: left;
 																														items="${plantMap}">
 																														<c:if
 																															test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
+																													 ${entry.value} 																												 </c:if>
 																													</c:forEach></td>
 																													
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}
+																													
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
+																													</td>
 
 																												
 																														
@@ -259,15 +285,22 @@ text-align: left;
 																													
 																													<td>${listLineItems.description}</td>
 																															
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td>${listLineItems.tempRequiredQuantity}
+																													
+																													<c:set var="productQuantity" value="${productQuantity + listLineItems.tempRequiredQuantity}" scope="page" /> 
+																													
+																													</td>
+																													
+																													
 																													
 																													<td>${listLineItems.unitPrice}</td>
-																												<td><c:forEach var="entry"
-																														items="${taxCodeMap}">
-																														<c:if
-																															test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
-																													</c:forEach></td>
+																												<td><%-- <c:forEach var="entry"
+																																items="${taxCodeMap}">
+																																<c:if test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																												<td>${listLineItems.taxTotal}</td>
 																												<td>${listLineItems.total}</td>
 
@@ -276,7 +309,7 @@ text-align: left;
 																																items="${plantMap}">
 																																<c:if
 																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
+																													                 ${entry.value} 																													 </c:if>
 																															</c:forEach></td>
 																														
 																													</c:if>
@@ -307,8 +340,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${gr.vendorShippingAddress.addressName}<br>
+																					${gr.vendorShippingAddress.street}
+																					${gr.vendorShippingAddress.city}
+																					${gr.vendorShippingAddress.zipCode}<br>
+																					${gr.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${gr.vendorPayTypeAddress.addressName}<br>
+																					${gr.vendorPayTypeAddress.street}
+																					${gr.vendorPayTypeAddress.city}
+																					${gr.vendorPayTypeAddress.zipCode}<br>
+																					${gr.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${gr.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -343,7 +405,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -366,7 +428,7 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Total Before Discount </label> </div>
+											<div class="col-sm-6">	<label>Total Invoice Amount </label> </div>
 											<div class="col-sm-6">:	${gr.totalBeforeDisAmt} </div>
 											</div>
 											<div class="form-group">
@@ -375,24 +437,30 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-											<div class="col-sm-6">	<label>Rounding  </label></div>
-											<div class="col-sm-6">: ${gr.amtRounding} </div>
-											</div>
-
-											<div class="form-group">
 												<div class="col-sm-6"> <label>Tax Amount </label> </div>
 												<div class="col-sm-6">: ${gr.taxAmt} </div>
+											</div>
+											
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Total  </label></div>
+											<div class="col-sm-6">: ${gr.amtRounding} </div>
+											</div>
+											
+											<div class="form-group">
+											<div class="col-sm-6">	<label>Rounded Off  </label></div>
+											<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${gr.totalPayment - gr.amtRounding}"/></div>
 											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
 											<div class="col-sm-6">: ${gr.totalPayment} </div>
 											</div>
+											
+											
+											
 										</div>
 									
 									</div>		
-											
-											
 											
 											
 											
@@ -405,16 +473,21 @@ text-align: left;
 											<div class="row">
 												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
+												         
+												         
+												         
+												         <c:choose>
+														<c:when test="${productQuantity !=0}">
+													
 												         <div class="col-sm-3 form-group has-feedback">
-												        
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
-										                           <c:if test="${ump.key eq 'Convert To GRE'}"> 
+										                           <c:if test="${ump.key eq 'Convert To GRE'}">  
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status != 'Invoiced'}">
-																		 
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
+																		
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
 																			class="btn btn-primary mr-1 float-right mySubButton">
@@ -434,7 +507,8 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To INV'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status != 'Invoiced'}">
+	        									                        
+	        									                        <c:if test="${(gr.status == 'Approved' || gr.status == 'Goods_Return') &&  gr.status != 'Invoiced' }">
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">
@@ -444,10 +518,22 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												          </div>
-										             
+							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												        </c:when>
+												       <c:otherwise>
+												       
+												       <div class="col-sm-3 form-group has-feedback"></div>
+												       <div class="col-sm-3 form-group has-feedback"></div>
+												       <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												       
+												       
+												       </c:otherwise> 
+												        
+												        
+												        
+												        
+												        </c:choose>
 												         
-												         
-												          <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
 										              </div>
 												 </div>
 										</div>
@@ -483,8 +569,20 @@ $('#containerContainingTabs a').on('click', function(e) {
 $(".mySubButton").on('click', function() {
 			alertify.confirm('Goods Return','Are you Sure, Want to Goods Return!',
 					function() {
+					$.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
 				    $('#form').attr('action', "${createUrl}").submit();
 					}, function() {
+						setTimeout($.unblockUI, 1000);
 						alertify.error('Cancelled')
 					});
 
@@ -492,28 +590,36 @@ $(".mySubButton").on('click', function() {
 		
 		
 		
-$(".mySubButtonInv").on('click', function() {
+	$(".mySubButtonInv").on('click', function() {
 			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice!',
 					function() {
+					$.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
+				
 				    $('#form').attr('action', "${createInvoiceUrl}").submit();
 					}, function() {
+						setTimeout($.unblockUI, 1000);
 						alertify.error('Cancelled')
 					});
 
 		});
 		
-		
-		
-		
-
-
 	
 function goBack() {
     window.history.back();
 }
 </script>
-	
-	
+
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 	
 </body>
 

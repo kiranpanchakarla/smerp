@@ -3,7 +3,7 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow"> 
   <div class="main-menu-content">
     <ul class="side_main_menu">
-      <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-home left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span></a>
+      <li><a href="<c:url value ="/dashboard"/>"><i class="icon-android-home left"></i><span class="menu_text">Dashboard</span><span class="menu_text_pad">&nbsp;</span></a>
         <ul class="sub_menu">
          <%--  <li class="has_sub"><a href="<c:url value ="/users/4"/>">Users</a></li> --%>
          <%-- <li class="has_sub"><a href="<c:url value ="/user/create"/>">Users</a></li> --%>
@@ -84,6 +84,18 @@
 				<c:if test="${ump.key eq 'Invoice'}">
 					<li><a href="<c:url value ="/inv/list"/>"><i
 							class="icon-moneybag left left"></i><span class="menu_text">Invoice</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
+				<c:if test="${ump.key eq 'Convert To CM'}">
+					<li><a href="<c:url value ="/inv/approvedList"/>"><i
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Convert To CM</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-ios-arrow-right right"></i></a>
+				</c:if>
+				
+				<c:if test="${ump.key eq 'Credit Memo'}">
+					<li><a href="<c:url value ="/creditMemo/list"/>"><i
+							class="icon-ei-credit-card left left"></i><span class="menu_text">Credit Memo</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 				

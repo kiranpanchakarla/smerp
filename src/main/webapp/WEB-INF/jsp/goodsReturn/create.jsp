@@ -98,8 +98,8 @@
 																		<label>Name</label>
 																		<form:input type="text"
 																			cssClass="form-control vendorname"
-																			placeholder='Vendor Name' path="vendor.name"
-																			required="true" autocomplete="off" />
+																			placeholder='Vendor Name' path="vendor.name" 
+																			disabled="true" readonly="true" />
 																	</div>
 																	<form:hidden path="vendor.id" id="vendordata" />
 																	<div class="col-sm-4 form-group">
@@ -111,14 +111,13 @@
 																	<div class="col-sm-4 form-group">
 																		<label>Contact</label>
 
-																		<form:select path="vendorContactDetails.id"
+																		<form:select path="vendorContactDetails.id" disabled="true" readonly="true"
 																			id="vendorContactDetails" cssClass="form-control"
 																			oninvalid="this.setCustomValidity('Please Select State ')"
 																			oninput="setCustomValidity('')">
-																			<form:option value="">Select</form:option>
+																			<form:option value=""></form:option>
 																		</form:select>
-																		<div style="color: red;" id="1_errorContainer"
-																			class="help-block with-errors"></div>
+																		 
 																	</div>
 																</div>
 
@@ -131,7 +130,7 @@
 																		<label>Pay To</label>
 																		<form:select path="vendorPayTypeAddress.id"
 																			id="vendorPayToAddress" cssClass="form-control"
-																			required="true">
+																			disabled="true" readonly="true">
 																			<form:option value="">Select</form:option>
 																		</form:select>
 																	</div>
@@ -140,17 +139,18 @@
 																		<label>Ship From</label>
 																		<form:select path="vendorShippingAddress.id"
 																			id="vendorAddress" cssClass="form-control"
-																			required="true">
+																			disabled="true" readonly="true">
 																			<form:option value="">Select</form:option>
 																		</form:select>
 																	</div>
 
-																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>
-																		<form:input type="text" cssClass="form-control"
-																			placeholder='Document Number' path="docNumber"
-																			readonly="true" />
-																	</div>
+																   <div class="col-sm-4 form-group">
+																					<label>Posting Date</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Posting Date' path="postingDate"
+																						readonly="true" />
+
+																				</div>
 
 																</div>
 
@@ -159,38 +159,67 @@
 																		<div class="form-body">
 
 																			<div class="row">
+																			
 																				<div class="col-sm-4 form-group">
-																					<label>Ref Doc No.</label>
+																		          <label>GRE Doc#</label>
+																		          <form:input type="text" cssClass="form-control"
+																			      placeholder='Document Number' path="docNumber"
+																			      readonly="true"/>
+																	        </div>
+																			
+																				<div class="col-sm-4 form-group">
+																					<label>GR Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number'
-																						path="referenceDocNumber" />
+																						path="referenceDocNumber" readonly="true" />
 																				</div>
+																				
 																				<div class="col-sm-4 form-group">
-																					<label>Posting Date</label>
+																					<label>PO Doc#</label>
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Posting Date' path="postingDate"
-																						autocomplete="off" required="true" />
-
+																						placeholder='Reference Document Number'
+																						path="POdocNumber" value="${gre.grId.poId.docNumber}" readonly="true" />
 																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>RFQ Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="RFQdocNumber" value="${gre.grId.poId.rfqId.docNumber}" readonly="true" />
+																				</div>
+																				
+																				<div class="col-sm-4 form-group">
+																					<label>PR Doc#</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Reference Document Number'
+																						path="PRdocNumber" value="${gre.grId.poId.rfqId.purchaseReqId.docNumber}" readonly="true" />
+																				</div>
+																				
 																				<div class="col-sm-4 form-group">
 																					<label>Doc Date</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Document Date' path="documentDate"
-																						autocomplete="off" required="true" />
+																						readonly="true" />
 
 																				</div>
+																				
 																			</div>
 
 
 
 
 																			<div class="row">
+																			
+																			
+																			
+																			
+																			
 																				<div class="col-sm-4 form-group">
 																					<label>Required Date</label>
 																					<form:input type="text" cssClass="form-control"
 																						id="require_date" placeholder='Required Date'
 																						autocomplete="off" path="requiredDate"
-																						required="true" />
+																						readonly="true" />
 
 																				</div>
 																				<div class="col-sm-4 form-group">&nbsp;</div>
@@ -438,12 +467,29 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" readonly="true"
 																																		path="goodsReturnLineItems[${count}].taxCode">
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	<select class="form-control taxCode" 
+																																		readonly="true"
+																																		name="goodsReturnLineItems[${count}].taxCode">
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.key == listLineItems.taxDescription}">
+																																					<option value="${taxCodeMap.value}"
+																																						selected>${taxCodeMap.key}</option>
+																																				</c:when>
+																																				<c:otherwise>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																	</select>
+																														<input type="hidden" name="goodsReturnLineItems[${count}].taxDescription"  class="taxDescription"  value="${listLineItems.taxDescription}"   />
 																																</div></td>
 
 
@@ -508,7 +554,7 @@
 																																				value="${listLineItems.requiredQuantity}"
 																																				onkeypress="return isNumericKey(event)"
 																																				class="form-control requiredQuantity validateQuantity"
-																																				autocomplete="off" readonly="true"></form:input>
+																																				autocomplete="off" ></form:input>
 																																		</div>
 
 																																	</c:when>
@@ -706,13 +752,30 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="goodsReturnLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	<select class="form-control taxCode"
+																																		required="true"
+																																		name="purchaseOrderlineItems[${count}].taxCode">
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.value == listLineItems.taxCode}">
+																																					<option value="${taxCodeMap.key}"
+																																						selected>${taxCodeMap.value}</option>
+																																				</c:when>
+																																				<c:otherwise>
+																																					<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																	</select>
 																																</div></td>
 
 
@@ -796,13 +859,30 @@
 
 
 																															<td><div class="form-group">
-																																	<form:select
+																																	<%-- <form:select
 																																		class="form-control taxCode"
 																																		style="width:;" required="true"
 																																		path="goodsReturnLineItems[${count}].taxCode">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
-																																	</form:select>
+																																	</form:select> --%>
+																																	<select class="form-control taxCode"
+																																		required="true"
+																																		name="purchaseOrderlineItems[${count}].taxCode">
+																																		<c:forEach var="taxCodeMap"
+																																			items="${taxCodeMap}">
+																																			<c:choose>
+																																				<c:when
+																																					test="${taxCodeMap.value == listLineItems.taxCode}">
+																																					<option value="${taxCodeMap.key}"
+																																						selected>${taxCodeMap.value}</option>
+																																				</c:when>
+																																				<c:otherwise>
+																																					<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>
+																																				</c:otherwise>
+																																			</c:choose>
+																																		</c:forEach>
+																																	</select>
 																																</div></td>
 
 
@@ -875,8 +955,28 @@
 
 																		<div class="tab-pane" id="profile" role="tabpanel"
 																			aria-labelledby="profile-tab">
+																			
+																			<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
 
-																			<table class="table fixed-width-table">
+																			<!-- <table class="table fixed-width-table">
 																				<thead>
 																					<tr>
 																						<th style="vertical-align: top; !important">Shipping
@@ -893,7 +993,7 @@
 																						</td>
 																					</tr>
 																				</thead>
-																			</table>
+																			</table> -->
 																		</div>
 																		<br>
 
@@ -905,7 +1005,7 @@
 																				<div class="create-block">
 																					<div class="form-group">
 																						<label>Remark</label>
-																						<form:textarea type="text" cssClass="form-control"
+																						<form:input type="text" cssClass="form-control"
 																							placeholder='Enter your Remark'
 																							autocomplete="off" path="remark" />
 																					</div>
@@ -913,62 +1013,79 @@
 																			</div>
 																			<div class="col-sm-4">&nbsp;</div>
 
-																			<div class="col-sm-4">
-																				<div class="form-group">
-																					<label>Discount(%) :</label>
+																			<div class="col-sm-4 create-po-wrap">
+																			
+																				<div class="row">
+															                 	<div class="col-sm-12 form-group">
+																					<label>Discount(%)</label>
 
 
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
-																						id="totalDiscount" placeholder='Total  DisCount '
+																						id="totalDiscount" placeholder='Total Discount '
 																						path="totalDiscount" autocomplete="off"
 																						readonly="true"
 																						onkeypress="return isNumericKey1(event)" />
 
 
 
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Before Discount : </label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Total Invoice Amount</label>
 
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Total Before Dis '
+																						placeholder='Total Before Discount '
 																						path="totalBeforeDisAmt" autocomplete="off"
 																						readonly="true" />
 
 
-																				</div>
-																				<div class="form-group">
-																					<label>Freight : </label>
+																				</div></div>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Freight</label>
 																					<form:input type="text"
 																						cssClass="form-control validatePrice"
 																						placeholder='Freight' path="freight"
 																						onkeypress="return isNumericKey(event)"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Rounding : </label>
-																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
-																						autocomplete="off" readonly="true" />
-																				</div>
-
-																				<div class="form-group">
-																					<label>Tax Amount :</label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Tax Amount</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Tax Amount' path="taxAmt"
 																						autocomplete="off" readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				<div class="row">
+																					<div class="col-sm-12 form-group">
+																					<label>Total</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="amtRounding"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
+																				
+																				<div class="row">
+																					<div class="col-sm-12 form-group">
+																					<label>Rounded Off</label>
+																					<form:input type="text" cssClass="form-control"
+																						placeholder='Rounding' path="roundedOff"
+																						autocomplete="off" readonly="true" />
+																				</div></div>
 
-																				<div class="form-group">
-																					<label>Total Payment Due : </label>
+																				<div class="row">
+																				<div class="col-sm-12 form-group">
+																					<label>Total Payment Due</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Total Payment Due'
 																						path="totalPayment" autocomplete="off"
 																						readonly="true" />
-																				</div>
+																				</div></div>
+																				
+																				
 																			</div>
 																		</div>
 
@@ -1173,7 +1290,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReturnLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="goodsReturnLineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1190,9 +1307,10 @@ function addItem() {
 			+ '<select  name="goodsReturnLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
+			+'<input type="hidden" name="purchaseOrderlineItems['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
 			+ '</td>'
 			
@@ -1288,7 +1406,7 @@ function addItem() {
 			+ '<select  name="goodsReturnLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
-			'<option value="${taxCodeMap.key}">${taxCodeMap.value}</option>'+
+			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
 			</c:forEach>
 			+ '</select>'
 			+ '</div>'
@@ -2132,7 +2250,7 @@ function goBack() {
 }
 	
 	
-	
+/* 	
 
 
 $(document).on("change", ".taxCode", function() {
@@ -2140,7 +2258,10 @@ $(document).on("change", ".taxCode", function() {
 	var itemParentRow = $(this).parents(".multTot");
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
+
+	var taxDescription=  $(itemParentRow).find(".taxCode option:selected").text();
+		$(itemParentRow).find(".taxDescription").val(taxDescription);
 //	alert("tax--->" +tax);
 	var tax_amt = getDiscount(tax);
 	var totalValue = getCalculateAmt(requiredQuantity,unitPrice,tax_amt);
@@ -2164,7 +2285,7 @@ $(document).on("change", ".taxCode", function() {
  	if(!isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total);
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -2180,7 +2301,7 @@ $(document).on("keyup", ".unitPrice", function() {
 	
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 //	alert("tax--->" +tax);
 	var tax_amt = Number(tax) / 100;
 	var totalValue = parseFloat(requiredQuantity * unitPrice) + parseFloat(requiredQuantity * unitPrice * tax_amt);
@@ -2205,7 +2326,7 @@ $(document).on("keyup", ".unitPrice", function() {
   	if( tax !="Select"  && !isNaN(sum_total)) {
 	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
   	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
-  	 $("#amtRounding").val(Math.round(sum_total));
+  	 $("#amtRounding").val(sum_total);
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
@@ -2220,7 +2341,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 	var unitPrice=  $(itemParentRow).find(".unitPrice").val();
 	//alert("requiredQuantity" +requiredQuantity);
-	var tax=  $(itemParentRow).find(".taxCode option:selected").text();
+	var tax=  $(itemParentRow).find(".taxCode option:selected").val();
 	if(tax=='') {
         tax=  $(itemParentRow).find(".taxCode").val();
    }
@@ -2262,7 +2383,8 @@ $(document).on("keyup", ".requiredQuantity", function() {
   		}
   		if(totalAmt!="") {
   		 $("#totalPayment").val(Math.round(totalPayment));
-  		 $("#amtRounding").val( Math.round(totalPayment));
+  		 $("#amtRounding").val(totalPayment.toFixed(2));
+  		 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
   		}
   		
   		}
@@ -2289,7 +2411,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	}
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
-	 $("#amtRounding").val( Math.round(totalPayment));
+	 $("#amtRounding").val(totalPayment);
 	}
 	
 	}else {
@@ -2330,7 +2452,7 @@ $('#freight').keyup(function() {
 	if(totalAmt!="") {
 	var finalValue =  Number(totalAmt) + Number(freight);
 	 $("#totalPayment").val(Math.round(finalValue));
-	 $("#amtRounding").val( Math.round(finalValue));
+	 $("#amtRounding").val(finalValue);
 	}
 });
 	
@@ -2373,7 +2495,7 @@ $('#freight').keyup(function() {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
-		});
+		}); */
 	
 	$(document).on("keyup", ".validateQuantity", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){
@@ -2413,6 +2535,8 @@ $('#freight').keyup(function() {
 	
 	
 	</script>
+	
+	<script src=<c:url value="/resources/js/calculation.js"/> type="text/javascript"></script>
 
 <%-- <c:import url="/WEB-INF/jsp/loadJs.jsp" />  --%>
 
@@ -2435,6 +2559,7 @@ $('#freight').keyup(function() {
 
 <link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
             

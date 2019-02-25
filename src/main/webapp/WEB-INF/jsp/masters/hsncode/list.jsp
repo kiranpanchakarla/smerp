@@ -161,6 +161,7 @@
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
 		type="text/javascript"></script>
+		<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 </html>
 

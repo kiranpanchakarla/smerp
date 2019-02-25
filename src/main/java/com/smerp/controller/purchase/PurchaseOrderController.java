@@ -20,6 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -31,9 +33,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
+import com.smerp.model.admin.User;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.inventory.PurchaseOrderActivityHistory;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
@@ -41,8 +46,11 @@ import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
+import com.smerp.service.purchase.PurchaseOrderActivityHistoryService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -78,8 +86,13 @@ public class PurchaseOrderController {
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
-
-
+	
+	@Autowired
+	private PurchaseOrderActivityHistoryService purchaseOrderActivityHistoryService;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -93,30 +106,34 @@ public class PurchaseOrderController {
 		logger.info("taxCode()-->" + taxCode());
 		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
-       
+       		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+		logger.info("PO count-->" + count);
+		
 		PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
-			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
+			logger.info("podetails-->" + po);
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
+		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0",count));
 		}
 		logger.info("podetails-->" + podetails);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("po", po);
 		return "po/create";
 	}
-
-	
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
@@ -125,9 +142,9 @@ public class PurchaseOrderController {
 		po = purchaseOrderService.getListAmount(po);  // set Amt Calculation  
 		logger.info("po-->" + po);
 		ObjectMapper mapper = poloadData(model, po);
-		
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
@@ -164,12 +181,22 @@ public class PurchaseOrderController {
 		logger.info("po-->" + po);
 		poloadData(model, po);
 		// model.addAttribute("categoryMap", categoryMap());
-		
-		model.addAttribute("checkStatusPoGr", goodsReceiptService.checkQuantityPoGr(po));
+		boolean check = goodsReceiptService.checkQuantityPoGr(po);
+		logger.info("check-->" + check);
+		model.addAttribute("checkStatusPoGr", check);
 		
 		model.addAttribute("po", po);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
+		try {
+			List<PurchaseOrderActivityHistory> poahList = purchaseOrderActivityHistoryService.findByHistoryListByPOId(Integer.parseInt(id));
+			
+			if(poahList.size()>0)
+			model.addAttribute("poahList", poahList);
+			
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while view():"+e);
+		}
 		return "po/view";
 	}
 
@@ -177,15 +204,45 @@ public class PurchaseOrderController {
 	public String delete(@RequestParam("id") int id) {
 
 		logger.info("Delete msg");
-		purchaseOrderService.delete(id);
+		PurchaseOrder po = purchaseOrderService.delete(id);
+		/*try {
+			//String message = 
+			savePoActivityHistory(po);
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while delete():"+e);
+		}*/
 		return "redirect:list";
 	}
-
 	
 	@PostMapping("/save")
-	public String name(PurchaseOrder requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
-		logger.info("po details" + purchaseOrderService.save(requestForQuotation));
+	public String name(PurchaseOrder purchaseOrder) {
+		logger.info("Inside save method" + purchaseOrder);
+		PurchaseOrder po = null;
+		if(purchaseOrder.getId()==null) {
+			boolean status = purchaseOrderService.findByDocNumber(purchaseOrder.getDocNumber());
+			if(!status) {
+			po = purchaseOrderService.save(purchaseOrder);
+			logger.info("po details" + po);
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+				logger.info("count-->" + count);
+				
+				PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
+				if (podetails != null && podetails.getDocNumber() != null) {
+					//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+					purchaseOrder.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
+				}
+				po = purchaseOrderService.save(purchaseOrder);
+			}
+		}else {
+			po = purchaseOrderService.save(purchaseOrder);
+			logger.info("po details" + po);
+		}
+		try {
+			savePoActivityHistory(po);
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while save():"+e);
+		}
 		return "redirect:list";
 	}
 	
@@ -195,10 +252,15 @@ public class PurchaseOrderController {
 		logger.info("rfqId" + rfqId);
 		logger.info("rfqId view-->" + rfqId);
 		PurchaseOrder po = purchaseOrderService.savePO(rfqId);
+		try {
+			String message = EnumStatusUpdate.CONVERTRFQTOPO.getStatus()+"@@"+po.getReferenceDocNumber();
+			savePoActivityHistory(po,message);
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while saveRFQtoPO():"+e);
+		}
 	   return "redirect:edit?id="+po.getId();
 	}
 
-	
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model) {
 		List<PurchaseOrder> purchaseOrderList = purchaseOrderService.poApprovedList();
@@ -210,8 +272,13 @@ public class PurchaseOrderController {
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		
-		logger.info("po details" + purchaseOrderService.saveCancelStage(id));
+		PurchaseOrder po = purchaseOrderService.saveCancelStage(id);
+		logger.info("po details" + po);
+		try {
+			savePoActivityHistory(po);
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while cancelStage():"+e);
+		}
 		return "redirect:list";
 	}
 
@@ -227,13 +294,15 @@ public class PurchaseOrderController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Double, Object> taxCode() {
+	public Map<Object,Double> taxCode() {
 		
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		
-		return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
+		return taxCodeRepository.findAll().stream().collect(Collectors.toMap(TaxCode::getDescription, TaxCode::getTaxCode));
+		
+		/*return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getDescription, TaxCode::getTaxCode,
                 (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
-                TreeMap::new));  // for Sorted Values
+                TreeMap::new));*/  // for Sorted Values
 	}
 	
 	@RequestMapping("/downloadPdf")
@@ -262,6 +331,88 @@ public class PurchaseOrderController {
 		}
 		fileInputStream.close();
 		out.close();
+		try {
+			String message = EnumStatusUpdate.PDFDOWNLOAD.getStatus();
+			savePoActivityHistory(po,message);
+		}catch(Exception e) {
+			logger.error("Error with ActivityHistory in PurchaseOrderController while downloadHtmlPDF():"+e);
+		}
+		
 	} 
-
+	
+		private void savePoActivityHistory(PurchaseOrder po) {
+			PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			poah.setPurchaseOrder(po);
+			boolean status = purchaseOrderActivityHistoryService.ifPOAvailableOrNot(po.getId());
+			if(!status) {
+				poah.setActivity(EnumStatusUpdate.CREATE.getStatus());
+				
+				if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
+					poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
+					poah.setLog(EnumStatusUpdate.SAVED.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
+					poah.setLog(po.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
+					poah.setLog(po.getStatus());
+				}
+			} else {
+				if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
+					poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
+					poah.setActivity(po.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
+					poah.setLog(EnumStatusUpdate.UPDATED.getStatus());
+					poah.setActivity(EnumStatusUpdate.UPDATE.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
+					poah.setLog(po.getStatus());
+					poah.setActivity(EnumStatusUpdate.APPROVE.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
+					poah.setLog(po.getStatus());
+					poah.setActivity(EnumStatusUpdate.REJECT.getStatus());
+				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.CANCELED.getStatus())) {
+					poah.setLog(po.getStatus());
+					poah.setActivity(EnumStatusUpdate.CANCEL.getStatus());
+				}
+			}
+			
+			poah.setCreatedBy(user.getUsername());
+			
+			logger.info("PurchaseOrderActivityHistory view-->" + poah);
+			purchaseOrderActivityHistoryService.save(poah);
+		}
+		
+		private void savePoActivityHistory(PurchaseOrder po,String message) {
+			PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			poah.setPurchaseOrder(po);
+			
+			if(message.equalsIgnoreCase(EnumStatusUpdate.PDFDOWNLOAD.getStatus())) {
+				poah.setLog(message);
+				poah.setActivity(message);
+			}else if(message.startsWith(EnumStatusUpdate.CONVERTRFQTOPO.getStatus()) && po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())){
+				String a[] = message.split("@@");
+				poah.setLog(a[0]);
+				poah.setActivity("RFQ# "+a[1]);
+			}
+			poah.setCreatedBy(user.getUsername());
+			logger.info("PurchaseOrderActivityHistory view-->"+ poah);
+			purchaseOrderActivityHistoryService.save(poah);
+		}
+	
+		/*@GetMapping(value ="/showHistoryById")
+		@ResponseBody
+		public List<PurchaseOrderActivityHistory> showHistory(String id) {
+			try {
+				List<PurchaseOrderActivityHistory> poahList = purchaseOrderActivityHistoryService.findByHistoryListByPOId(Integer.parseInt(id));
+				
+				if(poahList.size()>0)
+					//model.addAttribute("poahList", poahList);
+				return poahList;
+			}catch(Exception e) {
+				logger.error("Error with ActivityHistory in PurchaseOrderController while view():"+e);
+			}
+			return null;
+		} */
+		
 }

@@ -21,7 +21,6 @@
               </tr>
               <tr>
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
-                <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px;overflow: hidden;">
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Purchase Order</h2>
@@ -58,6 +57,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if po.requiredDate??>${po.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                 <td><strong>Status</strong></td>
+				<td>: <#if po.status??> ${po.status}</#if></td>
                 </tr>
                 
              
@@ -91,14 +92,14 @@
                 <td style="border: solid 1px ;"><#if polist.sku??>&nbsp;${polist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.requiredQuantity??>&nbsp;${polist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.unitPrice??>&nbsp;${polist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
-                  <#if polist.taxCode??>
+                <td style="border: solid 1px ;"><#if polist.taxDescription??>&nbsp;${polist.taxDescription}<#else>--</#if>
+                 <!--  <#if polist.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (polist.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (polist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if polist.taxTotal??>&nbsp;${polist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if polist.total??>&nbsp;${polist.total}<#else>--</#if></td>
@@ -172,7 +173,7 @@
                 <tr>
                 <td><#if po.vendorShippingAddress.addressName??>${po.vendorShippingAddress.addressName},</#if></td>
                 <td><#if po.vendorPayTypeAddress.addressName??>${po.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if po.totalBeforeDisAmt??> ${po.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
@@ -184,18 +185,25 @@
                 <tr>
                 <td><#if po.vendorShippingAddress.city??>${po.vendorShippingAddress.city},</#if> </td>
                 <td><#if po.vendorPayTypeAddress.city??>${po.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if po.amtRounding??> ${po.amtRounding}<#else>-- </#if></td>
+                 <td><strong>Tax Amount</strong></td>
+                <td>:<#if po.taxAmt??> ${po.taxAmt}<#else>--</#if></td>
                 </tr>
                 <tr>
                 <td><#if po.vendorShippingAddress.zipCode??>${po.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if po.vendorPayTypeAddress.zipCode??>${po.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if po.taxAmt??> ${po.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if po.amtRounding??> ${po.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if po.vendorShippingAddress.country.name??>${po.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if po.vendorPayTypeAddress.country.name??>${po.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if po.roundedOff??> ${po.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if po.totalPayment??> ${po.totalPayment}<#else>--</#if></td>
                 </tr>
@@ -209,7 +217,7 @@
               
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
-              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
+               <p style="text-align: center;font-family: inherit;">Email Sent by SMERP, do not reply. <br>
                                              Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>

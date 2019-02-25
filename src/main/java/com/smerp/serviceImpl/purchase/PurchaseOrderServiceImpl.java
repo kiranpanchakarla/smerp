@@ -1,5 +1,6 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,14 +21,17 @@ import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.PurchaseOrderLineItemsRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
+import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -63,6 +67,12 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private PurchaseRequestRepository purchaseRequestRepository;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -94,26 +104,38 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getTaxCode() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			purchaseOrder.setPurchaseOrderlineItems(listItems);
 		}
 		
+		if(purchaseOrder.getRfqId()==null) {
+			Vendor vendor = vendorService.findById(purchaseOrder.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(purchaseOrder.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(purchaseOrder.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(purchaseOrder.getVendorContactDetails().getId());
+
+			purchaseOrder.setVendor(vendor);
+			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
+			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
+			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+		}
 		
 		if (purchaseOrder.getId() != null) { // delete List Of Items.
 			PurchaseOrder purchaseOrderlineItems = purchaseOrderRepository
 					.findById(purchaseOrder.getId()).get();
 			List<PurchaseOrderLineItems> requestLists = purchaseOrderlineItems.getPurchaseOrderlineItems();
 			
-			
+			if(requestLists.size()>0 && requestLists!=null) {
+				purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
+				}
 			
 			
 			if(purchaseOrder.getRfqId()==null) {  // if RfqId null remove list items 
-				if(requestLists.size()>0 && requestLists!=null) {
-					purchaseOrderLineItemsRepository.deleteAll(requestLists);  // Delete All list items 
-					}
+				
 			
-			}else {  // Convert mode set Amount
+			}else {/*  // Convert mode set Amount
 				List<PurchaseOrderLineItems> header_listItems = purchaseOrder.getPurchaseOrderlineItems();
 				if (requestLists != null) {
 					List<PurchaseOrderLineItems> lineItems =new ArrayList<PurchaseOrderLineItems>();
@@ -138,30 +160,41 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				
 					purchaseOrder.setPurchaseOrderlineItems(lineItems);
 				}
+			*/}
+		
+			
+			if(purchaseOrder.getRfqId()!=null) {
+			RequestForQuotation rfq = purchaseOrder.getRfqId();  
+			//requestForQuotationService.findById(purchaseOrder.getRfqId().getId())
+			Vendor vendor = vendorService.findById(rfq.getVendor().getId());
+			VendorAddress vendorShippingAddress = vendorAddressService.findById(rfq.getVendorShippingAddress().getId());
+			VendorAddress vendorPayAddress = vendorAddressService.findById(rfq.getVendorPayTypeAddress().getId());
+			VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(rfq.getVendorContactDetails().getId());
+
+			purchaseOrder.setVendor(vendor);
+			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
+			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
+			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
 			}
 		}
 
-		Vendor vendor = vendorService.findById(purchaseOrder.getVendor().getId());
-		VendorAddress vendorShippingAddress = vendorAddressService.findById(purchaseOrder.getVendorShippingAddress().getId());
-		VendorAddress vendorPayAddress = vendorAddressService.findById(purchaseOrder.getVendorPayTypeAddress().getId());
-		
-		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(purchaseOrder.getVendorContactDetails().getId());
-
-		purchaseOrder.setVendor(vendor);
-		purchaseOrder.setVendorContactDetails(vendorsContactDetails);
-		purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
-		purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
-		
-		if(purchaseOrder.getStatusType()!=null &&  purchaseOrder.getStatusType().equals("APP")) {
+		 if(purchaseOrder.getStatus()!=null &&  !purchaseOrder.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				
+				
 			   	purchaseOrder =getListAmount(purchaseOrder);
+			   	if(purchaseOrder.getId()!=null) {
+					PurchaseOrder purchaseOrderObj = purchaseOrderRepository.findById(purchaseOrder.getId()).get();
+					logger.info(purchaseOrderObj.getCreatedBy().getUserEmail());
+					purchaseOrder.setCreatedBy(purchaseOrderObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "purchaseOrderEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPOEmail(purchaseOrder);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}
+		} 
 		 
 		return purchaseOrderRepository.save(purchaseOrder); 
 		 
@@ -172,15 +205,16 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 		PurchaseOrder po = new PurchaseOrder();
 		RequestForQuotation rfq = requestForQuotationService.findById((Integer.parseInt(rfqId)));
-		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq.getId());  // check RFQ exist in PO
-        if(dup_po==null) { 
-		PurchaseOrder podetails = findLastDocumentNumber();
+		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq);  // check RFQ exist in PO
+        if(dup_po==null) {
+	        Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
+			PurchaseOrder podetails = findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
-			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
+			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0"));
+		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (rfq != null) {
@@ -191,7 +225,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setRemark(rfq.getRemark());
 			po.setReferenceDocNumber(rfq.getDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
-			po.setRfqId(rfq.getId());
+			po.setRfqId(rfq);
 			po.setIsActive(true);
 			po.setVendor(rfq.getVendor());
 			po.setVendorContactDetails(rfq.getVendorContactDetails());
@@ -232,6 +266,26 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		rfq.setCategory("Item");
 		rfq.setStatus(EnumStatusUpdate.CONVERTRFQTOPO.getStatus());
 		requestForQuotationRepository.save(rfq);
+		
+		PurchaseRequest pr = new PurchaseRequest();
+		pr = po.getRfqId().getPurchaseReqId();
+		if(pr!=null) {
+			pr.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+			purchaseRequestRepository.save(pr);
+			
+			PurchaseRequest prRfqRef = po.getRfqId().getPurchaseReqId();
+			
+			List<RequestForQuotation> rfqList =  requestForQuotationService.getRFQListById(prRfqRef);
+			
+			for(RequestForQuotation rfqItem:rfqList) {
+				if(!rfqItem.getStatus().equalsIgnoreCase(EnumStatusUpdate.CONVERTRFQTOPO.getStatus())) {
+					rfqItem.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+					logger.info("rfq-->" + rfq);
+					rfqItem.setIsActive(false);
+				}
+			}
+			
+		}
 		
 		return po;
         }else {
@@ -279,23 +333,25 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		return purchaseOrderRepository.findById(id).get();
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 	@Override
 	public PurchaseOrder getListAmount(PurchaseOrder purchaseOrder) {
 		
 		List<PurchaseOrderLineItems> listItems = purchaseOrder.getPurchaseOrderlineItems();
 		List<PurchaseOrderLineItems> addListItems = new ArrayList<PurchaseOrderLineItems>();
-		Double addAmt=0.0;
-		Double addTaxAmt=0.0;
+		Double addAmt=0.00;
+		Double addTaxAmt=0.00;
+		Double total = 0.00;
+		Double total_payment = 0.00;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
 				PurchaseOrderLineItems polist = listItems.get(i);
 				if(polist.getUnitPrice()!=null  && polist.getTaxCode()!=null ) {
 				addTaxAmt += UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(polist.getRequiredQuantity(),polist.getUnitPrice());
 				polist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(polist.getRequiredQuantity(),polist.getUnitPrice(),polist.getTaxCode()));
-				polist.setTotal(""+UnitPriceListItems.getTotalAmt(polist.getRequiredQuantity(),polist.getUnitPrice(), polist.getTaxCode()));
+				polist.setTotal(""+UnitPriceListItems.getTotalINVAmt(polist.getRequiredQuantity(),polist.getUnitPrice()));
 				}else {
 				polist.setTaxTotal("");
 				polist.setTotal("");	
@@ -306,10 +362,19 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			purchaseOrder.setPurchaseOrderlineItems(addListItems);
 			
 		}
+		
 		purchaseOrder.setTotalBeforeDisAmt(addAmt);
 		purchaseOrder.setTaxAmt(""+addTaxAmt);
-		if(purchaseOrder.getTotalPayment()!=null) {
-		purchaseOrder.setAmtRounding(""+purchaseOrder.getTotalPayment());
+		
+		if(purchaseOrder.getTotalPayment()!=null && purchaseOrder.getTotalPayment() != 0) {
+			//total = ((addAmt - ( (addAmt * purchaseOrder.getTotalDiscount())/100 )) + purchaseOrder.getFreight());
+		  total = UnitPriceListItems.getTotalAmtPayment(addAmt, purchaseOrder.getTotalDiscount(), purchaseOrder.getFreight(),addTaxAmt);
+		  logger.info("total ---> " + total);
+		  logger.info("(purchaseOrder.getTotalPayment() ---> " + df2.format(purchaseOrder.getTotalPayment()));
+		  purchaseOrder.setAmtRounding(""+ total);
+		  purchaseOrder.setRoundedOff(""+ df2.format(purchaseOrder.getTotalPayment() - total));
+		}else {
+			purchaseOrder.setAmtRounding(""+ 0.0);
 		}
 	
 	return purchaseOrder;
@@ -324,6 +389,14 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		return purchaseOrder;
 	}
 
-
+	@Override
+	public boolean findByDocNumber(String docNum) {
+		List<PurchaseOrder> poList = purchaseOrderRepository.findByDocNumber(docNum);
+		if(poList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

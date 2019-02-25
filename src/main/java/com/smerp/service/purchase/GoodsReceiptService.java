@@ -3,34 +3,40 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.GoodsReceipt;
-import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 
 public interface GoodsReceiptService {
 
-	GoodsReceipt save(GoodsReceipt purchaseOrder);
+	GoodsReceipt save(GoodsReceipt goodsReceipt);
 
-	GoodsReceipt saveGR(String purchaseId);
+	GoodsReceipt saveGR(String goodsReceiptId);
 
-	GoodsReceipt saveCancelStage(String purchaseId);
+	GoodsReceipt saveCancelStage(String goodsReceiptId);
 
 	GoodsReceipt findLastDocumentNumber();
 
 	List<GoodsReceipt> findAll();
 
 	GoodsReceipt findById(int id);
+	
+	GoodsReceipt getGoodsReceiptById(int id);
+	
+	GoodsReceipt getGoodsReceiptViewById(int id);
 
 	GoodsReceipt delete(int id);
 
 	List<GoodsReceipt> findByIsActive();
 	
-	GoodsReceipt getListAmount(GoodsReceipt purchaseOrder);
+	GoodsReceipt getListAmount(GoodsReceipt goodsReceipt);
 	
 	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	
-	String setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
+	PurchaseOrder setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);
 	
 	List<GoodsReceipt> grApprovedList();
 	
-
+	List<LineItemsBean> getLineItemsBean(int id);
+	
+	boolean findByDocNumber(String grDocNum);
 }

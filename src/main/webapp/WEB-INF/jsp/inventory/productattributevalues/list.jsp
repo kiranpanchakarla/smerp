@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -85,6 +86,8 @@
 																<th>S.no</th>
 																<th>Product Attributes</th>
 																<th>Value</th>
+																<th>Created Date</th>
+																<th>Modified Date</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -96,6 +99,9 @@
 																			value="${count}" /></td>
 																	<td>${productattributesvalues.productAttributes.attributeName}</td>
 																	<td>${productattributesvalues.attributeValue}</td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productattributesvalues.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${productattributesvalues.updatedAt}"/></td>
+																	
 																	<td >   
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 												<c:if test="${ump.key eq 'Admin Master'}">
@@ -161,6 +167,7 @@ $(document).ready(function(){
 <script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/dataTables.buttons.min.js"/> type="text/javascript"></script> 
 <script src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/> type="text/javascript"></script> 
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 </html>
 

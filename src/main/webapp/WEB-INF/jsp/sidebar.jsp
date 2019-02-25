@@ -18,9 +18,17 @@
 	    <c:if test="${ump.key eq 'Admin Master'}">
        <a href="#"><i class="icon-android-menu left"></i><span class="menu_text">Administration</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         	</c:if>
+			  </c:forEach> 
+        <ul class="sub_menu">
+      
+        <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+         <li class="has_sub"><a>Admin<i class="icon-ios-arrow-right right"></i></a>
+         
+        	</c:if>
 			  </c:forEach>  
         
-        <ul class="sub_menu">
+        <ul class="super_sub">
          
             <c:forEach items="${sessionScope.umpmap}" var="ump">  
 			     <c:if test="${ump.key eq 'Company'}">
@@ -48,14 +56,64 @@
 			 	</c:if>
 			 	 </c:forEach>  
    		 
+   		</ul>
    		
-        </ul>
-      </li>
-      
+   		 <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+         <li class="has_sub"><a>Inventory<i class="icon-ios-arrow-right right"></i></a>
+         </c:if>
+		 </c:forEach>  
+		 <ul class="super_sub">
+		  <c:forEach items="${sessionScope.umpmap}" var="ump">
+                    <c:if test="${ump.key eq 'Product'}">
+					 <li class="has_sub"><a href="<c:url value ="/product/list"/>">Products</a></li>
+				   </c:if>	 
+					
+          </c:forEach> 
+          
+          
+           <c:forEach items="${sessionScope.umpmap}" var="ump">
+                     
+					 <c:if test="${ump.key eq 'Admin Master'}">
+					  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Product Attribute Values</a></li>
+					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Groups</a></li>
+          			 <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/uomcategory/list"/>">UOM Categories</a></li>
+         			 
+         			  </c:if>
+          </c:forEach> 
+		 </ul>
+		 
+		  <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+         <li class="has_sub"><a>Global Settings<i class="icon-ios-arrow-right right"></i></a>
+         </c:if>
+		 </c:forEach>  
+   		 <ul class="super_sub">
+   		 
+   		 <c:forEach items="${sessionScope.umpmap}" var="ump">
+	    <c:if test="${ump.key eq 'Admin Master'}">
+           <li class="has_sub"><a href="<c:url value ="/currency/list"/>">Currencies</a></li>
+         <li><a href="<c:url value ="/country/list"/>">Countries</a></li>
+           <li><a href="<c:url value ="/hsncode/list"/>">HSN Code</a></li>
+          <li><a href="<c:url value ="/languages/list"/>">Languages</a></li>
+           <%-- <li><a href="<c:url value ="/saccode/list"/>">SAC Code</a></li> --%>
+           <li><a href="<c:url value ="/states/list"/>">States</a></li>
+           <li><a href="<c:url value ="/timezone/list"/>">Timezones</a></li>
+         </c:if>
+		 </c:forEach>
+   		 
+   		 </ul>
+   		
+   		</ul>
+   		</li>
+   		
       
        
 	   
-       <li>
+       <%-- <li>
        <c:forEach items="${sessionScope.umpmap}" var="ump">
 	    <c:if test="${ump.key eq 'Admin Master'}">
        <a href="#"><i class="icon-android-expand left"></i><span class="menu_text">Inventory</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
@@ -86,12 +144,12 @@
           
           
         </ul>
-      </li>
+      </li> --%>
    
    		 
       
      
-       <c:forEach items="${sessionScope.umpmap}" var="ump">
+      <%--  <c:forEach items="${sessionScope.umpmap}" var="ump">
 	    <c:if test="${ump.key eq 'Admin Master'}">
       <li><a href="#"><i class="icon-android-settings left"></i><span class="menu_text">Settings</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
@@ -105,7 +163,7 @@
         </ul>
       </li>
        </c:if>
-   		  </c:forEach> 
+   		  </c:forEach>  --%>
       
       <li> 
      <c:set var="oneTime" value="${oneTime + 1}" scope="page" /> 
@@ -166,7 +224,7 @@
 						<c:if test="${ump.key eq 'Convert To GRE' || ump.key eq 'Convert To INV' }">
 							  <c:if test="${oneTimeGoods  ==1}">
 							<li class="has_sub"><a
-								href="<c:url value ="/gr/approvedList"/>">Convert GR To GRE/INV</a></li>
+								href="<c:url value ="/gr/approvedList"/>">GR To GRE/INV</a></li>
 								</c:if>
 								  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
 						</c:if>
@@ -180,12 +238,34 @@
 							<li class="has_sub"><a href="<c:url value ="/inv/list"/>">Invoice
 									</a></li>
 						</c:if>
+					
+						<c:if test="${ump.key eq 'Convert To CM'}">
+							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert To CM
+									</a></li>
+						</c:if>
+					
+						
+						<c:if test="${ump.key eq 'Credit Memo'}">
+							<li class="has_sub"><a href="<c:url value ="/creditMemo/list"/>">Credit Memo
+									</a></li>
+						</c:if>
 						
 					</c:forEach>
 
 				</ul>
       </li>
-      
+      <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Inventory Module</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
+       <!--  <ul class="sub_menu">
+          <li class="has_sub"><a>Transactions<i class="icon-ios-arrow-right right"></i></a> -->
+           <ul class="sub_menu">
+           <li class="has_sub"><a href="<c:url value ="/invgr/list"/>">Goods Receipt</a></li>
+            <li class="has_sub"><a href="<c:url value ="/invgi/list"/>">Goods Issue</a></li>
+              <li class="has_sub"><a href="<c:url value ="/invgt/list"/>">Goods Transfer</a></li>
+              </ul>
+             </li>
+          <%--  <li class="has_sub"><a href="<c:url value =""/>">Approval Templates</a></li> --%>
+        <!-- </ul>
+      </li>  -->
      <%--  <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Approval Procedures</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
           <li class="has_sub"><a href="<c:url value =""/>">Approval Stages</a></li>

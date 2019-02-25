@@ -9,16 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
 
-import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.Country;
 import com.smerp.model.master.Currency;
 import com.smerp.model.master.States;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_admin_company")
-public class Company extends AuditModel {
+public class Company extends UserAuditModel {
 
 	/**
 	 * 

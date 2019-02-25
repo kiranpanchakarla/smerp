@@ -75,7 +75,7 @@
 																<th>S.no</th>
 																<th>Vendor Name</th>
 																<th>Email Id</th>
-																<th>Document Number</th>
+																<th>Document No</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>GR Status</th>
@@ -90,8 +90,8 @@
 																	<td>${list.vendor.name}</td>
 																	<td>${list.vendor.emailId}</td>
 																	<td>${list.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${list.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${list.updatedAt}"/></td>
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>

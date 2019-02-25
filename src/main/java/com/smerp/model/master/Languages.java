@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_languages_master")
-public class Languages extends AuditModel {
+public class Languages extends UserAuditModel {
 
 	/**
 	 * 

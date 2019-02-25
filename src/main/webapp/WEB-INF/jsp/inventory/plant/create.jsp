@@ -65,13 +65,13 @@
 															<div class="form-body">
 																<div class="row">
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput1">Warehouse Name</label>
+																	<label for="timesheetinput1">Name</label>
 																	<div>
 
 																		<form:input type="text" cssClass="form-control camelCase"
 																			placeholder='Warehouse Name' path="plantName"
-																			required="true"
-																			oninvalid="this.setCustomValidity('Please Enter Currency Name')"
+																			required="true" onchange="isValidName('plantName','/currency/isValidWarehouseName','1_errorContainer','Warehouse Name Already Exists')"
+																			oninvalid="this.setCustomValidity('Please Enter Warehouse Name')"
 																			oninput="setCustomValidity('')" />
 																		<!-- <div  
 																			class="help-block with-errors"></div> -->
@@ -79,6 +79,87 @@
 																	</div>
 																</div>
 																 
+																 <div class="col-sm-4 form-group">
+																	<label for="timesheetinput1">Address-1</label>
+																	<div>
+
+																		<form:input type="text" cssClass="form-control camelCase"
+																			placeholder='Warehouse Address 1' path="address1"
+																			required="true"
+																			oninvalid="this.setCustomValidity('Please Enter Warehouse Address')"
+																			oninput="setCustomValidity('')" />
+																		<!-- <div  
+																			class="help-block with-errors"></div> -->
+																		 
+																	</div>
+																</div>
+																
+																 <div class="col-sm-4 form-group">
+																	<label for="timesheetinput1">Address-2</label>
+																	<div>
+
+																		<form:input type="text" cssClass="form-control camelCase"
+																			placeholder='Warehouse Address 2 ' path="address2"
+																			required="true"
+																			oninvalid="this.setCustomValidity('Please Enter Warehouse Address')"
+																			oninput="setCustomValidity('')" />
+																		<!-- <div  
+																			class="help-block with-errors"></div> -->
+																		 
+																	</div>
+																</div>
+																
+																<div class="col-sm-4 form-group">
+																	<label for="timesheetinput1">City</label>
+																	<div>
+
+																		<form:input type="text" cssClass="form-control camelCase"
+																			placeholder='Warehouse City ' path="city"
+																			required="true"
+																			oninvalid="this.setCustomValidity('Please Enter Warehouse Address')"
+																			oninput="setCustomValidity('')" />
+																		<!-- <div  
+																			class="help-block with-errors"></div> -->
+																		 
+																	</div>
+																</div>
+																
+																<div class="col-sm-4 form-group">
+																				<label>State</label>
+																				<form:select path="states.id" id="selectSubcat"
+																					cssClass="form-control" required="true"
+																					oninvalid="this.setCustomValidity('Please Select State')"
+																					oninput="setCustomValidity('')">
+																					<form:option value="">--Select--</form:option>
+																					<c:forEach items="${stateList}" var="stateList">
+
+																						<form:option value="${stateList.id}">${stateList.name}</form:option>
+																					</c:forEach>
+																				</form:select>
+																				<!-- <div   class="help-block with-errors"></div> -->
+																			</div>
+																
+																<div class="col-sm-4 form-group">
+																				<label>Country</label>
+																				<form:select path="country" id="selectSubcat"
+																					cssClass="form-control">
+																					<form:option value="${country.id}">${country.name}</form:option>
+																				</form:select>
+
+																			</div>
+																			</div>
+																			<div class="row">
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>ZIP Code</label>
+																				<form:input type="text"
+																					cssClass="form-control numericwithoutdecimal"
+																					placeholder='ZIP Code' path="zipCode"
+																					required="true" maxlength="6"
+																					oninvalid="this.setCustomValidity('Please ZIP Code')"
+																					oninput="setCustomValidity('')" />
+																				<!-- <div   class="help-block with-errors"></div> -->
+																			</div>
 															</div>
 															<br>
 															<div class="text-xs-center">

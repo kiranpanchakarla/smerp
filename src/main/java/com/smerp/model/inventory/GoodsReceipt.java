@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.admin.Vendor;
@@ -77,11 +78,15 @@ public class GoodsReceipt extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "po_id")
-	private Integer poId;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "po_id")
+	private PurchaseOrder poId;
 
 	@Column(name = "remark")
 	private String remark;
+	
+	@Column(name = "deliver_to")
+	private String deliverTo;
 
 	@Column(name = "total_discount")
 	private Double totalDiscount;
@@ -90,15 +95,53 @@ public class GoodsReceipt extends AuditModel {
 	private Double totalPayment ;
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
 	
     private transient String amtRounding;
     
-    private transient String taxAmt;
+    private transient String roundedOff;
+    
+    public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
+	}
+
+	private transient String taxAmt;
 	
 	private transient Double totalBeforeDisAmt ;
 	
+	private transient String RFQdocNumber;
 	
+	private transient String PRdocNumber;
+	
+    
+	
+	public String getRFQdocNumber() {
+		return RFQdocNumber;
+	}
+
+	public void setRFQdocNumber(String rFQdocNumber) {
+		RFQdocNumber = rFQdocNumber;
+	}
+
+	public String getPRdocNumber() {
+		return PRdocNumber;
+	}
+
+	public void setPRdocNumber(String pRdocNumber) {
+		PRdocNumber = pRdocNumber;
+	}
 
 	public Integer getId() {
 		return id;
@@ -250,11 +293,11 @@ public class GoodsReceipt extends AuditModel {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 
@@ -286,11 +329,11 @@ public class GoodsReceipt extends AuditModel {
 		this.totalPayment = totalPayment;
 	}
 
-	public Integer getPoId() {
+	public PurchaseOrder getPoId() {
 		return poId;
 	}
 
-	public void setPoId(Integer poId) {
+	public void setPoId(PurchaseOrder poId) {
 		this.poId = poId;
 	}
 
@@ -305,6 +348,7 @@ public class GoodsReceipt extends AuditModel {
 				+ totalPayment + ", freight=" + freight + "]";
 	}
 
+	
 	
 
 	

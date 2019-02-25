@@ -33,6 +33,13 @@ public class PlantServImpl implements PlantService {
 		}
 		return listPlant;
 	}
+	
+	
+	
+	@Override
+	public List<Plant> findPlantAll() {
+		return plantRepository.findAll();
+	}
 
 	@Override
 	public Plant save(Plant plant) {
@@ -56,6 +63,14 @@ public class PlantServImpl implements PlantService {
 	public void delete(int id) {
 		plantRepository.deleteById(id);
 		
+	}
+
+
+
+	@Override
+	public Plant findByName(String name) {
+		// TODO Auto-generated method stub
+		return plantRepository.findByName(name);
 	}
 
 }

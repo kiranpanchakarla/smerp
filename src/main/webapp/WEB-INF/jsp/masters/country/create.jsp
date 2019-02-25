@@ -63,7 +63,7 @@
 														<form class="form">
 															<div class="form-body">
 																<div class="row">
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput1">Country Code</label>
 																	<div>
 
@@ -77,7 +77,7 @@
 																		 
 																	</div>
 																</div>
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-6 form-group">
 																	<label for="timesheetinput2">Country Name</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control camelCase"
@@ -90,7 +90,10 @@
 																		 
 																	</div>
 																</div>
-																<div class="col-sm-4 form-group">
+																
+																	</div>
+																	<div class="row">
+																	<div class="col-sm-6 form-group">
 																		<label>Currency</label>
 																		<form:select id="currency" path="currency.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Currency')" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
@@ -100,9 +103,7 @@
 																		</form:select>
 																		<!-- <div   class="help-block with-errors"></div> -->
 																	</div>
-																	</div>
-																	<div class="row">
-																	<div class="col-sm-4 form-group">
+																	<div class="col-sm-6 form-group">
 																	<label for="timesheetinput2">Phone Code</label>
 																	<div>
 																		<form:input type="text" cssClass="form-control"

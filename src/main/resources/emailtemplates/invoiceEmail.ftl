@@ -21,7 +21,6 @@
               </tr>
               <tr>
                 <td height="80" align="center" valign="middle" style="font-size:12px; line-height:18px; color:#545454">
-                <p style="text-align: left;font-family: inherit;">Dear <b>${user.username}</b> </p>
                 <p style="text-align: left;font-family: inherit;"></p>
                 <div style="background:#e6ecf3; text-align:left;padding:15px;overflow: hidden;">
                 <h2 style="font-size: 1.4rem;color: #106570;font-weight: 600;margin: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px;font-family: inherit;">Invoice</h2>
@@ -59,6 +58,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if inv.requiredDate??>${inv.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if inv.status??> ${inv.status}</#if></td>
                 </tr>
                 
              
@@ -92,14 +93,15 @@
                 <td style="border: solid 1px ;"><#if invoiceList.sku??>&nbsp;${invoiceList.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.unitPrice??>&nbsp;${invoiceList.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if invoiceList.taxDescription??>&nbsp;${invoiceList.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if invoiceList.taxCode??>
                 <#list taxCodeMap as key, value>
-                <#if (invoiceList.taxCode) == (key)>
-                     <p> ${value}</p>
+                <#if (invoiceList.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if invoiceList.taxTotal??>&nbsp;${invoiceList.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.total??>&nbsp;${invoiceList.total}<#else>--</#if></td>
@@ -173,7 +175,7 @@
                 <tr>
                 <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName},</#if></td>
                 <td><#if inv.vendorPayTypeAddress.addressName??>${inv.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if inv.totalBeforeDisAmt??> ${inv.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
@@ -183,20 +185,21 @@
                 <td>:<#if inv.freight??> ${inv.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if inv.vendorShippingAddress.city??>${inv.vendorShippingAddress.city},</#if> </td>
-                <td><#if inv.vendorPayTypeAddress.city??>${inv.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
-                </tr>
-                <tr>
                 <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if inv.taxAmt??> ${inv.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if inv.roundedOff??> ${inv.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if inv.totalPayment??> ${inv.totalPayment}<#else>--</#if></td>
                 </tr>
@@ -212,7 +215,7 @@
               
               <tr>
               <td style="font-size:12px; line-height:18px; color:#545454">
-              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP <br>
+              <p style="text-align: center;font-family: inherit;">Email Sent by SMERP, do not reply. <br>
                                              Copyright &copy; 2019. All rights Reserved.
               </td>
               </tr>

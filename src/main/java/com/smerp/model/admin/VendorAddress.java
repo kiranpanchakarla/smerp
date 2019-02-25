@@ -10,12 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
 import com.smerp.model.master.Country;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_admin_vendor_address")
-public class VendorAddress extends AuditModel {
+public class VendorAddress extends UserAuditModel {
 
 	/**
 	 * 

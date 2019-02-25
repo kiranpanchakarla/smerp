@@ -27,6 +27,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.service.purchase.RequestForQuotationService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -62,6 +63,10 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	@Autowired
 	EmailGenerator emailGenerator;
 	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
+	
+	
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
 		requestForQuotation.setCategory("Item");
@@ -92,6 +97,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			for (int i = 0; i < listItems.size(); i++) {
 				if (listItems.get(i).getProdouctNumber() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			requestForQuotation.setLineItems(listItems);
@@ -126,16 +132,20 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		requestForQuotation.setVendorShippingAddress(vendorShippingAddress);
 		requestForQuotation.setVendorPayTypeAddress(vendorPayAddress);
 		
-		if(requestForQuotation.getStatusType()!=null &&  requestForQuotation.getStatusType().equals("APP")) {
+	 if(requestForQuotation.getStatus()!=null &&  !requestForQuotation.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
+				if(requestForQuotation.getId()!=null) {
+					RequestForQuotation requestForQuotationObj = requestForQuotationRepository.findById(requestForQuotation.getId()).get();
+					logger.info(requestForQuotationObj.getCreatedBy().getUserEmail());
+					requestForQuotation.setCreatedBy(requestForQuotationObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "requestForQuotationEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendRFQEmail(requestForQuotation);
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-		}
-			
+	} 
 
 		return requestForQuotationRepository.save(requestForQuotation);
 	}
@@ -146,15 +156,16 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		RequestForQuotation rfq = new RequestForQuotation();
 		PurchaseRequest prq = purchaseRequestService.getInfo(Integer.parseInt(purchaseId));
 		
-		RequestForQuotation dup_rfq =requestForQuotationRepository.findByPurchaseReqId(prq.getId());  // check PR exist in RFQ
-        if(dup_rfq==null) { 
-		RequestForQuotation rfqdetails = findLastDocumentNumber();
+		RequestForQuotation dup_rfq = null; //requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
+        if(dup_rfq==null) {
+        	Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
+        	RequestForQuotation rfqdetails = findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
-			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber()));
+			rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration(rfqdetails.getDocNumber(),count));
 		} else {
 			  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 			  LocalDateTime now = LocalDateTime.now();
-			  rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0"));
+			  rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (prq != null) {
@@ -166,11 +177,8 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			rfq.setRemark(prq.getRemarks());
 			rfq.setReferenceDocNumber(prq.getDocNumber());
 			rfq.setRequiredDate(prq.getRequiredDate());
-			rfq.setPurchaseReqId(prq.getId());
+			rfq.setPurchaseReqId(prq);
 			rfq.setIsActive(true);
-			
-			
-			
 			
 			List<PurchaseRequestList> prItms = prq.getPurchaseRequestLists();
 			List<LineItems> lineItems =new ArrayList<LineItems>();
@@ -193,13 +201,12 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			}
 			
 			rfq.setLineItems(lineItems);
-			
 		}
 		
 		rfq.setCategory("Item");
 		rfq = requestForQuotationRepository.save(rfq);
 		
-		prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+		//prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
 		prq.setType("Item");
 		purchaseRequestRepository.save(prq);
 		
@@ -254,6 +261,40 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		requestForQuotation.setIsActive(false);
 		requestForQuotationRepository.save(requestForQuotation);
 		return requestForQuotation;
+	}
+	
+	@Override
+	public boolean findByDocNumber(String rfqDocNum) {
+		List<RequestForQuotation> requestForQuotation = requestForQuotationRepository.findByDocNumber(rfqDocNum);
+		if(requestForQuotation.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean isVendorNameExistWithDocNum(String vendorName, String refDocNum) {
+		List<RequestForQuotation> requestForQuotation = requestForQuotationRepository.findByDocNumber(vendorName,refDocNum);
+		if(requestForQuotation.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public List<RequestForQuotation> getRFQListById(PurchaseRequest prId){
+		List<RequestForQuotation> rfqList = requestForQuotationRepository.getRFQListById(prId);
+		return rfqList;
+	}
+	
+	@Override
+	public Integer getRFQListCount(PurchaseRequest prId){
+		List<RequestForQuotation> rfqList = requestForQuotationRepository.getRFQListById(prId);
+		Integer noOfRfq = rfqList.size();
+		logger.info("No of RFQ's are:"+noOfRfq);
+		return noOfRfq;
 	}
 
 }

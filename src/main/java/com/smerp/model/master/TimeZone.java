@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_timezones_master")
-public class TimeZone extends AuditModel {
+public class TimeZone extends UserAuditModel {
 	
 	
 	/**

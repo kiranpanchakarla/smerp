@@ -69,6 +69,8 @@
                 <tr>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if gr.requiredDate??>${gr.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
+                <td><strong>Status</strong></td>
+				<td>: <#if gr.status??> ${gr.status}</#if></td>
                 </tr>
                 
              
@@ -102,14 +104,15 @@
                 <td style="border: solid 1px ;"><#if goodsRetlist.sku??>&nbsp;${goodsRetlist.sku}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.requiredQuantity??>&nbsp;${goodsRetlist.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.unitPrice??>&nbsp;${goodsRetlist.unitPrice}<#else>--</#if></td>
-                <td style="border: solid 1px ;">
+                <td style="border: solid 1px ;"><#if goodsRetlist.taxDescription??>&nbsp;${goodsRetlist.taxDescription}<#else>--</#if>
+                 <!-- 
                   <#if goodsRetlist.taxCode??>
-                <#list taxCodeMap as key, value>
-                <#if (goodsRetlist.taxCode) == (key)>
-                     <p> ${value}</p>
+               <#list taxCodeMap as key, value>
+                <#if (goodsRetlist.taxCode) == (value)>
+                     <p> ${key}</p>
                      </#if>
                 </#list>
-                  </#if>
+                  </#if> -->
                 </td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.taxTotal??>&nbsp;${goodsRetlist.taxTotal}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if goodsRetlist.total??>&nbsp;${goodsRetlist.total}<#else>--</#if></td>
@@ -183,7 +186,7 @@
                 <tr>
                 <td><#if gr.vendorShippingAddress.addressName??>${gr.vendorShippingAddress.addressName},</#if></td>
                 <td><#if gr.vendorPayTypeAddress.addressName??>${gr.vendorPayTypeAddress.addressName}</#if></td>
-                <td><strong>Total Before Discount</strong></td>
+                <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if gr.totalBeforeDisAmt??> ${gr.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
@@ -192,21 +195,28 @@
                  <td><strong>Freight</strong></td>
                 <td>:<#if gr.freight??> ${gr.freight} <#else>--</#if></td>
                 </tr>
-                <tr>
+                 <tr>
                 <td><#if gr.vendorShippingAddress.city??>${gr.vendorShippingAddress.city},</#if> </td>
                 <td><#if gr.vendorPayTypeAddress.city??>${gr.vendorPayTypeAddress.city},</#if></td>
-                <td><strong>Rounding</strong></td>
-                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
+                 <td><strong>Tax Amount</strong></td>
+                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
                 </tr>
                 <tr>
                 <td><#if gr.vendorShippingAddress.zipCode??>${gr.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if gr.vendorPayTypeAddress.zipCode??>${gr.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Tax Amount</strong></td>
-                <td>:<#if gr.taxAmt??> ${gr.taxAmt}<#else>--</#if></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if gr.amtRounding??> ${gr.amtRounding}<#else>-- </#if></td>
+               
                 </tr>
                 <tr>
                 <td><#if gr.vendorShippingAddress.country.name??>${gr.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if gr.vendorPayTypeAddress.country.name??>${gr.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><strong>Rounded Off</strong></td>
+                <td>:<#if gr.roundedOff??> ${gr.roundedOff}<#else>--</#if></td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if gr.totalPayment??> ${gr.totalPayment}<#else>--</#if></td>
                 </tr>

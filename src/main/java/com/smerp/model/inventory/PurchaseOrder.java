@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -25,6 +26,11 @@ import com.smerp.model.master.AuditModel;
 @Entity
 @Table(name = "tbl_purchase_order")
 public class PurchaseOrder extends AuditModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +53,7 @@ public class PurchaseOrder extends AuditModel {
 	private String status;
 
 	private transient String statusType;
-
+	
 	@Column(name = "reference_doc_number")
 	private String referenceDocNumber;
 
@@ -78,11 +84,23 @@ public class PurchaseOrder extends AuditModel {
 	@Column(name = "is_active")
 	private Boolean isActive = true;
 
-	@Column(name = "rfq_id")
-	private Integer rfqId;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "rfq_id")
+	private RequestForQuotation rfqId;
 
 	@Column(name = "remark")
 	private String remark;
+	
+	@Column(name = "deliver_to")
+	private String deliverTo;
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
 
 	@Column(name = "total_discount")
 	private Double totalDiscount;
@@ -91,16 +109,18 @@ public class PurchaseOrder extends AuditModel {
 	private Double totalPayment ;
 
 	@Column(name = "freight")
-	private Integer freight;
+	private Double freight;
 	
     private transient String amtRounding;
     
+    private transient String roundedOff;
+    
     private transient String taxAmt;
 	
-	private transient Double totalBeforeDisAmt ;
+	private transient Double totalBeforeDisAmt;
 	
+	private transient String PRDocNumber;
 	
-
 	public Integer getId() {
 		return id;
 	}
@@ -221,11 +241,11 @@ public class PurchaseOrder extends AuditModel {
 		this.isActive = isActive;
 	}
 
-	public Integer getRfqId() {
+	public RequestForQuotation getRfqId() {
 		return rfqId;
 	}
 
-	public void setRfqId(Integer rfqId) {
+	public void setRfqId(RequestForQuotation rfqId) {
 		this.rfqId = rfqId;
 	}
 
@@ -247,6 +267,14 @@ public class PurchaseOrder extends AuditModel {
 
 	
 
+	public String getPRDocNumber() {
+		return PRDocNumber;
+	}
+
+	public void setPRDocNumber(String pRDocNumber) {
+		PRDocNumber = pRDocNumber;
+	}
+
 	public Double getTotalBeforeDisAmt() {
 		return totalBeforeDisAmt;
 	}
@@ -255,11 +283,11 @@ public class PurchaseOrder extends AuditModel {
 		this.totalBeforeDisAmt = totalBeforeDisAmt;
 	}
 
-	public Integer getFreight() {
+	public Double getFreight() {
 		return freight;
 	}
 
-	public void setFreight(Integer freight) {
+	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 
@@ -289,6 +317,16 @@ public class PurchaseOrder extends AuditModel {
 
 	public void setTotalPayment(Double totalPayment) {
 		this.totalPayment = totalPayment;
+	}
+	
+	
+
+	public String getRoundedOff() {
+		return roundedOff;
+	}
+
+	public void setRoundedOff(String roundedOff) {
+		this.roundedOff = roundedOff;
 	}
 
 	@Override

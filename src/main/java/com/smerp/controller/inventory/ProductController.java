@@ -91,6 +91,7 @@ public class ProductController {
 		model.addAttribute("productTypeList", productList.getProductType());
 		model.addAttribute("taxCategoryList", productList.getTaxCategory());
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
+	    mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		
 		
@@ -128,6 +129,7 @@ public class ProductController {
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
 		model.addAttribute("valuationMethodList", productList.getValuationMethod());
 		model.addAttribute("uomList", uomService.uomList(product.getUomCategory().getId()));
+		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		return "product/create";
 	}
@@ -135,7 +137,7 @@ public class ProductController {
 	@GetMapping(value = "/view")
 	public String view(String productId, Model model) {
 		Product product=productService.getInfo(Integer.parseInt(productId));
-		List<ProductQuantity> productQuantity = productQuantityService.findProductOrderedQuantity(product.getProductNo());
+		List<ProductQuantity> productQuantity = productQuantityService.findProductOrderedQuantity(product.getId());
 		model.addAttribute("product",product);
 		model.addAttribute("uomCategoryList", uomCatergoryService.findAll());
 		model.addAttribute("hsnList", hsnService.findAll());

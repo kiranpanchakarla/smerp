@@ -58,16 +58,23 @@
                                                             <form class="form">
                                                                 <div class="form-body">
                                                                     <div class="row">
-                                                                        <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>User</label>
-                                                                            <form:input type="text" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
+                                                                          <div class="col-sm-6 form-group has-feedback">
+                                                                            <!-- <label>User</label> -->
+                                                                            <form:input type="hidden" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.userId" class="userId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
-                                                                        </div>
-                                                                        <div class="col-sm-6 form-group has-feedback">
+                                          
                                                                             <label>Doc No</label>
                                                                             <form:input type="text" class="form-control" placeholder='docNumber' path="docNumber" value="" autocomplete="off" readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Doc No.')" oninput="setCustomValidity('')" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            
+                                                                        </div>  
+                                                                       <div class="col-sm-6 form-group has-feedback">
+                                                                            <label>Email- ID</label>
+                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
+                                                                            
+                                                                            value="${purchaseRequest.referenceUser.userEmail}"
+                                                                            
+                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
+                                                                           <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -78,15 +85,15 @@
                                                                             
                                                                              required="true" oninvalid="this.setCustomValidity('Please Enter Requester Name.')" oninput="setCustomValidity('')" />
                                                                               <form:hidden path="referenceUser.userId" class="referenceUserId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Posting Date</label>
                                                                             <form:input type="text"  autocomplete="off"  class="form-control" placeholder='postingDate' required="true" path="postingDate" value="" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
+                                                                         
+                                                                    
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Plant</label>
                                                                             <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" 
@@ -96,32 +103,22 @@
                                                                             
                                                                               readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Plant.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.plant.id" class="plantId" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Doc Date</label>
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='documentDate' required="true" path="documentDate" value="" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                            <!-- <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>Email- ID</label>
-                                                                            <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
-                                                                            
-                                                                            value="${purchaseRequest.referenceUser.userEmail}"
-                                                                            
-                                                                              readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Email Id.')" oninput="setCustomValidity('')" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
-                                                                        </div>
+                                                                   
+                                                                       
                                                                         <div class="col-sm-6 form-group has-feedback">
                                                                             <label>Require Date</label>
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />
-                                                                            <div style="color:red;" class="help-block with-errors"></div>
+                                                                           <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-6 form-group">
+                                                                    
+                                                                        <div class="col-sm-6 form-group" style="visibility: hidden;">
                                                                             <div class="input-group">
                                                                                 <%-- <div class="col-sm-3 form-group">
                                                                                     <form:radiobutton name="type" path="type" id="items_radio"  value="Item" />
@@ -143,7 +140,7 @@
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div> 
 
-                                                                                <div style="color:red;" class="help-block with-errors"></div>
+                                                                               <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -316,7 +313,7 @@
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
-																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"  required="true"
+																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}" maxlength='5'  required="true"
 																															class="form-control validatePrice"></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:select class="form-control"
@@ -360,7 +357,7 @@
 																				<div class="row">
 																			<div class="col-sm-4 form-group">
                                                                           <label>Remark</label> 
-                                                                            <form:textarea type="text" cssClass="form-control camelCase"
+                                                                            <form:input type="text" cssClass="form-control camelCase"
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remarks"  />
                                                                            </div>
@@ -384,18 +381,18 @@
                                                                     <c:if test="${purchaseRequest.id==null}">
                                                                     <form:button  type="submit"  id="save" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i>Save</form:button>
                                                                     </c:if>
-                                                                    <c:if test="${purchaseRequest.id!=null}">
+                                                                   <c:if test="${purchaseRequest.id!=null}">
                                                                        <form:button  type="submit" id="update" name="statusType" value="SA" class="btn btn-primary mySubButton"> <i class="icon-check2"></i> Update</form:button>
                                                                         
- 																		  <a
-																			href="<c:url value="/purchaseReq/cancelStage?id=${purchaseRequest.id}"/>">
+ 																		<%--   <a
+																			href="<c:url value="/purchaseReq/list"/>">
 																			<button type="button" class="btn btn-warning mr-1">
 																				<i class="icon-cross2"></i> Cancel
 																			</button>
-																		</a>
+																		</a> --%>
 																		
 																		
-                                                                      </c:if>
+                                                                      </c:if>  
                                                                       <!-- Approve -->
                                                                        <c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request' }">
@@ -567,7 +564,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"   required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -671,10 +668,7 @@
            }).datepicker( "option", { setDate:0,
                    maxDate:'+3y -1d',
                    minDate:'0' } );
-    	
-     
 
-         
     	
             var date = new Date();
             var today = new Date(date.getDate(), date.getFullYear(), date.getMonth());
@@ -750,6 +744,15 @@
                     }
                 });
             }
+            
+            $(document).on("blur", ".username", function() {
+          	  if(availableTagsusernames.includes($(this).val()) == true) 	 {
+          		//alert("true");
+          } else {
+       	   alertify.alert("Purchase Request","Please Select Valid User! "+($(this).val()));
+       	   $(".username").val("");
+               }   
+              });
 
             var productList = [];
             var name  = {};
@@ -1334,6 +1337,7 @@
 
 <link href="<c:url value="/resources/css/themes/jquery-ui.css"/>" rel="stylesheet" type="text/css" />
 <script src=<c:url value="/resources/js/jquery-ui.js"/> type="text/javascript"></script>
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 
 <c:import url="/WEB-INF/jsp/loadJs.jsp" /> 
             

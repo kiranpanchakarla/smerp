@@ -8,6 +8,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
@@ -81,11 +82,11 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>Vendor Name</th>
 																<th>VendorCode</th>
-																<th>Created</th>
-																<th>Modified</th>
+																<th>Created Date</th>
+																<th>Modified Date</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -96,8 +97,8 @@
 																			scope="page" /> <c:out value="${count}" /></td>
 																	<td>${vendorList.name}</td>
 																	<td>${vendorList.vendorCode}</td>
-																	<td>${vendorList.createdAt}</td>
-																	<td>${vendorList.updatedAt}</td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${vendorList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${vendorList.updatedAt}"/></td>
 																	<td>
 																	<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Vendor'}">
@@ -165,6 +166,7 @@
 	<script
 		src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"
 		type="text/javascript"></script>
+		<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

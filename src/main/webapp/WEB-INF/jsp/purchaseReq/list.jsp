@@ -82,9 +82,9 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>User Name</th>
-																<th>Document Number</th>
+																<th>Document No</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
@@ -98,16 +98,16 @@
 																<tr>
 																	<td><c:set var="count" value="${count + 1}"
 																			scope="page" /> <c:out value="${count}" /></td>
-																	<td>${purchaseRequestsList.user.username}</td>
+																	<td>${purchaseRequestsList.referenceUser.username}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.createdAt}"/></td>
-																	<td><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss a" value="${purchaseRequestsList.updatedAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${purchaseRequestsList.createdAt}"/></td>
+																	<td><fmt:formatDate pattern="dd/MM/yyyy hh:mm a" value="${purchaseRequestsList.updatedAt}"/></td>
 																	<td>${purchaseRequestsList.status}</td>
 																	<%-- <th><c:if test="${productList.isActive eq true}">Active</c:if>
 																	<c:if test="${productList.isActive eq false}">InActive</c:if></th> --%>
 																	<td>
 																	  <c:choose>
-																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Cancelled' }">
+																	<c:when  test="${purchaseRequestsList.status != 'Approved'  && purchaseRequestsList.status!='ConvertedToRFQ'   && purchaseRequestsList.status != 'Rejected' }">
 																			
 																			<c:forEach items="${sessionScope.umpmap}" var="ump">
 																		 <c:if test="${ump.key eq 'Purchase Request'}">
@@ -183,6 +183,7 @@
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
 		type="text/javascript"></script>
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

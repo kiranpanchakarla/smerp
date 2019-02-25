@@ -70,7 +70,7 @@
 
 																</div>
 																<div class="col-sm-4 form-group">
-																	<label>Contact Person </label>:
+																	<label>Contact</label>:
 																	${rfq.vendorContactDetails.contactName}
 																</div>
 															</div>
@@ -88,10 +88,13 @@
 																	<label>Ship From</label>:
 																	${rfq.vendorShippingAddress.city}
 																</div>
-
 																<div class="col-sm-4 form-group">
-																	<label>Document#</label>: ${rfq.docNumber}
-																</div>
+																				<label>Posting Date</label>:
+																				<fmt:formatDate pattern="dd/MM/yyyy"
+																					value="${rfq.postingDate}" />
+																			</div>
+
+																
 
 															</div>
 
@@ -100,17 +103,16 @@
 																	<div class="form-body">
 
 																		<div class="row">
+																		<div class="col-sm-4 form-group">
+																	<label>RFQ Doc#</label>: ${rfq.docNumber}
+																</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Reference Document#</label>:
+																				<label>PR Doc#</label>:
 																				${rfq.referenceDocNumber}
 																			</div>
+																			
 																			<div class="col-sm-4 form-group">
-																				<label>Posting Date</label>:
-																				<fmt:formatDate pattern="dd/MM/yyyy"
-																					value="${rfq.postingDate}" />
-																			</div>
-																			<div class="col-sm-4 form-group">
-																				<label>Document Date</label>:
+																				<label>Doc Date</label>:
 																				<fmt:formatDate pattern="dd/MM/yyyy"
 																					value="${rfq.documentDate}" />
 																			</div>
@@ -336,7 +338,7 @@
 	   										                           </c:if>
 	       								                           </c:if>     
    									                            </c:forEach></div>
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 										              
 																</div>
@@ -373,16 +375,51 @@
 			theThis.addClass('active');
 		});
 
-		$('#convertBtn').on(
-				'click',
-				function(event) {
+		var noOfRFQ = ${noOfRfqs};
+		$('#convertBtn').on('click',function(event) {
 					event.preventDefault();
+					
+					if(noOfRFQ>1){
+						alertify.confirm('Are you Sure, Want to Convert RFQ to PO ? <br> Other RFQs will be Cancelled',
+								function() {
+									$.blockUI({ css: {
+						                 border: 'none', 
+						                 padding: '15px', 
+						                 backgroundColor: '#000', 
+						                 '-webkit-border-radius': '10px', 
+						                 '-moz-border-radius': '10px', 
+						                 opacity: .5, 
+						                 color: '#fff' 
+						             },
+						             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+						             });
+									
+									form.submit();
+								}, function() {
+									setTimeout($.unblockUI, 1000);
+									alertify.error('Cancelled')
+								});
+					}else{
 					alertify.confirm('Are you Sure, Want to Convert RFQ to PO',
 							function() {
+								$.blockUI({ css: {
+					                 border: 'none', 
+					                 padding: '15px', 
+					                 backgroundColor: '#000', 
+					                 '-webkit-border-radius': '10px', 
+					                 '-moz-border-radius': '10px', 
+					                 opacity: .5, 
+					                 color: '#fff' 
+					             },
+					             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+					             });
+								
 								form.submit();
 							}, function() {
+								setTimeout($.unblockUI, 1000);
 								alertify.error('Cancelled')
 							});
+					}
 
 				});
 
@@ -390,7 +427,7 @@
 			window.history.back();
 		}
 	</script>
-
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 
 
 </body>

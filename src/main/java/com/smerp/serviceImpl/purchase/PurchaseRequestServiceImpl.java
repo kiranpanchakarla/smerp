@@ -28,7 +28,6 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	@Autowired
 	PurchaseRequestListRepository purchaseRequestListRepository;
 	
-	
 	@Autowired
 	EmailGenerator emailGenerator;
 	
@@ -49,13 +48,6 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
             break; 
         case "APP": 
         	purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
-        	try {
-      			 RequestContext.initialize();
-      		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
-      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
-      		} catch (Exception e) {
-      			e.printStackTrace();
-      		}
             break; 
         case "CA":
         	purchaseRequest.setStatus(EnumStatusUpdate.CANCELED.getStatus());
@@ -70,21 +62,34 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 			for (int i = 0; i < ltms.size(); i++) {
 				if (ltms.get(i).getDescription() == null) {
 					ltms.remove(i);
+					i--;
 				}
 			}
 			purchaseRequest.setPurchaseRequestLists(ltms);
 		}
 		
 		if (purchaseRequest.getId() != null) {
-			PurchaseRequest purchaseRequest123 = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
-			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest123.getPurchaseRequestLists();
+			PurchaseRequest purchaseRequest_Obj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+			List<PurchaseRequestList> purchaseRequestLists = purchaseRequest_Obj.getPurchaseRequestLists();
 				purchaseRequestListRepository.deleteAll(purchaseRequestLists);
 		}
 		
-		
-		
-			
-
+		 if(purchaseRequest.getStatus()!=null &&  !purchaseRequest.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
+			 try {
+				 if(purchaseRequest.getId()!=null) {
+					PurchaseRequest purchaseRequestObj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+					logger.info(purchaseRequestObj.getCreatedBy().getUserEmail());
+					purchaseRequest.setCreatedBy(purchaseRequestObj.getCreatedBy());
+				 }
+      			 RequestContext.initialize();
+      		     RequestContext.get().getConfigMap().put("mail.template", "purchaseRequestEmail.ftl");  //Sending Email
+      		   emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendPREmail(purchaseRequest);
+      		} catch (Exception e) {
+      			e.printStackTrace();
+      		}
+			 
+		 } 
+		 
 		return purchaseRequestRepository.save(purchaseRequest);
 	}
 
@@ -130,7 +135,15 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		return purchaseRequestRepository.findById(purchaseReqId).get();
 	}
 
-	
+	@Override
+	public boolean findByDocNumber(String prNo) {
+		List<PurchaseRequest> prList = purchaseRequestRepository.findByDocNumber(prNo);
+		if(prList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
  
 }

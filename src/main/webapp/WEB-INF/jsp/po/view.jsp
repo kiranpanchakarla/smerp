@@ -1,4 +1,4 @@
-
+	
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE>
@@ -56,9 +56,41 @@ text-align: left;
 										<div class="col-md-12">
 											<div class="card-box">
 												<div class="card-header">
-
+													<div class="col-md-12">
 													<h2 class="card-title" id="basic-layout-icons">Purchase Order</h2>
+													</div>
+													
 												</div>
+
+												<!-- Modal -->
+											  <div class="modal fade" id="myModal" role="dialog">
+											    <div class="modal-dialog">
+											    
+											      <!-- Modal content-->
+											      <div class="modal-content">
+											        <div class="modal-header">
+											        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+											          <h4 class="modal-title">Purchase Order History</h4>
+											        </div>
+											        <div class="modal-body" style="height:250px;overflow-y:scroll">
+												<c:forEach items="${poahList}" var="poahListvar">
+											 	<ul class="popup-content">
+												  <li>
+													
+													 <b> <fmt:formatDate pattern = "dd/MM/yyyy hh:mm a"  value = "${poahListvar.createdDate}"/> :</b> ${poahListvar.activity} : ${poahListvar.log} by ${poahListvar.createdBy}
+													
+												   </li>
+												</ul> 
+												</c:forEach>
+											        </div>
+											        <div class="modal-footer">
+											          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											        </div>
+											      </div>
+											      
+											    </div>
+											  </div>
+
 
 												<div class="card-body collapse in create-block">
 													<div class="card-block">
@@ -91,37 +123,51 @@ text-align: left;
 																</div>
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${po.docNumber}
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.createdAt}" />
 																			</div>
-
 															</div>
 
 															<div class="card-body collapse in">
 																<div class="card-block-in">
 																	<div class="form-body">
-
-																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${po.referenceDocNumber}
+																	
+																	<div class="row">
+																	<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${po.docNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.postingDate}" />
-																			</div>
+																  
 																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${po.referenceDocNumber}
+																			</div>	
+																			
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${po.rfqId.purchaseReqId.docNumber}
+																			</div>	
+																			
+																	</div>
+																	
+																	<div class="row">
+																	 <div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.documentDate}" />
 																			</div>
+																	
+												                	
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>Required Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
+																			</div>
+																			
 																		</div>
 
 
 
 
 																		<div class="row">
-																			<div class="col-sm-4 form-group">
-																				<label>Required Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${po.requiredDate}" />
-																			</div>
+																			
                                                                             <div class="col-sm-4 form-group">
 																				<label>Type</label>: Product
 																			</div>
@@ -135,13 +181,12 @@ text-align: left;
 																</div>
 															</div>
 															
-															<div class="row">
+															<!--  <div class="row">
+															 <a class="btn po-hist-btn" data-toggle="modal" data-target="#myModal"> History </a>
 																			
-																			
-															</div>
+															</div>  -->
 																		
 															
-
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
 																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -233,11 +278,13 @@ text-align: left;
 																													
 																													
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
-																																<c:if test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
+																																<c:if test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
@@ -268,8 +315,8 @@ text-align: left;
 																												<td><c:forEach var="entry"
 																														items="${taxCodeMap}">
 																														<c:if
-																															test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
+																															test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
 																													</c:forEach></td>
 																												<td>${listLineItems.taxTotal}</td>
 																												<td>${listLineItems.total}</td>
@@ -310,8 +357,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${po.vendorShippingAddress.addressName}<br>
+																					${po.vendorShippingAddress.street}
+																					${po.vendorShippingAddress.city}
+																					${po.vendorShippingAddress.zipCode}<br>
+																					${po.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${po.vendorPayTypeAddress.addressName}<br>
+																					${po.vendorPayTypeAddress.street}
+																					${po.vendorPayTypeAddress.city}
+																					${po.vendorPayTypeAddress.zipCode}<br>
+																					${po.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${po.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -346,7 +422,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -374,7 +450,7 @@ text-align: left;
 
 											<div class="form-group">
 											<div class="col-sm-6">
-												<label>Total Before Discount  </label>
+												<label>Total Invoice Amount  </label>
 												</div>
 												<div class="col-sm-6">
 												: ${po.totalBeforeDisAmt}
@@ -388,19 +464,26 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6">: ${po.amtRounding} </div>
-											</div>
-
-											<div class="form-group">
 												<div class="col-sm-6"><label>Tax Amount </label> </div>
 												<div class="col-sm-6">: ${po.taxAmt} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6">: ${po.amtRounding} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${po.totalPayment - po.amtRounding}"/></div>
 											</div>
 
 											<div class="form-group">
 											<div class="col-sm-6">	<label>Total Payment Due  </label> </div>
 											<div class="col-sm-6">: ${po.totalPayment} </div>
 											</div>
+											
+											
 										</div>
 									
 									</div>		
@@ -424,7 +507,7 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
-	        									                        <c:if test="${po.status eq 'Approved' || po.status eq 'Partially_Received'}">
+	        									                        <c:if test="${po.status != 'Open'  && po.status != 'Draft' && po.status != 'Rejected'}">
 																		 
 																		   <c:if test="${checkStatusPoGr ==true}">
 									<input type="hidden" name="poId" value="${po.id}">
@@ -445,7 +528,7 @@ text-align: left;
 												         
 												         </div>
 												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/po/downloadPdf?id=${po.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -494,8 +577,21 @@ text-align: left;
 					event.preventDefault();
 					alertify.confirm('Convert PO to GR','Are you Sure, Want to Convert  PO  to GR',
 							function() {
+								$.blockUI({ css: {
+					                 border: 'none', 
+					                 padding: '15px', 
+					                 backgroundColor: '#000', 
+					                 '-webkit-border-radius': '10px', 
+					                 '-moz-border-radius': '10px', 
+					                 opacity: .5, 
+					                 color: '#fff' 
+					             },
+					             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+					             });
+								
 								form.submit();
 							}, function() {
+								setTimeout($.unblockUI, 1000);
 								alertify.error('Cancelled')
 							});
 
@@ -504,9 +600,34 @@ text-align: left;
 		function goBack() {
 			window.history.back();
 		}
+		
+		
+	/* 	function showHistory(po_id){
+			
+			var id = po_id;
+			alert("id:"+id);
+		 	$.ajax({
+		 		type:"GET",
+	              url: url, 
+	              url: "showHistoryById",
+	             data : id,
+	             success: function(result){
+	            	 alert("ok");
+	                  if(result==true){
+	                     alertify.warning(msg);
+	                     $('#'+nameId).val('');
+	                     $('#'+displayId).html(msg);
+	                 }else {
+	                     $('#'+displayId).html('');
+	                 } 
+	            }});
+			
+		} */
+
+		
 	</script>
 
-	
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 	
 </body>
 

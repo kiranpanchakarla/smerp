@@ -27,5 +27,7 @@ public interface PurchaseOrderService {
 	
 
 	List<PurchaseOrder> poApprovedList();
+	
+	boolean findByDocNumber(String docNum);
 
 }

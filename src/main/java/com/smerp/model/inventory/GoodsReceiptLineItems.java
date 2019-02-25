@@ -7,11 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 @Entity
 @Table(name = "tbl_goods_receipt_lineitems")
-public class GoodsReceiptLineItems extends AuditModel {
+public class GoodsReceiptLineItems extends UserAuditModel {
 
 
 	@Id
@@ -51,6 +51,9 @@ public class GoodsReceiptLineItems extends AuditModel {
 
 	@Column(name = "tax_code")
 	private Double taxCode;
+	
+	@Column(name = "tax_description")
+	private String taxDescription;
 	
 	@Column(name = "sku_quantity")
     private String sku;
@@ -196,13 +199,28 @@ public class GoodsReceiptLineItems extends AuditModel {
 		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
+	public String getTaxDescription() {
+		return taxDescription;
+	}
+
+	public void setTaxDescription(String taxDescription) {
+		this.taxDescription = taxDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "GoodsReceiptLineItems [id=" + id + ", productId=" + productId + ", prodouctNumber=" + prodouctNumber
 				+ ", description=" + description + ", uom=" + uom + ", requiredQuantity=" + requiredQuantity
 				+ ", productGroup=" + productGroup + ", warehouse=" + warehouse + ", hsn=" + hsn + ", sacCode="
-				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", sku=" + sku + "]";
+				+ sacCode + ", unitPrice=" + unitPrice + ", taxCode=" + taxCode + ", taxDescription=" + taxDescription
+				+ ", sku=" + sku + "]";
 	}
+
+
+
+	
+
+	
 
 	 
 

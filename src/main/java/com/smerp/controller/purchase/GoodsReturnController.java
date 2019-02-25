@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -86,16 +87,16 @@ public class GoodsReturnController {
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		GoodsReturn gre = goodsReturnService.findById(Integer.parseInt(id));
+		GoodsReturn gre = goodsReturnService.getGoodsReturnById(Integer.parseInt(id));
 		logger.info("11111 gre-->");
 		logger.info("New gre-->" + gre);
 		gre = goodsReturnService.getListAmount(gre);  // set Amt Calculation  
 		logger.info("gre-->" + gre);
 		ObjectMapper mapper = poloadData(model, gre);
-		
+		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
@@ -182,13 +183,15 @@ public class GoodsReturnController {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 	
-	public Map<Double, Object> taxCode() {
+public Map<Object,Double> taxCode() {
 		
 		//return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode));
 		
-		return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
+		return taxCodeRepository.findAll().stream().collect(Collectors.toMap(TaxCode::getDescription, TaxCode::getTaxCode));
+		
+		/*return taxCodeRepository.findAllByOrderByTaxCodeAsc().stream().collect(Collectors.toMap(TaxCode::getTaxCode, TaxCode::getTaxCode,
                 (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
-                TreeMap::new));  // for Sorted Values
+                TreeMap::new));*/  // for Sorted Values
 	}
 	
 	@RequestMapping("/downloadPdf")

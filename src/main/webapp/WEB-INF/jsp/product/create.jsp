@@ -129,27 +129,25 @@ $(document).ready(function(){
 																<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 																	
 																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																		<div class="col-sm-4 form-group">
 																		<div class="inventory-list">
 																			<!-- <label>With old Tax Liable</label> -->
-																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable" required="true" /><span class="radio-list">Withholding Tax Liable</span>
+																			<form:checkbox path="withOldTaxLiable" value="withOldTaxLiable"  /><span class="radio-list">Withholding Tax Liable</span>
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
+																	 
+																		<div class="col-sm-2 form-group">
 																			<div class="input-group">
 																				<!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="service" /><span class="radio-list">Service</span></div>
-																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="product" /><span class="radio-list">Product</span></div>
+																				<%-- <div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" required="true" value="service" /><span class="radio-list">Service</span></div> --%>
+																				<div class="inventory-list"><form:radiobutton class="product-category" name="productcategory" path="serviceOrProduct" checked="checked" required="true" value="product" /><span class="radio-list">Product</span></div>
 																				<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-sm-6 form-group">
-																			<div class="inventory-list"><form:checkbox path="gst" value="gst" id="gstcategory" required="true" /><span class="radio-list">GST</span>
+																	 
+																		<div class="col-sm-2 form-group">
+																			<div class="inventory-list"><form:checkbox path="gst" value="gst" id="gstcategory" checked="checked" required="true" /><span class="radio-list">GST</span>
 																			<!-- <div  class="help-block with-errors"></div> -->
 																			</div>
 																		</div>
@@ -224,10 +222,14 @@ $(document).ready(function(){
 																		</div>
 																		
 																	</div>
-																	<p class="card-title">Serial and Batch Numbers</p>
 																	<div class="row">
+																			<div class="col-sm-4">
+																				<label>Serial and Batch Numbers :</label>
+																				</div>
+																				</div>
+																		<div class="row">		 
 																		<div class="col-sm-6 form-group">
-																			<label>Manage ProductBy</label>
+																			<label>Manage Product By</label>
 																			<form:select path="manageProductBy" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Manage ProductBy')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${manageProductByList}" var="manageProductBy">
@@ -243,11 +245,14 @@ $(document).ready(function(){
 																	
 																	<div class="row">
                                                                         <div class="col-sm-6 form-group">
-                                                                            <label>Preferred Vendor</label>
-                                                                            <form:input path="preferredVendor" placeholder ="Please Select Vendor Name" class="form-control vendorname camelCase" required="true" oninvalid="this.setCustomValidity('Please Enter Preferred Vendor')" oninput="setCustomValidity('')" />
-                                                                            <!-- <div  class="help-block with-errors"></div> -->
-                                                                        </div>
-																	
+                                                                           <label>Preferred Vendor</label>
+                                                                           <form:input path="preferredVendor"
+                                                                           placeholder ="Please Select Vendor Name"
+                                                                           class="form-control vendorname camelCase"
+                                                                           required="true" autocomplete="off" />
+
+                                                                           <!-- <div  class="help-block with-errors"></div> -->
+                                                                       </div>
 																		<div class="col-sm-6 form-group">
 																			<label>Purchasing UOM </label>
 																			
@@ -615,10 +620,19 @@ $(document).ready(function(){
   		  $("#maximim").change(function(){
        				  if(parseInt($('#maximim').val()) <= parseInt($('#minimun').val())){
        					 $('#maximim').val('');
-       					alertify.success('Enter Greater than Min Vlaue');
+       					alertify.warning('Entered Value which is lower than Minimum Value');
        				  }
        				// alert(status);
        	            }); 
+  		  
+  		  $("#minimun").change(function(){
+  			  /* alert(parseInt($('#minimun').val())); */
+				  if(parseInt($('#minimun').val()) > parseInt($('#maximim').val())){
+					 $('#minimun').val('');
+					alertify.warning('Entered Value is Greater than Maximum Value');
+				  }
+				// alert(status);
+	            }); 
 
   		var vendorNames=[];
         var vendorNamesList=${vendorNamesList};

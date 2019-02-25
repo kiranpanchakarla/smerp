@@ -52,11 +52,12 @@
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>User</label>: ${purchaseRequest.user.username}
+																		<label>Doc No</label>: ${purchaseRequest.docNumber}
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Doc No</label>: ${purchaseRequest.docNumber}
+																		<label>Email- ID</label>:
+																		${purchaseRequest.user.userEmail}
 																	</div>
 																</div>
 																<div class="row">
@@ -83,29 +84,20 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Email- ID</label>:
-																		${purchaseRequest.user.userEmail}
+																		<label>Status</label>: ${purchaseRequest.status}
 																	</div>
+																	
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Require Date</label>:
 																		<fmt:formatDate pattern="dd/MM/yyyy"
 																			value="${purchaseRequest.requiredDate}" />
 																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: Product <%-- ${purchaseRequest.type} --%>
-
-																	</div>
-																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Status</label>: ${purchaseRequest.status}
-																	</div>
-																</div>
-																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Remark</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
+																 
+																
 
 																<!--  -->
 																<input type="hidden" id="addressCount" value="0">
@@ -218,7 +210,7 @@
 	       								                           </c:if>     
    									                            </c:forEach>
 																</div>
-														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary float-right">PDF</a></div>		
+														 <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/purchaseReq/downloadPdf?purchaseReqId=${purchaseRequest.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>		
 														</div>		
 														</div>
 
@@ -250,8 +242,22 @@
 		$('#convertBtn').on('click', function(event) {
 			event.preventDefault();
 			  alertify.confirm('Are you Sure, Want To Convert PR to RFQ', function(){
+				  
+				  $.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
+				  
 				  form.submit();
 			  }, function(){
+				  setTimeout($.unblockUI, 1000);
 		          alertify.error('Cancelled')
 		       });
 		 
@@ -259,6 +265,7 @@
 		
 		
 	</script>
+	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 </body>
 
 </html>

@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +30,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itextpdf.text.DocumentException;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.UserService;
 import com.smerp.service.inventory.ProductService;
@@ -46,6 +45,8 @@ import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.util.BarCodeGeneration;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -61,7 +62,7 @@ public class PurchaseRequestController {
 		this.pdfUploadedPath = pdf;
 	}
 	
-	private String barcodePath;
+	/*private String barcodePath;
 	
 	@Value(value = "${file.barcodeupload.path}")
 	public void setPropBarCode(String barcodePath) {
@@ -74,7 +75,7 @@ public class PurchaseRequestController {
 	public void setPropnewBarCode(String pdfbarcodePath) {
 		this.pdfbarcodePath = pdfbarcodePath;
 	}
-	
+	*/
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestController.class);
 
 	@Autowired
@@ -97,6 +98,9 @@ public class PurchaseRequestController {
 	
 	@Autowired
 	BarCodeGeneration barCodeGeneration;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -112,18 +116,26 @@ public class PurchaseRequestController {
 		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
-		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
+		  ObjectMapper mapper = new ObjectMapper();
+		  
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		//gets the users first and last name
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
-		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		model.addAttribute("usersList", mapper.writeValueAsString(userService.findFirstNames()));
+		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
+		
+		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
+		logger.info("PO count-->" + count);
+		
 		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
-			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
+			//purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber()));
+			purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(purchaseRequests.getDocNumber(),count));
 		} else {
 			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 			 LocalDateTime now = LocalDateTime.now();
-			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0"));
+			 purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration("PR"+(String)dtf.format(now) +"0",count));
 		}
 		model.addAttribute("purchaseRequest", purchaseRequest);
 		return "/purchaseReq/create";
@@ -131,12 +143,32 @@ public class PurchaseRequestController {
 
 	@PostMapping(value = "/save")
 	public String save(PurchaseRequest purchaseRequest, Model model, BindingResult result) throws IOException {
-		logger.info("purchaseRequest save-->" + purchaseRequest);
 		
-		if (purchaseRequest.getId() == null) {
+		
+		/*if (purchaseRequest.getId() == null) {
 		purchaseRequest.setBarCodeImgPath(barCodeGeneration.downloadbarcodeImpge(purchaseRequest.getDocNumber(), barcodePath));
+		}*/
+		if(purchaseRequest.getId() == null) {
+			boolean status = purchaseRequestService.findByDocNumber(purchaseRequest.getDocNumber());
+			if(!status) {
+				purchaseRequest = purchaseRequestService.save(purchaseRequest);
+				logger.info("purchaseRequest save-->" + purchaseRequest);
+			}else {
+				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
+				logger.info("count-->" + count);
+				
+				PurchaseRequest prdetails = purchaseRequestService.findLastDocumentNumber();
+				if (prdetails != null && prdetails.getDocNumber() != null) {
+					purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(prdetails.getDocNumber(),count));
+				}
+				purchaseRequest = purchaseRequestService.save(purchaseRequest);
+				logger.info("purchaseRequest save-->" + purchaseRequest);
+			}
+		}else {
+			purchaseRequestService.save(purchaseRequest);
+			logger.info("purchaseRequest save-->" + purchaseRequest);
 		}
-		purchaseRequestService.save(purchaseRequest);
+		
 		return "redirect:list";
 	}
 
@@ -185,10 +217,12 @@ public class PurchaseRequestController {
 		model.addAttribute("purchaseReq", new PurchaseRequest());
 		model.addAttribute("planMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());
-		model.addAttribute("productList", new ObjectMapper().writeValueAsString(productService.findAllProductNamesByProduct("product")));
-		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
-		model.addAttribute("usersList", new ObjectMapper().writeValueAsString(userService.findFirstNames()));
-		model.addAttribute("sacList", new ObjectMapper().writeValueAsString(sacService.findAllSacCodes()));
+		   ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
+		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
+		model.addAttribute("usersList", mapper.writeValueAsString(userService.findFirstNames()));
+		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		
 		purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
 		model.addAttribute("purchaseRequestLists", purchaseRequest.getPurchaseRequestLists());

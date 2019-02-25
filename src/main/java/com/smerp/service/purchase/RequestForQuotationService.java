@@ -26,5 +26,12 @@ public interface RequestForQuotationService {
 	List<RequestForQuotation> findByIsActive();
 	
 	List<RequestForQuotation> rfqApprovedList();
+	
+	boolean findByDocNumber(String rfqDocNum);
+	
+	boolean isVendorNameExistWithDocNum(String vendorName, String refDocNum);
+	
+	List<RequestForQuotation> getRFQListById(PurchaseRequest purchaseId);
 
+	Integer getRFQListCount(PurchaseRequest prId);
 }

@@ -10,7 +10,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
+<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
+	<c:import url="/WEB-INF/jsp/header.jsp" />
+
+	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>     -->
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  	
@@ -18,11 +22,7 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-	<c:import url="/WEB-INF/jsp/loadcss.jsp" />
-
-	<c:import url="/WEB-INF/jsp/header.jsp" />
-
-	<c:import url="/WEB-INF/jsp/sidebar.jsp" />
+	
 
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
@@ -77,7 +77,7 @@
 																	
 																	<div class="col-sm-4 form-group">
 																		<label>Department</label>
-																		<form:select id="department" path="department.id" cssClass="form-control" required="true" oninvalid="this.setCustomValidity('Please Select country')" oninput="setCustomValidity('')">
+																		<form:select id="department" path="department.id" cssClass="form-control" required="true" onChange="onChangeDept()" oninput="setCustomValidity('')">
 																			<form:option value="">Select</form:option>
 																			<c:forEach items="${departmentList}" var="departmentList">
 																				<form:option value="${departmentList.id}">${departmentList.name}</form:option>
@@ -89,10 +89,10 @@
 																	<div class="col-sm-4 form-group">
 																	<label for="timesheetinput2">Designation</label>
 																	<div>
-																		<form:input type="text" cssClass="form-control camelCase" 
-																			placeholder='Designation Name' path="desigination"
-																			value="${designation.desigination}" required="true" onchange="isValidDesiginationName('desigination','/desigination/isValidDesiginationName','1_errorContainer','Desigination Name Already Exists in this Company')"
-																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"
+																		<form:input type="text" cssClass="form-control camelCase"  
+																			placeholder='Designation Name' path="desigination" id="designationName"
+																		    required="true" onchange="isValidDesiginationName('desigination','/desigination/isValidDesiginationName','1_errorContainer','Desigination Name Already Exists in this Company')"
+																			oninvalid="this.setCustomValidity('Please Enter Designation Name')"  
 																			oninput="setCustomValidity('')" />
 																		 
 																		 
@@ -189,8 +189,8 @@
 		      var answer = parts[parts.length - 1];
 		    /*   alert(answer); */
 		      
-		      var dataString  ="name="+$('#'+nameId).val()+"&departmentId="+ $('#department').val();
-		      /* alert(dataString); */
+		      var dataString  ="name="+$('#designationName').val()+"&departmentId="+ $('#department').val();
+		        /* alert(dataString);  */
 		      $.ajax({
 		             type:"GET",
 		            /*  url: url, */
@@ -199,13 +199,18 @@
 		             success: function(result){
 		                 if(result==true){
 		                     alertify.warning(msg);
-		                     $('#'+nameId).val('');
+		                     $('#designationName').val('');
 		                     $('#'+displayId).html(msg);
 		                 }else {
 		                     $('#'+displayId).html('');
 		                 }
 		            }});
 		      
+		 }
+		 
+		 function onChangeDept(){
+			 var deptVal = $('#department').val();
+			 $('#designationName').val('');
 		 }
 		</script>
 </body>

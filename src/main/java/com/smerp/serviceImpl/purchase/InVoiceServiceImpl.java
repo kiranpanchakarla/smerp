@@ -1,12 +1,16 @@
 package com.smerp.serviceImpl.purchase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,19 +24,23 @@ import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
+import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.InVoiceLineItemsRepository;
 import com.smerp.repository.purchase.InVoiceRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
+import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -76,6 +84,15 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@PersistenceContext    
+	private EntityManager entityManager;
+	
+	@Autowired
+	ProductService  productService;
+	
+	@Autowired
+	private DocNumberGenerator docNumberGenerator;
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -121,6 +138,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 				for (int i = 0; i < listItems.size(); i++) {
 					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
 						listItems.remove(i);
+						i--;
 					}
 				}
 				inVoice.setInVoiceLineItems(listItems);
@@ -129,9 +147,35 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			}else {
 				 logger.info("convertd Po to GR Data -->" +inVoice);
 			}
+			 if(inVoice.getGrId() != null) { 
+				 GoodsReceipt gr = inVoice.getGrId();
+	        	
+				 Vendor vendor = vendorService.findById(gr.getVendor().getId());
+	     		VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
+	     		VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
+	     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
+
+	     		inVoice.setVendor(vendor);
+	     		inVoice.setVendorContactDetails(vendorsContactDetails);
+	     		inVoice.setVendorShippingAddress(vendorShippingAddress);
+	     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+	         }
 		}
          logger.info("inVoice -->" +inVoice);
-		Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+		
+         if(inVoice.getGrId()==null) { 
+        	 Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+     		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
+     		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
+     		
+     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(inVoice.getVendorContactDetails().getId());
+
+     		inVoice.setVendor(vendor);
+     		inVoice.setVendorContactDetails(vendorsContactDetails);
+     		inVoice.setVendorShippingAddress(vendorShippingAddress);
+     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+         }
+        Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
 		
@@ -142,9 +186,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		inVoice.setVendorShippingAddress(vendorShippingAddress);
 		inVoice.setVendorPayTypeAddress(vendorPayAddress);
 		
-		if(inVoice.getStatusType()!=null &&  inVoice.getStatusType().equals("APP")) {
+		 if(inVoice.getStatus()!=null &&  !inVoice.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			try {
 			   	inVoice =getListAmount(inVoice);
+			   	if(inVoice.getId()!=null) {
+			   		InVoice inVoiceObj = inVoiceRepository.findById(inVoice.getId()).get();
+					logger.info(inVoiceObj.getCreatedBy().getUserEmail());
+					inVoice.setCreatedBy(inVoiceObj.getCreatedBy());
+				 }
     			 RequestContext.initialize();
     		     RequestContext.get().getConfigMap().put("mail.template", "inVoiceEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendInvoiceEmail(inVoice);
@@ -153,12 +202,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
     		}
 		}
 		
-		
-		
-		
 		inVoice= inVoiceRepository.save(inVoice);
-		
-		
 		
 		return inVoice; 
 		 
@@ -170,15 +214,16 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		InVoice dup_inv =inVoiceRepository.findByGrId(gr.getId());  // check PO exist in  GR
+		InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check PO exist in  GR
         if(dup_inv==null) {
-		InVoice greDetails = findLastDocumentNumber();
+        	Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
+        	InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
-			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber()));
+			inv.setDocNumber(GenerateDocNumber.documentNumberGeneration(greDetails.getDocNumber(),count));
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
-		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0"));
+		inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0",count));
 		}
 
 		if (gr != null) {
@@ -187,9 +232,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setPostingDate(gr.getPostingDate());
 			inv.setCategory(gr.getCategory());
 			inv.setRemark(gr.getRemark());
+			inv.setDeliverTo(gr.getDeliverTo());
 			inv.setReferenceDocNumber(gr.getDocNumber());
 			inv.setRequiredDate(gr.getRequiredDate());
-			inv.setGrId(gr.getId());
+			inv.setGrId(gr);
 			inv.setIsActive(true);
 			inv.setVendor(gr.getVendor());
 			inv.setVendorContactDetails(gr.getVendorContactDetails());
@@ -209,13 +255,16 @@ public class InVoiceServiceImpl  implements InVoiceService {
 					line.setProductGroup(grItms.get(i).getProductGroup());
 					line.setDescription(grItms.get(i).getDescription());
 					line.setHsn(grItms.get(i).getHsn());
-					line.setRequiredQuantity(grItms.get(i).getRequiredQuantity());
+					
+					/*line.setRequiredQuantity(grItms.get(i).getRequiredQuantity());*/
+					
 					line.setSacCode(grItms.get(i).getSacCode());
 					line.setUom(grItms.get(i).getUom());
 					line.setSku(grItms.get(i).getSku());
 					line.setWarehouse(grItms.get(i).getWarehouse());
 					line.setProductId(grItms.get(i).getProductId());
 					line.setTaxCode(grItms.get(i).getTaxCode());
+					line.setTaxDescription(grItms.get(i).getTaxDescription());
 					line.setUnitPrice(grItms.get(i).getUnitPrice());
 					line.setTaxTotal(grItms.get(i).getTaxTotal());
 					line.setTotal(grItms.get(i).getTotal());
@@ -225,12 +274,71 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			
 			inv.setInVoiceLineItems(lineItems);
 			
-			inv= getListAmount(inv); // Set Amount....Like Tax Total Amt
-			
+			/*inv= getListAmount(inv);*/ // Set Amount....Like Tax Total Amt
 			
 		}
 		logger.info("inv" + inv);
 		inv.setCategory("Item");
+		
+		
+		/*SetRequiredQuantity*/
+		
+		/*Set Headers*/
+		
+		String sql= " select total_gr_amount_product_tax,total_gr_amount_product_cost,total_discount,freight,total_gr_amount_after_discount"
+				+ " ,total_gr_amount_after_discount_rounding from vw_goods_received_amount where id= " +inv.getGrId().getId();
+		
+		logger.info("sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+	     for(Object[] tuple : list) {
+	    	 inv.setTaxAmt(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 inv.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
+	    	// goodsReceipt.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
+	    	 //goodsReceipt.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 inv.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
+	    	 inv.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	
+	     }
+	     logger.info("List Size -----> " + inv.getTotalPayment());
+	     /*--Set Headers--*/
+	     
+	     
+	     /*--Set Lists--*/
+	     
+	 	String sqlList= " select product_number,current_quantity,creditmemo_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +inv.getGrId().getId();
+	 	String productNumber ="";
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    
+	     Map<String, Integer> grListData = new LinkedHashMap<>();
+	     for(Object[] tuple : invoiceList) {
+	         productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	         grListData.put(productNumber, Integer.parseInt(tuple[1].toString()));
+	     }
+	    
+	     List<InVoiceLineItems> listItems = inv.getInVoiceLineItems();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 InVoiceLineItems invlist = listItems.get(i);
+	        
+	        for(Map.Entry m:grListData.entrySet()){
+	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	               if(invlist.getProdouctNumber().equals(m.getKey())) {
+	                   invlist.setRequiredQuantity((Integer)m.getValue());    
+	                 }
+	        }
+	    }
+	     inv.setInVoiceLineItems(listItems);
+	   
+	    
+		
+		/*SetRequiredQuantity*/
+		
 		inv = inVoiceRepository.save(inv);
 		
 		gr.setStatus(EnumStatusUpdate.INVOICE.getStatus());  // Set Partial Complted
@@ -245,7 +353,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	
 	
-	@Override
+	/*@Override
 	public String  setStatusOfPurchaseOrder(InVoice inVoice) {
 		logger.info("set Status-->");
 		String status="";
@@ -286,7 +394,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
         }
     	logger.info("status-->" + status);
 		return status;
-	}
+	}*/
 
 	private Map<String, Integer> prepareMapForProductQunatityPR(PurchaseOrder purchaseOrder,List<PurchaseOrderLineItems> poListItems) {
 		 Map<String, Integer> poListData =new LinkedHashMap<>();
@@ -407,12 +515,127 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	public List<InVoice> findByIsActive() {
 		return inVoiceRepository.findByIsActive(true);
 	}
+	
+	@Override
+	public List<InVoice> invApprovedList() {
+		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+	}
+	
 
 	@Override
 	public InVoice findById(int id) {
 		return inVoiceRepository.findById(id).get();
 	}
 	
+	
+	@Override
+	public InVoice getInVoiceById(int id) {
+		InVoice invoice = inVoiceRepository.findById(id).get();
+		/*Set Headers*/
+		
+		String sql= " select total_inv_amount_product_tax,total_inv_amount_product,total_discount,freight,total_inv_amount_after_discount"
+				+ " ,total_inv_amount_after_discount_rounding from vw_invoice_amount where id= " +id;
+		
+		logger.info("sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		  List<Object[]>	list = query.getResultList();
+		
+		logger.info("List Size -----> " + list.size());
+	     for(Object[] tuple : list) {
+	    	 invoice.setTaxAmt(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 invoice.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
+	    	// invoice.setTotalDiscount(tuple[2] == null ?  0: (Double.parseDouble(tuple[2].toString())));
+	    	 //invoice.setFreight(tuple[3] == null  ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 invoice.setTotalPayment(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 invoice.setAmtRounding(tuple[4] == null ? "0" : ( tuple[4]).toString());
+	     }
+	     
+	     /*--Set Headers--*/
+	     
+	     
+	     return invoice;
+	}
+	
+	@Override
+	public List<LineItemsBean> getLineItemsBean(int id) {
+		
+	     /*--Set Lists--*/
+		List<LineItemsBean> addListItems = new ArrayList<LineItemsBean>();
+	 	String sqlList= " select product_number,description,uom,sku_quantity,unit_price,\r\n" + 
+	 			"tax_code,inv_product_tax,inv_product_amount,product_group,hsn,warehouse,inv_final_quantity,tax_description \r\n" + 
+	 			"from vw_invoice_lineitems_amount where id=" +id;
+	    logger.info("sqlList ----> " + sqlList);
+	    Query queryList = entityManager.createNativeQuery(sqlList);
+	      List<Object[]>    invoiceList = queryList.getResultList();
+	        
+	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	    logger.info("1----> " );
+	    
+	     for(Object[] tuple : invoiceList) {
+	    	 LineItemsBean ineItemsObj = new LineItemsBean();
+	    	 ineItemsObj.setProdouctNumber(tuple[0] == null ? "0" : ( tuple[0]).toString());
+	    	 ineItemsObj.setDescription(tuple[1] == null ? "0" : ( tuple[1]).toString());
+	    	 ineItemsObj.setUom(tuple[2] == null ? "0" : ( tuple[2]).toString());
+	    	 ineItemsObj.setSku(tuple[3] == null ? "0" : ( tuple[3]).toString());
+	    	 ineItemsObj.setUnitPrice(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+	    	 ineItemsObj.setTaxCode(tuple[5] == null ? 0: (Double.parseDouble(tuple[5].toString())));
+	    	 ineItemsObj.setTaxTotal(tuple[6] == null ? "0" : ( tuple[6]).toString());
+	    	 ineItemsObj.setTotal(tuple[7] == null ? "0" : ( tuple[7]).toString());
+	    	 ineItemsObj.setProductGroup(tuple[8] == null ? "0" : ( tuple[8]).toString());
+	    	 ineItemsObj.setHsn(tuple[9] == null ? "0" : ( tuple[9]).toString());
+	    	 ineItemsObj.setWarehouse(tuple[10] == null ? 0 :Integer.parseInt(tuple[10].toString()));
+	    	 ineItemsObj.setRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 ineItemsObj.setTempRequiredQuantity(tuple[11] == null ? 0 :Integer.parseInt(tuple[11].toString()));
+	    	 ineItemsObj.setTaxDescription(tuple[12] == null ? "0" : ( tuple[12]).toString());
+	    	 addListItems.add(ineItemsObj);
+	         
+	     }
+	     
+	     return addListItems;
+	}
+	
+	
+	
+	
+	/*@Override
+	public InVoice getInVoiceRequireQuantityById(int id) {
+		InVoice invoice = inVoiceRepository.findById(id).get();
+		
+		String sqlList= " select product_number,creditmemo_quantity,inv_final_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +id;
+		String productNumber =""; 
+		Integer creditmemoQuantity=0;
+		logger.info("sqlList ----> " + sqlList);
+		Query queryList = entityManager.createNativeQuery(sqlList);
+		  List<Object[]>	invoiceList = queryList.getResultList();
+		  
+		  List<InVoiceLineItems> listItems = invoice.getInVoiceLineItems();
+			
+			List<InVoiceLineItems> addListItems = new ArrayList<InVoiceLineItems>();
+		logger.info("invoiceList Size -----> " + invoiceList.size());
+		int j=0;
+	     for(Object[] tuple : invoiceList) {
+	    	 InVoiceLineItems invList = listItems.get(j);
+	    	 productNumber = tuple[0] == null ? "0" : ( tuple[0]).toString();
+	    	 creditmemoQuantity = tuple[1] == null  ? 0 : (Integer.parseInt(tuple[1].toString()));
+	    	 
+	    		for (int i = 0; i < listItems.size(); i++) {
+	    			InVoiceLineItems invlist = listItems.get(i);
+	    			
+	    			if(productNumber.equals(invlist.getProdouctNumber())) {
+	    			invList.setRequiredQuantity(tuple[2] == null  ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    			invList.setTaxTotal(tuple[3] == null ? "0" : ( tuple[3]).toString());
+					invList.setTotal(tuple[4] == null ? "0" : ( tuple[4]).toString());
+					break;
+					}
+	    		}
+	    		addListItems.add(invList);
+	    		j++;
+	     }
+	     
+	 	invoice.setInVoiceLineItems(addListItems);
+	 	
+	 	return invoice;
+	}*/
 	
 	
 	
@@ -427,14 +650,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		Integer greQunatity=0;
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
-				InVoiceLineItems grelist = listItems.get(i);
-				if(grelist.getUnitPrice()!=null) {
-				addTaxAmt += UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode());
-				addAmt +=UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode());
-				grelist.setTaxTotal(""+UnitPriceListItems.getTaxAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(),grelist.getTaxCode()));
-				grelist.setTotal(""+UnitPriceListItems.getTotalAmt(grelist.getRequiredQuantity(),grelist.getUnitPrice(), grelist.getTaxCode()));
+				InVoiceLineItems invList = listItems.get(i);
+				if(invList.getUnitPrice()!=null && invList.getRequiredQuantity()!=null) {
+				addTaxAmt += UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode());
+				addAmt +=UnitPriceListItems.getTotalINVAmt(invList.getRequiredQuantity(),invList.getUnitPrice());
+				invList.setTaxTotal(""+UnitPriceListItems.getTaxAmt(invList.getRequiredQuantity(),invList.getUnitPrice(),invList.getTaxCode()));
+				invList.setTotal(""+UnitPriceListItems.getTotalINVAmt(invList.getRequiredQuantity(),invList.getUnitPrice()));
 				} 
-				addListItems.add(grelist);
+				addListItems.add(invList);
 			  }
 			inVoice.setInVoiceLineItems(addListItems);
 			}
@@ -446,18 +669,26 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		logger.info("inVoice.getTotalDiscount()-->" + inVoice.getTotalDiscount());
 		logger.info("inVoice.getFreight()-->" + inVoice.getFreight());
 		Double total_amt=0.0;
+		Double total_payment = 0.0;
 		if(inVoice.getTotalDiscount()==null) inVoice.setTotalDiscount(0.0);
-		if(inVoice.getFreight()==null) inVoice.setFreight(0);
+		if(inVoice.getFreight()==null) inVoice.setFreight(0.0);
 			
 			
-		 total_amt= UnitPriceListItems.getTotalPaymentAmt(addAmt, inVoice.getTotalDiscount(), inVoice.getFreight());
-		inVoice.setAmtRounding(UnitPriceListItems.getRoundingValue(total_amt));
-		inVoice.setTotalPayment(total_amt);
+		 total_amt= UnitPriceListItems.getTotalAmtPayment(addAmt, inVoice.getTotalDiscount(), inVoice.getFreight(),addTaxAmt);
+		 
+		 if(inVoice.getGrId() != null) {
+				total_payment =(double) Math.round(total_amt);
+			}else {
+				total_payment = inVoice.getTotalPayment();
+			}
+		inVoice.setAmtRounding(""+df2.format(total_amt));
+		//inVoice.setTotalPayment(total_amt);
+		inVoice.setRoundedOff("" + df2.format(total_payment - total_amt));
 	
 	return inVoice;
 	}
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	
 	
@@ -497,15 +728,12 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	}*/
 	
 	
-	@Override
+	/*@Override
 	public Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder) {
 		List<InVoice> listinVoice = inVoiceRepository
 				.findByListGrId(purchaseOrder.getId(),EnumStatusUpdate.REJECTED.getStatus());
 		logger.info("listinVoice-->" +listinVoice);
 		
-		/*String status = setStatusOfPurchaseOrder(listinVoice.get(0));
-		logger.info("status-->" +status); //Test the Status if you want  
-*/		
 		Integer prQunatity = getListPoQuantityCount(purchaseOrder);
 		Integer grQunatity = getListGRQunatityCount(listinVoice);
 		
@@ -513,7 +741,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			return true;
 		else
 			return false;
-	}
+	}*/
 
 	private Integer getListGRQunatityCount(List<InVoice> listinVoice) {
 	
@@ -620,5 +848,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 			}
 
+	@Override
+	public boolean findByDocNumber(String invDocNum) {
+		List<InVoice> invList = inVoiceRepository.findByDocNumber(invDocNum);
+		if(invList.size()>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 			
 }

@@ -11,12 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 
-import com.smerp.model.master.AuditModel;
+import com.smerp.model.master.UserAuditModel;
 
 
 @Entity
 @Table(name="tbl_admin_designations")
-public class Desigination extends AuditModel {
+public class Desigination extends UserAuditModel	 {
 	
 	
 	

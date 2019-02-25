@@ -87,8 +87,9 @@ text-align: left;
 																	<label>Ship From</label>: ${gre.vendorShippingAddress.city}
 																</div>
                                                                 
-                                                                <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gre.docNumber}
+                                                               <div class="col-sm-4 form-group">
+																				<label>Posting Date</label>: 
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.postingDate}" />
 																			</div>
 
 															</div>
@@ -98,13 +99,25 @@ text-align: left;
 																	<div class="form-body">
 
 																		<div class="row">
+																		
+																		 <div class="col-sm-4 form-group">
+																				<label>GRE Doc#</label>: ${gre.docNumber}
+																			</div>
+																		
 																			<div class="col-sm-4 form-group">
-																				<label>Ref Doc#</label>: ${gre.referenceDocNumber}
+																				<label>GR Doc#</label>: ${gre.referenceDocNumber}
 																			</div>
-                                                                            <div class="col-sm-4 form-group">
-																				<label>Posting Date</label>: 
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.postingDate}" />
+																			
+																			<div class="col-sm-4 form-group">
+																				<label>PO Doc#</label>: ${gre.grId.poId.docNumber}
 																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>RFQ Doc#</label>: ${gre.grId.poId.rfqId.docNumber}
+																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>PR Doc#</label>: ${gre.grId.poId.rfqId.purchaseReqId.docNumber}
+																			</div>
+                                                                            
 																			<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.documentDate}" />
@@ -229,11 +242,13 @@ text-align: left;
 																													
 																													
 																															<td>${listLineItems.unitPrice}</td>
-																															<td><c:forEach var="entry"
+																															<td><%-- <c:forEach var="entry"
 																																items="${taxCodeMap}">
-																																<c:if test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
+																																<c:if test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
+																															</c:forEach> --%>
+																															${listLineItems.taxDescription}
+																															</td>
 																															<td>${listLineItems.taxTotal}</td>
 																															<td>${listLineItems.total}</td>
 																													
@@ -264,8 +279,8 @@ text-align: left;
 																												<td><c:forEach var="entry"
 																														items="${taxCodeMap}">
 																														<c:if
-																															test="${entry.key ==listLineItems.taxCode}">
-																													            ${entry.value} 																													 </c:if>
+																															test="${entry.value ==listLineItems.taxCode}">
+																													            ${entry.key} 																													 </c:if>
 																													</c:forEach></td>
 																												<td>${listLineItems.taxTotal}</td>
 																												<td>${listLineItems.total}</td>
@@ -306,8 +321,37 @@ text-align: left;
 
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
+																	
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${gre.vendorShippingAddress.addressName}<br>
+																					${gre.vendorShippingAddress.street}
+																					${gre.vendorShippingAddress.city}
+																					${gre.vendorShippingAddress.zipCode}<br>
+																					${gre.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${gre.vendorPayTypeAddress.addressName}<br>
+																					${gre.vendorPayTypeAddress.street}
+																					${gre.vendorPayTypeAddress.city}
+																					${gre.vendorPayTypeAddress.zipCode}<br>
+																					${gre.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${gre.deliverTo}
+																	</div>
+																	</div>
 
-																	<table class="table fixed-width-table">
+																	<%-- <table class="table fixed-width-table">
 																		<thead>
 																			<tr>
 																				<th style="vertical-align: top; !important">Shipping
@@ -342,7 +386,7 @@ text-align: left;
 																				</td>
 																			</tr>
 																		</thead>
-																	</table>
+																	</table> --%>
 																</div>
 															</div>
 														</div>
@@ -365,7 +409,7 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"><label>Total Before Discount  </label></div>
+												<div class="col-sm-6"><label>Total Invoice Amount  </label></div>
 												<div class="col-sm-6">: ${gre.totalBeforeDisAmt}</div>
 											</div>
 											<div class="form-group">
@@ -374,19 +418,26 @@ text-align: left;
 											</div>
 
 											<div class="form-group">
-												<div class="col-sm-6"><label>Rounding  </label></div>
-												<div class="col-sm-6"> : ${gre.amtRounding}</div>
-											</div>
-
-											<div class="form-group">
 											<div class="col-sm-6">	<label>Tax Amount </label> </div>
 											<div class="col-sm-6">: ${gre.taxAmt} </div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Total  </label></div>
+												<div class="col-sm-6"> : ${gre.amtRounding}</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-6"><label>Rounded Off  </label></div>
+												<div class="col-sm-6"> : <fmt:formatNumber type="number" maxFractionDigits="3" value="${gre.totalPayment - gre.amtRounding}"/></div>
 											</div>
 
 											<div class="form-group">
 												<div class="col-sm-6"><label>Total Payment Due  </label>  </div>
 												<div class="col-sm-6">: ${gre.totalPayment} </div>
 											</div>
+											
+											
 										</div>
 									
 									</div>		
@@ -403,7 +454,7 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/gre/downloadPdf?id=${gre.id}"/>"  class="btn btn-primary float-right">PDF</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/gre/downloadPdf?id=${gre.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>
@@ -443,7 +494,7 @@ function goBack() {
 }
 </script>
 	
-	
+<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>	
 	
 </body>
 

@@ -119,11 +119,11 @@
 																	<li class="nav-item"><a class="nav-link"
 																		id="profile-tab" data-toggle="tab" href="#profile"
 																		role="tab" aria-controls="profile"
-																		aria-selected="false">Purchasing</a></li>
+																		aria-selected="false">Purchase Tab</a></li>
 																	<li class="nav-item"><a class="nav-link"
 																		id="messages-tab" data-toggle="tab" href="#messages"
 																		role="tab" aria-controls="messages"
-																		aria-selected="false">Inventory</a></li>
+																		aria-selected="false">Inventory Tab</a></li>
 																</ul>
 																<div class="tab-content">
 																	<div class="tab-pane active" id="home" role="tabpanel"
@@ -133,7 +133,7 @@
 																				<form:checkbox path="withOldTaxLiable"
 																					onclick="return false;" value="withOldTaxLiable"
 																					required="true" />
-																				<span class="radio-list">Withholding Tax
+																				<span class="radio-list">With holding Tax
 																					Liable</span>
 																			</div>
 																		</div>
@@ -142,13 +142,7 @@
 																			<div class="col-sm-6 form-group">
 																				<div class="input-group">
 																					<!--  <label class="display-inline-block custom-control custom-radio ml-1" style="padding: 0px"> -->
-																					<div class="inventory-list">
-																						<form:radiobutton class="product-category"
-																							onclick="return false;" name="productcategory"
-																							path="serviceOrProduct" required="true"
-																							value="service" />
-																						<span class="radio-list">Service</span>
-																					</div>
+																					
 																					<div class="inventory-list">
 																						<form:radiobutton class="product-category"
 																							onclick="return false;" name="productcategory"

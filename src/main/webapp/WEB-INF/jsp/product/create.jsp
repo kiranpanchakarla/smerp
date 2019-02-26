@@ -120,9 +120,9 @@ $(document).ready(function(){
 															<ul class="nav nav-tabs" id="myTab" role="tablist">
 																<li class="nav-item active"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
 																</li>
-																<li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Purchasing</a>
+																<li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Purchase Tab</a>
 																</li>
-																<li class="nav-item"><a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Inventory</a>
+																<li class="nav-item"><a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Inventory Tab</a>
 																</li>
 															</ul>
 															<div class="tab-content">

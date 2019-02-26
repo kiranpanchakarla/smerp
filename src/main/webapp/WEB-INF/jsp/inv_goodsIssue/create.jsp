@@ -840,7 +840,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".productNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".productNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -848,9 +848,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+  				         autocompleteandchange(selcProdouctNo,itemParentRow);
+  				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
@@ -966,16 +966,16 @@ $(document).ready(function(){
           $(document).on("blur", ".description", function() {
          	var itemParentRow = $(this).parents(".multTot");
          
-         	
+         	var  selcDescription=   $(itemParentRow).find(".description").val();
          	var arr=[];
          	 $(".description").each(function() {
              	 
              	  if(availabledescTags.includes($(this).val()) == true) 	 {
  		        if ($.inArray($(this).val(), arr) == -1){
  		            arr.push($(this).val());
- 		           
- 		       	// var isDluplicate = true;
- 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		           if($(this).val() == selcDescription) {
+		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+	  		       }
  		        }else{
  		        	   var isDluplicate = false;
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -1336,21 +1336,21 @@ function goBack() {
 	
 	
 	
-$('.warehouse').on('change', function() {
+$(document).on("change", ".warehouse", function() {
 	var itemParentRow = $(this).parents(".multTot");
 	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
-$('.productNumber').on('blur', function() {
+$(document).on("blur", ".productNumber", function() {	
 	var itemParentRow = $(this).parents(".multTot");
 	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
-$('.description').on('blur', function() {
+$(document).on("blur", ".description", function() {	
 	var itemParentRow = $(this).parents(".multTot");
 	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();

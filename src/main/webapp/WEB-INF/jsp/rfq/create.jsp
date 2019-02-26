@@ -1071,7 +1071,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".prodouctNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -1079,9 +1079,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+				         autocompleteandchange(selcProdouctNo,itemParentRow);
+				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Request For Quotation","You have already entered the Product Number "+$(this).val());
@@ -1195,16 +1195,16 @@ $(document).ready(function(){
               $(document).on("blur", ".description", function() {
              	var itemParentRow = $(this).parents(".multTot");
              
-             	
+             	var  selcDescription=   $(itemParentRow).find(".description").val();
              	var arr=[];
              	 $(".description").each(function() {
                  	 
                  	  if(availabledescTags.includes($(this).val()) == true) 	 {
      		        if ($.inArray($(this).val(), arr) == -1){
      		            arr.push($(this).val());
-     		           
-     		       	// var isDluplicate = true;
-     		       	//autocompleteandchange(($(this).val()),itemParentRow);
+     		           if($(this).val() == selcDescription) {
+     		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+     	  		       }
      		        }else{
      		        	   var isDluplicate = false;
      		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));

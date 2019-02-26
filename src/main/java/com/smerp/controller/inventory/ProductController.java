@@ -200,7 +200,8 @@ public class ProductController {
 	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
     @ResponseBody
     private String getInvoiceListByProductNumber(@RequestParam("name") String name) throws JsonProcessingException {
-        Product product = productService.findByproductNo(name);
+		logger.info("name-->" + name );
+		Product product = productService.findByproductNo(name);
         logger.info("product Obj-->" + product );
         if(product!=null) {
         ObjectMapper mapper = new ObjectMapper();

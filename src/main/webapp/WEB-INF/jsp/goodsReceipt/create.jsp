@@ -2737,7 +2737,7 @@ $('#freight').keyup(function() {
 		
 		
 		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
 			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}

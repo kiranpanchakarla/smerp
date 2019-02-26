@@ -2179,7 +2179,11 @@ $('#containerContainingTabs a').on('click', function(e) {
 		$("#form").submit();
 		 return false;
 	  } else {
-		  var subStatus = $(this).val();
+		  
+			if(pendingQuantityValidate()){
+			
+			var subStatus = $(this).val();
+			
 		  if(subStatus == "RE"){
 			  var flag = true;
 		  }else{
@@ -2222,6 +2226,10 @@ $('#containerContainingTabs a').on('click', function(e) {
 		  alertify.alert("Goods Return","Quantity Required For Atleast One Product");
 			return false;
 	  	} 
+	  }else{
+		  alertify.alert("Goods Return","Can't Exceed more than the required quantity!");
+		  return false;
+	  }
 	}
 	
     if ($('#items_radio').is(":checked") == true) {
@@ -2534,20 +2542,42 @@ $('#freight').keyup(function() {
 		var itemParentRow = $(this).parents(".multTot");
 		 
 		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
-		
+
 		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 		
 		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
-		
-	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
-		
-	  
-			if(temp_requiredQuantity<remain_requiredQuantity){
+	   
+		var remain_requiredQuantity = parseFloat(change_requiredQuantity) + parseFloat(original_requiredQuantity);
+	  	
+			if(Number(temp_requiredQuantity)<Number(change_requiredQuantity)){
 				alertify.alert("Goods Return","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
 				 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 				 return false;
 			}
 		});
+		
+	
+	function pendingQuantityValidate(){
+		var flag = false;
+		$(".requiredQuantity").each(function() {
+			  var itemParentRow = $(this).parents(".multTot");
+			  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+			  var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
+			  
+			  if(Number(temp_requiredQuantity)<Number(requiredQuantity)){
+					alertify.error("Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
+					 ($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+					 ($(this).parents('tr').find('td').find('.requiredQuantity').focus());
+					 flag = true;
+				}
+			});
+		if(flag==true){
+			return false;
+		}else{
+			return true;
+		}
+		
+	}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

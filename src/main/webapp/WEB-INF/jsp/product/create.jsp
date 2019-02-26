@@ -354,10 +354,10 @@ $(document).ready(function(){
 																<button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> Cancel</button>
 															</a>
 															<c:if test="${product.id==null}">
-																<button type="submit" class="btn btn-primary" id="saveDetails">	<i class="icon-check2"></i> Save</button>
+																<button type="submit" class="btn btn-primary saveProduct" id="saveDetails">	<i class="icon-check2"></i> Save</button>
 															</c:if>
 															<c:if test="${product.id!=null}">
-																<button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update</button>
+																<button type="submit" class="btn btn-primary updateProduct"> <i class="icon-check2"></i> Update</button>
 															</c:if>
 														</div>
 													</form>
@@ -680,6 +680,36 @@ $(document).ready(function(){
              })      
      });   
         
+    	  $(document).on("click", ".saveProduct",function(e){		
+ 			 $.blockUI({ css: {
+ 		           border: 'none', 
+ 		           padding: '15px', 
+ 		           backgroundColor: '#000', 
+ 		           '-webkit-border-radius': '10px', 
+ 		           '-moz-border-radius': '10px', 
+ 		           opacity: .5, 
+ 		           color: '#fff' 
+ 		       },
+ 		       message: "<h3>Saving <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+ 		       }); 
+ 		       //setTimeout($.unblockUI, 9000);
+ 		});
+ 	  
+ 	  $(document).on("click", ".updateProduct",function(e){		
+			 $.blockUI({ css: {
+		           border: 'none', 
+		           padding: '15px', 
+		           backgroundColor: '#000', 
+		           '-webkit-border-radius': '10px', 
+		           '-moz-border-radius': '10px', 
+		           opacity: .5, 
+		           color: '#fff' 
+		       },
+		       message: "<h3>Updating <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		       }); 
+		       //setTimeout($.unblockUI, 9000);
+		});
+     
     </script>
     
     <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>

@@ -67,7 +67,7 @@ $(document).ready(function(){
 																	<form:select path="productGroup.id" class="form-control productGroup" required="true" oninvalid="this.setCustomValidity('Please Select Product.')" oninput="setCustomValidity('')">
 																		<form:option value="">--Select--</form:option>
 																		<c:forEach items="${productGroupList}" var="productGroup">
-																			<form:option value="${productGroup.id}">${productGroup.productName}</form:option>
+																			<form:option value="${productGroup.id}">${productGroup.description}</form:option>
 																		</c:forEach>
 																	</form:select>
 																	<!-- <div  class="help-block with-errors"></div> -->
@@ -491,10 +491,7 @@ $(document).ready(function(){
                 }
             });
 
-            
-         
-            
-            
+          
 		if ( ($('#inventoryProduct').is(":checked") == true) && (($("#inventoryProduct").val()=="inventoryProduct"))){
 			
             	 $(".purchaseType").removeAttr("required");
@@ -513,9 +510,7 @@ $(document).ready(function(){
             	 $(".purchaseType").removeAttr("required");
        		
        	} */
-            
-            
-        
+           
             $(".purchaseType").click(function(){
             	if(($('#purchaseProduct').is(":checked") == true && ($('#inventoryProduct').is(":checked") == true))){
             	$(this).parents().find(".purchaseType").attr("required",false);
@@ -633,6 +628,16 @@ $(document).ready(function(){
 				  }
 				// alert(status);
 	            }); 
+  		  
+  		 $(document).on("blur", ".vendorname", function() {
+         	  if(availableTagsvendornames.includes($(this).val()) == true) 	 {
+         		//alert("true");
+         } else {
+      	   alertify.alert("Invalid Vendor Name","Please Select Valid Vendor! "+($(this).val()));
+      	   $(".vendorname").val("");
+              }   
+             });
+
 
   		var vendorNames=[];
         var vendorNamesList=${vendorNamesList};
@@ -676,5 +681,7 @@ $(document).ready(function(){
      });   
         
     </script>
+    
+    <script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
 
     </html>

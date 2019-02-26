@@ -150,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			Query query = entityManager.createNamedQuery("getProductCode")
 		
-				.setParameter("productName", productGroup).setMaxResults(1);
+				.setParameter("productDescription", productGroup).setMaxResults(1);
 		logger.info("query--->" +query);
 		  pp = (Product) query.getSingleResult();		
 			logger.info(pp);	

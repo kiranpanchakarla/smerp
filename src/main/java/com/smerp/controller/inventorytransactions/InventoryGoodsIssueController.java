@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +26,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Plant;
+import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
-import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventory.ProductService;
@@ -176,10 +177,13 @@ public Map<Object,Double> taxCode() {
 		return "redirect:list";
 	}
 	
+	
+	
+	
 	 @GetMapping("/edit")
 		public String edit(String id, Model model) throws JsonProcessingException {
 			logger.info("id-->" + id);
-			InventoryGoodsIssue invGR = inventoryGoodsIssueService.findById(Integer.parseInt(id));
+			InventoryGoodsIssue invGR = inventoryGoodsIssueService.getinventoryGoodsIssueId(Integer.parseInt(id));
 			invGR = inventoryGoodsIssueService.getListAmount(invGR);
 			ObjectMapper mapper = poloadData(model, invGR);
 			mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -217,6 +221,22 @@ public Map<Object,Double> taxCode() {
 				model.addAttribute("inventoryGoodsIssueList", invGR.getInventoryGoodsIssueList());
 				return mapper;
 			}
+		 
+			@RequestMapping(value = "/getInStock", method = RequestMethod.GET)
+		    @ResponseBody
+		    private String getInStock(@RequestParam("productNo") String productNo,@RequestParam("warehouse") String warehouse) throws JsonProcessingException {
+		        logger.info("warehouse-->" + warehouse );
+		        if(!productNo.isEmpty() &&  !warehouse.isEmpty()) {
+		       
+		        	String  getInStock = inventoryGoodsIssueService.getInStock(productNo,Integer.parseInt(warehouse));
+		        	
+		        	return getInStock;
+		        }else {
+		        	return "0";
+		        }
+		    }
+		 
+		 
 		 
 		 @RequestMapping("/downloadPdf")
 			public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,

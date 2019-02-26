@@ -2,15 +2,24 @@ package com.smerp.serviceImpl.inventorytransactions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssueList;
-import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.inventorytransactions.InventoryGoodsIssueRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.util.EmailGenerator;
@@ -26,6 +35,9 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	
 	@Autowired
 	InventoryGoodsIssueRepository inventoryGoodsIssueRepository;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@Autowired
 	EmailGenerator emailGenerator;
@@ -172,4 +184,57 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 			return false;
 		}
 	}
+	
+	
+	@Override
+	public String getInStock(String productNo, Integer warehouse) {
+
+		String productsql = " select * from vw_inventory_product_quantity where product_no ='" + productNo
+				+ "' and plant_id='" + warehouse + "'";
+
+		Query query1 = entityManager.createNativeQuery(productsql);
+
+		logger.info("Product ordered ----> " + query1);
+
+		logger.info("Product ordered SQL ----> " + productsql);
+
+		String instockQuantity = "";
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+
+		for (Object[] tuple : arrayList) {
+
+			instockQuantity = "" + ((Integer) (tuple[4] == null ? 0 : (Integer.parseInt((tuple[4].toString())))));
+
+		}
+
+		logger.info(" In Stock Count--------->" + instockQuantity);
+        if(!instockQuantity.isEmpty()) {
+		return instockQuantity;
+        }else {
+        	return "0";
+        }
+	}
+	
+	@Override
+	public InventoryGoodsIssue getinventoryGoodsIssueId(int id) {
+		InventoryGoodsIssue inventoryGoodsIssue = inventoryGoodsIssueRepository.findById(id).get();
+	    
+	     List<InventoryGoodsIssueList> listItems = inventoryGoodsIssue.getInventoryGoodsIssueList();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 InventoryGoodsIssueList invlist = listItems.get(i);
+	        String productNo = invlist.getProductNumber();
+	        Integer wareHose = invlist.getWarehouse();
+	        invlist.setTempRequiredQuantity(Integer.parseInt(getInStock(productNo,wareHose)));    
+	    }
+	     inventoryGoodsIssue.setInventoryGoodsIssueList(listItems);
+	     logger.info(" inventoryGoodsIssue--------->" + inventoryGoodsIssue);
+	    return inventoryGoodsIssue;
+	}
+	
+	
+	
+	
 }

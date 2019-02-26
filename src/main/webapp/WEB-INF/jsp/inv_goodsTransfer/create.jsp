@@ -271,7 +271,7 @@
 																															</td>
 																															
 																																<td><div class="form-group">
-																																	<form:select class="form-control"
+																																	<form:select class="form-control warehouse"
 																																		style="width:;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})" 
 																																		path="inventoryGoodsTransferList[${count}].fromWarehouse">
 																																		<form:option value="" label="Select" />
@@ -288,7 +288,11 @@
 																																	</form:select>
 																																</div></td>
 																																
-																																	<td><div class="form-group">
+																																	<td class="gr-main">
+			                                                                                                               <img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output"
+			                                                                                                                width="15" height="15" class="quality-alert" data-toggle="tooltip" data-placement="top" 
+			                                                                                                                title="In Stock Quantity   ${listLineItems.tempRequiredQuantity}"/>
+			                                                                                                                <div class="form-group">
 																																	<form:input type="text"
 																																		path="inventoryGoodsTransferList[${count}].requiredQuantity"
 																																		value="${listLineItems.requiredQuantity}"
@@ -716,7 +720,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   onchange="fromHouse('+inc+')"   class="form-control fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   onchange="fromHouse('+inc+')"   class="form-control warehouse fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
 			+ scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
@@ -739,9 +743,10 @@ function addItem() {
 			+ '</td>'
 			
 
-			+'<td>'
+			+ '<td class="gr-main">'
+			+'<img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output" width="15" height="15" class="quality-alert" data-toggle="tooltip" data-placement="top" title="InStockQunatity" />'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsTransferList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity  '+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1269,21 +1274,57 @@ $('#containerContainingTabs a').on('click', function(e) {
 		$("#form").submit();
 		 return false;
 	  } else {
-		 	//showLoadingImage();
-		  var subStatus = $(this).val();
-        	if(subStatus == 'DR'){
-        		alertify.message('Draft Successfully');
-				return true;
-			  } else if(subStatus == "SA"){
-				 alertify.success('Saved Successfully');
-				return true;
-			  } else if(subStatus == "APP"){
-				 alertify.success('Document Approved');
-				return true;
-			  } else if(subStatus == "RE"){
-				 alertify.warning('Document Rejected');
-				 return true;
+		  if(pendingQuantityValidate()){
+			  var subStatus = $(this).val();
+				
+			  if(subStatus == "RE"){
+				  var flag = true;
+			  }else{
+				  var flag = false;
+			  
+				  var rQuantityList = [];
+				  $(".requiredQuantity").each(function() {
+					  var itemParentRow = $(this).parents(".multTot");
+					  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+					  rQuantityList.push(requiredQuantity);
+					});
+			  
+				  for ( var i = 0; i < rQuantityList.length; i++ ) {
+				  	var itemq = rQuantityList[i];
+				  	if(itemq > 0){
+				  		flag = true;
+				  		break;
+				  	}else{
+				  		flag = false;
+				  	}
+				  }
 			  }
+			  
+			
+			  if(flag == true){
+		        	if(subStatus == 'DR'){
+		        		alertify.message('Draft Successfully');
+						return true;
+					  } else if(subStatus == "SA"){
+						 alertify.success('Saved Successfully');
+						return true;
+					  } else if(subStatus == "APP"){
+						 alertify.success('Approved Return');
+						return true;
+					  } else if(subStatus == "RE"){
+						 alertify.warning('Document Rejected');
+						 return true;
+					  }  
+				  
+			   } else{
+				  alertify.alert("Goods Transfer","Quantity Required For Atleast One Product");
+					return false;
+			  	} 
+			  }else {
+				  alertify.alert("Goods Transfer","Can't Exceed more than the required quantity!");
+				  return false;
+			  }
+			 
 		  }
 	 
     if ($('#items_radio').is(":checked") == true) {
@@ -1365,6 +1406,50 @@ function isNumericKey1(evt)
 function goBack() {
     window.history.back();
 }
+	
+	
+	
+
+
+$('.warehouse').on('change', function() {
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+$('.productNumber').on('blur', function() {
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+$('.description').on('blur', function() {
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+
+function setInfoInStockQuantity(productNo,warehouse,itemParentRow){
+	
+	 $.ajax({
+		   type: "GET",
+			data: {productNo:productNo,warehouse :warehouse}, 
+			async : false,
+          url: "<c:url value="/invgi/getInStock"/>", 
+          success: function (response) {
+        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQunatity  "+response);
+          },
+          error: function(e){
+          // alert('Error: ' + e);
+           }
+          });
+}
+	
+	
 	
 	
 /* 	
@@ -1618,31 +1703,48 @@ $('#freight').keyup(function() {
 			   }
 		});
 	 */
-	$(document).on("keyup", ".validateQuantity", function(e) {
-		if (this.value.length == 0 && e.which == 48 ){
-			      return false;
-			   }
-		
-		var itemParentRow = $(this).parents(".multTot");
-		 
-		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
-		
-		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
-		
-		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
-		
-	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
-		
-		
-		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Transfer","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
-			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			 return false;
-		}
-		
-		});
+	 $(document).on("keyup", ".requiredQuantity", function(e) {	
+			
+			
+			var itemParentRow = $(this).parents(".multTot");
+			 
+			var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+			var ajaxQuantity=  $(itemParentRow).find(".quality-alert").attr('title');
+			
+			ajaxQuantity =ajaxQuantity.substring(ajaxQuantity.lastIndexOf(" ") + 1, ajaxQuantity.length);
+			
+			if(Number(requiredQuantity)>Number(ajaxQuantity)){
+				alertify.alert("Goods Transfer","Avaliable "+ajaxQuantity + ". Cannot Exceed more than the required quantity!");	
+				$(itemParentRow).find(".requiredQuantity").val("");
+				return false;
+			}
 	
-	
+	 });
+	 
+				function pendingQuantityValidate(){
+					var flag = false;
+					$(".requiredQuantity").each(function() {
+						  var itemParentRow = $(this).parents(".multTot");
+						  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+						  var temp_requiredQuantity= 0;
+						  var ajaxQuantity=  $(itemParentRow).find(".quality-alert").attr('title');
+							
+						  temp_requiredQuantity =ajaxQuantity.substring(ajaxQuantity.lastIndexOf(" ") + 1, ajaxQuantity.length);
+						  
+						  if(Number(temp_requiredQuantity)<Number(requiredQuantity)){
+								alertify.error("Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
+								 ($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+								 ($(this).parents('tr').find('td').find('.requiredQuantity').focus());
+								 flag = true;
+							}
+						});
+					if(flag==true){
+						return false;
+					}else{
+						return true;
+					}
+					
+				}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

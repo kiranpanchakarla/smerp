@@ -68,6 +68,8 @@ public class InventoryGoodsIssueList extends AuditModel {
 	
 	@Column(name="department_id")
 	private Integer department;
+	
+	private transient Integer tempRequiredQuantity;
 
 	public Integer getId() {
 		return id;
@@ -207,6 +209,16 @@ public class InventoryGoodsIssueList extends AuditModel {
 
 	public void setTaxDescription(String taxDescription) {
 		this.taxDescription = taxDescription;
+	}
+	
+	
+
+	public Integer getTempRequiredQuantity() {
+		return tempRequiredQuantity;
+	}
+
+	public void setTempRequiredQuantity(Integer tempRequiredQuantity) {
+		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
 	@Override

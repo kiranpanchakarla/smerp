@@ -17,6 +17,8 @@ public interface InventoryGoodsTransferService {
 	
 	InventoryGoodsTransfer findLastDocumentNumber();
 	
+	InventoryGoodsTransfer getInventoryGoodsTransferId(int id);
+	
 	InventoryGoodsTransfer getListAmount(InventoryGoodsTransfer inventoryGoodsTransfer);
 	
 	boolean findByDocNumber(String docNum);

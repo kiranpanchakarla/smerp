@@ -84,7 +84,7 @@ public class PlantController {
 	@GetMapping(value = "/view")
 	public String view(String plantId, Model model) {
 		logger.info("Inside PlantController view Method");
-		model.addAttribute("plantObj", plantService.getInfo(Integer.parseInt(plantId)));
+		model.addAttribute("plant", plantService.getInfo(Integer.parseInt(plantId)));
 		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); // for india pass value code 1
 		model.addAttribute("stateList", countryServices.stateList(Integer.parseInt(countryCode))); //  for india pass value code 1
 		return "inventory/plant/view";

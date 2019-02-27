@@ -82,7 +82,7 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Product Group</label>:
-																		${product.productCategory.name}
+																		${product.productGroup.productName}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>UOM Group</label>:
@@ -234,8 +234,8 @@
 																		aria-labelledby="messages-tab">
 																		<div class="row">
 																			<div class="col-sm-4 form-group has-feedback">
-																				<label>Quantity Per Package</label>:
-																				${product.inventoryUom.id}
+																				<label>UOM</label>:
+																				${product.inventoryUom.uomName}
 																			</div>
 																			<div class="col-sm-4 form-group has-feedback">
 																				<label>Minimum</label>: ${product.minimun}

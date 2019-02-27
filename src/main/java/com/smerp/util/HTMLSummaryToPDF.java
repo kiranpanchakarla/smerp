@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,7 @@ import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
@@ -275,8 +277,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 
 public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsReceipt goodsReceipt) throws TemplateException, IOException, DocumentException {
 		
-	goodsReceipt = goodsReceiptService.getListAmount(goodsReceipt);
-		
+	    goodsReceipt = goodsReceiptService.getListAmount(goodsReceipt);
+	    GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(goodsReceipt.getId());
+	    List<LineItemsBean> lineItemsBean = goodsReceiptService.getLineItemsBean(goodsReceipt.getId());
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());
 		if (!sourceFolder.exists()) {
@@ -291,6 +294,8 @@ public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsRece
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("gr", goodsReceipt);
+		input.put("grqty", gr);
+		input.put("grList", lineItemsBean);
 		input.put("moduleName", moduleGR);
 		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());
@@ -343,8 +348,9 @@ public String OfflineHtmlStringToPdfForGoodsReturn(String pdfFilePath,GoodsRetur
 
 public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoice) throws TemplateException, IOException, DocumentException {
 	
-	invoice = invoiceService.getListAmount(invoice);
-		
+	    invoice = invoiceService.getListAmount(invoice);
+	    InVoice inv = invoiceService.getInVoiceById(invoice.getId());
+	    List<LineItemsBean> lineItemsBean = invoiceService.getLineItemsBean(invoice.getId());
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());
 		if (!sourceFolder.exists()) {
@@ -359,6 +365,8 @@ public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoic
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("inv", invoice);
+		input.put("invQty", inv);
+		input.put("invList", lineItemsBean);
 		input.put("moduleName", moduleInv);
 		logger.info("plantMap-->" + purchaseOrderController.plantMap());
 		input.put("plantMap", purchaseOrderController.plantMap());

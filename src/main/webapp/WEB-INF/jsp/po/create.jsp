@@ -1197,7 +1197,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5" required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5" required="true" class="form-control requiredQuantity validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1239,7 +1239,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -2059,7 +2059,15 @@ $('#containerContainingTabs a').on('click', function(e) {
 	$('#containerContainingTabs a').removeClass('active');
 	theThis.addClass('active');
 	});
-	
+
+$(document).on("keyup", ".requiredQuantity", function(e){
+	var itemParentRow = $(this).parents(".multTot");
+	var requiredQunty=  $(itemParentRow).find(".requiredQuantity").val();
+	if(requiredQunty<=0){
+		alertify.alert("Purchase Order","Quantity Required for each Product");
+		($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+	}
+});
 	
 //$('form.commentForm').on('submit', function(event) {
 $(".mySubButton").on('click', function() {    

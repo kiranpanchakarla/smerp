@@ -475,7 +475,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control validatePrice"  required="true"></form:input></div></td>
+																															class="form-control requiredQuantity validateQuantity validatePrice"  required="true"></form:input></div></td>
 																															
 																													</c:if>
 																													
@@ -759,7 +759,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -800,7 +800,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1594,6 +1594,16 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
+	
+$(document).on("keyup", ".validateQuantity", function(e){
+	var itemParentRow = $(this).parents(".multTot");
+	var requiredQunty=  $(itemParentRow).find(".requiredQuantity").val();
+	if(requiredQunty<=0){
+		alertify.alert("Request For Quotation","Quantity Required for each Product");
+		($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+	}
+});
+
 	
 //$('form.commentForm').on('submit', function(event) {
 $(".mySubButton").on('click', function() {

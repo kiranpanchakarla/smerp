@@ -292,7 +292,7 @@
 																													<form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity"  required="true" onkeypress="return isNumericKey(event)"
 																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}"
-																															class="form-control validatePrice"></form:input>
+																															class="form-control requiredQuantity validatePrice validateQuantity"></form:input>
 																														</div>	
 																															</td>
 																															
@@ -314,7 +314,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].requiredQuantity" onkeypress="return isNumericKey(event)"
 																															autocomplete="off"  value="${listpurchaseRequestLists.requiredQuantity}" maxlength='5'  required="true"
-																															class="form-control validatePrice"></form:input></div></td>
+																															class="form-control requiredQuantity validatePrice validateQuantity"></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:select class="form-control"
 																															style="width:160px !important;"  required="true"
@@ -564,7 +564,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity"  onkeypress="return isNumericKey(event)" autocomplete="off"  maxlength="5" required="true"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -603,7 +603,7 @@
     			
     			+'<td>'
     			+'<div class="form-group">'
-    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+    			+'<input type="text" name="purchaseRequestLists['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" autocomplete="off"  required="true"  class="form-control validateQuantity validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
     			+ '</div>'
     			+'</td>'
     			
@@ -1217,6 +1217,15 @@
             var theThis = $(this);
             $('#containerContainingTabs a').removeClass('active');
             theThis.addClass('active');
+        });
+        
+        $(document).on("keyup", ".validateQuantity", function(e){
+        	var itemParentRow = $(this).parents(".multTot");
+    		var requiredQunty=  $(itemParentRow).find(".requiredQuantity").val();
+    		if(requiredQunty<=0){
+    			alertify.alert("Purchase Request","Quantity Required for each Product");
+    			($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+    		}
         });
         
       //  $('form.commentForm').on('submit', function(event) {

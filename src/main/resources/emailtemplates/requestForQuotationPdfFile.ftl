@@ -56,14 +56,14 @@
                 <td><strong>Ref Doc No.</strong></td>
                 <td>:<#if rfq.referenceDocNumber??>${rfq.referenceDocNumber}</#if></td>
                 <td><strong >Posting Date</strong></td>
-                <td><#if rfq.postingDate??>${rfq.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if rfq.postingDate??>${rfq.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 <td><strong >Doc Date</strong></td>
-                <td><#if rfq.documentDate??>${rfq.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
+                <td>:<#if rfq.documentDate??>${rfq.documentDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
                 
                 <tr>
                 <td><strong >Require Date</strong></td>
-                <td><#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
+                <td>:<#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 <td><strong>Status</strong></td>
 			    <td>: <#if rfq.status??> ${rfq.status}</#if></td>
                 </tr>

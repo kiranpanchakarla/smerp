@@ -174,27 +174,27 @@
                 </tr>
                                                                                    
                 <tr>
-                <td><#if goodsRec.vendorShippingAddress.addressName??>${goodsRec.vendorShippingAddress.addressName},</#if></td>
-                <td><#if goodsRec.vendorPayTypeAddress.addressName??>${goodsRec.vendorPayTypeAddress.addressName}</#if></td>
+                <td><#if goodsRec.vendorShippingAddress.addressName??>${goodsRec.vendorShippingAddress.addressName},<#else> </#if></td>
+                <td><#if goodsRec.vendorPayTypeAddress.addressName??>${goodsRec.vendorPayTypeAddress.addressName}<#else> </#if></td>
                 <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if goodsRec.totalBeforeDisAmt??> ${goodsRec.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
-                <td><#if goodsRec.vendorShippingAddress.street??>${goodsRec.vendorShippingAddress.street}, </#if></td>
-                 <td> <#if goodsRec.vendorPayTypeAddress.street??>${goodsRec.vendorPayTypeAddress.street},</#if></td>
+                <td><#if goodsRec.vendorShippingAddress.street??>${goodsRec.vendorShippingAddress.street}, <#else> </#if></td>
+                 <td> <#if goodsRec.vendorPayTypeAddress.street??>${goodsRec.vendorPayTypeAddress.street},<#else> </#if></td>
                  <td><strong>Freight</strong></td>
                 <td>:<#if goodsRec.freight??> ${goodsRec.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if goodsRec.vendorShippingAddress.zipCode??>${goodsRec.vendorShippingAddress.zipCode}, </#if></td>
-                <td> <#if goodsRec.vendorPayTypeAddress.zipCode??>${goodsRec.vendorPayTypeAddress.zipCode},</#if></td>
+                <td><#if goodsRec.vendorShippingAddress.zipCode??>${goodsRec.vendorShippingAddress.zipCode}, <#else> </#if></td>
+                <td> <#if goodsRec.vendorPayTypeAddress.zipCode??>${goodsRec.vendorPayTypeAddress.zipCode}, <#else> </#if></td>
                 <td><strong>Total</strong></td>
                 <td>:<#if goodsRec.amtRounding??> ${goodsRec.amtRounding}<#else>-- </#if></td>
                
                 </tr>
                 <tr>
-                <td><#if goodsRec.vendorShippingAddress.country.name??>${goodsRec.vendorShippingAddress.country.name}.</#if></td>
-                <td><#if goodsRec.vendorPayTypeAddress.country.name??>${goodsRec.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><#if goodsRec.vendorShippingAddress.country.name??>${goodsRec.vendorShippingAddress.country.name}.<#else> </#if></td>
+                <td><#if goodsRec.vendorPayTypeAddress.country.name??>${goodsRec.vendorPayTypeAddress.country.name}.<#else> </#if></td>
                 <td><strong>Rounded Off</strong></td>
                 <td>:<#if goodsRec.roundedOff??> ${goodsRec.roundedOff}<#else>--</#if></td>
                 </tr>

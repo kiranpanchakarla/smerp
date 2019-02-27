@@ -26,7 +26,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                             COALESCE(gr_new.gr_quantity, 0::bigint)::numeric - COALESCE(gr_new.returned_quantity, 0::numeric) - COALESCE(gr_new.creditmemo_quantity, 0::numeric) AS instock_quantity,
                             pol.required_quantity::numeric - (COALESCE(gr_new.gr_quantity, 0::bigint)::numeric - COALESCE(gr_new.returned_quantity, 0::numeric) - COALESCE(gr_new.creditmemo_quantity, 0::numeric)) AS ordered_quantity
                            FROM tbl_purchase_order poh
-                             JOIN tbl_purchase_order_lineitems pol ON poh.id = pol.po_id
+                             JOIN tbl_purchase_order_lineitems pol ON poh.id = pol.po_id AND (poh.status::text = ANY (ARRAY['Approved'::text, 'Partially_Received'::text, 'Completed'::text]))
                              LEFT JOIN ( SELECT grh.po_id,
                                     grl.product_id,
                                     grl.product_number,
@@ -35,7 +35,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                                     sum(COALESCE(gre.returned_quantity, 0::bigint)) AS returned_quantity,
                                     sum(COALESCE(cm.creditmemo_quantity, 0::bigint)) AS creditmemo_quantity
                                    FROM tbl_goods_receipt grh
-                                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id
+                                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Goods_Return'::text, 'Invoiced'::text]))
                                      LEFT JOIN ( SELECT greh.gr_id,
     grel.product_id,
     grel.warehouse,
@@ -62,7 +62,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     sum(grl.required_quantity)::numeric - (sum(COALESCE(gre.returned_quantity, 0::bigint)) + sum(COALESCE(cm.creditmemo_quantity, 0::bigint))) AS instock_quantity,
                     0 AS ordered_quantity
                    FROM tbl_goods_receipt grh
-                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id
+                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Goods_Return'::text, 'Invoiced'::text]))
                      LEFT JOIN ( SELECT greh.gr_id,
                             grel.product_id,
                             grel.warehouse,
@@ -107,7 +107,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     0 AS ordered_quantity
                    FROM tbl_inventory_goods_issue igih
                      JOIN tbl_inventory_goods_issue_list igil ON igih.id = igil.inv_goods_issue_id
-                  WHERE igih.status::text <> 'Rejected'::text
+                  WHERE igih.status::text = 'Approved'::text
                   GROUP BY igil.product_id, igil.ware_house
                 UNION ALL
                  SELECT igrl.product_id,
@@ -116,7 +116,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     0 AS ordered_quantity
                    FROM tbl_inventory_goods_receipt igrh
                      JOIN tbl_inventory_goods_receipt_list igrl ON igrh.id = igrl.inv_goods_receipt_id
-                  WHERE igrh.status::text <> 'Rejected'::text
+                  WHERE igrh.status::text = 'Approved'::text
                   GROUP BY igrl.product_id, igrl.ware_house
                 UNION ALL
                  SELECT igtl.product_id,
@@ -125,7 +125,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     0 AS ordered_quantity
                    FROM tbl_inventory_goods_transfer igth
                      JOIN tbl_inventory_goods_transfer_list igtl ON igth.id = igtl.inv_goods_transfer_id
-                  WHERE igth.status::text <> 'Rejected'::text
+                  WHERE igth.status::text = 'Approved'::text
                   GROUP BY igtl.product_id, igtl.from_warehouse
                 UNION ALL
                  SELECT igtl.product_id,
@@ -134,7 +134,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     0 AS ordered_quantity
                    FROM tbl_inventory_goods_transfer igth
                      JOIN tbl_inventory_goods_transfer_list igtl ON igth.id = igtl.inv_goods_transfer_id
-                  WHERE igth.status::text <> 'Rejected'::text
+                  WHERE igth.status::text = 'Approved'::text
                   GROUP BY igtl.product_id, igtl.to_warehouse) r
           GROUP BY r.product_id, r.warehouse) r1 ON r1.product_id = p.product_id AND r1.warehouse = w.plant_id
   ORDER BY p.product_id, w.plant_id;

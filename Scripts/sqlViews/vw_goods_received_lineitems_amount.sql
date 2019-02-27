@@ -5,7 +5,7 @@
 CREATE OR REPLACE VIEW vw_goods_received_lineitems_amount AS 
  SELECT grh.id,
     grh.doc_number,
-    COALESCE(grh.freight, 0::numeric) AS freight,
+    COALESCE(grh.freight, 0::numeric::double precision) AS freight,
     COALESCE(grh.total_discount, 0::double precision) AS total_discount,
     grl.product_id,
     grl.product_number,
@@ -20,9 +20,12 @@ CREATE OR REPLACE VIEW vw_goods_received_lineitems_amount AS
     COALESCE(cm.creditmemo_quantity, 0::bigint) AS creditmemo_quantity,
     grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint) AS current_quantity,
     grl.tax_code,
+    grl.tax_description,
     grl.unit_price,
-    (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grl.tax_code, 0::double precision) / 100::double precision AS product_tax,
-    (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price + (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grl.tax_code, 0::double precision) / 100::double precision AS product_cost_tax
+    ((grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grl.tax_code, 0::double precision) / 100::double precision)::numeric(20,2) AS product_tax,
+    ((grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price)::numeric(20,2) AS product_cost,
+    ((grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price - (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grh.total_discount, 0::double precision) / 100::double precision + (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grl.tax_code, 0::double precision) / 100::double precision)::numeric(20,2) AS product_cost_tax,
+    ((grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price + (grl.required_quantity - COALESCE(gre.returned_quantity, 0::bigint) - COALESCE(cm.creditmemo_quantity, 0::bigint))::double precision * grl.unit_price * COALESCE(grl.tax_code, 0::double precision) / 100::double precision)::numeric(20,2) AS product_cost_tax_without_discount
    FROM tbl_goods_receipt grh
      JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id
      LEFT JOIN ( SELECT greh.gr_id,
@@ -39,8 +42,7 @@ CREATE OR REPLACE VIEW vw_goods_received_lineitems_amount AS
              JOIN tbl_credit_memo_lineitems cml ON cmh.id = cml.cre_id
              JOIN tbl_invoice ih ON ih.id = cmh.inv_id
           WHERE cmh.status::text = 'Approved'::text
-          GROUP BY cml.product_id, ih.gr_id) cm ON cm.gr_id = grh.id AND cm.product_id = grl.product_id
-  WHERE grh.status::text <> 'Rejected'::text;
+          GROUP BY cml.product_id, ih.gr_id) cm ON cm.gr_id = grh.id AND cm.product_id = grl.product_id;
 
 ALTER TABLE vw_goods_received_lineitems_amount
   OWNER TO smerp_dev;

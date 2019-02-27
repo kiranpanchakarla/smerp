@@ -434,7 +434,7 @@
 																																		path="goodsReturnLineItems[${count}].description"
 																																		readonly="true"
 																																		value="${listLineItems.description}"
-																																		class="form-control description validatePrice"></form:input>
+																																		class="form-control  validatePrice"></form:input>
 																																</div>
 																															</td>
 
@@ -528,14 +528,19 @@
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		style="width:;" readonly="true"
-																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
+																															<td><div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="goodsReturnLineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div></td>
 																																
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"

@@ -504,12 +504,12 @@
 																													<td ><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].prodouctNumber" readonly="true"
 																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></div></td>
+																															class="form-control "></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].description" readonly="true"
 																															value="${listLineItems.description}"
-																															class="form-control description" ></form:input></div></td>
+																															class="form-control " ></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
@@ -573,12 +573,30 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																														
-																														<td><div class="form-group"><form:select class="form-control warehouse"
+																														<td>
+																														
+																														<%-- <div class="form-group"><form:select class="form-control warehouse"
 																															  readonly="true"
 																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${plantMap}" />
-																														</form:select></div></td>
+																														</form:select></div> --%>
+																														<div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="purchaseOrderlineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div>
+																														
+																														
+																														</td>
 																														
 																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"

@@ -532,7 +532,7 @@
 																																		path="goodsReceiptLineItems[${count}].prodouctNumber"
 																																		readonly="true"
 																																		value="${listLineItems.prodouctNumber}"
-																																		class="form-control prodouctNumber"></form:input>
+																																		class="form-control "></form:input>
 																																</div>  
 																															</td>
 
@@ -541,7 +541,7 @@
 																																		path="goodsReceiptLineItems[${count}].description"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.description}" readonly="true"
-																																		class="form-control description validatePrice"></form:input>
+																																		class="form-control  validatePrice"></form:input>
 																																</div> 
 																															</td>
 
@@ -638,14 +638,19 @@
 																																    </c:forEach>  
 																																  <form:option value="${plantMap}"></form:option>  
 																																	</form:select>
-																																</div> --%> <div class="form-group">
-																																	<form:select class="form-control warehouse"
-																																		style="width:;" readonly="true"
-																																		path="goodsReceiptLineItems[${count}].warehouse">
-																																		 
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div> </td>
+																																</div> --%> <div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="goodsReceiptLineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div></td>
 
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"

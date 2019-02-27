@@ -2232,7 +2232,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully',20000);
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Invoice Successfully');
+				 alertify.success('Invoice Approved');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected',20000);

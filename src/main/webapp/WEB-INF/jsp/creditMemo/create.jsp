@@ -541,7 +541,7 @@
 																																</div></td> --%>
 																																
 																														   <td><div class="form-group"><select class="form-control warehouse" readonly="true"
-																															name="goodsReturnLineItems[${count}].warehouse" >
+																															name="creditMemoLineItems[${count}].warehouse" >
 																														<c:forEach var="warehouse" items="${plantMap}">
 																													  <c:choose>
 																													<c:when
@@ -2235,7 +2235,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Approved Return');
+				 alertify.success('Approved');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');

@@ -157,25 +157,30 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		creditMemo.setVendorContactDetails(vendorsContactDetails);
 		creditMemo.setVendorShippingAddress(vendorShippingAddress);
 		creditMemo.setVendorPayTypeAddress(vendorPayAddress);
-         } }
+         } 
+         
+		}
 		
+		
+		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
+		try {
+		   	creditMemo =getListAmount(creditMemo);
+		   	if(creditMemo.getId()!=null) {
+		   		CreditMemo creditMemoObj = creditMemoRepository.findById(creditMemo.getId()).get();
+				logger.info(creditMemoObj.getCreatedBy().getUserEmail());
+				creditMemo.setCreatedBy(creditMemoObj.getCreatedBy());
+			 }
+			 RequestContext.initialize();
+		     RequestContext.get().getConfigMap().put("mail.template", "creditMemoEmail.ftl");  //Sending Email
+		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
 		
 		creditMemo= creditMemoRepository.save(creditMemo);
 		
 		 if(creditMemo.getStatus()!=null &&  !creditMemo.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
-			try {
-			   	creditMemo =getListAmount(creditMemo);
-			   /*	if(creditMemo.getId()!=null) {
-			   		CreditMemo creditMemoObj = creditMemoRepository.findById(creditMemo.getId()).get();
-					logger.info(creditMemoObj.getCreatedBy().getUserEmail());
-					creditMemo.setCreatedBy(creditMemoObj.getCreatedBy());
-				 }*/
-    			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "creditMemoEmail.ftl");  //Sending Email
-    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendCreditMemoEmail(creditMemo);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
 		
 			if(creditMemo.getInvId()!=null) {
 				InVoice invoice  = creditMemo.getInvId();

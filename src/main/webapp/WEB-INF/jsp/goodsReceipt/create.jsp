@@ -532,7 +532,7 @@
 																																		path="goodsReceiptLineItems[${count}].prodouctNumber"
 																																		readonly="true"
 																																		value="${listLineItems.prodouctNumber}"
-																																		class="form-control prodouctNumber"></form:input>
+																																		class="form-control "></form:input>
 																																</div>  
 																															</td>
 
@@ -541,7 +541,7 @@
 																																		path="goodsReceiptLineItems[${count}].description"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.description}" readonly="true"
-																																		class="form-control description validatePrice"></form:input>
+																																		class="form-control  validatePrice"></form:input>
 																																</div> 
 																															</td>
 
@@ -638,14 +638,19 @@
 																																    </c:forEach>  
 																																  <form:option value="${plantMap}"></form:option>  
 																																	</form:select>
-																																</div> --%> <div class="form-group">
-																																	<form:select class="form-control warehouse"
-																																		style="width:;" readonly="true"
-																																		path="goodsReceiptLineItems[${count}].warehouse">
-																																		 
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div> </td>
+																																</div> --%> <div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="goodsReceiptLineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div></td>
 
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
@@ -847,19 +852,19 @@
 																																		path="goodsReceiptLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
-																																		readonly="true"></form:input>
+																																		></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].sku"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
+																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -1434,7 +1439,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1447,7 +1452,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1801,7 +1806,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".prodouctNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -1809,9 +1814,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+				         autocompleteandchange(selcProdouctNo,itemParentRow);
+				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
@@ -1927,16 +1932,16 @@ $(document).ready(function(){
           $(document).on("blur", ".description", function() {
          	var itemParentRow = $(this).parents(".multTot");
          
-         	
+         	var  selcDescription=   $(itemParentRow).find(".description").val();
          	var arr=[];
          	 $(".description").each(function() {
              	 
              	  if(availabledescTags.includes($(this).val()) == true) 	 {
  		        if ($.inArray($(this).val(), arr) == -1){
  		            arr.push($(this).val());
- 		           
- 		       	// var isDluplicate = true;
- 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		           if($(this).val() == selcDescription) {
+ 		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+ 	  		       }
  		        }else{
  		        	   var isDluplicate = false;
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -2361,11 +2366,35 @@ $('#containerContainingTabs a').on('click', function(e) {
 	
 	if($(".mySubButton").hasClass("disabled")){
 		 alertify.error('Please fill mandatory fields');
-		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		alertify.alert("Goods Receipt","Please fill mandatory fields");
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		  var subStatus = $(this).val();
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
+		  }
+		  
+		if(flag == true){
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -2373,14 +2402,18 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Ready to Convert Goods Receipt to Goods Return');
+				 alertify.success('Approved');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
-		  }
-	
+		  
+	   } else{
+		  alertify.alert("Goods Receipt","Quantity Required For Atleast One Product");
+			return false;
+	  	}   
+	}
 	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
@@ -2692,7 +2725,7 @@ $('#freight').keyup(function() {
 	
 	
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
@@ -2709,7 +2742,7 @@ $('#freight').keyup(function() {
 		
 		
 		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+			alertify.alert("Goods Receipt","Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
 			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
 			 return false;
 		}

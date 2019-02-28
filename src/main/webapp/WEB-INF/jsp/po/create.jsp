@@ -504,12 +504,12 @@
 																													<td ><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].prodouctNumber" readonly="true"
 																															value="${listLineItems.prodouctNumber}"  
-																															class="form-control prodouctNumber"></form:input></div></td>
+																															class="form-control "></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].description" readonly="true"
 																															value="${listLineItems.description}"
-																															class="form-control description" ></form:input></div></td>
+																															class="form-control " ></form:input></div></td>
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
@@ -573,12 +573,30 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																														
-																														<td><div class="form-group"><form:select class="form-control warehouse"
+																														<td>
+																														
+																														<%-- <div class="form-group"><form:select class="form-control warehouse"
 																															  readonly="true"
 																															path="purchaseOrderlineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${plantMap}" />
-																														</form:select></div></td>
+																														</form:select></div> --%>
+																														<div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="purchaseOrderlineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div>
+																														
+																														
+																														</td>
 																														
 																														<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].requiredQuantity"
@@ -663,7 +681,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
 																															value="${listLineItems.uom}"
-																															class="form-control uom" readonly="true"></form:input></div></td>
+																															class="form-control uom"></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].sku"
@@ -1129,7 +1147,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'" />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1197,7 +1215,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5" required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" onkeypress="return isNumericKey(event)" maxlength="5" required="true" class="form-control requiredQuantity validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1239,7 +1257,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].requiredQuantity" autocomplete="off" required="true" onkeypress="return isNumericKey(event)"  class="form-control requiredQuantity validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1506,7 +1524,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".prodouctNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -1514,9 +1532,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+				         autocompleteandchange(selcProdouctNo,itemParentRow);
+				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Duplicate Product Added","You have already entered the Product Number "+$(this).val());
@@ -1631,16 +1649,16 @@ $(document).ready(function(){
           $(document).on("blur", ".description", function() {
          	var itemParentRow = $(this).parents(".multTot");
          
-         	
+         	var  selcDescription=   $(itemParentRow).find(".description").val();
          	var arr=[];
          	 $(".description").each(function() {
              	 
              	  if(availabledescTags.includes($(this).val()) == true) 	 {
  		        if ($.inArray($(this).val(), arr) == -1){
  		            arr.push($(this).val());
- 		           
- 		       	// var isDluplicate = true;
- 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		           if($(this).val() == selcDescription) {
+ 		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+ 	  		       }
  		        }else{
  		        	   var isDluplicate = false;
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -2059,7 +2077,15 @@ $('#containerContainingTabs a').on('click', function(e) {
 	$('#containerContainingTabs a').removeClass('active');
 	theThis.addClass('active');
 	});
-	
+
+$(document).on("keyup", ".requiredQuantity", function(e){
+	var itemParentRow = $(this).parents(".multTot");
+	var requiredQunty=  $(itemParentRow).find(".requiredQuantity").val();
+	if(requiredQunty<=0){
+		alertify.alert("Purchase Order","Quantity Required for each Product");
+		($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+	}
+});
 	
 //$('form.commentForm').on('submit', function(event) {
 $(".mySubButton").on('click', function() {    

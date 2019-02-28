@@ -25,7 +25,13 @@
         <div class="col-md-3">
         <div class="card-title text-xs-center">
                 <div class="p-1">
-                <img style="width: 150px;"  src="<c:url value="/resources/images/logo.png"/>"/>
+                <div style="display: inline-block;float: left; margin-left: 10px;">
+                	<img style="width: 200px;"  src="<c:url value="/resources/images/ccl_logo.png"/>"/>
+                </div>
+                <div style="display: inline-block;float: left; margin-left: 10px; padding-left: 10px; border-left: 1px solid #999;">
+                	<img style="width: 70px; height: 70px;"  src="<c:url value="/resources/images/logo.png"/>"/>
+               	</div>
+               	<div style="clear: both;"></div>
                 <!-- <img src="/resources/images/logo.png" style="width: 150px;" alt="branding logo"> -->
                 </div>
               </div>
@@ -71,6 +77,7 @@
               </div>
             </div> -->
           </div>
+          <div style="margin-top:30px; text-align: center;"><p style="display:inline;"><strong>Powered by </strong></p><img style="width: 100px;"  src="<c:url value="/resources/images/manuh_logo.png"/>"/></div>
         </div>
       </section>
     </div>

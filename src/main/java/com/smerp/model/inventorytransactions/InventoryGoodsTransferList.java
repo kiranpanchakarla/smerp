@@ -63,6 +63,9 @@ public class InventoryGoodsTransferList extends AuditModel{
 	
 	@Column(name = "tax_description")
 	private String taxDescription;
+	
+	
+	private transient Integer tempRequiredQuantity;
 
 	public Integer getFromWarehouse() {
 		return fromWarehouse;
@@ -200,6 +203,16 @@ public class InventoryGoodsTransferList extends AuditModel{
 
 	public void setTaxDescription(String taxDescription) {
 		this.taxDescription = taxDescription;
+	}
+
+	
+	
+	public Integer getTempRequiredQuantity() {
+		return tempRequiredQuantity;
+	}
+
+	public void setTempRequiredQuantity(Integer tempRequiredQuantity) {
+		this.tempRequiredQuantity = tempRequiredQuantity;
 	}
 
 	@Override

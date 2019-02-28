@@ -434,7 +434,7 @@
 																																		path="goodsReturnLineItems[${count}].description"
 																																		readonly="true"
 																																		value="${listLineItems.description}"
-																																		class="form-control description validatePrice"></form:input>
+																																		class="form-control  validatePrice"></form:input>
 																																</div>
 																															</td>
 
@@ -528,14 +528,19 @@
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		style="width:;" readonly="true"
-																																		path="goodsReturnLineItems[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
+																															<td><div class="form-group"><select class="form-control warehouse" readonly="true"
+																															name="goodsReturnLineItems[${count}].warehouse" >
+																														<c:forEach var="warehouse" items="${plantMap}">
+																													  <c:choose>
+																													<c:when
+																														test="${warehouse.key == listLineItems.warehouse}">
+																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
+																													</c:when>
+																													<c:otherwise>
+																													</c:otherwise>
+																														</c:choose>
+																														</c:forEach>
+																														</select></div></td>
 																																
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
@@ -2175,11 +2180,39 @@ $('#containerContainingTabs a').on('click', function(e) {
 	
 	if($(".mySubButton").hasClass("disabled")){
 		 alertify.error('Please fill mandatory fields');
-		alertify.alert("Request For Quotation","Please fill mandatory fields");
+		alertify.alert("Goods Return","Please fill mandatory fields");
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
+		  
+			if(pendingQuantityValidate()){
+			
+			var subStatus = $(this).val();
+			
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
+		  }
+		  
+		if(flag == true){
         	if(subStatus == 'DR'){
         		alertify.message('Draft Successfully');
 				return true;
@@ -2187,13 +2220,22 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Approved Return');
+				 alertify.success('Approved ');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');
 				 return true;
 			  }  
-		  }
+		  
+	   } else{
+		  alertify.alert("Goods Return","Quantity Required For Atleast One Product");
+			return false;
+	  	} 
+	  }else{
+		  alertify.alert("Goods Return","Can't Exceed more than the required quantity!");
+		  return false;
+	  }
+	}
 	
     if ($('#items_radio').is(":checked") == true) {
     var rowCount = $('#itemTbl tr').length-1;
@@ -2497,7 +2539,7 @@ $('#freight').keyup(function() {
 			   }
 		}); */
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
+	$(document).on("keyup", ".validateQuantity", function(e) {
 		if (this.value.length == 0 && e.which == 48 ){
 			      return false;
 			   }
@@ -2505,21 +2547,42 @@ $('#freight').keyup(function() {
 		var itemParentRow = $(this).parents(".multTot");
 		 
 		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
-		
+
 		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
 		
 		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
+	   
+		var remain_requiredQuantity = parseFloat(change_requiredQuantity) + parseFloat(original_requiredQuantity);
+	  	
+			if(Number(temp_requiredQuantity)<Number(change_requiredQuantity)){
+				alertify.alert("Goods Return","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
+				 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
+				 return false;
+			}
+		});
 		
-	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
-		
-		
-		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Goods Return","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
-			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			 return false;
+	
+	function pendingQuantityValidate(){
+		var flag = false;
+		$(".requiredQuantity").each(function() {
+			  var itemParentRow = $(this).parents(".multTot");
+			  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+			  var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
+			  
+			  if(Number(temp_requiredQuantity)<Number(requiredQuantity)){
+					alertify.error("Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
+					 ($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+					 ($(this).parents('tr').find('td').find('.requiredQuantity').focus());
+					 flag = true;
+				}
+			});
+		if(flag==true){
+			return false;
+		}else{
+			return true;
 		}
 		
-		});
+	}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

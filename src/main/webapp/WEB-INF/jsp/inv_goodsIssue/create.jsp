@@ -157,12 +157,12 @@
 																											<th style="display: none;">Product Id</th>
 																											<th>Product#</th>
 																											<th>Description</th>
+																											<th>Warehouse</th>
 																											<th>Quantity</th>
 																											<th>Unit Price</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Warehouse</th>
 																											<th>Department</th>
 																											<th>Group</th>
 																											<th>UOM</th>
@@ -190,12 +190,12 @@
 																												 
 																											<th>Product#</th>
 																											<th>Description</th>
+																											<th>Warehouse</th>
 																											<th>Quantity</th>
 																											<th>Unit Price</th>
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Warehouse</th>
 																											<th>Department</th>
 																											<th>Group</th>
 																											<th>HSN</th>
@@ -241,13 +241,26 @@
 																																</div>
 																															</td>
 
-																																
-																																<td><div class="form-group">
+																															<td><div class="form-group">
+																																	<form:select class="form-control warehouse"
+																																		  required="true"
+																																		path="inventoryGoodsIssueList[${count}].warehouse">
+																																		<form:option value="" label="Select" />
+																																		<form:options items="${plantMap}" />
+																																	</form:select>
+																																</div></td>
+
+
+																															<td class="gr-main">
+			                                                                                                               <img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output"
+			                                                                                                                width="15" height="15" class="quality-alert" data-toggle="tooltip" data-placement="top" 
+			                                                                                                                title="InStockQuantity ${listLineItems.tempRequiredQuantity}"/>
+			                                                                                                                <div class="form-group">
 																																	<form:input type="text"
 																																		path="inventoryGoodsIssueList[${count}].requiredQuantity"
 																																		value="${listLineItems.requiredQuantity}"
 																																		onkeypress="return isNumericKey(event)"
-																																		class="form-control requiredQuantity validatePrice"
+																																		class="form-control requiredQuantity validatePrice validateQuantity"
 																																		autocomplete="off" required="true"></form:input>
 																																</div></td>
 
@@ -309,14 +322,7 @@
 																																</div></td>
 																																
 																																
-																															<td><div class="form-group">
-																																	<form:select class="form-control"
-																																		  required="true"
-																																		path="inventoryGoodsIssueList[${count}].warehouse">
-																																		<form:option value="" label="Select" />
-																																		<form:options items="${plantMap}" />
-																																	</form:select>
-																																</div></td>
+																														
 																																
 																																<td><div class="form-group">
 																																	<form:select class="form-control"
@@ -662,9 +668,21 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
-			+'<td>'
+			+ '<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
+			+ '<select  name="inventoryGoodsIssueList['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+ scriptSelectPlant +
+			<c:forEach items="${plantMap}" var="plantMap">
+			'<option value="${plantMap.key}">${plantMap.value}</option>'+
+			</c:forEach>
+			+ '</select>'
+			+ '</div>'
+			+ '</td>'
+			
+			+ '<td class="gr-main">'
+			+'<img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output" width="15" height="15" class="quality-alert" data-toggle="tooltip" data-placement="top" title="InStockQunatity" />'
+			+'<div class="form-group">'
+			+'<input type="text" name="inventoryGoodsIssueList['+inc+'].requiredQuantity" autocomplete="off" maxlength="5" onkeypress="return isNumericKey(event)"  required="true" class="form-control validatePrice validateQuantity requiredQuantity'+inc+' requiredQuantity" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -700,16 +718,6 @@ function addItem() {
 			+ '</div>'
 			+'</td>'
 			
-			+ '<td>'
-			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+ scriptSelectPlant +
-			<c:forEach items="${plantMap}" var="plantMap">
-			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
-			+ '</select>'
-			+ '</div>'
-			+ '</td>'
 			
 			+ '<td>'
 			+'<div class="form-group">'
@@ -832,7 +840,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".productNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".productNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -840,9 +848,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+  				         autocompleteandchange(selcProdouctNo,itemParentRow);
+  				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
@@ -958,16 +966,16 @@ $(document).ready(function(){
           $(document).on("blur", ".description", function() {
          	var itemParentRow = $(this).parents(".multTot");
          
-         	
+         	var  selcDescription=   $(itemParentRow).find(".description").val();
          	var arr=[];
          	 $(".description").each(function() {
              	 
              	  if(availabledescTags.includes($(this).val()) == true) 	 {
  		        if ($.inArray($(this).val(), arr) == -1){
  		            arr.push($(this).val());
- 		           
- 		       	// var isDluplicate = true;
- 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		           if($(this).val() == selcDescription) {
+		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+	  		       }
  		        }else{
  		        	   var isDluplicate = false;
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -1218,21 +1226,57 @@ $('#containerContainingTabs a').on('click', function(e) {
 		$("#form").submit();
 		 return false;
 	  } else {
-		 var subStatus = $(this).val();
-        	if(subStatus == 'DR'){
-        		alertify.message('Draft Successfully');
-				return true;
-			  } else if(subStatus == "SA"){
-				 alertify.success('Saved Successfully');
-				return true;
-			  } else if(subStatus == "APP"){
-				 alertify.success('Document Approved');
-				return true;
-			  } else if(subStatus == "RE"){
-				 alertify.warning('Document Rejected');
-				 return true;
-			  }  
+		  if(pendingQuantityValidate()){
+		  var subStatus = $(this).val();
+			
+		  if(subStatus == "RE"){
+			  var flag = true;
+		  }else{
+			  var flag = false;
+		  
+			  var rQuantityList = [];
+			  $(".requiredQuantity").each(function() {
+				  var itemParentRow = $(this).parents(".multTot");
+				  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+				  rQuantityList.push(requiredQuantity);
+				});
+		  
+			  for ( var i = 0; i < rQuantityList.length; i++ ) {
+			  	var itemq = rQuantityList[i];
+			  	if(itemq > 0){
+			  		flag = true;
+			  		break;
+			  	}else{
+			  		flag = false;
+			  	}
+			  }
 		  }
+		  
+		
+		  if(flag == true){
+	        	if(subStatus == 'DR'){
+	        		alertify.message('Draft Successfully');
+					return true;
+				  } else if(subStatus == "SA"){
+					 alertify.success('Saved Successfully');
+					return true;
+				  } else if(subStatus == "APP"){
+					 alertify.success('Approved Return');
+					return true;
+				  } else if(subStatus == "RE"){
+					 alertify.warning('Document Rejected');
+					 return true;
+				  }  
+			  
+		   } else{
+			  alertify.alert("Inventory Goods Issue","Quantity Required For Atleast One Product");
+				return false;
+		  	} 
+		  }else {
+			  alertify.alert("Inventory Goods Issue","Can't Exceed more than the required quantity!");
+			  return false;
+		  }
+		 }
 	
 	
     if ($('#items_radio').is(":checked") == true) {
@@ -1289,6 +1333,46 @@ function goBack() {
     window.history.back();
 }
 	
+	
+	
+	
+$(document).on("change", ".warehouse", function() {
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+$(document).on("blur", ".productNumber", function() {	
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+$(document).on("blur", ".description", function() {	
+	var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var productNo=  $(itemParentRow).find(".productNumber").val();
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+});
+
+
+function setInfoInStockQuantity(productNo,warehouse,itemParentRow){
+	
+	 $.ajax({
+		   type: "GET",
+			data: {productNo:productNo,warehouse :warehouse}, 
+			async : false,
+          url: "<c:url value="/invgi/getInStock"/>", 
+          success: function (response) {
+        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQunatity "+response);
+          },
+          error: function(e){
+          // alert('Error: ' + e);
+           }
+          });
+}
 	
 	
 
@@ -1541,29 +1625,49 @@ $('#freight').keyup(function() {
 			   }
 		}); */
 	
-	$(document).on("keyup", ".validateQuantity", function(e) {	
-		if (this.value.length == 0 && e.which == 48 ){
-			      return false;
-			   }
+	$(document).on("keyup", ".requiredQuantity", function(e) {	
+		
 		
 		var itemParentRow = $(this).parents(".multTot");
 		 
-		var original_requiredQuantity=  $(itemParentRow).find(".original_requiredQuantity").val();
+		var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+		var ajaxQuantity=  $(itemParentRow).find(".quality-alert").attr('title');
 		
-		var change_requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+		ajaxQuantity =ajaxQuantity.substring(ajaxQuantity.lastIndexOf(" ") + 1, ajaxQuantity.length);
 		
-		var temp_requiredQuantity=  $(itemParentRow).find(".temp_requiredQuantity").val();
-		
-	    var remain_requiredQuantity = change_requiredQuantity - original_requiredQuantity;
-		
-		
-		if(temp_requiredQuantity<remain_requiredQuantity){
-			alertify.alert("Inventory Goods Issue","Avaliable "+temp_requiredQuantity + ". Cannot Exceed more than the required quantity!");	
-			 ($(this).parents('tr').find('td').find('.requiredQuantity').val(original_requiredQuantity));
-			 return false;
+		if(Number(requiredQuantity)>Number(ajaxQuantity)){
+			alertify.alert("Inventory Goods Issue","Avaliable "+ajaxQuantity + ". Cannot Exceed more than the required quantity!");	
+			$(itemParentRow).find(".requiredQuantity").val("");
+			return false;
 		}
 		
 		});
+		
+		
+			function pendingQuantityValidate(){
+				var flag = false;
+				$(".requiredQuantity").each(function() {
+					  var itemParentRow = $(this).parents(".multTot");
+					  var requiredQuantity=  $(itemParentRow).find(".requiredQuantity").val();
+					  var temp_requiredQuantity= 0;
+					  var ajaxQuantity=  $(itemParentRow).find(".quality-alert").attr('title');
+						
+					  temp_requiredQuantity =ajaxQuantity.substring(ajaxQuantity.lastIndexOf(" ") + 1, ajaxQuantity.length);
+					  
+					  if(Number(temp_requiredQuantity)<Number(requiredQuantity)){
+							alertify.error("Avaliable "+temp_requiredQuantity + ". Can't Exceed more than the required quantity!");	
+							 ($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+							 ($(this).parents('tr').find('td').find('.requiredQuantity').focus());
+							 flag = true;
+						}
+					});
+				if(flag==true){
+					return false;
+				}else{
+					return true;
+				}
+				
+			}
 	
 	
 	/*  $(".requiredQuantity").each(function() {

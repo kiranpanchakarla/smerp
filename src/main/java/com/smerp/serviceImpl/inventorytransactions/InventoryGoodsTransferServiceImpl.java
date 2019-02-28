@@ -3,15 +3,18 @@ package com.smerp.serviceImpl.inventorytransactions;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransferList;
-import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.inventorytransactions.InventoryGoodsTransferRepository;
+import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
@@ -29,6 +32,9 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	InventoryGoodsIssueService inventoryGoodsIssueService;
 	
 	@Override
 	public InventoryGoodsTransfer save(InventoryGoodsTransfer inventoryGoodsTransfer) {
@@ -96,6 +102,24 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		// TODO Auto-generated method stub
 		return inventoryGoodsTransferRepository.findById(id).get();
 	}
+	
+	@Override
+	public InventoryGoodsTransfer getInventoryGoodsTransferId(int id) {
+		InventoryGoodsTransfer inventoryGoodsIssue = inventoryGoodsTransferRepository.findById(id).get();
+	    
+	     List<InventoryGoodsTransferList> listItems = inventoryGoodsIssue.getInventoryGoodsTransferList();
+	     for (int i = 0; i < listItems.size(); i++) {
+	    	 InventoryGoodsTransferList invlist = listItems.get(i);
+	        String productNo = invlist.getProductNumber();
+	        Integer wareHose = invlist.getFromWarehouse();
+	        invlist.setTempRequiredQuantity(Integer.parseInt(inventoryGoodsIssueService.getInStock(productNo,wareHose)));    
+	    }
+	     inventoryGoodsIssue.setInventoryGoodsTransferList(listItems);
+	     logger.info(" inventoryGoodsIssue--------->" + inventoryGoodsIssue);
+	    return inventoryGoodsIssue;
+	}
+	
+	
 
 	@Override
 	public InventoryGoodsTransfer delete(int id) {

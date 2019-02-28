@@ -160,7 +160,7 @@ public class InventoryGoodsTransferController {
 	 @GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
 		logger.info("id-->" + id);
-		InventoryGoodsTransfer invGR = inventoryGoodsTransferService.findById(Integer.parseInt(id));
+		InventoryGoodsTransfer invGR = inventoryGoodsTransferService.getInventoryGoodsTransferId(Integer.parseInt(id));
 		invGR = inventoryGoodsTransferService.getListAmount(invGR);
 		ObjectMapper mapper = poloadData(model, invGR);
 		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

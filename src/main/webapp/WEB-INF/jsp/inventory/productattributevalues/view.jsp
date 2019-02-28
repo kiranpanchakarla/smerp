@@ -43,10 +43,10 @@
 									<div class="card">
 										 
 										<div class="card-header"><div class="content-header row">
-									<div class="col-md-2">
-										<h4 class="content-header-title">Product Attribute Value</h4>
+									<div class="col-md-4">
+										<h4 class="content-header-title">Attribute Value</h4>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
 									</div>
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">
@@ -55,7 +55,7 @@
 												</li>
 												<li class="breadcrumb-item"><a href="#">Administration</a>
 												</li>
-												<li class="breadcrumb-item active">Product Attribute Value</li>
+												<li class="breadcrumb-item active">Attribute Value</li>
 											</ol>
 										</div>
 									</div>

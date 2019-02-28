@@ -705,19 +705,19 @@
 																																		path="inVoiceLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
 																																		class="form-control uom"
-																																		readonly="true"></form:input>
+																																		></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="inVoiceLineItems[${count}].sku"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.sku}"
 																																		class="form-control sku"
 																																		readonly="true"></form:input>
 																																</div></td>
 
 																															<td><div class="form-group">
-																																	<form:input type="text" readonly="true"
+																																	<form:input type="text"
 																																		path="inVoiceLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
 																																		value="${listLineItems.unitPrice}"
@@ -1295,7 +1295,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inVoiceLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  readonly="true"  />'
+			+'<input type="text" name="inVoiceLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1308,7 +1308,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inVoiceLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" readonly="true" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="inVoiceLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1662,7 +1662,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".prodouctNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -1670,9 +1670,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+				         autocompleteandchange(selcProdouctNo,itemParentRow);
+				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Purchase Order","You have already entered the Product Number "+$(this).val());
@@ -1788,16 +1788,16 @@ $(document).ready(function(){
           $(document).on("blur", ".description", function() {
          	var itemParentRow = $(this).parents(".multTot");
          
-         	
+         	var  selcDescription=   $(itemParentRow).find(".description").val();
          	var arr=[];
          	 $(".description").each(function() {
              	 
              	  if(availabledescTags.includes($(this).val()) == true) 	 {
  		        if ($.inArray($(this).val(), arr) == -1){
  		            arr.push($(this).val());
- 		           
- 		       	// var isDluplicate = true;
- 		       	//autocompleteandchange(($(this).val()),itemParentRow);
+ 		           if($(this).val() == selcDescription) {
+ 		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+ 	  		       }
  		        }else{
  		        	   var isDluplicate = false;
  		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -2232,7 +2232,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully',20000);
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Invoice Successfully');
+				 alertify.success('Invoice Approved');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected',20000);

@@ -475,7 +475,7 @@
 																													<td><div class="form-group"><form:input type="text"
 																															path="lineItems[${count}].requiredQuantity"
 																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)"
-																															class="form-control validatePrice"  required="true"></form:input></div></td>
+																															class="form-control requiredQuantity validateQuantity validatePrice"  required="true"></form:input></div></td>
 																															
 																													</c:if>
 																													
@@ -759,7 +759,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" onkeypress="return isNumericKey(event)" maxlength="5"  required="true" class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -800,7 +800,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
+			+'<input type="text" name="lineItems['+inc+'].requiredQuantity" required="true" onkeypress="return isNumericKey(event)"  class="form-control validatePrice validateQuantity requiredQuantity requiredQuantity'+inc+'" id="requiredQuantity'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1071,7 +1071,7 @@ $(document).ready(function(){
 	 $(document).on("blur", ".prodouctNumber", function() {
      	var itemParentRow = $(this).parents(".multTot");
      
-     	
+     	var  selcProdouctNo=   $(itemParentRow).find(".prodouctNumber").val();
      	var arr=[];
      	 $(".prodouctNumber").each(function() {
      	//alert("validation-->"+	availableTags.includes($(this).val()) );
@@ -1079,9 +1079,9 @@ $(document).ready(function(){
      	
 		        if ($.inArray($(this).val(), arr) == -1){
 		            arr.push($(this).val());
-		       	// var isDluplicate = true;
-		       	
-		       	//autocompleteandchange(($(this).val()),itemParentRow);
+		            if($(this).val() == selcProdouctNo) {
+				         autocompleteandchange(selcProdouctNo,itemParentRow);
+				       }
 		        }else{
 		        	 /* var isDluplicate = false; */
 		        	   alertify.alert("Request For Quotation","You have already entered the Product Number "+$(this).val());
@@ -1195,16 +1195,16 @@ $(document).ready(function(){
               $(document).on("blur", ".description", function() {
              	var itemParentRow = $(this).parents(".multTot");
              
-             	
+             	var  selcDescription=   $(itemParentRow).find(".description").val();
              	var arr=[];
              	 $(".description").each(function() {
                  	 
                  	  if(availabledescTags.includes($(this).val()) == true) 	 {
      		        if ($.inArray($(this).val(), arr) == -1){
      		            arr.push($(this).val());
-     		           
-     		       	// var isDluplicate = true;
-     		       	//autocompleteandchange(($(this).val()),itemParentRow);
+     		           if($(this).val() == selcDescription) {
+     		            	autocompleteandchangedesc(selcDescription,itemParentRow);
+     	  		       }
      		        }else{
      		        	   var isDluplicate = false;
      		        	   alertify.alert("Duplicate Entry","You have already entered the Product Description "+($(this).val()));
@@ -1594,6 +1594,16 @@ $('#containerContainingTabs a').on('click', function(e) {
 	theThis.addClass('active');
 	});
 	
+	
+$(document).on("keyup", ".validateQuantity", function(e){
+	var itemParentRow = $(this).parents(".multTot");
+	var requiredQunty=  $(itemParentRow).find(".requiredQuantity").val();
+	if(requiredQunty<=0){
+		alertify.alert("Request For Quotation","Quantity Required for each Product");
+		($(this).parents('tr').find('td').find('.requiredQuantity').val(""));
+	}
+});
+
 	
 //$('form.commentForm').on('submit', function(event) {
 $(".mySubButton").on('click', function() {

@@ -86,23 +86,22 @@
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
-                <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
-                <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
+                <td style="border: solid 1px ;"><strong >Tax%</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Product Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
+                <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 </tr>
-                <#list inv.inVoiceLineItems as invoiceList>
+                <#list invList as invoiceList>
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if invoiceList.prodouctNumber??>&nbsp;${invoiceList.prodouctNumber}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.description??>&nbsp;${invoiceList.description}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.uom??>&nbsp;${invoiceList.uom}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.sku??>&nbsp;${invoiceList.sku}<#else>--</#if></td>
-                <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.unitPrice??>&nbsp;${invoiceList.unitPrice}<#else>--</#if></td>
                 <td style="border: solid 1px ;"><#if invoiceList.taxDescription??>&nbsp;${invoiceList.taxDescription}<#else>--</#if>
                  <!-- 
@@ -127,6 +126,7 @@
                 
                 </td>
                 <td style="border: solid 1px ;"><#if invoiceList.hsn??>&nbsp;${invoiceList.hsn}<#else>--</#if></td>
+                <td style="border: solid 1px ;"><#if invoiceList.requiredQuantity??>&nbsp;${invoiceList.requiredQuantity}<#else>--</#if></td>
                 </tr>
                 </#list>
                 </table>
@@ -138,12 +138,12 @@
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
-                <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
+                <td style="border: solid 1px ;"><strong >Tax%</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 </tr>
-                <#list inv.inVoiceLineItems as invoiceList>
+                <#list invList as invoiceList>
                 <tr>
                 <td style="border: solid 1px ;text-align:center;">${sno}<#assign sno = sno + 1 /></td>
                 <td style="border: solid 1px ;"><#if invoiceList.sacCode??>&nbsp;${invoiceList.sacCode}<#else>--</#if></td>
@@ -180,39 +180,39 @@
                 <td><strong>Shipping From :</strong></td>
                 <td><strong>Pay To :</strong></td>
                 <td><strong>Discount(%)</strong></td>
-                <td>:<#if inv.totalDiscount??>${inv.totalDiscount}<#else>--</#if></td>
+                <td>:<#if invQty.totalDiscount??>${invQty.totalDiscount}<#else>--</#if></td>
                 </tr>
                                                                                    
                 <tr>
                 <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName},</#if></td>
                 <td><#if inv.vendorPayTypeAddress.addressName??>${inv.vendorPayTypeAddress.addressName}</#if></td>
                 <td><strong>Total Invoice Amount</strong></td>
-                <td>:<#if inv.totalBeforeDisAmt??> ${inv.totalBeforeDisAmt}<#else> --</#if></td>
+                <td>:<#if invQty.totalBeforeDisAmt??> ${invQty.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
                 <td><#if inv.vendorShippingAddress.street??>${inv.vendorShippingAddress.street}, </#if></td>
                  <td> <#if inv.vendorPayTypeAddress.street??>${inv.vendorPayTypeAddress.street},</#if></td>
                  <td><strong>Freight</strong></td>
-                <td>:<#if inv.freight??> ${inv.freight} <#else>--</#if></td>
+                <td>:<#if invQty.freight??> ${invQty.freight} <#else>--</#if></td>
                 </tr>
                  <tr>
                 <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode},</#if></td>
                 <td><strong>Total</strong></td>
-                <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
+                <td>:<#if invQty.amtRounding??> ${invQty.amtRounding}<#else>-- </#if></td>
                
                 </tr>
                 <tr>
                 <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}.</#if></td>
                 <td><strong>Rounded Off</strong></td>
-                <td>:<#if inv.roundedOff??> ${inv.roundedOff}<#else>--</#if></td>
+                <td>:<#if invQty.roundedOff??> ${invQty.roundedOff}<#else>--</#if></td>
                 </tr>
                 <tr>
                 <td></td>
                 <td></td>
                 <td><strong>Total Payment Due</strong></td>
-                <td>:<#if inv.totalPayment??> ${inv.totalPayment}<#else>--</#if></td>
+                <td>:<#if invQty.totalPayment??> ${invQty.totalPayment}<#else>--</#if></td>
                 </tr>
             </table>
                  

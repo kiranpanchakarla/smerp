@@ -43,10 +43,10 @@
 									<div class="card">
 										 
 										<div class="card-header"><div class="content-header row">
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<h2 class="content-header-title">UOM Category</h2>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
 									</div>
 									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
 										<div class="breadcrumb-wrapper col-xs-12">

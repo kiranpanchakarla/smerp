@@ -20,4 +20,8 @@ public interface InventoryGoodsIssueService {
 	InventoryGoodsIssue getListAmount(InventoryGoodsIssue inventoryGoodsIssue);
 	
 	boolean findByDocNumber(String docNum);
+	
+	String getInStock(String productNo,Integer warehouse);
+	
+	InventoryGoodsIssue getinventoryGoodsIssueId(int id);
 }

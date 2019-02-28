@@ -62,7 +62,7 @@
     <div style="text-align: center; margin-top: 250px;">
         <h1>Contact:</h1>
         <h2>
-            <u><font color="red">help@manuhindia.com</font></u>
+            <u><font color="red">i-serve@manuhindia.com</font></u>
         </h2>
         <h4>for more Information.</h4>
     </div>

@@ -147,7 +147,15 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 			
 			if(goodsReceipt.getPoId()==null) {  // if PoId null remove list items 
-				
+				Vendor vendor = vendorService.findById(goodsReceipt.getVendor().getId());
+				VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReceipt.getVendorShippingAddress().getId());
+				VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReceipt.getVendorPayTypeAddress().getId());
+				VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(goodsReceipt.getVendorContactDetails().getId());
+
+				goodsReceipt.setVendor(vendor);
+				goodsReceipt.setVendorContactDetails(vendorsContactDetails);
+				goodsReceipt.setVendorShippingAddress(vendorShippingAddress);
+				goodsReceipt.setVendorPayTypeAddress(vendorPayAddress);
 			
 			}else {/*
 				List<GoodsReceiptLineItems> header_listItems =  goodsReceipt.getGoodsReceiptLineItems();
@@ -196,12 +204,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
          logger.info("goodsReceipt -->" +goodsReceipt);
 		
-         
-         goodsReceipt = goodsReceiptRepository.save(goodsReceipt);
-         
-		
-		 if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
-			try {
+         if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
+         try {
 			   	goodsReceipt =getListAmount(goodsReceipt);
 			   	
 			   	if(goodsReceipt.getId()!=null) {
@@ -209,12 +213,18 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					logger.info(goodsReceiptObj.getCreatedBy().getUserEmail());
 					goodsReceipt.setCreatedBy(goodsReceiptObj.getCreatedBy());
 				 }
-    			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "goodsReceiptEmail.ftl");  //Sending Email
-    		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReceiptEmail(goodsReceipt);
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
+ 			 RequestContext.initialize();
+ 		     RequestContext.get().getConfigMap().put("mail.template", "goodsReceiptEmail.ftl");  //Sending Email
+ 		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendGoodsReceiptEmail(goodsReceipt);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+     }
+         
+         goodsReceipt = goodsReceiptRepository.save(goodsReceipt);
+         
+		
+		 if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 		
 			if(goodsReceipt.getPoId()!=null  && goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 				PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update

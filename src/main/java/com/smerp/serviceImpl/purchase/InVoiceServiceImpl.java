@@ -195,7 +195,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 					inVoice.setCreatedBy(inVoiceObj.getCreatedBy());
 				 }
     			 RequestContext.initialize();
-    		     RequestContext.get().getConfigMap().put("mail.template", "inVoiceEmail.ftl");  //Sending Email
+    		     RequestContext.get().getConfigMap().put("mail.template", "invoiceEmail.ftl");  //Sending Email
     		     emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendInvoiceEmail(inVoice);
     		} catch (Exception e) {
     			e.printStackTrace();

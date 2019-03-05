@@ -73,13 +73,13 @@
 														<thead>
 															<tr>
 																<th>S.no</th>
-																<th>Vendor Name</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>GR Status</th>
-																<th>Actions</th>
+																<th>Convert GR TO GRE/INV</th>
 															</tr>
 														</thead>
 														<tbody>

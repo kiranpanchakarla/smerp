@@ -34,6 +34,8 @@
                 <td>:<#if invgr.docNumber??>&nbsp;${invgr.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if invgr.status??> ${invgr.status}</#if></td>
+                <td><strong >Remarks</strong></td>
+                <td>:<#if invgr.remarks??>&nbsp;${invgr.remarks}<#else>--</#if></td>
                 </tr>
                 
                 <tr>
@@ -50,8 +52,8 @@
                  <#assign sno = 1/>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
@@ -60,7 +62,7 @@
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
-                <td style="border: solid 1px ;"><strong >Product group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>

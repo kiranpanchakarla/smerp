@@ -98,14 +98,14 @@ text-align: left;
 																<div class="row">
 																
 																<div class="col-sm-6 form-group">
-																                <label>Posting Date</label>: ${gr.postingDate}
-																					 
+																                <label>Posting Date</label>:  
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />	 
 																				</div>
 
 
 																	<div class="col-sm-6 form-group">
-																		<label>Doc Date</label>: ${gr.documentDate}
-																		 
+																		<label>Doc Date</label>:  
+																		 <fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
 																	</div>
 																	
 																</div>
@@ -121,6 +121,11 @@ text-align: left;
 																													</c:forEach>  
 																					 
 																				</div>
+																				
+																				<div class="col-sm-6 form-group">
+																		<label>Remarks</label>: ${gr.remarks}
+																		 
+																	</div>
  
 																	
 																</div>

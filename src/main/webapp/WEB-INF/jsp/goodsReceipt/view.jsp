@@ -142,10 +142,10 @@ text-align: left;
 																		<div class="row">
 																			
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${gr.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${gr.status}
+																				<label>Remarks</label>: ${gr.remark}
 																			</div>
 																		</div>
 																		
@@ -162,7 +162,7 @@ text-align: left;
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item"><a class="nav-link active"
+																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>
@@ -471,7 +471,7 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="row">
-												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
 												         
 												         
@@ -479,7 +479,7 @@ text-align: left;
 												         <c:choose>
 														<c:when test="${productQuantity !=0}">
 													
-												         <div class="col-sm-3 form-group has-feedback">
+												         <div class="col-sm-2 form-group has-feedback">
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -501,7 +501,7 @@ text-align: left;
 												         
 												         </div>
 												         
-												          <div class="col-sm-3 form-group has-feedback">
+												          <div class="col-sm-2 form-group has-feedback">
 												          
 												          <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Convert To INV'}">
@@ -518,13 +518,13 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												          </div>
-							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+							                   <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 												        </c:when>
 												       <c:otherwise>
 												       
-												       <div class="col-sm-3 form-group has-feedback"></div>
-												       <div class="col-sm-3 form-group has-feedback"></div>
-												       <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												       <div class="col-sm-2 form-group has-feedback"></div>
+												       <div class="col-sm-2 form-group has-feedback"></div>
+												       <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 												       
 												       
 												       </c:otherwise> 

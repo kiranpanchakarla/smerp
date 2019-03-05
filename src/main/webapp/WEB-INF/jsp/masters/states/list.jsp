@@ -80,7 +80,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>Code</th>
 																<th>Name</th>
 																<th>Country</th>

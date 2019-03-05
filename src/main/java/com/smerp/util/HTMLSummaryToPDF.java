@@ -189,7 +189,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "prView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + purchaseRequest.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.Offline_Purchase_Request);
 		Writer out = new StringWriter();
@@ -219,7 +219,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "rfqView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + forQuotation.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.Offline_Request_For_Quotation);
 		Writer out = new StringWriter();
@@ -252,7 +252,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "POView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + purchaseOrder.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.Offline_Purchase_Order);
 		Writer out = new StringWriter();
@@ -287,7 +287,7 @@ public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsRece
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "GRView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + goodsReceipt.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Receipt);
 		Writer out = new StringWriter();
@@ -323,7 +323,7 @@ public String OfflineHtmlStringToPdfForGoodsReturn(String pdfFilePath,GoodsRetur
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "GRView" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + goodsReturn.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Goods_Return);
 		Writer out = new StringWriter();
@@ -358,7 +358,7 @@ public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoic
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "Invoice" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + invoice.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Invoice);
 		Writer out = new StringWriter();
@@ -394,7 +394,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "CreditMemo" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + creditMemo.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Credit_Memo);
 		Writer out = new StringWriter();
@@ -428,7 +428,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 		}
 		File file = null;
 		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		file = new File(sourceFolder + File.separator + "GoodsReceipt" + fileStr + ".pdf");
+		file = new File(sourceFolder + File.separator + inventoryGoodsReceipt.getDocNumber() + ".pdf");
 		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
 		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Inv_Goods_Receipt);
 		Writer out = new StringWriter();
@@ -462,7 +462,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		}
     		File file = null;
     		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-    		file = new File(sourceFolder + File.separator + "GoodsIssue" + fileStr + ".pdf");
+    		file = new File(sourceFolder + File.separator + inventoryGoodsIssue.getDocNumber() + ".pdf");
     		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
     		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Inv_Goods_Issue);
     		Writer out = new StringWriter();
@@ -500,7 +500,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		}
     		File file = null;
     		String fileStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-    		file = new File(sourceFolder + File.separator + "GoodsTransfer" + fileStr + ".pdf");
+    		file = new File(sourceFolder + File.separator + inventoryGoodsTransfer.getDocNumber() + ".pdf");
     		FileOutputStream os = new FileOutputStream(file.getAbsolutePath());
     		RequestContext.get().getConfigMap().put("mail.template", WebConstants.offline_Inv_Goods_Transfer);
     		Writer out = new StringWriter();

@@ -56,7 +56,7 @@
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Email- ID</label>:
+																		<label>Email Id</label>:
 																		${purchaseRequest.user.userEmail}
 																	</div>
 																</div>
@@ -88,12 +88,12 @@
 																	</div>
 																	
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Require Date</label>:
+																		<label>Required Date</label>:
 																		<fmt:formatDate pattern="dd/MM/yyyy"
 																			value="${purchaseRequest.requiredDate}" />
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Remark</label>: ${purchaseRequest.remarks}
+																		<label>Remarks</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
 																 
@@ -112,12 +112,12 @@
 																						<!-- <th>S.No</th> -->
 																						<th style="display: none;">Product Id</th>
 																						<th>S.no</th>
-																						<th>Product Name</th>
+																						<th>Product#</th>
 																						<th>Description</th>
 																						<th>UOM</th>
 																						<th>SKU</th>
-																						<th>Product Group</th>
-																						<th>HSN</th>
+																						<th>Group</th>
+																						<th>HSN Code</th>
 																						<th>Warehouse</th>
 																						<th>Quantity</th>
 																						

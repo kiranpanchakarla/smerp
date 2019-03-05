@@ -305,7 +305,6 @@
 																		 
 																		<!--  --> 
 																		<div class="row" id="radioDiv">
-																		<div class="card-block" style="clear:both;">
 																			<div class="col-sm-6 form-group">
 																			<div class="input-group">
                                                                                
@@ -323,7 +322,7 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
                                                                                 
-                                                                                   <div class="inventory-list">
+                                                                                   <div class="inventory-list" style="display: none;">
                                                                                     <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
                                                                                     <span class="radio-list">Product</span>
 
@@ -333,14 +332,11 @@
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div> 
                                                                                 
-                                                                                
-                                                                                
-                                                                                
-                                                                                <div class="help-block with-errors"></div>
+                                                                                 
                                                                             </div>
 																			
 																			</div>
-																			</div>
+																			 
 																		</div>
 																		
 																		
@@ -530,7 +526,7 @@
 																													
 																													
 																													    <td><div class="form-group">
-																														<select class="form-control taxCode" required="true"
+																														<select class="form-control taxCode" required="true" style="width: 100%;"
 																															name="purchaseOrderlineItems[${count}].taxCode" >
 																														<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
@@ -710,7 +706,7 @@
 																														</select> --%>
 																														
 																														
-																														<select class="form-control taxCode" required="true"
+																														<select class="form-control taxCode" required="true" style="width: 100%;"
 																															name="purchaseOrderlineItems[${count}].taxCode" >
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													
@@ -955,7 +951,7 @@
 																<div class="col-sm-12 form-group">
 																 	<label>Total</label> 
 																 	<form:input type="text" cssClass="form-control"
-																					  path="amtRounding"
+																					placeholder='Total'  path="amtRounding"
 																					autocomplete="off" readonly="true" />  
 																</div></div>
 																
@@ -1166,7 +1162,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="purchaseOrderlineItems['+inc+'].taxCode" required="true" style="width: 100%;"  class="form-control  taxCode"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -1489,7 +1485,14 @@ $(document).ready(function(){
                 });
 		}
 		
-	 
+    	 $(document).on("blur", ".vendorname", function() {
+        	  if(availableTagsvendornames.includes($(this).val()) == true) 	 {
+        		//alert("true");
+        } else {
+     	   alertify.alert("Invalid Vendor Name","Please Select Valid Vendor! "+($(this).val()));
+     	   $(".vendorname").val("");
+             }   
+            });
 
 	 var productList =[];
 	 var name;

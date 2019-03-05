@@ -226,7 +226,7 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
                                                                                 
-                                                                                   <div class="inventory-list">
+                                                                                   <div class="inventory-list" style="display: none;">
                                                                                     <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
                                                                                     <span class="radio-list">Product</span>
 
@@ -286,13 +286,13 @@
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>SKU</th>
-																									<th>Product Group</th>
-																									<th>HSN</th>
-																									<th>Ware house</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
+																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									<th>Action</th>
 																								</tr>
@@ -334,12 +334,12 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${rfq.category=='Item'}">
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>SKU</th>
-																									<th>Product Group</th>
-																									<th>HSN</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									</c:if>
@@ -540,24 +540,25 @@
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
 
-																	<table class="table fixed-width-table">
-																		<thead>
-																			<tr>
-																				<th style="vertical-align: top; !important">Shipping
-																					From</th>
-																				<td>
-																					<div id="shippingAddressTable"></div>
-																				</td>
-																			</tr>
-																			<tr>
-																				<th style="vertical-align: top; !important">Pay
-																					To</th>
-																				<td>
-																					<div id="payToAddressTable"></div>
-																				</td>
-																			</tr>
-																		</thead>
-																	</table>
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
 																</div>
 											<br>				
 									<div class="text-xs-center">
@@ -1022,7 +1023,14 @@ $(document).ready(function(){
 			
 		}
 		
-		
+    	 $(document).on("blur", ".vendorname", function() {
+        	  if(availableTagsvendornames.includes($(this).val()) == true) 	 {
+        		//alert("true");
+        } else {
+     	   alertify.alert("Invalid Vendor Name","Please Select Valid Vendor! "+($(this).val()));
+     	   $(".vendorname").val("");
+             }   
+            });
 	 
 
 	 var productList =[];

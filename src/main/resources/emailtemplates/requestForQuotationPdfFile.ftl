@@ -66,6 +66,8 @@
                 <td>:<#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 <td><strong>Status</strong></td>
 			    <td>: <#if rfq.status??> ${rfq.status}</#if></td>
+			    <td><strong>Remarks</strong></td>
+			    <td>: <#if rfq.remark??> ${rfq.remark}</#if></td>
                 </tr>
                 
              
@@ -76,13 +78,13 @@
                <#if rfq.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
@@ -163,6 +165,16 @@
                 <td><#if rfq.vendorPayTypeAddress.country.name??>${rfq.vendorPayTypeAddress.country.name}.</#if></td>
                 </tr>
             </table>
+            
+             <table style="width:50%">
+                <tr>
+                <td><strong>Deliver To :</strong></td>
+                </tr>
+                <tr>
+                <td><#if rfq.deliverTo??>${rfq.deliverTo}</#if></td>
+                </tr>
+            </table>
+            
             </div>
      
     </body>

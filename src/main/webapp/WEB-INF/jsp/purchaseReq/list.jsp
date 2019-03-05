@@ -83,8 +83,8 @@
 														<thead>
 															<tr>
 																<th>S.No</th>
-																<th>User Name</th>
-																<th>Document No</th>
+																<th>Username</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>

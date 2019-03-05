@@ -89,12 +89,12 @@
 														<thead>
 															<tr>
 																<th>S.No</th>
-																<th>Vendor Name</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document Number</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Invoice Status</th>
+																<th>INV Status</th>
 																<th>Actions</th>
 															</tr>
 														</thead>

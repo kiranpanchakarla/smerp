@@ -73,6 +73,10 @@ text-align: left;
 																</div>
 																	 
 																<div class="col-sm-4"><label>Status</label> : ${gr.status}</div>
+																
+																<div class="col-sm-4"><label>Remarks</label> : ${gr.remarks}</div>
+																<div class="col-sm-4"> &nbsp; </div>
+																
 																<div class="col-sm-4 create-po-wrap">
 																		
 																			

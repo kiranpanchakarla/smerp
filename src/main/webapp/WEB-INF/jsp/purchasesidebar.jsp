@@ -89,7 +89,7 @@
 				
 				<c:if test="${ump.key eq 'Convert To CM'}">
 					<li><a href="<c:url value ="/inv/approvedList"/>"><i
-							class="icon-arrow-return-left left left"></i><span class="menu_text">Convert To CM</span><span class="menu_text_pad">&nbsp;</span><i
+							class="icon-arrow-return-left left left"></i><span class="menu_text">Convert INV To CM</span><span class="menu_text_pad">&nbsp;</span><i
 							class="icon-ios-arrow-right right"></i></a>
 				</c:if>
 				

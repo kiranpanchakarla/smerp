@@ -76,7 +76,7 @@ $(document).ready(function(){
 																<div class="col-sm-6 form-group">
 																	<label>Description</label>
 																	<form:input type="text" class="form-control camelCase" placeholder='Description' path="description"
-																	 value="" required="true" onchange="isValidName('description','/product/isValidProductNo','1_productNo','Product Description Alredy Exists')"
+																	 value="" required="true" onchange="isValidName('description','/product/isValidProductNo','1_productNo','Product Description Already Exists')"
 																	 oninvalid="this.setCustomValidity('Please Enter Description.')" oninput="setCustomValidity('')" />
 																	<!-- <div  class="help-block with-errors"></div> -->
 																</div>

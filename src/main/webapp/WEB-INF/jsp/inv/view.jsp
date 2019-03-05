@@ -131,10 +131,10 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${inv.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${inv.status}
+																				<label>Remarks</label>: ${inv.remark}
 																			</div>
 																		</div>
 																		
@@ -449,9 +449,9 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12 form-group">
 											<div class="row">
-												          <div class="col-sm-4 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
-												          <div class="col-sm-4 form-group has-feedback">
+												          <div class="col-sm-2 form-group has-feedback">
 									 <c:if test="${productQuantity !=0}">
 										<input type="hidden" name="invId" value="${inv.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
@@ -475,7 +475,7 @@ text-align: left;
 												         
 												         
 												         
-												          <div class="col-sm-4 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>

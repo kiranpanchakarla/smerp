@@ -134,10 +134,10 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${cre.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${cre.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${cre.status}
+																				<label>Remarks</label>: ${cre.remark}
 																			</div>
 																		</div>
 																		

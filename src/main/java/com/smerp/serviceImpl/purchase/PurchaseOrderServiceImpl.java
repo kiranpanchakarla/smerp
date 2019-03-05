@@ -223,6 +223,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setPostingDate(rfq.getPostingDate());
 			po.setCategory(rfq.getCategory());
 			po.setRemark(rfq.getRemark());
+			po.setDeliverTo(rfq.getDeliverTo());
 			po.setReferenceDocNumber(rfq.getDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
 			po.setRfqId(rfq);

@@ -86,7 +86,7 @@
 														<thead>
 															<tr>
 																<th>S.No</th>
-																<th>Document Number</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>Document Status</th>

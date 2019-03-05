@@ -164,9 +164,9 @@
 																											<th>Tax Total</th>
 																											<th>Total</th>
 																											<th>Department</th>
-																											<th>Group</th>
+																											<th>Product Group</th>
 																											<th>UOM</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																											
 																											<th>Action</th>
 																										</tr>
@@ -197,8 +197,8 @@
 																											<th>Tax Total</th>
 																											<th>Total</th>
 																											<th>Department</th>
-																											<th>Group</th>
-																											<th>HSN</th>
+																											<th>Product Group</th>
+																											<th>HSN Code</th>
 																											<th>UOM</th>
 																											<th>Action</th>
 																												 

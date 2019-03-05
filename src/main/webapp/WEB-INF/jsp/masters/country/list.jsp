@@ -77,7 +77,7 @@
 															style="width: 100%">
 														<thead>
 															<tr>
-																<th >S.no</th>
+																<th >S.No</th>
 																<th >Country Code</th>
 																<th >Country name</th>
 																<th >Currency</th> 

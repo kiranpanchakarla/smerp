@@ -68,7 +68,7 @@
                                                                             
                                                                         </div>  
                                                                        <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>Email- ID</label>
+                                                                            <label>Email Id</label>
                                                                             <form:input type="text" class="form-control emailId" placeholder='Email- ID' path="referenceUser.userEmail" 
                                                                             
                                                                             value="${purchaseRequest.referenceUser.userEmail}"
@@ -113,7 +113,7 @@
                                                                    
                                                                        
                                                                         <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>Require Date</label>
+                                                                            <label>Required Date</label>
                                                                             <form:input type="text" autocomplete="off"  class="form-control" placeholder='requiredDate' required="true" path="requiredDate" value="" />
                                                                            <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
@@ -161,7 +161,7 @@
 																									<th>UOM</th>
 																									<th>SKU</th>
 																									<th>Group</th>
-																									<th>HSN</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									<th>Action</th>
@@ -208,7 +208,7 @@
 																									<th>UOM</th>
 																									<th>SKU</th>
 																									<th>Group</th>
-																									<th>HSN</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									</c:if>
@@ -254,7 +254,7 @@
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].uom"
-																															value="${listpurchaseRequestLists.uom}"
+																															value="${listpurchaseRequestLists.uom}" readonly="true"
 																															class="form-control uom " required="true" ></form:input>
 																															<form:input type="hidden"
                                                                                                                             path="purchaseRequestLists[${count}].unitPrice"  readonly="true"
@@ -265,7 +265,7 @@
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseRequestLists[${count}].sku"
-																															value="${listpurchaseRequestLists.sku}"
+																															value="${listpurchaseRequestLists.sku}" readonly="true"
 																															class="form-control sku " required="true" ></form:input></div></td>
 																															
 																														<td><div class="form-group"><form:input type="text"

@@ -53,24 +53,40 @@
                 <td>:<#if credit.vendorPayTypeAddress.city??>&nbsp;${credit.vendorPayTypeAddress.city}<#else>--</#if></td>
                 <td><strong >Ship From</strong></td>
                 <td>:<#if credit.vendorShippingAddress.city??>&nbsp;${credit.vendorShippingAddress.city}<#else>--</#if></td>
-                <td><strong>Doc No.</strong></td>
-                <td>:<#if credit.docNumber??>&nbsp;${credit.docNumber}<#else>--</#if></td>
-                </tr>
-                
-                <tr>
-                <td><strong>Ref Doc No.</strong></td>
-                <td>:<#if credit.referenceDocNumber??>&nbsp;${credit.referenceDocNumber}<#else>--</#if></td>
                 <td><strong >Posting Date</strong></td>
                 <td>:<#if credit.postingDate??>&nbsp;${credit.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong >Doc Date</strong></td>
-                <td>:<#if credit.documentDate??>&nbsp;${credit.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 </tr>
                 
                 <tr>
+                <td><strong>CRE Doc#</strong></td>
+                <td>:<#if credit.docNumber??>&nbsp;${credit.docNumber}<#else>--</#if></td>
+                <td><strong>INV Doc#</strong></td>
+                <td>:<#if credit.referenceDocNumber??>&nbsp;${credit.referenceDocNumber}<#else>--</#if></td>
+                <td><strong>GR Doc#</strong></td>
+                <td>:<#if credit.invId?? && credit.invId.grId??>&nbsp;${credit.invId.grId.docNumber}<#else>--</#if></td>
+                </tr>
+                
+                <tr>
+                 <td><strong>PO Doc#</strong></td>
+                <td>:<#if credit.invId?? && credit.invId.grId?? && credit.invId.grId.poId??>&nbsp;${credit.invId.grId.poId.docNumber}<#else>--</#if></td>
+                <td><strong>RFQ Doc#</strong></td>
+                <td>:<#if credit.invId?? && credit.invId.grId?? && credit.invId.grId.poId?? && credit.invId.grId.poId.rfqId??>&nbsp;${credit.invId.grId.poId.rfqId.docNumber}<#else>--</#if></td>
+                <td><strong>PR Doc#</strong></td>
+                <td>:<#if credit.invId?? && credit.invId.grId?? && credit.invId.grId.poId?? && credit.invId.grId.poId.rfqId?? && credit.invId.grId.poId.rfqId.purchaseReqId??>&nbsp;${credit.invId.grId.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
+                </tr>
+                
+                <tr>
+                <td><strong >Doc Date</strong></td>
+                <td>:<#if credit.documentDate??>&nbsp;${credit.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if credit.requiredDate??>${credit.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
-               <td><strong>Status</strong></td>
+                </tr>
+                
+                <tr>
+                <td><strong>Status</strong></td>
 				<td>: <#if credit.status??> ${credit.status}</#if></td>
+				<td><strong>Remarks</strong></td>
+				<td>: <#if credit.remark??> ${credit.remark}</#if></td>
                 </tr>
                 
              
@@ -81,8 +97,8 @@
                <#if credit.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
@@ -91,7 +107,7 @@
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
@@ -126,7 +142,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -189,32 +205,42 @@
                 <td>:<#if credit.freight??> ${credit.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.city??>${credit.vendorShippingAddress.city},</#if> </td>
-                <td><#if credit.vendorPayTypeAddress.city??>${credit.vendorPayTypeAddress.city},</#if></td>
-                 <td><strong>Tax Amount</strong></td>
-                <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
-                </tr>
-                <tr>
                 <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode}, </#if></td>
                 <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode},</#if></td>
-                <td><strong>Total</strong></td>
-                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
+                <td><strong>Tax Amount</strong></td>
+                <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
+                
                
                 </tr>
                 <tr>
                 <td><#if credit.vendorShippingAddress.country.name??>${credit.vendorShippingAddress.country.name}.</#if></td>
                 <td><#if credit.vendorPayTypeAddress.country.name??>${credit.vendorPayTypeAddress.country.name}.</#if></td>
-                <td><strong>Rounded Off</strong></td>
+                <td><strong>Total</strong></td>
+                <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
+                </tr>
+                
+                <tr>
+                <td></td>
+                <td></td>
+                 <td><strong>Rounded Off</strong></td>
                 <td>:<#if credit.roundedOff??> ${credit.roundedOff}<#else>--</#if></td>
                 </tr>
-                <tr>
+                
+                 <tr>
                 <td></td>
                 <td></td>
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if credit.totalPayment??> ${credit.totalPayment}<#else>--</#if></td>
                 </tr>
             </table>
-                 
+             <table style="width:100%">
+                <tr>
+                <td><strong>Deliver To :</strong></td>
+                </tr>
+                <tr>
+                <td><#if credit.deliverTo??>${credit.deliverTo}</#if></td>
+                </tr>
+              </table>       
      
      </#if>
      </div>

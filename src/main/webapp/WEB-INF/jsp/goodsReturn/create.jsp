@@ -226,7 +226,7 @@
 
 
 																				<div class="row" id="radioDiv">
-																					<div class="card-block" style="clear: both;">
+																					
 																						<div class="col-sm-6 form-group">
 																							<div class="input-group">
 
@@ -244,7 +244,7 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
                                                                                 
-                                                                                    <div class="inventory-list">
+                                                                                    <div class="inventory-list" style="display: none;">
                                                                                     <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
                                                                                     <span class="radio-list">Product</span>
 
@@ -253,24 +253,12 @@
                                                                                     <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div> 
-																								<div class="help-block with-errors"></div>
+																								
 																							</div>
 
 																						</div>
-																					</div>
+																					
 																				</div>
-
-
-																				<div class="card-block"
-																					style="clear: both; padding: 0px 1.5rem;">
-																					<div class="row" id="gr_radioDiv"
-																						style="display: none">
-																						<div class="col-sm-6 form-group has-feedback">
-																							<label>Type</label>:<%-- ${gre.category} --%> Product
-																						</div>
-																					</div>
-																				</div>
-
 
 																			</div>
 																		</div>
@@ -474,7 +462,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	<select class="form-control taxCode" 
-																																		readonly="true"
+																																		readonly="true" style="width: 100%;"
 																																		name="goodsReturnLineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
@@ -662,7 +650,7 @@
 																																	<form:input type="text"
 																																		path="goodsReturnLineItems[${count}].taxCode"
 																																		value="${listLineItems.taxCode}"
-																																		autocomplete="off" readonly="true"
+																																		autocomplete="off" readonly="true" style="width: 100%;"
 																																		class="form-control taxCode"></form:input>
 																																</div> <%--  <div class="form-group"><form:select class="form-control taxCode"
 																															 readonly="true"
@@ -765,7 +753,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	<select class="form-control taxCode"
-																																		required="true"
+																																		required="true" style="width: 100%;"
 																																		name="purchaseOrderlineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
@@ -872,7 +860,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	<select class="form-control taxCode"
-																																		required="true"
+																																		required="true" style="width: 100%;"
 																																		name="purchaseOrderlineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
@@ -1054,7 +1042,7 @@
 																						cssClass="form-control validatePrice"
 																						placeholder='Freight' path="freight"
 																						onkeypress="return isNumericKey(event)"
-																						autocomplete="off" readonly="true" />
+																						autocomplete="off" />
 																				</div></div>
 
 																				<div class="row">
@@ -1309,7 +1297,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="goodsReturnLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="goodsReturnLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode" style="width: 100%;"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+

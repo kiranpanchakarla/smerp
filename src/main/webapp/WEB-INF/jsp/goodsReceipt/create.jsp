@@ -327,7 +327,6 @@
 																			<!-- PO to GR Conversion END -->
 																				<div class="row">
 																				<div class="row" id="radioDiv">
-																					<div class="card-block" style="clear: both;">
 																						<div class="col-sm-6 form-group">
 																							<div class="input-group">
 
@@ -344,7 +343,8 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
 
-																								<div class="inventory-list">
+																								<div class="inventory-list"
+																										style="display: none;">
 																									<form:radiobutton name="type" path="category"
 																										id="items_radio" value="Item"
 																										checked="checked" disabled="true" />
@@ -361,7 +361,7 @@
 																							</div>
 
 																						</div>
-																					</div>
+																					
 																				</div>
 
 
@@ -576,7 +576,7 @@
 
 
 																															<td> <select class="form-control taxCode" readonly="true"
-																															name="goodsReceiptLineItems[${count}].taxCode" >
+																															name="goodsReceiptLineItems[${count}].taxCode" style="width: 100%;">
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													  <c:choose>
 																													<c:when
@@ -770,7 +770,7 @@
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].taxCode"
 																																		value="${listLineItems.taxCode}"
-																																		autocomplete="off" readonly="true"
+																																		autocomplete="off" style="width: 100%;" readonly="true"
 																																		class="form-control taxCode"></form:input>
 																																</div> <%--  <div class="form-group"><form:select class="form-control taxCode"
 																															 readonly="true"
@@ -1003,7 +1003,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																			<select class="form-control taxCode"
-																																				required="true"
+																																				required="true" style="width: 100%;"
 																																				name="goodsReceiptLineItems[${count}].taxCode">
 																																				<c:forEach var="taxCodeMap"
 																																					items="${taxCodeMap}">
@@ -1459,7 +1459,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="goodsReceiptLineItems['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="goodsReceiptLineItems['+inc+'].taxCode" required="true"   class="form-control taxCode" style="width: 100%;"  id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -1772,7 +1772,14 @@ $(document).ready(function(){
                 });
 		}
 		
-	 
+    	 $(document).on("blur", ".vendorname", function() {
+        	  if(availableTagsvendornames.includes($(this).val()) == true) 	 {
+        		//alert("true");
+        } else {
+     	   alertify.alert("Invalid Vendor Name","Please Select Valid Vendor! "+($(this).val()));
+     	   $(".vendorname").val("");
+             }   
+            });
 
 	 var productList =[];
 	 var name;
@@ -2402,7 +2409,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 				 alertify.success('Saved Successfully');
 				return true;
 			  } else if(subStatus == "APP"){
-				 alertify.success('Approved');
+				 alertify.success('Approved, Ready to convert to GRE/INV');
 				return true;
 			  } else if(subStatus == "RE"){
 				 alertify.warning('Document Rejected');

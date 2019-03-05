@@ -169,10 +169,10 @@ text-align: left;
 																		<div class="row">
 																			
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${po.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${po.status}
+																				<label>Remarks</label>: ${po.remark}
 																			</div>
 																		</div>
 																		

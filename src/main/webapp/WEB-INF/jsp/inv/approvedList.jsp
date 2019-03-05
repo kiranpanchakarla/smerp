@@ -72,14 +72,14 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
-																<th>Vendor Name</th>
+																<th>S.No</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>INV Status</th>
-																<th>Convert to CM</th>
+																<th>Convert INV to CM</th>
 															</tr>
 														</thead>
 														<tbody>

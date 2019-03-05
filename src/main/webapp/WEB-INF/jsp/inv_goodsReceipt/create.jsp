@@ -162,7 +162,7 @@
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Group</th>
+																											<th>Product Group</th>
 																											<th>HSN Code</th>
 																											<th>Warehouse</th>
 																											<th>Quantity</th>
@@ -194,7 +194,7 @@
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Group</th>
+																											<th>Product Group</th>
 																											<th>HSN Code</th>
 																											<th>Warehouse</th>
 																											<th>Quantity</th>

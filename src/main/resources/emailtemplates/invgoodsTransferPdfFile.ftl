@@ -61,7 +61,6 @@
                 <td>:<#if gr.postingDate??>&nbsp;${gr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong>Doc No.</strong></td>
                 <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
-                
                 </tr>
                 <tr>
                 <td><strong>Ship to</strong></td>
@@ -72,6 +71,8 @@
                      </#if>
                 </#list>
                 </td>
+                <td><strong >Remarks</strong></td>
+                <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
                 </tr>
                  
             </table>
@@ -79,8 +80,8 @@
                  <#assign sno = 1/>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Ship From</strong></td>
                 <td style="border: solid 1px ;"><strong >Ship To</strong></td>

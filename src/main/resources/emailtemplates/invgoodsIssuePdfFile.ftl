@@ -45,6 +45,8 @@
                 <td>:<#if gr.docNumber??>&nbsp;${gr.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if gr.status??> ${gr.status}</#if></td>
+				<td><strong>Remarks</strong></td>
+				<td>: <#if gr.remarks??> ${gr.remarks}</#if></td>
                 </tr>
                 
                 <tr>
@@ -61,8 +63,8 @@
                  <#assign sno = 1/>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
@@ -71,7 +73,7 @@
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 <td style="border: solid 1px ;"><strong >Department</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                  <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>

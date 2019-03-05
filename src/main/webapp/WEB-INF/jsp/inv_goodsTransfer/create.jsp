@@ -481,7 +481,7 @@
 																                <div class="col-sm-12 form-group">
 																					<label>Total</label>
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
+																						placeholder='Total' path="amtRounding"
 																						autocomplete="off" readonly="true" />
 																				</div></div>
 																				

@@ -224,7 +224,7 @@
 						<c:if test="${ump.key eq 'Convert To GRE' || ump.key eq 'Convert To INV' }">
 							  <c:if test="${oneTimeGoods  ==1}">
 							<li class="has_sub"><a
-								href="<c:url value ="/gr/approvedList"/>">GR To GRE/INV</a></li>
+								href="<c:url value ="/gr/approvedList"/>">Convert GR To GRE/INV</a></li>
 								</c:if>
 								  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
 						</c:if>
@@ -240,7 +240,7 @@
 						</c:if>
 					
 						<c:if test="${ump.key eq 'Convert To CM'}">
-							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert To CM
+							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert INV To CM
 									</a></li>
 						</c:if>
 					

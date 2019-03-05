@@ -85,8 +85,17 @@ public class RequestForQuotation extends AuditModel {
 	@Column(name="remark")
     private String remark;
  
+	@Column(name = "deliver_to")
+	private String deliverTo;
+	
 	
 	 
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
 	public PurchaseRequest getPurchaseReqId() {
 		return purchaseReqId;
 	}

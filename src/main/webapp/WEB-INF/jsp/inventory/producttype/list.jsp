@@ -83,7 +83,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th >S.no</th>
+																<th >S.No</th>
 																<th >Product Group</th>
 																<th >Description</th>
 																<th>Created Date</th>

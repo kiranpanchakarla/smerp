@@ -20,7 +20,7 @@
        </Console>
    </Appenders>
    <Loggers>
-       <Logger name="com.smerp" level="debug" additivity="true">
+       <Logger name="com.smerp" level="debug" additivity="false">
            <appender-ref ref="fileLogger" level="debug" />
            <appender-ref ref="console" />
        </Logger>

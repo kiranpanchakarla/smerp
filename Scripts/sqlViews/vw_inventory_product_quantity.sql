@@ -35,7 +35,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                                     sum(COALESCE(gre.returned_quantity, 0::bigint)) AS returned_quantity,
                                     sum(COALESCE(cm.creditmemo_quantity, 0::bigint)) AS creditmemo_quantity
                                    FROM tbl_goods_receipt grh
-                                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Goods_Return'::text, 'Invoiced'::text]))
+                                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Partially_Returned'::text, 'Goods_Return'::text, 'Invoiced'::text]))
                                      LEFT JOIN ( SELECT greh.gr_id,
     grel.product_id,
     grel.warehouse,
@@ -62,7 +62,7 @@ CREATE OR REPLACE VIEW vw_inventory_product_quantity AS
                     sum(grl.required_quantity)::numeric - (sum(COALESCE(gre.returned_quantity, 0::bigint)) + sum(COALESCE(cm.creditmemo_quantity, 0::bigint))) AS instock_quantity,
                     0 AS ordered_quantity
                    FROM tbl_goods_receipt grh
-                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Goods_Return'::text, 'Invoiced'::text]))
+                     JOIN tbl_goods_receipt_lineitems grl ON grh.id = grl.gr_id AND (grh.status::text = ANY (ARRAY['Approved'::text, 'Partially_Returned'::text, 'Goods_Return'::text, 'Invoiced'::text]))
                      LEFT JOIN ( SELECT greh.gr_id,
                             grel.product_id,
                             grel.warehouse,

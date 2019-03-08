@@ -67,28 +67,18 @@ text-align: left;
 															
 															<div class="row">
 																
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-5 form-group">
 																                <label>Business Partner</label>: ${gr.businessPartner}
 																					 
 																				</div>
 
 
-																	<div class="col-sm-6 form-group">
+																	<div class="col-sm-4 form-group">
 																		<label>Doc Number</label>: ${gr.docNumber}
 																		 
 																	</div>
 																	
-																</div>
-																
-																<div class="row">
-																
-																<div class="col-sm-6 form-group">
-																                <label>Name</label>: ${gr.user}
-																					 
-																				</div>
-
-
-																	<div class="col-sm-6 form-group">
+																	<div class="col-sm-3 form-group">
 																		<label>Status</label>: ${gr.status}
 																		 
 																	</div>
@@ -97,22 +87,38 @@ text-align: left;
 																
 																<div class="row">
 																
-																<div class="col-sm-6 form-group">
-																                <label>Posting Date</label>:  
-																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />	 
+																<div class="col-sm-5 form-group">
+																                <label>Name</label>: ${gr.user}
+																					 
 																				</div>
-
-
-																	<div class="col-sm-6 form-group">
-																		<label>Doc Date</label>:  
-																		 <fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
+																				
+																 <div class="col-sm-4 form-group">
+																		 <label>Ref Doc#</label>: ${gr.referenceDocNumber}
+																 </div>
+																 
+																 	<div class="col-sm-3 form-group">
+																		<label>Remarks</label>: ${gr.remarks}
+																		 
 																	</div>
+
+
+																	
 																	
 																</div>
 																
 																<div class="row">
+																 <div class="col-sm-5 form-group">
+																                <label>Posting Date</label>:  
+																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />	 
+																				</div>
+																	<div class="col-sm-4 form-group">
+																		<label>Doc Date</label>:  
+																		 <fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
+																	</div>
+																	
+																 
 																
-																<div class="col-sm-6 form-group">
+																<div class="col-sm-3 form-group">
 																                <label>Ship to</label>: <c:forEach var="entry"
 																														items="${plantMap}">
 																														<c:if
@@ -122,10 +128,7 @@ text-align: left;
 																					 
 																				</div>
 																				
-																				<div class="col-sm-6 form-group">
-																		<label>Remarks</label>: ${gr.remarks}
-																		 
-																	</div>
+																			
  
 																	
 																</div>

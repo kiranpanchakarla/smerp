@@ -63,7 +63,10 @@
                 <td><strong >Remarks</strong></td>
                 <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
                 </tr>
-                 
+                  <tr>
+                  <td><strong >Ref Doc#</strong></td>
+                <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if> </td>
+                </tr>
             </table>
                 <br></br>
                  <#assign sno = 1/>

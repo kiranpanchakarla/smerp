@@ -4,6 +4,8 @@ package com.smerp.service.admin;
 import java.util.List;
 
 import com.smerp.model.admin.DashboardCount;
+import com.smerp.model.inventory.InventoryGoodsIssueList;
+import com.smerp.model.inventory.InventoryProductsList;
 import com.smerp.model.inventory.MinimumQuantityList;
 
 public interface DashboardCountService {
@@ -18,7 +20,7 @@ public interface DashboardCountService {
 	
 	List<MinimumQuantityList> minProductQtyList();
 	
+	List<InventoryProductsList> inventoryQtyList(int id);
 	
-	
-	
+	List<InventoryGoodsIssueList> inventoryGoodsIssueList(int id);
 }

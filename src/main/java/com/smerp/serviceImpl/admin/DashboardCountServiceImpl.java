@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.DashboardCount;
+import com.smerp.model.inventory.InventoryGoodsIssueList;
+import com.smerp.model.inventory.InventoryProductsList;
 import com.smerp.model.inventory.MinimumQuantityList;
 import com.smerp.service.admin.DashboardCountService;
 
@@ -231,4 +233,72 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		return productList;
 	}
 
+ 
+
+	@Override
+	public List<InventoryProductsList> inventoryQtyList(int id) {
+		String qtysql= "select * from vw_inventory_status_report where plant_id=" + id ;
+		Query query1 = entityManager.createNativeQuery(qtysql);
+		 
+		logger.info("InventoryProductsList Query ----> " + query1);
+		logger.info("InventoryProductsList SQL ----> " + qtysql);
+		
+		//List<Object[]>	list1 = query1.getResultList();
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+		
+		List<InventoryProductsList> inventoryList = new ArrayList<>();
+		 for(Object[] tuple : arrayList) {
+			 InventoryProductsList prolist = new InventoryProductsList();
+			 prolist.setProductNo(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 prolist.setProductName(tuple[1].toString());
+			 prolist.setPlantId(tuple[2] == null ? 0 : ((Integer) tuple[2]).intValue());
+			 prolist.setPlantName(tuple[3].toString());
+			 prolist.setProductDescription(tuple[4].toString());
+			 prolist.setProductGroupDescription(tuple[5].toString());
+			 prolist.setUomName(tuple[6].toString());
+			 prolist.setInstockQty(tuple[7] == null ? 0: (Double.parseDouble(tuple[7].toString())));
+			 inventoryList.add(prolist);
+		 }
+		 
+		return inventoryList;
+	}
+
+	@Override
+	public List<InventoryGoodsIssueList> inventoryGoodsIssueList(int id) {
+		String qtysql= "select * from vw_inventory_goods_issue_daily where is_active = 't' and ware_house=" + id ;
+		Query query1 = entityManager.createNativeQuery(qtysql);
+		 
+		logger.info("Inventory GI SQL ----> " + qtysql);
+		
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+		
+		List<InventoryGoodsIssueList> inventoryGIList = new ArrayList<>();
+		 for(Object[] tuple : arrayList) {
+			 InventoryGoodsIssueList prolist = new InventoryGoodsIssueList();
+			 prolist.setDocId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 prolist.setDocNumber(tuple[1].toString());
+			 prolist.setDocDate(tuple[2].toString());
+			 prolist.setProductId(tuple[3] == null ? 0 : ((Integer) tuple[3]).intValue());
+			 prolist.setProductNumber(tuple[4].toString());
+			 prolist.setProductDescription(tuple[5].toString());
+			 prolist.setProductGroup(tuple[6].toString());
+			 prolist.setUomName(tuple[7].toString());
+			 prolist.setRequiredQty(tuple[8] == null ? 0: ((Integer) tuple[8]).intValue());
+			 prolist.setDepartmentId(tuple[9] == null ? 0: ((Integer) tuple[9]).intValue());
+			 prolist.setDepartmentName(tuple[10].toString());
+			 prolist.setRemarks(tuple[11].toString());
+			 prolist.setWarehouseId(tuple[12] == null ? 0: ((Integer) tuple[12]).intValue());
+			 
+			 inventoryGIList.add(prolist);
+		 }
+		 
+		return inventoryGIList;
+		 
+	}
+
+	
 }

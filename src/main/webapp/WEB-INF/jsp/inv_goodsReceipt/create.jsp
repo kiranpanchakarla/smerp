@@ -162,7 +162,7 @@
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Product Group</th>
+																											<th>Group</th>
 																											<th>HSN Code</th>
 																											<th>Warehouse</th>
 																											<th>Quantity</th>
@@ -273,7 +273,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	 <select class="form-control taxCode" required="true"
-																															name="inventoryGoodsReceiptList[${count}].taxCode" >
+																															name="inventoryGoodsReceiptList[${count}].taxCode" style="width: 100%;">
 																															<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													  <c:choose>
@@ -669,7 +669,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsReceiptList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="inventoryGoodsReceiptList['+inc+'].taxCode" required="true"   class="form-control taxCode" style="width: 100%;" id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+

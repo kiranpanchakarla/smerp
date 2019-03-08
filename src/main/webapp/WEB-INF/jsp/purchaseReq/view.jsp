@@ -194,8 +194,8 @@
 															<br></br>
 															 
 													<div class="row">
-												      <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												     
+												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												     <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
 										              <div class="col-sm-2 form-group has-feedback">
 																<c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Purchase Request'}">

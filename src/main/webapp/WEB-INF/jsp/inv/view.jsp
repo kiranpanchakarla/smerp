@@ -458,7 +458,7 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To CM'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Credit Memo'}">
+	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Credit Memo' ||   inv.status =='Partially_Credited'}">
 																		 
 														<%--  <c:if test="${checkStatusInv ==true}"> --%>
 																		<form:button type="button" id="convertBtn" name="statusType" value="Credit Memo"

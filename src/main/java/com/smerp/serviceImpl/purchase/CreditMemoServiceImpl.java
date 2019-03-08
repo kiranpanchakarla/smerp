@@ -192,10 +192,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 					logger.info("purchaseOrder -->" +purchaseOrder);
 					}
-					
-					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
-					inVoiceRepository.save(invoice);
-					
+					invoice = inVoiceService.setStatusOfInVoice(invoice);
 				}
 			}
 			

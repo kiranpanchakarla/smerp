@@ -1005,7 +1005,7 @@
 																						</c:when>
 																						<c:otherwise>
 																							<form:input type="text"
-																								cssClass="form-control validatePrice"
+																								cssClass="form-control "  maxlength="5"
 																								id="totalDiscount"
 																								placeholder='Total  Discount '
 																								path="totalDiscount" autocomplete="off"

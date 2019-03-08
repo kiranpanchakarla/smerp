@@ -195,9 +195,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			if(goodsReturn.getGrId()!=null  && goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			GoodsReceipt goodsReceipt =  goodsReturn.getGrId();
 			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
-			goodsReceiptRepository.save(goodsReceipt);
+			
+			goodsReceipt = goodsReceiptService.setStatusOfGoodsReceipt(goodsReceipt);
+			
 			logger.info("purchaseOrder -->" +purchaseOrder);
+			logger.info("goodsReceipt -->" +goodsReceipt);
 			}
 			
 		}

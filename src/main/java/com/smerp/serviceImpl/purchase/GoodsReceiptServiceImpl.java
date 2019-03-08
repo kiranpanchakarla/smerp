@@ -26,6 +26,7 @@ import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
+import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.LineItemsBean;
@@ -950,6 +951,51 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			   }*/
 	
 			}
+			
+			
+			
+			@Override
+			public GoodsReceipt  setStatusOfGoodsReceipt(GoodsReceipt goodsReceipt) {
+				logger.info("set Status-->");
+				String status="";
+				
+				if(goodsReceipt!=null) {
+				String sqlList= "select\r\n" + 
+						" gr.id as grId\r\n" + 
+						" ,grl.product_id\r\n" + 
+						" ,grl.required_quantity gr_quantity\r\n" + 
+						" ,sum(grel.required_quantity) AS greQuantity\r\n" + 
+						" ,grl.required_quantity-sum(grel.required_quantity) balance_qty\r\n" + 
+						" from tbl_goods_receipt gr\r\n" + 
+						" join tbl_goods_receipt_lineitems grl on grl.gr_id = gr.id\r\n" + 
+						" left join tbl_goods_return greh on gr.id = greh.gr_id\r\n" + 
+						" left join tbl_goods_return_lineitems grel ON greh.id = grel.gre_id and grel.product_id=grl.product_id\r\n" + 
+						" group by gr.id,grl.product_id,grl.required_quantity  having gr.id="+goodsReceipt.getId();
+				
+				Integer balenceQuantity=0;
+				
+			 	logger.info("sqlList ----> " + sqlList);
+				Query queryList = entityManager.createNativeQuery(sqlList);
+				 List<Object[]>	list = queryList.getResultList();
+					
+					logger.info("List Size -----> " + list.size());
+				     for(Object[] tuple : list) {
+				    	 balenceQuantity =(Integer)(tuple[4] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
+				     }
+			     
+				 	logger.info("balenceQuantity ----> " + balenceQuantity);
+				 
+				    if(balenceQuantity==0) {
+				    	 status = EnumStatusUpdate.GOODS_RETURN.getStatus();
+				    }else {
+				    	 status = EnumStatusUpdate.PARTIALLY_RETURNED.getStatus();
+				    }
+				
+			}
+				goodsReceipt.setStatus(status);
+				goodsReceiptRepository.save(goodsReceipt);
+			return goodsReceipt;	
+	  }
 
 	@Override
 	public boolean findByDocNumber(String grDocNum) {

@@ -11,6 +11,8 @@ public enum EnumStatusUpdate {
 	COMPLETED("Completed"),
 	REJECTED("Rejected"),
 	PARTIALLY_RECEIVED("Partially_Received"),
+	PARTIALLY_RETURNED("Partially_Returned"),
+	PARTIALLY_CREDITED("Partially_Credited"),
 	GOODS_RETURN("Goods_Return"),
 	CREDITMEMO("Credit Memo"),
 	INVOICE("Invoiced"),

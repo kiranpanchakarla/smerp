@@ -201,6 +201,15 @@ public class InVoiceServiceImpl  implements InVoiceService {
     			e.printStackTrace();
     		}
 		}
+		 
+		 if(inVoice.getStatus()!=null &&  inVoice.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			 GoodsReceipt goodsReceipt =  inVoice.getGrId();
+			  if(goodsReceipt!=null) {
+				goodsReceipt.setStatus(EnumStatusUpdate.APPROVEED.getStatus());  // Set GOODS_RETURN
+				goodsReceiptRepository.save(goodsReceipt);
+			  }
+		 }
+		 
 		
 		inVoice= inVoiceRepository.save(inVoice);
 		
@@ -214,8 +223,8 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check PO exist in  GR
-        if(dup_inv==null) {
+		//InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check Inv exist in  GR
+        //if(dup_inv==null) {
         	Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
         	InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
@@ -345,10 +354,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		goodsReceiptRepository.save(gr);
 		
 		return inv;
-        }else {
+       /* }else {
         	return dup_inv;
         }
-     
+       */
 	}
 	
 	
@@ -847,6 +856,51 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			   }*/
 	
 			}
+			
+			@Override
+			public InVoice  setStatusOfInVoice(InVoice invoice) {
+				logger.info("set Status-->");
+				String status="";
+				
+				if(invoice!=null) {
+				String sqlList= "select\r\n" + 
+						"inv.id as invId\r\n" + 
+						",inl.product_id\r\n" + 
+						",inl.required_quantity inv_quantity\r\n" + 
+						",sum(cml.required_quantity) AS cmQuantity\r\n" + 
+						",inl.required_quantity-sum(cml.required_quantity) balance_qty\r\n" + 
+						"from tbl_invoice inv\r\n" + 
+						"join tbl_invoice_lineitems inl on inl.inv_id = inv.id\r\n" + 
+						"left join tbl_credit_memo cmh on inv.id = cmh.inv_id\r\n" + 
+						"left join tbl_credit_memo_lineitems cml ON cmh.id = cml.cre_id and cml.product_id=inl.product_id\r\n" + 
+						"group by inv.id,inl.product_id,inl.required_quantity having inv.id="+invoice.getId();
+				
+				Integer balenceQuantity=0;
+				
+			 	logger.info("sqlList ----> " + sqlList);
+				Query queryList = entityManager.createNativeQuery(sqlList);
+				 List<Object[]>	list = queryList.getResultList();
+					
+					logger.info("List Size -----> " + list.size());
+				     for(Object[] tuple : list) {
+				    	 balenceQuantity =(Integer)(tuple[4] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
+				     }
+			     
+				 	logger.info("balenceQuantity ----> " + balenceQuantity);
+				 
+				    if(balenceQuantity==0) {
+				    	 status = EnumStatusUpdate.CREDITMEMO.getStatus();
+				    }else {
+				    	 status = EnumStatusUpdate.PARTIALLY_CREDITED.getStatus();
+				    }
+				
+			}
+				invoice.setStatus(status);
+				inVoiceRepository.save(invoice);
+			return invoice;	
+	  }
+			
+			
 
 	@Override
 	public boolean findByDocNumber(String invDocNum) {

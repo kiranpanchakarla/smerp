@@ -114,7 +114,7 @@
 														    		<a class ="btn btn-view" href="<c:url value="/gr/view?id=${list.id}"/>"><i class="icon-eye3 left"></i></a> 
 									                               </td>	 --%>
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'  && list.status != 'Partially_Returned'  && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"

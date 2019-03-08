@@ -917,8 +917,8 @@
 																<div class="row">
 																<div class="col-sm-12 form-group">
 																 <label>Discount(%)</label>  
-														         <form:input type="text" cssClass="form-control validatePrice" id="totalDiscount"
-																		placeholder='Total  Discount ' path="totalDiscount"
+														         <form:input type="text" cssClass="form-control " id="totalDiscount"
+																		placeholder='Total  Discount ' path="totalDiscount" maxlength="5"
 																	autocomplete="off"  onkeypress="return isNumericKey1(event)" />
 														        </div>
 														       </div>

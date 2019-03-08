@@ -68,11 +68,11 @@
                 
                 <tr>
                 <td><strong>RFQ Doc#</strong></td>
-                <td>:<#if gr.grId?? && gr.grId.poId.rfqId??>&nbsp;${gr.grId.poId.rfqId.docNumber}<#else>--</#if></td>
+                <td>:<#if goodsRet.grId?? && goodsRet.grId.poId?? && goodsRet.grId.poId.rfqId??>&nbsp;${goodsRet.grId.poId.rfqId.docNumber}<#else>--</#if></td>
                 <td><strong>PR Doc#.</strong></td>
-                <td>:<#if gr.grId?? && gr.grId.poId.rfqId.purchaseReqId??>&nbsp;${gr.grId.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
+                <td>:<#if goodsRet.grId??  && goodsRet.grId.poId?? && goodsRet.grId.poId.rfqId?? && goodsRet.grId.poId.rfqId.purchaseReqId??>&nbsp;${goodsRet.grId.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
                 <td><strong >Doc Date</strong></td>
-                <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td>:<#if goodsRet.documentDate??>&nbsp;${goodsRet.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 </tr>
                 
                 <tr>

@@ -59,7 +59,7 @@
                 
                 <tr>
                 <td><strong>PR Doc#</strong></td>
-                <td>:<#if goodsRec.poId?? && goodsRec.poId.rfqId.purchaseReqId??>&nbsp;${goodsRec.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
+                <td>:<#if goodsRec.poId?? && goodsRec.poId.rfqId?? && goodsRec.poId.rfqId.purchaseReqId??>&nbsp;${goodsRec.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if goodsRec.documentDate??>&nbsp;${goodsRec.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Require Date</strong></td>

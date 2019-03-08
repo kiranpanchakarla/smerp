@@ -70,7 +70,7 @@
                 
                 <tr>
                 <td><strong>PR Doc#</strong></td>
-                <td>:<#if gr.poId?? && gr.poId.rfqId.purchaseReqId??>&nbsp;${gr.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
+                <td>:<#if gr.poId?? && gr.poId.rfqId?? && gr.poId.rfqId.purchaseReqId??>&nbsp;${gr.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Require Date</strong></td>

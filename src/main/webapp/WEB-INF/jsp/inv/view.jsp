@@ -449,8 +449,8 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12 form-group">
 											<div class="row">
-												          <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												         <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
 												          <div class="col-sm-2 form-group has-feedback">
 									 <c:if test="${productQuantity !=0}">
 										<input type="hidden" name="invId" value="${inv.id}">
@@ -473,9 +473,7 @@ text-align: left;
 										  </c:if>     	         
 												         </div>
 												         
-												         
-												         
-												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												    <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>

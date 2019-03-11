@@ -213,7 +213,7 @@
             </div>
           </div> -->
         </div>
-        <div class="col-md-3">
+        <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -266,7 +266,7 @@
           </div>
           </a>
         </div> --%>
-         <div class="col-md-3">
+         <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -321,7 +321,7 @@
           </div>
           </a>
         </div>  --%>
-       <div class="col-md-3">
+       <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -369,7 +369,7 @@
           </a>
         </div>  --%>
         
-        <div class="col-md-3">
+        <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -409,5 +409,9 @@ $(document).ready(function(){
     
     console.log("document cookie"+document.cookie);   */
 });
+
+
+	
+	
 </script>
 </html>

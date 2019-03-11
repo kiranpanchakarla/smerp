@@ -500,8 +500,8 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
-												         <div class="col-sm-4 form-group has-feedback">
+												         <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												         <div class="col-sm-2 form-group has-feedback">
 												         
 												           <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'PurchaseOrder'}">
@@ -512,7 +512,7 @@ text-align: left;
 																		   <c:if test="${checkStatusPoGr ==true}">
 									<input type="hidden" name="poId" value="${po.id}">
 																		<form:button type="button" id="convertBtn"
-																			class="btn btn-primary mr-1 float-right">
+																			class="btn btn-primary convertBtn mr-1 float-right">
 																			<i></i>Convert To GR</form:button>
 																			
 								                           </c:if>	
@@ -522,9 +522,6 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												         
-												         
-												         
-												       
 												         
 												         </div>
 												         

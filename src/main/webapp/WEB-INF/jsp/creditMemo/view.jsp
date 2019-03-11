@@ -456,7 +456,9 @@ text-align: left;
 										<div class="col-sm-12 form-group">
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												          <div class="col-sm-6 form-group has-feedback"><a href="<c:url value="/creditMemo/downloadPdf?id=${cre.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												          <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												          <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/creditMemo/downloadPdf?id=${cre.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>

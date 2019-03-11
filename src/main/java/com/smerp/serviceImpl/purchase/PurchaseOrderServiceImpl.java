@@ -195,9 +195,33 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
     			e.printStackTrace();
     		}
 		} 
+		
+		 setAllRFQRejectedStatus(purchaseOrder);
 		 
 		return purchaseOrderRepository.save(purchaseOrder); 
 		 
+	}
+
+	private void setAllRFQRejectedStatus(PurchaseOrder purchaseOrder) {
+		if( purchaseOrder.getRfqId()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			
+			PurchaseRequest pr = new PurchaseRequest();
+			 	pr = purchaseOrder.getRfqId().getPurchaseReqId();
+			 
+			 logger.info("rfq-->" + pr);
+			 if(pr!=null) {
+				 List<RequestForQuotation> rfqList =  requestForQuotationService.getRFQListById(pr);
+				 if(rfqList.size()>1) {
+					 pr.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+					 
+					 for(RequestForQuotation rfqItem:rfqList) {
+								rfqItem.setStatus(EnumStatusUpdate.OPEN.getStatus());
+								logger.info("rfq-->" + rfqItem);
+								rfqItem.setIsActive(true);
+						}
+				 }
+			 }
+		 }
 	}
 
 	@Override

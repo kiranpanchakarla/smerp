@@ -473,10 +473,7 @@ text-align: left;
 											<div class="row">
 												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
-												         
-												         
-												         
-												         <c:choose>
+												      <c:choose>
 														<c:when test="${productQuantity !=0}">
 													
 												         <div class="col-sm-2 form-group has-feedback">
@@ -486,7 +483,7 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To GRE'}">  
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${gr.status == 'Approved' ||  gr.status == 'Partially_Returned' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
 																		
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
@@ -508,7 +505,7 @@ text-align: left;
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
 	        									                        
-	        									                        <c:if test="${(gr.status == 'Approved' ||  gr.status == 'Partially_Returned' ||  gr.status == 'Goods_Return') &&  gr.status != 'Invoiced' }">
+	 	        									                        <c:if test="${gr.status == 'Approved' ||  gr.status == 'Partially_Returned' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">
@@ -522,17 +519,11 @@ text-align: left;
 												        </c:when>
 												       <c:otherwise>
 												       
-												       <div class="col-sm-2 form-group has-feedback"></div>
-												       <div class="col-sm-2 form-group has-feedback"></div>
+												       <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												       <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
 												       <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
-												       
-												       
 												       </c:otherwise> 
-												        
-												        
-												        
-												        
-												        </c:choose>
+												      </c:choose>
 												         
 										              </div>
 												 </div>

@@ -47,8 +47,9 @@ public enum EnumStatusUpdate {
 	P("P"),
 	V("V"),
 	PG("PG"),
-	PGP("PGP");
-	
+	PGP("PGP"),
+	INVREPORT("InventoryReport"),
+	INVGIREPORT("InventoryGIReport");
 
 	
 	

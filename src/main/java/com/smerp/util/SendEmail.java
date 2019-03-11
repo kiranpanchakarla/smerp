@@ -757,10 +757,10 @@ public class SendEmail extends EmailerGenerator{
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				
 				if(WarehouseId == 1) {
-					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
 				if(WarehouseId == 2) {
-					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
 				if(!toEmail.isEmpty()) {
 					
@@ -832,10 +832,10 @@ public class SendEmail extends EmailerGenerator{
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				/* Get Email's From DB */
 				if(WarehouseId == 1) {
-					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
 				if(WarehouseId == 2) {
-					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
 				
 				if(!toEmail.isEmpty()) {

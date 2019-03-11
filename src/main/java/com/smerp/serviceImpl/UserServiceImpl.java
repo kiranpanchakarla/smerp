@@ -81,9 +81,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	public User save(User user) {
 		try {
 			logger.info("inside userservice impl save method");
+			
 			user.setActivationId("InActive");
 			//user.setPlant("test");
-			user.setPassword(bcryptEncoder.encode("Welcome"));
+			if(user.getUserId()!=null) {
+			
+				if(user.getTempPassword()!=null && !user.getTempPassword().equals("")) {
+				user.setPassword(bcryptEncoder.encode(user.getTempPassword()));
+			   }
+				
+			}else {
+				user.setPassword(bcryptEncoder.encode("Welcome"));
+			}
+			
 			user.setCompany(getComapnyIdFromSession());
 			//user.setUsername(RandomUtil.referenceId());
 			String roleId = user.getRolesDt();
@@ -167,5 +177,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		return userDao.findFirstNames(true);
 	}
 	
+	@Override
+	public boolean checkCurrentPwd(String currentPwd,String enterPwd) {
+		boolean check = bcryptEncoder.matches(enterPwd, currentPwd);
+		return check;
+	}
+
+	public static void main(String[] args) {
+		BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
+		System.out.println(bcryptEncoder.matches("Welcome", "$2a$10$DLmkngFSI/w95Bv1TLtn1e7FXwXu1COXCjqS9ocago5EZCPuEdzaC")); // true
+	}
+
 
 }

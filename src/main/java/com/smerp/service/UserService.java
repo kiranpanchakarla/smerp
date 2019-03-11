@@ -37,6 +37,7 @@ public interface UserService {
 
 	User findByName(String username);
 	
+	boolean checkCurrentPwd(String currentPwd,String enterPwd);
 	
 	List<User> findByIsActive();
 }

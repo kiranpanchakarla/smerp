@@ -41,6 +41,8 @@ public class User extends UserAuditModel {
 	@Column(name="password")
 	private String password;
 	
+	private transient String tempPassword;
+	
 
 	private Boolean enabled = true;
 	
@@ -271,27 +273,25 @@ public class User extends UserAuditModel {
 		return serialVersionUID;
 	}
 
+	
+	
+	
+	public String getTempPassword() {
+		return tempPassword;
+	}
+
+	public void setTempPassword(String tempPassword) {
+		this.tempPassword = tempPassword;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", userEmail=" + userEmail + ", password="
 				+ password + ", enabled=" + enabled + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", mobileNo=" + mobileNo + ", activationId=" + activationId + ", company=" + company + ", department="
 				+ department + ", designation=" + designation + ", reportingManagerId=" + reportingManagerId
-				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + ", userModulePermission="
-				+ userModulePermission + ", rolesDt=" + rolesDt + "]";
+				+ ", plant=" + plant + ", image=" + image + ", roles=" + roles + "]";
 	}
-
-	
-
-	
-
-
-	
-
-	
-
-	
-	
 
 
 }

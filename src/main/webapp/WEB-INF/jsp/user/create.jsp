@@ -12,7 +12,6 @@
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
 
-<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
  <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!-- <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
   <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  
@@ -30,7 +29,7 @@
 						<div class="content-body">
 							<!-- Basic form layout section start -->
 							<c:url value="/user/save" var="createUrl" />
-							<form:form  method="POST" action="${createUrl}" id="updateForm" enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form">
+							<form:form  method="POST" action="${createUrl}" id="updateForm" enctype="multipart/form-data" modelAttribute="user" data-toggle="validator" role="form" autocomplete="off">
 								<section id="basic-form-layouts">
 									<div class="row match-height">
 										<div class="col-md-12">
@@ -157,7 +156,41 @@
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																</div>
-															</div>
+																<c:if test="${pwd=='true'}">
+																<div class="col-sm-12 form-group">
+                                                             <a class="btn po-hist-btn"  id="changePwd"> Change Password </a>
+                                                               </div>
+                                                               </c:if>
+                                                               <div class="row" id="pwdDiv" style="display: none">
+                                                                <div class="col-sm-4 form-group">
+																		<label>Current Password</label>
+																		
+														<form:input type="hidden" cssClass="form-control" path="password"  />
+														
+														<div class="position-relative has-icon-right">
+														<input type="password" class="form-control" placeholder='Current Password' id="currentPwd"  value=""   />
+                         <div class="form-control-position"> <i class="icon-eye" onclick="myfunction();"></i> </div>
+                       </div>
+														
+														
+<%-- 										<div class="row"><img src="${contextPath}/resources/images/company/eye.png" width="20px";height="15px" ></div>
+ --%>
+																</div>
+																
+																<div class="col-sm-4 form-group">
+																		<label>New Password</label>
+														<form:input type="password" cssClass="form-control" placeholder='Current Password'  id="changePwd1" autocomplete="off" path="tempPassword"   value=""   />
+																</div>
+																
+																<div class="col-sm-4 form-group">
+																		<label>Confirm Password</label>
+														<input type="password" class="form-control" placeholder='Current Password' id="changePwd2"   value="" autocomplete="off"   />
+																</div>
+                                                                
+                                                            </div>
+                                                            </div>
+                                                            <!-- Modal -->
+                                             
 															<div class="text-xs-center">
 																	
 																	<a href="#" onclick="goBack()" class="btn btn-primary float-left">
@@ -166,10 +199,10 @@
 																	<button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> Cancel</button>
 																</a>
 																<c:if test="${user.username!=null}">
-																	<button type="submit" class="btn btn-primary"> <i class="icon-check2"></i> Update</button>
+																	<button type="submit" class="btn btn-primary myUserSubButton"> <i class="icon-check2"></i> Update</button>
 																</c:if>
 																<c:if test="${user.username==null}">
-																	<button type="submit" class="btn btn-primary">	<i class="icon-check2"></i> Save</button>
+																	<button type="submit" class="btn btn-primary myUserSubButton">	<i class="icon-check2"></i> Save</button>
 																</c:if>
 															</div>
 														
@@ -199,7 +232,7 @@ $('.camelCase').keyup(function(){
 });
 
 $(document).ready(function() {
- 
+	$('#mobileNo').blur();
 	var id = $('#userId').val();
 	if (id == '') {
 		$("#mobileNo").val("+91");
@@ -399,8 +432,83 @@ $(document).ready(function() {
 	                     			 
 	                     			      
 	                     			 }
+	                     			
+	                     			
+	                     			
+	                     			$(document).on("blur", "#currentPwd", function() {
+	                     				if ($('#pwdDiv').css('display') != 'none') {
+	                     				var currentPwd = $('#password').val();
+	                     				var enterPwd = $('#currentPwd').val();
+	                     				if(enterPwd!='') {
+	                     				 $.ajax({
+                     			             type:"GET",
+                     			            url : "<c:url value="/user/checkCurrentPwd"/>?currentPwd="+currentPwd+"&enterPwd="+enterPwd,
+                     			             success: function(result){
+                     			            	 if(result==true){
+                     			                   
+                     			                 }else {
+                     			                	 alertify.alert("Invaild Entry","Invaild Current Password!");
+                     			                	 $('#currentPwd').val("");
+                     			                 }
+                     			            }});
+	                     				} 
+	                     				}
+	                     			});
+	                     			
+                     			                	$(document).on("blur", "#changePwd1", function() {
+                     			                		var changePwd1 = $('#changePwd1').val();
+                     			                		if(changePwd1.length<6 && changePwd1!=""){
+                     			                			 alertify.alert("Invaild Entry","Password must be of minimum 6 letters!");
+                     			                			$('#changePwd1').val("");
+                     			                		}
+                	                     			});
+	                     			
+                     			                	$(".myUserSubButton").on('click', function() {    
+                     			                		
+                     			                		var changePwd1 = $('#changePwd1').val();
+                	                     				var changePwd2 = $('#changePwd2').val();
+                     			                		
+                	                     				if ($('#pwdDiv').css('display') != 'none') {
+                	                     				 
+                	                     					if($('#currentPwd').val()==""){
+                   	                     					 alertify.alert("User","Please Enter Current Password!");
+                   	                     					$( "#currentPwd" ).focus();
+                   	                     					return false;
+                   	                     				     }
+                	                     					if(changePwd1==""){
+                   	                     					 alertify.alert("User","Please Enter New Password!");
+                   	                     					$( "#changePwd1" ).focus();
+                   	                     					return false;
+                   	                     				    }
+                	                     					
+                	                     				if(changePwd1!=changePwd2){
+                	                     					 alertify.alert("User","Password Does not Match!");
+                	                     					$( "#changePwd2" ).focus();
+                	                     					return false;
+                	                     				}else{
+                	                     					//$("#form").submit();
+                	                     				}
+                	                     				
+                	                     				}
+                     			                	});	
+                     			                	
+													$("#changePwd").on('click', function() {    
+                     			                	    $("#pwdDiv").show();
+                     			                	});	
+                     			                	
+													function myfunction() {
+														var x = document.getElementById("currentPwd");
+														  if (x.type === "password") {
+														    x.type = "text";
+														  } else {
+														    x.type = "password";
+														  }
+														}			
+	                     			
 
 	                     			
 </script>
+<script src=<c:url value="/resources/js/common.js"/> type="text/javascript"></script>
+
 </html>
 

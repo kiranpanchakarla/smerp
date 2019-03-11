@@ -179,8 +179,8 @@ public class UserController {
 	
 
 	@GetMapping(value = "/edit")
-	public String view(String id, Model model, HttpServletRequest request) {
-		logger.info("Inside delete method");
+	public String view(String id, Model model,String pwd, HttpServletRequest request) {
+		logger.info("Inside delete method"+pwd);
 		Company company = getComapnyIdFromSession();
 		usercreationdependencymodules(model, company);
 		User user = userService.findById(Integer.parseInt(id));
@@ -192,8 +192,21 @@ public class UserController {
 		}
 		model.addAttribute("rolesList", map);
 		model.addAttribute("plantList", plantService.findAll());
+		
+		if(pwd!=null) 
+		model.addAttribute("pwd", pwd);
+		
 		model.addAttribute("user", user);
 		return "user/create";
+	}
+	
+	
+	@GetMapping(value = "/checkCurrentPwd")
+	@ResponseBody
+	public Boolean checkCurrentPwd(String currentPwd,String enterPwd) {
+		logger.info("currentPwd" + currentPwd);
+		logger.info("enterPwd" + enterPwd);
+		return userService.checkCurrentPwd(currentPwd, enterPwd);
 	}
 
 	private Company getComapnyIdFromSession() {

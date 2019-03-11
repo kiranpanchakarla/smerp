@@ -10,7 +10,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
-
+<c:import url="/WEB-INF/jsp/loadcss.jsp" />
 <script src=<c:url value="/resources/components/bootstrap-validator/js/jquery.min.js"/> type="text/javascript"></script>    
 <!--  <script src=<c:url value="/resources/components/bootstrap-validator/js/bootstrap.min.js"/> type="text/javascript"></script>  -->   
  <script src=<c:url value="/resources/components/bootstrap-validator/js/validator.min.js"/> type="text/javascript"></script>  	
@@ -19,7 +19,7 @@
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
 	class="vertical-layout vertical-menu 2-columns">
-	<c:import url="/WEB-INF/jsp/loadcss.jsp" />
+	
 
 	<c:import url="/WEB-INF/jsp/header.jsp" />
 
@@ -74,8 +74,9 @@
 																		</form:select>
 																		<!-- <div   class="help-block with-errors"></div> -->
 																	</div> 
+																	<div class="col-sm-1 form-group"> &nbsp; </div>
 																<div class="col-sm-4 form-group">
-																	<label for="timesheetinput2">Name</label>
+																	<label for="timesheetinput2">Department</label>
 																	<div>
 																		<form:input type="text"  cssClass="form-control camelCase" 
 																			placeholder='Department Name' path="name"

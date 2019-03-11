@@ -75,8 +75,8 @@
            <c:forEach items="${sessionScope.umpmap}" var="ump">
                      
 					 <c:if test="${ump.key eq 'Admin Master'}">
-					  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
-         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Attribute Values</a></li>
+					 <%--  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Attribute Values</a></li> --%>
 					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Groups</a></li>
           			 <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
@@ -196,8 +196,8 @@
 						</c:if>
 
 						<c:if test="${ump.key eq 'RFQ'}">
-							<li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request
-									Quotations</a></li>
+							<li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request For
+									Quotation</a></li>
 						</c:if>
 
 						<c:if test="${ump.key eq 'Convert To PO'}">

@@ -58,7 +58,7 @@
                 <tr>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if po.documentDate??>&nbsp;${po.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong >Require Date</strong></td>
+                <td><strong >Required Date</strong></td>
                 <td>:<#if po.requiredDate??>${po.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
                 <td><strong >Status</strong></td>
                  <td>:<#if po.status??>&nbsp;${po.status}<#else>--</#if></td>

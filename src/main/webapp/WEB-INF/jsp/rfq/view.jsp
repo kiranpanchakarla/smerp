@@ -333,7 +333,9 @@
 	       								                           </c:if>     
    									                            </c:forEach>
    									                         </div>
+   									                         <c:if test="${not empty rfq.vendor.name}">
 												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												          </c:if>
 										              </div>
 										              
 																</div>

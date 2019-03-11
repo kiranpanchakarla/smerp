@@ -35,7 +35,7 @@
                 
                 <tr>
                 <td><strong >Requester Name</strong></td>
-                <td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}</#if></td>
+                <td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}${' '}${pr.referenceUser.lastname}</#if></td>
                 <td><strong >Posting Date </strong></td>
                 <td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
                 </tr>
@@ -48,7 +48,7 @@
                 </tr>
                 
                 <tr>
-                <td><strong >Email- ID</strong></td>
+                <td><strong >Email Id</strong></td>
                 <td>:  <#if pr.referenceUser.userEmail??> ${pr.referenceUser.userEmail}</#if></td>
                 <td><strong >Require Date</strong></td>
                 <td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
@@ -76,7 +76,7 @@
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
-                <td style="border: solid 1px ;"><strong >HSN</strong></td>
+                <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>

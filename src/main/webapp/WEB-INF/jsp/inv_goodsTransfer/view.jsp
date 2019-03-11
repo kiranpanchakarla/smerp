@@ -88,7 +88,7 @@ text-align: left;
 																<div class="row">
 																
 																<div class="col-sm-5 form-group">
-																                <label>Name</label>: ${gr.user}
+																                <label>User</label>: ${gr.user}
 																					 
 																				</div>
 																				
@@ -136,28 +136,7 @@ text-align: left;
 															 
 
 															</div>
-
-															<div class="card-body collapse in">
-																<div class="card-block-in">
-																	<div class="form-body">
-
-																		
-
-
-																		
-																		
-																		
-																	</div>
-																</div>
-															</div>
-															
-															<div class="row">
-																			
-																			
-															</div>
-																		
-														
-
+																	<hr>
 															<div class="tab-content">
 																
 																	<div class="row">

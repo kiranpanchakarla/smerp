@@ -77,25 +77,24 @@
 
 																<div class="col-sm-4 form-group">
 																	<label>Tagline</label>
-																	<form:input type="text" cssClass="form-control camelCase"
-																		placeholder='Company TagLine' path="companyTagLine"
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																		placeholder='Company TagLine' path="companyTagLine" maxlength = "50"
 																		oninvalid="this.setCustomValidity('Please Enter Company TagLine')"
-																		oninput="setCustomValidity('')" />
+																		oninput="setCustomValidity('')" autocomplete ="off"/>
 																	<!-- <div   class="help-block with-errors"></div> -->
 																</div>
 
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-2 form-group">
 																	<div class="col-sm-12 no-padding">
-																		<label>Logo</label>
-																		<%-- <form:input type="file" cssClass="form-control"  accept="image/*" onchange="loadFile(event)" 
-																		path="logo" value="${company.logo}" /> --%>
-
+																		<!-- <label>Logo</label> -->
 																		<div class="logo-upload">
 																			<input type="file" name="file" id="file"
 																				value="${company.logo}"
 																				onchange="return fileValidation(event)"
 																				oninvalid="this.setCustomValidity('Please Upload Image')"
-																				oninput="setCustomValidity('')" />
+																				oninput="setCustomValidity('')" hidden/>
+																				
+																				<button type="button" class="browse-btn" id="buttonid"> Upload Logo </button>
 
 																			<form:input type="hidden" path="logo"
 																				value="${company.logo}" />
@@ -106,9 +105,9 @@
 																		</div>
 																		<!-- <div  id="3_errorContainer"  class="help-block with-errors"></div> -->
 																	</div>
-
-																	<div class="col-sm-12 form-group no-margin">
-																		<label class="hidden-box">&nbsp;</label>
+																</div>
+																
+																<div class="col-sm-2 form-group no-margin">
 																		<c:if test="${filePath==null}">
 																			<div class="logo-show hidden">
 																				<img
@@ -126,9 +125,6 @@
 																		</c:if>
 
 																	</div>
-
-																</div>
-
 
 															</div>
 
@@ -197,6 +193,8 @@
 																</div>
 																
 															</div> --%>
+															
+															<hr>
 
 															<div class="card-header-in">
 																<h4 class="card-title" id="basic-layout-icons">Address</h4>
@@ -300,7 +298,7 @@
 																			</div>
 
 																			<div class="col-sm-4 form-group">
-																				<label>ZIP Code</label>
+																				<label>Zipcode</label>
 																				<form:input type="text"
 																					cssClass="form-control numericwithoutdecimal"
 																					placeholder='ZIP Code' path="zipCode"
@@ -406,6 +404,12 @@
 	 image.src = URL.createObjectURL(event.target.files[0]);
 	 }; */
 
+	 document.getElementById('buttonid').addEventListener('click', openDialog);
+
+	 function openDialog() {
+	   document.getElementById('file').click();
+	 }
+	 
 	var id = $('#id').val();
 	
 	if (id == '') {

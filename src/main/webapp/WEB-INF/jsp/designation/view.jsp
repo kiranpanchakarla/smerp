@@ -30,97 +30,75 @@
 	<div class="app-content content container-fluid"
 		style="margin-top: 40px;">
 		<div class="content-wrapper">
-			<div class="content-header row">
-				<div class="col-md-6">
-					 
-				</div>
-			</div>
+			 
 			<div class="content-body">
-				<!--/ project charts -->
-				<div class="row">
-					<div class="large-12 columns">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="content-body">
+                            <!-- Basic form layout section start -->
+                            <c:url value="/designation/save" var="createUrl" />
+                            <form:form method="POST"  action="${createUrl}" class="commentForm" modelAttribute="designationObj" data-toggle="validator" role="form">
+                                <section id="basic-form-layouts">
+                                    <div class="row match-height">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 class="card-title" id="basic-layout-icons">Designation</h2>
+                                                </div>
+                                                
+                                                <div class="card-body collapse in create-block">
+                                                    <div class="card-block">
+                                                        <form class="form">
+                                                            <div class="form-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Designation</label>: ${designationObj.desigination}
 
-							<div class="content-wrapper">
-								<div class="card-header"><div class="content-header row">
-									<div class="col-md-3">
-										<h2 class="content-header-title">Designations</h2>
-										</div>
-										<div class="col-md-5">
-										 
-									</div>
-									<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-4 col-xs-12">
-										<div class="breadcrumb-wrapper col-xs-12">
-											<ol class="breadcrumb"><%-- <c:url value="/user/dashboard"/> --%>
-												<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a>
-												</li>
-												<li class="breadcrumb-item"><a href="#">Administration</a>
-												</li>
-												<li class="breadcrumb-item active">Designation</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-								</div>
-								<div>
-									<div class="content-body">
-										<!-- Basic Tables start -->
+                                                                    </div>
+                                                                    
+                                                                     <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Department</label>:  ${designationObj.department.name}
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Company</label>:  ${designationObj.company.name}
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                </div>
+                                                                
 
-										<div class="card">
-											 
+                                                                
+                                                                
+                                                                <!--  -->
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body collapse in">
-                <div class="table-responsive">
-                    <!-- <table class="table table-bordered mb-0 view-table"></table> -->
-                    <table class="table table-bordered mb-0 fixed-width-table">
-                    
-                         <tr class="even">
-                            <th>Designation Name</th>
-                            <td>${designationObj.desigination}</td>
-                        </tr>
+                                                            </div>
 
+                                                        </form>
 
-                        <tr class="odd">
-                            <th>Company Name</th>
-                            <td>${designationObj.company.name}</td>
-                        </tr>
-                         
-                         
-                        <tr class="even">
-                            <th>Department Name</th>
-                            <td>${designationObj.department.name}</td>
-                        </tr>
-                        
-                        
-                         
-                    </table>
+                                                        <div>
+                                                            <a href="#" onClick="goBack()" class="btn btn-primary">Back </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </section>
+                            </form:form>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
                 </div>
+                <!--/ project charts -->
+                <br>
             </div>
-        </div>
-    </div>
-   
-											
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										<div>
-										<a href="#" onclick="goBack()" class="btn btn-primary"
-											style="float: left;"> Back</a>
-									</div>
-										
-									</div>
-									<br>
-								</div>
-							</div>
-					</div>
-					</div>
-</div></div></div>
+
+</div></div>
 				<footer class="footer footer-static footer-light navbar-border">
   <p class="clearfix text-muted text-sm-center mb-0 px-2"><span class="float-md-right d-xs-block d-md-inline-block">Copyright  &copy; 2019 <a href="#" target="_blank" class="text-bold-800 grey darken-2">SMERP </a>, All rights reserved. </span></p>
 </footer>

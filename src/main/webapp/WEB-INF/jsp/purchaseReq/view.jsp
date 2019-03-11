@@ -63,7 +63,7 @@
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Requester Name</label>:
-																		${purchaseRequest.user.firstname}${' '}${purchaseRequest.user.lastname}
+																		${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Posting Date</label>:

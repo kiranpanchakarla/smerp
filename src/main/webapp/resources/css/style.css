@@ -722,8 +722,9 @@ form label {
 	padding-left: 3.8rem;
 }
 form .form-group {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 	overflow: hidden;
+	line-height: 2.3em;
 }
 form .form-group-user {
 	margin-bottom: 1rem;
@@ -817,6 +818,7 @@ form label {
 	float: left;
 	display: inline-block;
 	width: 28%;
+	line-height: 2.3em;
 }
 .create-block .form-group-user label {
 	float: left;
@@ -866,6 +868,22 @@ form label {
 	border-radius: 0.18rem;
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 	padding: 3px;/* width: 100%; */
+}
+.logo-upload input[type="file"] {
+    opacity: 0;
+    position: absolute;
+}
+.browse-btn {
+  background: #0f87ad;
+  color: #fff;
+  padding: 1px 5px;
+  border: none;
+  border-radius: 5px;
+  margin-top:20px;
+  cursor: pointer;
+}
+.browse-btn:hover {
+    background: #336799;
 }
 .no-margin {
 	margin: 0px !important;
@@ -1272,5 +1290,4 @@ h2, .h2 {font-size: 1.6rem;}
 }
 
 /*-------------------------- Mobile CSS End ------------------------ */
-
-
+ 

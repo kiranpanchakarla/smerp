@@ -72,7 +72,7 @@
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Product No.</label>: ${product.productNo}
+																		<label>Product#</label>: ${product.productNo}
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
@@ -182,7 +182,7 @@
 																					<label>Product Type</label>: ${product.productType}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
-																					<label>HSN</label>: ${product.hsnCode.id}
+																					<label>HSN Code</label>: ${product.hsnCode.id}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
 																					<label>TaxCategory</label>:

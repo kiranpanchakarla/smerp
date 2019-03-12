@@ -968,7 +968,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 						" ,grl.required_quantity-sum(grel.required_quantity) balance_qty\r\n" + 
 						" from tbl_goods_receipt gr\r\n" + 
 						" join tbl_goods_receipt_lineitems grl on grl.gr_id = gr.id\r\n" + 
-						" left join tbl_goods_return greh on gr.id = greh.gr_id\r\n" + 
+						" left join tbl_goods_return greh on gr.id = greh.gr_id  and greh.status not in('Rejected','Open') \r\n" + 
 						" left join tbl_goods_return_lineitems grel ON greh.id = grel.gre_id and grel.product_id=grl.product_id\r\n" + 
 						" group by gr.id,grl.product_id,grl.required_quantity  having gr.id="+goodsReceipt.getId();
 				

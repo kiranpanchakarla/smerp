@@ -871,7 +871,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 						",inl.required_quantity-sum(cml.required_quantity) balance_qty\r\n" + 
 						"from tbl_invoice inv\r\n" + 
 						"join tbl_invoice_lineitems inl on inl.inv_id = inv.id\r\n" + 
-						"left join tbl_credit_memo cmh on inv.id = cmh.inv_id\r\n" + 
+						"left join tbl_credit_memo cmh on inv.id = cmh.inv_id and cmh.status not in( 'Rejected' ,'Open') \r\n" + 
 						"left join tbl_credit_memo_lineitems cml ON cmh.id = cml.cre_id and cml.product_id=inl.product_id\r\n" + 
 						"group by inv.id,inl.product_id,inl.required_quantity having inv.id="+invoice.getId();
 				

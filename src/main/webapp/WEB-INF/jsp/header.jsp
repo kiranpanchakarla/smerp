@@ -291,7 +291,8 @@
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 				<sec:authentication property="principal.userId" var="userId" />
-                <a href="/user/edit?id=${userId}&pwd=true" class="dropdown-item"><i class="icon-head"></i> View Profile</a>
+				<c:url value="/user/edit?id=${userId}&pwd=true" var="createUrl" />
+                <a href="${createUrl}" class="dropdown-item"><i class="icon-head"></i> View Profile</a>
 					<!-- <a href="#" class="dropdown-item"><i class="icon-head"></i>
 						Edit Profile</a> <a href="#" class="dropdown-item"><i
 						class="icon-mail6"></i> My Inbox</a> <a href="#" class="dropdown-item"><i

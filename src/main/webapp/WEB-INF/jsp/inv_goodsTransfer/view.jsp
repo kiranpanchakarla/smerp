@@ -74,7 +74,7 @@ text-align: left;
 
 
 																	<div class="col-sm-4 form-group">
-																		<label>Doc Number</label>: ${gr.docNumber}
+																		<label>Doc#</label>: ${gr.docNumber}
 																		 
 																	</div>
 																	

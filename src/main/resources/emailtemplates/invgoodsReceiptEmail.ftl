@@ -30,7 +30,7 @@
         <table style="width:100%">
                 
                 <tr>
-                 <td><strong >Document Number</strong></td>
+                 <td><strong >Doc#</strong></td>
                 <td>:<#if invgr.docNumber??>&nbsp;${invgr.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if invgr.status??> ${invgr.status}</#if></td>

@@ -49,7 +49,7 @@ public class Scheduler {
 		}
 	}
 
-	//@Scheduled(cron = "0 0 */2 * * ?")
+	//@Scheduled(cron = "0 0 19 * * MON-FRI")
 	public void sendInventoryQtyEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -72,7 +72,7 @@ public class Scheduler {
 
 	}
 
-	// @Scheduled(cron = "0 0 */2 * * ?")
+	//@Scheduled(cron = "0 */30 19 * * MON-FRI")
 	public void sendInventoryGIEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();

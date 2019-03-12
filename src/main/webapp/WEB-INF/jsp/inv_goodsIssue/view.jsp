@@ -69,7 +69,7 @@ text-align: left;
 																
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																				<label>Doc#</label>: ${gr.docNumber}
 																</div>
 																	 
 																<div class="col-sm-4 form-group"><label>Status</label> : ${gr.status}</div>

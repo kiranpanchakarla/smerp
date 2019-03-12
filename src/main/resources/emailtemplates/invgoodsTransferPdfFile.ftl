@@ -59,7 +59,7 @@
                 <tr>
                  <td><strong >Posting Date</strong></td>
                 <td>:<#if gr.postingDate??>&nbsp;${gr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong>Doc No.</strong></td>
+                <td><strong>Doc#</strong></td>
                 <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
                 </tr>
                 

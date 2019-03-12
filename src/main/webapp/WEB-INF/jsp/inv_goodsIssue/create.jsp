@@ -101,7 +101,7 @@
 															<div class="row">
 
 																	<div class="col-sm-6 form-group">
-																		<label>Doc Number</label>
+																		<label>Doc#</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
 																			readonly="true" />

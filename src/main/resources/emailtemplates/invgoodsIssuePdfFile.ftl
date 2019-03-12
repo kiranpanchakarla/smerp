@@ -41,7 +41,7 @@
         <table style="width:100%">
                 
                 <tr>
-                 <td><strong >Document Number</strong></td>
+                 <td><strong >Doc#</strong></td>
                 <td>:<#if gr.docNumber??>&nbsp;${gr.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if gr.status??> ${gr.status}</#if></td>

@@ -171,34 +171,34 @@
 																</div>
 																<c:if test="${pwd=='true'}">
 																<div class="col-sm-12 form-group">
-                                                             <a class="btn po-hist-btn"  id="changePwd"> Change Password </a>
+                                                             <a class="btn po-hist-btn"  id="changePwd">Change Password</a>
                                                                </div>
                                                                </c:if>
                                                                <div class="row" id="pwdDiv" style="display: none">
-                                                                <div class="col-sm-4 form-group">
-																		<label>Current Password</label>
+                                                               
+                                                                <div class="col-sm-6 form-group">
+                                                                <div class="row">
+																<div class="col-sm-4" style="color: #106570;font-weight: 500;">Current Password </div>
 																 
 														<form:input type="hidden" cssClass="form-control" path="password"  />
-														  
+														 <div class="col-sm-6"> 
 														<div class="input-group">
 														<input type="password" class="form-control" placeholder='Current Password' id="currentPwd"  value=""   />
-                        								<!--  <div class="form-control-position"> <i class="icon-eye" onclick="myfunction();"></i> </div> -->
                         								 <span class="input-group-addon" onclick="myfunction();"><i class="icon-eye" ></i></span>
                        									</div>
-														 
-														
-<%-- 										<div class="row"><img src="${contextPath}/resources/images/company/eye.png" width="20px";height="15px" ></div>
- --%>
+														 </div>
+														 </div>
+ 
 																</div>
 																
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-6 form-group">
 																		<label>New Password</label>
-														<form:input type="password" cssClass="form-control" placeholder='Current Password'  id="changePwd1" autocomplete="off" path="tempPassword"   value=""   />
+														<form:input type="password" cssClass="form-control" placeholder='New Password'  id="changePwd1" autocomplete="off" path="tempPassword"   value=""   />
 																</div>
-																
-																<div class="col-sm-4 form-group">
+																<div class="col-sm-6 form-group">&nbsp;</div>
+																<div class="col-sm-6 form-group">
 																		<label>Confirm Password</label>
-														<input type="password" class="form-control" placeholder='Current Password' id="changePwd2"   value="" autocomplete="off"   />
+														<input type="password" class="form-control" placeholder='Confirm Password' id="changePwd2"   value="" autocomplete="off"   />
 																</div>
                                                                 
                                                             </div>

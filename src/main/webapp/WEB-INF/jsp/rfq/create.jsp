@@ -243,7 +243,7 @@
 																		
 																		<div class="row" id="pur_radioDiv" style="display: none">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: <%-- ${rfq.category} --%> Product
+																		
 																	</div>
 																       </div>
 																		

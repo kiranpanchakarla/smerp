@@ -46,7 +46,7 @@
 
 		<tr>
 			<td><strong>Requester Name</strong></td>
-			<td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}${' '}${pr.referenceUser.lastname}</#if></td>
+			<td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}</#if></td>
 			<td><strong>Posting Date </strong></td>
 			<td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
 		</tr>
@@ -61,7 +61,7 @@
 		<tr>
 			<td><strong>Email Id</strong></td>
 			<td>: <#if pr.referenceUser.userEmail??> ${pr.referenceUser.userEmail}</#if></td>
-			<td><strong>Require Date</strong></td>
+			<td><strong>Required Date</strong></td>
 			<td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
 		</tr>
 

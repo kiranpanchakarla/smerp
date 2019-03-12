@@ -299,7 +299,7 @@ $(document).ready(function(){
 																	
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
-																			<label>Inventory UOM:</label>
+																			<label>Inventory UOM</label>
 																			<form:select id="inventoryUomId" path="inventoryUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${uomList}" var="uom">
@@ -323,7 +323,7 @@ $(document).ready(function(){
 																		</div>
 																		
 																		<div class="col-sm-6 form-group">
-																			<label>Valuation Method:</label>
+																			<label>Valuation Method</label>
 																			<form:select path="valuationMethod" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select Valuation Method')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${valuationMethodList}" var="valuationMethod">
@@ -337,7 +337,7 @@ $(document).ready(function(){
 																		
 																	
 																		<div class="col-sm-6 form-group">
-																			<label>Product Cost:</label>
+																			<label>Product Cost</label>
 																			<form:input path="productCost" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Product Cost')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
@@ -692,7 +692,7 @@ $(document).ready(function(){
  		       },
  		       message: "<h3>Saving <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
  		       }); 
- 		       //setTimeout($.unblockUI, 9000);
+ 		       setTimeout($.unblockUI, 500);
  		});
  	  
  	  $(document).on("click", ".updateProduct",function(e){		
@@ -707,7 +707,7 @@ $(document).ready(function(){
 		       },
 		       message: "<h3>Updating <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
 		       }); 
-		       //setTimeout($.unblockUI, 9000);
+		       setTimeout($.unblockUI, 500);
 		});
      
     </script>

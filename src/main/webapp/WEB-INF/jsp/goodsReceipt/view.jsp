@@ -483,7 +483,7 @@ text-align: left;
 										                           <c:if test="${ump.key eq 'Convert To GRE'}">  
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status == 'Partially_Returned'  &&  gr.status != 'Invoiced'}">
 																		
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"

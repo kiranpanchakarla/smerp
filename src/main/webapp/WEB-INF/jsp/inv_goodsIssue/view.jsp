@@ -121,7 +121,7 @@ text-align: left;
 																											<th>Warehouse</th>
 																											<th>Department</th>
 																											<th>Group</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																											<th>UOM</th>
 																									
 																									

@@ -63,7 +63,7 @@
                                                                             <form:input type="hidden" class="form-control" placeholder='User Name'   path="user.username" readonly="true" value="${user.username}"  required="true"  oninvalid="this.setCustomValidity('Please Enter user Name.')" oninput="setCustomValidity('')" />
                                                                             <form:hidden path="user.userId" class="userId" />
                                           
-                                                                            <label>Doc No</label>
+                                                                            <label>Doc#</label>
                                                                             <form:input type="text" class="form-control" placeholder='docNumber' path="docNumber" value="" autocomplete="off" readonly="true" required="true" oninvalid="this.setCustomValidity('Please Enter Doc No.')" oninput="setCustomValidity('')" />
                                                                             
                                                                         </div>  

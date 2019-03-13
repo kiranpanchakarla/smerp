@@ -190,7 +190,7 @@
 																											<th>Quantity</th>
 																											<th>Group</th>
 																											<th>Warehouse</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																										</c:if>
 
 																										<c:if test="${rfq.category!='Item'}">

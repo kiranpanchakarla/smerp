@@ -43,7 +43,7 @@
                 <td>:<#if invgr.postingDate??>&nbsp;${invgr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if invgr.documentDate??>&nbsp;${invgr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>Ref Doc#</strong></td>
                 <td>:<#if invgr.referenceDocNumber??>&nbsp;${invgr.referenceDocNumber}<#else>--</#if></td>
                 </tr>
                  

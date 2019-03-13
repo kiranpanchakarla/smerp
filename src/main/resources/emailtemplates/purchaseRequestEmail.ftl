@@ -27,9 +27,9 @@
                 
                 <table style="width:100%">
                 <tr>
-                <td><strong >User</strong></td>
+                <td><strong >Updated by</strong></td>
                 <td>: <#if pr.user.username??> ${pr.user.username}</#if></td>
-                <td><strong >Doc No</strong></td>
+                <td><strong >Doc#</strong></td>
                 <td>:<#if pr.docNumber??> ${pr.docNumber}</#if> </td>
                 </tr>
                 

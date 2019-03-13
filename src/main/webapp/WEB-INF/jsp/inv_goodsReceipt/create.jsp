@@ -107,7 +107,7 @@
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
-																                <label>Ref Doc No.</label>
+																                <label>Ref Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Doc Number'
 																						path="referenceDocNumber" />

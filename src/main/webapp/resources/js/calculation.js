@@ -37,7 +37,7 @@ $(document).on("change", ".taxCode", function() {
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
-  	$("#roundedOff").val("");
+     $("#roundedOff").val(parseFloat(Math.round(sum_total) - sum_total).toFixed(2));
  	}
   	 
 	});

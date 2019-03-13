@@ -43,7 +43,7 @@
                 <td>:<#if invgi.postingDate??>&nbsp;${invgi.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if invgi.documentDate??>&nbsp;${invgi.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>Ref Doc#</strong></td>
                 <td>:<#if invgi.referenceDocNumber??>&nbsp;${invgi.referenceDocNumber}<#else>--</#if></td>
                 </tr>
                  

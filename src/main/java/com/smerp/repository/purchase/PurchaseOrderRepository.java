@@ -10,8 +10,8 @@ import com.smerp.model.inventory.RequestForQuotation;
 
 public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, Integer> {
 	
-	@Query("SELECT r FROM PurchaseOrder r WHERE isActive=:isActive order by createdAt desc")
-	List<PurchaseOrder> findByIsActive(Boolean isActive);
+	@Query("SELECT r FROM PurchaseOrder r WHERE isActive=:isActive and plant.id in (:plantIds) order by createdAt desc")
+	List<PurchaseOrder> findByIsActive(Boolean isActive, int[] plantIds);
 	
 	PurchaseOrder findTopByOrderByIdDesc();
 	

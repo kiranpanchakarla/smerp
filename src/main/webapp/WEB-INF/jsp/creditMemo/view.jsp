@@ -137,6 +137,9 @@ text-align: left;
 																				<label>Status</label>: ${cre.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
+																				<label>Warehouse</label>: ${cre.plant.plantName}
+																			  </div>
+																			<div class="col-sm-4 form-group">
 																				<label>Remarks</label>: ${cre.remark}
 																			</div>
 																		</div>

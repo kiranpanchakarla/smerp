@@ -134,6 +134,9 @@ text-align: left;
 																				<label>Status</label>: ${inv.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
+																				<label>Warehouse</label>: ${inv.plant.plantName}
+																			  </div>
+																			<div class="col-sm-4 form-group">
 																				<label>Remarks</label>: ${inv.remark}
 																			</div>
 																		</div>

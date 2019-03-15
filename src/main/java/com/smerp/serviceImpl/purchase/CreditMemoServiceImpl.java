@@ -162,6 +162,8 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		creditMemo.setVendorContactDetails(vendorsContactDetails);
 		creditMemo.setVendorShippingAddress(vendorShippingAddress);
 		creditMemo.setVendorPayTypeAddress(vendorPayAddress);
+		
+		creditMemo.setPlant(creditMemo.getInvId().getPlant());
          } 
          
 		}
@@ -230,6 +232,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			inv.setPostingDate(in.getPostingDate());
 			inv.setCategory(in.getCategory());
 			inv.setRemark(in.getRemark());
+			inv.setPlant(in.getPlant());
 			inv.setDeliverTo(in.getDeliverTo());
 			inv.setReferenceDocNumber(in.getDocNumber());
 			inv.setRequiredDate(in.getRequiredDate());

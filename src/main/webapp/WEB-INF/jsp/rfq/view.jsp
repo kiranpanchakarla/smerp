@@ -130,6 +130,9 @@
 																			<div class="col-sm-4 form-group">
 																				<label>Status</label>: ${rfq.status}
 																			</div>
+																			<div class="col-sm-4 form-group ">
+																		   <label>Warehouse</label>: ${rfq.plant.plantName}
+																	      </div>
 																			<div class="col-sm-4 form-group">
 																				
 																				<label>Remarks </label>: ${rfq.remark}

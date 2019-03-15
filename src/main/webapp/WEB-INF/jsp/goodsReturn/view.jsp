@@ -132,14 +132,19 @@ text-align: left;
 																				<label>Required Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gre.requiredDate}" />
 																			</div>
+																			<div class="col-sm-4 form-group">
+																				<label>Warehouse</label>: ${gre.plant.plantName}
+																			</div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Status</label>: ${gre.status}
 																			</div>
-																			<div class="col-sm-4 form-group">
+																			
+																		</div>
+																		<div class="row">
+																		<div class="col-sm-4 form-group">
 																				<label>Remarks</label>: ${gre.remark}
 																			</div>
 																		</div>
-																		
 																		
 																	</div>
 																</div>

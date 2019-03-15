@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -274,12 +275,15 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		os.close();
 		return file.getAbsolutePath();
 	}
+	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsReceipt goodsReceipt) throws TemplateException, IOException, DocumentException {
 		
 	    goodsReceipt = goodsReceiptService.getListAmount(goodsReceipt);
 	    GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(goodsReceipt.getId());
 	    List<LineItemsBean> lineItemsBean = goodsReceiptService.getLineItemsBean(goodsReceipt.getId());
+	    gr.setRoundedOff("" + df2.format(gr.getTotalPayment() - Double.parseDouble(gr.getAmtRounding())));
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());
 		if (!sourceFolder.exists()) {
@@ -351,6 +355,7 @@ public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoic
 	    invoice = invoiceService.getListAmount(invoice);
 	    InVoice inv = invoiceService.getInVoiceById(invoice.getId());
 	    List<LineItemsBean> lineItemsBean = invoiceService.getLineItemsBean(invoice.getId());
+	    inv.setRoundedOff("" + df2.format(inv.getTotalPayment() - Double.parseDouble(inv.getAmtRounding())));
 		File sourceFolder = null;
 			sourceFolder = new File(downloadUtil.getDownloadPath());
 		if (!sourceFolder.exists()) {

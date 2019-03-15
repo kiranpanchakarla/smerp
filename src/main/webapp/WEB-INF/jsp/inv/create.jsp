@@ -197,6 +197,15 @@
 																						required="true" />
 
 																				</div>
+																				
+																				<div class="col-sm-4 form-group ">
+																				<label>Warehouse</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true"  onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
+																			</div>	
 																				</c:if>
 																				<!-- Direct Creation END -->
 
@@ -326,6 +335,16 @@
 																						readonly="true" />
 
 																				</div>
+																				
+																				<div class="col-sm-4 form-group ">
+																				<label>Warehouse</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" disabled="true" readonly="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			</div>
+																	  		  
+																	  		 
 																			</c:if>
 																			<!-- COnversion END -->
 																				<div class="row" id="radioDiv">
@@ -637,14 +656,30 @@
 																																</div></td>
 																															<!--  -->
 
-																															<td><div class="form-group">
+																															<td><%-- <div class="form-group">
 																																	<form:select class="form-control warehouse"
 																																		style="width:;" readonly="true"
 																																		path="inVoiceLineItems[${count}].warehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control warehouse" 
+																															name="inVoiceLineItems[${count}].warehouse" style="width:100%;" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div> 
+																																
+																																</td>
 
 																														</c:if>
 
@@ -774,14 +809,28 @@
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
+																															<td><%-- <div class="form-group">
 																																	<form:select class="form-control warehouse"
 																																		style="width:;" required="true"
 																																		path="inVoiceLineItems[${count}].warehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																<div class="form-group"><select class="form-control warehouse" 
+																															name="inVoiceLineItems[${count}].warehouse" style="width:100%;" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div>
+																																</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -1196,6 +1245,26 @@
 
 
 <script type="text/javascript">
+
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	 
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+			
+			
+		}
+} 
+
+
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -1228,6 +1297,8 @@ if ($('#service_radio').is(":checked") == true) {
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -1336,11 +1407,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inVoiceLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+ scriptSelectPlant +
+			+ '<select  name="inVoiceLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse" style="width: 100%;" id="toWarehouse'+inc+'" >'
+			/* + scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -1456,6 +1527,7 @@ function addItem() {
 		
 	
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}

@@ -29,6 +29,7 @@ import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.DocNumberGenerator;
@@ -73,6 +74,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	
 	@Autowired
 	private PurchaseRequestRepository purchaseRequestRepository;
+	
+	@Autowired
+	PlantService plantService;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -175,6 +179,8 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
 			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
 			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+			
+			purchaseOrder.setPlant(purchaseOrder.getRfqId().getPlant());
 			}
 		}
 
@@ -247,6 +253,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setPostingDate(rfq.getPostingDate());
 			po.setCategory(rfq.getCategory());
 			po.setRemark(rfq.getRemark());
+			po.setPlant(rfq.getPlant());
 			po.setDeliverTo(rfq.getDeliverTo());
 			po.setReferenceDocNumber(rfq.getDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
@@ -350,7 +357,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 	@Override
 	public List<PurchaseOrder> findByIsActive() {
-		return purchaseOrderRepository.findByIsActive(true);
+		return purchaseOrderRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

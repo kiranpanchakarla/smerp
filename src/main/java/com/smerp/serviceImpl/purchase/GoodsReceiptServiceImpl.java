@@ -205,6 +205,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				goodsReceipt.setVendorContactDetails(vendorsContactDetails);
 				goodsReceipt.setVendorShippingAddress(vendorShippingAddress);
 				goodsReceipt.setVendorPayTypeAddress(vendorPayAddress);
+				
+				goodsReceipt.setPlant(goodsReceipt.getPoId().getPlant());
 			}
 			
 		}
@@ -279,6 +281,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			gr.setPostingDate(po.getPostingDate());
 			gr.setCategory(po.getCategory());
 			gr.setRemark(po.getRemark());
+			gr.setPlant(po.getPlant());
 			gr.setDeliverTo(po.getDeliverTo());
 			gr.setReferenceDocNumber(po.getDocNumber());
 			gr.setRequiredDate(po.getRequiredDate());

@@ -155,7 +155,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			 if(inVoice.getGrId() != null) { 
 				 GoodsReceipt gr = inVoice.getGrId();
 	        	
-				 Vendor vendor = vendorService.findById(gr.getVendor().getId());
+				Vendor vendor = vendorService.findById(gr.getVendor().getId());
 	     		VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
 	     		VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
 	     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
@@ -164,12 +164,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     		inVoice.setVendorContactDetails(vendorsContactDetails);
 	     		inVoice.setVendorShippingAddress(vendorShippingAddress);
 	     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+	     		
+	     		inVoice.setPlant(inVoice.getGrId().getPlant());
 	         }
 		}
          logger.info("inVoice -->" +inVoice);
 		
          if(inVoice.getGrId()==null) { 
-        	 Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+        	Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
      		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
      		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
      		
@@ -246,6 +248,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setPostingDate(gr.getPostingDate());
 			inv.setCategory(gr.getCategory());
 			inv.setRemark(gr.getRemark());
+			inv.setPlant(gr.getPlant());
 			inv.setDeliverTo(gr.getDeliverTo());
 			inv.setReferenceDocNumber(gr.getDocNumber());
 			inv.setRequiredDate(gr.getRequiredDate());

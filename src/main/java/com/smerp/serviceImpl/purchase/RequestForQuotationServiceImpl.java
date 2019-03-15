@@ -119,6 +119,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			
 			}else {
 				requestForQuotation.setLineItems(requestLists);
+				requestForQuotation.setPlant(requestForQuotation.getPurchaseReqId().getPlant());
 			}
 			
 			

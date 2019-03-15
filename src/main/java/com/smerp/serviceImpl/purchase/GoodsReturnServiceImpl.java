@@ -152,6 +152,8 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			goodsReturn.setVendorContactDetails(vendorsContactDetails);
 			goodsReturn.setVendorShippingAddress(vendorShippingAddress);
 			goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
+			
+			goodsReturn.setPlant(goodsReturn.getGrId().getPlant());
 			}
 		}
          logger.info("goodsReturn -->" +goodsReturn);
@@ -236,6 +238,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			gre.setPostingDate(gr.getPostingDate());
 			gre.setCategory(gr.getCategory());
 			gre.setRemark(gr.getRemark());
+			gre.setPlant(gr.getPlant());
 			gre.setDeliverTo(gr.getDeliverTo());
 			gre.setReferenceDocNumber(gr.getDocNumber());
 			gre.setRequiredDate(gr.getRequiredDate());

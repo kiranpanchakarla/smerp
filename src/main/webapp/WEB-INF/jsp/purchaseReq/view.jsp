@@ -73,7 +73,7 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Plant</label>:
+																		<label>User Warehouse</label>:
 																		${purchaseRequest.user.plant.plantName}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
@@ -91,6 +91,9 @@
 																		<label>Required Date</label>:
 																		<fmt:formatDate pattern="dd/MM/yyyy"
 																			value="${purchaseRequest.requiredDate}" />
+																	</div>
+																	<div class="col-sm-6 form-group has-feedback">
+																		<label>Warehouse</label>: ${purchaseRequest.plant.plantName}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Remarks</label>: ${purchaseRequest.remarks}

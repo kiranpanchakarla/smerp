@@ -140,7 +140,9 @@ text-align: left;
 
 
 																		<div class="row">
-																			
+																			  <div class="col-sm-4 form-group">
+																				<label>Warehouse</label>: ${gr.plant.plantName}
+																			  </div>
                                                                             <div class="col-sm-4 form-group">
 																				<label>Status</label>: ${gr.status}
 																			</div>

@@ -206,13 +206,26 @@
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div>
-                                                                           
+                                                                           <c:choose>
+																			<c:when test="${rfq.purchaseReqId.id==null}">
                                                                            <div class="col-sm-4 form-group">
-                                                                          <label>Warehouse</label> 
+                                                                            <label>Warehouse</label> 
                                                                             <form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
 																			<form:option value="">Select</form:option>
 																			<form:options items="${planMap}"></form:options>
-																		</form:select>
+																		    </form:select>
+																		    </div>
+																		 </c:when>    
+																		 <c:otherwise>
+																		 <div class="col-sm-4 form-group">
+                                                                            <label>Warehouse</label> 
+                                                                            <form:select id="warehouseId" path="plant.id" cssClass="form-control" disabled="true" onchange="wareHouseValidation()">
+																			<form:option value="">Select</form:option>
+																			<form:options items="${planMap}"></form:options>
+																		    </form:select>
+																		    </div>
+																		  </c:otherwise>
+																				</c:choose>
 																		</div>
 																		
 																		 

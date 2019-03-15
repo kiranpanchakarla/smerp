@@ -1261,7 +1261,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 					 alertify.success('Saved Successfully');
 					return true;
 				  } else if(subStatus == "APP"){
-					 alertify.success('Approved Return');
+					 alertify.success('Approved');
 					return true;
 				  } else if(subStatus == "RE"){
 					 alertify.warning('Document Rejected');

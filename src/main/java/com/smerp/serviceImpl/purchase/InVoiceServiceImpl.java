@@ -37,6 +37,7 @@ import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
@@ -93,6 +94,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -522,7 +527,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 
 	@Override
 	public List<InVoice> findByIsActive() {
-		return inVoiceRepository.findByIsActive(true);
+		return inVoiceRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 	
 	@Override

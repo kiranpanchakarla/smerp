@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
@@ -34,6 +35,10 @@ public class RequestForQuotation extends AuditModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="vendor_id")
 	private Vendor vendor;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="plant_id", referencedColumnName = "plant_id")
+	private Plant  plant;
 	
 	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name = "rfq_id", referencedColumnName = "rfq_id")
@@ -200,6 +205,21 @@ public class RequestForQuotation extends AuditModel {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public Plant getPlant() {
+		return plant;
+	}
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+	@Override
+	public String toString() {
+		return "RequestForQuotation [id=" + id + ", vendor=" + vendor + ", plant=" + plant + ", lineItems=" + lineItems
+				+ ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber
+				+ ", postingDate=" + postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
+				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
+				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
+				+ ", purchaseReqId=" + purchaseReqId + ", remark=" + remark + ", deliverTo=" + deliverTo + "]";
 	}
 
 	

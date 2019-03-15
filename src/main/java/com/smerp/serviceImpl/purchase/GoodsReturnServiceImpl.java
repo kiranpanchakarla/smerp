@@ -38,6 +38,7 @@ import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
@@ -89,6 +90,10 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	@Autowired
 	DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
@@ -466,7 +471,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 
 	@Override
 	public List<GoodsReturn> findByIsActive() {
-		return goodsReturnRepository.findByIsActive(true);
+		return goodsReturnRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

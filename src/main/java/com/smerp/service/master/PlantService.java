@@ -20,5 +20,7 @@ public interface PlantService {
 	
 	Plant findByName(String name);
 	
+	int[] findPlantIds();
+	
 
 }

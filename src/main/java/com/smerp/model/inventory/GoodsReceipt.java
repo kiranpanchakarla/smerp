@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
@@ -34,6 +35,10 @@ public class GoodsReceipt extends AuditModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="plant_id", referencedColumnName = "plant_id")
+	private Plant  plant;
 
 	//@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@OneToMany(cascade = CascadeType.ALL)
@@ -335,6 +340,16 @@ public class GoodsReceipt extends AuditModel {
 
 	public void setPoId(PurchaseOrder poId) {
 		this.poId = poId;
+	}
+
+	
+	
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
 	}
 
 	@Override

@@ -95,7 +95,7 @@
                                                                          
                                                                     
                                                                         <div class="col-sm-6 form-group has-feedback">
-                                                                            <label>Plant</label>
+                                                                            <label>User Warehouse</label>
                                                                             <form:input type="text" class="form-control plant" placeholder='Plant' path="referenceUser.plant.plantName" 
                                                                           
                                                                             value="${purchaseRequest.referenceUser.plant.plantName}" 
@@ -118,7 +118,21 @@
                                                                            <!--  <div style="color:red;" class="help-block with-errors"></div> -->
                                                                         </div>
                                                                     
-                                                                        <div class="col-sm-6 form-group" style="visibility: hidden;">
+                                                                       
+                                                                        
+                                                                         <div class="col-sm-6 form-group has-feedback">
+																		<label>Warehouse</label>
+																		<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																			<form:option value="">Select</form:option>
+																			<form:options items="${planMap}"></form:options>
+																		</form:select>
+																	   </div>
+                                                                        
+                                                                        
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                     <div class="col-sm-6 form-group" style="visibility: hidden;">
                                                                             <div class="input-group">
                                                                                 <%-- <div class="col-sm-3 form-group">
                                                                                     <form:radiobutton name="type" path="type" id="items_radio"  value="Item" />
@@ -280,12 +294,28 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																													  
-																													  	<td><div class="form-group"><form:select class="form-control"
-																															style="width:160px !important;"  required="true"
+																													  	<td><%-- <div class="form-group"><form:select class="form-control warehouse"
+																															style="width:100% !important;" id="toWarehouse${count}"  required="true"
 																															path="purchaseRequestLists[${count}].warehouse">
 																															<form:option value="" label="Select" />
-																															<form:options items="${planMap}" />
-																														</form:select></div></td>
+																															<form:options items="${planMap}" value = "purchaseRequest.plant" />
+																														</form:select></div>   --%>
+																														
+																														 <div class="form-group"><select class="form-control warehouse" 
+																															name="purchaseRequestLists[${count}].warehouse" id="toWarehouse${count}">
+																														<c:forEach var="plantMap" items="${planMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${plantMap.key == listpurchaseRequestLists.warehouse}">
+																															<option  value="${plantMap.key}" selected>${plantMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div> 
+																														
+																														</td>
 																													  
 																													  <td>
 																													<div class="form-group">
@@ -445,6 +475,28 @@
     </body>
 
     <script type="text/javascript">
+    
+    function wareHouseValidation() {
+    	wareHouseChangeInLineItems();
+    	
+        
+    }
+    	  
+    function wareHouseChangeInLineItems(){
+    	var incCount = inc;
+    	
+    	
+    	
+    	for (var i = 0; i < incCount; i++) {
+    			var val = $("#warehouseId").val();
+    			var warhouseName=  $("#warehouseId option:selected").text();
+    			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+    			$('#toWarehouse'+i).empty();
+    			$('#toWarehouse'+i).append(addToRow);
+    			
+    			
+    		}
+    } 
 
     var sizeplant = "${planMapSize}";
     var scriptSelectPlant='';
@@ -454,7 +506,7 @@
     
     var recipientsArray = []; 
     
-    var inc=0;
+    var inc=0;;
     var edit_addressCount=0;
 
 
@@ -473,11 +525,14 @@
     	 
     		if ($('#edit_addressCount').val() != undefined ) {
     			 //alert("edit");
+    			 inc = $("#edit_addressCount").val();
+    			 inc++;
     			 $("#serviceTbl").hide();
     			 $("#itemTbl").hide();
     		}
 
     		if ($('#edit_addressCount').val() != undefined ) {
+    			 
     		}else{
     			addItem();
     		}
@@ -553,11 +608,11 @@
     			
     			+ '<td>'
     			+'<div class="form-group">'
-    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse" style="width:160px !important;" required="true"  class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-    			+scriptSelectPlant+
+    			+ '<select  name="purchaseRequestLists['+inc+'].warehouse"  required="true"  class="form-control warehouse'+inc+' warehouse" style="width:160px !important;" id="toWarehouse'+inc+'" >'
+    			/* +scriptSelectPlant+
     			<c:forEach items="${planMap}" var="planMap">
     			'<option value="${planMap.key}">${planMap.value}</option>'+
-    			</c:forEach>
+    			</c:forEach> */
     			+ '</select>'
     			+ '</div>'
     			+ '</td>'
@@ -637,6 +692,7 @@
     		
     	
     		inc++;
+    		wareHouseChangeInLineItems();
     		$('#addressCount').val(inc);
     		$("#form").validator("update");
     		

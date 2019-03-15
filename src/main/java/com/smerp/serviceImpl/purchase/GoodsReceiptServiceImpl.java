@@ -40,6 +40,7 @@ import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
@@ -88,6 +89,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Autowired
 	DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
@@ -548,7 +553,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Override
 	public List<GoodsReceipt> findByIsActive() {
-		return goodsReceiptRepository.findByIsActive(true);
+		return goodsReceiptRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 	
 	@Override

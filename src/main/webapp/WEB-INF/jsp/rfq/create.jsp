@@ -206,6 +206,13 @@
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div>
+                                                                           
+                                                                           <div class="col-sm-4 form-group">
+                                                                          <label>Warehouse</label> 
+                                                                            <form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																			<form:option value="">Select</form:option>
+																			<form:options items="${planMap}"></form:options>
+																		</form:select>
 																		</div>
 																		
 																		 
@@ -464,12 +471,28 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																													
-																													<td><div class="form-group"><form:select class="form-control"
+																													<td><%-- <div class="form-group"><form:select class="form-control"
 																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></div></td>
+																														</form:select></div> --%>
+																														
+																														 <div class="form-group"><select class="form-control warehouse" 
+																															name="lineItems[${count}].warehouse" id="toWarehouse${count}">
+																														<c:forEach var="plantMap" items="${planMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${plantMap.key == listLineItems.warehouse}">
+																															<option  value="${plantMap.key}" selected>${plantMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div>
+																														
+																														</td>
 																															
 																															
 																													<td><div class="form-group"><form:input type="text"
@@ -641,6 +664,28 @@
 
 <script type="text/javascript">
 
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+	
+    
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	
+	
+	
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+			
+			
+		}
+} 
+
 var sizeplant = "${planMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -672,6 +717,8 @@ if ($('#service_radio').is(":checked") == true) {
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			 inc = $("#edit_addressCount").val();
+    			 inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -748,11 +795,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+scriptSelectPlant+
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			/* +scriptSelectPlant+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -807,7 +854,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
@@ -835,6 +882,7 @@ function addItem() {
 		
 	
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}

@@ -10,8 +10,8 @@ import com.smerp.model.inventory.InVoice;
 
 public interface InVoiceRepository  extends JpaRepository<InVoice, Integer> {
 	
-	@Query("SELECT r FROM InVoice r WHERE isActive=:isActive order by createdAt desc")
-	List<InVoice> findByIsActive(Boolean isActive);
+	@Query("SELECT r FROM InVoice r WHERE isActive=:isActive and plant.id in (:plantIds)  order by createdAt desc")
+	List<InVoice> findByIsActive(Boolean isActive, int[] plantIds);
 	
 	InVoice findTopByOrderByIdDesc();
 	

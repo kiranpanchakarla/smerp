@@ -37,6 +37,7 @@ import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
@@ -94,6 +95,10 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public CreditMemo save(CreditMemo creditMemo) {
@@ -458,7 +463,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 
 	@Override
 	public List<CreditMemo> findByIsActive() {
-		return creditMemoRepository.findByIsActive(true);
+		return creditMemoRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

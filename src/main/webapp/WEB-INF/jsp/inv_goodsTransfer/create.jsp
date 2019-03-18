@@ -155,16 +155,13 @@
 																				</div> 
 																				
 																				
-																				<div class="col-sm-6 form-group">
-																					<label>Ship To</label>
-																					<form:select class="form-control" id="warehouseId" onchange="wareHouseValidation()"
-																					  required="true"
-																					 path="toWarehouse">
-																					 <form:option value="" label="Select" />
-																					 <form:options items="${findPlantAll}" />
-																					 </form:select>
-
-																				</div> 
+																				<div class="col-sm-6 form-group ">
+																				<label>Ship To</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
 																				 
 																			</div>
 																			</div>
@@ -279,14 +276,29 @@
 																																	</form:select>
 																																</div></td>
 																																
-																																	<td><div class="form-group">
+																																	<td><%-- <div class="form-group">
 																																	<form:select class="form-control"
 																																		style="width:;" required="true" id="toWarehouse${count}"
 																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${findPlantAll}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control" 
+																																	name="inventoryGoodsTransferList[${count}].toWarehouse" style="width:100%;" id="toWarehouse${count}">
+																																	<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  				<c:choose>
+																																		<c:when test="${planMap.key == listLineItems.toWarehouse}">
+																																		<option  value="${planMap.key}" selected>${planMap.value}</option>
+																																	</c:when>
+																																	</c:choose>
+																																	</c:forEach>
+																																	</select>
+																														
+																																</div> 
+																																</td>
 																																
 																																	<td class="gr-main">
 			                                                                                                               <img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output"
@@ -671,6 +683,8 @@ $("#itemTbl").show();
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}

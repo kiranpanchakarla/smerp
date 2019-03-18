@@ -119,12 +119,12 @@ text-align: left;
 																 
 																
 																<div class="col-sm-3 form-group">
-																                <label>Ship to</label>: <c:forEach var="entry"
+																                <label>Ship to</label>: ${gr.plant.plantName}<%-- <c:forEach var="entry"
 																														items="${plantMap}">
 																														<c:if
 																															test="${entry.key ==gr.toWarehouse}">
 																													 ${entry.value} 																													 </c:if>
-																													</c:forEach>  
+																													</c:forEach>   --%>
 																					 
 																				</div>
 																				

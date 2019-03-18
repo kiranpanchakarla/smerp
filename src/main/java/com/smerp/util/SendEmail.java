@@ -286,10 +286,10 @@ public class SendEmail extends EmailerGenerator{
 		Writer out = new StringWriter();
 		try {
 			Map<String, Object> input = new HashMap<String, Object>(1);
-			input.put("prCount", dashboardCountService.findAll());
+			/*input.put("prCount", dashboardCountService.findAll());
 			input.put("rfqCount", dashboardCountService.findRFQCount());
 			input.put("poCount", dashboardCountService.findPOCount());
-			input.put("grCount", dashboardCountService.findGoodsReceiptCount());
+			input.put("grCount", dashboardCountService.findGoodsReceiptCount());*/
 			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {

@@ -16,6 +16,7 @@ import com.smerp.model.inventorytransactions.InventoryGoodsTransferList;
 import com.smerp.repository.inventorytransactions.InventoryGoodsTransferRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
+import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.RequestContext;
@@ -35,6 +36,9 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	
 	@Autowired
 	InventoryGoodsIssueService inventoryGoodsIssueService;
+	
+	@Autowired
+	PlantService plantService;
 	
 	@Override
 	public InventoryGoodsTransfer save(InventoryGoodsTransfer inventoryGoodsTransfer) {
@@ -132,7 +136,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	@Override
 	public List<InventoryGoodsTransfer> findByIsActive() {
 		// TODO Auto-generated method stub
-		return inventoryGoodsTransferRepository.findByIsActive(true);
+		return inventoryGoodsTransferRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

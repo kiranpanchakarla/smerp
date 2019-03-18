@@ -15,6 +15,7 @@ import com.smerp.model.inventorytransactions.InventoryGoodsReceiptList;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.repository.inventorytransactions.InventoryGoodsReceiptRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
+import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.RequestContext;
@@ -31,6 +32,9 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	PlantService plantService;
 	
 	@Override
 	public InventoryGoodsReceipt save(InventoryGoodsReceipt inventoryGoodsReceipt) {
@@ -110,7 +114,7 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 	@Override
 	public List<InventoryGoodsReceipt> findByIsActive() {
 		// TODO Auto-generated method stub
-		return inventoryGoodsReceiptRepository.findByIsActive(true);
+		return inventoryGoodsReceiptRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

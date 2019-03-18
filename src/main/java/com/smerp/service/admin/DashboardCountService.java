@@ -10,17 +10,19 @@ import com.smerp.model.inventory.MinimumQuantityList;
 
 public interface DashboardCountService {
 
-	DashboardCount findAll();
+	/*DashboardCount findAll();
 	
 	DashboardCount findRFQCount();
 	
 	DashboardCount findPOCount();
 	
-	DashboardCount findGoodsReceiptCount();
+	DashboardCount findGoodsReceiptCount();*/
 	
 	List<MinimumQuantityList> minProductQtyList();
 	
 	List<InventoryProductsList> inventoryQtyList(int id);
 	
 	List<InventoryGoodsIssueList> inventoryGoodsIssueList(int id);
+	
+	List<DashboardCount> getCount();
 }

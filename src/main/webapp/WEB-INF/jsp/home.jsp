@@ -195,32 +195,17 @@
         </div>
          
         </div>
-        
-        <!--/ stats --> 
-      <!--/ project charts -->
-     
-      <!--/ project charts --> 
-      <!-- Recent invoice with Statistics -->
-         <!--  <div class="card">
-            <div class="card-body">
-               <div class="media">
-               <div class="p-2 text-xs-center bg-teal media-right media-middle"> <i class="icon-user1 font-large-2 white"></i> </div>
-                <div class="p-2 media-body">
-                  <h5>New Users</h5>
-                </div>
-                
-              </div>
-            </div>
-          </div> -->
+      
         </div>
-        <div class="col-xl-3 col-lg-6 col-xs-12">
+        
+      <%--   <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
                 <h4 class="card-title" style="text-align: center;"><a href="<c:url value="/purchaseReq/list"/>">Purchase Request</a></h4>
               </div>
               <ul class="list-group list-group-flush">
-               <%--   <a id="example" onchange="setStatus('Open')" href="<c:url value="/purchaseReq/list?purchaseReqStatus=Open"/>"> --%>
+                 <a id="example" onchange="setStatus('Open')" href="<c:url value="/purchaseReq/list?purchaseReqStatus=Open"/>">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-primary float-xs-right">${dashboardCount.open}</span> Open </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${dashboardCount.draft}</span> Draft </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${dashboardCount.cancelled}</span>Cancelled </li>
@@ -231,7 +216,7 @@
               </ul>
             </div>
           </div>
-         </div>
+         </div> --%>
        <%--  <div class="col-md-6">
         <a href="<c:url value="/purchaseReq/list"/>">
           <div class="card">
@@ -266,7 +251,7 @@
           </div>
           </a>
         </div> --%>
-         <div class="col-xl-3 col-lg-6 col-xs-12">
+         <%-- <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -278,13 +263,13 @@
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-warning float-xs-right">${rfqCount.cancelled}</span>Cancelled </li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.approved}</span> Approved</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-danger float-xs-right">${rfqCount.rejected}</span> Rejected </li>
-              <%--   <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li> --%>
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToRFQ}</span>Converted to RFQ</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-success float-xs-right">${rfqCount.convertedToPO}</span>Converted to PO</li>
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-total float-xs-right">${rfqCount.total}</span> Total Records </li>
               </ul>
             </div>
           </div>
-         </div>
+         </div> --%>
          <%-- <div class="col-md-6">
          <a href="<c:url value="/rfq/list"/>">
           <div class="card">
@@ -321,7 +306,7 @@
           </div>
           </a>
         </div>  --%>
-       <div class="col-xl-3 col-lg-6 col-xs-12">
+       <%-- <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -339,7 +324,7 @@
               </ul>
             </div>
           </div>
-         </div>
+         </div> --%>
        <%-- <div class="col-md-6">
          <a href="<c:url value="/rfq/list"/>">
           <div class="card">
@@ -369,7 +354,7 @@
           </a>
         </div>  --%>
         
-        <div class="col-xl-3 col-lg-6 col-xs-12">
+        <%-- <div class="col-xl-3 col-lg-6 col-xs-12">
          <div class="card new_card_style" style="height: 440px;">
             <div class="card-body">
               <div class="card-block">
@@ -386,8 +371,83 @@
               </ul>
             </div>
           </div>
+         </div> --%>
+         
+            
+          
+         <div class="col-xl-3 col-lg-6 col-xs-12">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+            
+              <ul class="list-group list-group-flush">
+                <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Purchase Request</a></h4>
+               <c:forEach var="docCount" items="${count}">
+               <c:if test="${docCount.status != 'ConvertedToPO' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced' && docCount.status != 'Partially_Received'}">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.prCount}</span> ${docCount.status} </li>
+                </c:if>
+                </c:forEach>
+                
+              </ul>
+             
+            </div>
+          </div>
          </div>
+         
+         <div class="col-xl-3 col-lg-6 col-xs-12">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+           
+              <ul class="list-group list-group-flush">
+              <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Request for Quotation</a></h4>
+                
+               <c:forEach var="docCount" items="${count}">
+               <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced' && docCount.status != 'Partially_Received' }">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.rfqCount}</span> ${docCount.status} </li>
+                </c:if>
+                </c:forEach>
+              </ul>
+             
+            </div>
+          </div>
+         </div>  
+         
+         <div class="col-xl-3 col-lg-6 col-xs-12">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+            
+              <ul class="list-group list-group-flush">
+               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Purchase Order</a></h4>
+               <c:forEach var="docCount" items="${count}">
+                <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'ConvertedToPO' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced'}">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.poCount}</span> ${docCount.status} </li>
+                </c:if>
+                </c:forEach>
+              </ul>
+             
+            </div>
+          </div>
+         </div>
+         
+         <div class="col-xl-3 col-lg-6 col-xs-12">
+         <div class="card new_card_style" style="height: 440px;">
+            <div class="card-body">
+            
+              <ul class="list-group list-group-flush">
+               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Goods Receipt</a></h4>
+               <c:forEach var="docCount" items="${count}">
+               <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'ConvertedToPO' && docCount.status != 'Partially_Received' }">
+                <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.grCount}</span> ${docCount.status} </li>
+                </c:if>
+                </c:forEach>
+              </ul>
+             
+            </div>
+          </div>
+         </div>
+         
+        
        
+         
       </div><br><br>
       
       <!-- <hr> -->

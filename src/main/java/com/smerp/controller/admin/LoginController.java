@@ -111,10 +111,11 @@ public class LoginController {
 			model.addAttribute("productsCount", productService.findByIsActive().size());
 			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());
 			model.addAttribute("companyListCount", companyServices.findByIsActive().size());
-			model.addAttribute("dashboardCount", dashboardCountService.findAll());
+			/*model.addAttribute("dashboardCount", dashboardCountService.findAll());
 			model.addAttribute("rfqCount", dashboardCountService.findRFQCount());
 			model.addAttribute("poCount", dashboardCountService.findPOCount());
-			model.addAttribute("grCount", dashboardCountService.findGoodsReceiptCount());
+			model.addAttribute("grCount", dashboardCountService.findGoodsReceiptCount());*/
+			model.addAttribute("count", dashboardCountService.getCount());
 			//model.addAttribute("proCount", dashboardCountService.minProductQtyList());
 		} catch (Exception e) {
 			e.printStackTrace();

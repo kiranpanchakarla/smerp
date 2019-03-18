@@ -65,13 +65,8 @@
                 
                 <tr>
                 <td><strong>Ship to</strong></td>
-                <td> 
-                  <#list plantMap as key, value>
-                <#if (gr.toWarehouse) == (key)>
-                     <p>&nbsp;${value}</p>
-                     </#if>
-                </#list>
-                </td>
+                 <td>:<#if gr.plant??>&nbsp;${gr.plant.plantName}<#else>--</#if> </td>
+                
                 <td><strong >Remarks</strong></td>
                 <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
                 </tr>

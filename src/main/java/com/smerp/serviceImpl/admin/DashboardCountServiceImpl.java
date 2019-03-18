@@ -12,6 +12,7 @@ import javax.transaction.Transactional.TxType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.DashboardCount;
@@ -19,6 +20,7 @@ import com.smerp.model.inventory.InventoryGoodsIssueList;
 import com.smerp.model.inventory.InventoryProductsList;
 import com.smerp.model.inventory.MinimumQuantityList;
 import com.smerp.service.admin.DashboardCountService;
+import com.smerp.service.master.PlantService;
 
 @Repository
 @Transactional(value = TxType.REQUIRED)
@@ -28,8 +30,12 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
-			
-	@Override
+	
+	@Autowired
+	PlantService plantService;
+
+	
+	/*@Override
 	public DashboardCount findAll() {
 		 
 		String sql= "with countWise as ( select count(*) as totalCnt1 FROM tbl_purchase_purchase_req where  is_active=true) ," +
@@ -185,7 +191,7 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	     logger.info("Goods Receipt Count--------->"+dashboardCount); 
 		return dashboardCount;
 	}
-
+*/
 	@Override
 	public List<MinimumQuantityList> minProductQtyList() {
 		String qtysql= "with grWise as(select gol.product_number as grProduct,gol.warehouse as grWarehouse, sum(gol.required_quantity) as receivedQuantity\r\n" + 
@@ -298,6 +304,63 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		 
 		return inventoryGIList;
 		 
+	}
+
+	@Override
+	public List<DashboardCount> getCount() {
+		//String sql= "select * from vw_dashboard";
+		int[] plantIds = plantService.findPlantIds();
+		String plantId="";
+		for(int i : plantIds ) {
+			plantId += "," +i;
+		}
+		plantId = plantId.substring(1,plantId.length());
+		logger.info("Plant ----> " + plantId);
+		String sql = "\r\n" + 
+				"select status\r\n" + 
+				",sum(pr_count) as prCount \r\n" + 
+				",sum(rfq_count) as rfqCount \r\n" + 
+				",sum(po_count) as poCount \r\n" + 
+				",sum(gr_count) as grCount \r\n" + 
+				",sum(gre_count) as greCount \r\n" + 
+				",sum(inv_count) as invCount \r\n" + 
+				",sum(cre_count) as creCount \r\n" + 
+				",sum(invgr_count) as invgrCount \r\n" + 
+				",sum(invgi_count) as invgiCount \r\n" + 
+				",sum(invgt_count) as invgtCount \r\n" + 
+				"from vw_dashboard_plant where plant_id in " + " ( " + plantId  + ") "
+				+ " group by status order by status ";
+		logger.info("Sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		
+		logger.info("sql ----> " + sql);
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query.getResultList());
+		
+		logger.info("List Size -----> " + arrayList.size());
+		
+		
+		List<DashboardCount> list = new ArrayList<>();
+		  
+		 for(Object[] tuple : arrayList) {
+			 DashboardCount dashboardCount = new DashboardCount();
+	    	 dashboardCount.setStatus(tuple[0].toString());
+	    	 dashboardCount.setPrCount(tuple[1] == null ? 0 : (Integer.parseInt(tuple[1].toString())));
+	    	 dashboardCount.setRfqCount(tuple[2] == null ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    	 dashboardCount.setPoCount(tuple[3] == null ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 dashboardCount.setGrCount(tuple[4] == null ? 0 : (Integer.parseInt(tuple[4].toString())));
+	    	 dashboardCount.setGreCount(tuple[5] == null ? 0 : (Integer.parseInt(tuple[5].toString())));
+	    	 dashboardCount.setInvCount(tuple[6] == null ? 0 :(Integer.parseInt(tuple[6].toString())));
+	    	 dashboardCount.setCreCount(tuple[7] == null ? 0 : (Integer.parseInt(tuple[7].toString())));
+	    	 dashboardCount.setInvgrCount(tuple[8] == null ? 0 : (Integer.parseInt(tuple[8].toString())));
+	    	 dashboardCount.setInvgiCount(tuple[9] == null ? 0 : (Integer.parseInt(tuple[9].toString())));
+	    	 dashboardCount.setInvgtCount(tuple[10] == null ? 0 :(Integer.parseInt(tuple[10].toString())));
+	    	 
+	    	 list.add(dashboardCount);
+	     }
+	     
+	     logger.info("PR Count--------->"+arrayList); 
+		return list;
 	}
 
 	

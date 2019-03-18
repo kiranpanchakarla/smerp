@@ -270,6 +270,8 @@
 						</ul></li>
 				</ul> </li>-->
 		   
+		   <li class="float-right dashboard-logo-wrap"><img src=<c:url value="/resources/images/dashboard-logo.png"/> class="logo-right-main" /></li>
+		   
 			<li class="dropdown dropdown-user nav-item edit-user-dropdown">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
@@ -304,7 +306,7 @@
 				</div>
 			</li>
 			
-			<li class="float-right dashboard-logo-wrap"><img src=<c:url value="/resources/images/dashboard-logo.png"/> class="logo-right-main" /></li>
+			
 
 		</ul>
 		<div style="clear: both;"></div>

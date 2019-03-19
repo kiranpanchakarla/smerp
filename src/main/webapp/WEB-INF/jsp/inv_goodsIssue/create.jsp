@@ -138,7 +138,7 @@
 																			<div class="row">
 																			<div class="col-sm-6 form-group ">
 																				<label>Warehouse</label>
-																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																				<form:select id="warehouseId" path="plant.id" class="form-control shipTo" required="true" onchange="wareHouseValidation()">
 																				<form:option value="">Select</form:option>
 																				<form:options items="${plantMap}"></form:options>
 																				</form:select>
@@ -638,8 +638,8 @@ function wareHouseChangeInLineItems(){
 			var val = $("#warehouseId").val();
 			var warhouseName=  $("#warehouseId option:selected").text();
 			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
-			$('#toWarehouse'+i).empty();
-			$('#toWarehouse'+i).append(addToRow);
+			 $('#toWarehouse'+i).empty(); 
+			 $('#toWarehouse'+i).append(addToRow);
 		}
 } 
 
@@ -1380,42 +1380,60 @@ function goBack() {
 	
 	
 	
-$(document).on("change", ".warehouse", function() {
-	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
-	var productNo=  $(itemParentRow).find(".productNumber").val();
-	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+$(document).on("change", ".shipTo", function() {
+	
+
+	/* var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(".shipTo option:selected").val(); 
+	//alert(warehouse);
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val(); 
+	var productNo=  $(itemParentRow).find(".productNumber").val();  */
+	
+	var incCount = inc;
+	  
+	for (var i = 0; i < incCount; i++) {
+	
+		var productNo=  $(".productNumber"+i).val();
+		var warehouse=  $(".shipTo option:selected").val();
+		var itemParentRow = $('.productNumber'+i).parents(".multTot");
+		 
+		setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+		} 
+	 
 });
 
-$(document).on("blur", ".productNumber", function() {	
+$(document).on("blur", ".productNumber", function getStock() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	/* var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();  */
+	var warehouse=  $(".shipTo option:selected").val();  
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
 $(document).on("blur", ".description", function() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	/* var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();  */
+	var warehouse=  $(".shipTo option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
 
 function setInfoInStockQuantity(productNo,warehouse,itemParentRow){
-	
-	 $.ajax({
+	/* console.log("test"+); */
+	/* if(!isNaN(warehouse)) {} */
+	   $.ajax({
 		   type: "GET",
 			data: {productNo:productNo,warehouse :warehouse}, 
 			async : false,
           url: "<c:url value="/invgi/getInStock"/>", 
           success: function (response) {
-        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQunatity "+response);
+        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQuantity "+response);
           },
           error: function(e){
           // alert('Error: ' + e);
            }
-          });
+          });  
 }
 	
 	

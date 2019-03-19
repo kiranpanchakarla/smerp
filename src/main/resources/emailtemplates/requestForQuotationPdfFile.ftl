@@ -48,12 +48,12 @@
                 <td>: <#if rfq.vendorPayTypeAddress.city??>${rfq.vendorPayTypeAddress.city}</#if></td>
                 <td><strong >Ship From</strong></td>
                 <td>: <#if rfq.vendorShippingAddress.city??>${rfq.vendorShippingAddress.city}</#if></td>
-                <td><strong>Doc No.</strong></td>
+                <td><strong>Doc#</strong></td>
                 <td>:<#if rfq.docNumber??>${rfq.docNumber}</#if></td>
                 </tr>
                 
                 <tr>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>Ref Doc#</strong></td>
                 <td>:<#if rfq.referenceDocNumber??>${rfq.referenceDocNumber}</#if></td>
                 <td><strong >Posting Date</strong></td>
                 <td>:<#if rfq.postingDate??>${rfq.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
@@ -62,7 +62,7 @@
                 </tr>
                 
                 <tr>
-                <td><strong >Require Date</strong></td>
+                <td><strong >Required Date</strong></td>
                 <td>:<#if rfq.requiredDate??>${rfq.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 <td><strong>Status</strong></td>
 			    <td>: <#if rfq.status??> ${rfq.status}</#if></td>

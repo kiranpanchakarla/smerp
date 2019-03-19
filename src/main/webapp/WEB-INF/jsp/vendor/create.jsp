@@ -551,7 +551,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address-1</label> <input type="text"
 																							name="vendorAddress[0].addressId"
-																							class="form-control camelCase" placeholder='Address Id'
+																							class="form-control camelCase" placeholder='Address-1'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address Id')"
 																							oninput="setCustomValidity('')" />
@@ -563,7 +563,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address-2</label> <input type="text"
 																							name="vendorAddress[0].addressName"
-																							class="form-control camelCase" placeholder='Address'
+																							class="form-control camelCase" placeholder='Address-2'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address')"
 																							oninput="setCustomValidity('')" />

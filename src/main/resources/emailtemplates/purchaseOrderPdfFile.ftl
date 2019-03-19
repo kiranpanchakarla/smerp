@@ -227,11 +227,11 @@
             </table>
              <table style="width:100%">
                 <tr>
-                <td><strong>Deviler To :</strong></td>
+                <td><strong>Deliver To :</strong></td>
                 </tr>
                 
                 <tr>
-                <td><#if po.deliverTo??>${po.deliverTo},</#if></td>
+                <td><#if po.deliverTo??>${po.deliverTo}</#if></td>
                 </tr>
              </table>
                  

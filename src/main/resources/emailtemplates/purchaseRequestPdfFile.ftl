@@ -46,7 +46,7 @@
 
 		<tr>
 			<td><strong>Requester Name</strong></td>
-			<td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname}</#if></td>
+			<td>:<#if pr.referenceUser.firstname??> ${pr.referenceUser.firstname} ${" "} ${pr.referenceUser.lastname}</#if></td>
 			<td><strong>Posting Date </strong></td>
 			<td>:<#if pr.postingDate??>${pr.postingDate?string("dd-MM-yyyy")!''}</#if> </td>
 		</tr>

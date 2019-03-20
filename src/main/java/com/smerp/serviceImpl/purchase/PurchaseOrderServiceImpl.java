@@ -341,7 +341,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	@Override
 	public List<PurchaseOrder> poApprovedList() {
 
-		return purchaseOrderRepository.poApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return purchaseOrderRepository.poApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 	

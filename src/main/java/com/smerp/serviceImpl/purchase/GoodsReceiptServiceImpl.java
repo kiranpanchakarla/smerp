@@ -561,7 +561,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public List<GoodsReceipt> grApprovedList() {
-		return goodsReceiptRepository.grApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),EnumStatusUpdate.GOODS_RETURN.getStatus());
+		return goodsReceiptRepository.grApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),EnumStatusUpdate.GOODS_RETURN.getStatus(),plantService.findPlantIds());
 	}
 
 	@Override

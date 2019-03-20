@@ -22,8 +22,8 @@ public interface InVoiceRepository  extends JpaRepository<InVoice, Integer> {
 	List<InVoice> findByApproveListGrId(GoodsReceipt gr ,String status);
 	
 	
-	@Query("SELECT r FROM InVoice r WHERE status = :status order by createdAt desc")
-	List<InVoice> invApprovedList(String status);
+	@Query("SELECT r FROM InVoice r WHERE status = :status and plant.id in (:plantIds) order by createdAt desc")
+	List<InVoice> invApprovedList(String status , int[] plantIds);
 	
 	InVoice findByGrId(GoodsReceipt gr);
 	

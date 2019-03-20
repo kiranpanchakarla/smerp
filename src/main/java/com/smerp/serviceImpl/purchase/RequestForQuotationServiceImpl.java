@@ -237,7 +237,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	@Override
 	public List<RequestForQuotation> rfqApprovedList() {
 
-		return requestForQuotationRepository.rfqApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return requestForQuotationRepository.rfqApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 	

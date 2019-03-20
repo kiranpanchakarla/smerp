@@ -535,7 +535,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Override
 	public List<InVoice> invApprovedList() {
-		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 

@@ -18,8 +18,8 @@ public interface GoodsReturnRepository  extends JpaRepository<GoodsReturn, Integ
 	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status!=:status order by createdAt desc")
 	List<GoodsReturn> findByListgrId(GoodsReceipt gr,String status);
 	
-	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status = :status order by createdAt desc")
-	List<GoodsReturn> findByApproveListGrId(GoodsReceipt gr ,String status);
+	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status = :status and plant.id in (:plantIds) order by createdAt desc")
+	List<GoodsReturn> findByApproveListGrId(GoodsReceipt gr ,String status, int[] plantIds);
 	
 	GoodsReturn findBygrId(GoodsReturn gr);
 

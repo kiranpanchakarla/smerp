@@ -18,11 +18,11 @@ public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Int
 	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:po and status!=:status order by createdAt desc")
 	List<GoodsReceipt> findByListPoId(PurchaseOrder po,String status);
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:po and status = :status order by createdAt desc")
+	@Query("SELECT r FROM GoodsReceipt r WHERE poId=:po and status = :status  order by createdAt desc")
 	List<GoodsReceipt> findByApproveListPoId(PurchaseOrder po ,String status);
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE status = :status or status= :gStatus order by createdAt desc")
-	List<GoodsReceipt> grApprovedList(String status,String gStatus);
+	@Query("SELECT r FROM GoodsReceipt r WHERE status = :status or status= :gStatus and plant.id in (:plantIds) order by createdAt desc")
+	List<GoodsReceipt> grApprovedList(String status,String gStatus, int[] plantIds);
 	
 	GoodsReceipt findByPoId(PurchaseOrder purchaseOrder);
 	

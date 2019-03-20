@@ -83,7 +83,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>UOM</th>
 																<th>Category</th>
 																<th>Created Date</th>

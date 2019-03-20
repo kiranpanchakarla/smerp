@@ -82,11 +82,13 @@
   });
   
   
+  
+  
   function deleteById(id,url){
       alertify.confirm('Are you Sure Want to Delete', function(){
           //alertify.success('Ok');
             //"You pressed OK!";
-            
+           
             
             var parts = url.split('/');
       /* alert(parts); */
@@ -122,6 +124,10 @@
           alertify.error('Cancelled');
           setTimeout($.unblockUI, 1000);
        });
+	  
+      //$(".ajs-header").css("background", "yellow");
+	 // $(".ajs-footer").css("background", "yellow");
+	 // $(".ajs-footer").addClass("backg");
   }
 
  function isValidName(nameId,url,displayId,msg){
@@ -259,5 +265,18 @@
       window.history.back();
   }
  
+  
+ /*  $('.btn-delete').click(function(){
+	  $(".ajs-header").css("background", "yellow");
+	  $(".ajs-footer").css("background", "yellow");
+	  
+  });
+  
+  $(document).on("click", "#convertBtn",function(e){
+	  $(".ajs-header").css("background", "blue");
+	  $(".ajs-footer").css("background", "blue");
+	  
+  }); */
+  
   
 </script>

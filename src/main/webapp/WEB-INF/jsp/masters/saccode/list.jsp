@@ -79,7 +79,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-															    <th>S.no</th>
+															    <th>S.No</th>
 																<th>SAC Code</th>
 																<th>Description</th>
 																<th>Rate</th>

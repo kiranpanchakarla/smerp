@@ -206,6 +206,26 @@
 																					 placeholder='Enter your Remark'
 																					autocomplete="off" path="remark"  />
                                                                            </div>
+                                                                           <c:choose>
+																			<c:when test="${rfq.purchaseReqId.id==null}">
+                                                                           <div class="col-sm-4 form-group">
+                                                                            <label>Warehouse</label> 
+                                                                            <form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																			<form:option value="">Select</form:option>
+																			<form:options items="${planMap}"></form:options>
+																		    </form:select>
+																		    </div>
+																		 </c:when>    
+																		 <c:otherwise>
+																		 <div class="col-sm-4 form-group">
+                                                                            <label>Warehouse</label> 
+                                                                            <form:select id="warehouseId" path="plant.id" cssClass="form-control" disabled="true" onchange="wareHouseValidation()">
+																			<form:option value="">Select</form:option>
+																			<form:options items="${planMap}"></form:options>
+																		    </form:select>
+																		    </div>
+																		  </c:otherwise>
+																				</c:choose>
 																		</div>
 																		
 																		 
@@ -226,7 +246,7 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
                                                                                 
-                                                                                   <div class="inventory-list">
+                                                                                   <div class="inventory-list" style="display: none;">
                                                                                     <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
                                                                                     <span class="radio-list">Product</span>
 
@@ -243,7 +263,7 @@
 																		
 																		<div class="row" id="pur_radioDiv" style="display: none">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Type</label>: <%-- ${rfq.category} --%> Product
+																		
 																	</div>
 																       </div>
 																		
@@ -286,13 +306,13 @@
 																								<tr>
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>SKU</th>
-																									<th>Product Group</th>
-																									<th>HSN</th>
-																									<th>Ware house</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
+																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									<th>Action</th>
 																								</tr>
@@ -334,12 +354,12 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${rfq.category=='Item'}">
-																									<th>Product No.</th>
+																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
 																									<th>SKU</th>
-																									<th>Product Group</th>
-																									<th>HSN</th>
+																									<th>Group</th>
+																									<th>HSN Code</th>
 																									<th>Warehouse</th>
 																									<th>Quantity</th>
 																									</c:if>
@@ -464,12 +484,28 @@
 																															class="form-control hsnVal"
 																															readonly="true"></form:input></div></td>
 																													
-																													<td><div class="form-group"><form:select class="form-control"
+																													<td><%-- <div class="form-group"><form:select class="form-control"
 																															style="width:160px !important;" required="true"
 																															path="lineItems[${count}].warehouse">
 																															<form:option value="" label="Select" />
 																															<form:options items="${planMap}" />
-																														</form:select></div></td>
+																														</form:select></div> --%>
+																														
+																														 <div class="form-group"><select class="form-control warehouse" 
+																															name="lineItems[${count}].warehouse" id="toWarehouse${count}">
+																														<c:forEach var="plantMap" items="${planMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${plantMap.key == listLineItems.warehouse}">
+																															<option  value="${plantMap.key}" selected>${plantMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div>
+																														
+																														</td>
 																															
 																															
 																													<td><div class="form-group"><form:input type="text"
@@ -540,24 +576,25 @@
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
 
-																	<table class="table fixed-width-table">
-																		<thead>
-																			<tr>
-																				<th style="vertical-align: top; !important">Shipping
-																					From</th>
-																				<td>
-																					<div id="shippingAddressTable"></div>
-																				</td>
-																			</tr>
-																			<tr>
-																				<th style="vertical-align: top; !important">Pay
-																					To</th>
-																				<td>
-																					<div id="payToAddressTable"></div>
-																				</td>
-																			</tr>
-																		</thead>
-																	</table>
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" ></div>
+																	 
+																	</div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable"></div>
+																	 </div>
+																	
+																	<div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	<form:textarea type="text" cssClass="form-control camelCase"
+																					autocomplete="off" path="deliverTo"  />
+																	</div>
+																	</div>
 																</div>
 											<br>				
 									<div class="text-xs-center">
@@ -640,6 +677,28 @@
 
 <script type="text/javascript">
 
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+	
+    
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	
+	
+	
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+			
+			
+		}
+} 
+
 var sizeplant = "${planMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -671,6 +730,8 @@ if ($('#service_radio').is(":checked") == true) {
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			 inc = $("#edit_addressCount").val();
+    			 inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -747,11 +808,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+scriptSelectPlant+
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			/* +scriptSelectPlant+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -806,7 +867,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
+			+ '<select  name="lineItems['+inc+'].warehouse" required="true"  style="width:160px !important;" class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
 			+'<option value="">select</option>'+
 			<c:forEach items="${planMap}" var="planMap">
 			'<option value="${planMap.key}">${planMap.value}</option>'+
@@ -834,6 +895,7 @@ function addItem() {
 		
 	
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}
@@ -1022,7 +1084,14 @@ $(document).ready(function(){
 			
 		}
 		
-		
+    	 $(document).on("blur", ".vendorname", function() {
+        	  if(availableTagsvendornames.includes($(this).val()) == true) 	 {
+        		//alert("true");
+        } else {
+     	   alertify.alert("Invalid Vendor Name","Please Select Valid Vendor! "+($(this).val()));
+     	   $(".vendorname").val("");
+             }   
+            });
 	 
 
 	 var productList =[];

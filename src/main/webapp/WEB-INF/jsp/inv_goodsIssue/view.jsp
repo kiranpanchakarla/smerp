@@ -69,56 +69,28 @@ text-align: left;
 																
                                                                 
                                                                 <div class="col-sm-4 form-group">
-																				<label>Document#</label>: ${gr.docNumber}
+																				<label>Doc#</label>: ${gr.docNumber}
 																</div>
 																	 
-																<div class="col-sm-4"><label>Status</label> : ${gr.status}</div>
-																<div class="col-sm-4 create-po-wrap">
-																		
-																			
-																			
-                                                                          <div class="row">
-																                <div class="col-sm-12 form-group">
+																<div class="col-sm-4 form-group"><label>Status</label> : ${gr.status}</div>
+																
+																<div class="col-sm-4 form-group"><label>Remarks</label> : ${gr.remarks}</div>
+																<div class="col-sm-4 form-group">
 																				<label>Posting Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.postingDate}" />
-																			</div></div>
-																			
-																			<div class="row">
-																                <div class="col-sm-12 form-group">
+																			</div>
+																<div class="col-sm-4 form-group">
 																				<label>Doc Date</label>: 
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
-																			</div></div>
-																			
-																			<div class="row">
-																                <div class="col-sm-12 form-group">
+																			</div>
+																<div class="col-sm-4 form-group">
 																				<label>Ref Doc#</label>: ${gr.referenceDocNumber}
-																			</div></div>
-																		</div>
+																			</div>
+																 
 
 															</div>
-
-															<div class="card-body collapse in">
-																<div class="card-block-in">
-																	<div class="form-body">
-
-																		
-
-
-																		
-																		
-																		
-																	</div>
-																</div>
-															</div>
-															
-															<div class="row">
-																			
-																			
-															</div>
-																		
-														
-
-															<div class="tab-content">
+																<hr>
+																<div class="tab-content">
 																
 																	<div class="row">
 																		<div class="col-xs-12">
@@ -149,7 +121,7 @@ text-align: left;
 																											<th>Warehouse</th>
 																											<th>Department</th>
 																											<th>Group</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																											<th>UOM</th>
 																									
 																									

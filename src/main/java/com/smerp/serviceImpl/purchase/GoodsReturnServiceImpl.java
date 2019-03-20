@@ -38,6 +38,7 @@ import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
@@ -89,6 +90,10 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	@Autowired
 	DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
@@ -147,6 +152,8 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			goodsReturn.setVendorContactDetails(vendorsContactDetails);
 			goodsReturn.setVendorShippingAddress(vendorShippingAddress);
 			goodsReturn.setVendorPayTypeAddress(vendorPayAddress);
+			
+			goodsReturn.setPlant(goodsReturn.getGrId().getPlant());
 			}
 		}
          logger.info("goodsReturn -->" +goodsReturn);
@@ -195,9 +202,11 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			if(goodsReturn.getGrId()!=null  && goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 			GoodsReceipt goodsReceipt =  goodsReturn.getGrId();
 			PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-			goodsReceipt.setStatus(EnumStatusUpdate.GOODS_RETURN.getStatus());  // Set GOODS_RETURN
-			goodsReceiptRepository.save(goodsReceipt);
+			
+			goodsReceipt = goodsReceiptService.setStatusOfGoodsReceipt(goodsReceipt);
+			
 			logger.info("purchaseOrder -->" +purchaseOrder);
+			logger.info("goodsReceipt -->" +goodsReceipt);
 			}
 			
 		}
@@ -229,6 +238,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			gre.setPostingDate(gr.getPostingDate());
 			gre.setCategory(gr.getCategory());
 			gre.setRemark(gr.getRemark());
+			gre.setPlant(gr.getPlant());
 			gre.setDeliverTo(gr.getDeliverTo());
 			gre.setReferenceDocNumber(gr.getDocNumber());
 			gre.setRequiredDate(gr.getRequiredDate());
@@ -464,7 +474,7 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 
 	@Override
 	public List<GoodsReturn> findByIsActive() {
-		return goodsReturnRepository.findByIsActive(true);
+		return goodsReturnRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

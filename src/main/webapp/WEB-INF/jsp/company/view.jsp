@@ -46,7 +46,7 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h2 class="card-title" id="basic-layout-icons">Company</h2>
+                                                    <h2 class="card-title" id="basic-layout-icons">Company Details</h2>
                                                 </div>
                                                 
                                                 <div class="card-body collapse in create-block">
@@ -54,47 +54,75 @@
                                                         <form class="form">
                                                             <div class="form-body">
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Company Name</label>: ${company.name}
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Name</label>: ${company.name}
 
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Company logo</label>: <img src="${filePath}" alt="Upload Image" id="output" width="100" height="70"> 
+                                                                    
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Tagline</label>: ${company.companyTagLine}
+                                                                    </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>logo</label>: <img src="${filePath}" alt="Upload Image" id="output" width="100" height="70"> 
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Company Tagline</label>: ${company.companyTagLine}
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>GSTIN</label>: ${company.gstinVat}
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Email</label>: ${company.emailId}
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>State</label>: ${company.states.name}
+                                                                    </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Pan</label>: ${company.panNum}
                                                                     </div>
                                                                 </div>
                                                                  
-                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>State</label>: ${company.states.name}
-                                                                    </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Phone</label>: ${company.phoneNum}
-                                                                    </div>
-                                                                </div>
+                                                               <hr>
+
+															<div class="card-header-in">
+																<h4 class="card-title" id="basic-layout-icons">Address</h4>
+
+															</div>
                                                                 
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>City</label>: ${company.city}
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Street-1</label>: ${company.street1}
                                                                     </div>
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Street-2</label>: ${company.street2}
+                                                                    </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>City</label>: ${company.city}
+                                                                    </div> 
                                                                      
                                                                 </div>
                                                                 
-                                                                <%-- <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Plant</label>: ${user.plant}
+                                                                <div class="row">
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Mobile</label>: ${company.phoneNum}
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Role</label>: ${}
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Fax</label>: ${company.faxNum}
                                                                     </div>
-                                                                </div> --%>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Email</label>: ${company.emailId}
+                                                                    </div> 
+                                                                     
+                                                                </div>
+                                                                
+                                                                 <div class="row">
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>State</label>: ${company.states.name}
+                                                                    </div>
+                                                                   <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Country</label>: ${company.country.name}
+                                                                    </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Zipcode</label>: ${company.zipCode}
+                                                                    </div> 
+                                                                     
+                                                                </div>
 
                                                                 
                                                                 

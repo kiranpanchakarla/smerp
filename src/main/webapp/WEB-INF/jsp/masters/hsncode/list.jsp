@@ -73,7 +73,7 @@
 													style="width: 100%">
 													<thead>
 														<tr>
-															<th>S.no</th>
+															<th>S.No</th>
 															<th>HSN Code</th>
 															<th>Description</th>
 															<th>Rate</th>

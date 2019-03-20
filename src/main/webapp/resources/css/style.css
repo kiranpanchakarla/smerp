@@ -39,7 +39,7 @@ a {
 	padding: 7px 10px;
 	cursor: pointer;
 	position: relative;
-	height: 40px;
+	height: 45px;
 }
 .main_menu li:hover {
 	background-color: #fff;
@@ -500,7 +500,7 @@ a {
 	padding: 7px 10px;
 	cursor: pointer;
 	position: relative;
-	height: 40px;
+	height: 42px;
 }
 .main_menu li:hover {
 	background-color: #fff;
@@ -523,7 +523,7 @@ a {
 	float: none;
 	background-color: #fff;
 	color: #000;
-	width: 150px;
+	width: 180px;
 }
 .sub_menu li:hover {
 	background-color: #ddd;
@@ -614,7 +614,7 @@ a {
 .side_main_menu .sub_menu .super_sub {
 	display: none;
 	position: absolute;
-	left: 150px;
+	left: 180px;
 	top: 0;
 }
 .side_main_menu .sub_menu .has_sub:hover> .super_sub {
@@ -722,8 +722,9 @@ form label {
 	padding-left: 3.8rem;
 }
 form .form-group {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 	overflow: hidden;
+	line-height: 2.3em;
 }
 form .form-group-user {
 	margin-bottom: 1rem;
@@ -817,6 +818,7 @@ form label {
 	float: left;
 	display: inline-block;
 	width: 28%;
+	line-height: 2.3em;
 }
 .create-block .form-group-user label {
 	float: left;
@@ -867,6 +869,22 @@ form label {
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 	padding: 3px;/* width: 100%; */
 }
+.logo-upload input[type="file"] {
+    opacity: 0;
+    position: absolute;
+}
+.browse-btn {
+  background: #0f87ad;
+  color: #fff;
+  padding: 1px 5px;
+  border: none;
+  border-radius: 5px;
+  margin-top:20px;
+  cursor: pointer;
+}
+.browse-btn:hover {
+    background: #336799;
+}
 .no-margin {
 	margin: 0px !important;
 	font-size: 0px;
@@ -908,8 +926,9 @@ table.dataTable tbody th, table.dataTable tbody td {
 table.dataTable.nowrap th, table.dataTable.nowrap td {
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: auto;
+	max-width: auto;	
 }
+
 .fixed-width-table {
 	width: auto;
 }
@@ -1108,7 +1127,7 @@ h2.font-weight-normal {
 }
 .logo-right-main {
 	display: block;
-	width: 37%;
+	/* width: 37%; */
 	top: 0px;
 	float: right;
 }
@@ -1185,6 +1204,7 @@ h2.font-weight-normal {
     display: inline-block;
     width: auto;
     padding-right: 5px;
+    margin-bottom: 4px;
 }
 .po-wrap-list select, .po-wrap-list input[type="text"], .po-wrap-list input[type="date"] {
     float: left;
@@ -1206,7 +1226,7 @@ h2.font-weight-normal {
 }
 .po-wrap-list .btn {
     font-size: 13px;
-    padding: 0.3rem 0.7rem;
+    padding: 0.2rem 0.5rem;
     vertical-align: top;
 }
 .po-wrap-list input[type="text"], .po-wrap-list input[type="date"] {
@@ -1215,7 +1235,7 @@ h2.font-weight-normal {
     line-height: 0px !important;
 }
 .po-wrap-list select {
-    height: auto !important;
+    height: auto !important; width: auto;
 }
 .po-list-dashboard{padding: 0.5rem 1.5rem !important;}
 .po-hist-btn {padding: 0rem 1rem 0.5rem;color:#a94442 !important; font-weight: 500;}
@@ -1229,3 +1249,62 @@ h2.font-weight-normal {
 .table-responsive .form-group {
     margin-bottom: 0px;
 }
+.dataTables_scrollHeadInner, .dataTables_wrapper.no-footer div.dataTables_scrollHead table.dataTable {
+    width: 100% !important;
+}
+
+
+/*-------------------------- filter-search-wrap  CSS Starts ------------------------ */
+
+.filter-search-wrap {
+    padding: 5px 1.5rem 0px;
+}
+.filter-search-wrap .form-body {
+    overflow: inherit;
+}
+.filter-search-wrap .form-group {
+    margin-bottom: 0px;
+}
+
+.filter-search-wrap .form {
+    margin-bottom: 0px;
+}
+.no-top-gap{ padding-top: 0px;}
+
+/*-------------------------- filter-search-wrap  CSS  End ------------------------ */
+
+
+/*-------------------------- Mobile CSS Starts ------------------------ */
+
+@media (max-width: 991px) {
+.hidden-sm-down {display: block !important; }
+.menu_text {display: block !important;}
+.menu_text_pad {display: none !important;}
+.main-menu.menu-fixed{width: 240px;}
+.collapse_sub {left: 240px !important;}
+.menu-collapsed .menu-shadow {display: none;}
+body.vertical-layout.vertical-menu.menu-collapsed .content, body.vertical-layout.vertical-menu.menu-collapsed .footer{
+	margin-left: 0px;}
+h2, .h2 {font-size: 1.6rem;}	
+.filter-search-wrap .form-body{float: left;}
+}
+
+/*-------------------------- Mobile CSS End ------------------------ */
+ 
+.list-group-item{
+	color: #1087ad;
+    text-transform: capitalize;
+    font-weight: 600;
+    letter-spacing: 0.4px; 
+}
+ 
+.list-group-flush li:first-child {
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #3d0c88;
+}
+
+/* .list-group-flush li:nth-child(odd) span {
+    background: #e8971b !important;
+} */

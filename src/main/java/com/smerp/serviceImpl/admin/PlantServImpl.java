@@ -2,6 +2,8 @@ package com.smerp.serviceImpl.admin;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.repository.admin.PlantRepository;
 import com.smerp.service.master.PlantService;
+import com.smerp.serviceImpl.purchase.PurchaseRequestServiceImpl;
 import com.smerp.util.CheckUserPermissionUtil;
 
 @Service
@@ -21,6 +24,8 @@ public class PlantServImpl implements PlantService {
 	@Autowired
 	CheckUserPermissionUtil checkUserPermissionUtil;
 
+	private static final Logger logger = LogManager.getLogger(PlantServImpl.class);
+	
 	@Override
 	public List<Plant> findAll() {
 		List<Plant> listPlant = null;
@@ -35,6 +40,16 @@ public class PlantServImpl implements PlantService {
 	}
 	
 	
+	@Override
+	public int[] findPlantIds() {
+		List<Plant> list = findAll();
+		int[] plantIds = new int[list.size()];
+		for(int i=0; i< list.size(); i++) {
+			plantIds[i] = list.get(i).getId();
+		}
+		logger.info("plantIds-->" +plantIds);
+		return plantIds;
+	}
 	
 	@Override
 	public List<Plant> findPlantAll() {

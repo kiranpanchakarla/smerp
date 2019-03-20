@@ -51,50 +51,43 @@
                                                         <form class="form">
                                                             <div class="form-body">
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>First Name</label>: ${user.firstname}
 
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Last Name</label>: ${user.lastname}
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Username</label>: ${user.username}
-                                                                    </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Image</label>: <img src="${contextPath}/${user.image}" alt="Upload Image" id="output" width="100" height="70"> 
                                                                     </div>
                                                                 </div>
-                                                                 
-                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Username</label>: ${user.username}
+                                                                    </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Email</label>: ${user.userEmail}
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Mobile</label>: ${user.mobileNo}
                                                                     </div>
+                                                                    
                                                                 </div>
+                                                                 
+                                                                 
                                                                 
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Department</label>: ${user.department.name}
                                                                     </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
+                                                                    <div class="col-sm-4 form-group has-feedback">
                                                                         <label>Designation</label>: ${user.desigination.desigination}
                                                                     </div>
+                                                                    <div class="col-sm-4 form-group has-feedback">
+                                                                        <label>Plant</label>: ${user.plant.plantName}
+                                                                    </div>
                                                                 </div>
-                                                                
-                                                                <%-- <div class="row">
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Plant</label>: ${user.plant}
-                                                                    </div>
-                                                                    <div class="col-sm-6 form-group has-feedback">
-                                                                        <label>Role</label>: ${}
-                                                                    </div>
-                                                                </div> --%>
-
                                                                 
                                                                 
                                                                 <!--  -->

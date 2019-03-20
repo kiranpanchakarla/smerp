@@ -131,10 +131,13 @@ text-align: left;
 																				<fmt:formatDate pattern = "dd/MM/yyyy"  value = "${inv.requiredDate}" />
 																			</div>
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${inv.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${inv.status}
+																				<label>Warehouse</label>: ${inv.plant.plantName}
+																			  </div>
+																			<div class="col-sm-4 form-group">
+																				<label>Remarks</label>: ${inv.remark}
 																			</div>
 																		</div>
 																		
@@ -449,16 +452,16 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12 form-group">
 											<div class="row">
-												          <div class="col-sm-4 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												         
-												          <div class="col-sm-4 form-group has-feedback">
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												         <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												          <div class="col-sm-2 form-group has-feedback">
 									 <c:if test="${productQuantity !=0}">
 										<input type="hidden" name="invId" value="${inv.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Convert To CM'}"> 
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Credit Memo'}">
+	        									                        <c:if test="${inv.status == 'Approved' || inv.status == 'Credit Memo' ||   inv.status =='Partially_Credited'}">
 																		 
 														<%--  <c:if test="${checkStatusInv ==true}"> --%>
 																		<form:button type="button" id="convertBtn" name="statusType" value="Credit Memo"
@@ -473,9 +476,7 @@ text-align: left;
 										  </c:if>     	         
 												         </div>
 												         
-												         
-												         
-												          <div class="col-sm-4 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												    <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/inv/downloadPdf?id=${inv.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 										              </div>
 												
 										</div>

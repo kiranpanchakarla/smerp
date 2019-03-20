@@ -30,6 +30,8 @@ public interface GoodsReceiptService {
 	
 	GoodsReceipt getListAmount(GoodsReceipt goodsReceipt);
 	
+	GoodsReceipt setStatusOfGoodsReceipt(GoodsReceipt goodsReceipt);
+	
 	Boolean checkQuantityPoGr(PurchaseOrder purchaseOrder);
 	
 	PurchaseOrder setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt);

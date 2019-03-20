@@ -22,6 +22,7 @@ import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssueList;
 import com.smerp.repository.inventorytransactions.InventoryGoodsIssueRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
+import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.RequestContext;
@@ -41,6 +42,10 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 	@Override
 	public InventoryGoodsIssue save(InventoryGoodsIssue inventoryGoodsIssue) {
 		switch (inventoryGoodsIssue.getStatusType()) {
@@ -119,7 +124,7 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	@Override
 	public List<InventoryGoodsIssue> findByIsActive() {
 		// TODO Auto-generated method stub
-		return inventoryGoodsIssueRepository.findByIsActive(true);
+		return inventoryGoodsIssueRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

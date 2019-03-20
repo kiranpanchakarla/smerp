@@ -101,14 +101,14 @@
 															<div class="row">
 
 																	<div class="col-sm-6 form-group">
-																		<label>Doc Number</label>
+																		<label>Doc#</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
 																			readonly="true" />
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
-																                <label>Ref Doc No.</label>
+																                <label>Ref Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Doc Number'
 																						path="referenceDocNumber" />
@@ -135,6 +135,15 @@
 																				</div> 
 																				 
 																			</div>
+																			<div class="row">
+																			<div class="col-sm-6 form-group ">
+																				<label>Warehouse</label>
+																				<form:select id="warehouseId" path="plant.id" class="form-control shipTo" required="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
+																	  		</div>
 																			</div>
 
 																<div class="card-body collapse in create-block">
@@ -166,7 +175,7 @@
 																											<th>Department</th>
 																											<th>Group</th>
 																											<th>UOM</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																											
 																											<th>Action</th>
 																										</tr>
@@ -197,8 +206,8 @@
 																											<th>Tax Total</th>
 																											<th>Total</th>
 																											<th>Department</th>
-																											<th>Group</th>
-																											<th>HSN</th>
+																											<th>Product Group</th>
+																											<th>HSN Code</th>
 																											<th>UOM</th>
 																											<th>Action</th>
 																												 
@@ -241,14 +250,30 @@
 																																</div>
 																															</td>
 
-																															<td><div class="form-group">
+																															<td><%-- <div class="form-group">
 																																	<form:select class="form-control warehouse"
 																																		  required="true"
 																																		path="inventoryGoodsIssueList[${count}].warehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control warehouse" 
+																															name="inventoryGoodsIssueList[${count}].warehouse" style="width:100%;" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div> 
+																																
+																																</td>
 
 
 																															<td class="gr-main">
@@ -282,7 +307,7 @@
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
-																																	 <select class="form-control taxCode" required="true"
+																																	 <select class="form-control taxCode" required="true" style="width: 100%;"
 																															name="inventoryGoodsIssueList[${count}].taxCode" >
 																															<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
@@ -602,6 +627,22 @@
 
 <script type="text/javascript">
 
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	 
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			 $('#toWarehouse'+i).empty(); 
+			 $('#toWarehouse'+i).append(addToRow);
+		}
+} 
+
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -621,6 +662,8 @@ $("#itemTbl").show();
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -670,11 +713,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+ scriptSelectPlant +
+			+ '<select  name="inventoryGoodsIssueList['+inc+'].warehouse" required="true" style="width: 100%;"  class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			/* + scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -695,7 +738,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsIssueList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="inventoryGoodsIssueList['+inc+'].taxCode" required="true"   class="form-control taxCode" style="width: 100%;" id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -760,6 +803,7 @@ function addItem() {
 		 $("#itemTbl").append(item_table_data);
 	}
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}
@@ -1261,7 +1305,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 					 alertify.success('Saved Successfully');
 					return true;
 				  } else if(subStatus == "APP"){
-					 alertify.success('Approved Return');
+					 alertify.success('Approved');
 					return true;
 				  } else if(subStatus == "RE"){
 					 alertify.warning('Document Rejected');
@@ -1336,42 +1380,60 @@ function goBack() {
 	
 	
 	
-$(document).on("change", ".warehouse", function() {
-	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
-	var productNo=  $(itemParentRow).find(".productNumber").val();
-	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+$(document).on("change", ".shipTo", function() {
+	
+
+	/* var itemParentRow = $(this).parents(".multTot");
+	var warehouse=  $(".shipTo option:selected").val(); 
+	//alert(warehouse);
+	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val(); 
+	var productNo=  $(itemParentRow).find(".productNumber").val();  */
+	
+	var incCount = inc;
+	  
+	for (var i = 0; i < incCount; i++) {
+	
+		var productNo=  $(".productNumber"+i).val();
+		var warehouse=  $(".shipTo option:selected").val();
+		var itemParentRow = $('.productNumber'+i).parents(".multTot");
+		 
+		setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+		} 
+	 
 });
 
-$(document).on("blur", ".productNumber", function() {	
+$(document).on("blur", ".productNumber", function getStock() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	/* var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();  */
+	var warehouse=  $(".shipTo option:selected").val();  
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
 $(document).on("blur", ".description", function() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	/* var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();  */
+	var warehouse=  $(".shipTo option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
 
 function setInfoInStockQuantity(productNo,warehouse,itemParentRow){
-	
-	 $.ajax({
+	/* console.log("test"+); */
+	/* if(!isNaN(warehouse)) {} */
+	   $.ajax({
 		   type: "GET",
 			data: {productNo:productNo,warehouse :warehouse}, 
 			async : false,
           url: "<c:url value="/invgi/getInStock"/>", 
           success: function (response) {
-        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQunatity "+response);
+        	  $(itemParentRow).find(".quality-alert").attr('title', "InStockQuantity "+response);
           },
           error: function(e){
           // alert('Error: ' + e);
            }
-          });
+          });  
 }
 	
 	

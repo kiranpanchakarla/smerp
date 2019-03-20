@@ -16,6 +16,30 @@
 .table thead tr th {
 	text-align: center !important;
 }
+ 
+.table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table td, .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table tr:nth-child(even){background-color: #f2f2f2;}
+
+.table tr:hover {background-color: #ddd;}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #80b7cc;
+  color: white;
+}
+ 
 </style>
 
 </head>
@@ -72,7 +96,7 @@
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Product No.</label>: ${product.productNo}
+																		<label>Product Number</label>: ${product.productNo}
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
@@ -182,7 +206,7 @@
 																					<label>Product Type</label>: ${product.productType}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
-																					<label>HSN</label>: ${product.hsnCode.id}
+																					<label>HSN Code</label>: ${product.hsnCode.id}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
 																					<label>TaxCategory</label>:
@@ -265,7 +289,6 @@
 																							<th>Warehouse Name</th>
 																							<th>In Stock</th>
 																							<th>Ordered</th>
-																							<!-- <th>In Stock</th>-->
 																						    <th>Available</th> 
 
 																						</tr>

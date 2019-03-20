@@ -52,18 +52,18 @@
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Doc No</label>: ${purchaseRequest.docNumber}
+																		<label>Doc#</label>: ${purchaseRequest.docNumber}
 
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Email- ID</label>:
+																		<label>Email Id</label>:
 																		${purchaseRequest.user.userEmail}
 																	</div>
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Requester Name</label>:
-																		${purchaseRequest.user.firstname}${' '}${purchaseRequest.user.lastname}
+																		${purchaseRequest.referenceUser.firstname}${' '}${purchaseRequest.referenceUser.lastname}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
 																		<label>Posting Date</label>:
@@ -73,7 +73,7 @@
 																</div>
 																<div class="row">
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Plant</label>:
+																		<label>User Warehouse</label>:
 																		${purchaseRequest.user.plant.plantName}
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
@@ -88,12 +88,15 @@
 																	</div>
 																	
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Require Date</label>:
+																		<label>Required Date</label>:
 																		<fmt:formatDate pattern="dd/MM/yyyy"
 																			value="${purchaseRequest.requiredDate}" />
 																	</div>
 																	<div class="col-sm-6 form-group has-feedback">
-																		<label>Remark</label>: ${purchaseRequest.remarks}
+																		<label>Warehouse</label>: ${purchaseRequest.plant.plantName}
+																	</div>
+																	<div class="col-sm-6 form-group has-feedback">
+																		<label>Remarks</label>: ${purchaseRequest.remarks}
 																	</div>
 																</div>
 																 
@@ -112,12 +115,12 @@
 																						<!-- <th>S.No</th> -->
 																						<th style="display: none;">Product Id</th>
 																						<th>S.no</th>
-																						<th>Product Name</th>
+																						<th>Product#</th>
 																						<th>Description</th>
 																						<th>UOM</th>
 																						<th>SKU</th>
-																						<th>Product Group</th>
-																						<th>HSN</th>
+																						<th>Group</th>
+																						<th>HSN Code</th>
 																						<th>Warehouse</th>
 																						<th>Quantity</th>
 																						
@@ -194,8 +197,8 @@
 															<br></br>
 															 
 													<div class="row">
-												      <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
-												     
+												      <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												     <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
 										              <div class="col-sm-2 form-group has-feedback">
 																<c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Purchase Request'}">

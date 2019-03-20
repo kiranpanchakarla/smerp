@@ -83,7 +83,7 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
+																<th>S.No</th>
 																<th>Product Attributes</th>
 																<th>Value</th>
 																<th>Created Date</th>

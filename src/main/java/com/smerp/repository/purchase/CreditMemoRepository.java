@@ -9,8 +9,8 @@ import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.InVoice;
 
 public interface CreditMemoRepository  extends JpaRepository<CreditMemo, Integer> {
-	@Query("SELECT r FROM CreditMemo r WHERE isActive=:isActive order by createdAt desc")
-	List<CreditMemo> findByIsActive(Boolean isActive);
+	@Query("SELECT r FROM CreditMemo r WHERE isActive=:isActive and plant.id in (:plantIds)  order by createdAt desc")
+	List<CreditMemo> findByIsActive(Boolean isActive, int[] plantIds);
 	
 	CreditMemo findTopByOrderByIdDesc();
 	

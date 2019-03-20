@@ -29,6 +29,7 @@ import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.DocNumberGenerator;
@@ -73,6 +74,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	
 	@Autowired
 	private PurchaseRequestRepository purchaseRequestRepository;
+	
+	@Autowired
+	PlantService plantService;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -175,6 +179,8 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			purchaseOrder.setVendorContactDetails(vendorsContactDetails);
 			purchaseOrder.setVendorShippingAddress(vendorShippingAddress);
 			purchaseOrder.setVendorPayTypeAddress(vendorPayAddress);
+			
+			purchaseOrder.setPlant(purchaseOrder.getRfqId().getPlant());
 			}
 		}
 
@@ -195,9 +201,33 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
     			e.printStackTrace();
     		}
 		} 
+		
+		 setAllRFQRejectedStatus(purchaseOrder);
 		 
 		return purchaseOrderRepository.save(purchaseOrder); 
 		 
+	}
+
+	private void setAllRFQRejectedStatus(PurchaseOrder purchaseOrder) {
+		if( purchaseOrder.getRfqId()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			
+			PurchaseRequest pr = new PurchaseRequest();
+			 	pr = purchaseOrder.getRfqId().getPurchaseReqId();
+			 
+			 logger.info("rfq-->" + pr);
+			 if(pr!=null) {
+				 List<RequestForQuotation> rfqList =  requestForQuotationService.getRFQListById(pr);
+				 if(rfqList.size()>1) {
+					 pr.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+					 
+					 for(RequestForQuotation rfqItem:rfqList) {
+								rfqItem.setStatus(EnumStatusUpdate.OPEN.getStatus());
+								logger.info("rfq-->" + rfqItem);
+								rfqItem.setIsActive(true);
+						}
+				 }
+			 }
+		 }
 	}
 
 	@Override
@@ -223,6 +253,8 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			po.setPostingDate(rfq.getPostingDate());
 			po.setCategory(rfq.getCategory());
 			po.setRemark(rfq.getRemark());
+			po.setPlant(rfq.getPlant());
+			po.setDeliverTo(rfq.getDeliverTo());
 			po.setReferenceDocNumber(rfq.getDocNumber());
 			po.setRequiredDate(rfq.getRequiredDate());
 			po.setRfqId(rfq);
@@ -309,7 +341,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	@Override
 	public List<PurchaseOrder> poApprovedList() {
 
-		return purchaseOrderRepository.poApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return purchaseOrderRepository.poApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 	
@@ -325,7 +357,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 	@Override
 	public List<PurchaseOrder> findByIsActive() {
-		return purchaseOrderRepository.findByIsActive(true);
+		return purchaseOrderRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

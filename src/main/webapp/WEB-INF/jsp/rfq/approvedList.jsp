@@ -73,14 +73,14 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
-																<th>Vendor Name</th>
+																<th>S.No</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>RFQ Status</th>
-																<th>Convert to PO</th>
+																<th>Convert RFQ to PO</th>
 															</tr>
 														</thead>
 														<tbody>

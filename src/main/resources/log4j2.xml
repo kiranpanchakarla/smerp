@@ -2,6 +2,7 @@
 <Configuration status="warn">
    <Properties>
        <Property name="basePath">/data/smerp/logs</Property>
+        <Property name="LOG_PATTERN">[%clr{%p}] %clr{%d{ABSOLUTE}}{red} %clr{[%6c]}{blue} %clr{%M:} %clr{%m}{magenta}%n%xwEx</Property>
    </Properties>
 
    <Appenders>
@@ -15,11 +16,11 @@
        </RollingFile>
 
        <Console name="console" target="SYSTEM_OUT">
-           <PatternLayout   pattern="%d{dd-MM-yyyy HH:mm:ss.SSS}  %-5level %logger{36}.%M - %msg%n" />
+          <PatternLayout pattern="${LOG_PATTERN}" />
        </Console>
    </Appenders>
    <Loggers>
-       <Logger name="com.smerp" level="debug" additivity="true">
+       <Logger name="com.smerp" level="debug" additivity="false">
            <appender-ref ref="fileLogger" level="debug" />
            <appender-ref ref="console" />
        </Logger>

@@ -37,6 +37,7 @@ import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
@@ -94,6 +95,10 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public CreditMemo save(CreditMemo creditMemo) {
@@ -157,6 +162,8 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		creditMemo.setVendorContactDetails(vendorsContactDetails);
 		creditMemo.setVendorShippingAddress(vendorShippingAddress);
 		creditMemo.setVendorPayTypeAddress(vendorPayAddress);
+		
+		creditMemo.setPlant(creditMemo.getInvId().getPlant());
          } 
          
 		}
@@ -192,10 +199,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
 					logger.info("purchaseOrder -->" +purchaseOrder);
 					}
-					
-					invoice.setStatus(EnumStatusUpdate.CREDITMEMO.getStatus());  // Set INVOICE
-					inVoiceRepository.save(invoice);
-					
+					invoice = inVoiceService.setStatusOfInVoice(invoice);
 				}
 			}
 			
@@ -228,6 +232,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			inv.setPostingDate(in.getPostingDate());
 			inv.setCategory(in.getCategory());
 			inv.setRemark(in.getRemark());
+			inv.setPlant(in.getPlant());
 			inv.setDeliverTo(in.getDeliverTo());
 			inv.setReferenceDocNumber(in.getDocNumber());
 			inv.setRequiredDate(in.getRequiredDate());
@@ -461,7 +466,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 
 	@Override
 	public List<CreditMemo> findByIsActive() {
-		return creditMemoRepository.findByIsActive(true);
+		return creditMemoRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

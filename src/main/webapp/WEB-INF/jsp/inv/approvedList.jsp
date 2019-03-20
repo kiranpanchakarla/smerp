@@ -72,14 +72,14 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>S.no</th>
-																<th>Vendor Name</th>
+																<th>S.No</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>INV Status</th>
-																<th>Convert to CM</th>
+																<th>Convert INV to CM</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -95,7 +95,7 @@
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected' && list.status != 'Goods_Return' && list.status != 'Invoiced'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'  && list.status !='Partially_Credited'   }">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Goods Receipt'}">
 																						<c:set var="permissions" scope="session"

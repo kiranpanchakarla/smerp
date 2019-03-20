@@ -30,10 +30,12 @@
         <table style="width:100%">
                 
                 <tr>
-                 <td><strong >Document Number</strong></td>
+                 <td><strong >Doc#</strong></td>
                 <td>:<#if invgi.docNumber??>&nbsp;${invgi.docNumber}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if invgi.status??> ${invgi.status}</#if></td>
+				<td><strong>Remarks</strong></td>
+				<td>: <#if invgi.remarks??> ${invgi.remarks}</#if></td>
                 </tr>
                 
                 <tr>
@@ -41,7 +43,7 @@
                 <td>:<#if invgi.postingDate??>&nbsp;${invgi.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if invgi.documentDate??>&nbsp;${invgi.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>Ref Doc#</strong></td>
                 <td>:<#if invgi.referenceDocNumber??>&nbsp;${invgi.referenceDocNumber}<#else>--</#if></td>
                 </tr>
                  
@@ -50,8 +52,8 @@
                  <#assign sno = 1/>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
                 <td style="border: solid 1px ;"><strong >Unit Price</strong></td>
@@ -60,8 +62,8 @@
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
                 <td style="border: solid 1px ;"><strong >Department</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
-                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
+                <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
                 <#list invgi.inventoryGoodsIssueList as goodsReclist>

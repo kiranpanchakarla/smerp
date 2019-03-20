@@ -109,7 +109,7 @@
 
 
 																	<div class="col-sm-6 form-group">
-																		<label>Doc Number</label>
+																		<label>Doc#</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
 																			readonly="true" />
@@ -155,16 +155,13 @@
 																				</div> 
 																				
 																				
-																				<div class="col-sm-6 form-group">
-																					<label>Ship To</label>
-																					<form:select class="form-control" id="warehouseId" onchange="wareHouseValidation()"
-																					  required="true"
-																					 path="toWarehouse">
-																					 <form:option value="" label="Select" />
-																					 <form:options items="${findPlantAll}" />
-																					 </form:select>
-
-																				</div> 
+																				<div class="col-sm-6 form-group ">
+																				<label>Ship To</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
 																				 
 																			</div>
 																			</div>
@@ -279,14 +276,29 @@
 																																	</form:select>
 																																</div></td>
 																																
-																																	<td><div class="form-group">
+																																	<td><%-- <div class="form-group">
 																																	<form:select class="form-control"
 																																		style="width:;" required="true" id="toWarehouse${count}"
 																																		path="inventoryGoodsTransferList[${count}].toWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${findPlantAll}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control" 
+																																	name="inventoryGoodsTransferList[${count}].toWarehouse" style="width:100%;" id="toWarehouse${count}">
+																																	<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  				<c:choose>
+																																		<c:when test="${planMap.key == listLineItems.toWarehouse}">
+																																		<option  value="${planMap.key}" selected>${planMap.value}</option>
+																																	</c:when>
+																																	</c:choose>
+																																	</c:forEach>
+																																	</select>
+																														
+																																</div> 
+																																</td>
 																																
 																																	<td class="gr-main">
 			                                                                                                               <img src="${contextPath}/resources/images/portrait/info.png" alt="See" id="output"
@@ -318,7 +330,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	 <select class="form-control taxCode" required="true"
-																															name="inventoryGoodsTransferList[${count}].taxCode" >
+																															name="inventoryGoodsTransferList[${count}].taxCode" style="width: 100%;" >
 																															<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																														
@@ -481,7 +493,7 @@
 																                <div class="col-sm-12 form-group">
 																					<label>Total</label>
 																					<form:input type="text" cssClass="form-control"
-																						placeholder='Rounding' path="amtRounding"
+																						placeholder='Total' path="amtRounding"
 																						autocomplete="off" readonly="true" />
 																				</div></div>
 																				
@@ -671,6 +683,8 @@ $("#itemTbl").show();
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -759,7 +773,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsTransferList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="inventoryGoodsTransferList['+inc+'].taxCode" required="true"   class="form-control taxCode" style="width: 100%;" id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -1309,7 +1323,7 @@ $('#containerContainingTabs a').on('click', function(e) {
 						 alertify.success('Saved Successfully');
 						return true;
 					  } else if(subStatus == "APP"){
-						 alertify.success('Approved Return');
+						 alertify.success('Approved');
 						return true;
 					  } else if(subStatus == "RE"){
 						 alertify.warning('Document Rejected');

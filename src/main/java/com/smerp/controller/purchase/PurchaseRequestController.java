@@ -115,7 +115,7 @@ public class PurchaseRequestController {
 		model.addAttribute("user", user);
 		purchaseRequest.setReferenceUser(user);
 		model.addAttribute("planMap", plantMap());
-		model.addAttribute("plantMapSize", plantMap().size());
+		model.addAttribute("planMapSize", plantMap().size());
 		  ObjectMapper mapper = new ObjectMapper();
 		  
 	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

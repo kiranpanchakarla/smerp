@@ -75,8 +75,8 @@
            <c:forEach items="${sessionScope.umpmap}" var="ump">
                      
 					 <c:if test="${ump.key eq 'Admin Master'}">
-					  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
-         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Attribute Values</a></li>
+					 <%--  <li class="has_sub"><a href="<c:url value ="/productattributes/list"/>">Product Attributes</a></li>
+         			 <li class="has_sub"><a href="<c:url value ="/productattributesvalues/list"/>">Attribute Values</a></li> --%>
 					  <li class="has_sub"><a href="<c:url value ="/producttype/list"/>">Product Groups</a></li>
           			 <li class="has_sub"><a href="<c:url value ="/plant/list"/>">Warehouse</a></li>
          			 <li class="has_sub"><a href="<c:url value ="/uom/list"/>">Unit Of Measure</a></li>
@@ -196,8 +196,8 @@
 						</c:if>
 
 						<c:if test="${ump.key eq 'RFQ'}">
-							<li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request
-									Quotations</a></li>
+							<li class="has_sub"><a href="<c:url value ="/rfq/list"/>">Request For
+									Quotation</a></li>
 						</c:if>
 
 						<c:if test="${ump.key eq 'Convert To PO'}">
@@ -224,7 +224,7 @@
 						<c:if test="${ump.key eq 'Convert To GRE' || ump.key eq 'Convert To INV' }">
 							  <c:if test="${oneTimeGoods  ==1}">
 							<li class="has_sub"><a
-								href="<c:url value ="/gr/approvedList"/>">GR To GRE/INV</a></li>
+								href="<c:url value ="/gr/approvedList"/>">Convert GR To GRE/INV</a></li>
 								</c:if>
 								  <c:set var="oneTimeGoods" value="${oneTimeGoods + 1}" scope="page" /> 
 						</c:if>
@@ -240,7 +240,7 @@
 						</c:if>
 					
 						<c:if test="${ump.key eq 'Convert To CM'}">
-							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert To CM
+							<li class="has_sub"><a href="<c:url value ="/inv/approvedList"/>">Convert INV To CM
 									</a></li>
 						</c:if>
 					

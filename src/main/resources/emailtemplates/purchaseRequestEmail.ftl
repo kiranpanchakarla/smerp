@@ -27,9 +27,9 @@
                 
                 <table style="width:100%">
                 <tr>
-                <td><strong >User</strong></td>
+                <td><strong >Updated by</strong></td>
                 <td>: <#if pr.user.username??> ${pr.user.username}</#if></td>
-                <td><strong >Doc No</strong></td>
+                <td><strong >Doc#</strong></td>
                 <td>:<#if pr.docNumber??> ${pr.docNumber}</#if> </td>
                 </tr>
                 
@@ -48,17 +48,17 @@
                 </tr>
                 
                 <tr>
-                <td><strong >Email- ID</strong></td>
+                <td><strong >Email Id</strong></td>
                 <td>:  <#if pr.referenceUser.userEmail??> ${pr.referenceUser.userEmail}</#if></td>
-                <td><strong >Require Date</strong></td>
+                <td><strong >Required Date</strong></td>
                 <td>:<#if pr.requiredDate??>${pr.requiredDate?string("dd-MM-yyyy")!''}</#if></td>
                 </tr>
                 
                 <tr>
-                <td><strong >Type</strong></td>
-                <td>: <#if pr.type??> ${pr.type}</#if></td>
                 <td><strong >Status</strong></td>
                 <td>: <#if pr.status??> ${pr.status}</#if></td> 
+                <td><strong >Remarks</strong></td>
+                <td>: <#if pr.remarks??> ${pr.remarks}</#if></td>
                 </tr>
                 
             </table>
@@ -68,15 +68,15 @@
                <#if pr.type = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse</strong></td>
-                <td style="border: solid 1px ;"><strong >HSN</strong></td>
+                <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
                 <#list pr.purchaseRequestLists as prlist>
                 <tr>

@@ -37,20 +37,29 @@
                 <td>:<#if goodsRet.vendorContactDetails.contactName??>&nbsp;${goodsRet.vendorContactDetails.contactName}<#else>--</#if> </td>
                 </tr>
                 
-                <tr>
+                 <tr>
                 <td><strong>Pay To</strong></td>
                 <td>:<#if goodsRet.vendorPayTypeAddress.city??>&nbsp;${goodsRet.vendorPayTypeAddress.city}<#else>--</#if></td>
                 <td><strong >Ship From</strong></td>
                 <td>:<#if goodsRet.vendorShippingAddress.city??>&nbsp;${goodsRet.vendorShippingAddress.city}<#else>--</#if></td>
-                <td><strong>Doc No.</strong></td>
-                <td>:<#if goodsRet.docNumber??>&nbsp;${goodsRet.docNumber}<#else>--</#if></td>
+                 <td><strong >Posting Date</strong></td>
+                <td>:<#if goodsRet.postingDate??>&nbsp;${goodsRet.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 </tr>
                 
                 <tr>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>GRE Doc#</strong></td>
+                <td>:<#if goodsRet.docNumber??>&nbsp;${goodsRet.docNumber}<#else>--</#if></td>
+                <td><strong>GR Doc#</strong></td>
                 <td>:<#if goodsRet.referenceDocNumber??>&nbsp;${goodsRet.referenceDocNumber}<#else>--</#if></td>
-                <td><strong >Posting Date</strong></td>
-                <td>:<#if goodsRet.postingDate??>&nbsp;${goodsRet.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+               <td><strong>PO Doc#</strong></td>
+                <td>:<#if goodsRet.grId?? && goodsRet.grId.poId??>&nbsp;${goodsRet.grId.poId.docNumber}<#else>--</#if></td>
+                 </tr>
+                
+                <tr>
+                <td><strong>RFQ Doc#</strong></td>
+                <td>:<#if goodsRet.grId?? && goodsRet.grId.poId?? && goodsRet.grId.poId.rfqId??>&nbsp;${goodsRet.grId.poId.rfqId.docNumber}<#else>--</#if></td>
+                <td><strong>PR Doc#.</strong></td>
+                <td>:<#if goodsRet.grId??  && goodsRet.grId.poId?? && goodsRet.grId.poId.rfqId?? && goodsRet.grId.poId.rfqId.purchaseReqId??>&nbsp;${goodsRet.grId.poId.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if goodsRet.documentDate??>&nbsp;${goodsRet.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
                 </tr>
@@ -60,6 +69,8 @@
                 <td>:<#if goodsRet.requiredDate??>${goodsRet.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
                 <td><strong>Status</strong></td>
 				<td>: <#if goodsRet.status??> ${goodsRet.status}</#if></td>
+				<td><strong>Remarks</strong></td>
+				<td>: <#if goodsRet.remark??> ${goodsRet.remark}</#if></td>
                 </tr>
                 
              
@@ -70,8 +81,8 @@
                <#if goodsRet.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
@@ -80,7 +91,7 @@
                 <td style="border: solid 1px ;"><strong >Tax Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
@@ -122,7 +133,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -204,7 +215,14 @@
                 <td>:<#if goodsRet.totalPayment??> ${goodsRet.totalPayment}<#else>--</#if></td>
                 </tr>
             </table>
-                 
+                 <table style="width:100%">
+                <tr>
+                <td><strong>Deliver To :</strong></td>
+                </tr>
+                <tr>
+                <td><#if goodsRet.deliverTo??>${goodsRet.deliverTo},</#if></td>
+                </tr>   
+              </table>
      
      </#if>
      

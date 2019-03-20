@@ -10,16 +10,16 @@ import com.smerp.model.inventory.GoodsReturn;
 
 public interface GoodsReturnRepository  extends JpaRepository<GoodsReturn, Integer> {
 	
-	@Query("SELECT r FROM GoodsReturn r WHERE isActive=:isActive order by createdAt desc")
-	List<GoodsReturn> findByIsActive(Boolean isActive);
+	@Query("SELECT r FROM GoodsReturn r WHERE isActive=:isActive and plant.id in (:plantIds)  order by createdAt desc")
+	List<GoodsReturn> findByIsActive(Boolean isActive, int[] plantIds);
 	
 	GoodsReturn findTopByOrderByIdDesc();
 	
 	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status!=:status order by createdAt desc")
 	List<GoodsReturn> findByListgrId(GoodsReceipt gr,String status);
 	
-	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status = :status order by createdAt desc")
-	List<GoodsReturn> findByApproveListGrId(GoodsReceipt gr ,String status);
+	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status = :status and plant.id in (:plantIds) order by createdAt desc")
+	List<GoodsReturn> findByApproveListGrId(GoodsReceipt gr ,String status, int[] plantIds);
 	
 	GoodsReturn findBygrId(GoodsReturn gr);
 

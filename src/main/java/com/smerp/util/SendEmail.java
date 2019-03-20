@@ -1,27 +1,49 @@
 package com.smerp.util;
 
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
-import com.smerp.controller.inventorytransactions.InventoryGoodsIssueController;
 import com.smerp.controller.purchase.GoodsReceiptController;
 import com.smerp.controller.purchase.GoodsReturnController;
 import com.smerp.controller.purchase.PurchaseOrderController;
@@ -30,22 +52,21 @@ import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.Department;
 import com.smerp.model.admin.User;
-import com.smerp.model.emailids.EmailId;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.InventoryGoodsIssueList;
+import com.smerp.model.inventory.InventoryProductsList;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.purchase.PurchaseRequest;
-import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.service.admin.DashboardCountService;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.emailids.EmailIdService;
-import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -79,6 +100,9 @@ public class SendEmail extends EmailerGenerator{
 	
 	@Autowired
 	EmailIdService emailIdService;
+	
+	@Autowired
+	DownloadProductXLS downloadProductXLS;
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
@@ -160,7 +184,7 @@ public class SendEmail extends EmailerGenerator{
 	
 	protected MimeMessagePreparator createPRMessage(PurchaseRequest purchaseRequest) {
 		return new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+			public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException {
 				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
 				/*if(purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) || purchaseRequest.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
@@ -217,6 +241,7 @@ public class SendEmail extends EmailerGenerator{
 			//	logger.info("purchaseRequest Last Updated By  ---> "+ purchaseRequest.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				
 				pr = purchaseRequest;
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(recipientList);
@@ -261,10 +286,10 @@ public class SendEmail extends EmailerGenerator{
 		Writer out = new StringWriter();
 		try {
 			Map<String, Object> input = new HashMap<String, Object>(1);
-			input.put("prCount", dashboardCountService.findAll());
+			/*input.put("prCount", dashboardCountService.findAll());
 			input.put("rfqCount", dashboardCountService.findRFQCount());
 			input.put("poCount", dashboardCountService.findPOCount());
-			input.put("grCount", dashboardCountService.findGoodsReceiptCount());
+			input.put("grCount", dashboardCountService.findGoodsReceiptCount());*/
 			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {
@@ -288,6 +313,8 @@ public class SendEmail extends EmailerGenerator{
 		return out.toString();
 	}
 	
+	
+	 
 	protected String RejectMessage() {
 		  
 		return "Document has Been Rejected";
@@ -700,18 +727,8 @@ public class SendEmail extends EmailerGenerator{
 	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
-				//InternetAddress[] myccList = InternetAddress.parse(getSUPPORT_CC_EMAIL());
-				//mimeMessage.addRecipients(Message.RecipientType.CC, myBccList);
-					//ccEmail = emailIdService.getCCEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
-					//bccEmail = emailIdService.getBCCEmailIds(EnumStatusUpdate.RFQ.getStatus(), EnumStatusUpdate.APPROVAL.getStatus());
-				 
-				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
-				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
-				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				//toEmail += "," + getUser().getUserEmail();
-				//String[] recipientList = toEmail.split(",");
-				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(toEmail);
 				message.setSubject(getEnvironment() +  " - " + "Products With Minimum Quantity");
@@ -720,6 +737,161 @@ public class SendEmail extends EmailerGenerator{
 			}
 
 		};
+	}
+	
+	public void sendInventoryQtyEmail(int WarehouseId) throws Exception {
+		 if (shouldNotify()) {
+			 
+	            try {
+	                mailSender.send(createInventoryQtyEmailMessage(WarehouseId));
+	                
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	 
+	protected MimeMessagePreparator createInventoryQtyEmailMessage(int WarehouseId) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				
+				if(WarehouseId == 1) {
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
+				}
+				if(WarehouseId == 2) {
+					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
+				}
+				if(!toEmail.isEmpty()) {
+					
+				String[] recipientList = toEmail.split(",");
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(recipientList);
+				
+				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(WarehouseId);
+				 logger.info("Product List For Email " + productList);
+				logger.info("Email Send To ---> "  +  toEmail);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Date now = new Date();
+				String strDate = sdf.format(now);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Status Report " +  " - " + strDate);
+				 if(productList != null) {
+					 message.setText(getInventoryQtyEmailBody(productList), true);
+				 }else {
+					 message.setText("Please Ignore this Email. Contact help.manuh@gmail.com", true);
+				 }
+				/* Attachment */
+				 
+				 if(productList != null) {
+					 ByteArrayOutputStream stream = downloadProductXLS.InventoryProductsReport(productList);
+		             InputStream is = new ByteArrayInputStream(stream.toByteArray());
+		             message.addAttachment("InventoryQuantity.xlsx",  new ByteArrayResource(IOUtils.toByteArray(is))); 
+				 }
+				 
+	            /* Attachment */
+				}else {
+					logger.info("Email Id's not found in createInventoryQtyEmailMessage Method");
+				}
+					
+				
+			}
+
+		};
+	}
+	
+	protected String getInventoryQtyEmailBody(List<InventoryProductsList> productList) {
+		Writer out = new StringWriter();
+		try {
+			Map<String, Object> input = new HashMap<String, Object>(1);
+			input.put("invCount", productList);
+			getTemplate().process(input, out);
+			out.flush();
+		} catch (Exception e) {
+			logger.error("Failed to process exception email template for Inventory Quantity email ", e);
+			throw new RuntimeException(e);
+		}
+		return out.toString();
+	}
+	
+	public void sendInventoryGIEmail(int WarehouseId) throws Exception {
+		 if (shouldNotify()) {
+			 
+	            try {
+	                mailSender.send(createInventoryGIEmailMessage(WarehouseId));
+	                
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	 
+	protected MimeMessagePreparator createInventoryGIEmailMessage(int WarehouseId) {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				/* Get Email's From DB */
+				if(WarehouseId == 1) {
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
+				}
+				if(WarehouseId == 2) {
+					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
+				}
+				
+				if(!toEmail.isEmpty()) {
+				String[] recipientList = toEmail.split(",");
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo(recipientList);
+				
+				/* Get Email's From DB */
+				
+				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(WarehouseId);
+				logger.info("Product List For Email " + productList);
+	             
+				logger.info("Email Send To ---> "  +  toEmail);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Date now = new Date();
+				String strDate = sdf.format(now);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Goods Issue Report " +  " - " + strDate);
+				if(productList != null && productList.size()!= 0) {
+					message.setText(getInventoryGIEmailBody(productList), true);
+				}else {
+					message.setText("No Goods Issued Today", true);
+				}
+				
+				
+				/* Attachment */
+				
+				 
+				 if(productList != null && productList.size()!= 0) {
+					 ByteArrayOutputStream stream = downloadProductXLS.InventoryGoodsIssueReport(productList);
+		             InputStream is = new ByteArrayInputStream(stream.toByteArray());
+		             message.addAttachment("InvGIReport.xlsx",  new ByteArrayResource(IOUtils.toByteArray(is))); 
+				 }
+	             
+	            /* Attachment */
+				}else {
+					logger.info("Email Id's not found in createInventoryQtyEmailMessage Method");
+				}
+				
+			}
+
+		};
+	} 
+	
+	protected String getInventoryGIEmailBody(List<InventoryGoodsIssueList> productList) {
+		Writer out = new StringWriter();
+		try {
+			Map<String, Object> input = new HashMap<String, Object>(1);
+			input.put("invCount", productList);
+			getTemplate().process(input, out);
+			out.flush();
+		} catch (Exception e) {
+			logger.error("Failed to process exception email template for Inventory Quantity email ", e);
+			throw new RuntimeException(e);
+		}
+		return out.toString();
 	}
 	
 	public void sendDashboardEmail() throws Exception {

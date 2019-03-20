@@ -100,14 +100,14 @@
 																<div class="row">
 
 																	<div class="col-sm-6 form-group">
-																		<label>Doc Number</label>
+																		<label>Doc#</label>
 																		<form:input type="text" cssClass="form-control"
 																			placeholder='Document Number' path="docNumber"
 																			readonly="true" />
 																	</div>
 																	
 																	<div class="col-sm-6 form-group">
-																                <label>Ref Doc No.</label>
+																                <label>Ref Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Doc Number'
 																						path="referenceDocNumber" />
@@ -134,6 +134,15 @@
 																				</div> 
 																				 
 																			</div>
+																			<div class="row">
+																			<div class="col-sm-6 form-group ">
+																				<label>Warehouse</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
+																	  		</div>
 																			</div>
 
 																<div class="card-body collapse in create-block">
@@ -194,7 +203,7 @@
 																											<th>Tax %</th>
 																											<th>Tax Total</th>
 																											<th>Total</th>
-																											<th>Group</th>
+																											<th>Product Group</th>
 																											<th>HSN Code</th>
 																											<th>Warehouse</th>
 																											<th>Quantity</th>
@@ -273,7 +282,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	 <select class="form-control taxCode" required="true"
-																															name="inventoryGoodsReceiptList[${count}].taxCode" >
+																															name="inventoryGoodsReceiptList[${count}].taxCode" style="width: 100%;">
 																															<option  value="" >Select</option>	
 																														<c:forEach var="taxCodeMap" items="${taxCodeMap}">
 																													  <c:choose>
@@ -327,14 +336,28 @@
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
+																															<td><%-- <div class="form-group">
 																																	<form:select class="form-control"
 																																		style="width:;" required="true"
 																																		path="inventoryGoodsReceiptList[${count}].warehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																<div class="form-group"><select class="form-control warehouse" 
+																															name="inventoryGoodsReceiptList[${count}].warehouse" style="width:100%;" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div> 
+																																</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -587,6 +610,22 @@
 
 <script type="text/javascript">
 
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	 
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+		}
+} 
+
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -600,6 +639,8 @@ $("#itemTbl").show();
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -669,7 +710,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsReceiptList['+inc+'].taxCode" required="true"   class="form-control taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="inventoryGoodsReceiptList['+inc+'].taxCode" required="true"   class="form-control taxCode" style="width: 100%;" id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -707,11 +748,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="inventoryGoodsReceiptList['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+ scriptSelectPlant +
+			+ '<select  name="inventoryGoodsReceiptList['+inc+'].warehouse" required="true"  style="width: 100%;"  class="form-control warehouse'+inc+' warehouse"  id="toWarehouse'+inc+'" >'
+			/* + scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -736,6 +777,7 @@ function addItem() {
 		 $("#itemTbl").append(item_table_data);
 	}
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}

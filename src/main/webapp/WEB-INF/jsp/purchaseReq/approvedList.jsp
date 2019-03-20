@@ -75,11 +75,11 @@
 															<tr>
 																<th>S.no</th>
 																<th>Created By</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PR Status</th>
-																<th>Convert To RFQ</th>
+																<th>Convert PR To RFQ</th>
 
 															</tr>
 														</thead>

@@ -136,7 +136,7 @@ $(document).ready(function(){
 																		role="tabpanel" aria-labelledby="general-tab">
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Mobile</label>
 																				<form:input path="mobileNo"
 																					placeholder='Mobile Number'
@@ -147,8 +147,10 @@ $(document).ready(function(){
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
+																			
+																			<div class="col-sm-1 form-group"> &nbsp; </div>
 
-																			<div class="col-sm-6 form-group">
+																			<div class="col-sm-4 form-group">
 																				<label>Fax</label>
 																				<form:input path="fax" placeholder='Fax number'
 																					type="text" class="form-control" maxlength="15"
@@ -163,7 +165,7 @@ $(document).ready(function(){
 																		</div>
 
 																		<div class="row">
-																			<div class="col-md-6 form-group">
+																			<div class="col-md-4 form-group">
 																				<label>Email</label>
 																				<form:input path="emailId" type="text"
 																					class="form-control"
@@ -173,8 +175,10 @@ $(document).ready(function(){
 																					oninput="setCustomValidity('')" />
 																				<!-- <div   class="help-block with-errors" ></div> -->
 																			</div>
+																			
+																			<div class="col-sm-1 form-group"> &nbsp; </div>
 
-																			<div class="col-md-6 form-group">
+																			<div class="col-md-4 form-group">
 																				<label>Business Type</label>
 																				<form:select path="businessPartnerType"
 																					class="form-control"
@@ -477,9 +481,9 @@ $(document).ready(function(){
 																							</div>
 																						</div>
 
-																						<!-- <div class="col-xs-12 col-sm-3">
+																						<!-- <div class="col-xs-12 col-sm-4">
 												<div class="form-group">
-												<label>&nbsp;&nbsp;&nbsp; </label><br>
+												
 												<a class="remove btn btn-danger">Remove</a>
 												</div>
 												</div> -->
@@ -547,7 +551,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address-1</label> <input type="text"
 																							name="vendorAddress[0].addressId"
-																							class="form-control camelCase" placeholder='Address Id'
+																							class="form-control camelCase" placeholder='Address-1'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address Id')"
 																							oninput="setCustomValidity('')" />
@@ -559,7 +563,7 @@ $(document).ready(function(){
 																					<div class="form-group">
 																						<label>Address-2</label> <input type="text"
 																							name="vendorAddress[0].addressName"
-																							class="form-control camelCase" placeholder='Address'
+																							class="form-control camelCase" placeholder='Address-2'
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter Address')"
 																							oninput="setCustomValidity('')" />
@@ -872,7 +876,7 @@ $(document).ready(function(){
 																		<div class="row">
 
 																			<div class="col-sm-4 form-group">
-																				<label>Payment Terms</label>
+																				<label>Payment</label>
 																				<form:input path="paymentTerms"
 																					placeholder='Payment Terms' type="text"
 																					class="form-control camelCase" required="true"
@@ -893,7 +897,7 @@ $(document).ready(function(){
 																			</div>
 
 																			<div class="col-sm-4 form-group">
-																				<label>Commitment Limit</label>
+																				<label>Commitment</label>
 																				<form:input path="commitmentLimit"
 																					placeholder='Commitment Limit' type="text"
 																					class="form-control"
@@ -950,7 +954,7 @@ $(document).ready(function(){
 																				<!-- <div   class="help-block with-errors"></div> -->
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Account Number</label>
+																				<label>Account#</label>
 																				<form:input path="accountId" minlength='9'
 																					maxlength='18' placeholder='Account Number'
 																					type="text" class="form-control"
@@ -962,7 +966,7 @@ $(document).ready(function(){
 																			</div>
 
 																			<div class="col-sm-4 form-group">
-																				<label>Account Holder</label>
+																				<label>Account Name</label>
 																				<form:input path="bankAccountName"
 																					placeholder='Account Holder Name' type="text"
 																					class="form-control camelCase" required="true"
@@ -1108,7 +1112,7 @@ $(document).ready(function(){
 												+ '<option value="Female">Female</option>'
 												+ '</select></div></div>'
 
-												+'<div class="col-xs-12 col-sm-3"><div class="form-group"><label>&nbsp;&nbsp;&nbsp; </label><br><a class="remove btn btn-danger">Remove</a></div></div></div>');
+												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><a class="remove btn btn-danger float-right">Remove</a></div></div></div>');
 					
 						$("#form").validator("update");
 					});

@@ -9,11 +9,11 @@ import com.smerp.model.purchase.PurchaseRequest;
 
 public interface RequestForQuotationRepository extends JpaRepository<RequestForQuotation, Integer> {
 	
-	@Query("SELECT r FROM RequestForQuotation r WHERE isActive=:isActive order by createdAt desc")
-	List<RequestForQuotation> findByIsActive(Boolean isActive);
+	@Query("SELECT r FROM RequestForQuotation r WHERE isActive=:isActive and plant.id in (:plantIds)  order by createdAt desc")
+	List<RequestForQuotation> findByIsActive(Boolean isActive, int[] plantIds);
 	
-	@Query("SELECT r FROM RequestForQuotation r WHERE status=:status order by createdAt desc")
-	List<RequestForQuotation> rfqApprovedList(String status);
+	@Query("SELECT r FROM RequestForQuotation r WHERE status=:status and plant.id in (:plantIds) order by createdAt desc")
+	List<RequestForQuotation> rfqApprovedList(String status, int[] plantIds);
 	
 	RequestForQuotation findTopByOrderByIdDesc();
 	

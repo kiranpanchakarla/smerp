@@ -72,11 +72,11 @@ $(document).ready(function(){
 															<div class="form-body">
 																<div class="row">
 																	<div class="col-sm-3 form-group has-feedback">
-																		<label>Vendor Code</label>: ${vendor.vendorCode}
+																		<label>Code</label>: ${vendor.vendorCode}
 
 																	</div>
 																	<div class="col-sm-3 form-group has-feedback">
-																		<label>Vendor Name</label>: ${vendor.name}
+																		<label>Name</label>: ${vendor.name}
 																	</div>
 																	<div class="col-sm-3 form-group has-feedback">
 																		<label>Group</label>: ${vendor.groupName}
@@ -107,24 +107,24 @@ $(document).ready(function(){
 																		aria-labelledby="home-tab">
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group has-feedback">
+																			<div class="col-sm-4 form-group has-feedback">
 																				<label>Mobile</label>: ${vendor.mobileNo}
 																			</div>
-																			<div class="col-sm-6 form-group has-feedback">
+																			<div class="col-sm-4 form-group has-feedback">
 																				<label>Fax</label>: ${vendor.fax}
 																			</div>
 																		</div>
 
 																		<div class="row">
-																			<div class="col-sm-6 form-group has-feedback">
+																			<div class="col-sm-4 form-group has-feedback">
 																				<label>Email</label>: ${vendor.emailId}
 																			</div>
-																			<div class="col-sm-6 form-group has-feedback">
+																			<div class="col-sm-4 form-group has-feedback">
 																				<label>Business Type</label>:
 																				${vendor.businessPartnerType}
 																			</div>
 																		</div>
-																		
+																		<hr>
 																		<div class="form-group">
 																						<label>Contact Details</label>
 																					</div>
@@ -173,7 +173,7 @@ $(document).ready(function(){
 																				<br> <br> 
 																			</div>
 																			</div>
-																			 
+																			 <hr>
 																				</c:forEach>
  
 																			<input type="hidden" id="indexValue1">	
@@ -233,8 +233,9 @@ $(document).ready(function(){
 																					${listAddressDetails.country.name}
 																				</div>
 																			</div>
+																			<hr>
 																			</div>
-																			 <br> <br> 
+																			 <br>   
 																				</c:forEach>
  
 																			<input type="hidden" id="indexValue1">	
@@ -249,13 +250,13 @@ $(document).ready(function(){
 																	aria-labelledby="messages-tab">
 																	<div class="row">
 																		<div class="col-sm-4 form-group has-feedback">
-																			<label>Payment Terms</label>: ${vendor.paymentTerms}
+																			<label>Payment</label>: ${vendor.paymentTerms}
 																		</div>
 																		<div class="col-sm-4 form-group has-feedback">
 																			<label>Credit Limit</label>: ${vendor.creditLimit}
 																		</div>
 																		<div class="col-sm-4 form-group has-feedback">
-																			<label>Commitment Limit</label>:
+																			<label>Commitment</label>:
 																			${vendor.commitmentLimit}
 																		</div>
 																	</div>
@@ -276,13 +277,14 @@ $(document).ready(function(){
 																			<label>Branch</label>: ${vendor.branch}
 																		</div>
 																		<div class="col-sm-4 form-group has-feedback">
-																			<label>Account Number</label>: ${vendor.accountId}
+																			<label>Account#</label>: ${vendor.accountId}
 																		</div>
 																		<div class="col-sm-4 form-group has-feedback">
-																			<label>Account Holder</label>:
+																			<label>Name</label>:
 																			${vendor.bankAccountName}
 																		</div>
 																	</div>
+																	<hr>
 																</div>
 															</div>
 															<!--  -->

@@ -128,10 +128,14 @@
 																					value="${rfq.requiredDate}" />
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
-																			</div>
-																			<div class="col-sm-4 form-group">
 																				<label>Status</label>: ${rfq.status}
+																			</div>
+																			<div class="col-sm-4 form-group ">
+																		   <label>Warehouse</label>: ${rfq.plant.plantName}
+																	      </div>
+																			<div class="col-sm-4 form-group">
+																				
+																				<label>Remarks </label>: ${rfq.remark}
 																			</div>
 																		</div>
 
@@ -182,14 +186,14 @@
 																										<th style="display: none;">Product Id</th>
 																										<c:if test="${rfq.category=='Item'}">
 																											<th>S.no</th> 
-																											<th>Product Name</th>
+																											<th>Product#</th>
 																											<th>Description</th>
 																											<th>UOM</th>
 																											<th>SKU</th>
 																											<th>Quantity</th>
-																											<th>Product Group</th>
+																											<th>Group</th>
 																											<th>Warehouse</th>
-																											<th>HSN</th>
+																											<th>HSN Code</th>
 																										</c:if>
 
 																										<c:if test="${rfq.category!='Item'}">
@@ -282,49 +286,42 @@
 																<div class="tab-pane" id="profile" role="tabpanel"
 																	aria-labelledby="profile-tab">
 
-																	<table class="table fixed-width-table">
-																		<thead>
-																			<tr>
-																				<th style="vertical-align: top; !important">Shipping
-																					From</th>
-																				<td>
-																					<div id="shippingAddressTable">
-
-																						${rfq.vendorShippingAddress.addressName}<br>
-																						${rfq.vendorShippingAddress.street}
-																						${rfq.vendorShippingAddress.city}
-																						${rfq.vendorShippingAddress.zipCode}<br>
-																						${rfq.vendorShippingAddress.country.name}
-
-
-																					</div>
-																				</td>
-																			</tr>
-																			<tr>
-																				<th style="vertical-align: top; !important">Pay
-																					To</th>
-																				<td>
-																					<div id="payToAddressTable">
-
-																						${rfq.vendorPayTypeAddress.addressName}<br>
-																						${rfq.vendorPayTypeAddress.street}
-																						${rfq.vendorPayTypeAddress.city}
-																						${rfq.vendorPayTypeAddress.zipCode}<br>
-																						${rfq.vendorPayTypeAddress.country.name}
-
-
-																					</div>
-																				</td>
-																			</tr>
-																		</thead>
-																	</table>
+																	<div class="row">
+																	<div class="col-sm-4">
+																	 
+																	<label>Shipping From </label>
+																	<div id="shippingAddressTable" >
+																	                ${rfq.vendorShippingAddress.addressName}<br>
+																					${rfq.vendorShippingAddress.street}
+																					${rfq.vendorShippingAddress.city}
+																					${rfq.vendorShippingAddress.zipCode}<br>
+																					${rfq.vendorShippingAddress.country.name}
+																	</div></div>
+																	
+																	<div class="col-sm-4">
+																	<label>Pay To </label> 
+																	<div id="payToAddressTable">
+																					${rfq.vendorPayTypeAddress.addressName}<br>
+																					${rfq.vendorPayTypeAddress.street}
+																					${rfq.vendorPayTypeAddress.city}
+																					${rfq.vendorPayTypeAddress.zipCode}<br>
+																					${rfq.vendorPayTypeAddress.country.name}
+																	</div>
+																	 </div>
+																	
+																	 <div class="col-sm-4 form-group">
+																	<label>Deliver To </label> 
+																	${rfq.deliverTo}
+																	</div>  
+																	</div>
 																</div>
 																
 															</div>
 															<div>
-																	
+																<br>	
 														<div class="row">
-												          <div class="col-sm-8 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												           <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
 												           <div class="col-sm-2 form-group has-feedback">  <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'RFQ'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
@@ -337,8 +334,11 @@
 																	</c:if>
 	   										                           </c:if>
 	       								                           </c:if>     
-   									                            </c:forEach></div>
+   									                            </c:forEach>
+   									                         </div>
+   									                         <c:if test="${not empty rfq.vendor.name}">
 												          <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/rfq/downloadPdf?id=${rfq.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+												          </c:if>
 										              </div>
 										              
 																</div>

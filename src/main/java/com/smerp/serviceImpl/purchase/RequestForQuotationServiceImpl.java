@@ -25,6 +25,7 @@ import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.DocNumberGenerator;
@@ -65,6 +66,10 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 	
 	
 	@Override
@@ -114,6 +119,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			
 			}else {
 				requestForQuotation.setLineItems(requestLists);
+				requestForQuotation.setPlant(requestForQuotation.getPurchaseReqId().getPlant());
 			}
 			
 			
@@ -175,6 +181,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			rfq.setPostingDate(prq.getPostingDate());
 			rfq.setCategory(prq.getType());
 			rfq.setRemark(prq.getRemarks());
+			rfq.setPlant(prq.getPlant());
 			rfq.setReferenceDocNumber(prq.getDocNumber());
 			rfq.setRequiredDate(prq.getRequiredDate());
 			rfq.setPurchaseReqId(prq);
@@ -230,7 +237,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	@Override
 	public List<RequestForQuotation> rfqApprovedList() {
 
-		return requestForQuotationRepository.rfqApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return requestForQuotationRepository.rfqApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 	
@@ -246,7 +253,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 
 	@Override
 	public List<RequestForQuotation> findByIsActive() {
-		return requestForQuotationRepository.findByIsActive(true);
+		return requestForQuotationRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override

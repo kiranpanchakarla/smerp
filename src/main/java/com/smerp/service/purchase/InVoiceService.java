@@ -34,5 +34,7 @@ public interface InVoiceService {
 	boolean findByDocNumber(String invDocNum);
 	
 	List<LineItemsBean> getLineItemsBean (int id);
+	
+	InVoice setStatusOfInVoice(InVoice inVoice);
 
 }

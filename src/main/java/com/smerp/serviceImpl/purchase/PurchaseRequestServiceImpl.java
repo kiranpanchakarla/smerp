@@ -8,10 +8,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumStatusUpdate;
@@ -30,6 +32,9 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	
 	@Autowired
 	EmailGenerator emailGenerator;
+	
+	@Autowired
+	PlantService plantService;
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestServiceImpl.class);
 	@Override
@@ -105,14 +110,13 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	
 	@Override
 	public List<PurchaseRequest> findByIsActive() {
-
-		return purchaseRequestRepository.findByIsActive(true);
+		return purchaseRequestRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 
 	@Override
 	public List<PurchaseRequest> prApprovedList() {
 
-		return purchaseRequestRepository.prApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return purchaseRequestRepository.prApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 	@Override

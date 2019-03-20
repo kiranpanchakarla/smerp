@@ -48,28 +48,27 @@
                 <tr>
                  <td><strong >Posting Date</strong></td>
                 <td>:<#if gr.postingDate??>&nbsp;${gr.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                <td><strong>Doc No.</strong></td>
+                <td><strong>Doc#</strong></td>
                 <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
-                
                 </tr>
                 <tr>
                 <td><strong>Ship to</strong></td>
-                <td> 
-                  <#list plantMap as key, value>
-                <#if (gr.toWarehouse) == (key)>
-                     <p>&nbsp;${value}</p>
-                     </#if>
-                </#list>
-                </td>
+                <td>:<#if gr.toWarehouse??>&nbsp;${gr.plant.plantName}<#else>--</#if> </td>
+                
+                <td><strong >Remarks</strong></td>
+                <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
                 </tr>
-                 
+                  <tr>
+                  <td><strong >Ref Doc#</strong></td>
+                <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if> </td>
+                </tr>
             </table>
                 <br></br>
                  <#assign sno = 1/>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Ship From</strong></td>
                 <td style="border: solid 1px ;"><strong >Ship To</strong></td>

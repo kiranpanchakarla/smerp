@@ -37,6 +37,7 @@ $(document).on("change", ".taxCode", function() {
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
+     $("#roundedOff").val(parseFloat(Math.round(sum_total) - sum_total).toFixed(2));
  	}
   	 
 	});
@@ -83,7 +84,7 @@ $(document).on("keyup", ".unitPrice", function() {
   	 $("#totalPayment").val(Math.round(sum_total));
   	 $("#totalDiscount").val("");
   	 $("#freight").val("");
-  	$("#roundedOff").val(Math.round(sum_total) - sum_total );
+  	$("#roundedOff").val(parseFloat(Math.round(sum_total) - sum_total).toFixed(2));
     	}
 	});
 	
@@ -151,7 +152,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
   	 $("#totalPayment").val(Math.round(sum_total));
   	 //$("#totalDiscount").val("");
   	 //$("#freight").val("");
-  	 $("#roundedOff").val(Math.round(sum_total) - sum_total );
+  	 $("#roundedOff").val(parseFloat(Math.round(sum_total) - sum_total).toFixed(2));
     	}
   	
   	
@@ -183,7 +184,7 @@ $(document).on("keyup", ".requiredQuantity", function() {
 	if(totalAmt!="") {
 	 $("#totalPayment").val(Math.round(totalPayment));
 	 $("#amtRounding").val(parseFloat(totalPayment).toFixed(2));
-	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2) );
+	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 	}
 	
 	}else {
@@ -272,7 +273,7 @@ $('#freight').keyup(function() {
 		if(sum_total!="") {
 		 $("#totalPayment").val(Math.round(totalPayment));
 		 $("#amtRounding").val( totalPayment);
-		 $("#rounderOff").val(Math.round(totalPayment) - totalPayment);
+		 $("#rounderOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
 		}
 	
 	} 

@@ -174,7 +174,7 @@
 																				</div>
 																				
 																				<div class="col-sm-4 form-group">
-																					<label>Gr Doc#</label>
+																					<label>GR Doc#</label>
 																					<form:input type="text" cssClass="form-control"
 																						placeholder='Reference Document Number' 
 																						path="GrdocNumber"  value="${cre.invId.grId.docNumber}" readonly="true" />
@@ -217,6 +217,14 @@
 																						readonly="true" />
 
 																				</div>
+																				
+																				<div class="col-sm-4 form-group ">
+																				<label>Warehouse</label>
+																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" disabled="true" readonly="true" onchange="wareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			</div>
 																			</div>
 
 
@@ -228,7 +236,6 @@
 
 
 																				<div class="row" id="radioDiv">
-																					<div class="card-block" style="clear: both;">
 																						<div class="col-sm-6 form-group">
 																							<div class="input-group">
 
@@ -246,7 +253,7 @@
 																				/>	
                                                                                 <span class="radio-list">Services</span></div> --%>
                                                                                 
-                                                                                    <div class="inventory-list">
+                                                                                    <div class="inventory-list" style="display: none;">
                                                                                     <form:radiobutton name="type" path="category"  id="items_radio"  value="Item" checked="checked" disabled="true" />
                                                                                     <span class="radio-list">Product</span>
 
@@ -255,25 +262,13 @@
                                                                                     <form:radiobutton name="type" path="category" id="service_radio"  value="Service" />
                                                                                     <span class="radio-list">Service</span>
                                                                                 </div> 
-																								<div class="help-block with-errors"></div>
+																								 
 																							</div>
 
 																						</div>
-																					</div>
+																					 
 																				</div>
-
-
-																				<div class="card-block"
-																					style="clear: both; padding: 0px 1.5rem;">
-																					<div class="row" id="gr_radioDiv"
-																						style="display: none">
-																						<div class="col-sm-6 form-group has-feedback">
-																							<label>Type</label>:<%-- ${cre.category} --%> Product
-																						</div>
-																					</div>
-																				</div>
-
-
+ 
 																			</div>
 																		</div>
 																	</div>
@@ -476,7 +471,7 @@
 																																		<form:options items="${taxCodeMap}" />
 																																	</form:select> --%>
 																																	<select class="form-control taxCode" 
-																																		readonly="true"
+																																		readonly="true" style="width: 100%;"
 																																		name="creditMemoLineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
@@ -540,19 +535,19 @@
 																																	</form:select>
 																																</div></td> --%>
 																																
-																														   <td><div class="form-group"><select class="form-control warehouse" readonly="true"
-																															name="creditMemoLineItems[${count}].warehouse" >
-																														<c:forEach var="warehouse" items="${plantMap}">
-																													  <c:choose>
-																													<c:when
-																														test="${warehouse.key == listLineItems.warehouse}">
-																													<option  value="${warehouse.key}" selected>${warehouse.value}</option>
-																													</c:when>
-																													<c:otherwise>
-																													</c:otherwise>
+																														   <td><div class="form-group"><select class="form-control warehouse" 
+																															name="creditMemoLineItems[${count}].warehouse" style="width:100%;" readonly="true" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
 																														</c:choose>
 																														</c:forEach>
-																														</select></div></td>
+																														</select>
+																														
+																														</div></td>
 																																
 																															<td class="gr-main"><img
 																																src="${contextPath}/resources/images/portrait/info.png"
@@ -674,7 +669,7 @@
 																																	<form:input type="text"
 																																		path="creditMemoLineItems[${count}].taxCode"
 																																		value="${listLineItems.taxCode}"
-																																		autocomplete="off" readonly="true"
+																																		autocomplete="off" readonly="true" style="width: 100%;"
 																																		class="form-control taxCode"></form:input>
 																																</div> <%--  <div class="form-group"><form:select class="form-control taxCode"
 																															 readonly="true"
@@ -778,7 +773,7 @@
 																																	</form:select> --%>
 																																	
 																																	<select class="form-control taxCode"
-																																		required="true"
+																																		required="true" style="width: 100%;"
 																																		name="purchaseOrderlineItems[${count}].taxCode">
 																																		<c:forEach var="taxCodeMap"
 																																			items="${taxCodeMap}">
@@ -824,13 +819,29 @@
 																																		readonly="true"></form:input>
 																																</div></td>
 
-																															<td><div class="form-group">
+																															<td><%-- <div class="form-group">
 																																	<form:select class="form-control"
 																																		style="width:;" required="true"
 																																		path="creditMemoLineItems[${count}].warehouse">
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control warehouse" 
+																															name="creditMemoLineItems[${count}].warehouse" style="width:100%;" id="toWarehouse${count}">
+																														<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${planMap.key == listLineItems.warehouse}">
+																															<option  value="${planMap.key}" selected>${planMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div>
+																																
+																																</td>
 
 																															<td><div class="form-group">
 																																	<form:input type="text"
@@ -1069,7 +1080,7 @@
 																						cssClass="form-control validatePrice"
 																						placeholder='Freight' path="freight"
 																						onkeypress="return isNumericKey(event)"
-																						autocomplete="off" readonly="true" />
+																						autocomplete="off" />
 																				</div></div>
 
 																				<div class="row">
@@ -1217,6 +1228,24 @@
 
 <script type="text/javascript">
 
+function wareHouseValidation() {
+	wareHouseChangeInLineItems();
+}
+	  
+function wareHouseChangeInLineItems(){
+	var incCount = inc;
+	 
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#warehouseId").val();
+			var warhouseName=  $("#warehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			$('#toWarehouse'+i).empty();
+			$('#toWarehouse'+i).append(addToRow);
+			
+			
+		}
+} 
+
 var sizeplant = "${planMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
@@ -1248,6 +1277,8 @@ if ($('#service_radio').is(":checked") == true) {
 	 
 		if ($('#edit_addressCount').val() != undefined ) {
 			// alert("edit");
+			inc = $("#edit_addressCount").val();
+    	     inc++;
 			 $("#serviceTbl").hide();
 			 $("#itemTbl").hide();
 		}
@@ -1324,7 +1355,7 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="creditMemoLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode"  id="taxCode'+inc+'" >'
+			+ '<select  name="creditMemoLineItems['+inc+'].taxCode" required="true"   class="form-control  taxCode" style="width: 100%;" id="taxCode'+inc+'" >'
 			+'<option value="">Select</option>'+
 			<c:forEach items="${taxCodeMap}" var="taxCodeMap">
 			'<option value="${taxCodeMap.value}">${taxCodeMap.key}</option>'+
@@ -1357,11 +1388,11 @@ function addItem() {
 			
 			+ '<td>'
 			+'<div class="form-group">'
-			+ '<select  name="creditMemoLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  id="warehouse'+inc+'" >'
-			+scriptSelectPlant+
+			+ '<select  name="creditMemoLineItems['+inc+'].warehouse" required="true"   class="form-control warehouse'+inc+' warehouse"  style="width: 100%;" id="toWarehouse'+inc+'" >'
+			/* +scriptSelectPlant+
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+ '</div>'
 			+ '</td>'
@@ -1475,6 +1506,7 @@ function addItem() {
 		
 	
 		inc++;
+		wareHouseChangeInLineItems();
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
 	}

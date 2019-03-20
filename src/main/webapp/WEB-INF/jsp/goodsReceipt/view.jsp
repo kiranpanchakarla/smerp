@@ -140,12 +140,14 @@ text-align: left;
 
 
 																		<div class="row">
-																			
+																			  <div class="col-sm-4 form-group">
+																				<label>Warehouse</label>: ${gr.plant.plantName}
+																			  </div>
                                                                             <div class="col-sm-4 form-group">
-																				<label>Type</label>: Product
+																				<label>Status</label>: ${gr.status}
 																			</div>
 																			<div class="col-sm-4 form-group">
-																				<label>Status</label>: ${gr.status}
+																				<label>Remarks</label>: ${gr.remark}
 																			</div>
 																		</div>
 																		
@@ -162,7 +164,7 @@ text-align: left;
 															
 
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">
-																<li class="nav-item"><a class="nav-link active"
+																<li class="nav-item active"><a class="nav-link"
 																	id="home-tab" data-toggle="tab" href="#home" role="tab"
 																	aria-controls="home" aria-selected="true">Item
 																		Details</a></li>
@@ -471,22 +473,19 @@ text-align: left;
 									<div class="row">
 										<div class="col-sm-12">
 											<div class="row">
-												          <div class="col-sm-3 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
+												          <div class="col-sm-6 form-group has-feedback"><a href="#" onclick="goBack()" class="btn btn-primary float-left">Back</a></div>
 												         
-												         
-												         
-												         
-												         <c:choose>
+												      <c:choose>
 														<c:when test="${productQuantity !=0}">
 													
-												         <div class="col-sm-3 form-group has-feedback">
+												         <div class="col-sm-2 form-group has-feedback">
 									
 										<input type="hidden" name="greId" value="${gr.id}">
 									 <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Convert To GRE'}">  
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}"> 
-	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
+	        									                        <c:if test="${gr.status == 'Approved' || gr.status == 'Goods_Return'  || gr.status == 'Partially_Returned'  &&  gr.status != 'Invoiced'}">
 																		
 														 <c:if test="${checkStatusGr ==true}">
 																		<form:button type="button" id="convertBtn" name="statusType" value="goods_return"
@@ -501,14 +500,14 @@ text-align: left;
 												         
 												         </div>
 												         
-												          <div class="col-sm-3 form-group has-feedback">
+												          <div class="col-sm-2 form-group has-feedback">
 												          
 												          <c:forEach items="${sessionScope.umpmap}" var="ump">
 										                           <c:if test="${ump.key eq 'Convert To INV'}">
 										                           <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
 										 	                            <c:if test="${fn:containsIgnoreCase(permissions,'Convertion')}">
 	        									                        
-	        									                        <c:if test="${(gr.status == 'Approved' || gr.status == 'Goods_Return') &&  gr.status != 'Invoiced' }">
+	 	        									                        <c:if test="${gr.status == 'Approved' ||  gr.status == 'Partially_Returned' || gr.status == 'Goods_Return'  && gr.status != 'Invoiced'}">
 														
 																		<form:button type="button" id="convertBtnInvoice" name="statusType" value="in_voice"
 																			class="btn btn-primary mr-1 float-right mySubButtonInv">
@@ -518,21 +517,15 @@ text-align: left;
 	       								                           </c:if>     
    									                            </c:forEach>
 												          </div>
-							                   <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
+							                   <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 												        </c:when>
 												       <c:otherwise>
 												       
-												       <div class="col-sm-3 form-group has-feedback"></div>
-												       <div class="col-sm-3 form-group has-feedback"></div>
-												       <div class="col-sm-3 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
-												       
-												       
+												       <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												       <div class="col-sm-2 form-group has-feedback" style="visibility: hidden;"> &nbsp;</div>
+												       <div class="col-sm-2 form-group has-feedback"><a href="<c:url value="/gr/downloadPdf?id=${gr.id}"/>"  class="btn btn-primary pdfdownload float-right">PDF</a></div>
 												       </c:otherwise> 
-												        
-												        
-												        
-												        
-												        </c:choose>
+												      </c:choose>
 												         
 										              </div>
 												 </div>

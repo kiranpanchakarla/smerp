@@ -13,12 +13,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.master.AuditModel;
 
+/**
+ * @author dganapathi
+ *
+ */
 @Entity
 @Table(name="tbl_purchase_purchase_req")
 public class PurchaseRequest extends AuditModel {
@@ -41,6 +46,11 @@ public class PurchaseRequest extends AuditModel {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="reference_user_id", referencedColumnName = "user_id")
 	private User  referenceUser;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="plant_id", referencedColumnName = "plant_id")
+	private Plant  plant;
+	
 	
 	@Column(name="doc_number")
     private String docNumber;
@@ -199,26 +209,22 @@ public class PurchaseRequest extends AuditModel {
 		this.remarks = remarks;
 	}
 
-	@Override
-	public String toString() {
-		return "PurchaseRequest [id=" + id + ", user=" + user + ", referenceUser=" + referenceUser + ", docNumber="
-				+ docNumber + ", documentDate=" + documentDate + ", status=" + status + ", postingDate=" + postingDate
-				+ ", requiredDate=" + requiredDate + ", type=" + type + ", remarks=" + remarks
-				+ ", purchaseRequestLists=" + purchaseRequestLists + ", isActive=" + isActive + "]";
+	public Plant getPlant() {
+		return plant;
 	}
 
-	
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
 
-	
+	@Override
+	public String toString() {
+		return "PurchaseRequest [id=" + id + ", user=" + user + ", referenceUser=" + referenceUser + ", plant=" + plant
+				+ ", docNumber=" + docNumber + ", documentDate=" + documentDate + ", status=" + status
+				+ ", postingDate=" + postingDate + ", requiredDate=" + requiredDate + ", type=" + type + ", remarks="
+				+ remarks + ", purchaseRequestLists=" + purchaseRequestLists + ", isActive=" + isActive
+				+ ", barCodeImgPath=" + barCodeImgPath + "]";
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

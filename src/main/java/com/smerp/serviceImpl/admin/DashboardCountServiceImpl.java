@@ -12,11 +12,15 @@ import javax.transaction.Transactional.TxType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.smerp.model.admin.DashboardCount;
+import com.smerp.model.inventory.InventoryGoodsIssueList;
+import com.smerp.model.inventory.InventoryProductsList;
 import com.smerp.model.inventory.MinimumQuantityList;
 import com.smerp.service.admin.DashboardCountService;
+import com.smerp.service.master.PlantService;
 
 @Repository
 @Transactional(value = TxType.REQUIRED)
@@ -26,8 +30,12 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
-			
-	@Override
+	
+	@Autowired
+	PlantService plantService;
+
+	
+	/*@Override
 	public DashboardCount findAll() {
 		 
 		String sql= "with countWise as ( select count(*) as totalCnt1 FROM tbl_purchase_purchase_req where  is_active=true) ," +
@@ -183,7 +191,7 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	     logger.info("Goods Receipt Count--------->"+dashboardCount); 
 		return dashboardCount;
 	}
-
+*/
 	@Override
 	public List<MinimumQuantityList> minProductQtyList() {
 		String qtysql= "with grWise as(select gol.product_number as grProduct,gol.warehouse as grWarehouse, sum(gol.required_quantity) as receivedQuantity\r\n" + 
@@ -231,4 +239,129 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		return productList;
 	}
 
+ 
+
+	@Override
+	public List<InventoryProductsList> inventoryQtyList(int id) {
+		String qtysql= "select * from vw_inventory_status_report where plant_id=" + id ;
+		Query query1 = entityManager.createNativeQuery(qtysql);
+		 
+		logger.info("InventoryProductsList Query ----> " + query1);
+		logger.info("InventoryProductsList SQL ----> " + qtysql);
+		
+		//List<Object[]>	list1 = query1.getResultList();
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+		
+		List<InventoryProductsList> inventoryList = new ArrayList<>();
+		 for(Object[] tuple : arrayList) {
+			 InventoryProductsList prolist = new InventoryProductsList();
+			 prolist.setProductNo(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 prolist.setProductName(tuple[1].toString());
+			 prolist.setPlantId(tuple[2] == null ? 0 : ((Integer) tuple[2]).intValue());
+			 prolist.setPlantName(tuple[3].toString());
+			 prolist.setProductDescription(tuple[4].toString());
+			 prolist.setProductGroupDescription(tuple[5].toString());
+			 prolist.setUomName(tuple[6].toString());
+			 prolist.setInstockQty(tuple[7] == null ? 0: (Double.parseDouble(tuple[7].toString())));
+			 inventoryList.add(prolist);
+		 }
+		 
+		return inventoryList;
+	}
+
+	@Override
+	public List<InventoryGoodsIssueList> inventoryGoodsIssueList(int id) {
+		String qtysql= "select * from vw_inventory_goods_issue_daily where is_active = 't' and ware_house=" + id ;
+		Query query1 = entityManager.createNativeQuery(qtysql);
+		 
+		logger.info("Inventory GI SQL ----> " + qtysql);
+		
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query1.getResultList());
+		logger.info("Product List Size ----> " + arrayList.size());
+		
+		List<InventoryGoodsIssueList> inventoryGIList = new ArrayList<>();
+		 for(Object[] tuple : arrayList) {
+			 InventoryGoodsIssueList prolist = new InventoryGoodsIssueList();
+			 prolist.setDocId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 prolist.setDocNumber(tuple[1].toString());
+			 prolist.setDocDate(tuple[2].toString());
+			 prolist.setProductId(tuple[3] == null ? 0 : ((Integer) tuple[3]).intValue());
+			 prolist.setProductNumber(tuple[4].toString());
+			 prolist.setProductDescription(tuple[5].toString());
+			 prolist.setProductGroup(tuple[6].toString());
+			 prolist.setUomName(tuple[7].toString());
+			 prolist.setRequiredQty(tuple[8] == null ? 0: ((Integer) tuple[8]).intValue());
+			 prolist.setDepartmentId(tuple[9] == null ? 0: ((Integer) tuple[9]).intValue());
+			 prolist.setDepartmentName(tuple[10].toString());
+			 prolist.setRemarks(tuple[11].toString());
+			 prolist.setWarehouseId(tuple[12] == null ? 0: ((Integer) tuple[12]).intValue());
+			 
+			 inventoryGIList.add(prolist);
+		 }
+		 
+		return inventoryGIList;
+		 
+	}
+
+	@Override
+	public List<DashboardCount> getCount() {
+		//String sql= "select * from vw_dashboard";
+		int[] plantIds = plantService.findPlantIds();
+		String plantId="";
+		for(int i : plantIds ) {
+			plantId += "," +i;
+		}
+		plantId = plantId.substring(1,plantId.length());
+		logger.info("Plant ----> " + plantId);
+		String sql = "\r\n" + 
+				"select status\r\n" + 
+				",sum(pr_count) as prCount \r\n" + 
+				",sum(rfq_count) as rfqCount \r\n" + 
+				",sum(po_count) as poCount \r\n" + 
+				",sum(gr_count) as grCount \r\n" + 
+				",sum(gre_count) as greCount \r\n" + 
+				",sum(inv_count) as invCount \r\n" + 
+				",sum(cre_count) as creCount \r\n" + 
+				",sum(invgr_count) as invgrCount \r\n" + 
+				",sum(invgi_count) as invgiCount \r\n" + 
+				",sum(invgt_count) as invgtCount \r\n" + 
+				"from vw_dashboard_plant where plant_id in " + " ( " + plantId  + ") "
+				+ " group by status order by status ";
+		logger.info("Sql ----> " + sql);
+		Query query = entityManager.createNativeQuery(sql);
+		
+		logger.info("sql ----> " + sql);
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+		arrayList.addAll(query.getResultList());
+		
+		logger.info("List Size -----> " + arrayList.size());
+		
+		
+		List<DashboardCount> list = new ArrayList<>();
+		  
+		 for(Object[] tuple : arrayList) {
+			 DashboardCount dashboardCount = new DashboardCount();
+	    	 dashboardCount.setStatus(tuple[0].toString());
+	    	 dashboardCount.setPrCount(tuple[1] == null ? 0 : (Integer.parseInt(tuple[1].toString())));
+	    	 dashboardCount.setRfqCount(tuple[2] == null ? 0 : (Integer.parseInt(tuple[2].toString())));
+	    	 dashboardCount.setPoCount(tuple[3] == null ? 0 : (Integer.parseInt(tuple[3].toString())));
+	    	 dashboardCount.setGrCount(tuple[4] == null ? 0 : (Integer.parseInt(tuple[4].toString())));
+	    	 dashboardCount.setGreCount(tuple[5] == null ? 0 : (Integer.parseInt(tuple[5].toString())));
+	    	 dashboardCount.setInvCount(tuple[6] == null ? 0 :(Integer.parseInt(tuple[6].toString())));
+	    	 dashboardCount.setCreCount(tuple[7] == null ? 0 : (Integer.parseInt(tuple[7].toString())));
+	    	 dashboardCount.setInvgrCount(tuple[8] == null ? 0 : (Integer.parseInt(tuple[8].toString())));
+	    	 dashboardCount.setInvgiCount(tuple[9] == null ? 0 : (Integer.parseInt(tuple[9].toString())));
+	    	 dashboardCount.setInvgtCount(tuple[10] == null ? 0 :(Integer.parseInt(tuple[10].toString())));
+	    	 
+	    	 list.add(dashboardCount);
+	     }
+	     
+	     logger.info("PR Count--------->"+arrayList); 
+		return list;
+	}
+
+	
 }

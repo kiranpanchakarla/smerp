@@ -50,25 +50,33 @@
                 <td>:<#if po.vendorPayTypeAddress.city??>&nbsp;${po.vendorPayTypeAddress.city}<#else>--</#if></td>
                 <td><strong >Ship From</strong></td>
                 <td>:<#if po.vendorShippingAddress.city??>&nbsp;${po.vendorShippingAddress.city}<#else>--</#if></td>
-                <td><strong>Doc No.</strong></td>
-                <td>:<#if po.docNumber??>&nbsp;${po.docNumber}<#else>--</#if></td>
+                 <td><strong >Posting Date</strong></td>
+                <td>:<#if po.postingDate??>&nbsp;${po.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                
                 </tr>
                 
                 <tr>
-                <td><strong>Ref Doc No.</strong></td>
+                <td><strong>PO Doc#</strong></td>
+                <td>:<#if po.docNumber??>&nbsp;${po.docNumber}<#else>--</#if></td>
+                <td><strong>RFQ Doc#</strong></td>
                 <td>:<#if po.referenceDocNumber??>&nbsp;${po.referenceDocNumber}<#else>--</#if></td>
-                <td><strong >Posting Date</strong></td>
-                <td>:<#if po.postingDate??>&nbsp;${po.postingDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
+                <td><strong>PR Doc#</strong></td>
+                <td>:<#if po.rfqId?? && po.rfqId.purchaseReqId??>&nbsp;${po.rfqId.purchaseReqId.docNumber}<#else>--</#if></td>
+                </tr>
+                
+                <tr>
                 <td><strong >Doc Date</strong></td>
                 <td>:<#if po.documentDate??>&nbsp;${po.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if> </td>
-                </tr>
-                
-                <tr>
-                <td><strong >Require Date</strong></td>
+                <td><strong >Required Date</strong></td>
                 <td>:<#if po.requiredDate??>${po.requiredDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
-                <td><strong >Document Status</strong></td>
+                <td><strong >Status</strong></td>
                  <td>:<#if po.status??>&nbsp;${po.status}<#else>--</#if></td>
                 </tr>
+                 <tr>
+                 <td><strong >Remarks</strong></td>
+                 <td>:<#if po.remark??>&nbsp;${po.remark}<#else>--</#if></td>
+                </tr>
+                 
                 
              
             </table>
@@ -78,8 +86,8 @@
                <#if po.category = "Item"> 
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Name</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
+                <td style="border: solid 1px ;"><strong >Product#</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >UOM</strong></td>
                 <td style="border: solid 1px ;"><strong >SKU</strong></td>
@@ -88,7 +96,7 @@
                 <td style="border: solid 1px ;"><strong >Tax %</strong></td>
                 <td style="border: solid 1px ;"><strong >Tax Total</strong></td>
                 <td style="border: solid 1px ;"><strong >Total</strong></td>
-                <td style="border: solid 1px ;"><strong >Product Group</strong></td>
+                <td style="border: solid 1px ;"><strong >Group</strong></td>
                 <td style="border: solid 1px ;"><strong >Warehouse	</strong></td>
                 <td style="border: solid 1px ;"><strong >HSN Code</strong></td>
                 </tr>
@@ -129,7 +137,7 @@
                 <#else>
                 <table style="width:100% ; border-collapse: collapse;" >
                 <tr>
-                <td style="border: solid 1px ;"><strong >S.no</strong></td>
+                <td style="border: solid 1px ;"><strong >S.No</strong></td>
                 <td style="border: solid 1px ;"><strong >SAC Code</strong></td>
                 <td style="border: solid 1px ;"><strong >Description</strong></td>
                 <td style="border: solid 1px ;"><strong >Quantity</strong></td>
@@ -216,8 +224,16 @@
                 <td><strong>Total Payment Due</strong></td>
                 <td>:<#if po.totalPayment??> ${po.totalPayment}<#else>--</#if></td>
                 </tr>
-                
             </table>
+             <table style="width:100%">
+                <tr>
+                <td><strong>Deliver To :</strong></td>
+                </tr>
+                
+                <tr>
+                <td><#if po.deliverTo??>${po.deliverTo}</#if></td>
+                </tr>
+             </table>
                  
      
      </#if>

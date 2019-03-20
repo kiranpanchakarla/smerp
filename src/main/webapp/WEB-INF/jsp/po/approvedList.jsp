@@ -73,14 +73,14 @@
 														style="width: 100%">
 														<thead>
 															<tr>
-																<th>Sno</th>
-																<th>Vendor Name</th>
+																<th>S.No</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document No</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
 																<th>PO Status</th>
-																<th>Convert to GR</th>
+																<th>Convert PO to GR</th>
 															</tr>
 														</thead>
 														<tbody>

@@ -270,6 +270,8 @@
 						</ul></li>
 				</ul> </li>-->
 		   
+		   <li class="float-right dashboard-logo-wrap"><img src=<c:url value="/resources/images/dashboard-logo.png"/> class="logo-right-main" /></li>
+		   
 			<li class="dropdown dropdown-user nav-item edit-user-dropdown">
 				<a href="#" data-toggle="dropdown"
 				class="dropdown-toggle nav-link dropdown-user-link"> <span
@@ -290,6 +292,9 @@
 
 			</a>
 				<div class="dropdown-menu dropdown-menu-right">
+				<sec:authentication property="principal.userId" var="userId" />
+				<c:url value="/user/edit?id=${userId}&pwd=true" var="createUrl" />
+                <a href="${createUrl}" class="dropdown-item"><i class="icon-head"></i> View Profile</a>
 					<!-- <a href="#" class="dropdown-item"><i class="icon-head"></i>
 						Edit Profile</a> <a href="#" class="dropdown-item"><i
 						class="icon-mail6"></i> My Inbox</a> <a href="#" class="dropdown-item"><i
@@ -301,7 +306,7 @@
 				</div>
 			</li>
 			
-			<li class="float-right dashboard-logo-wrap"><img src=<c:url value="/resources/images/dashboard-logo.png"/> class="logo-right-main" /></li>
+			
 
 		</ul>
 		<div style="clear: both;"></div>

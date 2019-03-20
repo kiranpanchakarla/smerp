@@ -89,12 +89,12 @@
 														<thead>
 															<tr>
 																<th>S.No</th>
-																<th>Vendor Name</th>
+																<th>Vendor</th>
 																<th>Email Id</th>
-																<th>Document Number</th>
+																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
-																<th>Invoice Status</th>
+																<th>INV Status</th>
 																<th>Actions</th>
 															</tr>
 														</thead>
@@ -111,7 +111,7 @@
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'  && list.status != 'Credit Memo'}">
+																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'  && list.status !='Partially_Credited'  && list.status != 'Credit Memo'  }">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Invoice'}">
 																						<c:set var="permissions" scope="session"

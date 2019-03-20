@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.master.AuditModel;
 
@@ -77,15 +79,20 @@ public class InventoryGoodsTransfer extends AuditModel {
 	@Column(name = "total_payment")
 	private Double totalPayment ;
 	
-	@Column(name = "to_warehouse")
-	private Integer toWarehouse;
+	 
 
-	public Integer getToWarehouse() {
+	 
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="plant_id", referencedColumnName = "plant_id")
+	private Plant toWarehouse;
+	 
+	public Plant getPlant() {
 		return toWarehouse;
 	}
 
-	public void setToWarehouse(Integer toWarehouse) {
-		this.toWarehouse = toWarehouse;
+	public void setPlant(Plant plant) {
+		this.toWarehouse = plant;
 	}
 
 	public String getStatusType() {

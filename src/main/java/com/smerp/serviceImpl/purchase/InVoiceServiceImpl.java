@@ -37,6 +37,7 @@ import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
@@ -93,6 +94,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	PlantService plantService;
+	
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -150,7 +155,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			 if(inVoice.getGrId() != null) { 
 				 GoodsReceipt gr = inVoice.getGrId();
 	        	
-				 Vendor vendor = vendorService.findById(gr.getVendor().getId());
+				Vendor vendor = vendorService.findById(gr.getVendor().getId());
 	     		VendorAddress vendorShippingAddress = vendorAddressService.findById(gr.getVendorShippingAddress().getId());
 	     		VendorAddress vendorPayAddress = vendorAddressService.findById(gr.getVendorPayTypeAddress().getId());
 	     		VendorsContactDetails vendorsContactDetails =vendorsContactDetailsService.findById(gr.getVendorContactDetails().getId());
@@ -159,12 +164,14 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	     		inVoice.setVendorContactDetails(vendorsContactDetails);
 	     		inVoice.setVendorShippingAddress(vendorShippingAddress);
 	     		inVoice.setVendorPayTypeAddress(vendorPayAddress);
+	     		
+	     		inVoice.setPlant(inVoice.getGrId().getPlant());
 	         }
 		}
          logger.info("inVoice -->" +inVoice);
 		
          if(inVoice.getGrId()==null) { 
-        	 Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
+        	Vendor vendor = vendorService.findById(inVoice.getVendor().getId());
      		VendorAddress vendorShippingAddress = vendorAddressService.findById(inVoice.getVendorShippingAddress().getId());
      		VendorAddress vendorPayAddress = vendorAddressService.findById(inVoice.getVendorPayTypeAddress().getId());
      		
@@ -201,6 +208,15 @@ public class InVoiceServiceImpl  implements InVoiceService {
     			e.printStackTrace();
     		}
 		}
+		 
+		 if(inVoice.getStatus()!=null &&  inVoice.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+			 GoodsReceipt goodsReceipt =  inVoice.getGrId();
+			  if(goodsReceipt!=null) {
+				goodsReceipt.setStatus(EnumStatusUpdate.APPROVEED.getStatus());  // Set GOODS_RETURN
+				goodsReceiptRepository.save(goodsReceipt);
+			  }
+		 }
+		 
 		
 		inVoice= inVoiceRepository.save(inVoice);
 		
@@ -214,8 +230,8 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check PO exist in  GR
-        if(dup_inv==null) {
+		//InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check Inv exist in  GR
+        //if(dup_inv==null) {
         	Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
         	InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
@@ -232,6 +248,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			inv.setPostingDate(gr.getPostingDate());
 			inv.setCategory(gr.getCategory());
 			inv.setRemark(gr.getRemark());
+			inv.setPlant(gr.getPlant());
 			inv.setDeliverTo(gr.getDeliverTo());
 			inv.setReferenceDocNumber(gr.getDocNumber());
 			inv.setRequiredDate(gr.getRequiredDate());
@@ -345,10 +362,10 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		goodsReceiptRepository.save(gr);
 		
 		return inv;
-        }else {
+       /* }else {
         	return dup_inv;
         }
-     
+       */
 	}
 	
 	
@@ -513,12 +530,12 @@ public class InVoiceServiceImpl  implements InVoiceService {
 
 	@Override
 	public List<InVoice> findByIsActive() {
-		return inVoiceRepository.findByIsActive(true);
+		return inVoiceRepository.findByIsActive(true,plantService.findPlantIds());
 	}
 	
 	@Override
 	public List<InVoice> invApprovedList() {
-		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus());
+		return inVoiceRepository.invApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
 	}
 	
 
@@ -847,6 +864,51 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			   }*/
 	
 			}
+			
+			@Override
+			public InVoice  setStatusOfInVoice(InVoice invoice) {
+				logger.info("set Status-->");
+				String status="";
+				
+				if(invoice!=null) {
+				String sqlList= "select\r\n" + 
+						"inv.id as invId\r\n" + 
+						",inl.product_id\r\n" + 
+						",inl.required_quantity inv_quantity\r\n" + 
+						",sum(cml.required_quantity) AS cmQuantity\r\n" + 
+						",inl.required_quantity-sum(cml.required_quantity) balance_qty\r\n" + 
+						"from tbl_invoice inv\r\n" + 
+						"join tbl_invoice_lineitems inl on inl.inv_id = inv.id\r\n" + 
+						"left join tbl_credit_memo cmh on inv.id = cmh.inv_id and cmh.status not in( 'Rejected' ,'Open') \r\n" + 
+						"left join tbl_credit_memo_lineitems cml ON cmh.id = cml.cre_id and cml.product_id=inl.product_id\r\n" + 
+						"group by inv.id,inl.product_id,inl.required_quantity having inv.id="+invoice.getId();
+				
+				Integer balenceQuantity=0;
+				
+			 	logger.info("sqlList ----> " + sqlList);
+				Query queryList = entityManager.createNativeQuery(sqlList);
+				 List<Object[]>	list = queryList.getResultList();
+					
+					logger.info("List Size -----> " + list.size());
+				     for(Object[] tuple : list) {
+				    	 balenceQuantity =(Integer)(tuple[4] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
+				     }
+			     
+				 	logger.info("balenceQuantity ----> " + balenceQuantity);
+				 
+				    if(balenceQuantity==0) {
+				    	 status = EnumStatusUpdate.CREDITMEMO.getStatus();
+				    }else {
+				    	 status = EnumStatusUpdate.PARTIALLY_CREDITED.getStatus();
+				    }
+				
+			}
+				invoice.setStatus(status);
+				inVoiceRepository.save(invoice);
+			return invoice;	
+	  }
+			
+			
 
 	@Override
 	public boolean findByDocNumber(String invDocNum) {

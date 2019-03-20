@@ -523,7 +523,7 @@
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
-																															value="${listLineItems.uom}"
+																															value="${listLineItems.uom}" maxlength="10"
 																															class="form-control uom" readonly="true"></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
@@ -535,7 +535,7 @@
 																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}"  required="true"
+																															value="${listLineItems.unitPrice}"  required="true" maxlength="6"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
@@ -690,7 +690,7 @@
 																													
 																													<td><div class="form-group"><form:input type="text"
 																															path="purchaseOrderlineItems[${count}].uom"
-																															value="${listLineItems.uom}"
+																															value="${listLineItems.uom}" maxlength="10"
 																															class="form-control uom"></form:input></div></td>
 																															
 																													<td><div class="form-group"><form:input type="text"
@@ -702,7 +702,7 @@
 																															<td><div class="form-group">
 																															<form:input type="text"
 																															path="purchaseOrderlineItems[${count}].unitPrice" onkeypress="return isNumericKey(event)"
-																															value="${listLineItems.unitPrice}" required ="true" 
+																															value="${listLineItems.unitPrice}" required ="true" maxlength="6"
 																															class="form-control unitPrice validatePrice" ></form:input></div></td>
 																													
 																													
@@ -1191,7 +1191,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'" />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].uom" maxlength="10" class="form-control uom uom'+inc+'" id="uom'+inc+'" />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1203,7 +1203,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)"    class="form-control  unitPrice validatePrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="purchaseOrderlineItems['+inc+'].unitPrice" maxlength="6" autocomplete="off" onkeypress="return isNumericKey(event)"    class="form-control  unitPrice validatePrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

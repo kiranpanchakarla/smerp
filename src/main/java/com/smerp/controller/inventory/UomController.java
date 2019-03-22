@@ -10,8 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.smerp.model.inventory.Product;
 import com.smerp.model.inventory.Uom;
 import com.smerp.model.inventory.UomCategory;
 import com.smerp.service.inventory.UomCatergoryService;
@@ -86,4 +92,20 @@ private static final Logger logger = LogManager.getLogger(UomController.class);
 			return false;
 		}
 	}
+	
+	@RequestMapping(value = "/getUOMInfo", method = RequestMethod.GET)
+    @ResponseBody
+    private String getUOMList(@RequestParam("name") String name) throws JsonProcessingException {
+		logger.info("name-->" + name );
+		Uom uom = uomService.findByName(name);
+        logger.info("product Obj-->" + uom );
+        if(uom!=null) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        logger.info(mapper.writeValueAsString(uom));
+        return mapper.writeValueAsString(uom);
+        }else {
+        	return "";
+        }
+    }
 }

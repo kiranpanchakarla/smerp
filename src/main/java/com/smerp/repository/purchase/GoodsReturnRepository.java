@@ -22,5 +22,8 @@ public interface GoodsReturnRepository  extends JpaRepository<GoodsReturn, Integ
 	List<GoodsReturn> findByApproveListGrId(GoodsReceipt gr ,String status, int[] plantIds);
 	
 	GoodsReturn findBygrId(GoodsReturn gr);
+	
+	@Query("SELECT r FROM GoodsReturn r WHERE grId=:gr and status=:status order by createdAt desc")
+	List<GoodsReturn> getListBygrId(GoodsReceipt gr,String status);
 
 }

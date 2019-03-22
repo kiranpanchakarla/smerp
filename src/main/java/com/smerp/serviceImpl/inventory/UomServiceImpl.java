@@ -62,6 +62,13 @@ public class UomServiceImpl implements UomService {
 		return uomRepository.findByName(name);
 	}
 
+
+	@Override
+	public List<Uom> getUOM() {
+		// TODO Auto-generated method stub
+		return uomRepository.getUOM();
+	}
+
 	
 	/*public List<Uom> findById(Integer id) {
 		

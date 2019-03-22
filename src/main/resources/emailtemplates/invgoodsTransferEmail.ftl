@@ -51,15 +51,11 @@
                 <td><strong>Doc#</strong></td>
                 <td>:<#if gr.documentDate??>&nbsp;${gr.documentDate?string("dd-MM-yyyy")!''}<#else>--</#if></td>
                 </tr>
-                <tr>
-                <td><strong>Ship to</strong></td>
-                <td>:<#if gr.toWarehouse??>&nbsp;${gr.plant.plantName}<#else>--</#if> </td>
                 
-                <td><strong >Remarks</strong></td>
+                <tr>
+                 <td><strong >Remarks</strong></td>
                 <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
-                </tr>
-                  <tr>
-                  <td><strong >Ref Doc#</strong></td>
+                <td><strong >Ref Doc#</strong></td>
                 <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if> </td>
                 </tr>
             </table>

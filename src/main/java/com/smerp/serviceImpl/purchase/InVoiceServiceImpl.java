@@ -22,6 +22,7 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReceiptLineItems;
+import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.LineItemsBean;
@@ -39,6 +40,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
+import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
@@ -64,6 +66,9 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	
 	@Autowired
 	GoodsReceiptService goodsReceiptService;
+	
+	@Autowired
+	GoodsReturnService goodsReturnService;
 	
 	@Autowired
 	GoodsReceiptRepository goodsReceiptRepository;
@@ -230,8 +235,9 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		InVoice inv = new InVoice();
 		GoodsReceipt gr = goodsReceiptService.findById((Integer.parseInt(grId)));
 		logger.info("grId" + grId);
-		//InVoice dup_inv =inVoiceRepository.findByGrId(gr);  // check Inv exist in  GR
-        //if(dup_inv==null) {
+		/*check any goods returns for this goods receipt and set status to cancelled*/
+		changeGoodsReturnStatus(gr);
+		 
         	Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
         	InVoice greDetails = findLastDocumentNumber();
 		if (greDetails != null && greDetails.getDocNumber() != null) {
@@ -362,10 +368,16 @@ public class InVoiceServiceImpl  implements InVoiceService {
 		goodsReceiptRepository.save(gr);
 		
 		return inv;
-       /* }else {
-        	return dup_inv;
-        }
-       */
+       
+	}
+   
+	private void changeGoodsReturnStatus(GoodsReceipt gr) {
+		List<GoodsReturn> greList = goodsReturnService.findByGoodsReceiptId(gr, EnumStatusUpdate.OPEN.getStatus());
+		logger.info("greList" + greList.size());
+		for (GoodsReturn gre:greList)  {
+			logger.info("gre" + gre);
+			gre.setStatus(EnumStatusUpdate.CANCELED.getStatus());
+		}
 	}
 	
 	

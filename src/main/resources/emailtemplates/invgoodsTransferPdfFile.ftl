@@ -64,14 +64,22 @@
                 </tr>
                 
                 <tr>
+                <td><strong>Ship From</strong></td>
+                <td>:<#if gr.fromWarehouse??>&nbsp;${gr.fromWarehouse.plantName}<#else>--</#if></td>
                 <td><strong>Ship to</strong></td>
-                 <td>:<#if gr.plant??>&nbsp;${gr.plant.plantName}<#else>--</#if> </td>
-                
-                <td><strong >Remarks</strong></td>
-                <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
+                <td> <#list plantMap as key, value>
+                 <#if (gr.toWarehouse) == (key)>
+                     <p>&nbsp;${value}</p>
+                 </#if>
+                </#list>
+                </td>
+               
                 </tr>
-                  <tr>
-                  <td><strong >Ref Doc#</strong></td>
+                
+                <tr>
+                 <td><strong >Remarks</strong></td>
+                <td>:<#if gr.remarks??>&nbsp;${gr.remarks}<#else>--</#if> </td>
+                <td><strong >Ref Doc#</strong></td>
                 <td>:<#if gr.referenceDocNumber??>&nbsp;${gr.referenceDocNumber}<#else>--</#if> </td>
                 </tr>
             </table>

@@ -154,12 +154,19 @@
 
 																				</div> 
 																				
+																				<div class="col-sm-6 form-group ">
+																				<label>Ship From</label>
+																				<form:select id="fromWarehouseId" path="fromWarehouse.id" class="form-control shipFrom" required="true" onchange="fromWareHouseValidation()">
+																				<form:option value="">Select</form:option>
+																				<form:options items="${plantMap}"></form:options>
+																				</form:select>
+																	  			 </div>
 																				
 																				<div class="col-sm-6 form-group ">
 																				<label>Ship To</label>
-																				<form:select id="warehouseId" path="plant.id" cssClass="form-control" required="true" onchange="wareHouseValidation()">
+																				<form:select id="warehouseId" path="toWarehouse" class="form-control shipTo" required="true" onchange="wareHouseValidation()">
 																				<form:option value="">Select</form:option>
-																				<form:options items="${plantMap}"></form:options>
+																				<form:options items="${findPlantAll}"></form:options>
 																				</form:select>
 																	  			 </div>
 																				 
@@ -267,14 +274,30 @@
 																																</div>
 																															</td>
 																															
-																																<td><div class="form-group">
+																																<td><%-- <div class="form-group">
 																																	<form:select class="form-control warehouse"
-																																		style="width:;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})" 
+																																		style="width:100%;" required="true" id="fromWarehouse${count}" onchange="fromHouse(${count})" 
 																																		path="inventoryGoodsTransferList[${count}].fromWarehouse">
 																																		<form:option value="" label="Select" />
 																																		<form:options items="${plantMap}" />
 																																	</form:select>
-																																</div></td>
+																																</div> --%>
+																																
+																																<div class="form-group"><select class="form-control" 
+																																	name="inventoryGoodsTransferList[${count}].fromWarehouse" style="width:100%;" id="fromWarehouse${count}">
+																																	<c:forEach var="planMap" items="${plantMap}">
+																														
+																													  				<c:choose>
+																																		<c:when test="${planMap.key == listLineItems.fromWarehouse}">
+																																		<option  value="${planMap.key}" selected>${planMap.value}</option>
+																																	</c:when>
+																																	</c:choose>
+																																	</c:forEach>
+																																	</select>
+																														
+																																</div>
+																																
+																																</td>
 																																
 																																	<td><%-- <div class="form-group">
 																																	<form:select class="form-control"
@@ -287,7 +310,7 @@
 																																
 																																<div class="form-group"><select class="form-control" 
 																																	name="inventoryGoodsTransferList[${count}].toWarehouse" style="width:100%;" id="toWarehouse${count}">
-																																	<c:forEach var="planMap" items="${plantMap}">
+																																	<c:forEach var="planMap" items="${findPlantAll}">
 																														
 																													  				<c:choose>
 																																		<c:when test="${planMap.key == listLineItems.toWarehouse}">
@@ -640,20 +663,41 @@ function wareHouseChangeInLineItems(){
 			$('#toWarehouse'+i).empty();
 			$('#toWarehouse'+i).append(addToRow);
 			
-			fromHouse(i);
+			 
 		}
 } 
 
-function fromHouse(index){
+function fromWareHouseValidation() {
 	
-	var fromData=  $("#fromWarehouse"+index+" option:selected").text();
-	var toData=  $("#toWarehouse"+index+" option:selected").text();
-
-	if(fromData==toData){
-		alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
-		$("#fromWarehouse"+index).prop('selectedIndex',0);
-	}
+	fromWarehouseChangeInLineItems();
+	//warehouseAlert();
+   // alert($("#warehouseId").val());
 }
+	  
+function fromWarehouseChangeInLineItems(){
+	var incCount = inc;
+	for (var i = 0; i < incCount; i++) {
+			var val = $("#fromWarehouseId").val();
+			var warhouseName=  $("#fromWarehouseId option:selected").text();
+			var addToRow = '<option value='+val+' selected="selected">'+warhouseName+'</option>';
+			
+			$('#fromWarehouse'+i).empty();
+			$('#fromWarehouse'+i).append(addToRow);
+			
+			
+		}
+} 
+
+$(document).on("change", ".shipTo", function() {
+	
+	var fromWarehouse=  $(".shipFrom option:selected").val();
+	var toWarehouse=  $(".shipTo option:selected").val();
+	
+	if(fromWarehouse==toWarehouse){
+		alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
+		$(".shipTo").prop('selectedIndex', 0);
+	}
+});
 
 /* function warehouseAlert(){
 	var incCount = inc;
@@ -673,7 +717,7 @@ function fromHouse(index){
 var sizeplant = "${plantMapSize}";
 var scriptSelectPlant='';
 if(sizeplant>1) {
-    scriptSelectPlant ='<option value="">select</option>';
+    scriptSelectPlant ='<option value="">Select</option>';
      }
 var inc=0;
 var edit_addressCount=0;
@@ -735,10 +779,10 @@ function addItem() {
 			+ '<td>'
 			+'<div class="form-group">'
 			+ '<select  name="inventoryGoodsTransferList['+inc+'].fromWarehouse" required="true"   onchange="fromHouse('+inc+')"   class="form-control warehouse fromWarehouse'+inc+' fromWarehouse"  id="fromWarehouse'+inc+'" >'
-			+ scriptSelectPlant +
+			/* + scriptSelectPlant +
 			<c:forEach items="${plantMap}" var="plantMap">
 			'<option value="${plantMap.key}">${plantMap.value}</option>'+
-			</c:forEach>
+			</c:forEach> */
 			+ '</select>'
 			+'<input type="hidden" name="inventoryGoodsTransferList['+inc+'].taxDescription"  class="taxDescription"    />'
 			+ '</div>'
@@ -820,9 +864,12 @@ function addItem() {
 		 $("#itemTbl").append(item_table_data);
 	}
 		inc++;
+		fromWarehouseChangeInLineItems(); 
+		wareHouseChangeInLineItems();
+		
 		$('#addressCount').val(inc);
 		$("#form").validator("update");
-		wareHouseChangeInLineItems();
+		
 	}
 
 
@@ -1421,27 +1468,49 @@ function goBack() {
     window.history.back();
 }
 	
+$(document).on("change", ".shipTo", function() {
 	
+	var fromWarehouse=  $(".shipFrom option:selected").val();
+	var toWarehouse=  $(".shipTo option:selected").val();
+	
+	if(fromWarehouse==toWarehouse){
+		alertify.alert("Inventory Goods Transfer"," Warehouse From and To Can't be Same!");
+		
+	}
+});
 	
 
 
-$(document).on("change", ".warehouse", function() {
-	var itemParentRow = $(this).parents(".multTot");
+$(document).on("change", ".shipFrom", function() {
+	
+
+	/* var itemParentRow = $(this).parents(".multTot");
 	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
-	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+	setInfoInStockQuantity(productNo,warehouse,itemParentRow); */
+	
+	var incCount = inc;
+	  
+	for (var i = 0; i < incCount; i++) {
+	
+		var productNo=  $(".productNumber"+i).val();
+		var warehouse=  $(".shipFrom option:selected").val();
+		var itemParentRow = $('.productNumber'+i).parents(".multTot");
+		 
+		setInfoInStockQuantity(productNo,warehouse,itemParentRow);
+		} 
 });
 
 $(document).on("blur", ".productNumber", function() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var warehouse= $(".shipFrom option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });
 
 $(document).on("blur", ".description", function() {	
 	var itemParentRow = $(this).parents(".multTot");
-	var warehouse=  $(itemParentRow).find(".warehouse option:selected").val();
+	var warehouse=  $(".shipFrom option:selected").val();
 	var productNo=  $(itemParentRow).find(".productNumber").val();
 	setInfoInStockQuantity(productNo,warehouse,itemParentRow);
 });

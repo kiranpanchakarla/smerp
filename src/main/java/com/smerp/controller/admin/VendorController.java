@@ -37,6 +37,8 @@ import com.smerp.util.GenerateDocNumber;
 @RequestMapping("/vendor")
 public class VendorController {
 	
+
+	
 	@Autowired
 	private VendorService vendorService;
 	
@@ -71,7 +73,8 @@ public class VendorController {
 		Vendor vendor = vendorService.findLastCodeNumber();
 		Vendor vendorObj =  new Vendor();
 		vendorObj.setVendorCode(GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.V, vendor == null ? "" :  vendor.getVendorCode()));
-		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); // for india pass value code 1
+		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode)));
+		model.addAttribute("stateList", countryServices.stateList(Integer.parseInt(countryCode)));// for india pass value code 1
 		model.addAttribute("vendor", vendorObj);
 		return "vendor/create";
 	}
@@ -91,6 +94,7 @@ public class VendorController {
 		Vendor vendor = vendorService.getInfo(Integer.parseInt(vendorId));
 		model.addAttribute("vendor", vendor);
 		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); //  for india pass value code 1
+		model.addAttribute("stateList", countryServices.stateList(Integer.parseInt(countryCode)));
 		return "vendor/create";
 	}
 

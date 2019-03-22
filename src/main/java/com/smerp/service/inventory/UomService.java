@@ -19,5 +19,7 @@ public interface UomService {
 	void delete(int id);
 	
 	Uom findByName(String name);
+	
+	List<Uom> getUOM();
 
 }

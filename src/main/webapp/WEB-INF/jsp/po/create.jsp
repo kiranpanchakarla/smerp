@@ -1440,17 +1440,6 @@ $(document).ready(function(){
 		 availableTagsvendornames.push(value.toString());
 	   });
 	
-	// alert("push data-->" +availableTagsvendornames);
-		/* $(document).on("keypress", ".vendorname", function() {
-			$(this).autocomplete({
-		        source: availableTagsvendornames,
-		        select: function(event, ui) {
-		        	var vendorname = ui.item.value;
-		        	//alert(vendorname);
-		            autocompletevendorDetails(vendorname);
-		       		 },
-		        }); 
-			}); */
 		
 		$(document).on("focus", ".vendorname", function() {
 			$(this).autocomplete({
@@ -1789,6 +1778,39 @@ $(document).ready(function(){
                       
          }   
    /* End of Description List  */   
+   
+   /* UOM AutoComplete */
+   
+    var uomList =[];
+	 var name;
+	 var uomData= ${uomList};
+	 var availableUOMTags = [];
+		$.each(uomData, function (index, value) {
+		   availableUOMTags.push(value.toString());
+	   });
+	 //alert("length"+availableUOMTags);
+		 
+		//$(".prodouctNumber").autocomplete({
+	$(document).on("focus", ".uom", function() {
+		var itemParentRow = $(this).parents(".multTot");
+		//alert("itemParentRow"+itemParentRow);
+		 
+		 $(this).autocomplete({
+	        source: availableUOMTags,
+	        minLength: 0,
+            scroll: true,
+	        select: function(event, ui) {
+	        	name = ui.item.value;
+	        	//alert(name);
+	             //autocompleteUOM(name,itemParentRow);
+	        	$(itemParentRow).find(".uom").val(name);
+	       		 },
+	        }).focus(function() {
+	            $(this).autocomplete("search", "");
+	        }); 
+		});
+		
+   /* UOM AutoComplete */
 	
     	$('#vendorAddress').on('change', function() {
     		var shippingId=$('#vendorAddress').val();

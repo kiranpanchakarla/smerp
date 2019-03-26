@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -43,6 +45,7 @@ import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
+import com.smerp.service.inventory.UomService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
@@ -93,6 +96,11 @@ public class PurchaseOrderController {
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
 	
+	@Autowired
+	UomService uomService;
+	
+	
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -129,6 +137,7 @@ public class PurchaseOrderController {
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("po", po);
@@ -146,6 +155,7 @@ public class PurchaseOrderController {
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());

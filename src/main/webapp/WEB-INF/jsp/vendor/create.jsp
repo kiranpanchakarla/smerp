@@ -607,18 +607,39 @@ $(document).ready(function(){
 																					</div>
 																				</div>
 
-																				<div class="col-xs-12 col-sm-4">
+																				<!-- <div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>Street#</label> <input type="text"
 																							name="vendorAddress[0].streetNo"
 																							class="form-control camelCase" placeholder='Street Number'
 																							oninvalid="this.setCustomValidity('Please Enter Street Number')"
 																							oninput="setCustomValidity('')" />
-																						<!-- <div   class="help-block with-errors"></div> -->
+																						<div   class="help-block with-errors"></div>
 																					</div>
-																				</div>
+																				</div> -->
+																				
+																				 <div class="col-xs-12 col-sm-4">
+																					<div class="form-group">
+																						<label>State</label> <select
+																							name="vendorAddress[0].states.id"
+																							class="form-control">
+																							<option value="">--Select--</option>
+																							<c:forEach items="${stateList}" var="statesList">
+																						    <%-- <option value="${states.id}">${states.name}</option> --%>
+																						    <c:choose>
+																							<c:when test="${vendor.vendorAddress!=null}">
+																							<option value="${vendorAddress[0].states.name}">${vendorAddress[0].states.name}</option>
+																							</c:when>
+																							 <c:otherwise>
+																								<option value="${statesList.id}">${statesList.name}</option>
+																							</c:otherwise> 
+																							</c:choose>
+																							</c:forEach>
+																						</select>
+																					</div>
+																				</div> 
 
-																				<div class="col-xs-12 col-sm-4">
+																				  <div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
 																						<label>GSTIN </label> <input type="text"
 																							name="vendorAddress[0].gstin"
@@ -628,9 +649,10 @@ $(document).ready(function(){
 																							required="true"
 																							oninvalid="this.setCustomValidity('Please Enter GST IN')"
 																							oninput="setCustomValidity('')" />
-																						<!-- <div   class="help-block with-errors"></div> -->
+																						 
 																					</div>
-																				</div>
+																				</div> 
+																				
 
 																				<div class="col-xs-12 col-sm-4">
 																					<div class="form-group">
@@ -773,7 +795,7 @@ $(document).ready(function(){
 																							</div>
 																						</div>
 
-																						<div class="col-xs-12 col-sm-4">
+																						<%-- <div class="col-xs-12 col-sm-4">
 																							<div class="form-group">
 																								<label>Street#</label> <input type="text"
 																									value="${listAddressDetails.streetNo}"
@@ -784,7 +806,30 @@ $(document).ready(function(){
 																									oninput="setCustomValidity('')" />
 																								<!-- <div   class="help-block with-errors"></div> -->
 																							</div>
-																						</div>
+																						</div> --%>
+																						
+																						<div class="col-xs-12 col-sm-4">
+																					<div class="form-group">
+																						<label>State</label> <select
+																							name="vendorAddress[<%=count1%>].states.id"
+																							class="form-control">
+																							
+																							  <option value="">Select</option> 
+																						   <c:forEach items="${stateMap}" var="statesList">
+																						    <%-- <option value="${states.id}">${states.name}</option> --%>
+																						    <c:choose>
+																							<c:when test="${statesList.key == listAddressDetails.states.id}">
+																							<option value="${statesList.key}" selected >${statesList.value}</option>
+																							</c:when>
+																							 <c:otherwise>
+																								<option value="${statesList.key}">${statesList.value}</option>
+																							</c:otherwise> 
+																							</c:choose>
+																							</c:forEach>
+																							 
+																						</select>
+																					</div>
+																				</div> 
 
 																						<div class="col-xs-12 col-sm-4">
 																							<div class="form-group">
@@ -1180,9 +1225,15 @@ var inc1=1;
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Zipcode</label>'
 												+ '<input type="text" placeholder="Zip Code" name="vendorAddress['+inc1+'].zipCode" maxlength="6" minlength="6" class="form-control" onkeypress="return isZipcodeKey(event);"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter Zip Code\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 
-												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street#</label>'
-												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control camelCase"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>'
-
+												/* +'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>Street#</label>'
+												+ '<input type="text" placeholder="Street Number" name="vendorAddress['+inc1+'].streetNo" class="form-control camelCase"   oninvalid="this.setCustomValidity(\'Please Enter Street Number\')" oninput="setCustomValidity(\'\')" >  </div></div>' */
+												
+												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>State</label>'
+												+ '<select name="vendorAddress['+inc1+'].states.id" class="form-control">'
+												+ '<option value="">--Select--</option>'
+												+ '<c:forEach items="${stateList}" var="states"> <option value="${states.id}">${states.name}</option></c:forEach> '
+												+ '</select></div></div></div>'
+												
 												+'<div class="col-xs-12 col-sm-4"><div class="form-group"><label>GSTIN </label>'
 												+ '<input type="text" placeholder="GSTIN" name="vendorAddress['+inc1+'].gstin" class="form-control" maxlength="15" minlength="15" pattern="^[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}?$"  required="true"  oninvalid="this.setCustomValidity(\'Please Enter GST IN\')" oninput="setCustomValidity(\'\')" >  </div></div>'
 

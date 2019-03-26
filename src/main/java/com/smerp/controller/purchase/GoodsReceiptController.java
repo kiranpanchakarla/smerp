@@ -41,6 +41,7 @@ import com.smerp.model.inventory.TaxCode;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
+import com.smerp.service.inventory.UomService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReceiptService;
@@ -87,6 +88,9 @@ public class GoodsReceiptController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	UomService uomService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -123,6 +127,7 @@ public class GoodsReceiptController {
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("gr", gr);
@@ -148,6 +153,7 @@ public class GoodsReceiptController {
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("plantMapSize", plantMap().size());

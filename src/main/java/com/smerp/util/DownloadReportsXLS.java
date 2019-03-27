@@ -126,7 +126,7 @@ public class DownloadReportsXLS {
 	private String getPOHeader() {
 		String heading = SNO + SEMICOLUMN + VENDORCODE + SEMICOLUMN  + VENDOR + SEMICOLUMN  + DOC +  SEMICOLUMN + DOCDATE + SEMICOLUMN   + PRODUCTCODE
 			    + SEMICOLUMN + PRODUCTDESCRIPTION + SEMICOLUMN  + PRODUCTGROUP + SEMICOLUMN +  UOM + SEMICOLUMN  + WAREHOUSE + SEMICOLUMN + ORDERQUANTITY + SEMICOLUMN
-			    + PENDINGQUANTITY+ SEMICOLUMN + UNITPRICE + SEMICOLUMN + TAXDESCRIPTION + SEMICOLUMN + TAXAMOUNT + SEMICOLUMN + LINETOTAL + SEMICOLUMN + DISCOUNT + SEMICOLUMN 
+			    + RECEIVEDQUANTITY + SEMICOLUMN + PENDINGQUANTITY+ SEMICOLUMN + UNITPRICE + SEMICOLUMN + TAXDESCRIPTION + SEMICOLUMN + TAXAMOUNT + SEMICOLUMN + LINETOTAL + SEMICOLUMN + DISCOUNT + SEMICOLUMN 
 				+ FREIGHT + SEMICOLUMN + PAYTO + SEMICOLUMN + SHIPFROM + SEMICOLUMN + SHIPTO + SEMICOLUMN + REMARKS + SEMICOLUMN + STATUS + SEMICOLUMN + NEWLINE;
 		return heading;
 	}
@@ -246,20 +246,24 @@ public class DownloadReportsXLS {
 		return byteArrayOutputStream;
 	}
 	
-	private Integer getPendingQty(int poId,String product_number){
-		String sql= "select id,product_number,pending_quantity from vw_purchase_order_pending_qty  where id =" + poId + " and product_number= " + "'" + product_number + "'";
+	private List<Integer> getPendingQty(int poId,String product_number){
+		String sql= "select id,product_number,pending_quantity,available_quantity from vw_purchase_order_pending_qty  where id =" + poId + " and product_number= " + "'" + product_number + "'";
 		logger.info("Sql ----> " + sql);
+		List<Integer> listQuantity = new ArrayList<Integer>();
 		 Integer pendingQty = 0;
-		  
+		 Integer availableQty = 0; 
 		   Query query = entityManager.createNativeQuery(sql);
 		   List<Object[]>	pendingQtyList = query.getResultList();
 		    
 		    for(Object[] tuple : pendingQtyList) {
 		    	pendingQty = ((Integer)(tuple[2] == null ? 0 : (Integer.parseInt((tuple[2].toString())))));
+		    	availableQty = ((Integer)(tuple[3] == null ? 0 : (Integer.parseInt((tuple[3].toString())))));
 		    	logger.info("pendingQty ----> " + pendingQty);
+		    	listQuantity.add(pendingQty);
+		    	listQuantity.add(availableQty);
 		    }
 		
-		return pendingQty;
+		return listQuantity;
 		
 	}
 	
@@ -273,6 +277,10 @@ public class DownloadReportsXLS {
 			for (PurchaseOrder list : poList) {
 				for(int i=0; i< list.getPurchaseOrderlineItems().size(); i++) {
 					list = purchaseOrderService.getListAmount(list);
+					
+					List<Integer> listQuantity = 	getPendingQty(list.getId(),list.getPurchaseOrderlineItems().get(i).getProdouctNumber());
+					
+					
 				excelData = index + SEMICOLUMN + 
 						(list.getVendor() == null ? BLANK : list.getVendor().getVendorCode()) + SEMICOLUMN +
 						(StringUtil.isEmptyTrim(list.getVendor().getName()) ? BLANK : list.getVendor().getName()) + SEMICOLUMN + 
@@ -284,7 +292,8 @@ public class DownloadReportsXLS {
 						(StringUtil.isEmptyTrim(list.getPurchaseOrderlineItems().get(i).getUom())? BLANK : list.getPurchaseOrderlineItems().get(i).getUom()) + SEMICOLUMN +
 						(getWarehouseName(list.getPurchaseOrderlineItems().get(i).getWarehouse())==null? BLANK : getWarehouseName(list.getPurchaseOrderlineItems().get(i).getWarehouse())) + SEMICOLUMN +
 						(list.getPurchaseOrderlineItems().get(i).getRequiredQuantity()==null? BLANK : list.getPurchaseOrderlineItems().get(i).getRequiredQuantity()) + SEMICOLUMN + 
-						(getPendingQty(list.getId(),list.getPurchaseOrderlineItems().get(i).getProdouctNumber())==null? BLANK : getPendingQty(list.getId(),list.getPurchaseOrderlineItems().get(i).getProdouctNumber())) + SEMICOLUMN + 
+						(listQuantity==null? BLANK : listQuantity.get(1)) + SEMICOLUMN + //1 = available quantity
+						(listQuantity==null? BLANK : listQuantity.get(0)) + SEMICOLUMN + //0 = pending quantity
 						(list.getPurchaseOrderlineItems().get(i).getUnitPrice()==null? BLANK : list.getPurchaseOrderlineItems().get(i).getUnitPrice()) + SEMICOLUMN + 
 						(StringUtil.isEmptyTrim(list.getPurchaseOrderlineItems().get(i).getTaxDescription())? BLANK : list.getPurchaseOrderlineItems().get(i).getTaxDescription()) + SEMICOLUMN +
 						(list.getPurchaseOrderlineItems().get(i).getTaxTotal()==null? ZERO : list.getPurchaseOrderlineItems().get(i).getTaxTotal()) + SEMICOLUMN + 

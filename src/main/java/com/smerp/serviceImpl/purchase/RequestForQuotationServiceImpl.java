@@ -3,8 +3,12 @@ package com.smerp.serviceImpl.purchase;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +23,7 @@ import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.LineitemsRepositoryRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
@@ -30,8 +35,11 @@ import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetConvertedDocStatusList;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 
 @Service
@@ -41,36 +49,43 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	RequestForQuotationRepository requestForQuotationRepository;
+	private RequestForQuotationRepository requestForQuotationRepository;
 
 	@Autowired
-	LineitemsRepositoryRepository lineitemsRepository;
+	private LineitemsRepositoryRepository lineitemsRepository;
 
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
+	private VendorAddressService vendorAddressService;
 	
 	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	PurchaseRequestService purchaseRequestService;
+	private PurchaseRequestService purchaseRequestService;
 	
 	@Autowired
-	PurchaseRequestRepository purchaseRequestRepository;
+	private PurchaseRequestRepository purchaseRequestRepository;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
+	
+	@Autowired
+	private GetConvertedDocStatusList getConvertedDocStatusList;
 	
 	@Override
 	public RequestForQuotation save(RequestForQuotation requestForQuotation) {
@@ -303,5 +318,57 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		logger.info("No of RFQ's are:"+noOfRfq);
 		return noOfRfq;
 	}
-
+	
+	@Override
+	public List<RequestForQuotation> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		
+		searchFilter.setTypeOf(EnumSearchFilter.RFQTABLE.getStatus());
+		if(searchFilter.getIsConvertedDoc()!= null && searchFilter.getIsConvertedDoc().equals("true")){
+			List<String> statusList = getConvertedDocStatusList.getRFQStatusList();
+			searchFilter.setStatusList(statusList);
+			if(searchFilter.getSortBy()!=null) {
+				 if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<RequestForQuotation> list = query.getResultList();
+				logger.info(list);
+				return list;
+				}else {
+					List<RequestForQuotation> list = rfqApprovedList();
+					return list;
+				}
+				}else {
+					List<RequestForQuotation> list = rfqApprovedList();
+					return list;
+				}
+			
+			
+		}else if(searchFilter.getSortBy()!=null) {
+		 if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+		
+		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+		
+		logger.info(resultQuery);
+		
+		Query query = entityManager.createQuery(resultQuery);
+		List<RequestForQuotation> list = query.getResultList();
+		logger.info(list);
+		return list;
+		}else {
+			List<RequestForQuotation> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<RequestForQuotation> list = findByIsActive();
+			return list;
+		}
+	}
+	
 }

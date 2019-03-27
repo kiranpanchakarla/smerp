@@ -63,6 +63,7 @@
 											</div>
 
 										</div>
+										<c:import url="/WEB-INF/jsp/searchFilter.jsp" />
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
 
@@ -162,9 +163,20 @@
 
 	<c:import url="/WEB-INF/jsp/loadJs.jsp" />
 	<script type="text/javascript">
+	function getSearchFilterList() {
+		var dateSelectfrom = $('#dateSelect option:selected').val();
+		var formdatepicker = $('#fromDate').val();
+		var todatepicker = $('#toDate').val();
+		$("#isConvertedDoc").val('true');
+		$('#searchFilterForm').attr('action', "/gr/getSearchFilterList").submit();
+	}
+	
 		$(document).ready(function() {
 			$('#example').DataTable({
-				"scrollX" : true
+				"scrollX" : true,
+				"searching" : false,
+				"info" : false,
+				"dom" : '<"top"i>rt<"bottom"flp><"clear">'
 			});
 		});
 		$(document).ready(function(){

@@ -2,6 +2,7 @@ package com.smerp.service.inventorytransactions;
 
 import java.util.List;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
+import com.smerp.model.search.SearchFilter;
 
 public interface InventoryGoodsTransferService {
 
@@ -22,4 +23,6 @@ public interface InventoryGoodsTransferService {
 	InventoryGoodsTransfer getListAmount(InventoryGoodsTransfer inventoryGoodsTransfer);
 	
 	boolean findByDocNumber(String docNum);
+	
+	List<InventoryGoodsTransfer> searchFilterBySelection(SearchFilter searchFilter);
 }

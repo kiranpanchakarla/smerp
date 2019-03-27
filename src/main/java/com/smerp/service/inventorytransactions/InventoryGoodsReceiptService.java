@@ -3,6 +3,7 @@ package com.smerp.service.inventorytransactions;
 import java.util.List;
 
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
+import com.smerp.model.search.SearchFilter;
 
 public interface InventoryGoodsReceiptService {
 
@@ -22,4 +23,5 @@ public interface InventoryGoodsReceiptService {
 	
 	boolean findByDocNumber(String docNum);
 	
+	List<InventoryGoodsReceipt> searchFilterBySelection(SearchFilter searchFilter);
 	}

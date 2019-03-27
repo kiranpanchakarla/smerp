@@ -2,6 +2,7 @@ package com.smerp.service.inventorytransactions;
 
 import java.util.List;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
+import com.smerp.model.search.SearchFilter;
 
 public interface InventoryGoodsIssueService {
 
@@ -24,4 +25,6 @@ public interface InventoryGoodsIssueService {
 	String getInStock(String productNo,Integer warehouse);
 	
 	InventoryGoodsIssue getinventoryGoodsIssueId(int id);
+	
+	List<InventoryGoodsIssue> searchFilterBySelection(SearchFilter searchFilter);
 }

@@ -1194,6 +1194,7 @@ h2.font-weight-normal {
 .po-wrap-list li:last-child ul {
     margin-left: 0px !important;
     padding-left: 0px !important;
+    padding-top:0px;
 }
 
 .po-wrap-list li:last-child li {
@@ -1205,6 +1206,7 @@ h2.font-weight-normal {
     width: auto;
     padding-right: 5px;
     margin-bottom: 4px;
+    line-height: 25px;
 }
 .po-wrap-list select, .po-wrap-list input[type="text"], .po-wrap-list input[type="date"] {
     float: left;
@@ -1239,6 +1241,22 @@ h2.font-weight-normal {
 }
 .po-list-dashboard{padding: 0.5rem 1.5rem !important;}
 .po-hist-btn {padding: 0rem 1rem 0.5rem;color:#a94442 !important; font-weight: 500;}
+.last-list-search{width: 69px !important;}
+.list-search1{width: 106px !important; }
+.list-search2{width: 53px !important;}
+.list-search3{width: 113px !important;}
+
+@-moz-document url-prefix() {
+    .last-list-search{width: 67px !important;}
+    .list-search1 {width: 101px !important;}
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.last-list-search {width: 68px !important;}
+	.list-search1{width: 136px !important; }
+	.list-search2 {width: 51px !important;}
+}	
+
 .popup-content li { position: relative; padding-left: 20px; list-style:none; } 
 .popup-content li:before { position: absolute; content: "\ea0b"; font-family: 'icomoon' !important; top: 0px; left: 0;color: #106570; font-weight: bold; } 
 .popup-content { margin-bottom: 0px; padding-left: 10px; }
@@ -1252,6 +1270,7 @@ h2.font-weight-normal {
 .dataTables_scrollHeadInner, .dataTables_wrapper.no-footer div.dataTables_scrollHead table.dataTable {
     width: 100% !important;
 }
+.vendor-wise select, .vendor-wise input[type="text"], .vendor-wise input[type="date"]{ width:100% !important;}
 
 
 /*-------------------------- filter-search-wrap  CSS Starts ------------------------ */
@@ -1269,7 +1288,25 @@ h2.font-weight-normal {
 .filter-search-wrap .form {
     margin-bottom: 0px;
 }
-.no-top-gap{ padding-top: 0px;}
+
+.excel-download {
+    font-weight: bold;
+    border: dotted 2px #1087ad;
+    padding: 2px;
+    color: #1087ad;
+}
+.excel-download:hover, .excel-download:focus{
+    border: dotted 2px #e66a0f;
+    color: #e66a0f;
+}
+.filter-search-wrap .card-block {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.filter-search-wrap .card-dashboard {
+    padding-top: 0px;
+}
 
 /*-------------------------- filter-search-wrap  CSS  End ------------------------ */
 
@@ -1291,13 +1328,13 @@ h2, .h2 {font-size: 1.6rem;}
 
 /*-------------------------- Mobile CSS End ------------------------ */
  
-.list-group-item{
+ .list-group-item{
 	color: #1087ad;
     text-transform: capitalize;
     font-weight: 600;
     letter-spacing: 0.4px; 
 }
- 
+
 .list-group-flush li:first-child {
     text-align: center;
     font-weight: 500;

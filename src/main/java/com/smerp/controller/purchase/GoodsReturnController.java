@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +39,7 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -44,6 +47,7 @@ import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
@@ -57,25 +61,28 @@ public class GoodsReturnController {
 	private static String pdfUploadedPath;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
 	private VendorService vendorService;
 
 	@Autowired
-	GoodsReturnService goodsReturnService;
+	private GoodsReturnService goodsReturnService;
 
 	@Autowired
-	SacService sacService;
+	private SacService sacService;
 	
 	@Autowired
-	TaxCodeRepository taxCodeRepository;
+	private TaxCodeRepository taxCodeRepository;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -172,9 +179,10 @@ public class GoodsReturnController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,SearchFilter searchFilter) {
 		List<GoodsReturn> list = goodsReturnService.findByIsActive();
 		logger.info("list"+list);
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "goodsReturn/list";
 	}
@@ -222,5 +230,51 @@ public Map<Object,Double> taxCode() {
 		fileInputStream.close();
 		out.close();
 	} 
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<GoodsReturn> list = goodsReturnService.searchFilterBySelection(searchFilter);
+		logger.info("list" + list);
+		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
+		return "goodsReturn/list";
+	}
+		
+	@GetMapping("/exportGREExcel")
+	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
+			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
+			throws Exception {
+
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+
+		if (!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if (!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+
+		String greFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		List<GoodsReturn> list = goodsReturnService.searchFilterBySelection(searchFilter);
+
+		ByteArrayOutputStream stream = downloadReportsXLS.GREReport(list);
+		response.setContentType("text/html");
+		OutputStream outstream = response.getOutputStream();
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"GRE_Report_" + greFileNameDate + ".xlsx\"");
+		stream.writeTo(outstream);
+		outstream.flush();
+		outstream.close();
+	}
 
 }

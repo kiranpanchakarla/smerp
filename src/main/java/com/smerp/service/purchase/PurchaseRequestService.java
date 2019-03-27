@@ -3,6 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 
 public interface PurchaseRequestService {
 
@@ -22,5 +23,6 @@ public interface PurchaseRequestService {
 	
 	boolean findByDocNumber(String pr);
 	
+	List<PurchaseRequest> searchFilterBySelection(SearchFilter searchFilter);
 
 }

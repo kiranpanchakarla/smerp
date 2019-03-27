@@ -2,8 +2,12 @@ package com.smerp.serviceImpl.inventorytransactions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,14 +15,18 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransferList;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.inventorytransactions.InventoryGoodsTransferRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -29,16 +37,22 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	private static final Logger logger = LogManager.getLogger(InventoryGoodsTransferServiceImpl.class);
 	
 	@Autowired
-	InventoryGoodsTransferRepository inventoryGoodsTransferRepository;
+	private InventoryGoodsTransferRepository inventoryGoodsTransferRepository;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
-	InventoryGoodsIssueService inventoryGoodsIssueService;
+	private InventoryGoodsIssueService inventoryGoodsIssueService;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
 	
 	@Override
 	public InventoryGoodsTransfer save(InventoryGoodsTransfer inventoryGoodsTransfer) {
@@ -199,4 +213,34 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 			return false;
 		}
 	}
+	
+	@Override
+	public List<InventoryGoodsTransfer> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		searchFilter.setTypeOf(EnumSearchFilter.INVGT.getStatus());
+		
+		if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<InventoryGoodsTransfer> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<InventoryGoodsTransfer> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<InventoryGoodsTransfer> list = findByIsActive();
+			return list;
+		}
+	
+		
+	}
+	
 }

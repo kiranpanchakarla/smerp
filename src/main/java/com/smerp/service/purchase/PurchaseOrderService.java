@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.search.SearchFilter;
 
 public interface PurchaseOrderService {
 
@@ -24,10 +25,11 @@ public interface PurchaseOrderService {
 	List<PurchaseOrder> findByIsActive();
 	
 	PurchaseOrder getListAmount(PurchaseOrder purchaseOrder);
-	
 
 	List<PurchaseOrder> poApprovedList();
 	
 	boolean findByDocNumber(String docNum);
+	
+	List<PurchaseOrder> searchFilterBySelection(SearchFilter searchFilter);
 
 }

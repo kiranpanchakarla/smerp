@@ -4,8 +4,12 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +26,7 @@ import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.PurchaseOrderLineItemsRepository;
 import com.smerp.repository.purchase.PurchaseOrderRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
@@ -34,8 +39,11 @@ import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetConvertedDocStatusList;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -46,28 +54,28 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderRepository purchaseOrderRepository;
 
 	@Autowired
-	PurchaseOrderLineItemsRepository purchaseOrderLineItemsRepository;
+	private PurchaseOrderLineItemsRepository purchaseOrderLineItemsRepository;
 
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
+	private VendorAddressService vendorAddressService;
 	
 	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	RequestForQuotationService requestForQuotationService;
+	private RequestForQuotationService requestForQuotationService;
 	
 	@Autowired
-	RequestForQuotationRepository requestForQuotationRepository;
+	private RequestForQuotationRepository requestForQuotationRepository;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
@@ -76,7 +84,16 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	private PurchaseRequestRepository purchaseRequestRepository;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
+	
+	@Autowired
+	private GetConvertedDocStatusList getConvertedDocStatusList;
 
 	@Override
 	public PurchaseOrder save(PurchaseOrder purchaseOrder) {
@@ -431,4 +448,52 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		}
 	}
 
+	@Override
+	public List<PurchaseOrder> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		
+		searchFilter.setTypeOf(EnumSearchFilter.POTABLE.getStatus());
+		if(searchFilter.getIsConvertedDoc()!=null && searchFilter.getIsConvertedDoc().equals("true")){
+			List<String> statusList = getConvertedDocStatusList.getPOStatusList();
+			searchFilter.setStatusList(statusList);
+			if(searchFilter.getSortBy()!=null) {
+				if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+					
+					String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+					logger.info(resultQuery);
+					
+					Query query = entityManager.createQuery(resultQuery);
+					List<PurchaseOrder> list = query.getResultList();
+					logger.info(list);
+					return list;
+				}else {
+				List<PurchaseOrder> list = poApprovedList();
+				return list;
+			}
+			}else {
+				List<PurchaseOrder> list = poApprovedList();
+				return list;
+			}
+		}else if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<PurchaseOrder> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<PurchaseOrder> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<PurchaseOrder> list = findByIsActive();
+			return list;
+		}
+		
+	}
 }

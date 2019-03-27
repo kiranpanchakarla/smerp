@@ -380,7 +380,7 @@
             <div class="card-body">
             
               <ul class="list-group list-group-flush">
-                <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Purchase Request</a></h4>
+                <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="<c:url value="/purchaseReq/list"/>">Purchase Request</a></h4>
                <c:forEach var="docCount" items="${count}">
                <c:if test="${docCount.status != 'ConvertedToPO' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced' && docCount.status != 'Partially_Received'}">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.prCount}</span> ${docCount.status} </li>
@@ -398,7 +398,7 @@
             <div class="card-body">
            
               <ul class="list-group list-group-flush">
-              <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Request for Quotation</a></h4>
+              <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="<c:url value="/rfq/list"/>">Request for Quotation</a></h4>
                 
                <c:forEach var="docCount" items="${count}">
                <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced' && docCount.status != 'Partially_Received' }">
@@ -416,7 +416,7 @@
             <div class="card-body">
             
               <ul class="list-group list-group-flush">
-               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Purchase Order</a></h4>
+               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="<c:url value="/po/list"/>">Purchase Order</a></h4>
                <c:forEach var="docCount" items="${count}">
                 <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'ConvertedToPO' && docCount.status != 'Goods_Return' && docCount.status != 'Invoiced'}">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.poCount}</span> ${docCount.status} </li>
@@ -433,7 +433,7 @@
             <div class="card-body">
             
               <ul class="list-group list-group-flush">
-               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="">Goods Receipt</a></h4>
+               <h4 class="card-title" style="text-align: center; padding-top: 10px;"><a href="<c:url value="/gr/list"/>">Goods Receipt</a></h4>
                <c:forEach var="docCount" items="${count}">
                <c:if test="${docCount.status != 'ConvertedToRFQ' && docCount.status != 'ConvertedToPO' && docCount.status != 'Partially_Received' }">
                 <li class="list-group-item"> <span class="tag tag-default tag-pill bg-info float-xs-right">${docCount.grCount}</span> ${docCount.status} </li>

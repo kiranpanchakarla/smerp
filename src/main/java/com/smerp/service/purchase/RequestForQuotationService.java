@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 
 public interface RequestForQuotationService {
@@ -34,4 +35,6 @@ public interface RequestForQuotationService {
 	List<RequestForQuotation> getRFQListById(PurchaseRequest purchaseId);
 
 	Integer getRFQListCount(PurchaseRequest prId);
+	
+	List<RequestForQuotation> searchFilterBySelection(SearchFilter searchFilter);
 }

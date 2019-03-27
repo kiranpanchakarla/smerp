@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
 import com.smerp.repository.purchase.InVoiceLineItemsRepository;
@@ -43,8 +45,11 @@ import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetConvertedDocStatusList;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -54,50 +59,55 @@ public class InVoiceServiceImpl  implements InVoiceService {
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	InVoiceRepository inVoiceRepository;
+	private InVoiceRepository inVoiceRepository;
 
 	@Autowired
-	InVoiceLineItemsRepository inVoiceLineItemsRepository;
+	private InVoiceLineItemsRepository inVoiceLineItemsRepository;
 	
 	@Autowired
-	GoodsReturnRepository goodsReturnRepository;
+	private GoodsReturnRepository goodsReturnRepository;
 	
 	@Autowired
-	GoodsReceiptService goodsReceiptService;
+	private GoodsReceiptService goodsReceiptService;
 	
 	@Autowired
-	GoodsReceiptRepository goodsReceiptRepository;
+	private GoodsReceiptRepository goodsReceiptRepository;
 	
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
+	private VendorAddressService vendorAddressService;
 	
 	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	PurchaseOrderService purchaseOrderService;
+	private PurchaseOrderService purchaseOrderService;
 	
 	@Autowired
-	PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderRepository purchaseOrderRepository;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
 	
 	@Autowired
-	ProductService  productService;
+	private ProductService  productService;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
+	
+	@Autowired
+	private GetConvertedDocStatusList getConvertedDocStatusList;
 
 	@Override
 	public InVoice save(InVoice inVoice) {
@@ -919,5 +929,52 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			return false;
 		}
 	}
-			
+	
+	@Override
+	public List<InVoice> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		
+		searchFilter.setTypeOf(EnumSearchFilter.INVTABLE.getStatus());
+		if(searchFilter.getIsConvertedDoc()!= null && searchFilter.getIsConvertedDoc().equals("true")) {
+			List<String> statusList = getConvertedDocStatusList.getINVStatusList();
+			searchFilter.setStatusList(statusList);
+			if(searchFilter.getSortBy()!=null) {
+				if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+					
+					String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+					logger.info(resultQuery);
+					
+					Query query = entityManager.createQuery(resultQuery);
+					List<InVoice> list = query.getResultList();
+					logger.info(list);
+					return list;
+				}else {
+				List<InVoice> list = invApprovedList();
+				return list;
+			}
+			}else {
+				List<InVoice> list = invApprovedList();
+				return list;
+			}
+		} else if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<InVoice> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<InVoice> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<InVoice> list = findByIsActive();
+			return list;
+		}
+	}
 }

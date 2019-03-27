@@ -2,22 +2,31 @@ package com.smerp.serviceImpl.inventorytransactions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceiptList;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.inventorytransactions.InventoryGoodsReceiptRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -28,13 +37,19 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 	private static final Logger logger = LogManager.getLogger(InventoryGoodsReceiptServiceImpl.class);
 			
 	@Autowired
-	InventoryGoodsReceiptRepository inventoryGoodsReceiptRepository;
+	private InventoryGoodsReceiptRepository inventoryGoodsReceiptRepository;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
 	
 	@Override
 	public InventoryGoodsReceipt save(InventoryGoodsReceipt inventoryGoodsReceipt) {
@@ -179,4 +194,32 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 			return false;
 		}
 	}
+	
+	@Override
+	public List<InventoryGoodsReceipt> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		searchFilter.setTypeOf(EnumSearchFilter.INVGR.getStatus());
+		
+		if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<InventoryGoodsReceipt> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<InventoryGoodsReceipt> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<InventoryGoodsReceipt> list = findByIsActive();
+			return list;
+		}
+	}
+	
 }

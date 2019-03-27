@@ -1,9 +1,11 @@
 package com.smerp.controller.purchase;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,6 +40,7 @@ import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.service.UserService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
@@ -46,6 +49,8 @@ import com.smerp.service.purchase.PurchaseRequestService;
 import com.smerp.util.BarCodeGeneration;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -101,6 +106,9 @@ public class PurchaseRequestController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -181,17 +189,22 @@ public class PurchaseRequestController {
 	
 	
 	@GetMapping(value = "/list")
-	public String list(Model model) {
+	public String list(Model model, SearchFilter searchFilter) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.findByIsActive();
 		logger.info("purchaseRequest list-->" + purchaseRequestsList);
+		searchFilter.setTypeOf(EnumSearchFilter.PRTABLE.getStatus());
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
 		return "/purchaseReq/list";
 	}
 	
 	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
+	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.prApprovedList();
 		logger.info("purchaseRequest list-->" + purchaseRequestsList);
+		searchFilter.setIsConvertedDoc("true");
+		searchFilter.setTypeOf(EnumSearchFilter.PRTABLE.getStatus());
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
 		return "/purchaseReq/approvedList";
 	}
@@ -297,5 +310,54 @@ public class PurchaseRequestController {
 		return "redirect:list";
 	}
 	*/
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.searchFilterBySelection(searchFilter);
+		logger.info("purchaseRequestsList" + purchaseRequestsList);
+		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
+		model.addAttribute("searchFilter", searchFilter);
+		if(searchFilter.getIsConvertedDoc().equals("true"))
+			return "purchaseReq/approvedList";
+		else
+			return "purchaseReq/list";
+	}
+		
+	@GetMapping("/exportPRExcel")
+	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
+			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
+			throws Exception {
+
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+
+		if (!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if (!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+
+		String prFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		List<PurchaseRequest> list = purchaseRequestService.searchFilterBySelection(searchFilter);
+
+		ByteArrayOutputStream stream = downloadReportsXLS.PRReport(list);
+		response.setContentType("text/html");
+		OutputStream outstream = response.getOutputStream();
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"PR_Report_" + prFileNameDate + ".xlsx\"");
+		stream.writeTo(outstream);
+		outstream.flush();
+		outstream.close();
+	}
 	
 }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.GoodsReceiptLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
@@ -45,8 +47,11 @@ import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetConvertedDocStatusList;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -57,43 +62,47 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	GoodsReceiptRepository goodsReceiptRepository;
+	private GoodsReceiptRepository goodsReceiptRepository;
 
 	@Autowired
-	GoodsReceiptLineItemsRepository goodsReceiptLineItemsRepository;
+	private GoodsReceiptLineItemsRepository goodsReceiptLineItemsRepository;
 	
 	@Autowired
-	GoodsReturnRepository goodsReturnRepository;
+	private GoodsReturnRepository goodsReturnRepository;
 	
+	@Autowired
+	private VendorService vendorService;
+	
+	@Autowired
+	private VendorAddressService vendorAddressService;
+	
+	@Autowired
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	VendorService vendorService;
+	private PurchaseOrderService purchaseOrderService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
-	
-	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
-
-	@Autowired
-	PurchaseOrderService purchaseOrderService;
-	
-	@Autowired
-	PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderRepository purchaseOrderRepository;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
 	
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
-	DocNumberGenerator docNumberGenerator;
+	private DocNumberGenerator docNumberGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 	
-
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
+	
+	@Autowired
+	private GetConvertedDocStatusList getConvertedDocStatusList;
+	
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
 		goodsReceipt.setCategory("Item");
@@ -561,7 +570,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public List<GoodsReceipt> grApprovedList() {
-		return goodsReceiptRepository.grApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),EnumStatusUpdate.GOODS_RETURN.getStatus(),plantService.findPlantIds());
+		return goodsReceiptRepository.grApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),EnumStatusUpdate.PARTIALLY_RETURNED.getStatus(),plantService.findPlantIds());
 	}
 
 	@Override
@@ -571,7 +580,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	
 	@Override
-	public GoodsReceipt getGoodsReceiptById(int id) {GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
+	public GoodsReceipt getGoodsReceiptById(int id) {
+		GoodsReceipt goodsReceipt = goodsReceiptRepository.findById(id).get();
     
     String sqlList= " select product_number,pending_quantity from vw_purchase_order_pending_qty where id= " + goodsReceipt.getPoId().getId();
    String productNumber ="";
@@ -1015,5 +1025,53 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
 	}
 			
-
+	@Override
+	public List<GoodsReceipt> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		
+		searchFilter.setTypeOf(EnumSearchFilter.GRTABLE.getStatus());
+		if(searchFilter.getIsConvertedDoc()!= null && searchFilter.getIsConvertedDoc().equals("true")) {
+			List<String> statusList = getConvertedDocStatusList.getGRStatusList();
+			searchFilter.setStatusList(statusList);
+			if(searchFilter.getSortBy()!=null) {
+				if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+					
+					String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+					logger.info(resultQuery);
+					
+					Query query = entityManager.createQuery(resultQuery);
+					List<GoodsReceipt> list = query.getResultList();
+					logger.info(list);
+					return list;
+				}else {
+				List<GoodsReceipt> list = grApprovedList();
+				return list;
+			}
+			}else {
+				List<GoodsReceipt> list = grApprovedList();
+				return list;
+			}
+		} else if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<GoodsReceipt> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<GoodsReceipt> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<GoodsReceipt> list = findByIsActive();
+			return list;
+		}
+		
+	}
+	
 }

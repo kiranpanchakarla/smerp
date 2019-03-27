@@ -5,6 +5,7 @@ import java.util.List;
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.search.SearchFilter;
 
 public interface GoodsReceiptService {
 
@@ -41,4 +42,6 @@ public interface GoodsReceiptService {
 	List<LineItemsBean> getLineItemsBean(int id);
 	
 	boolean findByDocNumber(String grDocNum);
+	
+	List<GoodsReceipt> searchFilterBySelection(SearchFilter searchFilter);
 }

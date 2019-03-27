@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -9,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +28,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +43,7 @@ import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderActivityHistory;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -50,6 +54,7 @@ import com.smerp.service.purchase.PurchaseOrderActivityHistoryService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -92,6 +97,9 @@ public class PurchaseOrderController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -262,9 +270,11 @@ public class PurchaseOrderController {
 	}
 
 	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
+	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<PurchaseOrder> purchaseOrderList = purchaseOrderService.poApprovedList();
 		logger.info("purchaseOrder list-->" + purchaseOrderService);
+		searchFilter.setIsConvertedDoc("true");
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("purchaseOrderList", purchaseOrderList);
 		return "/po/approvedList";
 	}
@@ -283,10 +293,11 @@ public class PurchaseOrderController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,SearchFilter searchFilter) {
 		List<PurchaseOrder> list = purchaseOrderService.findByIsActive();
 		logger.info("list"+list);
 		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
 		return "po/list";
 	}
 
@@ -340,65 +351,66 @@ public class PurchaseOrderController {
 		
 	} 
 	
-		private void savePoActivityHistory(PurchaseOrder po) {
-			PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			poah.setPurchaseOrder(po);
-			boolean status = purchaseOrderActivityHistoryService.ifPOAvailableOrNot(po.getId());
-			if(!status) {
-				poah.setActivity(EnumStatusUpdate.CREATE.getStatus());
-				
-				if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
-					poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
-					poah.setLog(EnumStatusUpdate.SAVED.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
-					poah.setLog(po.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
-					poah.setLog(po.getStatus());
-				}
-			} else {
-				if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
-					poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
-					poah.setActivity(po.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
-					poah.setLog(EnumStatusUpdate.UPDATED.getStatus());
-					poah.setActivity(EnumStatusUpdate.UPDATE.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
-					poah.setLog(po.getStatus());
-					poah.setActivity(EnumStatusUpdate.APPROVE.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
-					poah.setLog(po.getStatus());
-					poah.setActivity(EnumStatusUpdate.REJECT.getStatus());
-				}else if(po.getStatus().equalsIgnoreCase(EnumStatusUpdate.CANCELED.getStatus())) {
-					poah.setLog(po.getStatus());
-					poah.setActivity(EnumStatusUpdate.CANCEL.getStatus());
-				}
+	private void savePoActivityHistory(PurchaseOrder po) {
+		PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		poah.setPurchaseOrder(po);
+		boolean status = purchaseOrderActivityHistoryService.ifPOAvailableOrNot(po.getId());
+		if (!status) {
+			poah.setActivity(EnumStatusUpdate.CREATE.getStatus());
+
+			if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
+				poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
+				poah.setLog(EnumStatusUpdate.SAVED.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
+				poah.setLog(po.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
+				poah.setLog(po.getStatus());
 			}
-			
-			poah.setCreatedBy(user.getUsername());
-			
-			logger.info("PurchaseOrderActivityHistory view-->" + poah);
-			purchaseOrderActivityHistoryService.save(poah);
+		} else {
+			if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.DRAFT.getStatus())) {
+				poah.setLog(EnumStatusUpdate.DRAFTED.getStatus());
+				poah.setActivity(po.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
+				poah.setLog(EnumStatusUpdate.UPDATED.getStatus());
+				poah.setActivity(EnumStatusUpdate.UPDATE.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.APPROVEED.getStatus())) {
+				poah.setLog(po.getStatus());
+				poah.setActivity(EnumStatusUpdate.APPROVE.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.REJECTED.getStatus())) {
+				poah.setLog(po.getStatus());
+				poah.setActivity(EnumStatusUpdate.REJECT.getStatus());
+			} else if (po.getStatus().equalsIgnoreCase(EnumStatusUpdate.CANCELED.getStatus())) {
+				poah.setLog(po.getStatus());
+				poah.setActivity(EnumStatusUpdate.CANCEL.getStatus());
+			}
 		}
+
+		poah.setCreatedBy(user.getUsername());
+
+		logger.info("PurchaseOrderActivityHistory view-->" + poah);
+		purchaseOrderActivityHistoryService.save(poah);
+	}
 		
-		private void savePoActivityHistory(PurchaseOrder po,String message) {
-			PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
-			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			poah.setPurchaseOrder(po);
-			
-			if(message.equalsIgnoreCase(EnumStatusUpdate.PDFDOWNLOAD.getStatus())) {
-				poah.setLog(message);
-				poah.setActivity(message);
-			}else if(message.startsWith(EnumStatusUpdate.CONVERTRFQTOPO.getStatus()) && po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())){
-				String a[] = message.split("@@");
-				poah.setLog(a[0]);
-				poah.setActivity("RFQ# "+a[1]);
-			}
-			poah.setCreatedBy(user.getUsername());
-			logger.info("PurchaseOrderActivityHistory view-->"+ poah);
-			purchaseOrderActivityHistoryService.save(poah);
+	private void savePoActivityHistory(PurchaseOrder po, String message) {
+		PurchaseOrderActivityHistory poah = new PurchaseOrderActivityHistory();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		poah.setPurchaseOrder(po);
+
+		if (message.equalsIgnoreCase(EnumStatusUpdate.PDFDOWNLOAD.getStatus())) {
+			poah.setLog(message);
+			poah.setActivity(message);
+		} else if (message.startsWith(EnumStatusUpdate.CONVERTRFQTOPO.getStatus())
+				&& po.getStatus().equalsIgnoreCase(EnumStatusUpdate.OPEN.getStatus())) {
+			String a[] = message.split("@@");
+			poah.setLog(a[0]);
+			poah.setActivity("RFQ# " + a[1]);
 		}
+		poah.setCreatedBy(user.getUsername());
+		logger.info("PurchaseOrderActivityHistory view-->" + poah);
+		purchaseOrderActivityHistoryService.save(poah);
+	}
 	
 		/*@GetMapping(value ="/showHistoryById")
 		@ResponseBody
@@ -414,5 +426,59 @@ public class PurchaseOrderController {
 			}
 			return null;
 		} */
+		
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		if(searchFilter.getIsConvertedDoc().equals("true")) {
+			List<PurchaseOrder> purchaseOrderList = purchaseOrderService.searchFilterBySelection(searchFilter);
+			logger.info("purchaseOrderList" + purchaseOrderList);
+			model.addAttribute("purchaseOrderList", purchaseOrderList);
+			model.addAttribute("searchFilter", searchFilter);
+			return "po/approvedList";
+		}else {
+			List<PurchaseOrder> list = purchaseOrderService.searchFilterBySelection(searchFilter);
+			logger.info("list" + list);
+			model.addAttribute("list", list);
+			model.addAttribute("searchFilter", searchFilter);
+			return "po/list";
+		}
+	}
+		
+	@GetMapping("/exportPOExcel")
+	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
+			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
+			throws Exception {
+
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+
+		if (!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if (!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+
+		String poFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		List<PurchaseOrder> list = purchaseOrderService.searchFilterBySelection(searchFilter);
+
+		ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		response.setContentType("text/html");
+		OutputStream outstream = response.getOutputStream();
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"PO_Report_" + poFileNameDate + ".xlsx\"");
+		stream.writeTo(outstream);
+		outstream.flush();
+		outstream.close();
+	}
 		
 }

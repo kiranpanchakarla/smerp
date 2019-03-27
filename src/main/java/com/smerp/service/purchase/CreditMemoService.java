@@ -3,6 +3,7 @@ package com.smerp.service.purchase;
 import java.util.List;
 
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.model.inventory.CreditMemo;
 
 public interface CreditMemoService {
@@ -27,7 +28,7 @@ public interface CreditMemoService {
 	
 	CreditMemo getListAmount(CreditMemo creditMemo);
 	
-	/*Boolean checkQuantityInv(InVoice InVoice);*/
+	List<CreditMemo> searchFilterBySelection(SearchFilter searchFilter);
 	
 
 }

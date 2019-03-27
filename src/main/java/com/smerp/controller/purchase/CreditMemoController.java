@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,8 +35,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.InVoice;
+import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -42,6 +46,7 @@ import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.util.ContextUtil;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.HTMLToPDFGenerator;
 import com.smerp.util.RequestContext;
 
@@ -54,25 +59,28 @@ public class CreditMemoController {
 	private static String pdfUploadedPath;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 
 	@Autowired
-	CreditMemoService creditMemoService;
+	private CreditMemoService creditMemoService;
 
 	@Autowired
-	SacService sacService;
+	private SacService sacService;
 	
 	@Autowired
-	TaxCodeRepository taxCodeRepository;
+	private TaxCodeRepository taxCodeRepository;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -165,9 +173,10 @@ public class CreditMemoController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, SearchFilter searchFilter) {
 		List<CreditMemo> list = creditMemoService.findByIsActive();
 		logger.info("list"+list);
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "creditMemo/list";
 	}
@@ -215,5 +224,50 @@ public class CreditMemoController {
 		fileInputStream.close();
 		out.close();
 	} 
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<CreditMemo> list = creditMemoService.searchFilterBySelection(searchFilter);
+		logger.info("list"+list);
+		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
+		return "creditMemo/list";
+	}
+	
+	@GetMapping("/exportCMExcel")
+	   public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy, String fieldName, String sortBy,
+			   String dateSelect, String fromDateString, String toDateString) throws Exception {
+		
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+		
+		if(!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if(!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+			String cmFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+	       List<CreditMemo> list = creditMemoService.searchFilterBySelection(searchFilter);
+	       
+	       ByteArrayOutputStream stream = downloadReportsXLS.creditMemoReport(list);
+	       response.setContentType("text/html");
+	       OutputStream outstream = response.getOutputStream();
+	       response.setContentType("APPLICATION/OCTET-STREAM");
+	       response.setHeader("Content-Disposition", "attachment; filename=\"CM_Report_"+cmFileNameDate+".xlsx\"");
+	       stream.writeTo(outstream);
+	       outstream.flush();
+	       outstream.close();
+	   }
 
 }

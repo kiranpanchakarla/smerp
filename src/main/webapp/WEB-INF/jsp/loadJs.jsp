@@ -261,6 +261,21 @@
      	 setTimeout($.unblockUI, 2000);
 });
  
+ $(document).on("click", ".exceldownload",function(e){
+	 $.blockUI({ css: {
+           border: 'none', 
+           padding: '15px', 
+           backgroundColor: '#000', 
+           '-webkit-border-radius': '10px', 
+           '-moz-border-radius': '10px', 
+           opacity: .5, 
+           color: '#fff' 
+       },
+       message: "<h3>Downloading <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+       }); 
+     	 setTimeout($.unblockUI, 2000);
+});
+ 
   function goBack() {
       window.history.back();
   }
@@ -277,6 +292,63 @@
 	  $(".ajs-footer").css("background", "blue");
 	  
   }); */
+  
+  
+  $(document).ready(function() {
+	    
+		$("#fromDate").datepicker({
+				dateFormat : 'dd/mm/yy'
+			}).datepicker("option", {
+				setDate : "0",
+				minDate : '-3y +1d',
+				maxDate:'+3y -1d',
+				onSelect: function(selectedDate ) {
+		          	 var date = $(this).datepicker("getDate");
+		              // alert(date);
+		               date.setDate(date.getDate());
+		               //$("#todatepicker").datepicker("setDate", date);
+		               $("#toDate").datepicker( "option", "minDate", selectedDate );
+		               //date.setDate(date.getDate() + 10);
+		          }
+			});
+
+			$("#toDate").datepicker({
+				dateFormat : 'dd/mm/yy'
+			}).datepicker("option", {
+				setDate : "0",
+				minDate : '-3y +1d',
+				maxDate:'+3y -1d'
+			});
+			
+		});
+  
+  
+  function downloadExcelFileQuery() {
+		var searchBy =	'${searchFilter.searchBy}';
+		var fieldName = '${searchFilter.fieldName}';
+		var sortBy = '${searchFilter.sortBy}';					
+		var dateSelect = 	'${searchFilter.dateSelect}';	
+		
+		var d = new Date('${searchFilter.fromDate}');
+		var fromDate1 = $.datepicker.formatDate('yy-mm-dd', d);
+		 if (fromDate1 != "NaN-NaN-NaN") {
+		    var fromDate = fromDate1;
+		  }else{
+			  var fromDate=null;
+		  }
+		
+		var d1 = new Date('${searchFilter.toDate}');
+		var toDate1 = $.datepicker.formatDate('yy-mm-dd', d1);
+		if (toDate1 != "NaN-NaN-NaN") {
+		    var toDate = toDate1;
+		  }else{
+			  var toDate=null;
+		  }
+		//alert(toDate);
+		var stringQuery = "searchBy="+searchBy+"&fieldName="+fieldName+"&sortBy="+sortBy+"&dateSelect="+dateSelect+"&fromDateString="+fromDate+"&toDateString="+toDate;
+		//alert(stringQuery);
+		return stringQuery;
+	}
   
   
 </script>

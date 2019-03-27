@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.LineItemsBean;
+import com.smerp.model.search.SearchFilter;
 
 public interface InVoiceService {
 
@@ -37,4 +38,5 @@ public interface InVoiceService {
 	
 	InVoice setStatusOfInVoice(InVoice inVoice);
 
+	List<InVoice> searchFilterBySelection(SearchFilter searchFilter);
 }

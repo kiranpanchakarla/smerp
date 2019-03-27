@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +39,7 @@ import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.master.PlantService;
@@ -44,6 +47,8 @@ import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.RequestForQuotationService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -77,6 +82,9 @@ public class RequestForQuotationController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -213,9 +221,12 @@ public class RequestForQuotationController {
 	
 	
 	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
+	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<RequestForQuotation> requestForQuotationList = requestForQuotationService.rfqApprovedList();
 		logger.info("requestForQuotation list-->" + requestForQuotationList);
+		searchFilter.setIsConvertedDoc("true");
+		searchFilter.setTypeOf(EnumSearchFilter.RFQTABLE.getStatus());
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("requestForQuotationList", requestForQuotationList);
 		return "/rfq/approvedList";
 	}
@@ -230,9 +241,10 @@ public class RequestForQuotationController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, SearchFilter searchFilter) {
 		List<RequestForQuotation> list = requestForQuotationService.findByIsActive();
 		logger.info("list"+list);
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "rfq/list";
 	}
@@ -276,5 +288,57 @@ public class RequestForQuotationController {
 		boolean isExist = requestForQuotationService.isVendorNameExistWithDocNum(vendorName,refDocNum);
 		return isExist;
 	}
-
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		if(searchFilter.getIsConvertedDoc().equals("true")) {
+			List<RequestForQuotation> requestForQuotationList = requestForQuotationService.searchFilterBySelection(searchFilter);
+			model.addAttribute("requestForQuotationList", requestForQuotationList);
+			model.addAttribute("searchFilter", searchFilter);
+			return "rfq/approvedList";
+		}else {
+			List<RequestForQuotation> list = requestForQuotationService.searchFilterBySelection(searchFilter);
+			logger.info("list"+list);
+			model.addAttribute("list", list);
+			model.addAttribute("searchFilter", searchFilter);
+			return "rfq/list";
+		}
+	}
+	
+	@GetMapping("/exportRFQExcel")
+	   public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy, String fieldName, String sortBy,
+			   String dateSelect, String fromDateString, String toDateString) throws Exception {
+		
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+		
+		if(!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if(!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+			String RFQFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+	       List<RequestForQuotation> list = requestForQuotationService.searchFilterBySelection(searchFilter);
+	       
+	       ByteArrayOutputStream stream = downloadReportsXLS.RFQReport(list);
+	       response.setContentType("text/html");
+	       OutputStream outstream = response.getOutputStream();
+	       response.setContentType("APPLICATION/OCTET-STREAM");
+	       response.setHeader("Content-Disposition", "attachment; filename=\"RFQ_Report_"+RFQFileNameDate+".xlsx\"");
+	       stream.writeTo(outstream);
+	       outstream.flush();
+	       outstream.close();
+	   }
+	
 }

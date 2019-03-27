@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
 import com.smerp.repository.purchase.GoodsReturnLineItemsRepository;
 import com.smerp.repository.purchase.GoodsReturnRepository;
@@ -44,8 +46,10 @@ import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -56,44 +60,46 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	GoodsReturnRepository goodsReturnRepository;
+	private GoodsReturnRepository goodsReturnRepository;
 
 	@Autowired
-	GoodsReturnLineItemsRepository goodsReturnLineItemsRepository;
+	private GoodsReturnLineItemsRepository goodsReturnLineItemsRepository;
 
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
+	private VendorAddressService vendorAddressService;
 	
 	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	PurchaseOrderService purchaseOrderService;
+	private PurchaseOrderService purchaseOrderService;
 	
 	@Autowired
-	PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderRepository purchaseOrderRepository;
 	
 	@Autowired
-	GoodsReceiptService goodsReceiptService;
+	private GoodsReceiptService goodsReceiptService;
 		
 	@Autowired
-	GoodsReceiptRepository goodsReceiptRepository;
+	private GoodsReceiptRepository goodsReceiptRepository;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
 		
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
-	DocNumberGenerator docNumberGenerator;
+	private DocNumberGenerator docNumberGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
 
 	@Override
 	public GoodsReturn save(GoodsReturn goodsReturn) {
@@ -794,6 +800,35 @@ public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsRet
 				return goodsReceiptObj;
 			}*/
 
+			
+	@Override
+	public List<GoodsReturn> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		
+		searchFilter.setTypeOf(EnumSearchFilter.GRETABLE.getStatus());
+		
+		if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<GoodsReturn> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<GoodsReturn> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<GoodsReturn> list = findByIsActive();
+			return list;
+		}
+		
+	}
 }
 
 

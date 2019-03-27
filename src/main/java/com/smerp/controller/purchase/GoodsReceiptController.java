@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,6 +40,8 @@ import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -47,6 +51,7 @@ import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -61,32 +66,34 @@ public class GoodsReceiptController {
 	private static String pdfUploadedPath;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
 	private VendorService vendorService;
 
 	@Autowired
-	GoodsReceiptService goodsReceiptService;
+	private GoodsReceiptService goodsReceiptService;
 	
 	@Autowired
-	GoodsReturnService goodsReturnService;
-	
-
-	@Autowired
-	SacService sacService;
+	private GoodsReturnService goodsReturnService;
 	
 	@Autowired
-	TaxCodeRepository taxCodeRepository;
+	private SacService sacService;
+	
+	@Autowired
+	private TaxCodeRepository taxCodeRepository;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -246,19 +253,22 @@ public class GoodsReceiptController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, SearchFilter searchFilter) {
 		List<GoodsReceipt> list = goodsReceiptService.findByIsActive();
 		logger.info("list"+list);
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "goodsReceipt/list";
 	}
 	
 	
 	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
+	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<GoodsReceipt> list = goodsReceiptService.grApprovedList();
 		logger.info("goodsReceiptService list-->" + list);
 		model.addAttribute("list", list);
+		searchFilter.setIsConvertedDoc("true");
+		model.addAttribute("searchFilter", searchFilter);
 		return "/goodsReceipt/approvedList";
 	}
 
@@ -305,5 +315,54 @@ public class GoodsReceiptController {
 		fileInputStream.close();
 		out.close();
 	} 
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<GoodsReceipt> list = goodsReceiptService.searchFilterBySelection(searchFilter);
+		logger.info("list" + list);
+		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
+		if(searchFilter.getIsConvertedDoc().equals("true"))
+			return "goodsReceipt/approvedList";
+		else 
+			return "goodsReceipt/list";
+	}
+		
+	@GetMapping("/exportGRExcel")
+	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
+			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
+			throws Exception {
+
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+
+		if (!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if (!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+
+		String grFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		List<GoodsReceipt> list = goodsReceiptService.searchFilterBySelection(searchFilter);
+
+		ByteArrayOutputStream stream = downloadReportsXLS.GRReport(list);
+		response.setContentType("text/html");
+		OutputStream outstream = response.getOutputStream();
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"GR_Report_" + grFileNameDate + ".xlsx\"");
+		stream.writeTo(outstream);
+		outstream.flush();
+		outstream.close();
+	}
 
 }

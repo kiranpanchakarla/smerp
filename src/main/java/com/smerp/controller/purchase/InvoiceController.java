@@ -1,7 +1,9 @@
 package com.smerp.controller.purchase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -36,7 +38,9 @@ import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.LineItemsBean;
+import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
@@ -46,6 +50,7 @@ import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.InVoiceService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -60,32 +65,35 @@ public class InvoiceController {
 	private static String pdfUploadedPath;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	@Autowired
 	private VendorService vendorService;
 
 		
 	@Autowired
-	InVoiceService inVoiceService;
+	private InVoiceService inVoiceService;
 	
 	@Autowired
-	CreditMemoService creditMemoService;
+	private CreditMemoService creditMemoService;
 	
 	@Autowired
-	SacService sacService;
+	private SacService sacService;
 	
 	@Autowired
-	TaxCodeRepository taxCodeRepository;
+	private TaxCodeRepository taxCodeRepository;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -240,18 +248,21 @@ public class InvoiceController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,SearchFilter searchFilter) {
 		List<InVoice> list = inVoiceService.findByIsActive();
 		logger.info("list"+list);
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "inv/list";
 	}
 	
 	
 	@GetMapping(value = "/approvedList")
-	public String approvedList(Model model) {
+	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<InVoice> list = inVoiceService.invApprovedList();
 		logger.info("InVoice list-->" + list);
+		searchFilter.setIsConvertedDoc("true");
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "/inv/approvedList";
 	}
@@ -300,4 +311,52 @@ public class InvoiceController {
 		out.close();
 	} 
 
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<InVoice> list = inVoiceService.searchFilterBySelection(searchFilter);
+		logger.info("list"+list);
+		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
+		if(searchFilter.getIsConvertedDoc().equals("true"))
+			return "inv/approvedList";
+		else
+			return "inv/list";
+	}
+	
+	@GetMapping("/exportINVExcel")
+	   public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy, String fieldName, String sortBy,
+			   String dateSelect, String fromDateString, String toDateString) throws Exception {
+		
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+		
+		if(!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if(!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+			String invFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());	
+	       List<InVoice> list = inVoiceService.searchFilterBySelection(searchFilter);
+	       
+	       ByteArrayOutputStream stream = downloadReportsXLS.invReport(list);
+	       response.setContentType("text/html");
+	       OutputStream outstream = response.getOutputStream();
+	       response.setContentType("APPLICATION/OCTET-STREAM");
+	       response.setHeader("Content-Disposition", "attachment; filename=\"INV_Report_"+invFileNameDate+".xlsx\"");
+	       stream.writeTo(outstream);
+	       outstream.flush();
+	       outstream.close();
+	   }
+	
 }

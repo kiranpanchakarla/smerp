@@ -2,6 +2,7 @@ package com.smerp.serviceImpl.inventorytransactions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +21,15 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssueList;
+import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.inventorytransactions.InventoryGoodsIssueRepository;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 
@@ -45,6 +50,9 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	
 	@Autowired
 	PlantService plantService;
+	
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
 	
 	@Override
 	public InventoryGoodsIssue save(InventoryGoodsIssue inventoryGoodsIssue) {
@@ -239,7 +247,33 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	    return inventoryGoodsIssue;
 	}
 	
-	
+	@Override
+	public List<InventoryGoodsIssue> searchFilterBySelection(SearchFilter searchFilter){
+		if(searchFilter.getToDate()==null) {
+			searchFilter.setToDate(new Date());
+		}
+		searchFilter.setTypeOf(EnumSearchFilter.INVGI.getStatus());
+		
+		if(searchFilter.getSortBy()!=null) {
+			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+				
+				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+				logger.info(resultQuery);
+				
+				Query query = entityManager.createQuery(resultQuery);
+				List<InventoryGoodsIssue> list = query.getResultList();
+				logger.info(list);
+				return list;
+			}else {
+			List<InventoryGoodsIssue> list = findByIsActive();
+			return list;
+		}
+		}else {
+			List<InventoryGoodsIssue> list = findByIsActive();
+			return list;
+		}
+		
+	}
 	
 	
 }

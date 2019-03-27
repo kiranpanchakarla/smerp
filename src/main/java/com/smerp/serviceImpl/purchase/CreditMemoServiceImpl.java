@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.smerp.model.inventory.InVoiceLineItems;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.PurchaseOrderLineItems;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.CreditMemoLineItemsRepository;
 import com.smerp.repository.purchase.CreditMemoRepository;
 import com.smerp.repository.purchase.GoodsReceiptRepository;
@@ -44,8 +46,10 @@ import com.smerp.service.purchase.InVoiceService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
+import com.smerp.util.GetSearchFilterResult;
 import com.smerp.util.RequestContext;
 import com.smerp.util.UnitPriceListItems;
 @Service
@@ -54,52 +58,53 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
 
 	@Autowired
-	CreditMemoRepository creditMemoRepository;
+	private CreditMemoRepository creditMemoRepository;
 
 	@Autowired
-	CreditMemoLineItemsRepository creditMemoLineItemsRepository;
+	private CreditMemoLineItemsRepository creditMemoLineItemsRepository;
 
 	@Autowired
-	VendorService vendorService;
+	private VendorService vendorService;
 	
 	@Autowired
-	VendorAddressService vendorAddressService;
+	private VendorAddressService vendorAddressService;
 	
 	@Autowired
-	VendorsContactDetailsService vendorsContactDetailsService;
+	private VendorsContactDetailsService vendorsContactDetailsService;
 
 	@Autowired
-	PurchaseOrderService purchaseOrderService;
+	private PurchaseOrderService purchaseOrderService;
 	
 	@Autowired
-	PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderRepository purchaseOrderRepository;
 	
 	@Autowired
-	InVoiceService inVoiceService;
-	
-	
-	@Autowired
-	InVoiceRepository inVoiceRepository;
+	private InVoiceService inVoiceService;
 	
 	@Autowired
-	GoodsReceiptRepository goodsReceiptRepository;
+	private InVoiceRepository inVoiceRepository;
 	
 	@Autowired
-	GoodsReceiptService goodsReceiptService;
+	private GoodsReceiptRepository goodsReceiptRepository;
+	
+	@Autowired
+	private GoodsReceiptService goodsReceiptService;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
 
 	@Autowired
-	EmailGenerator emailGenerator;
+	private EmailGenerator emailGenerator;
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
 	
 	@Autowired
-	PlantService plantService;
+	private PlantService plantService;
 	
-
+	@Autowired
+	private GetSearchFilterResult getSearchFilterResult;
+	
 	@Override
 	public CreditMemo save(CreditMemo creditMemo) {
 		creditMemo.setCategory("Item");
@@ -825,7 +830,33 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}*/
       
      
-      
+     @Override
+     public List<CreditMemo> searchFilterBySelection(SearchFilter searchFilter){
+    	 if(searchFilter.getToDate()==null) {
+ 			searchFilter.setToDate(new Date());
+ 		}
+ 		
+ 		searchFilter.setTypeOf(EnumSearchFilter.CMTABLE.getStatus());
+ 		
+ 		if(searchFilter.getSortBy()!=null) {
+ 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
+ 				
+ 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
+ 				logger.info(resultQuery);
+ 				
+ 				Query query = entityManager.createQuery(resultQuery);
+ 				List<CreditMemo> list = query.getResultList();
+ 				logger.info(list);
+ 				return list;
+ 			}else {
+ 			List<CreditMemo> list = findByIsActive();
+ 			return list;
+ 		}
+ 		}else {
+ 			List<CreditMemo> list = findByIsActive();
+ 			return list;
+ 		}
+     }
       
 
 }

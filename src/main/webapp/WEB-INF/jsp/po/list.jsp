@@ -12,6 +12,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SMERP</title>
 <c:import url="/WEB-INF/jsp/loadcss.jsp" />
+
+  
 </head>
 
 
@@ -76,9 +78,9 @@
 											</div>
 
 										</div>
+										<c:import url="/WEB-INF/jsp/searchFilter.jsp" />
 										<div class="card-body collapse in">
 											<div class="card-block card-dashboard">
-
 												<div class="table-responsive">
 													<table id="example"
 														class="display nowrap table table_padding_custom table-hover table-striped table-bordered"
@@ -190,7 +192,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#example').DataTable({
-				"scrollX" : true
+				"scrollX" : true,
+				"searching": false,
+				"info": false,
+				"dom": '<"top"i>rt<"bottom"flp><"clear">'
 			});
 		});
 		$(document).ready(function(){
@@ -198,7 +203,24 @@
 		    //$('.btn-edit').tooltip('open');
 		});
 	</script>
+<script type="text/javascript">
 
+function getSearchFilterList() {
+	var dateSelectfrom = $('#dateSelect option:selected').val();
+	var formdatepicker = $('#fromDate').val();
+	var todatepicker = $('#toDate').val();
+	
+	$('#searchFilterForm').attr('action', "/po/getSearchFilterList").submit();
+} 
+
+function downloadExcelFile(){
+	var a = document.getElementById('exceldownload');
+	var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
+	//alert(stringQuery);
+	a.href = "/po/exportPOExcel?"+stringQuery;
+}
+
+</script>
 
 	<script
 		src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/>
@@ -210,6 +232,8 @@
 		src=<c:url value="/resources/js/scripts/dataTables/jquery.dataTables.min.js"/>
 		type="text/javascript"></script>
 	<script src=<c:url value="/resources/js/scripts/ui-blocker/jquery.blockUI.js"/> type="text/javascript"></script>
+	
+
 </body>
 
 </html>

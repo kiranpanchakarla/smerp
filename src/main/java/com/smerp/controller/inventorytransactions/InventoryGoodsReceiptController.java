@@ -1,7 +1,9 @@
 package com.smerp.controller.inventorytransactions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -33,14 +35,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Plant;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.TaxCode;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
+import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.inventory.ProductService;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 import com.smerp.util.HTMLToPDFGenerator;
@@ -71,6 +77,9 @@ public class InventoryGoodsReceiptController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -110,9 +119,11 @@ public class InventoryGoodsReceiptController {
 	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.findByIsActive();
 		logger.info("list" + list);
+		searchFilter.setTypeOf(EnumSearchFilter.INVGR.getStatus());
+		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "inv_goodsReceipt/list";
 	}
@@ -229,4 +240,50 @@ public class InventoryGoodsReceiptController {
 		fileInputStream.close();
 		out.close();
 	} 
+	
+	@GetMapping("/getSearchFilterList")
+	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
+		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.searchFilterBySelection(searchFilter);
+		logger.info("list" + list);
+		model.addAttribute("list", list);
+		model.addAttribute("searchFilter", searchFilter);
+		return "inv_goodsReceipt/list";
+	}
+		
+	@GetMapping("/exportINVGRExcel")
+	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
+			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
+			throws Exception {
+
+		SearchFilter searchFilter = new SearchFilter();
+		searchFilter.setSearchBy(searchBy);
+		searchFilter.setFieldName(fieldName);
+		searchFilter.setSortBy(sortBy);
+		searchFilter.setDateSelect(dateSelect);
+
+		if (!fromDateString.equals("null")) {
+			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
+			Date toDate = new Date();
+			if (!toDateString.equals("null")) {
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(toDateString);
+			} else {
+				String currentDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				toDate = new SimpleDateFormat("yyyy-MM-dd").parse(currentDate);
+			}
+			searchFilter.setFromDate(fromDate);
+			searchFilter.setToDate(toDate);
+		}
+
+		String invGRFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.searchFilterBySelection(searchFilter);
+
+		//ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		response.setContentType("text/html");
+		OutputStream outstream = response.getOutputStream();
+		response.setContentType("APPLICATION/OCTET-STREAM");
+		response.setHeader("Content-Disposition", "attachment; filename=\"INVGR_Report_" + invGRFileNameDate + ".xlsx\"");
+		//stream.writeTo(outstream);
+		outstream.flush();
+		outstream.close();
+	}
 }

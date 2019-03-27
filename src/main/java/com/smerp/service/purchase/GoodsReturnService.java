@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smerp.model.inventory.GoodsReceipt;
 import com.smerp.model.inventory.GoodsReturn;
+import com.smerp.model.search.SearchFilter;
 
 public interface GoodsReturnService {
 
@@ -29,5 +30,5 @@ public interface GoodsReturnService {
 	
 	Boolean checkQuantityGr(GoodsReceipt goodsReceipt);
 	
-
+	List<GoodsReturn> searchFilterBySelection(SearchFilter searchFilter);
 }

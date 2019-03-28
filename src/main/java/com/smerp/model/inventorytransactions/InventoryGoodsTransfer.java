@@ -87,6 +87,15 @@ public class InventoryGoodsTransfer extends AuditModel {
 	@Column(name="to_warehouse")
 	private Integer toWarehouse; 
 
+	@Column(name="first_Approve_id")
+	private Integer  firstApproveId;
+	
+	@Column(name="second_Approve_id")
+	private Integer  secondApproveId;
+	
+	
+	@Column(name="second_Level_enable")
+	private Boolean  secondLevelEnable = false;
 	
 	public Plant getFromWarehouse() {
 		return fromWarehouse;
@@ -285,6 +294,30 @@ public class InventoryGoodsTransfer extends AuditModel {
 
 	public void setRoundedOff(String roundedOff) {
 		this.roundedOff = roundedOff;
+	}
+
+	public Integer getFirstApproveId() {
+		return firstApproveId;
+	}
+
+	public void setFirstApproveId(Integer firstApproveId) {
+		this.firstApproveId = firstApproveId;
+	}
+
+	public Integer getSecondApproveId() {
+		return secondApproveId;
+	}
+
+	public void setSecondApproveId(Integer secondApproveId) {
+		this.secondApproveId = secondApproveId;
+	}
+
+	public Boolean getSecondLevelEnable() {
+		return secondLevelEnable;
+	}
+
+	public void setSecondLevelEnable(Boolean secondLevelEnable) {
+		this.secondLevelEnable = secondLevelEnable;
 	}
 	
 	

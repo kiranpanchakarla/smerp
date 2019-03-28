@@ -98,7 +98,10 @@
 															<div class="form-body">
 																 
 																<form:hidden path="id" />
-
+																<form:input type="hidden" cssClass="form-control" path="firstApproveId" />
+																<form:input type="hidden" cssClass="form-control" path="secondApproveId" />
+																<form:input type="hidden" cssClass="form-control" path="secondLevelEnable" />
+																
 																<div class="row">
 																
 																<div class="col-sm-6 form-group">

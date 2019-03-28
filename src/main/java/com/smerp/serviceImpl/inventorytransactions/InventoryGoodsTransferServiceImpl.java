@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.admin.User;
 import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransferList;
@@ -23,6 +24,7 @@ import com.smerp.repository.inventorytransactions.InventoryGoodsTransferReposito
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
+import com.smerp.util.CheckUserPermissionUtil;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
@@ -53,6 +55,9 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	
 	@Autowired
 	private GetSearchFilterResult getSearchFilterResult;
+	
+	@Autowired
+	private CheckUserPermissionUtil checkUserPermissionUtil;
 	
 	@Override
 	public InventoryGoodsTransfer save(InventoryGoodsTransfer inventoryGoodsTransfer) {
@@ -104,6 +109,44 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
     		}
 		}
 		
+		/*  Multi Level Approved .. Start*/
+		
+		 if(inventoryGoodsTransfer.getFromWarehouse().getId()==2) {   //FOR Yelamanchili
+			 
+			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
+			 logger.info("checkMultiApp-->" +checkMultiApp);
+			 
+		 if(inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
+			 User user = checkUserPermissionUtil.getUser();
+			 
+			 if(checkMultiApp) { // Final Approved
+				 if(inventoryGoodsTransfer.getFirstApproveId()!=null) {
+					 inventoryGoodsTransfer.setSecondApproveId(user.getUserId());
+					 inventoryGoodsTransfer.setSecondLevelEnable(true);}
+				 else {
+					 inventoryGoodsTransfer.setFirstApproveId(user.getUserId());
+					 inventoryGoodsTransfer.setSecondApproveId(user.getUserId());
+					 inventoryGoodsTransfer.setSecondLevelEnable(true);
+				 }
+				 inventoryGoodsTransfer.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+			 }else {            // First Approved
+				 inventoryGoodsTransfer.setFirstApproveId(user.getUserId());
+				 inventoryGoodsTransfer.setStatus(EnumStatusUpdate.PARTIALLY_APPROVEED.getStatus());
+				 inventoryGoodsTransfer.setSecondLevelEnable(true);
+			 }
+			 
+		 }else {
+			 if(checkMultiApp) {
+				 inventoryGoodsTransfer.setSecondLevelEnable(true); 
+			 }
+		 }
+		 
+		 }else {
+			 inventoryGoodsTransfer.setSecondLevelEnable(true); 
+		 }
+		 
+		 /*  Multi Level Approved .. End*/
+		
 		inventoryGoodsTransfer = inventoryGoodsTransferRepository.save(inventoryGoodsTransfer);
 		
 		return inventoryGoodsTransfer;
@@ -150,7 +193,8 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	@Override
 	public List<InventoryGoodsTransfer> findByIsActive() {
 		// TODO Auto-generated method stub
-		return inventoryGoodsTransferRepository.findByIsActive(true,plantService.findPlantIds());
+		Boolean [] secondApp = checkUserPermissionUtil.getMultiAppPermission();
+		return inventoryGoodsTransferRepository.findByIsActive(true,plantService.findPlantIds(),secondApp);
 	}
 
 	@Override

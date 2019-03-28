@@ -215,8 +215,8 @@ $(document).ready(function(){
 																					${listAddressDetails.zipCode}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
-																					<label>Street No.</label>:
-																					${listAddressDetails.streetNo}
+																					<label>States</label>:
+																					${listAddressDetails.states.name}
 																				</div>
 																			</div>
 																			<div class="row">

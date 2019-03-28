@@ -177,7 +177,7 @@
 		var dateSelectfrom = $('#dateSelect option:selected').val();
 		var formdatepicker = $('#fromDate').val();
 		var todatepicker = $('#toDate').val();
-		$('#searchFilterForm').attr('action', "/gre/getSearchFilterList").submit();
+		$('#searchFilterForm').attr('action', "<c:url value='/gre/getSearchFilterList'/>").submit();
 	} 
 	
  	function downloadExcelFile(){		
@@ -185,7 +185,7 @@
 		var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 		//alert(stringQuery);
 		
-		a.href = "/gre/exportGREExcel?"+stringQuery;
+		a.href = "<c:url value='/gre/exportGREExcel?'/>"+stringQuery;
 	}
 	
 		$(document).ready(function() {

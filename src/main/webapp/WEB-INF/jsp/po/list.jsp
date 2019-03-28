@@ -210,14 +210,14 @@ function getSearchFilterList() {
 	var formdatepicker = $('#fromDate').val();
 	var todatepicker = $('#toDate').val();
 	
-	$('#searchFilterForm').attr('action', "/po/getSearchFilterList").submit();
+	$('#searchFilterForm').attr('action', "<c:url value='/po/getSearchFilterList'/>").submit();
 } 
 
 function downloadExcelFile(){
 	var a = document.getElementById('exceldownload');
 	var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 	//alert(stringQuery);
-	a.href = "/po/exportPOExcel?"+stringQuery;
+	a.href = "<c:url value='/po/exportPOExcel?'/>"+stringQuery;
 }
 
 </script>

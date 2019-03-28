@@ -177,14 +177,14 @@
 		var dateSelectfrom = $('#dateSelect option:selected').val();
 		var formdatepicker = $('#fromDate').val();
 		var todatepicker = $('#toDate').val();
-		$('#searchFilterForm').attr('action', "/creditMemo/getSearchFilterList").submit();
+		$('#searchFilterForm').attr('action', "<c:url value='/creditMemo/getSearchFilterList'/>").submit();
 	} 
 	
  	function downloadExcelFile(){		
 		var a = document.getElementById('exceldownload');
 		var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 		//alert(stringQuery);
-		a.href = "/creditMemo/exportCMExcel?"+stringQuery;
+		a.href = "<c:url value='/creditMemo/exportCMExcel?'/>"+stringQuery;
 	}
 	
 		$(document).ready(function() {

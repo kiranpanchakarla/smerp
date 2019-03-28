@@ -190,7 +190,7 @@
 		var dateSelectfrom = $('#dateSelect option:selected').val();
 		var formdatepicker = $('#fromDate').val();
 		var todatepicker = $('#toDate').val();
-		$('#searchFilterForm').attr('action', "/inv/getSearchFilterList").submit();
+		$('#searchFilterForm').attr('action', "<c:url value='/inv/getSearchFilterList'/>").submit();
 	} 
 	
  	function downloadExcelFile(){		
@@ -198,7 +198,7 @@
 		var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 		//alert(stringQuery);
 		
-		a.href = "/inv/exportINVExcel?"+stringQuery;
+		a.href = "<c:url value='/inv/exportINVExcel?'/>"+stringQuery;
 	}
 	
 		$(document).ready(function() {

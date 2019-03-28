@@ -137,7 +137,7 @@
 		var formdatepicker = $('#fromDate').val();
 		var todatepicker = $('#toDate').val();
 		$("#isConvertedDoc").val('true');
-		$('#searchFilterForm').attr('action', "/purchaseReq/getSearchFilterList").submit();
+		$('#searchFilterForm').attr('action', "<c:url value='/purchaseReq/getSearchFilterList'/>").submit();
 	} 
 	
 		$(document).ready(function() {

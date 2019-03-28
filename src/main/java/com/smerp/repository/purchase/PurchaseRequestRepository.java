@@ -8,8 +8,8 @@ import com.smerp.model.purchase.PurchaseRequest;
 
 public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest, Integer> {
     String plantN= "1";
-	@Query("SELECT P FROM PurchaseRequest P WHERE isActive=:isActive and plant.id in (:plantIds) and secondLevelEnable in (:secondApp) order by createdAt desc" )
-	List<PurchaseRequest> findByIsActive(Boolean isActive, int[] plantIds,Boolean [] secondApp);
+	@Query("SELECT P FROM PurchaseRequest P WHERE isActive=:isActive and plant.id in (:plantIds) order by createdAt desc" )
+	List<PurchaseRequest> findByIsActive(Boolean isActive, int[] plantIds);
 	
 	@Query("SELECT P FROM PurchaseRequest P WHERE status=:status and plant.id in (:plantIds) order by createdAt desc")
 	List<PurchaseRequest> prApprovedList(String status, int[] plantIds);

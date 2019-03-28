@@ -24,6 +24,10 @@ import com.smerp.model.master.AuditModel;
  * @author dganapathi
  *
  */
+/**
+ * @author dganapathi
+ *
+ */
 @Entity
 @Table(name="tbl_purchase_purchase_req")
 public class PurchaseRequest extends AuditModel {
@@ -83,10 +87,20 @@ public class PurchaseRequest extends AuditModel {
 	
 	@Column(name="is_active")
 	private Boolean isActive = true;
+	
+	
+	@Column(name="first_Approve_id")
+	private Integer  firstApproveId;
+	
+	@Column(name="second_Approve_id")
+	private Integer  secondApproveId;
+	
+	
+	@Column(name="second_Level_enable")
+	private Boolean  secondLevelEnable = false;
 
 	@Column(name="barcodeImgPath")  //Barcode Image Path
 	private String barCodeImgPath;
-	
 	
 	public String getBarCodeImgPath() {
 		return barCodeImgPath;
@@ -218,14 +232,42 @@ public class PurchaseRequest extends AuditModel {
 		this.plant = plant;
 	}
 
+	public Integer getFirstApproveId() {
+		return firstApproveId;
+	}
+
+	public void setFirstApproveId(Integer firstApproveId) {
+		this.firstApproveId = firstApproveId;
+	}
+
+	public Integer getSecondApproveId() {
+		return secondApproveId;
+	}
+
+	public void setSecondApproveId(Integer secondApproveId) {
+		this.secondApproveId = secondApproveId;
+	}
+	
+	
+
+	public Boolean getSecondLevelEnable() {
+		return secondLevelEnable;
+	}
+
+	public void setSecondLevelEnable(Boolean secondLevelEnable) {
+		this.secondLevelEnable = secondLevelEnable;
+	}
+
 	@Override
 	public String toString() {
 		return "PurchaseRequest [id=" + id + ", user=" + user + ", referenceUser=" + referenceUser + ", plant=" + plant
 				+ ", docNumber=" + docNumber + ", documentDate=" + documentDate + ", status=" + status
 				+ ", postingDate=" + postingDate + ", requiredDate=" + requiredDate + ", type=" + type + ", remarks="
 				+ remarks + ", purchaseRequestLists=" + purchaseRequestLists + ", isActive=" + isActive
-				+ ", barCodeImgPath=" + barCodeImgPath + "]";
+				+ ", firstApproveId=" + firstApproveId + ", secondApproveId=" + secondApproveId + ", secondLevelEnable="
+				+ secondLevelEnable + ", barCodeImgPath=" + barCodeImgPath + "]";
 	}
+	
 
 
 }

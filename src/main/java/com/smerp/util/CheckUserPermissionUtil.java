@@ -58,4 +58,15 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 		return  checkUserPermission(user.getUserId(), 1, 10);
 	}
 	
+	public Boolean[] getMultiAppPermission() {
+		Boolean [] secondApp = new Boolean [2];
+		boolean MultiApp = checkMultiAppPermission();
+		if(MultiApp==true) {
+			secondApp[0] = true;
+		}else {
+			secondApp[0] = true;secondApp[1] = false;
+		}
+		return secondApp;
+	}
+	
 }

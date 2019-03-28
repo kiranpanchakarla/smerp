@@ -47,6 +47,9 @@
 												<c:if test="${purchaseRequest.id!=null}">
 													<h2 class="card-title" id="basic-layout-icons">Update Purchase Request Details</h2>
 													<form:input type="hidden" cssClass="form-control" path="id" />
+													<form:input type="hidden" cssClass="form-control" path="firstApproveId" />
+													<form:input type="hidden" cssClass="form-control" path="secondApproveId" />
+													<form:input type="hidden" cssClass="form-control" path="secondLevelEnable" />
 												</c:if>
 												<c:if test="${purchaseRequest.id==null}">
 													<h2 class="card-title" id="basic-layout-icons">Create New Purchase Request</h2>

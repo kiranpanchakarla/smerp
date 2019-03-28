@@ -1,6 +1,5 @@
 package com.smerp.serviceImpl.purchase;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smerp.model.inventory.PurchaseOrder;
+import com.smerp.model.admin.User;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.model.search.SearchFilter;
@@ -22,6 +21,7 @@ import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.PurchaseRequestService;
+import com.smerp.util.CheckUserPermissionUtil;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
@@ -35,16 +35,19 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 
 	
 	@Autowired
-	private PurchaseRequestRepository purchaseRequestRepository;
+	PurchaseRequestRepository purchaseRequestRepository;
 
 	@Autowired
-	private PurchaseRequestListRepository purchaseRequestListRepository;
+	PurchaseRequestListRepository purchaseRequestListRepository;
 	
 	@Autowired
-	private EmailGenerator emailGenerator;
+	EmailGenerator emailGenerator;
 	
 	@Autowired
-	private PlantService plantService;
+	PlantService plantService;
+	
+	@Autowired
+	CheckUserPermissionUtil checkUserPermissionUtil;
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -54,6 +57,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	
 	@Autowired
 	private GetConvertedDocStatusList getConvertedDocStatusList;
+	
 	
 	private static final Logger logger = LogManager.getLogger(PurchaseRequestServiceImpl.class);
 	@Override
@@ -101,7 +105,7 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 		 if(purchaseRequest.getStatus()!=null &&  !purchaseRequest.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
 			 try {
 				 if(purchaseRequest.getId()!=null) {
-					PurchaseRequest purchaseRequestObj = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
+					 PurchaseRequest purchaseRequestObj  = purchaseRequestRepository.findById(purchaseRequest.getId()).get();
 					logger.info(purchaseRequestObj.getCreatedBy().getUserEmail());
 					purchaseRequest.setCreatedBy(purchaseRequestObj.getCreatedBy());
 				 }
@@ -111,8 +115,50 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
       		} catch (Exception e) {
       			e.printStackTrace();
       		}
-			 
 		 } 
+		 
+		/*  Multi Level Approved .. Start*/
+		
+		
+		
+		 
+		 if(purchaseRequest.getPlant().getId()==2) {   //FOR Yelamanchili
+			 
+			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
+			 logger.info("checkMultiApp-->" +checkMultiApp);
+			 
+			 
+		 if(purchaseRequest.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
+			 User user = checkUserPermissionUtil.getUser();
+			 
+			 if(checkMultiApp) { // Final Approved
+				 if(purchaseRequest.getFirstApproveId()!=null) {
+				    purchaseRequest.setSecondApproveId(user.getUserId());
+				    purchaseRequest.setSecondLevelEnable(true);}
+				 else {
+					 purchaseRequest.setFirstApproveId(user.getUserId());
+					 purchaseRequest.setSecondApproveId(user.getUserId());
+					 purchaseRequest.setSecondLevelEnable(true);
+				 }
+				 purchaseRequest.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+			 }else {            // First Approved
+				 purchaseRequest.setFirstApproveId(user.getUserId());
+				 purchaseRequest.setStatus(EnumStatusUpdate.PARTIALLY_APPROVEED.getStatus());
+				 purchaseRequest.setSecondLevelEnable(true);
+			 }
+			 
+		 }else {
+			 if(checkMultiApp) {
+				 purchaseRequest.setSecondLevelEnable(true); 
+			 }
+		 }
+		 
+		 }else {
+			 purchaseRequest.setSecondLevelEnable(true); 
+		 }
+		 
+		 /*  Multi Level Approved .. End*/
+		 
 		 
 		return purchaseRequestRepository.save(purchaseRequest);
 	}
@@ -129,8 +175,12 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 	
 	@Override
 	public List<PurchaseRequest> findByIsActive() {
-		return purchaseRequestRepository.findByIsActive(true,plantService.findPlantIds());
+		
+		Boolean [] secondApp = checkUserPermissionUtil.getMultiAppPermission();
+		
+		return purchaseRequestRepository.findByIsActive(true,plantService.findPlantIds(),secondApp);
 	}
+
 
 	@Override
 	public List<PurchaseRequest> prApprovedList() {

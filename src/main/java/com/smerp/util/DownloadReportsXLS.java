@@ -557,6 +557,42 @@ public class DownloadReportsXLS {
 		ByteArrayOutputStream byteArrayOutputStream =xLSXDownload.preparedDownloadXLS(excelReport);
 		return byteArrayOutputStream;
 	}
+		
+		
+	/*
+	 public ByteArrayOutputStream InventoryGoodsIssueReport(List<InventoryGoodsIssue> productList) throws Exception {
+		String excelReport = "";
+		String excelData = "";
+		String concat = "";
+		String heading = SNO + SEMICOLUMN + DOCNUMBER + SEMICOLUMN  + DOCDATE + SEMICOLUMN + PRODUCTNUMBER + SEMICOLUMN + PRODUCTDESCRIPTION + SEMICOLUMN + PRODUCTGROUP
+				+ SEMICOLUMN  + UOM + SEMICOLUMN  + QUANTITY +  SEMICOLUMN + DEPARTMENT + SEMICOLUMN + REMARKS + SEMICOLUMN +  NEWLINE;
+
+		int index = 1;
+		if (!productList.isEmpty() && productList != null) {
+			for (InventoryGoodsIssue list : productList) {
+				for(int i=0; i< list.getInventoryGoodsIssueList().size(); i++) {
+				excelData = index + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getDocNumber()) ? BLANK : list.getDocNumber()) + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(sdf.format(list.getDocumentDate()))? BLANK : sdf.format(list.getDocumentDate()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getProductNumber())? BLANK : list.getProductNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getProductDescription())? BLANK : list.getProductDescription()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getProductGroup())? BLANK : list.getProductGroup()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getUomName())? BLANK : list.getUomName()) + SEMICOLUMN +
+						(list.getRequiredQty()==null? BLANK : list.getRequiredQty()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getDepartmentName())? BLANK : list.getDepartmentName()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getRemarks())? BLANK : list.getRemarks()) + NEWLINE ;
+						
+				concat = concat + excelData;
+				index = index + 1;
+				}
+			}
+		}
+		excelReport = heading + concat;
+		ByteArrayOutputStream byteArrayOutputStream =xLSXDownload.preparedDownloadXLS(excelReport);
+		return byteArrayOutputStream;
+	}	
+	 */
+	
 	
 	public Map<Integer, Object> plantMap() {
 		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));

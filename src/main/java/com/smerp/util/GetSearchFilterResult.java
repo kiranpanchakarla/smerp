@@ -70,6 +70,8 @@ public class GetSearchFilterResult {
 		}
 		String isActiveAndPlant="";
 		
+	if(searchFilter.getTypeOf()!=null & !searchFilter.getTypeOf().equals(EnumSearchFilter.INVGT.getStatus())) {
+			
 		if(searchFilter.getIsConvertedDoc()!= null && searchFilter.getIsConvertedDoc().equals("true")) {
 			String statusListString = searchFilter.getStatusList().isEmpty() ? "" : "\'" + String.join("\', \'", searchFilter.getStatusList()) + "\'";
 			String statusDBColumn = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.STATUS.getStatus()));
@@ -77,6 +79,12 @@ public class GetSearchFilterResult {
 		}else {
 			isActiveAndPlant = " sfq.isActive='true' "+EnumSearchFilter.AND.getStatus()+" sfq.plant.id in ("+plantIdsString+") ";
 		}
+		
+	}else {
+			isActiveAndPlant = " sfq.isActive='true' "+EnumSearchFilter.AND.getStatus()+" sfq.fromWarehouse.id in ("+plantIdsString+") ";
+		}
+		
+		
 		if(!searchByQuery.isEmpty() || !dateSelectionQuery.isEmpty()) {
 			oderbyQuery =  " "+EnumSearchFilter.AND.getStatus()+" "+ isActiveAndPlant + oderbyQuery;
 		} else {

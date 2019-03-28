@@ -87,6 +87,7 @@ public class PurchaseRequest extends AuditModel {
 	@Column(name="barcodeImgPath")  //Barcode Image Path
 	private String barCodeImgPath;
 	
+	
 	public String getBarCodeImgPath() {
 		return barCodeImgPath;
 	}

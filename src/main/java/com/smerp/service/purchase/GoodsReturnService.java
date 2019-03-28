@@ -30,5 +30,7 @@ public interface GoodsReturnService {
 	
 	Boolean checkQuantityGr(GoodsReceipt goodsReceipt);
 	
+	List<GoodsReturn> findByGoodsReceiptId(GoodsReceipt gr,String status);
+	
 	List<GoodsReturn> searchFilterBySelection(SearchFilter searchFilter);
 }

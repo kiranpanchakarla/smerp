@@ -1,5 +1,8 @@
 package com.smerp.controller.admin;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -24,10 +27,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smerp.model.admin.Vendor;
+import com.smerp.model.inventory.TaxCode;
+import com.smerp.model.master.States;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.CountryServices;
+import com.smerp.service.master.StatesService;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
 @Configuration
@@ -36,6 +42,8 @@ import com.smerp.util.GenerateDocNumber;
 @Controller
 @RequestMapping("/vendor")
 public class VendorController {
+	
+
 	
 	@Autowired
 	private VendorService vendorService;
@@ -48,6 +56,9 @@ public class VendorController {
 	
 	@Autowired
 	CountryServices countryServices;
+	
+	@Autowired
+	StatesService statesService;
 	
 	private static String countryCode;
 
@@ -71,7 +82,9 @@ public class VendorController {
 		Vendor vendor = vendorService.findLastCodeNumber();
 		Vendor vendorObj =  new Vendor();
 		vendorObj.setVendorCode(GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.V, vendor == null ? "" :  vendor.getVendorCode()));
-		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); // for india pass value code 1
+		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode)));
+		model.addAttribute("stateList", countryServices.stateList(Integer.parseInt(countryCode)));
+		model.addAttribute("stateMap", stateMap());
 		model.addAttribute("vendor", vendorObj);
 		return "vendor/create";
 	}
@@ -91,6 +104,8 @@ public class VendorController {
 		Vendor vendor = vendorService.getInfo(Integer.parseInt(vendorId));
 		model.addAttribute("vendor", vendor);
 		model.addAttribute("country", countryServices.findById(Integer.parseInt(countryCode))); //  for india pass value code 1
+		model.addAttribute("stateList", countryServices.stateList(Integer.parseInt(countryCode)));
+		model.addAttribute("stateMap", stateMap());
 		return "vendor/create";
 	}
 
@@ -152,5 +167,12 @@ public class VendorController {
 		return mapper.writeValueAsString(vendorAddressService.findById(Integer.parseInt(shippingId)));
 		
 	}
+	
+	
+public Map<Integer,Object> stateMap() {
+		return statesService.findAll().stream().collect(Collectors.toMap(States::getId, States::getName));
+		 
+	}
+
 	
 }

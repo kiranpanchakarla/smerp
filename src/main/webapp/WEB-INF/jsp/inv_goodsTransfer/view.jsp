@@ -115,20 +115,25 @@ text-align: left;
 																		<label>Doc Date</label>:  
 																		 <fmt:formatDate pattern = "dd/MM/yyyy"  value = "${gr.documentDate}" />
 																	</div>
-																	
-																 
+																</div>
 																
-																<div class="col-sm-3 form-group">
-																                <label>Ship to</label>: ${gr.plant.plantName}<%-- <c:forEach var="entry"
-																														items="${plantMap}">
+																<div class="row">	
+																 <div class="col-sm-5 form-group">
+																                <label>Ship From</label>: ${gr.fromWarehouse.plantName} 
+																					 
+																				</div>	
+																
+																<div class="col-sm-4 form-group">
+																                <label>Ship to</label>:  <c:forEach var="entry"
+																														items="${findPlantAll}">
 																														<c:if
 																															test="${entry.key ==gr.toWarehouse}">
 																													 ${entry.value} 																													 </c:if>
-																													</c:forEach>   --%>
+																													</c:forEach>    
 																					 
 																				</div>
 																				
-																			
+																		
  
 																	
 																</div>

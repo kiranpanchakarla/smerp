@@ -268,7 +268,7 @@
 																																	<form:input type="text"
 																																		path="inventoryGoodsReceiptList[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.unitPrice}"
+																																		value="${listLineItems.unitPrice}" maxlength="6"
 																																		class="form-control unitPrice validatePrice"></form:input>
 																																</div></td>
 
@@ -703,7 +703,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="inventoryGoodsReceiptList['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="inventoryGoodsReceiptList['+inc+'].unitPrice" autocomplete="off" maxlength="6" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			

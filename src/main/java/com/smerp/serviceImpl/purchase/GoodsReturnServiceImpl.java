@@ -768,6 +768,12 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			   }*/
 	
 			}
+
+			@Override
+			public List<GoodsReturn> findByGoodsReceiptId(GoodsReceipt gr,String status) {
+				
+				return goodsReturnRepository.getListBygrId(gr,status);
+			}
 			
 			/*
 public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsReturnObj) {

@@ -28,6 +28,7 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.Department;
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -44,6 +45,7 @@ import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
 import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
 import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.GoodsReturnService;
@@ -150,6 +152,9 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 	@Autowired
 	DepartmentService departmentService;
 	
+	@Autowired
+	PlantService plantService;
+	
  /*    
 	public String OfflineHtmlStringToPdf(String pdfFilePath) throws TemplateException, IOException, DocumentException {
 		File sourceFolder = null;
@@ -200,7 +205,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		input.put("user", getUser());
 		input.put("moduleName", modulePR);
 		logger.info("plantMap-->" + purchaseRequestController.plantMap());
-		input.put("plantMap", purchaseRequestController.plantMap());
+		input.put("plantMap", plantMap());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		getTemplate().process(input, out);
 		ITextRenderer renderer = new ITextRenderer();
@@ -227,7 +232,7 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		Map<String, Object> input = new HashMap<String, Object>(1);
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("rfq", forQuotation);
-		logger.info("plantMap-->" + rfqController.plantMap());
+		logger.info("plantMap-->" + plantMap());
 		input.put("plantMap", rfqController.plantMap());
 		input.put("user", getUser());
 		input.put("moduleName", moduleRFQ);
@@ -261,8 +266,8 @@ public class HTMLSummaryToPDF extends EmailerGenerator {
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("po", purchaseOrder);
 		input.put("moduleName", modulePO);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap",plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -301,8 +306,8 @@ public String OfflineHtmlStringToPdfForGoodsReceipt(String pdfFilePath,GoodsRece
 		input.put("grqty", gr);
 		input.put("grList", lineItemsBean);
 		input.put("moduleName", moduleGR);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap", plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -335,8 +340,8 @@ public String OfflineHtmlStringToPdfForGoodsReturn(String pdfFilePath,GoodsRetur
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("gr", goodsReturn);
 		input.put("moduleName", moduleGRet);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap", plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -373,8 +378,8 @@ public String OfflineHtmlStringToPdfForInvoice(String pdfFilePath,InVoice invoic
 		input.put("invQty", inv);
 		input.put("invList", lineItemsBean);
 		input.put("moduleName", moduleInv);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap", plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -407,8 +412,8 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("credit", creditMemo);
 		input.put("moduleName", moduleCredit);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap", plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -441,8 +446,8 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 		input.put("contextPath", RequestContext.get().getContextPath());
 		input.put("gr", invGR);
 		input.put("moduleName", moduleCredit);
-		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-		input.put("plantMap", purchaseOrderController.plantMap());
+		logger.info("plantMap-->" + plantMap());
+		input.put("plantMap", plantMap());
 		input.put("taxCodeMap", purchaseOrderController.taxCode());
 		input.put("user", getUser());
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -475,8 +480,8 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		input.put("contextPath", RequestContext.get().getContextPath());
     		input.put("gr", invGR);
     		input.put("moduleName", moduleCredit);
-    		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-    		input.put("plantMap", purchaseOrderController.plantMap());
+    		logger.info("plantMap-->" + plantMap());
+    		input.put("plantMap", plantMap());
     		input.put("taxCodeMap", purchaseOrderController.taxCode());
     		input.put("deptMap", deptMap());
     		input.put("user", getUser());
@@ -513,8 +518,8 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
     		input.put("contextPath", RequestContext.get().getContextPath());
     		input.put("gr", invGR);
     		input.put("moduleName", moduleCredit);
-    		logger.info("plantMap-->" + purchaseOrderController.plantMap());
-    		input.put("plantMap", purchaseOrderController.plantMap());
+    		logger.info("plantMap-->" + plantMap());
+    		input.put("plantMap", plantMap());
     		input.put("taxCodeMap", purchaseOrderController.taxCode());
     		input.put("deptMap", deptMap());
     		input.put("user", getUser());
@@ -542,5 +547,7 @@ public String OfflineHtmlStringToPdfForCreditMemo(String pdfFilePath,CreditMemo 
 	return user;
 	}
 	
-    
+	public Map<Integer, Object> plantMap() {
+		return plantService.findPlantAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
+	}
 }

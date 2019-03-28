@@ -190,6 +190,7 @@ public class InventoryGoodsTransferController {
 			poloadData(model, invGR);
 			model.addAttribute("gr", invGR);
 			model.addAttribute("plantMap", plantMap());
+			model.addAttribute("findPlantAll", findPlantAll());
 			model.addAttribute("taxCodeMap", taxCode());
 			return "inv_goodsTransfer/view";
 		}

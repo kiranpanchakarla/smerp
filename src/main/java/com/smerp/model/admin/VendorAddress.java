@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.master.Country;
+import com.smerp.model.master.States;
 import com.smerp.model.master.UserAuditModel;
 
 @Entity
@@ -48,6 +49,18 @@ public class VendorAddress extends UserAuditModel {
 
 	@Column(name = "street_no")
 	private String streetNo;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "states_id")
+	private States states;
+
+	public States getStates() {
+		return states;
+	}
+
+	public void setStates(States states) {
+		this.states = states;
+	}
 
 	@Column(name = "gstin")
 	private String gstin;
@@ -174,9 +187,11 @@ public class VendorAddress extends UserAuditModel {
 	public String toString() {
 		return "VendorAddress [id=" + id + ", addressId=" + addressId + ", addressName=" + addressName + ", street="
 				+ street + ", city=" + city + ", zipCode=" + zipCode + ", country=" + country + ", streetNo=" + streetNo
-				+ ", gstin=" + gstin + ", gstinType=" + gstinType + ", payTo=" + payTo + ", shipFrom=" + shipFrom
-				+ ", isActive=" + isActive + "]";
+				+ ", states=" + states + ", gstin=" + gstin + ", gstinType=" + gstinType + ", payTo=" + payTo
+				+ ", shipFrom=" + shipFrom + ", isActive=" + isActive + "]";
 	}
+
+	
 
 	
 }

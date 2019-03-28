@@ -15,5 +15,8 @@ public interface UomRepository extends JpaRepository<Uom, Integer> {
 	
 	@Query("SELECT c FROM Uom c WHERE LOWER(c.uomName) = LOWER(:name)")
 	Uom findByName(@Param("name") String name);
-
+	
+	@Query("SELECT c.uomName FROM Uom c")
+	List<Uom> getUOM();
+ 
 }

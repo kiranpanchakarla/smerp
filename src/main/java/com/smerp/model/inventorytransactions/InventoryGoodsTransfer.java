@@ -79,20 +79,29 @@ public class InventoryGoodsTransfer extends AuditModel {
 	@Column(name = "total_payment")
 	private Double totalPayment ;
 	
-	 
 
-	 
-	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="plant_id", referencedColumnName = "plant_id")
-	private Plant toWarehouse;
+	private Plant fromWarehouse;
 	 
-	public Plant getPlant() {
+	@Column(name="to_warehouse")
+	private Integer toWarehouse; 
+
+	
+	public Plant getFromWarehouse() {
+		return fromWarehouse;
+	}
+
+	public void setFromWarehouse(Plant fromWarehouse) {
+		this.fromWarehouse = fromWarehouse;
+	}
+
+	public Integer getToWarehouse() {
 		return toWarehouse;
 	}
 
-	public void setPlant(Plant plant) {
-		this.toWarehouse = plant;
+	public void setToWarehouse(Integer toWarehouse) {
+		this.toWarehouse = toWarehouse;
 	}
 
 	public String getStatusType() {

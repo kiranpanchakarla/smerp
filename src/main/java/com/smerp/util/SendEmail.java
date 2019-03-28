@@ -51,6 +51,7 @@ import com.smerp.controller.purchase.PurchaseRequestController;
 import com.smerp.controller.purchase.RequestForQuotationController;
 import com.smerp.email.EmailerGenerator;
 import com.smerp.model.admin.Department;
+import com.smerp.model.admin.Plant;
 import com.smerp.model.admin.User;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -67,6 +68,7 @@ import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.service.admin.DashboardCountService;
 import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.emailids.EmailIdService;
+import com.smerp.service.master.PlantService;
 
 @Component
 public class SendEmail extends EmailerGenerator{
@@ -103,6 +105,9 @@ public class SendEmail extends EmailerGenerator{
 	
 	@Autowired
 	DownloadProductXLS downloadProductXLS;
+	
+	@Autowired
+	PlantService plantService;
 	
 	private static final Logger logger = LogManager.getLogger(SendEmail.class);
 	
@@ -252,7 +257,9 @@ public class SendEmail extends EmailerGenerator{
 		};
 	}
 	
-	 
+	public Map<Integer, Object> plantMap() {
+		return plantService.findPlantAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
+	}
 
 	protected String getBody() {
 		Writer out = new StringWriter();
@@ -270,7 +277,7 @@ public class SendEmail extends EmailerGenerator{
 			input.put("invgi", getInventoryGoodsIssue());
 			input.put("gr", getInventoryGoodsTransfer());
 			input.put("deptMap", deptMap());
-			input.put("plantMap", purchaseRequestController.plantMap());
+			input.put("plantMap",plantMap());
 			input.put("taxCodeMap", purchaseOrderController.taxCode());
 			input.put("contextPath", RequestContext.get().getContextPath());
 			getTemplate().process(input, out);

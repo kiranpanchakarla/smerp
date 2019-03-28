@@ -44,6 +44,7 @@ import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.admin.TaxCodeRepository;
 import com.smerp.service.admin.VendorService;
 import com.smerp.service.inventory.ProductService;
+import com.smerp.service.inventory.UomService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.master.SacService;
 import com.smerp.service.purchase.CreditMemoService;
@@ -85,6 +86,9 @@ public class InvoiceController {
 	
 	@Autowired
 	private TaxCodeRepository taxCodeRepository;
+	
+	@Autowired
+	UomService uomService;
 	
 	@Autowired
 	private HTMLToPDFGenerator hTMLToPDFGenerator;
@@ -130,6 +134,7 @@ public class InvoiceController {
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("inv", inv);
@@ -150,7 +155,7 @@ public class InvoiceController {
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
-		// model.addAttribute("categoryMap", categoryMap());
+		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());
 		model.addAttribute("plantMapSize", plantMap().size());

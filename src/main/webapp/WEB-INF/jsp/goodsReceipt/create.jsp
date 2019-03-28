@@ -565,7 +565,7 @@
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].uom"
 																																		value="${listLineItems.uom}"
-																																		class="form-control uom"
+																																		class="form-control uom" maxlength="10"
 																																		readonly="true"></form:input>
 																																</div>  
 																															</td>
@@ -586,7 +586,7 @@
 																																	type="text" readonly="true"
 																																	path="goodsReceiptLineItems[${count}].unitPrice"
 																																	onkeypress="return isNumericKey(event)"
-																																	value="${listLineItems.unitPrice}"
+																																	value="${listLineItems.unitPrice}" maxlength="6"
 																																	class="form-control unitPrice validatePrice"></form:input>
 																																</td>
 
@@ -866,7 +866,7 @@
 																															<td><div class="form-group">
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].uom"
-																																		value="${listLineItems.uom}"
+																																		value="${listLineItems.uom}" maxlength="10"
 																																		class="form-control uom"
 																																		></form:input>
 																																</div></td>
@@ -883,7 +883,7 @@
 																																	<form:input type="text"
 																																		path="goodsReceiptLineItems[${count}].unitPrice"
 																																		onkeypress="return isNumericKey(event)"
-																																		value="${listLineItems.unitPrice}"
+																																		value="${listLineItems.unitPrice}" maxlength="6"
 																																		class="form-control unitPrice validatePrice"></form:input>
 																																</div></td>
 
@@ -1486,13 +1486,13 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].description" required="true" autocomplete="off"  class="form-control description '+inc+'" id="uom'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].description" required="true" autocomplete="off"  class="form-control description '+inc+'" id="description'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].uom" maxlength="10" class="form-control uom uom'+inc+'" id="uom'+inc+'"  />'
 			+ '</div>'
 			+'</td>'
 			
@@ -1505,7 +1505,7 @@ function addItem() {
 			
 			+'<td>'
 			+'<div class="form-group">'
-			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
+			+'<input type="text" name="goodsReceiptLineItems['+inc+'].unitPrice" maxlength="6" autocomplete="off" onkeypress="return isNumericKey(event)" required="true" class="form-control validatePrice unitPrice'+inc+' unitPrice" id="unitPrice'+inc+'"   />'
 			+ '</div>'
 			+'</td>'
 			
@@ -2083,6 +2083,39 @@ $(document).ready(function(){
                       
          }   
    /* End of Description List  */ 
+   
+    /* UOM AutoComplete */
+   
+    var uomList =[];
+	 var name;
+	 var uomData= ${uomList};
+	 var availableUOMTags = [];
+		$.each(uomData, function (index, value) {
+		   availableUOMTags.push(value.toString());
+	   });
+	 //alert("length"+availableUOMTags);
+		 
+		 
+	$(document).on("focus", ".uom", function() {
+		var itemParentRow = $(this).parents(".multTot");
+		//alert("itemParentRow"+itemParentRow);
+		 
+		 $(this).autocomplete({
+	        source: availableUOMTags,
+	        minLength: 0,
+            scroll: true,
+	        select: function(event, ui) {
+	        	name = ui.item.value;
+	        	//alert(name);
+	              
+	        	$(itemParentRow).find(".uom").val(name);
+	       		 },
+	        }).focus(function() {
+	            $(this).autocomplete("search", "");
+	        }); 
+		});
+		
+   /* UOM AutoComplete */
 	
     	$('#vendorAddress').on('change', function() {
     		var shippingId=$('#vendorAddress').val();

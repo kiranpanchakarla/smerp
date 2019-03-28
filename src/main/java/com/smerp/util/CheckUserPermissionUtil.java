@@ -48,5 +48,14 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 	
+	public boolean checkWareHousePermission() {
+		User user = getUser();
+		return  checkUserPermission(user.getUserId(), 1, 9);
+	}
+	
+	public boolean checkMultiAppPermission() {
+		User user = getUser();
+		return  checkUserPermission(user.getUserId(), 1, 10);
+	}
 	
 }

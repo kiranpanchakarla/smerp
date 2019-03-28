@@ -52,12 +52,12 @@ public class GetSearchFilterResult {
 		
 		String oderbyQuery = "";
 		
-		if(!searchFilter.getSortBy().equals("select")) {
-			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
-			oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
+		if(searchFilter.getSortBy()!= null && !searchFilter.getSortBy().equals("select")) {
+			//String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
+			oderbyQuery = oderbyQuery + "order by sfq.createdAt ";
 		}else {
-			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDAT.getStatus()));
-			oderbyQuery = "order by sfq."+ dbSortByColumnName;
+			//String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDAT.getStatus()));
+			oderbyQuery = "order by sfq.createdAt";
 		}
 		
 		int plantIds[] = plantService.findPlantIds();

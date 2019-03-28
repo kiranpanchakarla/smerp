@@ -6,6 +6,7 @@ public enum EnumStatusUpdate {
 	CANCELED("Cancelled"),
 	DRAFT("Draft"),
 	APPROVEED("Approved"),
+	PARTIALLY_APPROVEED("Partially_Approved"),
 	CONVERTPRTORFQ("ConvertedToRFQ"),
 	CONVERTRFQTOPO("ConvertedToPO"),
 	COMPLETED("Completed"),

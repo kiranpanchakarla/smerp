@@ -115,7 +115,41 @@ public class GoodsReturn extends AuditModel {
 	
 	private transient String PRdocNumber;
 	
+	@Column(name="first_Approve_id")
+	private Integer  firstApproveId;
 	
+	@Column(name="second_Approve_id")
+	private Integer  secondApproveId;
+	
+	
+	@Column(name="second_Level_enable")
+	private Boolean  secondLevelEnable = false;
+	
+	
+
+	public Integer getFirstApproveId() {
+		return firstApproveId;
+	}
+
+	public void setFirstApproveId(Integer firstApproveId) {
+		this.firstApproveId = firstApproveId;
+	}
+
+	public Integer getSecondApproveId() {
+		return secondApproveId;
+	}
+
+	public void setSecondApproveId(Integer secondApproveId) {
+		this.secondApproveId = secondApproveId;
+	}
+
+	public Boolean getSecondLevelEnable() {
+		return secondLevelEnable;
+	}
+
+	public void setSecondLevelEnable(Boolean secondLevelEnable) {
+		this.secondLevelEnable = secondLevelEnable;
+	}
 
 	public String getDeliverTo() {
 		return deliverTo;
@@ -353,15 +387,18 @@ public class GoodsReturn extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "GoodsReturn [id=" + id + ", vendor=" + vendor + ", goodsReturnLineItems=" + goodsReturnLineItems
-				+ ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber
-				+ ", postingDate=" + postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
-				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
-				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ ", grId=" + grId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
-				+ totalPayment + ", freight=" + freight + "]";
+		return "GoodsReturn [id=" + id + ", vendor=" + vendor + ", plant=" + plant + ", goodsReturnLineItems="
+				+ goodsReturnLineItems + ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber="
+				+ referenceDocNumber + ", postingDate=" + postingDate + ", documentDate=" + documentDate
+				+ ", requiredDate=" + requiredDate + ", vendorShippingAddress=" + vendorShippingAddress
+				+ ", vendorPayTypeAddress=" + vendorPayTypeAddress + ", vendorContactDetails=" + vendorContactDetails
+				+ ", category=" + category + ", isActive=" + isActive + ", grId=" + grId + ", remark=" + remark
+				+ ", totalDiscount=" + totalDiscount + ", totalPayment=" + totalPayment + ", deliverTo=" + deliverTo
+				+ ", freight=" + freight + ", firstApproveId=" + firstApproveId + ", secondApproveId=" + secondApproveId
+				+ ", secondLevelEnable=" + secondLevelEnable + "]";
 	}
-
+ 
+	
  
 
 	 

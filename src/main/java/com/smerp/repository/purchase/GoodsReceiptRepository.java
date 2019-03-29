@@ -10,8 +10,8 @@ import com.smerp.model.inventory.PurchaseOrder;
 
 public interface GoodsReceiptRepository  extends JpaRepository<GoodsReceipt, Integer> {
 	
-	@Query("SELECT r FROM GoodsReceipt r WHERE isActive=:isActive and plant.id in (:plantIds)  order by createdAt desc")
-	List<GoodsReceipt> findByIsActive(Boolean isActive, int[] plantIds);
+	@Query("SELECT r FROM GoodsReceipt r WHERE isActive=:isActive and plant.id in (:plantIds) and secondLevelEnable in (:secondApp) order by createdAt desc")
+	List<GoodsReceipt> findByIsActive(Boolean isActive, int[] plantIds,Boolean [] secondApp);
 	
 	GoodsReceipt findTopByOrderByIdDesc();
 	

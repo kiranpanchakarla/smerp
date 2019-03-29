@@ -102,11 +102,46 @@ public class GoodsReceipt extends AuditModel {
 	@Column(name = "freight")
 	private Double freight;
 	
+	@Column(name="first_Approve_id")
+	private Integer  firstApproveId;
+	
+	@Column(name="second_Approve_id")
+	private Integer  secondApproveId;
+	
+	
+	@Column(name="second_Level_enable")
+	private Boolean  secondLevelEnable = false;
+	
     private transient String amtRounding;
     
     private transient String roundedOff;
     
-    public String getDeliverTo() {
+    
+    public Integer getFirstApproveId() {
+		return firstApproveId;
+	}
+
+	public void setFirstApproveId(Integer firstApproveId) {
+		this.firstApproveId = firstApproveId;
+	}
+
+	public Integer getSecondApproveId() {
+		return secondApproveId;
+	}
+
+	public void setSecondApproveId(Integer secondApproveId) {
+		this.secondApproveId = secondApproveId;
+	}
+
+	public Boolean getSecondLevelEnable() {
+		return secondLevelEnable;
+	}
+
+	public void setSecondLevelEnable(Boolean secondLevelEnable) {
+		this.secondLevelEnable = secondLevelEnable;
+	}
+
+	public String getDeliverTo() {
 		return deliverTo;
 	}
 
@@ -354,14 +389,20 @@ public class GoodsReceipt extends AuditModel {
 
 	@Override
 	public String toString() {
-		return "GoodsReceipt [id=" + id + ", vendor=" + vendor + ", goodsReceiptLineItems=" + goodsReceiptLineItems
-				+ ", docNumber=" + docNumber + ", status=" + status + ", referenceDocNumber=" + referenceDocNumber
-				+ ", postingDate=" + postingDate + ", documentDate=" + documentDate + ", requiredDate=" + requiredDate
-				+ ", vendorShippingAddress=" + vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress
-				+ ", vendorContactDetails=" + vendorContactDetails + ", category=" + category + ", isActive=" + isActive
-				+ ", poId=" + poId + ", remark=" + remark + ", totalDiscount=" + totalDiscount + ", totalPayment="
-				+ totalPayment + ", freight=" + freight + "]";
+		return "GoodsReceipt [id=" + id + ", vendor=" + vendor + ", plant=" + plant + ", goodsReceiptLineItems="
+				+ goodsReceiptLineItems + ", docNumber=" + docNumber + ", status=" + status + ", statusType="
+				+ statusType + ", referenceDocNumber=" + referenceDocNumber + ", postingDate=" + postingDate
+				+ ", documentDate=" + documentDate + ", requiredDate=" + requiredDate + ", vendorShippingAddress="
+				+ vendorShippingAddress + ", vendorPayTypeAddress=" + vendorPayTypeAddress + ", vendorContactDetails="
+				+ vendorContactDetails + ", category=" + category + ", isActive=" + isActive + ", poId=" + poId
+				+ ", remark=" + remark + ", deliverTo=" + deliverTo + ", totalDiscount=" + totalDiscount
+				+ ", totalPayment=" + totalPayment + ", freight=" + freight + ", firstApproveId=" + firstApproveId
+				+ ", secondApproveId=" + secondApproveId + ", secondLevelEnable=" + secondLevelEnable + ", amtRounding="
+				+ amtRounding + ", roundedOff=" + roundedOff + ", taxAmt=" + taxAmt + ", totalBeforeDisAmt="
+				+ totalBeforeDisAmt + ", RFQdocNumber=" + RFQdocNumber + ", PRdocNumber=" + PRdocNumber + "]";
 	}
+
+	 
 
 	
 	

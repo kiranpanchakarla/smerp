@@ -99,7 +99,27 @@
 																	<td>${list.status}</td>
 																	
 																	<td><c:choose>
-																			<c:when test="${list.status != 'Approved'  && list.status != 'Cancelled'  && list.status != 'Rejected'}">
+																	
+																	    <c:when  test="${ list.status == 'Partially_Approved' }"> 
+                                                                      <c:forEach items="${sessionScope.umpmap}" var="ump">
+                                                                         <c:if test="${ump.key eq 'Admin Master'}">
+                                                                         <c:set var = "permissions" scope = "session" value = "${ump.value}"/>
+                                                                         <c:choose>
+                                                                        <c:when test="${fn:containsIgnoreCase(permissions,'Multilevel Approval')}">  <a class="btn btn-edit"
+                                                                                href="<c:url value="/gre/edit?id=${list.id}"/>" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                                class="icon-edit left"></i></a></c:when>
+                                                                            <c:otherwise><a class="btn btn-disable"><i
+                                                                                    class="icon-bin left"></i></a></c:otherwise></c:choose>
+                                                                         <c:choose>
+                                                                    <c:when test="${fn:containsIgnoreCase(permissions,'Multilevel Approval')}">  <a class="btn btn-delete" href="#"
+                                                                        onclick="deleteById('<c:out value="${list.id}"/>','/gre/delete')" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                                            class="icon-bin left"></i></a></c:when>
+                                                                            <c:otherwise><a class="btn btn-disable"><i
+                                                                                    class="icon-bin left"></i></a></c:otherwise></c:choose>
+                                                                            </c:if></c:forEach>
+                                                                     </c:when>
+                                                                     
+																			<c:when test="${list.status != 'Approved' && purchaseRequestsList.status != 'Partially_Approved' && list.status != 'Cancelled'  && list.status != 'Rejected'}">
 																				<c:forEach items="${sessionScope.umpmap}" var="ump">
 																					<c:if test="${ump.key eq 'Goods Return'}">
 																						<c:set var="permissions" scope="session"

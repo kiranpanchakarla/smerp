@@ -1,6 +1,8 @@
 package com.smerp.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +27,12 @@ public class GetSearchFilterResult {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Autowired
+	CheckUserPermissionUtil checkUserPermissionUtil;
 
 	public String getQueryBysearchFilterSelection(SearchFilter searchFilter){
-		String resultQuery = "";
-		String searchByQuery = "";
+		String resultQuery = "",searchByQuery="";
 		
 		if(!searchFilter.getFieldName().isEmpty() && !searchFilter.getSearchBy().equals("select")) {
 			String dbSearchByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSearchBy()));
@@ -50,14 +54,22 @@ public class GetSearchFilterResult {
 			searchByQuery = searchByQuery +" "+ EnumSearchFilter.AND.getStatus() +" ";
 		}
 		
+		String multipleApprovPemission = "";
+		/* MultipleApproval Module List  */
+	
+		if(EnumSearchFilter.MULTIAPPORVEDTABLES.getStatus().contains(searchFilter.getTypeOf())) {
+			if(checkUserPermissionUtil.getMultiApprovPermission())
+				multipleApprovPemission = multipleApprovPemission + "and sfq.secondLevelEnable = 'true' ";
+		}
+		
 		String oderbyQuery = "";
 		
 		if(searchFilter.getSortBy()!= null && !searchFilter.getSortBy().equals("select")) {
-			//String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
-			oderbyQuery = oderbyQuery + "order by sfq.createdAt ";
+			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
+			oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
 		}else {
-			//String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDAT.getStatus()));
-			oderbyQuery = "order by sfq.createdAt";
+			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDAT.getStatus()));
+			oderbyQuery = "order by sfq."+ dbSortByColumnName;
 		}
 		
 		int plantIds[] = plantService.findPlantIds();
@@ -86,9 +98,9 @@ public class GetSearchFilterResult {
 		
 		
 		if(!searchByQuery.isEmpty() || !dateSelectionQuery.isEmpty()) {
-			oderbyQuery =  " "+EnumSearchFilter.AND.getStatus()+" "+ isActiveAndPlant + oderbyQuery;
+			oderbyQuery =  " "+EnumSearchFilter.AND.getStatus()+" "+ isActiveAndPlant + multipleApprovPemission + oderbyQuery;
 		} else {
-			oderbyQuery = isActiveAndPlant + oderbyQuery;
+			oderbyQuery = isActiveAndPlant + multipleApprovPemission + oderbyQuery;
 		}
 				
 		resultQuery = "select sfq from "+searchFilter.getTypeOf()+" sfq where " + searchByQuery + dateSelectionQuery + oderbyQuery;

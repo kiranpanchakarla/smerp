@@ -69,4 +69,8 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 		return secondApp;
 	}
 	
+	public Boolean getMultiApprovPermission() {
+		return checkMultiAppPermission();
+	}
+	
 }

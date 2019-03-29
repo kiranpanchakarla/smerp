@@ -15,6 +15,7 @@ public enum EnumSearchFilter {
 	CREATEDAT("createdAt"),
 	BETWEEN("between"),
 	STATUS("status"),
+	MULTIAPPORVEDTABLES("PurchaseRequest,GoodsReceipt,GoodsReturn,InventoryGoodsReceipt,InventoryGoodsIssue,InventoryGoodsTransfer"),
 	AND("and");
 	
 

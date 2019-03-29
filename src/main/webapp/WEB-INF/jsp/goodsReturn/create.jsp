@@ -75,6 +75,9 @@
 															Goods Return</h2>
 														<form:input type="hidden" cssClass="form-control"
 															path="id" />
+															<form:input type="hidden" cssClass="form-control" path="firstApproveId" />
+													<form:input type="hidden" cssClass="form-control" path="secondApproveId" />
+													<form:input type="hidden" cssClass="form-control" path="secondLevelEnable" />
 													</c:if>
 													</div>
 													<div class="col-md-6">

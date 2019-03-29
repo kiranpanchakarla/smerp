@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.admin.User;
 import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
@@ -45,6 +46,7 @@ import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
 import com.smerp.service.purchase.PurchaseOrderService;
+import com.smerp.util.CheckUserPermissionUtil;
 import com.smerp.util.DocNumberGenerator;
 import com.smerp.util.EmailGenerator;
 import com.smerp.util.EnumSearchFilter;
@@ -102,6 +104,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Autowired
 	private GetConvertedDocStatusList getConvertedDocStatusList;
+	
+	@Autowired
+	private CheckUserPermissionUtil checkUserPermissionUtil;
 	
 	@Override
 	public GoodsReceipt save(GoodsReceipt goodsReceipt) {
@@ -237,7 +242,44 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
  			e.printStackTrace();
  		}
      }
-         
+/*  Multi Level Approved .. Start*/
+		 
+		 if(goodsReceipt.getPlant().getId()==2) {   //FOR Yelamanchili
+			 
+			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
+			 logger.info("checkMultiApp-->" +checkMultiApp);
+			 
+			 
+		 if(goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
+			 User user = checkUserPermissionUtil.getUser();
+			 
+			 if(checkMultiApp) { // Final Approved
+				 if(goodsReceipt.getFirstApproveId()!=null) {
+				    goodsReceipt.setSecondApproveId(user.getUserId());
+				    goodsReceipt.setSecondLevelEnable(true);}
+				 else {
+					 goodsReceipt.setFirstApproveId(user.getUserId());
+					 goodsReceipt.setSecondApproveId(user.getUserId());
+					 goodsReceipt.setSecondLevelEnable(true);
+				 }
+				 goodsReceipt.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+			 }else {            // First Approved
+				 goodsReceipt.setFirstApproveId(user.getUserId());
+				 goodsReceipt.setStatus(EnumStatusUpdate.PARTIALLY_APPROVEED.getStatus());
+				 goodsReceipt.setSecondLevelEnable(true);
+			 }
+			 
+		 }else {
+			 if(checkMultiApp) {
+				 goodsReceipt.setSecondLevelEnable(true); 
+			 }
+		 }
+		 
+		 }else {
+			 goodsReceipt.setSecondLevelEnable(true); 
+		 }
+		 
+		 /*  Multi Level Approved .. End*/ 
          goodsReceipt = goodsReceiptRepository.save(goodsReceipt);
          
 		
@@ -348,6 +390,44 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 			
 		}
+		
+		/*  Multi Level Approved .. Start*/
+		 
+		 if(gr.getPlant().getId()==2) {   //FOR Yelamanchili
+			 
+			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
+			 logger.info("checkMultiApp-->" +checkMultiApp);
+			 
+			 
+		/* if(gre.getStatus().equals(EnumStatusUpdate.OPEN.getStatus()) ) {  
+			 User user = checkUserPermissionUtil.getUser();
+			 
+			 if(checkMultiApp) { // Final Approved
+				 if(gre.getFirstApproveId()!=null) {
+				    }
+				 else {
+					 gre.setFirstApproveId(user.getUserId());
+					 gre.setSecondApproveId(user.getUserId());
+					 gre.setSecondLevelEnable(true);
+				 }
+				  
+			 }else {            // First Approved
+				 gre.setFirstApproveId(user.getUserId());
+				 gre.setSecondApproveId(user.getUserId());
+				 gre.setSecondLevelEnable(true);
+			 }
+			 
+		 }*/  {
+			 if(checkMultiApp) {
+				 gr.setSecondLevelEnable(true); 
+			 }
+		 }
+		 
+		 }else {
+			 gr.setSecondLevelEnable(true); 
+		 }
+		 
+		 /*  Multi Level Approved .. End*/
 		logger.info("gr" + gr);
 		gr.setCategory("Item");
 		gr = goodsReceiptRepository.save(gr);
@@ -565,7 +645,8 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 	@Override
 	public List<GoodsReceipt> findByIsActive() {
-		return goodsReceiptRepository.findByIsActive(true,plantService.findPlantIds());
+		Boolean [] secondApp = checkUserPermissionUtil.getMultiAppPermission();
+		return goodsReceiptRepository.findByIsActive(true,plantService.findPlantIds(),secondApp);
 	}
 	
 	@Override

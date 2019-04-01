@@ -184,8 +184,8 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 
 	@Override
 	public List<PurchaseRequest> prApprovedList() {
-
-		return purchaseRequestRepository.prApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds());
+		Boolean [] secondApp = checkUserPermissionUtil.getMultiAppPermission();
+		return purchaseRequestRepository.prApprovedList(EnumStatusUpdate.APPROVEED.getStatus(),plantService.findPlantIds(),secondApp);
 	}
 	
 	@Override

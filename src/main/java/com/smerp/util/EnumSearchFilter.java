@@ -12,7 +12,7 @@ public enum EnumSearchFilter {
 	INVGR("InventoryGoodsReceipt"),
 	INVGI("InventoryGoodsIssue"),
 	INVGT("InventoryGoodsTransfer"),
-	CREATEDAT("createdAt"),
+	CREATEDDATE("createdDate"),
 	BETWEEN("between"),
 	STATUS("status"),
 	MULTIAPPORVEDTABLES("PurchaseRequest,GoodsReceipt,GoodsReturn,InventoryGoodsReceipt,InventoryGoodsIssue,InventoryGoodsTransfer"),

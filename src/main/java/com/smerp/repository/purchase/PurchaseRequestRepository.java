@@ -11,8 +11,8 @@ public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest
 	@Query("SELECT P FROM PurchaseRequest P WHERE isActive=:isActive and plant.id in (:plantIds) and secondLevelEnable in (:secondApp) order by createdAt desc" )
 	List<PurchaseRequest> findByIsActive(Boolean isActive, int[] plantIds,Boolean [] secondApp);
 	
-	@Query("SELECT P FROM PurchaseRequest P WHERE status=:status and plant.id in (:plantIds) order by createdAt desc")
-	List<PurchaseRequest> prApprovedList(String status, int[] plantIds);
+	@Query("SELECT P FROM PurchaseRequest P WHERE status=:status and plant.id in (:plantIds) and secondLevelEnable in (:secondApp) order by createdAt desc")
+	List<PurchaseRequest> prApprovedList(String status, int[] plantIds,Boolean [] secondApp);
 
 	PurchaseRequest findTopByOrderByIdDesc();
 	

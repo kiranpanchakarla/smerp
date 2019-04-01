@@ -68,7 +68,7 @@ public class GetSearchFilterResult {
 			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
 			oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
 		}else {
-			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDAT.getStatus()));
+			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDDATE.getStatus()));
 			oderbyQuery = "order by sfq."+ dbSortByColumnName;
 		}
 		

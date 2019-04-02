@@ -11,7 +11,7 @@ CREATE OR REPLACE VIEW vw_goods_received_amount AS
     sum(grl.product_cost) AS total_gr_amount_product_cost,
     (sum(grl.product_cost_tax_without_discount)::double precision + COALESCE(grl.freight, 0::numeric::double precision))::numeric(20,2) AS total_gr_amount_before_discount,
     (sum(grl.product_cost_tax)::double precision + COALESCE(grl.freight, 0::numeric::double precision))::numeric(20,2) AS total_gr_amount_after_discount,
-    (sum(grl.product_cost_tax)::numeric(20,0)::double precision + COALESCE(grl.freight, 0::numeric::double precision))::numeric(20,2) AS total_gr_amount_after_discount_rounding
+    round((sum(grl.product_cost_tax)::double precision + COALESCE(grl.freight, 0::numeric::double precision))::numeric(20,2)) AS total_gr_amount_after_discount_rounding
    FROM vw_goods_received_lineitems_amount grl
   GROUP BY grl.id, grl.doc_number, grl.freight, grl.total_discount;
 

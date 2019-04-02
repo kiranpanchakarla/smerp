@@ -340,8 +340,8 @@ public class DownloadReportsXLS {
 				for(int i=0; i< grItem.getGoodsReceiptLineItems().size(); i++) {
 					grItem = goodsReceiptService.getListAmount(grItem);
 					GoodsReceipt gr = null;
-					if(grItem.getPoId()!=null)
-					//	gr = goodsReceiptService.getGoodsReceiptById(grItem.getId());
+					
+					
 				excelData = index + SEMICOLUMN + 
 						(grItem.getVendor() == null ? BLANK : grItem.getVendor().getVendorCode()) + SEMICOLUMN +
 						(StringUtil.isEmptyTrim(grItem.getVendor().getName()) ? BLANK : grItem.getVendor().getName()) + SEMICOLUMN + 

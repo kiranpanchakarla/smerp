@@ -46,7 +46,7 @@
 							</div></li>
 						<li><div class="form-group full-group">
 								<!--  <label>Field:</label> -->
-								<input type="text" id="filedName" class="form-control" name="fieldName"
+								<input type="text" id="filedName" class="form-control" name="fieldName" autocomplete="off"
 									placeholder="Field name">
 							</div></li>
 						<li><div class="form-group">

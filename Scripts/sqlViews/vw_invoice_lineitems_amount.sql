@@ -1,4 +1,4 @@
-﻿-- View: vw_invoice_lineitems_amount
+-- View: vw_invoice_lineitems_amount
 
 -- DROP VIEW vw_invoice_lineitems_amount;
 
@@ -23,8 +23,8 @@ CREATE OR REPLACE VIEW vw_invoice_lineitems_amount AS
     il.unit_price,
     ((il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * COALESCE(il.tax_code, 0::numeric::double precision) / 100::double precision)::numeric(20,2) AS inv_product_tax,
     ((il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price)::numeric(20,2) AS inv_product_amount,
-    ((il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * (100::double precision - COALESCE(ih.total_discount, 0::numeric::double precision)) / 100::double precision + (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * COALESCE(il.tax_code, 0::numeric::double precision) / 100::double precision + COALESCE(ih.freight, 0::numeric::double precision))::numeric(20,2) AS inv_amount_tax,
-    ((il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price + (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * COALESCE(il.tax_code, 0::numeric::double precision) / 100::double precision + COALESCE(ih.freight, 0::numeric::double precision))::numeric(20,2) AS inv_amount_tax_before_discount
+    (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * (100::double precision - COALESCE(ih.total_discount, 0::numeric::double precision)) / 100::double precision + (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * COALESCE(il.tax_code, 0::numeric::double precision) / 100::double precision AS inv_amount_tax,
+    (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price + (il.required_quantity - COALESCE(cm.required_quantity, 0::bigint))::double precision * il.unit_price * COALESCE(il.tax_code, 0::numeric::double precision) / 100::double precision AS inv_amount_tax_before_discount
    FROM tbl_invoice ih
      JOIN tbl_invoice_lineitems il ON ih.id = il.inv_id
      LEFT JOIN ( SELECT cmh.inv_id,

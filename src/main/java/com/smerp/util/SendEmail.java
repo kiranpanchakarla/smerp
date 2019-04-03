@@ -746,11 +746,11 @@ public class SendEmail extends EmailerGenerator{
 		};
 	}
 	
-	public void sendInventoryQtyEmail(int WarehouseId) throws Exception {
+	public void sendInventoryQtyEmail(int warehouseId) throws Exception {
 		 if (shouldNotify()) {
 			 
 	            try {
-	                mailSender.send(createInventoryQtyEmailMessage(WarehouseId));
+	                mailSender.send(createInventoryQtyEmailMessage(warehouseId));
 	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
@@ -759,14 +759,14 @@ public class SendEmail extends EmailerGenerator{
 	        }
 	}
 	 
-	protected MimeMessagePreparator createInventoryQtyEmailMessage(int WarehouseId) {
+	protected MimeMessagePreparator createInventoryQtyEmailMessage(int warehouseId) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				
-				if(WarehouseId == 1) {
+				if(warehouseId == 1) {
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
-				if(WarehouseId == 2) {
+				if(warehouseId == 2) {
 					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
 				if(!toEmail.isEmpty()) {
@@ -776,13 +776,13 @@ public class SendEmail extends EmailerGenerator{
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(recipientList);
 				
-				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(WarehouseId);
+				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(warehouseId);
 				 logger.info("Product List For Email " + productList);
 				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
-				message.setSubject(getEnvironment() +  " - " + "Inventory Status Report " +  " - " + strDate);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Status Report" + " - " + getPlantName(warehouseId) + " - " + strDate);
 				 if(productList != null) {
 					 message.setText(getInventoryQtyEmailBody(productList), true);
 				 }else {
@@ -821,11 +821,11 @@ public class SendEmail extends EmailerGenerator{
 		return out.toString();
 	}
 	
-	public void sendInventoryGIEmail(int WarehouseId) throws Exception {
+	public void sendInventoryGIEmail(int warehouseId) throws Exception {
 		 if (shouldNotify()) {
 			 
 	            try {
-	                mailSender.send(createInventoryGIEmailMessage(WarehouseId));
+	                mailSender.send(createInventoryGIEmailMessage(warehouseId));
 	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
@@ -834,14 +834,14 @@ public class SendEmail extends EmailerGenerator{
 	        }
 	}
 	 
-	protected MimeMessagePreparator createInventoryGIEmailMessage(int WarehouseId) {
+	protected MimeMessagePreparator createInventoryGIEmailMessage(int warehouseId) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				/* Get Email's From DB */
-				if(WarehouseId == 1) {
+				if(warehouseId == 1) {
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
-				if(WarehouseId == 2) {
+				if(warehouseId == 2) {
 					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
 				
@@ -853,14 +853,14 @@ public class SendEmail extends EmailerGenerator{
 				
 				/* Get Email's From DB */
 				
-				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(WarehouseId);
+				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(warehouseId);
 				logger.info("Product List For Email " + productList);
 	             
 				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
-				message.setSubject(getEnvironment() +  " - " + "Inventory Goods Issue Report " +  " - " + strDate);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Goods Issue Report" + " - " + getPlantName(warehouseId) +  " - " + strDate);
 				if(productList != null && productList.size()!= 0) {
 					message.setText(getInventoryGIEmailBody(productList), true);
 				}else {
@@ -886,6 +886,10 @@ public class SendEmail extends EmailerGenerator{
 
 		};
 	} 
+	
+	public String getPlantName(int id) {
+		return plantService.findById(id).getPlantName();
+	}
 	
 	protected String getInventoryGIEmailBody(List<InventoryGoodsIssueList> productList) {
 		Writer out = new StringWriter();

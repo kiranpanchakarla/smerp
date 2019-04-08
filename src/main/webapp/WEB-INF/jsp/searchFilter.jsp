@@ -8,7 +8,7 @@
 	<form class="form" id="searchFilterForm" action="" modelAttribute="searchFilter" method="get">
 		<div class="form-body">
 			<div class="row">
-				<div class="col-sm-8">
+				<div class="col-md-9 col-sm-12">
 					<ul class="po-wrap-list">
 						<li><div class="form-group">
 								<!--  <label>Search By:</label> -->
@@ -18,11 +18,11 @@
 									<option value="documentNo">Document No</option>
 									<option value="status">Status</option>
 									<c:choose>
-									  <c:when test="${searchFilter.typeOf != 'InventoryGoodsTransfer'}">	<!-- this is only for Purchase Request -->
+									  <c:when test="${searchFilter.typeOf != 'InventoryGoodsTransfer'}">	<!-- this is only for InventoryGoodsTransfer -->
 									  	<option value="plant">Plant Name</option>
 									  </c:when>
 									  <c:otherwise>
-									   	
+									   	<option value="fromplant">Plant Name</option>
 									  </c:otherwise>
 									</c:choose>
 									
@@ -31,7 +31,7 @@
 								<c:when test="${searchFilter.typeOf != 'InventoryGoodsReceipt' && searchFilter.typeOf != 'InventoryGoodsIssue' && searchFilter.typeOf != 'InventoryGoodsTransfer'}">	
 									<c:choose>
 									  <c:when test="${searchFilter.typeOf == 'PurchaseRequest'}">	<!-- this is only for Purchase Request -->
-									  	<option value="userName">User Name</option>
+									  	<option value="requesterName">Requester Name</option>
 									  </c:when>
 									  <c:otherwise>
 									   	<option value="vendorName">Vendor Name</option>
@@ -63,7 +63,7 @@
 									
 									<c:choose>
 									  <c:when test="${searchFilter.typeOf == 'PurchaseRequest'}">	<!-- this is only for Purchase Request -->
-									  	<option value="userName">User Name</option>
+									  	<option value="requesterName">Requester Name</option>
 									  </c:when>
 									  <c:otherwise>
 									   	<option value="vendorName">Vendor Name</option>
@@ -141,7 +141,7 @@
 						</c:when>
 						<c:otherwise>
 							
-							<div class="col-sm-4"><a href="#"  id="exceldownload" onclick="downloadExcelFile()" class="excel-download exceldownload float-sm-right" title="Excel Report Download">Excel Download</a>
+							<div class="col-md-3 col-sm-12"><a href="#"  id="exceldownload" onclick="downloadExcelFile()" class="excel-download exceldownload float-sm-right" title="Excel Report Download">Excel Download</a>
 								</div>
 						</c:otherwise>
 					</c:choose>

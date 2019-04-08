@@ -35,8 +35,17 @@ public class GetSearchFilterResult {
 		String resultQuery = "",searchByQuery="";
 		
 		if(!searchFilter.getFieldName().isEmpty() && !searchFilter.getSearchBy().equals("select")) {
-			String dbSearchByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSearchBy()));
-			searchByQuery = searchByQuery +"TRIM(LOWER(sfq."+dbSearchByColumnName+"))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
+			 
+			if(searchFilter.getSearchBy().equals(EnumSearchFilter.REQUESTERNAME.getStatus())) { /* requesterName at Purchase Request only */
+				String requesterFName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.REQUESTERFNAME.getStatus()));
+				String requesterLName =	SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.REQUESTERLNAME.getStatus()));
+				
+				searchByQuery = searchByQuery +"LOWER(concat(TRIM(sfq."+requesterFName+"),' ',TRIM(sfq."+requesterLName+")))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
+			} else {
+				String dbSearchByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSearchBy()));
+				searchByQuery = searchByQuery +"TRIM(LOWER(sfq."+dbSearchByColumnName+"))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
+			}
+			//searchByQuery = searchByQuery +"TRIM(LOWER(sfq."+dbSearchByColumnName+"))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
 		}
 		
 		String dateSelectionQuery="";
@@ -59,14 +68,19 @@ public class GetSearchFilterResult {
 	
 		if(EnumSearchFilter.MULTIAPPORVEDTABLES.getStatus().contains(searchFilter.getTypeOf())) {
 			if(checkUserPermissionUtil.getMultiApprovPermission())
-				multipleApprovPemission = multipleApprovPemission + "and sfq.secondLevelEnable = 'true' ";
+				multipleApprovPemission = multipleApprovPemission + EnumSearchFilter.AND.getStatus()+" sfq."+EnumSearchFilter.SECONDLEVELENABLE.getStatus()+" = '"+EnumSearchFilter.TRUE.getStatus()+"' ";
 		}
 		
 		String oderbyQuery = "";
 		
 		if(searchFilter.getSortBy()!= null && !searchFilter.getSortBy().equals("select")) {
-			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
-			oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
+			if(searchFilter.getSortBy().equals(EnumSearchFilter.REQUESTERNAME.getStatus())) { /* requesterName at Purchase Request only */
+				String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.REQUESTERFNAME.getStatus()));
+				oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
+			}else {
+				String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSortBy()));
+				oderbyQuery = oderbyQuery + "order by sfq."+ dbSortByColumnName;
+			}
 		}else {
 			String dbSortByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(EnumSearchFilter.CREATEDDATE.getStatus()));
 			oderbyQuery = "order by sfq."+ dbSortByColumnName;

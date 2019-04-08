@@ -75,7 +75,7 @@
 														<thead>
 															<tr>
 																<th>S.no</th>
-																<th>Created By</th>
+																<th>Requester Name</th>
 																<th>Doc#</th>
 																<th>Created Date</th>
 																<th>Modified Date</th>
@@ -90,7 +90,7 @@
 																<tr>
 																	<td><c:set var="count" value="${count + 1}"
 																			scope="page" /> <c:out value="${count}" /></td>
-																	<td>${purchaseRequestsList.referenceUser.username}</td>
+																	<td>${purchaseRequestsList.referenceUser.firstname}${' '}${purchaseRequestsList.referenceUser.lastname}</td>
 																	<td>${purchaseRequestsList.docNumber}</td>
 																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.createdAt}"/></td>
 																	<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm a" value="${purchaseRequestsList.updatedAt}"/></td>

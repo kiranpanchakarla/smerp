@@ -1323,9 +1323,20 @@ h2.font-weight-normal {
 body.vertical-layout.vertical-menu.menu-collapsed .content, body.vertical-layout.vertical-menu.menu-collapsed .footer{
 	margin-left: 0px;}
 h2, .h2 {font-size: 1.6rem;}	
-.filter-search-wrap .form-body{float: left;}
+/* .filter-search-wrap .form-body{float: left;} */
 }
 
+
+@media screen and (min-width:1118px) and (max-width: 1190px) { 
+#searchFilterForm .col-md-9 {width: 81%;}
+#searchFilterForm .col-md-3 {width: 19%;}
+}
+
+@media screen and (min-width:992px) and (max-width: 1118px) { 
+#searchFilterForm .col-md-9 {width: 100%;}
+#searchFilterForm .col-md-3 {width: 100%;}	
+.excel-download.float-sm-right {float: left !important;}
+}
 /*-------------------------- Mobile CSS End ------------------------ */
  
  .list-group-item{

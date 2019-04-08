@@ -6,11 +6,13 @@ import java.util.Map;
 
 public enum SearchFilterMapStatusEnum {
 	
-			/* UI_columns  DB_Columns*/
-	USERNAME("userName","referenceUser.username"),
+			/* UI_Columns  DB_pojo_Columns*/
+	REQUESTERFNAME("requesterFName","referenceUser.firstname"),
+	REQUESTERLNAME("requesterLName","referenceUser.lastname"),
 	VENDORNAME("vendorName","vendor.name"),
 	DOCNUMBER("documentNo","docNumber"),
 	PLANT("plant","plant.plantName"),
+	FROMPLANT("fromplant","fromWarehouse.plantName"),
 	STATUS("status","status"),
 	CREATEDDATE("createdDate","createdAt"),
 	UPDATEDDATE("updatedDate","updatedAt");

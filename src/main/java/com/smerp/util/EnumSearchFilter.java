@@ -16,7 +16,12 @@ public enum EnumSearchFilter {
 	BETWEEN("between"),
 	STATUS("status"),
 	MULTIAPPORVEDTABLES("PurchaseRequest,GoodsReceipt,GoodsReturn,InventoryGoodsReceipt,InventoryGoodsIssue,InventoryGoodsTransfer"),
-	AND("and");
+	AND("and"),
+	REQUESTERNAME("requesterName"),
+	REQUESTERFNAME("requesterFName"),
+	REQUESTERLNAME("requesterLName"),
+	SECONDLEVELENABLE("secondLevelEnable"),
+	TRUE("true");
 	
 
 	private String status;

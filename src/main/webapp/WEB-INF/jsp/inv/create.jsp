@@ -1972,6 +1972,12 @@ $(document).ready(function(){
 	        }); 
 		});
 		
+	$(document).on("blur", ".uom", function() {
+  	  if(availableUOMTags.includes($(this).val()) == false) 	 {
+  	   alertify.alert("Invalid UOM","Please Select Valid UOM! "+($(this).val()));
+	   $(".uom").val("");
+       }   
+      });
    /* UOM AutoComplete */
 	
     	$('#vendorAddress').on('change', function() {

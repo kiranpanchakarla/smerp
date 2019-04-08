@@ -59,6 +59,7 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.InVoice;
 import com.smerp.model.inventory.InventoryGoodsIssueList;
 import com.smerp.model.inventory.InventoryProductsList;
+import com.smerp.model.inventory.MinimumQuantityList;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
@@ -306,11 +307,11 @@ public class SendEmail extends EmailerGenerator{
 		return out.toString();
 	}
 	
-	protected String getsendMinQtyProductsEmailBody() {
+	protected String getsendMinQtyProductsEmailBody(List<MinimumQuantityList> productList) {
 		Writer out = new StringWriter();
 		try {
 			Map<String, Object> input = new HashMap<String, Object>(1);
-			input.put("proCount", dashboardCountService.minProductQtyList());
+			input.put("proCount",productList);
 			getTemplate().process(input, out);
 			out.flush();
 		} catch (Exception e) {
@@ -718,11 +719,15 @@ public class SendEmail extends EmailerGenerator{
 		};
 	}
 
-	public void sendsendMinQtyProductsEmailEmail() throws Exception {
+	public String getPlantName(int id) {
+			return plantService.findById(id).getPlantName();
+	}
+	
+	public void sendMinQtyProductsEmail(int id) throws Exception {
 		 if (shouldNotify()) {
 			 
 	            try {
-	                mailSender.send(createsendMinQtyProductsEmailMessage());
+	                mailSender.send(createsendMinQtyProductsEmailMessage(id));
 	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
@@ -731,26 +736,39 @@ public class SendEmail extends EmailerGenerator{
 	        }
 	}
 	
-	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage() {
+	protected MimeMessagePreparator createsendMinQtyProductsEmailMessage(int id) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				List<MinimumQuantityList> productList  = dashboardCountService.minProductQtyList(id);
+				if(id == 1) {
+					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+				}
+				if(id == 2) {
+					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+				}
+				if(!toEmail.isEmpty()) {
+				
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
 					MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(toEmail);
-				message.setSubject(getEnvironment() +  " - " + "Products With Minimum Quantity");
-				message.setText(getsendMinQtyProductsEmailBody(), true);
-				
+				message.setSubject(getEnvironment() +  " - " + "Products With Minimum Quantity" + " - " + getPlantName(id));
+				 if(productList != null) {
+					 message.setText(getsendMinQtyProductsEmailBody(productList), true);
+				 }else {
+					 message.setText("All products are Above the Required Quantity", true);
+				 }
+			  }
 			}
 
 		};
 	}
 	
-	public void sendInventoryQtyEmail(int WarehouseId) throws Exception {
+	public void sendInventoryQtyEmail(int warehouseId) throws Exception {
 		 if (shouldNotify()) {
 			 
 	            try {
-	                mailSender.send(createInventoryQtyEmailMessage(WarehouseId));
+	                mailSender.send(createInventoryQtyEmailMessage(warehouseId));
 	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
@@ -759,14 +777,14 @@ public class SendEmail extends EmailerGenerator{
 	        }
 	}
 	 
-	protected MimeMessagePreparator createInventoryQtyEmailMessage(int WarehouseId) {
+	protected MimeMessagePreparator createInventoryQtyEmailMessage(int warehouseId) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				
-				if(WarehouseId == 1) {
+				if(warehouseId == 1) {
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
-				if(WarehouseId == 2) {
+				if(warehouseId == 2) {
 					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVREPORT.getStatus(), EnumStatusUpdate.INVREPORT.getStatus());
 				}
 				if(!toEmail.isEmpty()) {
@@ -776,13 +794,13 @@ public class SendEmail extends EmailerGenerator{
 				message.setFrom(getDefaultEmailFromAddress());
 				message.setTo(recipientList);
 				
-				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(WarehouseId);
+				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(warehouseId);
 				 logger.info("Product List For Email " + productList);
 				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
-				message.setSubject(getEnvironment() +  " - " + "Inventory Status Report " +  " - " + strDate);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Status Report " +  " - " + getPlantName(warehouseId) +  " - " + strDate);
 				 if(productList != null) {
 					 message.setText(getInventoryQtyEmailBody(productList), true);
 				 }else {
@@ -821,11 +839,11 @@ public class SendEmail extends EmailerGenerator{
 		return out.toString();
 	}
 	
-	public void sendInventoryGIEmail(int WarehouseId) throws Exception {
+	public void sendInventoryGIEmail(int warehouseId) throws Exception {
 		 if (shouldNotify()) {
 			 
 	            try {
-	                mailSender.send(createInventoryGIEmailMessage(WarehouseId));
+	                mailSender.send(createInventoryGIEmailMessage(warehouseId));
 	                
 	            } catch (Exception e) {
 	                logger.error("Error in sending email", e);
@@ -834,14 +852,14 @@ public class SendEmail extends EmailerGenerator{
 	        }
 	}
 	 
-	protected MimeMessagePreparator createInventoryGIEmailMessage(int WarehouseId) {
+	protected MimeMessagePreparator createInventoryGIEmailMessage(int warehouseId) {
 		return new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				/* Get Email's From DB */
-				if(WarehouseId == 1) {
+				if(warehouseId == 1) {
 					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
-				if(WarehouseId == 2) {
+				if(warehouseId == 2) {
 					toEmail = emailIdService.getToYMLEmailIds(EnumStatusUpdate.INVGIREPORT.getStatus(), EnumStatusUpdate.INVGIREPORT.getStatus());
 				}
 				
@@ -853,14 +871,14 @@ public class SendEmail extends EmailerGenerator{
 				
 				/* Get Email's From DB */
 				
-				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(WarehouseId);
+				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(warehouseId);
 				logger.info("Product List For Email " + productList);
 	             
 				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
-				message.setSubject(getEnvironment() +  " - " + "Inventory Goods Issue Report " +  " - " + strDate);
+				message.setSubject(getEnvironment() +  " - " + "Inventory Goods Issue Report " +  " - " + getPlantName(warehouseId) +  " - " + strDate);
 				if(productList != null && productList.size()!= 0) {
 					message.setText(getInventoryGIEmailBody(productList), true);
 				}else {

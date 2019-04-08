@@ -193,25 +193,10 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	}
 */
 	@Override
-	public List<MinimumQuantityList> minProductQtyList() {
-		String qtysql= "with grWise as(select gol.product_number as grProduct,gol.warehouse as grWarehouse, sum(gol.required_quantity) as receivedQuantity\r\n" + 
-				"from tbl_goods_receipt_lineitems as gol join  tbl_goods_receipt as gr  on gr.id =gol.gr_id  where  gol.product_number!='' and  gr.status in \r\n" + 
-				" ('Approved','Goods_Return')\r\n" + 
-				"group by gol.product_number,gol.warehouse),\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"productWise as (select products.product_no as productNumber,products.minimum as minQty,products.description as productName from tbl_inventory_product as products\r\n" + 
-				" where products.is_delete = true),\r\n" + 
-				"\r\n" + 
-				"warehouseWise as (select plant.plant_name as warehouse, plant.plant_id as warehouseId from tbl_admin_plant as plant),\r\n" + 
-				"\r\n" + 
-				"qtyWise as (Select productWise.productNumber as productNo,productWise.productName as productName,COALESCE(warehouseWise.warehouse,'N/A') as warehouse,\r\n" + 
-				"COALESCE(productWise.minQty,0)as minQty,COALESCE(grWise.receivedQuantity,0)as InStock from productWise \r\n" + 
-				"left outer join grWise on grWise.grProduct = productWise.productNumber \r\n" + 
-				"left outer join warehouseWise on grWise.grWarehouse = warehouseWise.warehouseId)\r\n" + 
-				"\r\n" + 
-				"select qtyWise.productNo,qtyWise.productName,qtyWise.warehouse,qtyWise.minQty, qtyWise.inStock from qtyWise \r\n" + 
-				"where qtyWise.inStock < qtyWise.minQty order by qtyWise.productNo";
+	public List<MinimumQuantityList> minProductQtyList(int id) {
+		String qtysql= "select pq.*,p.minimum,p.description as minqty From vw_inventory_product_quantity pq \r\n" + 
+				"inner join tbl_inventory_product p on p.product_id=pq.product_id and pq.instock_quantity<p.minimum\r\n" + 
+				"where plant_id = ' "+ id + "';";
 		
 		Query query1 = entityManager.createNativeQuery(qtysql);
 		 
@@ -228,11 +213,12 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		 for(Object[] tuple : arrayList) {
 			 MinimumQuantityList prolist = new MinimumQuantityList();
 			 
-			 prolist.setProductNumber(tuple[0].toString());
-			 prolist.setProductName(tuple[1].toString());
-			 prolist.setWarehouse(tuple[2].toString());
-			 prolist.setMinQty(tuple[3] == null ? 0 : ((Integer) tuple[3]).intValue());
-			 prolist.setInStock(tuple[4] == null ? 0 : ((BigInteger) tuple[4]).intValue());
+			 
+			 prolist.setProductNumber(tuple[1].toString());
+			 prolist.setWarehouse(tuple[3].toString());
+			 prolist.setInStock(tuple[4] == null ? 0: (Double.parseDouble(tuple[4].toString())));
+			 prolist.setMinQty(tuple[7] == null ? 0 : ((Integer) tuple[7]).intValue());
+			 prolist.setProductName(tuple[8].toString());
 			 productList.add(prolist);
 		 }
 		

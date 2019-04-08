@@ -195,33 +195,33 @@
                 </tr>
                                                                                    
                 <tr>
-                <td><#if gr.vendorShippingAddress.addressName??>${gr.vendorShippingAddress.addressName},</#if></td>
+                <td><#if gr.vendorShippingAddress.addressName??>${gr.vendorShippingAddress.addressName}</#if></td>
                 <td><#if gr.vendorPayTypeAddress.addressName??>${gr.vendorPayTypeAddress.addressName}</#if></td>
                 <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if grqty.totalBeforeDisAmt??> ${grqty.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.street??>${gr.vendorShippingAddress.street}, </#if></td>
-                 <td> <#if gr.vendorPayTypeAddress.street??>${gr.vendorPayTypeAddress.street},</#if></td>
+                <td><#if gr.vendorShippingAddress.street??>${gr.vendorShippingAddress.street}</#if></td>
+                 <td> <#if gr.vendorPayTypeAddress.street??>${gr.vendorPayTypeAddress.street}</#if></td>
                  <td><strong>Freight</strong></td>
                 <td>:<#if grqty.freight??> ${grqty.freight} <#else>--</#if></td>
                 </tr>
                  <tr>
-                <td><#if gr.vendorShippingAddress.city??>${gr.vendorShippingAddress.city},</#if> </td>
-                <td><#if gr.vendorPayTypeAddress.city??>${gr.vendorPayTypeAddress.city},</#if></td>
+                <td><#if gr.vendorShippingAddress.city??>${gr.vendorShippingAddress.city}</#if> </td>
+                <td><#if gr.vendorPayTypeAddress.city??>${gr.vendorPayTypeAddress.city}</#if></td>
                  <td><strong>Tax Amount</strong></td>
                 <td>:<#if grqty.taxAmt??> ${grqty.taxAmt}<#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.zipCode??>${gr.vendorShippingAddress.zipCode}, </#if></td>
-                <td> <#if gr.vendorPayTypeAddress.zipCode??>${gr.vendorPayTypeAddress.zipCode},</#if></td>
+                <td><#if gr.vendorShippingAddress.zipCode??>${gr.vendorShippingAddress.zipCode}</#if></td>
+                <td> <#if gr.vendorPayTypeAddress.zipCode??>${gr.vendorPayTypeAddress.zipCode}</#if></td>
                 <td><strong>Total</strong></td>
                 <td>:<#if grqty.amtRounding??> ${grqty.amtRounding}<#else>-- </#if></td>
                
                 </tr>
                 <tr>
-                <td><#if gr.vendorShippingAddress.country.name??>${gr.vendorShippingAddress.country.name}.</#if></td>
-                <td><#if gr.vendorPayTypeAddress.country.name??>${gr.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><#if gr.vendorShippingAddress.country.name??>${gr.vendorShippingAddress.country.name}</#if></td>
+                <td><#if gr.vendorPayTypeAddress.country.name??>${gr.vendorPayTypeAddress.country.name}</#if></td>
                 <td><strong>Rounded Off</strong></td>
                 <td>:<#if grqty.roundedOff??> ${grqty.roundedOff}<#else>--</#if></td>
                 </tr>

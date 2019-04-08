@@ -18,7 +18,7 @@ public interface DashboardCountService {
 	
 	DashboardCount findGoodsReceiptCount();*/
 	
-	List<MinimumQuantityList> minProductQtyList();
+	List<MinimumQuantityList> minProductQtyList(int warehouseId);
 	
 	List<InventoryProductsList> inventoryQtyList(int id);
 	

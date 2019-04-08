@@ -6,7 +6,7 @@ public class MinimumQuantityList {
 	private String productName;
 	private String warehouse;
 	private Integer minQty;
-	private Integer inStock;
+	private Double inStock;
 	public String getProductNumber() {
 		return productNumber;
 	}
@@ -31,10 +31,10 @@ public class MinimumQuantityList {
 	public void setMinQty(Integer minQty) {
 		this.minQty = minQty;
 	}
-	public Integer getInStock() {
+	public Double getInStock() {
 		return inStock;
 	}
-	public void setInStock(Integer inStock) {
+	public void setInStock(Double inStock) {
 		this.inStock = inStock;
 	}
 	@Override

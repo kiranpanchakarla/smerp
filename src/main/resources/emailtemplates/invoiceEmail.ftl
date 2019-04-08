@@ -184,28 +184,28 @@
                 </tr>
                                                                                    
                 <tr>
-                <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName},</#if></td>
+                <td><#if inv.vendorShippingAddress.addressName??>${inv.vendorShippingAddress.addressName}</#if></td>
                 <td><#if inv.vendorPayTypeAddress.addressName??>${inv.vendorPayTypeAddress.addressName}</#if></td>
                 <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if inv.totalBeforeDisAmt??> ${inv.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
-                <td><#if inv.vendorShippingAddress.street??>${inv.vendorShippingAddress.street}, </#if></td>
-                 <td> <#if inv.vendorPayTypeAddress.street??>${inv.vendorPayTypeAddress.street},</#if></td>
+                <td><#if inv.vendorShippingAddress.street??>${inv.vendorShippingAddress.street}</#if></td>
+                 <td> <#if inv.vendorPayTypeAddress.street??>${inv.vendorPayTypeAddress.street}</#if></td>
                  <td><strong>Freight</strong></td>
                 <td>:<#if inv.freight??> ${inv.freight} <#else>--</#if></td>
                 </tr>
                  <tr>
-                <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}, </#if></td>
-                <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode},</#if></td>
+                <td><#if inv.vendorShippingAddress.zipCode??>${inv.vendorShippingAddress.zipCode}</#if></td>
+                <td> <#if inv.vendorPayTypeAddress.zipCode??>${inv.vendorPayTypeAddress.zipCode}</#if></td>
                 <td><strong>Tax Amount</strong></td>
                 <td>:<#if inv.taxAmt??> ${inv.taxAmt}<#else>--</#if></td>
                 
                
                 </tr>
                 <tr>
-                <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}.</#if></td>
-                <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><#if inv.vendorShippingAddress.country.name??>${inv.vendorShippingAddress.country.name}</#if></td>
+                <td><#if inv.vendorPayTypeAddress.country.name??>${inv.vendorPayTypeAddress.country.name}</#if></td>
                 <td><strong>Total</strong></td>
                 <td>:<#if inv.amtRounding??> ${inv.amtRounding}<#else>-- </#if></td>
                  

@@ -193,28 +193,28 @@
                 </tr>
                                                                                    
                 <tr>
-                <td><#if credit.vendorShippingAddress.addressName??>${credit.vendorShippingAddress.addressName},</#if></td>
+                <td><#if credit.vendorShippingAddress.addressName??>${credit.vendorShippingAddress.addressName}</#if></td>
                 <td><#if credit.vendorPayTypeAddress.addressName??>${credit.vendorPayTypeAddress.addressName}</#if></td>
                 <td><strong>Total Invoice Amount</strong></td>
                 <td>:<#if credit.totalBeforeDisAmt??> ${credit.totalBeforeDisAmt}<#else> --</#if></td>
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.street??>${credit.vendorShippingAddress.street}, </#if></td>
-                 <td> <#if credit.vendorPayTypeAddress.street??>${credit.vendorPayTypeAddress.street},</#if></td>
+                <td><#if credit.vendorShippingAddress.street??>${credit.vendorShippingAddress.street} </#if></td>
+                 <td> <#if credit.vendorPayTypeAddress.street??>${credit.vendorPayTypeAddress.street}</#if></td>
                  <td><strong>Freight</strong></td>
                 <td>:<#if credit.freight??> ${credit.freight} <#else>--</#if></td>
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode}, </#if></td>
-                <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode},</#if></td>
+                <td><#if credit.vendorShippingAddress.zipCode??>${credit.vendorShippingAddress.zipCode} </#if></td>
+                <td> <#if credit.vendorPayTypeAddress.zipCode??>${credit.vendorPayTypeAddress.zipCode}</#if></td>
                 <td><strong>Tax Amount</strong></td>
                 <td>:<#if credit.taxAmt??> ${credit.taxAmt}<#else>--</#if></td>
                 
                
                 </tr>
                 <tr>
-                <td><#if credit.vendorShippingAddress.country.name??>${credit.vendorShippingAddress.country.name}.</#if></td>
-                <td><#if credit.vendorPayTypeAddress.country.name??>${credit.vendorPayTypeAddress.country.name}.</#if></td>
+                <td><#if credit.vendorShippingAddress.country.name??>${credit.vendorShippingAddress.country.name}</#if></td>
+                <td><#if credit.vendorPayTypeAddress.country.name??>${credit.vendorPayTypeAddress.country.name}</#if></td>
                 <td><strong>Total</strong></td>
                 <td>:<#if credit.amtRounding??> ${credit.amtRounding}<#else>-- </#if></td>
                 </tr>

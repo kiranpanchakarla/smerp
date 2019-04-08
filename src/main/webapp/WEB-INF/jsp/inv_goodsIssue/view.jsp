@@ -178,12 +178,12 @@ text-align: left;
 																													 ${entry1.value} 																													 </c:if>
 																													</c:forEach></td>
 																													<td>${listLineItems.productGroup}</td>
-																													<td>${listLineItems.uom}</td>
+																													
 																													
 																														<td>${listLineItems.hsn}</td>
 																													
 																												
-																													
+																													<td>${listLineItems.uom}</td>
 																													
 																												
 																												</tr>

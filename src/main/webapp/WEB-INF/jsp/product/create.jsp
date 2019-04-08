@@ -106,12 +106,12 @@ $(document).ready(function(){
 															<div class="row">
 																<div class="col-sm-12 form-group">
 																<div class="inventory-list">
-																		<form:checkbox path="inventoryProduct" id="inventoryProduct" class="purchaseType" value="inventoryProduct" required="true"  /> <span class="radio-list">Inventory Product</span>
+																		<form:checkbox path="inventoryProduct" id="inventoryProduct" class="purchaseType" value="inventoryProduct"    /> <span class="radio-list">Inventory Product</span>
 																		<!-- <div  class="help-block with-errors"></div> -->
 																	</div>
 																	
 																	<div class="inventory-list">
-																		<form:checkbox path="purchaseProduct"  id="purchaseProduct" class="purchaseType" value="purchaseProduct" required="true"  /> <span class="radio-list">Purchase Product</span>
+																		<form:checkbox path="purchaseProduct"  id="purchaseProduct" class="purchaseType" value="purchaseProduct"  /> <span class="radio-list">Purchase Product</span>
 																		<!-- <div  class="help-block with-errors"></div> -->
 																	</div>
 																</div>
@@ -199,7 +199,7 @@ $(document).ready(function(){
 																		
 																			<div class="col-sm-4 form-group">
 																				<label>HSN Code</label>
-																				<form:select path="hsnCode.id" class="form-control" oninvalid="this.setCustomValidity('Please Select HSN Code')" oninput="setCustomValidity('')">
+																				<form:select path="hsnCode.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select HSN Code')" oninput="setCustomValidity('')">
 																					<form:option value="">--Select--</form:option>
 																					<c:forEach items="${hsnList}" var="hsn">
 																						<form:option value="${hsn.id}">${hsn.hsnCode}</form:option>
@@ -230,7 +230,7 @@ $(document).ready(function(){
 																		<div class="row">		 
 																		<div class="col-sm-6 form-group">
 																			<label>Manage Product By</label>
-																			<form:select path="manageProductBy" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select Manage ProductBy')" oninput="setCustomValidity('')">
+																			<form:select path="manageProductBy" class="form-control" oninvalid="this.setCustomValidity('Please Select Manage ProductBy')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${manageProductByList}" var="manageProductBy">
 																					<form:option value="${manageProductBy.key}">${manageProductBy.value}</form:option>
@@ -249,14 +249,14 @@ $(document).ready(function(){
                                                                            <form:input path="preferredVendor"
                                                                            placeholder ="Please Select Vendor Name"
                                                                            class="form-control vendorname camelCase"
-                                                                           required="true" autocomplete="off" />
+                                                                           autocomplete="off" />
 
                                                                            <!-- <div  class="help-block with-errors"></div> -->
                                                                        </div>
 																		<div class="col-sm-6 form-group">
 																			<label>Purchasing UOM </label>
 																			
-																			<form:select id="purchasingUomId" path="purchasingUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
+																			<form:select id="purchasingUomId" path="purchasingUom.id" class="form-control" required ="true" oninvalid="this.setCustomValidity('Please Select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${uomList}" var="uom">
 																																								
@@ -290,7 +290,7 @@ $(document).ready(function(){
 																	
 																		<div class="col-sm-6 form-group">
 																			<label>SKU Quantity</label>
-																			<form:input path="qualityPerPackage" type="text" placeholder ="SKU Quantity" class="form-control numericwithdecimal" required="true" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
+																			<form:input path="qualityPerPackage" type="text" placeholder ="SKU Quantity" class="form-control numericwithdecimal" oninvalid="this.setCustomValidity('Please Enter Quantity Per Package')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																	</div>
@@ -300,7 +300,7 @@ $(document).ready(function(){
 																	<div class="row">
 																		<div class="col-sm-6 form-group">
 																			<label>Inventory UOM</label>
-																			<form:select id="inventoryUomId" path="inventoryUom.id" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select UOM')" oninput="setCustomValidity('')">
+																			<form:select id="inventoryUomId" path="inventoryUom.id" class="form-control"  required="true" oninvalid="this.setCustomValidity('Please select UOM')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${uomList}" var="uom">
 																					<form:option value="${uom.id}">${uom.uomName}</form:option>
@@ -318,13 +318,13 @@ $(document).ready(function(){
 																	
 																		<div class="col-sm-6 form-group">
 																			<label>Maximum</label>
-																			<form:input path="maximim" class="form-control numericwithdecimal" placeholder="Maximum Quantity" required="true" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
+																			<form:input path="maximim" class="form-control numericwithdecimal" placeholder="Maximum Quantity" oninvalid="this.setCustomValidity('Please Enter Maximum value')" oninput="setCustomValidity('')" />
 																			<!-- <div  class="help-block with-errors"></div> -->
 																		</div>
 																		
 																		<div class="col-sm-6 form-group">
 																			<label>Valuation Method</label>
-																			<form:select path="valuationMethod" class="form-control" required="true" oninvalid="this.setCustomValidity('Please select Valuation Method')" oninput="setCustomValidity('')">
+																			<form:select path="valuationMethod" class="form-control" oninvalid="this.setCustomValidity('Please select Valuation Method')" oninput="setCustomValidity('')">
 																				<form:option value="">--Select--</form:option>
 																				<c:forEach items="${valuationMethodList}" var="valuationMethod">
 																					<form:option value="${valuationMethod.key}">${valuationMethod.value}</form:option>
@@ -494,14 +494,14 @@ $(document).ready(function(){
           
 		if ( ($('#inventoryProduct').is(":checked") == true) && (($("#inventoryProduct").val()=="inventoryProduct"))){
 			
-            	 $(".purchaseType").removeAttr("required");
+            	/*  $(".purchaseType").removeAttr("required"); */
         		
         	}
         	
 		if ( ($('#purchaseProduct').is(":checked") == true) && (($("#purchaseProduct").val()=="purchaseProduct"))){
         	
 			
-       		 $(".purchaseType").removeAttr("required");
+       		/*  $(".purchaseType").removeAttr("required"); */
    		
    	}
             
@@ -511,7 +511,7 @@ $(document).ready(function(){
        		
        	} */
            
-            $(".purchaseType").click(function(){
+           /*  $(".purchaseType").click(function(){
             	if(($('#purchaseProduct').is(":checked") == true && ($('#inventoryProduct').is(":checked") == true))){
             	$(this).parents().find(".purchaseType").attr("required",false);
             	}else if(($('#purchaseProduct').is(":checked") == true && ($('#inventoryProduct').is(":checked") == false))){
@@ -529,7 +529,7 @@ $(document).ready(function(){
             		 alertify.success('Please Select atleast one');
             	}
             	
-            });
+            }); */
             
           
             

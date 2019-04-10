@@ -206,7 +206,7 @@
 																					<label>Product Type</label>: ${product.productType}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
-																					<label>HSN Code</label>: ${product.hsnCode.id}
+																					<label>HSN Code</label>: ${product.hsnCode.hsnCode}
 																				</div>
 																				<div class="col-sm-4 form-group has-feedback">
 																					<label>TaxCategory</label>:

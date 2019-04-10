@@ -584,7 +584,7 @@ $(".mySubButton").on('click', function() {
 		
 		
 	$(".mySubButtonInv").on('click', function() {
-			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice!',
+			alertify.confirm('Invoice','Any Open G.RE will be Cancelled. Are you Sure, Want to Generate Invoice! ',
 					function() {
 					$.blockUI({ css: {
 		                 border: 'none', 

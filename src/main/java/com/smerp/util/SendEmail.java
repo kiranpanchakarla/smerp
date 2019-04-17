@@ -1194,4 +1194,30 @@ public class SendEmail extends EmailerGenerator{
 
 		};
 	}
+	
+	public void sendTestEmail() throws Exception {
+		 if (shouldNotify()) {
+			 
+	            try {
+	                mailSender.send(createTestMessage());
+	                
+	            } catch (Exception e) {
+	                logger.error("Error in sending email", e);
+	                throw new Exception(e);
+	            }
+	        }
+	}
+	 
+	protected MimeMessagePreparator createTestMessage() {
+		return new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				 
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				message.setFrom(getDefaultEmailFromAddress());
+				message.setTo("k.panchakarla@gmail.com");
+				message.setSubject("Test");
+			}
+
+		};
+	} 
 }

@@ -1163,7 +1163,7 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	@Override
 	public boolean getGoodsReturn(GoodsReceipt goodsReceipt) {
 		List<GoodsReturn> greList = goodsReturnService.findByGoodsReceiptId(goodsReceipt, EnumStatusUpdate.OPEN.getStatus());
-		if(greList.size() > 1) {
+		if(greList.size() >= 1) {
 			return true;
 		}else {
 			return false;

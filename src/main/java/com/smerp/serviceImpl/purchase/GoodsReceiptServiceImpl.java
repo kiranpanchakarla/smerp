@@ -45,6 +45,7 @@ import com.smerp.service.inventory.VendorAddressService;
 import com.smerp.service.inventory.VendorsContactDetailsService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.GoodsReceiptService;
+import com.smerp.service.purchase.GoodsReturnService;
 import com.smerp.service.purchase.PurchaseOrderService;
 import com.smerp.util.CheckUserPermissionUtil;
 import com.smerp.util.DocNumberGenerator;
@@ -98,6 +99,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Autowired
 	private PlantService plantService;
+	
+	@Autowired
+	GoodsReturnService goodsReturnService;
 	
 	@Autowired
 	private GetSearchFilterResult getSearchFilterResult;
@@ -1154,6 +1158,16 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			return list;
 		}
 		
+	}
+
+	@Override
+	public boolean getGoodsReturn(GoodsReceipt goodsReceipt) {
+		List<GoodsReturn> greList = goodsReturnService.findByGoodsReceiptId(goodsReceipt, EnumStatusUpdate.OPEN.getStatus());
+		if(greList.size() > 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 }

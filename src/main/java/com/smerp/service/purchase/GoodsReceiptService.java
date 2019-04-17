@@ -44,4 +44,6 @@ public interface GoodsReceiptService {
 	boolean findByDocNumber(String grDocNum);
 	
 	List<GoodsReceipt> searchFilterBySelection(SearchFilter searchFilter);
+	
+	boolean getGoodsReturn(GoodsReceipt goodsReceipt);
 }

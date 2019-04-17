@@ -581,9 +581,10 @@ $(".mySubButton").on('click', function() {
 
 		});
 		
-		
+		var greList = ${getGRE};
 		
 	$(".mySubButtonInv").on('click', function() {
+		if(greList == true){
 			alertify.confirm('Invoice','Any Open G.RE will be Cancelled. Are you Sure, Want to Generate Invoice! ',
 					function() {
 					$.blockUI({ css: {
@@ -603,6 +604,28 @@ $(".mySubButton").on('click', function() {
 						setTimeout($.unblockUI, 1000);
 						alertify.error('Cancelled')
 					});
+		}else{
+			alertify.confirm('Invoice','Are you Sure, Want to Generate Invoice! ',
+					function() {
+					$.blockUI({ css: {
+		                 border: 'none', 
+		                 padding: '15px', 
+		                 backgroundColor: '#000', 
+		                 '-webkit-border-radius': '10px', 
+		                 '-moz-border-radius': '10px', 
+		                 opacity: .5, 
+		                 color: '#fff' 
+		             },
+		             message: "<h3>Converting <img src=<c:url value='/resources/images/ajax-loader.gif'/> border='0' /></h3>"
+		             });
+				
+				    $('#form').attr('action', "${createInvoiceUrl}").submit();
+					}, function() {
+						setTimeout($.unblockUI, 1000);
+						alertify.error('Cancelled')
+					});
+		}
+			
 
 		});
 		

@@ -18,7 +18,7 @@ import com.smerp.model.master.SACCode;
 
 @Entity
 @Table(name="tbl_inventory_product")
-@NamedQuery(name="getProductCode", query="from Product p where p.productGroup.description=:productDescription order by p.id DESC ")
+@NamedQuery(name="getProductCode", query="from Product p where p.productGroup.description=:productDescription order by p.productNo DESC ")
 public class Product extends AuditModel {
 	
 	/**

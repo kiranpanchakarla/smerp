@@ -203,6 +203,7 @@ public class GoodsReceiptController {
 		poloadData(model, gr);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("checkStatusGr", goodsReturnService.checkQuantityGr(gr));
+		model.addAttribute("getGRE", goodsReceiptService.getGoodsReturn(gr));
 		model.addAttribute("gr", gr);
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("taxCodeMap", taxCode());

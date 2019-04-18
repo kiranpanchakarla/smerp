@@ -33,7 +33,7 @@ public class Scheduler {
 		}
 	}
 
-	@Scheduled(cron = "0 30 19 * * *")
+	//@Scheduled(cron = "0 30 19 * * *")
 	public void sendMinQtyProductsEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -53,7 +53,7 @@ public class Scheduler {
 		}
 	}
 
-	@Scheduled(cron = "0 0 19 * * *")
+	//@Scheduled(cron = "0 0 19 * * *")
 	public void sendInventoryQtyEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -75,7 +75,7 @@ public class Scheduler {
 
 	}
 
-	@Scheduled(cron = "0 15 19 * * *")
+	//@Scheduled(cron = "0 15 19 * * *")
 	public void sendInventoryGIEmail() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -95,7 +95,7 @@ public class Scheduler {
 
 	}
 
-	@Scheduled(cron = "0 54 18 * * *")
+	//@Scheduled(cron = "0 54 18 * * *")
 	public void sendTestEmail3() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -111,7 +111,7 @@ public class Scheduler {
 
 	}
 
-	@Scheduled(cron = "0 9 19 * * *")
+	//@Scheduled(cron = "0 9 19 * * *")
 	public void sendTestEmail1() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();
@@ -127,7 +127,7 @@ public class Scheduler {
 
 	}
 
-	@Scheduled(cron = "0 24 19 * * *")
+	//@Scheduled(cron = "0 24 19 * * *")
 	public void sendTestEmail2() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date now = new Date();

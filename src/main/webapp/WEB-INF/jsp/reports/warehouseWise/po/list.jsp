@@ -47,12 +47,10 @@
 									<div class="card">
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
-												<div class="col-md-5">
+												<div class="col-md-8">
 													<h2 class="content-header-title">Purchase Order - Warehouse Wise Report</h2>
 												</div>
-												<div class="col-md-3">
 												 
-												</div>
 												<div class="col-md-4">
 													<ol class="breadcrumb">
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>

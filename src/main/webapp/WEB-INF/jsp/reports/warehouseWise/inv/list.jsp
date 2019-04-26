@@ -58,7 +58,7 @@
 														<li class="breadcrumb-item"><a href="<c:url value="/dashboard"/>">Home</a></li>
 														<li class="breadcrumb-item"><a href="#">Report</a>
 														</li>
-														<li class="breadcrumb-item active">Vendor Wise</li>
+														<li class="breadcrumb-item active">Warehouse Wise</li>
 													</ol>
 												</div>
 											</div>

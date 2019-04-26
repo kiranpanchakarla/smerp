@@ -13,7 +13,7 @@
 						<li><div class="form-group">
 								<!--  <label>Search By:</label> -->
 								<label for="searchlabel">Search By:</label> 
-								<select id="searchBy" class="form-control" name="searchBy">
+								<select id="searchBy" class="form-control report-select-box" name="searchBy">
 									<option value="select">select</option>
 									   
 									<c:choose>
@@ -38,7 +38,7 @@
 									
 									<c:choose>
 									  <c:when test="${searchFilter.typeOf == 'vw_plant_wise_po_report' || searchFilter.typeOf == 'vw_plant_wise_inv_report'}">	<!-- this is only for Purchase Request -->
-									  	<option value="Warehouse_Name">Warehouse_Name</option>
+									  	<option value="warehouse_Name">Warehouse_Name</option>
 									  </c:when>
 									  <c:otherwise>
 									   	
@@ -48,7 +48,7 @@
 								</select>
 							</div></li>
 							
-						<li><div class="form-group full-group">
+						<li><div class="form-group">
 								<!--  <label>Field:</label> -->
 								<input type="text" id="filedName" class="form-control" name="fieldName" autocomplete="off"
 									placeholder="Field name">
@@ -88,10 +88,10 @@
 
 						<li>
 							<div class="form-group">
-							    <label style="margin-right: 30px;">Created Date:</label>
+							    <label>Created Date:</label>
 								<!-- <label style="margin-right: 30px;">From:</label>  -->
 								<input type="text" id="fromDate" name="fromDate"
-									class="form-control list-search1" placeholder="From Date" autocomplete="off" style="margin-left: -8px;"/>
+									class="form-control report-select-box1" placeholder="From Date" autocomplete="off"/>
 							</div>
 						</li>
                        
@@ -99,7 +99,7 @@
 							<div class="form-group">
 								<!-- <label class="list-search2">To: </label>  -->
 								<input type="text" id="toDate" name="toDate"
-									class="form-control list-search3" placeholder="To Date"  autocomplete="off" >
+									class="form-control report-select-box2" placeholder="To Date"  autocomplete="off" >
 							</div>
 						</li>
 

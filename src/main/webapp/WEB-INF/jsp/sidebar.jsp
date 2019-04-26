@@ -312,17 +312,17 @@
 						href="<c:url value =""/>">Products Report <i class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<li class="has_sub"><a
-								href="<c:url value ="/productReport/polist"/>">PO</a></li>
+								href="<c:url value ="/productReport/polist"/>">Purchase Order</a></li>
 							<li class="has_sub"><a
-								href="<c:url value ="/productReport/invlist"/>">INV</a></li>
+								href="<c:url value ="/productReport/invlist"/>">Invoice</a></li>
 						</ul></li> 
 					<li class="has_sub"><a
 						href="<c:url value =""/>">Warehouse Report <i class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<li class="has_sub"><a
-								href="<c:url value ="/warehouseReport/polist"/>">PO</a></li>
+								href="<c:url value ="/warehouseReport/polist"/>">Purchase Order</a></li>
 							<li class="has_sub"><a
-								href="<c:url value ="/warehouseReport/invlist"/>">INV</a></li>
+								href="<c:url value ="/warehouseReport/invlist"/>">Invoice</a></li>
 						</ul></li> 
 				</ul></li>
 

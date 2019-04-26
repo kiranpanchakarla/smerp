@@ -64,7 +64,7 @@ public class ProductWiseReportController {
 	@GetMapping(value = "/invlist")
 	public String invList(Model model,SearchFilter searchFilter) {
 		 
-		searchFilter.setTypeOf(EnumSearchFilter.INVREPORTVENDOR.getStatus());
+		searchFilter.setTypeOf(EnumSearchFilter.INVREPORTPRODUCT.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
 		
 		return "reports/productWise/inv/list";
@@ -153,9 +153,9 @@ public class ProductWiseReportController {
 		
 		 if(searchFilter.getFromDate() != null) {
 			 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-			// stream = monthlyReportsXLS.vendorSearchReport(vendorList,months); 
+			stream = monthlyReportsXLS.productSearchReport(vendorList,months); 
 		 }else {
-			 // stream = monthlyReportsXLS.VendorReport(vendorList);
+			 stream = monthlyReportsXLS.productReport(vendorList);
 		 }
 		
 		
@@ -163,7 +163,7 @@ public class ProductWiseReportController {
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
 		response.setHeader("Content-Disposition", "attachment; filename=\"Vendor_Report_" + prFileNameDate + ".xlsx\"");
-		//stream.writeTo(outstream);
+		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
 	}

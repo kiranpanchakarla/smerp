@@ -69,26 +69,26 @@ public class MonthlyReportsXLS {
 
 	private String getVendorHeader() {
 		String heading = SNO + SEMICOLUMN + VENDORCODE + SEMICOLUMN + VENDOR + SEMICOLUMN  + SEMICOLUMN + APR
-				+ SEMICOLUMN + MAY + SEMICOLUMN + JUN + SEMICOLUMN + JUL + SEMICOLUMN + AUG + SEMICOLUMN + SEP
-				+ SEMICOLUMN + OCT + SEMICOLUMN + NOV + SEMICOLUMN + DEC + SEMICOLUMN + JAN + SEMICOLUMN + FEB
-				+ SEMICOLUMN + MAR + SEMICOLUMN + NEWLINE;
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + MAY + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + JUN + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + JUL + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + AUG + SEMICOLUMN + SEP
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + OCT + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + NOV + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + DEC+ SEMICOLUMN + AMOUNT + DASH + JAN + SEMICOLUMN + FEB
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + MAR + SEMICOLUMN + NEWLINE;
 		return heading;
 	}
 	
 	private String getWarehouseHeader() {
 		String heading = SNO + SEMICOLUMN + WAREHOUSE + SEMICOLUMN  + APR
-				+ SEMICOLUMN + MAY + SEMICOLUMN + JUN + SEMICOLUMN + JUL + SEMICOLUMN + AUG + SEMICOLUMN + SEP
-				+ SEMICOLUMN + OCT + SEMICOLUMN + NOV + SEMICOLUMN + DEC + SEMICOLUMN + JAN + SEMICOLUMN + FEB
-				+ SEMICOLUMN + MAR + SEMICOLUMN + NEWLINE;
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + MAY + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + JUN + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + JUL + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + AUG + SEMICOLUMN + SEP
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + OCT + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + NOV + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + DEC+ SEMICOLUMN + AMOUNT + DASH + JAN + SEMICOLUMN + FEB
+				+ SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + MAR + SEMICOLUMN + NEWLINE;
 		return heading;
 	}
 	
 	private String getProductHeader() {
 		String heading = SNO + SEMICOLUMN + PRODUCTNO + SEMICOLUMN + DESCRIPTION + SEMICOLUMN  + QTY+DASH+APR + SEMICOLUMN + APR
-				+ SEMICOLUMN + QTY+DASH+MAY + SEMICOLUMN + MAY + SEMICOLUMN + QTY+DASH+JUN + SEMICOLUMN + JUN + SEMICOLUMN + QTY+DASH+JUL + SEMICOLUMN 
-				+ JUL + SEMICOLUMN + QTY+DASH+AUG + SEMICOLUMN + AUG + SEMICOLUMN + QTY+DASH+SEP + SEMICOLUMN + SEP + SEMICOLUMN   
-				+ QTY+DASH+OCT + SEMICOLUMN +  OCT + SEMICOLUMN + QTY+DASH+NOV + SEMICOLUMN + NOV + SEMICOLUMN +QTY+DASH+DEC + SEMICOLUMN +  DEC + SEMICOLUMN 
-				+ QTY+DASH+JAN + SEMICOLUMN + JAN + SEMICOLUMN + QTY+DASH+FEB + SEMICOLUMN + FEB + QTY+DASH+MAR + SEMICOLUMN  + MAR + SEMICOLUMN + NEWLINE;
+				+ SEMICOLUMN + QTY+DASH+MAY + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + MAY + SEMICOLUMN + QTY+DASH+JUN + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + JUN + SEMICOLUMN + QTY+DASH+JUL + SEMICOLUMN 
+				+ AMOUNT + DASH + AMOUNT + DASH + JUL + SEMICOLUMN + QTY+DASH+AUG + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + AUG + SEMICOLUMN + QTY+DASH+SEP + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + SEP + SEMICOLUMN   
+				+ QTY+DASH+OCT + SEMICOLUMN +  OCT + SEMICOLUMN + QTY+DASH+NOV + SEMICOLUMN + AMOUNT + DASH + AMOUNT + DASH + NOV + SEMICOLUMN +QTY+DASH+DEC + SEMICOLUMN +  DEC + SEMICOLUMN 
+				+ QTY+DASH+JAN + SEMICOLUMN + AMOUNT + DASH + JAN + SEMICOLUMN + QTY+DASH+FEB + SEMICOLUMN + AMOUNT + DASH + FEB+ QTY+DASH+MAR + SEMICOLUMN  + AMOUNT + DASH + AMOUNT + DASH + MAR + SEMICOLUMN + NEWLINE;
 		return heading;
 	}
 
@@ -139,50 +139,50 @@ public class MonthlyReportsXLS {
 		String heading = SNO + SEMICOLUMN + VENDORCODE + SEMICOLUMN + VENDOR  + SEMICOLUMN;
 		for (int i = 0; i < months.size(); i++) {
 			if (months.get(i).equals(JAN)) {
-				heading += JAN + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JAN + SEMICOLUMN;
 			}
 			if (months.get(i).equals(FEB)) {
-				heading += FEB + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + FEB + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAR)) {
-				heading += MAR + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + MAR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(APR)) {
-				heading += APR + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + APR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAY)) {
-				heading += MAY + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + MAY + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUN)) {
-				heading += JUN + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JUN + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUL)) {
-				heading += JUL + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JUL + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(AUG)) {
-				heading += AUG + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + AUG + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(SEP)) {
-				heading += SEP + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + SEP + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(OCT)) {
-				heading += OCT + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + OCT + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(NOV)) {
-				heading += NOV + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + NOV + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(DEC)) {
-				heading += DEC + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + DEC + SEMICOLUMN;
 			}
 		}
 		
@@ -305,50 +305,50 @@ public class MonthlyReportsXLS {
 		String heading = SNO + SEMICOLUMN + WAREHOUSE + SEMICOLUMN;
 		for (int i = 0; i < months.size(); i++) {
 			if (months.get(i).equals(JAN)) {
-				heading += JAN + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JAN + SEMICOLUMN;
 			}
 			if (months.get(i).equals(FEB)) {
-				heading += FEB + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + FEB + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAR)) {
-				heading += MAR + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + MAR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(APR)) {
-				heading += APR + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + APR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAY)) {
-				heading += MAY + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + MAY + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUN)) {
-				heading += JUN + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JUN + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUL)) {
-				heading += JUL + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + JUL + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(AUG)) {
-				heading += AUG + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + AUG + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(SEP)) {
-				heading += SEP + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + SEP + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(OCT)) {
-				heading += OCT + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + OCT + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(NOV)) {
-				heading += NOV + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + NOV + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(DEC)) {
-				heading += DEC + SEMICOLUMN;
+				heading+=  AMOUNT + DASH + DEC + SEMICOLUMN;
 			}
 		}
 		
@@ -484,50 +484,50 @@ public class MonthlyReportsXLS {
 		String heading = SNO + SEMICOLUMN + PRODUCTNO + SEMICOLUMN + DESCRIPTION +SEMICOLUMN;
 		for (int i = 0; i < months.size(); i++) {
 			if (months.get(i).equals(JAN)) {
-				heading += QTY+DASH+JAN + SEMICOLUMN + JAN + SEMICOLUMN;
+				heading += QTY+DASH+JAN + SEMICOLUMN + AMOUNT + DASH + JAN + SEMICOLUMN;
 			}
 			if (months.get(i).equals(FEB)) {
-				heading += QTY+DASH+FEB + SEMICOLUMN +FEB + SEMICOLUMN;
+				heading += QTY+DASH+FEB + SEMICOLUMN + AMOUNT + DASH + FEB + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAR)) {
-				heading += QTY+DASH+MAR + SEMICOLUMN +MAR + SEMICOLUMN;
+				heading += QTY+DASH+MAR + SEMICOLUMN + AMOUNT + DASH + MAR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(APR)) {
-				heading += QTY+DASH+APR + SEMICOLUMN +APR + SEMICOLUMN;
+				heading += QTY+DASH+APR + SEMICOLUMN + AMOUNT + DASH + APR + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(MAY)) {
-				heading += QTY+DASH+MAY + SEMICOLUMN +MAY + SEMICOLUMN;
+				heading += QTY+DASH+MAY + SEMICOLUMN + AMOUNT + DASH + MAY + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUN)) {
-				heading += QTY+DASH+JUN + SEMICOLUMN +JUN + SEMICOLUMN;
+				heading += QTY+DASH+JUN + SEMICOLUMN + AMOUNT + DASH + JUN + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(JUL)) {
-				heading += QTY+DASH+JUL + SEMICOLUMN +JUL + SEMICOLUMN;
+				heading += QTY+DASH+JUL + SEMICOLUMN + AMOUNT + DASH + JUL + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(AUG)) {
-				heading += QTY+DASH+AUG + SEMICOLUMN +AUG + SEMICOLUMN;
+				heading += QTY+DASH+AUG + SEMICOLUMN + AMOUNT + DASH + AUG + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(SEP)) {
-				heading += QTY+DASH+SEP + SEMICOLUMN +SEP + SEMICOLUMN;
+				heading += QTY+DASH+SEP + SEMICOLUMN + AMOUNT + DASH + SEP + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(OCT)) {
-				heading += QTY+DASH+OCT + SEMICOLUMN +OCT + SEMICOLUMN;
+				heading += QTY+DASH+OCT + SEMICOLUMN + AMOUNT + DASH + OCT + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(NOV)) {
-				heading += QTY+DASH+NOV + SEMICOLUMN +NOV + SEMICOLUMN;
+				heading += QTY+DASH+NOV + SEMICOLUMN + AMOUNT + DASH + NOV + SEMICOLUMN;
 			}
 
 			if (months.get(i).equals(DEC)) {
-				heading += QTY+DASH+DEC + SEMICOLUMN +DEC + SEMICOLUMN;
+				heading += QTY+DASH+DEC + SEMICOLUMN + AMOUNT + DASH + DEC+ SEMICOLUMN;
 			}
 		}
 		

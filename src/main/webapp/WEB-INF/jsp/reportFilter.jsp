@@ -50,7 +50,7 @@
 							
 						<li><div class="form-group">
 								<!--  <label>Field:</label> -->
-								<input type="text" id="filedName" class="form-control" name="fieldName" autocomplete="off"
+								<input type="text" id="filedName" class="form-control report-textbox" name="fieldName" autocomplete="off"
 									placeholder="Field name">
 							</div></li>
 							

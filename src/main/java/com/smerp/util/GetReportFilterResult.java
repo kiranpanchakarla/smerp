@@ -153,13 +153,8 @@ public class GetReportFilterResult {
 			               " group by sfq.product_id,sfq.product_number,sfq.description\r\n" + 
 			               "order by sfq.product_id;";
 		}
-		
-		
-		
-		logger.info(resultQuery);
 	
 		return resultQuery;
 	}
-	 
 	
 }

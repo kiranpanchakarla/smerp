@@ -78,9 +78,9 @@
 
 														<thead>
 															<tr>
-																<th>S.No</th>
-																<th>Product Number</th>
-																<th>Description</th>
+																<th style="width: 50px;">S.No</th>
+																<th style="width: 100px;">Product Number</th>
+																<th style="width: 100px;">Description</th>
 																<c:forEach items="${searchListMonths}" var="month">
 																    <th style="text-align: right;">${month}-Qty</th>
 																	<th style="text-align: right;">${month}-Amt</th>

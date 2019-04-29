@@ -120,15 +120,15 @@ public class ProductWiseReportController {
 			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString,String id)
 			throws Exception {
 		
-		logger.info("id---->" + id);
-		id = id.substring( 0, id.indexOf("?"));
-		logger.info("id---->" + id);
+		String typeOf = id.substring( 0, id.indexOf("?"));
+		searchBy = id.substring(id.lastIndexOf("=") + 1);
+		
 		SearchFilter searchFilter = new SearchFilter();
 		searchFilter.setSearchBy(searchBy);
 		searchFilter.setFieldName(fieldName);
 		searchFilter.setSortBy(sortBy);
 		searchFilter.setDateSelect(dateSelect);
-		searchFilter.setTypeOf(id);
+		searchFilter.setTypeOf(typeOf);
 		
 		if (!fromDateString.equals("null")) {
 			Date fromDate = new SimpleDateFormat("yyyy-MM-dd").parse(fromDateString);
@@ -146,7 +146,7 @@ public class ProductWiseReportController {
 		
 		
 		String prFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-		ArrayList<Object[]> fullList = productWiseReportService.searchFilterBySelection(searchFilter,id);
+		ArrayList<Object[]> fullList = productWiseReportService.searchFilterBySelection(searchFilter,typeOf);
 		List<ProductWiseReport> vendorList = productWiseReportService.vendorReportList(fullList);
 		
 		ByteArrayOutputStream stream;

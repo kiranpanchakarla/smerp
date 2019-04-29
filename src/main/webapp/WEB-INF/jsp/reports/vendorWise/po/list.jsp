@@ -79,7 +79,7 @@
 																<th style="width: 100px;">Vendor Name</th>
 																
 																<c:forEach items="${searchListMonths}" var="month"> 
-																<th style="text-align: right;">${month}</th>
+																<th style="text-align: right;">${month}-Amt</th>
 																</c:forEach>  
 															 
 																 

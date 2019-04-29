@@ -75,10 +75,10 @@
 														
 														<thead>
 															<tr>
-																<th>S.No</th>
-																<th>Warehouse Name</th>
+																<th style="width: 50px;">S.No</th>
+																<th style="width: 100px;">Warehouse Name</th>
 																<c:forEach items="${searchListMonths}" var="month"> 
-																<th style="text-align: right;">${month}</th>
+																<th style="text-align: right;">${month}-Amt</th>
 																</c:forEach>  
 																 
 																 

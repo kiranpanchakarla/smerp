@@ -162,7 +162,7 @@ public class ProductWiseReportController {
 		response.setContentType("text/html");
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
-		response.setHeader("Content-Disposition", "attachment; filename=\"Vendor_Report_" + prFileNameDate + ".xlsx\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\"Product_Report_" + prFileNameDate + ".xlsx\"");
 		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();

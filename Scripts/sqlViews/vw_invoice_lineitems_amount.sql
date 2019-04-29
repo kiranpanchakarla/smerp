@@ -1,4 +1,4 @@
--- View: vw_invoice_lineitems_amount
+﻿-- View: vw_invoice_lineitems_amount
 
 -- DROP VIEW vw_invoice_lineitems_amount;
 

@@ -29,7 +29,6 @@ public class SacServiceImpl implements SacService {
 		try {
 			sacRepository.save(savcode);
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
 		}
 		return savcode;
 	}

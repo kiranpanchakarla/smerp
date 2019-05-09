@@ -357,11 +357,9 @@ public class UserController {
 	private String getUserDetailsByUserName(@RequestParam("username") String username) throws JsonProcessingException {
 		
 		User user =userService.findByName(username);
-        logger.info("user Obj-->" + user );
         if(user!=null) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        logger.info(mapper.writeValueAsString(user));
         return mapper.writeValueAsString(user);
         }else {
         	return "";

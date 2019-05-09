@@ -1368,3 +1368,10 @@ h2, .h2 {font-size: 1.6rem;}
 .report-textbox{
 	width: 79% !important;
 }
+.annualReport{
+	    margin-left: 32px;
+}
+.sort-report{
+	    margin-left: 36px;
+        width: 128px !important;
+}

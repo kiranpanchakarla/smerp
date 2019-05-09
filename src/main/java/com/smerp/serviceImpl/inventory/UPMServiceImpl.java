@@ -28,7 +28,6 @@ public class UPMServiceImpl implements UPMService {
 
 	@Override
 	public List<UPM> findAll(Integer id) {
-		logger.info("usermission query method"+id);
 		
 		String sql="select \r\n" + 
 				" mp.module_id\r\n" + 
@@ -53,11 +52,9 @@ public class UPMServiceImpl implements UPMService {
 				",ump.permission_id\r\n" + 
 				",ump.id order by mp.module_id ";
 		
-		logger.info("sql-->" +sql);
 		Query query = entityManager.createNativeQuery(sql);
 		query.setParameter("user_id", id);
 	     List<Object[]>	list= query.getResultList();
-	     System.out.println(list.size());
 	     List<UPM>	upmlist= new ArrayList<>();
 	     for(Object[] tuple : list) {
 	    	 UPM upm = new UPM();
@@ -70,7 +67,6 @@ public class UPMServiceImpl implements UPMService {
 		    	 upmlist.add(upm);
 	    	
 	    	}
-	    logger.info("upmlist size--------->"+upmlist.size()); 
 		return upmlist;
 	}
 	

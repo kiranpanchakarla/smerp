@@ -62,7 +62,7 @@ import com.smerp.util.UnitPriceListItems;
 @Transactional
 public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
-	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(GoodsReceiptServiceImpl.class);
 
 	@Autowired
 	private GoodsReceiptRepository goodsReceiptRepository;
@@ -228,7 +228,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			}
 			
 		}
-         logger.info("goodsReceipt -->" +goodsReceipt);
 		
          if(goodsReceipt.getStatus()!=null &&  !goodsReceipt.getStatus().equals(EnumStatusUpdate.DRAFT.getStatus())) {
          try {
@@ -251,7 +250,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 if(goodsReceipt.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 			 
 		 if(goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
@@ -291,7 +289,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		
 			if(goodsReceipt.getPoId()!=null  && goodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 				PurchaseOrder purchaseOrder = setStatusOfPurchaseOrder(goodsReceipt); // Status Update
-				 logger.info("goodsReceipt -->" +goodsReceipt);
 			}
 		 
 		 } 
@@ -317,7 +314,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 
 		GoodsReceipt gr = new GoodsReceipt();
 		PurchaseOrder po = purchaseOrderService.findById((Integer.parseInt(poId)));
-		logger.info("po" + po);
 		/*GoodsReceipt dup_gr =goodsReceiptRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gr==null) { */
         Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
@@ -400,7 +396,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 if(gr.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 			 
 		/* if(gre.getStatus().equals(EnumStatusUpdate.OPEN.getStatus()) ) {  
@@ -432,7 +427,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		 }
 		 
 		 /*  Multi Level Approved .. End*/
-		logger.info("gr" + gr);
 		gr.setCategory("Item");
 		gr = goodsReceiptRepository.save(gr);
 		
@@ -448,7 +442,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public PurchaseOrder  setStatusOfPurchaseOrder(GoodsReceipt goodsReceipt) {
-		logger.info("set Status-->");
 		String status="";
 		PurchaseOrder dup_po = new PurchaseOrder ();
 		/*PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReceipt.getPoId());
@@ -499,7 +492,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		Query queryList = entityManager.createNativeQuery(sqlList);
 		 List<Object[]>	list = queryList.getResultList();
 			
-			logger.info("List Size -----> " + list.size());
 		     for(Object[] tuple : list) {
 		    	 prQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[3].toString()))));
 		    	 grQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
@@ -508,11 +500,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		    	 pendingQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[8].toString()))));
 		     }
 	     
-		 	logger.info("prQuantity ----> " + prQuantity);
-		 	logger.info("grQuantity ----> " + grQuantity);
-		 	logger.info("returnQuantity ----> " + returnQuantity);
-		 	logger.info("creditQuantity ----> " + creditQuantity);
-		 	logger.info("pendingQuantity ----> " + pendingQuantity);
 		    if(grQuantity!=0) {
 			if(pendingQuantity > 0)
 				 status = EnumStatusUpdate.PARTIALLY_RECEIVED.getStatus();
@@ -521,7 +508,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		    }else {
 		    	status = EnumStatusUpdate.APPROVEED.getStatus();
 		    }
-    	logger.info("status-->" + status);
     	
         PurchaseOrder po = goodsReceipt.getPoId();
 		po.setStatus(status);
@@ -551,7 +537,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			}
 		}
 		
-		logger.info("poListData-->" + poListData);
 		return poListData;
 	}
 	
@@ -562,7 +547,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 																											// Multiple
 		grMapListData = getGoodsReceiptRealQunatityList(goodReceipt, grMapListData, listGoodsReceipt);
 		
-		logger.info("grMapListData-->" + grMapListData);
 
 		return grMapListData;
 	}
@@ -575,7 +559,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 																											// Quantity
 		grMapListData = getGoodsReceiptRealQunatityList(goodReceipt, grMapListData, listGoodsReceipt);
 		
-		logger.info("grMapListData-->" + grMapListData);
 
 		return grMapListData;
 	}
@@ -587,7 +570,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			List<GoodsReceiptLineItems> goodsReceiptLineItems = goodsReceiptObj.getGoodsReceiptLineItems();
 			for (int j = 0; j < goodsReceiptLineItems.size(); j++) {
 				GoodsReceiptLineItems grlist = goodsReceiptLineItems.get(j);
-				logger.info("grlist===>" + grlist);
 				String key = "";
 				
 				if( grlist.getProdouctNumber()!=null) {
@@ -675,7 +657,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
    Query queryList = entityManager.createNativeQuery(sqlList);
      List<Object[]>    invoiceList = queryList.getResultList();
        
-   logger.info("invoiceList Size -----> " + invoiceList.size());
    
     Map<String, Integer> poListData = new LinkedHashMap<>();
     for(Object[] tuple : invoiceList) {
@@ -688,7 +669,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
         GoodsReceiptLineItems invlist = listItems.get(i);
        
        for(Map.Entry m:poListData.entrySet()){
-              logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
               if(invlist.getProdouctNumber().equals(m.getKey())) {
                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
                 }
@@ -713,7 +693,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		Query query = entityManager.createNativeQuery(sql);
 		  List<Object[]>	list = query.getResultList();
 		
-		logger.info("List Size -----> " + list.size());
 	     for(Object[] tuple : list) {
 	    	 goodsReceipt.setTaxAmt(tuple[0] == null ? "0" : ( tuple[0]).toString());
 	    	 goodsReceipt.setTotalBeforeDisAmt(tuple[1] == null ? 0: (Double.parseDouble(tuple[1].toString())));
@@ -743,8 +722,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	    Query queryList = entityManager.createNativeQuery(sqlList);
 	      List<Object[]>    invoiceList = queryList.getResultList();
 	        
-	    logger.info("invoiceList Size -----> " + invoiceList.size());
-	    logger.info("1----> " );
 	    
 	     for(Object[] tuple : invoiceList) {
 	    	 LineItemsBean ineItemsObj = new LineItemsBean();
@@ -774,7 +751,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	@Override
 	public GoodsReceipt getListAmount(GoodsReceipt goodsReceipt) {
-		logger.info("getListAmount-->");
 		List<GoodsReceiptLineItems> listItems = goodsReceipt.getGoodsReceiptLineItems();
 		List<GoodsReceiptLineItems> addListItems = new ArrayList<GoodsReceiptLineItems>();
 		
@@ -827,9 +803,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		}
 		goodsReceipt.setTotalBeforeDisAmt(addAmt);
 		goodsReceipt.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("goodsReceipt.getTotalDiscount()-->" + goodsReceipt.getTotalDiscount());
-		logger.info("goodsReceipt.getFreight()-->" + goodsReceipt.getFreight());
 		Double total_amt=0.0;
 		Double total_payment = 0.0;
 		
@@ -842,14 +815,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		//goodsReceipt.setTotalPayment(total_amt);
 		if(goodsReceipt.getPoId() != null) {
 			total_payment = (double) Math.round(total_amt);
-			logger.info("goodsReceipt.getTotalPayment() after rounding -->" + total_payment);
 		}else {
 			total_payment = (double) Math.round(goodsReceipt.getTotalPayment());
-			logger.info("goodsReceipt.getTotalPayment() no rounding -->" + total_payment);
 		}
 	//	goodsReceipt.setTotalPayment(total_payment);
-		logger.info("goodsReceipt.getTotalPayment()-->" + goodsReceipt.getTotalPayment());
-		logger.info("goodsReceipt.getTotalPayment()-->" + total_payment);
 		goodsReceipt.setRoundedOff("" + df2.format(total_payment - total_amt));
 		 
 	return goodsReceipt;
@@ -930,7 +899,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		Query queryList = entityManager.createNativeQuery(sqlList);
 		 List<Object[]>	list = queryList.getResultList();
 			
-			logger.info("List Size -----> " + list.size());
 		     for(Object[] tuple : list) {
 		    	 prQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[3].toString()))));
 		    	 grQuantity +=(Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
@@ -939,11 +907,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 		    	 pendingQuantity += (Integer)(tuple[0] == null  ? 0 : (Integer.parseInt((tuple[8].toString()))));
 		     }
 	     
-		 	logger.info("prQuantity ----> " + prQuantity);
-		 	logger.info("grQuantity ----> " + grQuantity);
-		 	logger.info("returnQuantity ----> " + returnQuantity);
-		 	logger.info("creditQuantity ----> " + creditQuantity);
-		 	logger.info("pendingQuantity ----> " + pendingQuantity);
 		
 		if(pendingQuantity > 0)
 			return true;
@@ -975,14 +938,12 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 	
 	private Integer getListGoodsProductCount(List<GoodsReceipt> listGoodsReceipt, String category) {
 		Integer qunatity = 0;
-		logger.info("category===>" +category);
 	
 		for (int i = 0; i < listGoodsReceipt.size(); i++) {
 			GoodsReceipt goodsReceiptObj = listGoodsReceipt.get(i);
 			List<GoodsReceiptLineItems> goodsReceiptLineItems = goodsReceiptObj.getGoodsReceiptLineItems();
 			for (int j = 0; j < goodsReceiptLineItems.size(); j++) {
 				GoodsReceiptLineItems grlist = goodsReceiptLineItems.get(j);
-				logger.info("grlist===>" +grlist);
 				if (grlist.getRequiredQuantity() != null) {
 					if (category.equals(grlist.getProdouctNumber()) || category.equals(grlist.getSacCode()))
 						qunatity += grlist.getRequiredQuantity();
@@ -1042,9 +1003,9 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				grListData.put("PO2019010747$p123", 10);
 				
 			  
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
 		        
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( grListData.keySet()));
 		        
 		       /* if(key1.containsAll(key2)) {
 		        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
@@ -1060,7 +1021,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 			
 			@Override
 			public GoodsReceipt  setStatusOfGoodsReceipt(GoodsReceipt goodsReceipt) {
-				logger.info("set Status-->");
 				String status="";
 				
 				if(goodsReceipt!=null) {
@@ -1082,12 +1042,10 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				Query queryList = entityManager.createNativeQuery(sqlList);
 				 List<Object[]>	list = queryList.getResultList();
 					
-					logger.info("List Size -----> " + list.size());
 				     for(Object[] tuple : list) {
 				    	 balenceQuantity =(Integer)(tuple[4] == null  ? 0 : (Integer.parseInt((tuple[4].toString()))));
 				     }
 			     
-				 	logger.info("balenceQuantity ----> " + balenceQuantity);
 				 
 				    if(balenceQuantity==0) {
 				    	 status = EnumStatusUpdate.GOODS_RETURN.getStatus();
@@ -1129,7 +1087,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 					
 					Query query = entityManager.createQuery(resultQuery);
 					List<GoodsReceipt> list = query.getResultList();
-					logger.info(list);
 					return list;
 				}else {
 				List<GoodsReceipt> list = grApprovedList();
@@ -1147,7 +1104,6 @@ public class GoodsReceiptServiceImpl  implements GoodsReceiptService {
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<GoodsReceipt> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<GoodsReceipt> list = findByIsActive();

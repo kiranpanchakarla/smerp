@@ -40,12 +40,6 @@ public class ProductWiseReportController {
 	@Autowired
 	private MonthsBetweenDates monthsBetweenDates;
 	
-	@GetMapping(value = "/list")
-	public String getList(Model model) {
-		 
-		return "reports/productWise/list";
-	}
-	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -75,15 +69,12 @@ public class ProductWiseReportController {
 	public String getSearchFilterPOList(Model model, SearchFilter searchFilter) {
 		searchFilter.setTypeOf(EnumSearchFilter.POREPORTPRODUCT.getStatus());
 		ArrayList<Object[]> fullList = productWiseReportService.searchFilterBySelection(searchFilter,EnumSearchFilter.POREPORTPRODUCT.getStatus());
-			logger.info("fullList" + fullList);
 			
 			List<ProductWiseReport> vendorList = productWiseReportService.vendorReportList(fullList);
 			model.addAttribute("vendorList", vendorList);
-			logger.info("vendorList" +  vendorList);
 			
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-					logger.info("Months" +  months);
 					model.addAttribute("searchListMonths", months);
 			 }
 			 
@@ -97,15 +88,12 @@ public class ProductWiseReportController {
 	public String getSearchFilterINVList(Model model, SearchFilter searchFilter) {
 		searchFilter.setTypeOf(EnumSearchFilter.INVREPORTPRODUCT.getStatus());
 		ArrayList<Object[]> fullList = productWiseReportService.searchFilterBySelection(searchFilter,EnumSearchFilter.INVREPORTPRODUCT.getStatus());
-			logger.info("fullList" + fullList);
 			
 			List<ProductWiseReport> vendorList = productWiseReportService.vendorReportList(fullList);
 			model.addAttribute("vendorList", vendorList);
-			logger.info("vendorList" +  vendorList);
 			
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-					logger.info("Months" +  months);
 					model.addAttribute("searchListMonths", months);
 			 }
 			 

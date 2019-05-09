@@ -50,7 +50,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		logger.info("user name" + password);
 		User user = userService.findOne(auth.getName());
 
-		logger.info("user details " + user);
 
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("Invalid credentials. ", auth.getPrincipal()));

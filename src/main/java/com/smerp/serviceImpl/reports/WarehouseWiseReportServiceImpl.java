@@ -30,11 +30,9 @@ private static final Logger logger = LogManager.getLogger(WarehouseWiseReportSer
 		String qtysql = "select * from vw_plant_wise_po_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_plant_wise_po_report SQL ----> " + qtysql);
 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
 	}
@@ -44,11 +42,9 @@ private static final Logger logger = LogManager.getLogger(WarehouseWiseReportSer
 		String qtysql = "select * from vw_plant_wise_inv_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_plant_wise_inv_report SQL ----> " + qtysql);
 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
 	}
@@ -63,12 +59,10 @@ private static final Logger logger = LogManager.getLogger(WarehouseWiseReportSer
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForReports(searchFilter);
-		logger.info(resultQuery);
 
 		Query query = entityManager.createNativeQuery(resultQuery);
 		arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 	  return arrayList;
 	}
@@ -93,6 +87,39 @@ private static final Logger logger = LogManager.getLogger(WarehouseWiseReportSer
 			prolist.setJAN((double) (tuple[12] == null ? 0 : (Double.parseDouble(tuple[12].toString()))));
 			prolist.setFEB((double) (tuple[13] == null ? 0 : (Double.parseDouble(tuple[13].toString()))));
 			prolist.setMAR((double) (tuple[14] == null ? 0 : (Double.parseDouble(tuple[14].toString()))));
+			reportList.add(prolist);
+		}
+
+		return reportList;
+	}
+
+	@Override
+	public ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter, String typeOf) {
+		if (searchFilter.getToDate() == null) {
+			searchFilter.setToDate(new Date());
+		}
+
+		searchFilter.setTypeOf(typeOf);
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+
+		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForAnnualReports(searchFilter);
+
+		Query query = entityManager.createNativeQuery(resultQuery);
+		arrayList = new ArrayList<>();
+		arrayList.addAll(query.getResultList());
+
+	  return arrayList;
+	}
+
+	@Override
+	public List<WarehouseWiseReport> annualReportList(ArrayList<Object[]> arrayList) {
+		List<WarehouseWiseReport> reportList = new ArrayList<>();
+		for (Object[] tuple : arrayList) {
+			WarehouseWiseReport prolist = new WarehouseWiseReport();
+			prolist.setWarehouseId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			prolist.setWarehouseName(tuple[1].toString());
+			prolist.setTotalAmount((double) (tuple[2] == null ? 0 : (Double.parseDouble(tuple[2].toString()))));
+			 
 			reportList.add(prolist);
 		}
 

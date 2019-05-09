@@ -55,7 +55,7 @@ import com.smerp.util.UnitPriceListItems;
 @Service
 public class CreditMemoServiceImpl implements CreditMemoService{
 
-	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(CreditMemoServiceImpl.class);
 
 	@Autowired
 	private CreditMemoRepository creditMemoRepository;
@@ -152,10 +152,8 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			
 			
 			}else {
-				 logger.info("CreditMemo Data -->" +creditMemo);
 			}
 		
-         logger.info("creditMemo -->" +creditMemo);
          if(creditMemo.getInvId()!=null) {
  			InVoice inv = creditMemo.getInvId();
 		Vendor vendor = vendorService.findById(inv.getVendor().getId());
@@ -202,7 +200,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					if(invoice.getGrId()!=null) {
 					GoodsReceipt goodsReceipt =  goodsReceiptRepository.findById(invoice.getGrId().getId()).get();
 					PurchaseOrder purchaseOrder = goodsReceiptService.setStatusOfPurchaseOrder(goodsReceipt);  // change status PO
-					logger.info("purchaseOrder -->" +purchaseOrder);
 					}
 					invoice = inVoiceService.setStatusOfInVoice(invoice);
 				}
@@ -218,7 +215,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 
 		CreditMemo inv = new CreditMemo();
 		InVoice in = inVoiceService.findById((Integer.parseInt(inId)));
-		logger.info("inId" + inId);
 		/*CreditMemo dup_gre =creditMemoRepository.findByPoId(po.getId());  // check PO exist in  GR
         if(dup_gre==null) { */
 		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.CM.getStatus());
@@ -299,7 +295,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			
 			
 		}
-		logger.info("inv" + inv);
 		inv.setCategory("Item");
 		inv = creditMemoRepository.save(inv);
 		
@@ -314,7 +309,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	
 	/*public String  setStatusOfPurchaseOrder(CreditMemo creditMemo) {
-		logger.info("set Status-->");
 		String status="";
 		//PurchaseOrder purchaseOrder = purchaseOrderService.findById(creditMemo.getPoId());
 		PurchaseOrder purchaseOrder =null;
@@ -351,7 +345,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		}else {  // No inv list
         	status = EnumStatusUpdate.APPROVEED.getStatus();
         }
-    	logger.info("status-->" + status);
 		return status;
 	}*/
 
@@ -374,7 +367,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}
 		}
 		
-		logger.info("poListData-->" + poListData);
 		return poListData;
 	}
 	
@@ -385,7 +377,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 																											// Multiple
 		greMapListData = getGoodsReturnRealQunatityList(goodReceipt, greMapListData, listCreditMemo);
 		
-		logger.info("greMapListData-->" + greMapListData);
 
 		return greMapListData;
 	}
@@ -398,7 +389,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 																											// Quantity
 		greMapListData = getGoodsReturnRealQunatityList(goodReceipt, greMapListData, listCreditMemo);
 		
-		logger.info("greMapListData-->" + greMapListData);
 
 		return greMapListData;
 	}
@@ -410,7 +400,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			List<CreditMemoLineItems> goodsReturnLineItems = creditMemoObj.getCreditMemoLineItems();
 			for (int j = 0; j < goodsReturnLineItems.size(); j++) {
 				CreditMemoLineItems crelist = goodsReturnLineItems.get(j);
-				logger.info("crelist===>" + crelist);
 				String key = "";
 				
 				if( crelist.getProdouctNumber()!=null) {
@@ -519,9 +508,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 					 creQunatity = getListGoodsProductCount(listCreditMemo,  grItms.get(i).getSacCode());
 				} }
 				
-				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
-				logger.info("creQunatity-->" + creQunatity);
-				/*if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
+ 				/*if(creditMemo.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					crelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - creQunatity);
 					}else 
 					{
@@ -540,9 +527,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		}
 		creditMemo.setTotalBeforeDisAmt(addAmt);
 		creditMemo.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("creditMemo.getTotalDiscount()-->" + creditMemo.getTotalDiscount());
-		logger.info("creditMemo.getFreight()-->" + creditMemo.getFreight());
+		 
 		Double total_amt=0.0;
 		Double total_payment = 0.0;
 		if(creditMemo.getTotalDiscount()==null) creditMemo.setTotalDiscount(0.0);
@@ -555,8 +540,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}else {
 				total_payment = creditMemo.getTotalPayment();
 			}
-		 logger.info("creditMemo.total_payment()-->" + total_payment);
-			logger.info("creditMemo.total_amt()-->" + total_amt);
+		 
 		creditMemo.setAmtRounding(""+df2.format(total_amt));
 		creditMemo.setTotalPayment(total_amt);
 		creditMemo.setRoundedOff("" + df2.format(total_payment - total_amt));
@@ -574,11 +558,11 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	     
 	 	String sqlList= " select product_number,inv_final_quantity,creditmemo_quantity,inv_product_tax,inv_amount_tax from vw_invoice_lineitems_amount where id= " +creditMemo.getInvId().getId();
 	 	String productNumber ="";
-	    logger.info("sqlList ----> " + sqlList);
+	    
 	    Query queryList = entityManager.createNativeQuery(sqlList);
 	      List<Object[]>    invoiceList = queryList.getResultList();
 	        
-	    logger.info("invoiceList Size -----> " + invoiceList.size());
+	   
 	    
 	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
@@ -591,7 +575,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	    	 CreditMemoLineItems invlist = listItems.get(i);
 	        
 	        for(Map.Entry m:grListData.entrySet()){
-	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
+	                
 	               if(invlist.getProdouctNumber().equals(m.getKey())) {
 	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
 	                 }
@@ -666,7 +650,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 		if (listCreditMemo != null) {
 			for (int i = 0; i < listCreditMemo.size(); i++) {
 				CreditMemo  creditMemo = listCreditMemo.get(i);
-				logger.info("creditMemo-->" +creditMemo);
+				 
 				List<CreditMemoLineItems> listItems = creditMemo.getCreditMemoLineItems();
 			for (int j = 0; j < listItems.size(); j++) {
 				CreditMemoLineItems crelist = listItems.get(j);
@@ -676,7 +660,7 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}
 		  }
 		}
-		logger.info("creQunatity===>" +creQunatity);
+		 
 		return creQunatity;
 	}
 
@@ -685,18 +669,18 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 	
 	private Integer getListGoodsProductCount(List<CreditMemo> listCreditMemo, String category) {
 		Integer qunatity = 0;
-		logger.info("category===>" +category);
+		 
 	
 		for (int i = 0; i < listCreditMemo.size(); i++) {
 			CreditMemo creditMemoObj = listCreditMemo.get(i);
 			List<CreditMemoLineItems> goodsReturnLineItems = creditMemoObj.getCreditMemoLineItems();
 			for (int j = 0; j < goodsReturnLineItems.size(); j++) {
 				CreditMemoLineItems crelist = goodsReturnLineItems.get(j);
-				logger.info("crelist===>" +crelist);
+				 
 				if (crelist.getRequiredQuantity() != null) {
 					if (category.equals(crelist.getProdouctNumber()) || category.equals(crelist.getSacCode()))
 						qunatity += crelist.getRequiredQuantity();
-					    logger.info("creQunatity===>" +qunatity);
+					    
 				}
 			}
 		}
@@ -722,7 +706,6 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 			}
 		}
 		
-		logger.info("invQunatity===>" +invQunatity);
 		return invQunatity;
 	}
 	
@@ -749,9 +732,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
 				greListData.put("PO2019010747$p123", 10);
 				
 			  
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
 		        
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
 		        
 		       /* if(key1.containsAll(key2)) {
 		        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
@@ -842,11 +825,9 @@ public class CreditMemoServiceImpl implements CreditMemoService{
  			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
  				
  				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
- 				logger.info(resultQuery);
  				
  				Query query = entityManager.createQuery(resultQuery);
  				List<CreditMemo> list = query.getResultList();
- 				logger.info(list);
  				return list;
  			}else {
  			List<CreditMemo> list = findByIsActive();

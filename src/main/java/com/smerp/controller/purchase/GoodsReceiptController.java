@@ -108,9 +108,7 @@ public class GoodsReceiptController {
 	@GetMapping("/create")
 	public String create(Model model, GoodsReceipt gr) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("gr-->" + gr);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
+		 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
@@ -119,7 +117,7 @@ public class GoodsReceiptController {
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
 		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
-		logger.info("GR count-->" + count);
+		 
 		
 		GoodsReceipt grDetails = goodsReceiptService.findLastDocumentNumber();
 		if (grDetails != null && grDetails.getDocNumber() != null) {
@@ -129,13 +127,13 @@ public class GoodsReceiptController {
 	    LocalDateTime now = LocalDateTime.now();
 	    gr.setDocNumber(GenerateDocNumber.documentNumberGeneration("GR"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("grDetails-->" + grDetails);
+		 
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
-		logger.info("mapper-->" + mapper);
+		 
 
 		model.addAttribute("gr", gr);
 		return "goodsReceipt/create";
@@ -145,15 +143,14 @@ public class GoodsReceiptController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
+		 
 		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
 		if(gr.getPoId() != null) {
 		 gr = goodsReceiptService.getGoodsReceiptById(Integer.parseInt(id));
 		}
-		logger.info("11111 gr-->");
-		logger.info("New gr-->" + gr);
+		 
 		gr = goodsReceiptService.getListAmount(gr);  // set Amt Calculation  
-		logger.info("gr-->" + gr);
+		 
 		ObjectMapper mapper = poloadData(model, gr);
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
@@ -180,24 +177,21 @@ public class GoodsReceiptController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-	
-		
+		 
 		model.addAttribute("goodsReceiptLineItems", gr.getGoodsReceiptLineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
+		 
 		
 		GoodsReceipt gr = goodsReceiptService.getGoodsReceiptViewById(Integer.parseInt(id));
 		//gr = goodsReceiptService.getListAmount(gr);
-		logger.info("gr-->" + gr);
+		 
 		
 		List<LineItemsBean> lineItemsBean = goodsReceiptService.getLineItemsBean(Integer.parseInt(id));
-		logger.info("lineItemsBean-->" + lineItemsBean);
+		 
 		
 		model.addAttribute("lineItemsBean",lineItemsBean);
 		poloadData(model, gr);
@@ -213,7 +207,7 @@ public class GoodsReceiptController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
+		 
 		goodsReceiptService.delete(id);
 		return "redirect:list";
 	}
@@ -221,22 +215,22 @@ public class GoodsReceiptController {
 	
 	@PostMapping("/save")
 	public String name(GoodsReceipt goodsReceipt) {
-		logger.info("Inside save method" + goodsReceipt);
+		logger.info("Inside save method");
 		
 		if(goodsReceipt.getId()==null) {
 			boolean status = goodsReceiptService.findByDocNumber(goodsReceipt.getDocNumber());
 			if(!status) {
-				logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+				goodsReceiptService.save(goodsReceipt);
 			}else {
 				Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.GR.getStatus());
 				GoodsReceipt grdetails = goodsReceiptService.findLastDocumentNumber();
 				if (grdetails != null && grdetails.getDocNumber() != null) {
 					goodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(grdetails.getDocNumber(),count));
 				}
-				logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+				goodsReceiptService.save(goodsReceipt);
 			}
 		}else {
-			logger.info("gr details" + goodsReceiptService.save(goodsReceipt));
+			goodsReceiptService.save(goodsReceipt);
 		}
 		
 		return "redirect:list";
@@ -245,24 +239,22 @@ public class GoodsReceiptController {
 	@PostMapping("/savePOtoGR")
 	public String savePRtoRFQ(HttpServletRequest request) {
 		String poId = request.getParameter("poId");
-		logger.info("poId" + poId);
-		logger.info("poId view-->" + poId);
+		 
 		GoodsReceipt gr = goodsReceiptService.saveGR(poId);
 		return "redirect:edit?id="+gr.getId();
 	}
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
-		
-		logger.info("gr details" + goodsReceiptService.saveCancelStage(id));
+		 
+		goodsReceiptService.saveCancelStage(id);
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<GoodsReceipt> list = goodsReceiptService.findByIsActive();
-		logger.info("list"+list);
+		 
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "goodsReceipt/list";
@@ -272,7 +264,7 @@ public class GoodsReceiptController {
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<GoodsReceipt> list = goodsReceiptService.grApprovedList();
-		logger.info("goodsReceiptService list-->" + list);
+		 
 		model.addAttribute("list", list);
 		searchFilter.setIsConvertedDoc("true");
 		model.addAttribute("searchFilter", searchFilter);
@@ -298,17 +290,17 @@ public class GoodsReceiptController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		logger.info("id -->" + id);
+		 
 		GoodsReceipt gr = goodsReceiptService.findById(Integer.parseInt(id));
-		logger.info("goodsReceipt -->" + gr);
-		
+		 
+		 
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
 		
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForGoodsReceipt(pdfUploadedPath,gr);
 				
-		logger.info("path " +path);
+		 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -326,7 +318,7 @@ public class GoodsReceiptController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<GoodsReceipt> list = goodsReceiptService.searchFilterBySelection(searchFilter);
-		logger.info("list" + list);
+		 
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		if(searchFilter.getIsConvertedDoc().equals("true"))

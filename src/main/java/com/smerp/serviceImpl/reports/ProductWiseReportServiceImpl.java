@@ -34,11 +34,9 @@ public class ProductWiseReportServiceImpl implements ProductWiseReportService {
 		String qtysql = "select * from vw_product_wise_po_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_vendor_wise_report SQL ----> " + qtysql);
 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
 	}
@@ -47,11 +45,8 @@ public class ProductWiseReportServiceImpl implements ProductWiseReportService {
 		String qtysql = "select * from vw_product_wise_inv_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_vendor_wise_report SQL ----> " + qtysql);
-
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
 	}
@@ -65,12 +60,10 @@ public class ProductWiseReportServiceImpl implements ProductWiseReportService {
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForReports(searchFilter);
-		logger.info(resultQuery);
 
 		Query query = entityManager.createNativeQuery(resultQuery);
 		arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 	  return arrayList;
 
@@ -109,6 +102,39 @@ public class ProductWiseReportServiceImpl implements ProductWiseReportService {
 			 prolist.setFebAmt((double) (tuple[26] == null ? 0 : (Double.parseDouble(tuple[26].toString()))));
 			 prolist.setMarQty((double) (tuple[27] == null ? 0 : (Double.parseDouble(tuple[27].toString()))));
 			 prolist.setMarAmt((double) (tuple[28] == null ? 0 : (Double.parseDouble(tuple[28].toString()))));
+			reportList.add(prolist);
+		}
+
+		return reportList;
+	}
+	@Override
+	public ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter, String typeOf) {
+		if (searchFilter.getToDate() == null) {
+			searchFilter.setToDate(new Date());
+		}
+
+		searchFilter.setTypeOf(typeOf);
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+
+		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForAnnualReports(searchFilter);
+
+		Query query = entityManager.createNativeQuery(resultQuery);
+		arrayList = new ArrayList<>();
+		arrayList.addAll(query.getResultList());
+
+	  return arrayList;
+	}
+	@Override
+	public List<ProductWiseReport> annualReportList(ArrayList<Object[]> arrayList) {
+		List<ProductWiseReport> reportList = new ArrayList<>();
+		for (Object[] tuple : arrayList) {
+			ProductWiseReport prolist = new ProductWiseReport();
+			 prolist.setProductId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			 prolist.setProductName(tuple[1].toString());
+			 prolist.setDescription(tuple[2].toString());
+			 prolist.setTotalQty((double) (tuple[3] == null ? 0 : (Double.parseDouble(tuple[3].toString()))));
+			 prolist.setTotalAmount((double) (tuple[4] == null ? 0 : (Double.parseDouble(tuple[4].toString()))));
+			 
 			reportList.add(prolist);
 		}
 

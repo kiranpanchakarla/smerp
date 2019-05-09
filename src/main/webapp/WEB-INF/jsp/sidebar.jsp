@@ -285,46 +285,108 @@
 					<li class="has_sub"><a href="<c:url value ="/invgt/list"/>">Goods
 							Transfer</a></li>
 				</ul></li>
-			<%--  <li class="has_sub"><a href="<c:url value =""/>">Approval Templates</a></li> --%>
+			<%--  <li class="has_sub"><a href="">Approval Templates</a></li> --%>
 			<!-- </ul>
       </li>  -->
 			<%--  <li><a href="#"><i class="icon-marquee-plus left"></i><span class="menu_text">Approval Procedures</span><span class="menu_text_pad">&nbsp;</span><i class="icon-ios-arrow-right right"></i></a>
         <ul class="sub_menu">
-          <li class="has_sub"><a href="<c:url value =""/>">Approval Stages</a></li>
-           <li class="has_sub"><a href="<c:url value =""/>">Approval Templates</a></li>
+          <li class="has_sub"><a href="">Approval Stages</a></li>
+           <li class="has_sub"><a href="">Approval Templates</a></li>
         </ul>
       </li> --%>
 
-			<li><a href="#"><i class="icon-file2 left"></i><span
+			<li><c:forEach items="${sessionScope.umpmap}" var="ump">
+					<c:if test="${ump.key eq 'Admin Master'}">
+			<a href="#"><i class="icon-file2 left"></i><span
 					class="menu_text">Reports</span><span class="menu_text_pad">&nbsp;</span><i
-					class="icon-ios-arrow-right right"></i></a> <!--  <ul class="sub_menu">
-          <li class="has_sub"><a>Transactions<i class="icon-ios-arrow-right right"></i></a> -->
+					class="icon-ios-arrow-right right"></i></a> 
+             </c:if>
+			 </c:forEach>
 				<ul class="sub_menu">
-					<li class="has_sub"><a href="<c:url value =""/>">Vendor Report
+					<li class="has_sub"><a href="">Monthly Reports
 					<i class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
+							<li class="has_sub"><a
+								href="">Vendor Report<i class="icon-ios-arrow-right right"></i></a>
+								<ul class="super_sub">
 							<li class="has_sub"><a
 								href="<c:url value ="/vendorReport/polist"/>">Purchase Order</a></li>
 							<li class="has_sub"><a
 								href="<c:url value ="/vendorReport/invlist"/>">Invoice</a></li>
 						</ul></li>
-					 <li class="has_sub"><a
-						href="<c:url value =""/>">Products Report <i class="icon-ios-arrow-right right"></i></a>
+						
+						<li class="has_sub"><a
+						href="">Products Report <i class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<li class="has_sub"><a
 								href="<c:url value ="/productReport/polist"/>">Purchase Order</a></li>
 							<li class="has_sub"><a
 								href="<c:url value ="/productReport/invlist"/>">Invoice</a></li>
-						</ul></li> 
-					<li class="has_sub"><a
-						href="<c:url value =""/>">Warehouse Report <i class="icon-ios-arrow-right right"></i></a>
+						</ul></li>
+						
+						 <li class="has_sub"><a
+						href="">Warehouse Report <i class="icon-ios-arrow-right right"></i></a>
 						<ul class="super_sub">
 							<li class="has_sub"><a
 								href="<c:url value ="/warehouseReport/polist"/>">Purchase Order</a></li>
 							<li class="has_sub"><a
 								href="<c:url value ="/warehouseReport/invlist"/>">Invoice</a></li>
 						</ul></li> 
-				</ul></li>
+						</ul>
+								</li>
+								
+							<li class="has_sub"><a href="">Annual Reports
+					<i class="icon-ios-arrow-right right"></i></a>
+						<ul class="super_sub">
+							<li class="has_sub"><a
+								href="">Vendor Report<i class="icon-ios-arrow-right right"></i></a>
+								<ul class="super_sub">
+							<li class="has_sub"><a
+								href="<c:url value ="/annualVendorReport/polist"/>">Purchase Order</a></li>
+							<li class="has_sub"><a
+								href="<c:url value ="/annualVendorReport/invlist"/>">Invoice</a></li>
+						</ul></li>
+						
+						<li class="has_sub"><a
+						href="">Products Report <i class="icon-ios-arrow-right right"></i></a>
+						<ul class="super_sub">
+							<li class="has_sub"><a
+								href="<c:url value ="/annualProductReport/polist"/>">Purchase Order</a></li>
+							<li class="has_sub"><a
+								href="<c:url value ="/annualProductReport/invlist"/>">Invoice</a></li>
+						</ul></li>
+						
+						 <li class="has_sub"><a
+						href="">Warehouse Report <i class="icon-ios-arrow-right right"></i></a>
+						<ul class="super_sub">
+							<li class="has_sub"><a
+								href="<c:url value ="/annualWarehouseReport/polist"/>">Purchase Order</a></li>
+							<li class="has_sub"><a
+								href="<c:url value ="/annualWarehouseReport/invlist"/>">Invoice</a></li>
+						</ul></li> 
+						</ul>
+								</li>
+								
+								<li class="has_sub"><a href="">Inventory Reports
+					<i class="icon-ios-arrow-right right"></i></a>
+						<ul class="super_sub">
+							<li class="has_sub"><a
+								href="<c:url value ="/invReport/prolist"/>">Product Report</a>
+								 </li>
+						    <li class="has_sub"><a
+								href="<c:url value ="/warehouseReport/prolist"/>">Warehouse Report</a>
+								 </li>
+						    <li class="has_sub"><a
+								href="<c:url value ="/invGIReport/prolist"/>">Goods Issue Report</a>
+								 </li>
+						 
+						</ul>
+								</li>
+								
+								
+						</ul></li>
+					  
+				 
 
 		</ul>
 	</div>

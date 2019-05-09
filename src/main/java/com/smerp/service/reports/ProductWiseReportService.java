@@ -13,5 +13,9 @@ public interface ProductWiseReportService {
 	
 	ArrayList<Object[]> searchFilterBySelection(SearchFilter searchFilter,String typeOf);
 	
+	ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter,String typeOf);
+	
 	List<ProductWiseReport> vendorReportList(ArrayList<Object[]> arrayList);
+	
+	List<ProductWiseReport> annualReportList(ArrayList<Object[]> arrayList);
 }

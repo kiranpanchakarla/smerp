@@ -78,8 +78,8 @@
 																<th style="width: 100px;">Product Number</th>
 																<th style="width: 100px;">Description</th>
 																<c:forEach items="${searchListMonths}" var="month"> 
-																<th style="text-align: right;">${month}-Qty</th>
-																<th style="text-align: right;">${month}-Amt</th>
+																<th>${month}-Qty</th>
+																<th>${month}-Amt</th>
 																</c:forEach>  
 															 
 																 
@@ -97,85 +97,85 @@
 																	<td>${product.description}</td>
 																	<c:forEach items="${searchListMonths}" var="month">
 																		<c:if test="${month eq 'JAN'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.janQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.janAmt}" /></td>
 																		</c:if>
 																		<c:if test="${month == 'FEB'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.febQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.febAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'MAR'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.marQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.marAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'APR'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.aprQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.aprAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'MAY'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.mayQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.mayAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'JUN'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.junQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.junAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'JUL'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.julQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.julAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'AUG'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.augQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.augAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'SEP'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.septQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.septAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'OCT'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.octQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.octAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'NOV'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.novQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.novAmt}" /></td>
 
 																		</c:if>
 																		<c:if test="${month == 'DEC'}">
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.decQty}" /></td>
-																			<td style="text-align: right;"><fmt:formatNumber type="number"
+																			<td><fmt:formatNumber type="number"
 																					pattern="###0.00" value="${product.decAmt}" /></td>
 
 																		</c:if>

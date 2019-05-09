@@ -37,14 +37,40 @@
 									</c:choose>
 									
 									<c:choose>
-									  <c:when test="${searchFilter.typeOf == 'vw_plant_wise_po_report' || searchFilter.typeOf == 'vw_plant_wise_inv_report'}">	<!-- this is only for Purchase Request -->
+									  <c:when test="${searchFilter.typeOf == 'vw_plant_wise_po_report' || searchFilter.typeOf == 'vw_plant_wise_inv_report'}">	<!-- this is only for Plant Wise Report -->
 									  	<option value="warehouse_Name">Warehouse_Name</option>
 									  </c:when>
 									  <c:otherwise>
 									   	
 									  </c:otherwise>
 									</c:choose>
-							 
+									<c:choose>
+									  <c:when test="${searchFilter.typeOf == 'vw_inv_stock_qty_report' || searchFilter.typeOf == 'vw_inv_warehouse_report'}">	<!-- this is only for Inventory Product Report -->
+									  	<option value="product_number">Product Number</option>
+									  	<option value="product_description">Description</option>
+									  	<option value="product_group">Product Group</option>
+									  	<option value="uom">UOM</option>
+									  </c:when>
+									  <c:otherwise>
+									   	
+									  </c:otherwise>
+									</c:choose>
+									
+									<c:choose>
+									  <c:when test="${searchFilter.typeOf == 'vw_inventory_goods_issue_report'}">	<!-- this is only for Inventory GI Report -->
+									  	<option value="doc_number">DOC Number</option>
+									  	<option value="doc_date">DocDate</option>
+									  	<option value="product_number">Product Number</option>
+									  	<option value="product_description">Description</option>
+									  	<option value="product_group">Product Group</option>
+									  	<option value="plant">Warehouse</option>
+									  	<option value="department">Department</option>
+									  </c:when>
+									  <c:otherwise>
+									   	
+									  </c:otherwise>
+									</c:choose>
+							     
 								</select>
 							</div></li>
 							
@@ -54,28 +80,31 @@
 									placeholder="Field name">
 							</div></li>
 							
-						 <%--  <li><div class="form-group">
-								<!--  <label>Search By:</label> -->
-								<label for="sortBy">Sort By:</label> 
-								<select id="sortBy" class="form-control" name="sortBy">
-								    <option value="select">select</option>
-								    <c:choose>
-									  <c:when test="${searchFilter.typeOf == 'vw_vendor_wise_po_report'}">	<!-- this is only for Purchase Request -->
-									  	<option value="vendor_Code">Vendor_Code</option>
-									  	<option value="vendor_Name">Vendor_Name</option>
-									  </c:when>
-									  <c:otherwise>
-									   	
-									  </c:otherwise>
-									</c:choose>
-									
-								</select>
-							</div></li>  --%> 
+						 <c:if test="${searchFilter.typeOf == 'vw_inv_warehouse_report' || searchFilter.typeOf == 'vw_inventory_goods_issue_report'}">
+							   
+							   <li>
+									<div class="form-group">
+										<!-- <label>User</label> -->
+										<input type="button" id="search" value="Search" onclick="getSearchFilterList()"
+											class="btn btn-primary" />
+									</div>
+								</li>
+
+								<li>
+									<div class="form-group">
+										<!-- <label>User</label> -->
+										<input type="button" id="reset" value="Reset" onclick="getSearchFilterResetList()"
+											class="btn btn-warning" />
+									</div>
+								</li>  
+							     
+								</c:if>
 							
 					</ul>
 					<ul class="po-wrap-list last-list">
 						
 						<!-- <li>
+						 
 							<div class="form-group">
 								 <label>Search By:</label>
 								<label for="datelabel" class="last-list-search">Date:</label> 
@@ -88,24 +117,42 @@
 
 						<li>
 							<div class="form-group">
+							 <c:if test="${searchFilter.typeOf != 'vw_inv_stock_qty_report' && searchFilter.typeOf != 'vw_inv_warehouse_report'  && searchFilter.typeOf != 'vw_inventory_goods_issue_report'}">
 							    <label>Created Date:</label>
 								<!-- <label style="margin-right: 30px;">From:</label>  -->
 								<input type="text" id="fromDate" name="fromDate"
 									class="form-control report-select-box1" placeholder="From Date" autocomplete="off"/>
+								</c:if>
+								 <c:if test="${searchFilter.typeOf == 'vw_inv_stock_qty_report'}">
+								  <label for="sortBy">Sort By:</label> 
+								    <select id="sortBy" class="form-control sort-report" name="sortBy">
+								    <option value="select">select</option>
+									<option value="Madurawada">Madurawada</option>
+									<option value="Yelamanchili">Yelamanchili</option>
+									
+								</select>
+								 </c:if>
 							</div>
+							
+									  
 						</li>
                        
 						<li>
+						
 							<div class="form-group">
+							<c:if test="${searchFilter.typeOf != 'vw_inv_stock_qty_report' && searchFilter.typeOf != 'vw_inv_warehouse_report'  && searchFilter.typeOf != 'vw_inventory_goods_issue_report'}">
 								<!-- <label class="list-search2">To: </label>  -->
 								<input type="text" id="toDate" name="toDate"
 									class="form-control report-select-box2" placeholder="To Date"  autocomplete="off" >
+							</c:if>
 							</div>
+							
 						</li>
 
 						<li>
 
 							<ul>
+							<c:if test="${searchFilter.typeOf != 'vw_inv_warehouse_report' && searchFilter.typeOf != 'vw_inventory_goods_issue_report'}">
 								<li>
 									<div class="form-group">
 										<!-- <label>User</label> -->
@@ -121,7 +168,7 @@
 											class="btn btn-warning" />
 									</div>
 								</li>
-								
+								</c:if>
 							</ul>
 					</ul>
 				</div>

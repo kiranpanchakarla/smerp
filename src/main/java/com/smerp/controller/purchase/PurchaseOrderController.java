@@ -114,9 +114,6 @@ public class PurchaseOrderController {
 	@GetMapping("/create")
 	public String create(Model model, PurchaseOrder po) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("po-->" + po);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
@@ -125,24 +122,20 @@ public class PurchaseOrderController {
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        		
 		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
-		logger.info("PO count-->" + count);
 		
 		PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
 		if (podetails != null && podetails.getDocNumber() != null) {
 			//po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber()));
 			po.setDocNumber(GenerateDocNumber.documentNumberGeneration(podetails.getDocNumber(),count));
-			logger.info("podetails-->" + po);
 		} else {
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 	    LocalDateTime now = LocalDateTime.now();
 		po.setDocNumber(GenerateDocNumber.documentNumberGeneration("PO"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("podetails-->" + podetails);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
-		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("po", po);
 		return "po/create";
@@ -150,10 +143,8 @@ public class PurchaseOrderController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
 		po = purchaseOrderService.getListAmount(po);  // set Amt Calculation  
-		logger.info("po-->" + po);
 		ObjectMapper mapper = poloadData(model, po);
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -179,9 +170,6 @@ public class PurchaseOrderController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-	
 		
 		model.addAttribute("purchaseOrderlineItems", po.getPurchaseOrderlineItems());
 		return mapper;
@@ -189,14 +177,11 @@ public class PurchaseOrderController {
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
 		po = purchaseOrderService.getListAmount(po);
-		logger.info("po-->" + po);
 		poloadData(model, po);
 		// model.addAttribute("categoryMap", categoryMap());
 		boolean check = goodsReceiptService.checkQuantityPoGr(po);
-		logger.info("check-->" + check);
 		model.addAttribute("checkStatusPoGr", check);
 		
 		model.addAttribute("po", po);
@@ -217,7 +202,6 @@ public class PurchaseOrderController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		PurchaseOrder po = purchaseOrderService.delete(id);
 		/*try {
 			//String message = 
@@ -230,16 +214,14 @@ public class PurchaseOrderController {
 	
 	@PostMapping("/save")
 	public String name(PurchaseOrder purchaseOrder) {
-		logger.info("Inside save method" + purchaseOrder);
+		logger.info("Inside save method");
 		PurchaseOrder po = null;
 		if(purchaseOrder.getId()==null) {
 			boolean status = purchaseOrderService.findByDocNumber(purchaseOrder.getDocNumber());
 			if(!status) {
 			po = purchaseOrderService.save(purchaseOrder);
-			logger.info("po details" + po);
 			}else {
 				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
-				logger.info("count-->" + count);
 				
 				PurchaseOrder podetails = purchaseOrderService.findLastDocumentNumber();
 				if (podetails != null && podetails.getDocNumber() != null) {
@@ -250,7 +232,6 @@ public class PurchaseOrderController {
 			}
 		}else {
 			po = purchaseOrderService.save(purchaseOrder);
-			logger.info("po details" + po);
 		}
 		try {
 			savePoActivityHistory(po);
@@ -263,8 +244,6 @@ public class PurchaseOrderController {
 	@PostMapping("/saveRFQtoPO")
 	public String savePRtoRFQ(HttpServletRequest request) {
 		String rfqId = request.getParameter("rfqId");
-		logger.info("rfqId" + rfqId);
-		logger.info("rfqId view-->" + rfqId);
 		PurchaseOrder po = purchaseOrderService.savePO(rfqId);
 		try {
 			String message = EnumStatusUpdate.CONVERTRFQTOPO.getStatus()+"@@"+po.getReferenceDocNumber();
@@ -278,7 +257,6 @@ public class PurchaseOrderController {
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<PurchaseOrder> purchaseOrderList = purchaseOrderService.poApprovedList();
-		logger.info("purchaseOrder list-->" + purchaseOrderService);
 		searchFilter.setIsConvertedDoc("true");
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("purchaseOrderList", purchaseOrderList);
@@ -287,9 +265,7 @@ public class PurchaseOrderController {
 	
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		PurchaseOrder po = purchaseOrderService.saveCancelStage(id);
-		logger.info("po details" + po);
 		try {
 			savePoActivityHistory(po);
 		}catch(Exception e) {
@@ -301,7 +277,6 @@ public class PurchaseOrderController {
 	@GetMapping("/list")
 	public String list(Model model,SearchFilter searchFilter) {
 		List<PurchaseOrder> list = purchaseOrderService.findByIsActive();
-		logger.info("list"+list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		return "po/list";
@@ -327,7 +302,6 @@ public class PurchaseOrderController {
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
 		PurchaseOrder po = purchaseOrderService.findById(Integer.parseInt(id));
-		logger.info("RequestForQuotation view-->" + po);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -335,7 +309,6 @@ public class PurchaseOrderController {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
 				.OfflineHtmlStringToPdfForPO(pdfUploadedPath,po);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -395,7 +368,6 @@ public class PurchaseOrderController {
 
 		poah.setCreatedBy(user.getUsername());
 
-		logger.info("PurchaseOrderActivityHistory view-->" + poah);
 		purchaseOrderActivityHistoryService.save(poah);
 	}
 		
@@ -414,7 +386,6 @@ public class PurchaseOrderController {
 			poah.setActivity("RFQ# " + a[1]);
 		}
 		poah.setCreatedBy(user.getUsername());
-		logger.info("PurchaseOrderActivityHistory view-->" + poah);
 		purchaseOrderActivityHistoryService.save(poah);
 	}
 	
@@ -437,13 +408,11 @@ public class PurchaseOrderController {
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		if(searchFilter.getIsConvertedDoc().equals("true")) {
 			List<PurchaseOrder> purchaseOrderList = purchaseOrderService.searchFilterBySelection(searchFilter);
-			logger.info("purchaseOrderList" + purchaseOrderList);
 			model.addAttribute("purchaseOrderList", purchaseOrderList);
 			model.addAttribute("searchFilter", searchFilter);
 			return "po/approvedList";
 		}else {
 			List<PurchaseOrder> list = purchaseOrderService.searchFilterBySelection(searchFilter);
-			logger.info("list" + list);
 			model.addAttribute("list", list);
 			model.addAttribute("searchFilter", searchFilter);
 			return "po/list";

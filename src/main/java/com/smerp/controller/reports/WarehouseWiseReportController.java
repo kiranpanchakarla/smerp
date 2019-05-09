@@ -69,15 +69,12 @@ public class WarehouseWiseReportController {
 	public String getSearchFilterPOList(Model model, SearchFilter searchFilter) {
 		searchFilter.setTypeOf(EnumSearchFilter.POREPORTPLANT.getStatus());
 		ArrayList<Object[]> fullList = warehouseWiseReportService.searchFilterBySelection(searchFilter,EnumSearchFilter.POREPORTPLANT.getStatus());
-			logger.info("fullList" + fullList);
 			
 			List<WarehouseWiseReport> vendorList = warehouseWiseReportService.plantReportList(fullList);
 			model.addAttribute("vendorList", vendorList);
-			logger.info("vendorList" +  vendorList);
 			
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months =  monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-					logger.info("Months" +  months);
 					model.addAttribute("searchListMonths", months);
 			 }
 			 

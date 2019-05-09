@@ -37,11 +37,9 @@ public class VendorWiseReportServiceImpl implements VendorWiseReportService {
 		String qtysql = "select * from vw_vendor_wise_po_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_vendor_wise_report SQL ----> " + qtysql);
 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
 	}
@@ -83,12 +81,10 @@ public class VendorWiseReportServiceImpl implements VendorWiseReportService {
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForReports(searchFilter);
-		logger.info(resultQuery);
 
 		Query query = entityManager.createNativeQuery(resultQuery);
 		arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 	  return arrayList;
 
@@ -99,13 +95,44 @@ public class VendorWiseReportServiceImpl implements VendorWiseReportService {
 		String qtysql = "select * from vw_vendor_wise_invoive_report";
 		Query query1 = entityManager.createNativeQuery(qtysql);
 
-		logger.info("vw_vendor_wise_report SQL ----> " + qtysql);
 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		return arrayList;
+	}
+
+	@Override
+	public List<VendorWiseReport> vendorReportAnnualList(ArrayList<Object[]> arrayList) {
+		List<VendorWiseReport> reportList = new ArrayList<>();
+		for (Object[] tuple : arrayList) {
+			VendorWiseReport prolist = new VendorWiseReport();
+			prolist.setVendorId(tuple[0] == null ? 0 : ((Integer) tuple[0]).intValue());
+			prolist.setVendorCode(tuple[1].toString());
+			prolist.setVendorName(tuple[2].toString());
+			prolist.setTotalAmount((double) (tuple[3] == null ? 0 : (Double.parseDouble(tuple[3].toString()))));
+			reportList.add(prolist);
+		}
+
+		return reportList;
+	}
+
+	@Override
+	public ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter, String typeOf) {
+		if (searchFilter.getToDate() == null) {
+			searchFilter.setToDate(new Date());
+		}
+
+		searchFilter.setTypeOf(typeOf);
+		ArrayList<Object[]> arrayList = new ArrayList<>();
+
+		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForAnnualReports(searchFilter);
+
+		Query query = entityManager.createNativeQuery(resultQuery);
+		arrayList = new ArrayList<>();
+		arrayList.addAll(query.getResultList());
+
+	  return arrayList;
 	}
 
 }

@@ -157,4 +157,128 @@ public class GetReportFilterResult {
 		return resultQuery;
 	}
 	
+	
+	public String getQueryBysearchFilterSelectionForAnnualReports(SearchFilter searchFilter){
+		String resultQuery = "",searchByQuery="";
+		
+		if(!searchFilter.getFieldName().isEmpty() && !searchFilter.getSearchBy().equals("select")) {
+			String dbSearchByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSearchBy()));
+			searchByQuery = searchByQuery +"TRIM(LOWER(sfq."+dbSearchByColumnName+"))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
+		}
+		
+		 
+		
+		String dateSelectionQuery="";
+		if(searchFilter.getFromDate()!=null && !searchFilter.getFromDate().equals("") && searchFilter.getToDate()!=null && !searchFilter.getToDate().equals("")) {
+		
+			String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(searchFilter.getFromDate());
+			String toDate = new SimpleDateFormat("yyyy-MM-dd").format(searchFilter.getToDate());
+			
+			String dbDateSelectColumnName =  EnumSearchFilter.DATE.getStatus();
+			dateSelectionQuery = dateSelectionQuery + "sfq."+dbDateSelectColumnName+" "+EnumSearchFilter.BETWEEN.getStatus()+" '"+fromDate+"' " + EnumSearchFilter.AND.getStatus()+" '"+toDate + "' ";
+		}
+		
+		
+		
+		if(!searchByQuery.isEmpty() && dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + searchByQuery  +" ";
+		}
+		
+		if(!searchByQuery.isEmpty() && !dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + searchByQuery +" "+ EnumSearchFilter.AND.getStatus() +" " + dateSelectionQuery;
+		}
+		
+		if(searchByQuery.isEmpty() && !dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + dateSelectionQuery  +" ";
+		}
+		
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.POREPORTVENDOR.getStatus()) || searchFilter.getTypeOf().equals(EnumSearchFilter.INVREPORTVENDOR.getStatus())) {
+			resultQuery = "SELECT sfq.vendor_id,\r\n" + 
+					"    sfq.vendor_code,\r\n" + 
+					"    sfq.name,\r\n" + 
+					"    sum(sfq.total_amount) AS annual\r\n" + 
+					"   FROM "
+			               + searchFilter.getTypeOf() +" sfq " + searchByQuery +
+			               "group by vendor_id,vendor_code,name\r\n" + 
+			               "order by vendor_id;";
+		}
+		
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.POREPORTPLANT.getStatus()) || searchFilter.getTypeOf().equals(EnumSearchFilter.INVREPORTPLANT.getStatus())) {
+			resultQuery = "SELECT sfq.warehouse,\r\n" + 
+					"    sfq.plant_name,\r\n" + 
+					"    sum(sfq.total_amount) AS annual\r\n" + 
+					"   FROM "
+			               + searchFilter.getTypeOf() +" sfq " + searchByQuery +
+			               "group by warehouse,plant_name\r\n" + 
+			               "order by warehouse;";
+		}
+		
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.POREPORTPRODUCT.getStatus()) || searchFilter.getTypeOf().equals(EnumSearchFilter.INVREPORTPRODUCT.getStatus())) {
+			resultQuery = "SELECT \r\n" + 
+					"    sfq.product_id,\r\n" + 
+					"    sfq.product_number,\r\n" + 
+					"    sfq.description,\r\n" + 
+					"    sum(sfq.total_qty) AS qty,\r\n" + 
+					"    sum(sfq.total_amount) AS annual\r\n" + 
+					"   FROM "
+			               + searchFilter.getTypeOf() +" sfq " + searchByQuery +
+			               " group by sfq.product_id,sfq.product_number,sfq.description\r\n" + 
+			               "order by sfq.product_id;";
+		}
+	
+		return resultQuery;
+	}
+	
+	public String getQueryBysearchFilterSelectionForInvProductReports(SearchFilter searchFilter){
+		String resultQuery = "",searchByQuery="";
+		
+		if(!searchFilter.getFieldName().isEmpty() && !searchFilter.getSearchBy().equals("select")) {
+			String dbSearchByColumnName = SearchFilterMapStatusEnum.DB_COLUMN.get(SearchFilterMapStatusEnum.UI_COLUMN.get(searchFilter.getSearchBy()));
+			searchByQuery = searchByQuery +"TRIM(LOWER(sfq."+dbSearchByColumnName+"))='"+searchFilter.getFieldName().toLowerCase().trim()+"'";
+		}
+		
+		 
+		
+		String dateSelectionQuery="";
+		if(searchFilter.getFromDate()!=null && !searchFilter.getFromDate().equals("") && searchFilter.getToDate()!=null && !searchFilter.getToDate().equals("")) {
+		
+			String fromDate = new SimpleDateFormat("yyyy-MM-dd").format(searchFilter.getFromDate());
+			String toDate = new SimpleDateFormat("yyyy-MM-dd").format(searchFilter.getToDate());
+			
+			String dbDateSelectColumnName =  EnumSearchFilter.DATE.getStatus();
+			dateSelectionQuery = dateSelectionQuery + "sfq."+dbDateSelectColumnName+" "+EnumSearchFilter.BETWEEN.getStatus()+" '"+fromDate+"' " + EnumSearchFilter.AND.getStatus()+" '"+toDate + "' ";
+		}
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.INVPRODUCTREPORT.getStatus())) {
+			
+			if(searchFilter.getSortBy()!= null && !searchFilter.getSortBy().equals("select")) {
+				String dbDateSelectColumnName =  EnumSearchFilter.PLANT.getStatus();
+				dateSelectionQuery = "sfq."+dbDateSelectColumnName+ " = '"+searchFilter.getSortBy() +"' ";
+				}
+			
+		}
+		
+		
+		
+		if(!searchByQuery.isEmpty() && dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + searchByQuery  +" ";
+		}
+		
+		if(!searchByQuery.isEmpty() && !dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + searchByQuery +" "+ EnumSearchFilter.AND.getStatus() +" " + dateSelectionQuery;
+		}
+		
+		if(searchByQuery.isEmpty() && !dateSelectionQuery.isEmpty()) {
+			searchByQuery = EnumSearchFilter.WHERE.getStatus() + " " + dateSelectionQuery  +" ";
+		}
+		
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.INVPRODUCTREPORT.getStatus()) || searchFilter.getTypeOf().equals(EnumSearchFilter.INVPLANTREPORT.getStatus()) || searchFilter.getTypeOf().equals(EnumSearchFilter.INVGIREPORT.getStatus())) {
+			resultQuery = "SELECT * FROM "
+			               + searchFilter.getTypeOf() +" sfq " + searchByQuery ;
+		}
+		
+		 
+	
+		return resultQuery;
+	}
+	
 }

@@ -19,9 +19,19 @@ public enum SearchFilterMapStatusEnum {
 	POPLANTNAME("warehouse_Name","plant_name"),
 	POPRODUCTNUMBER("product_number","product_number"),
 	PODESCRIPTION("description","description"),
+	INVPRODUCTNUMBER("product_number","product_no"),
+    INVDESCRIPTION("product_description","product_description"),
+	INVPRODUCTGROUP("product_group","product_group_description"),
+	INVUOM("uom","uom_name"),
 	CREATEDDATE("createdDate","createdAt"),
 	UPDATEDDATE("updatedDate","updatedAt"),
-	PO_YEAR("po_Year","po_year");
+	PO_YEAR("po_Year","po_year"),
+	MADURAWADA("Madurawada","Madurawada"),
+	YELAMANCHILI("Yelamanchili","Yelamanchili"),
+	INVDOCNUMBER("doc_number","doc_number"),
+	INVDOCDATE("doc_date","document_date"),
+	INVPLANT("plant","plant_name"),
+	INVDEPARTMENT("department","department_name");
 	
 	private String status;
 	private String value;

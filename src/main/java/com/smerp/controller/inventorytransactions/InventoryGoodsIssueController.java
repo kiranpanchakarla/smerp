@@ -111,9 +111,6 @@ public Map<Object,Double> taxCode() {
 	@GetMapping(value = "/create")
 	public String create(Model model, InventoryGoodsIssue invGoodsIssue) throws JsonProcessingException {
 		logger.info("Inside InventoryGoodsIssueController Create Method");
-		logger.info("gr-->" + invGoodsIssue);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("plantMap", plantMap());
 		model.addAttribute("deptMap",deptMap());
@@ -132,7 +129,7 @@ public Map<Object,Double> taxCode() {
 	    LocalDateTime now = LocalDateTime.now();
 	    invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGI"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("IGR Details-->" + invGoodsIssue);
+		
 		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -144,7 +141,6 @@ public Map<Object,Double> taxCode() {
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsIssue> list = inventoryGoodsIssueService.findByIsActive();
-		logger.info("list" + list);
 		searchFilter.setTypeOf(EnumSearchFilter.INVGI.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
@@ -153,12 +149,12 @@ public Map<Object,Double> taxCode() {
 	
 	@PostMapping("/save")
 	public String saveInvGI(InventoryGoodsIssue invGoodsIssue) {
-		logger.info("Inside save method" + invGoodsIssue);
+		logger.info("Inside save method");
 		
 		if(invGoodsIssue.getId() == null) {
 			boolean status = inventoryGoodsIssueService.findByDocNumber(invGoodsIssue.getDocNumber());
 			if(!status) {
-				logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));
+				inventoryGoodsIssueService.save(invGoodsIssue);
 			}else {
 				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGI.getStatus());
 				logger.info("count-->" + count);
@@ -167,10 +163,10 @@ public Map<Object,Double> taxCode() {
 				if (igidetails != null && igidetails.getDocNumber() != null) {
 					invGoodsIssue.setDocNumber(GenerateDocNumber.documentNumberGeneration(igidetails.getDocNumber(),count));
 				}
-				logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));
+				inventoryGoodsIssueService.save(invGoodsIssue);
 			}
 		}else {
-			logger.info("igi details" + inventoryGoodsIssueService.save(invGoodsIssue));	
+			inventoryGoodsIssueService.save(invGoodsIssue);	
 		}
 		return "redirect:list";
 	}
@@ -178,7 +174,6 @@ public Map<Object,Double> taxCode() {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		inventoryGoodsIssueService.delete(id);
 		return "redirect:list";
 	}
@@ -210,7 +205,6 @@ public Map<Object,Double> taxCode() {
 		 
 		 @GetMapping("/view")
 			public String view(String id, Model model) throws JsonProcessingException {
-				logger.info("id-->" + id);
 				InventoryGoodsIssue invGR = inventoryGoodsIssueService.findById(Integer.parseInt(id));
 				invGR = inventoryGoodsIssueService.getListAmount(invGR);
 				poloadData(model, invGR);
@@ -231,7 +225,6 @@ public Map<Object,Double> taxCode() {
 			@RequestMapping(value = "/getInStock", method = RequestMethod.GET)
 		    @ResponseBody
 		    private String getInStock(@RequestParam("productNo") String productNo,@RequestParam("warehouse") String warehouse) throws JsonProcessingException {
-		        logger.info("warehouse-->" + warehouse );
 		        if(!productNo.isEmpty() &&  !warehouse.isEmpty()) {
 		       
 		        	String  getInStock = inventoryGoodsIssueService.getInStock(productNo,Integer.parseInt(warehouse));
@@ -248,9 +241,7 @@ public Map<Object,Double> taxCode() {
 			public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 					HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 				
-				logger.info("id -->" + id);
 				InventoryGoodsIssue invGR = inventoryGoodsIssueService.findById(Integer.parseInt(id));
-				logger.info("Inventory goods Receipt -->" + invGR);
 				
 				RequestContext.set(ContextUtil.populateContexturl(request));
 				String path = "";
@@ -258,7 +249,6 @@ public Map<Object,Double> taxCode() {
 				 path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
 		                .OfflineHtmlStringToPdfForInvGoodsIssue(pdfUploadedPath,invGR); 
 						
-				logger.info("path " +path);
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
 				File file = new File(path);
@@ -276,7 +266,6 @@ public Map<Object,Double> taxCode() {
 		 @GetMapping("/getSearchFilterList")
 			public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 				List<InventoryGoodsIssue> list = inventoryGoodsIssueService.searchFilterBySelection(searchFilter);
-				logger.info("list" + list);
 				model.addAttribute("list", list);
 				model.addAttribute("searchFilter", searchFilter);
 				return "inv_goodsIssue/list";

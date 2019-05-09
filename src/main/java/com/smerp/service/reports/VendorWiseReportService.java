@@ -17,6 +17,10 @@ public interface VendorWiseReportService {
 	
 	ArrayList<Object[]> searchFilterBySelection(SearchFilter searchFilter,String typeOf);
 	
+	ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter,String typeOf);
+	
 	List<VendorWiseReport> vendorReportList(ArrayList<Object[]> arrayList);
+	
+	List<VendorWiseReport> vendorReportAnnualList(ArrayList<Object[]> arrayList);
 	
 }

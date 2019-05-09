@@ -28,10 +28,8 @@ private static final Logger logger = LogManager.getLogger(CheckUserPermissionUti
 	
 
 	public boolean checkUserPermission(Integer userId,Integer moduleId,Integer permissionId) {
-		logger.info("usermission userId"+userId);
 		String sql="select * from tbl_admin_usermodulepermission where module_id = "+moduleId+" and  permission_id = "+permissionId
 				+"  and   user_id = " + userId;
-		logger.info("sql-->" +sql);
 		Query query = entityManager.createNativeQuery(sql);
 	     List<Object[]>	list= query.getResultList();
 	    if(list.size()>0) {

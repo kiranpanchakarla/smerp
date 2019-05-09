@@ -75,15 +75,12 @@ public class VendorWiseReportController {
 	public String getSearchFilterPOList(Model model, SearchFilter searchFilter) {
 		searchFilter.setTypeOf(EnumSearchFilter.POREPORTVENDOR.getStatus());
 		ArrayList<Object[]> fullList = vendorWiseReportService.searchFilterBySelection(searchFilter,EnumSearchFilter.POREPORTVENDOR.getStatus());
-			logger.info("fullList" + fullList);
 			
 			List<VendorWiseReport> vendorList = vendorWiseReportService.vendorReportList(fullList);
 			model.addAttribute("vendorList", vendorList);
-			logger.info("vendorList" +  vendorList);
 			
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-					logger.info("Months" +  months);
 					model.addAttribute("searchListMonths", months);
 			 }
 			 
@@ -97,15 +94,12 @@ public class VendorWiseReportController {
 	public String getSearchFilterINVList(Model model, SearchFilter searchFilter) {
 		searchFilter.setTypeOf(EnumSearchFilter.INVREPORTVENDOR.getStatus());
 		ArrayList<Object[]> fullList = vendorWiseReportService.searchFilterBySelection(searchFilter,EnumSearchFilter.INVREPORTVENDOR.getStatus());
-			logger.info("fullList" + fullList);
 			
 			List<VendorWiseReport> vendorList = vendorWiseReportService.vendorReportList(fullList);
 			model.addAttribute("vendorList", vendorList);
-			logger.info("vendorList" +  vendorList);
 			
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
-					logger.info("Months" +  months);
 					model.addAttribute("searchListMonths", months);
 			 }
 			 

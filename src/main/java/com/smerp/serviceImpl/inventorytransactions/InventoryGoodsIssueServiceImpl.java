@@ -114,7 +114,6 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		 if(inventoryGoodsIssue.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 		 if(inventoryGoodsIssue.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
 			 User user = checkUserPermissionUtil.getUser();
@@ -187,7 +186,6 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 
 	@Override
 	public InventoryGoodsIssue getListAmount(InventoryGoodsIssue inventoryGoodsIssue) {
-		logger.info("getListAmount-->");
 		List<InventoryGoodsIssueList> listItems = inventoryGoodsIssue.getInventoryGoodsIssueList();
 		List<InventoryGoodsIssueList> addListItems = new ArrayList<InventoryGoodsIssueList>();
 		
@@ -214,9 +212,7 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		}
 		inventoryGoodsIssue.setTotalBeforeDisAmt(addAmt);
 		inventoryGoodsIssue.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("goodsIssue.getTotalDiscount()-->" + inventoryGoodsIssue.getTotalDiscount());
-		logger.info("goodsIssue.getFreight()-->" + inventoryGoodsIssue.getFreight());
+		 
 		Double total_amt=0.0;
 		if(inventoryGoodsIssue.getTotalDiscount()==null) inventoryGoodsIssue.setTotalDiscount(0.0);
 		if(inventoryGoodsIssue.getFreight()==null) inventoryGoodsIssue.setFreight(0.0);
@@ -251,15 +247,10 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 
 		Query query1 = entityManager.createNativeQuery(productsql);
 
-		logger.info("Product ordered ----> " + query1);
-
-		logger.info("Product ordered SQL ----> " + productsql);
-
 		String instockQuantity = "";
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 
 		for (Object[] tuple : arrayList) {
 
@@ -267,7 +258,6 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 
 		}
 
-		logger.info(" In Stock Count--------->" + instockQuantity);
         if(!instockQuantity.isEmpty()) {
 		return instockQuantity;
         }else {
@@ -287,7 +277,6 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 	        invlist.setTempRequiredQuantity(Integer.parseInt(getInStock(productNo,wareHose)));    
 	    }
 	     inventoryGoodsIssue.setInventoryGoodsIssueList(listItems);
-	     logger.info(" inventoryGoodsIssue--------->" + inventoryGoodsIssue);
 	    return inventoryGoodsIssue;
 	}
 	
@@ -302,11 +291,9 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
 				
 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
-				logger.info(resultQuery);
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<InventoryGoodsIssue> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<InventoryGoodsIssue> list = findByIsActive();

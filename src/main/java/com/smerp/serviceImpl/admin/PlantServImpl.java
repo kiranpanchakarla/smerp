@@ -47,7 +47,6 @@ public class PlantServImpl implements PlantService {
 		for(int i=0; i< list.size(); i++) {
 			plantIds[i] = list.get(i).getId();
 		}
-		logger.info("plantIds-->" +plantIds);
 		return plantIds;
 	}
 	

@@ -51,7 +51,7 @@ import com.smerp.util.UnitPriceListItems;
 @Transactional
 public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
-	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(PurchaseOrderServiceImpl.class);
 
 	@Autowired
 	private PurchaseOrderRepository purchaseOrderRepository;
@@ -239,7 +239,6 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 					 
 					 for(RequestForQuotation rfqItem:rfqList) {
 								rfqItem.setStatus(EnumStatusUpdate.OPEN.getStatus());
-								logger.info("rfq-->" + rfqItem);
 								rfqItem.setIsActive(true);
 						}
 				 }
@@ -329,7 +328,6 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			for(RequestForQuotation rfqItem:rfqList) {
 				if(!rfqItem.getStatus().equalsIgnoreCase(EnumStatusUpdate.CONVERTRFQTOPO.getStatus())) {
 					rfqItem.setStatus(EnumStatusUpdate.CANCELED.getStatus());
-					logger.info("rfq-->" + rfq);
 					rfqItem.setIsActive(false);
 				}
 			}
@@ -480,11 +478,9 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
 				
 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
-				logger.info(resultQuery);
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<PurchaseOrder> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<PurchaseOrder> list = findByIsActive();

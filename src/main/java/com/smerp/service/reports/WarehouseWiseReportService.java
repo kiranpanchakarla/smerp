@@ -13,6 +13,10 @@ public interface WarehouseWiseReportService {
 	ArrayList<Object[]> getINVList();
 
 	ArrayList<Object[]> searchFilterBySelection(SearchFilter searchFilter, String typeOf);
+	
+	ArrayList<Object[]> searchFilterBySelectionForAnnualReports(SearchFilter searchFilter, String typeOf);
 
 	List<WarehouseWiseReport> plantReportList(ArrayList<Object[]> arrayList);
+	
+	List<WarehouseWiseReport> annualReportList(ArrayList<Object[]> arrayList);
 }

@@ -111,7 +111,6 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 		 if(inventoryGoodsReceipt.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 		 if(inventoryGoodsReceipt.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
 			 User user = checkUserPermissionUtil.getUser();
@@ -184,7 +183,6 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 
 	@Override
 	public InventoryGoodsReceipt getListAmount(InventoryGoodsReceipt inventoryGoodsReceipt) {
-		logger.info("getListAmount-->");
 		List<InventoryGoodsReceiptList> listItems = inventoryGoodsReceipt.getInventoryGoodsReceiptList();
 		List<InventoryGoodsReceiptList> addListItems = new ArrayList<InventoryGoodsReceiptList>();
 		
@@ -211,9 +209,6 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 		}
 		inventoryGoodsReceipt.setTotalBeforeDisAmt(addAmt);
 		inventoryGoodsReceipt.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("goodsReceipt.getTotalDiscount()-->" + inventoryGoodsReceipt.getTotalDiscount());
-		logger.info("goodsReceipt.getFreight()-->" + inventoryGoodsReceipt.getFreight());
 		Double total_amt=0.0;
 		if(inventoryGoodsReceipt.getTotalDiscount()==null) inventoryGoodsReceipt.setTotalDiscount(0.0);
 		if(inventoryGoodsReceipt.getFreight()==null) inventoryGoodsReceipt.setFreight(0.0);
@@ -250,11 +245,9 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
 				
 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
-				logger.info(resultQuery);
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<InventoryGoodsReceipt> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<InventoryGoodsReceipt> list = findByIsActive();

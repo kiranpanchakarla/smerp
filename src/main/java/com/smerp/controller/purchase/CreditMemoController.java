@@ -54,7 +54,7 @@ import com.smerp.util.RequestContext;
 @RequestMapping("/creditMemo")
 public class CreditMemoController {
 
-	private static final Logger logger = LogManager.getLogger(GoodsReturnController.class);
+	private static final Logger logger = LogManager.getLogger(CreditMemoController.class);
 
 	private static String pdfUploadedPath;
 	
@@ -90,12 +90,8 @@ public class CreditMemoController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		CreditMemo cre = creditMemoService.getCreditMemoById(Integer.parseInt(id));
-		logger.info("11111 cre-->");
-		logger.info("New cre-->" + cre);
 		cre = creditMemoService.getListAmount(cre);  // set Amt Calculation  
-		logger.info("cre-->" + cre);
 		ObjectMapper mapper = poloadData(model, cre);
 	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
@@ -121,18 +117,14 @@ public class CreditMemoController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
 		model.addAttribute("creditMemoLineItems", cre.getCreditMemoLineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
 		cre = creditMemoService.getListAmount(cre);
-		logger.info("cre-->" + cre);
 		poloadData(model, cre);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("cre", cre);
@@ -143,31 +135,26 @@ public class CreditMemoController {
 
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
-		logger.info("Delete msg");
 		creditMemoService.delete(id);
 		return "redirect:list";
 	}
 
 	@PostMapping("/save")
 	public String name(CreditMemo creditMemo) {
-		logger.info("Inside save method" + creditMemo);
-		logger.info("cre details" + creditMemoService.save(creditMemo));
+		logger.info("Inside save method");
+		creditMemoService.save(creditMemo);
 		return "redirect:list";
 	}
 	
 	@PostMapping("/saveInvtoCre")
 	public String savePRtoRFQ(HttpServletRequest request,InVoice inVoice) {
 		String invId = request.getParameter("invId");
-		logger.info("inVoice" + inVoice);
-		logger.info("invId view-->" + invId);
 		CreditMemo cre = creditMemoService.saveCM(invId);
 		return "redirect:edit?id="+cre.getId();
 	}
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
-		
 		logger.info("cre details" + creditMemoService.saveCancelStage(id));
 		return "redirect:list";
 	}
@@ -175,7 +162,6 @@ public class CreditMemoController {
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<CreditMemo> list = creditMemoService.findByIsActive();
-		logger.info("list"+list);
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "creditMemo/list";
@@ -200,9 +186,7 @@ public class CreditMemoController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		logger.info("id -->" + id);
 		CreditMemo cre = creditMemoService.findById(Integer.parseInt(id));
-		logger.info("creditMemo -->" + cre);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -210,7 +194,6 @@ public class CreditMemoController {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForCreditMemo(pdfUploadedPath,cre);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -228,7 +211,6 @@ public class CreditMemoController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<CreditMemo> list = creditMemoService.searchFilterBySelection(searchFilter);
-		logger.info("list"+list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		return "creditMemo/list";

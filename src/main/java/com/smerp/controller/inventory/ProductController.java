@@ -200,13 +200,11 @@ public class ProductController {
 	@RequestMapping(value = "/getProductInfo", method = RequestMethod.GET)
     @ResponseBody
     private String getInvoiceListByProductNumber(@RequestParam("name") String name) throws JsonProcessingException {
-		logger.info("name-->" + name );
 		Product product = productService.findByproductNo(name);
-        logger.info("product Obj-->" + product );
+       // logger.info("product Obj-->" + product );
         if(product!=null) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        logger.info(mapper.writeValueAsString(product));
         return mapper.writeValueAsString(product);
         }else {
         	return "";
@@ -217,11 +215,11 @@ public class ProductController {
     @ResponseBody
     private String getInvoiceListByDescription(@RequestParam("name") String name) throws JsonProcessingException {
         Product product = productService.findByDescription(name);
-        logger.info("product Obj-->" + product );
+       // logger.info("product Obj-->" + product );
         if(product!=null) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        logger.info(mapper.writeValueAsString(product));
+       // logger.info(mapper.writeValueAsString(product));
         return mapper.writeValueAsString(product);
         }else {
         	return "";

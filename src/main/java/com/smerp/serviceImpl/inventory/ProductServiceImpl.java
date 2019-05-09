@@ -43,7 +43,6 @@ public class ProductServiceImpl implements ProductService {
 			productRepository.save(product);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("error-->" + ex.getMessage());
 		}
 		return product;
 
@@ -79,7 +78,6 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			productRepository.save(product);
 		} catch (Exception ex) {
-			System.out.println("error-->" + ex.getMessage());
 		}
 		return product;
 	}

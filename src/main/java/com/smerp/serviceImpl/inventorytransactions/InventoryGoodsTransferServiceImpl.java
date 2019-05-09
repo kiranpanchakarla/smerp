@@ -114,7 +114,6 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		 if(inventoryGoodsTransfer.getFromWarehouse().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 		 if(inventoryGoodsTransfer.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
 			 User user = checkUserPermissionUtil.getUser();
@@ -176,7 +175,6 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 	        invlist.setTempRequiredQuantity(Integer.parseInt(inventoryGoodsIssueService.getInStock(productNo,wareHose)));    
 	    }
 	     inventoryGoodsIssue.setInventoryGoodsTransferList(listItems);
-	     logger.info(" inventoryGoodsIssue--------->" + inventoryGoodsIssue);
 	    return inventoryGoodsIssue;
 	}
 	
@@ -205,7 +203,6 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 
 	@Override
 	public InventoryGoodsTransfer getListAmount(InventoryGoodsTransfer inventoryGoodsTransfer) {
-		logger.info("getListAmount-->");
 		List<InventoryGoodsTransferList> listItems = inventoryGoodsTransfer.getInventoryGoodsTransferList();
 		List<InventoryGoodsTransferList> addListItems = new ArrayList<InventoryGoodsTransferList>();
 		
@@ -232,9 +229,6 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		}
 		inventoryGoodsTransfer.setTotalBeforeDisAmt(addAmt);
 		inventoryGoodsTransfer.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("goodsTransfer.getTotalDiscount()-->" + inventoryGoodsTransfer.getTotalDiscount());
-		logger.info("goodsTransfer.getFreight()-->" + inventoryGoodsTransfer.getFreight());
 		Double total_amt=0.0;
 		if(inventoryGoodsTransfer.getTotalDiscount()==null) inventoryGoodsTransfer.setTotalDiscount(0.0);
 		if(inventoryGoodsTransfer.getFreight()==null) inventoryGoodsTransfer.setFreight(0.0);
@@ -269,11 +263,9 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
 				
 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
-				logger.info(resultQuery);
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<InventoryGoodsTransfer> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<InventoryGoodsTransfer> list = findByIsActive();

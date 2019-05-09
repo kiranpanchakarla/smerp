@@ -98,7 +98,7 @@ private static final Logger logger = LogManager.getLogger(UomController.class);
     private String getUOMList(@RequestParam("name") String name) throws JsonProcessingException {
 		logger.info("name-->" + name );
 		Uom uom = uomService.findByName(name);
-        logger.info("product Obj-->" + uom );
+        logger.info("uom-->" + uom );
         if(uom!=null) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

@@ -48,7 +48,7 @@
 										<div class="card-header" style="height: 60px;">
 											<div class="row">
 												<div class="col-md-5">
-													<h2 class="content-header-title">Product List</h2>
+													<h2 class="content-header-title">Products Report by Warehouse</h2>
 												</div>
 												<div class="col-md-3">
 												 

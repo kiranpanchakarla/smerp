@@ -287,7 +287,6 @@ public class UserController {
 		/* updating user permisions details in database */
 		userModulePermissionService.saveAll(user);
 		Map<Module, List<Permission>> userpermissionsmap = usermodulepermissionsbyuserId(user, model);
-		logger.info("userpermissionsmap-------->" + userpermissionsmap);
 		/*model.addAttribute("user", user);
 		model.addAttribute("id", user.getUserId());
 		return "user/addPermissions";*/

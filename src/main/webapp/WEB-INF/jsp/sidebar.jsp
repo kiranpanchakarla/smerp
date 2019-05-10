@@ -296,7 +296,7 @@
       </li> --%>
 
 			<li><c:forEach items="${sessionScope.umpmap}" var="ump">
-					<c:if test="${ump.key eq 'Admin Master'}">
+					<c:if test="${ump.key eq 'Reports'}">
 			<a href="#"><i class="icon-file2 left"></i><span
 					class="menu_text">Reports</span><span class="menu_text_pad">&nbsp;</span><i
 					class="icon-ios-arrow-right right"></i></a> 

@@ -39,7 +39,6 @@ public class ProductServiceImpl implements ProductService {
 				
 			}
 
-			logger.info("product-->" + product);
 			productRepository.save(product);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -151,7 +150,6 @@ public class ProductServiceImpl implements ProductService {
 				.setParameter("productDescription", productGroup).setMaxResults(1);
 		logger.info("query--->" +query);
 		  pp = (Product) query.getSingleResult();		
-			logger.info(pp);	
 		}catch (NoResultException nre){
 			logger.info("nre--->" +nre);
 				}	

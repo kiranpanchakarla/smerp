@@ -19,7 +19,7 @@ public enum SearchFilterMapStatusEnum {
 	POPLANTNAME("warehouse_Name","plant_name"),
 	POPRODUCTNUMBER("product_number","product_number"),
 	PODESCRIPTION("description","description"),
-	INVPRODUCTNUMBER("product_number","product_no"),
+	INVPRODUCTNUMBER("product_no","product_no"),
     INVDESCRIPTION("product_description","product_description"),
 	INVPRODUCTGROUP("product_group","product_group_description"),
 	INVUOM("uom","uom_name"),

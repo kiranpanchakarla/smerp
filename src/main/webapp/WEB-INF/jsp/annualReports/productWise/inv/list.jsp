@@ -133,6 +133,37 @@
 				"dom" : '<"top"i>rt<"bottom"flp><"clear">'
 			});
 		});
+		
+		  $(document).ready(function() {
+			    
+				$("#fromDate1").datepicker({
+					dateFormat : 'dd/mm/yy'
+					}).datepicker("option", {
+						setDate : "0",
+						minDate : '-3y +1d',
+						maxDate:'+10y -1d',
+						changeYear: true,
+				        changeMonth:true,
+						onSelect: function(selectedDate) {
+				          	 var date = $(this).datepicker("getDate");
+				               date.setDate(date.getDate());
+				               $("#todatepicker").datepicker("setDate", date);
+				               $("#toDate").datepicker( "option", "minDate", selectedDate );
+				               date.setDate(date.getDate() + 10);
+				          }
+					});
+
+					$("#toDate1").datepicker({
+						dateFormat : 'dd/mm/yy'
+					}).datepicker("option", {
+						setDate : "0",
+						minDate : '-3y +1d',
+						maxDate:'+10y -1d',
+						changeYear: true,
+				        changeMonth:true
+					});
+					
+				}); 
 
 		$(document).ready(function() {
 			$('[data-toggle="tooltip"]').tooltip();

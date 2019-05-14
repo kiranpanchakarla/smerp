@@ -117,7 +117,7 @@ public class ProductWiseReportServiceImpl implements ProductWiseReportService {
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForAnnualReports(searchFilter);
-
+       logger.info(resultQuery);
 		Query query = entityManager.createNativeQuery(resultQuery);
 		arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());

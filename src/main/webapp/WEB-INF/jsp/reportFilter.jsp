@@ -46,7 +46,7 @@
 									</c:choose>
 									<c:choose>
 									  <c:when test="${searchFilter.typeOf == 'vw_inv_stock_qty_report' || searchFilter.typeOf == 'vw_inv_warehouse_report'}">	<!-- this is only for Inventory Product Report -->
-									  	<option value="product_number">Product Number</option>
+									  	<option value="product_no">Product Number</option>
 									  	<option value="product_description">Description</option>
 									  	<option value="product_group">Product Group</option>
 									  	<option value="uom">UOM</option>
@@ -60,7 +60,7 @@
 									  <c:when test="${searchFilter.typeOf == 'vw_inventory_goods_issue_report'}">	<!-- this is only for Inventory GI Report -->
 									  	<option value="doc_number">DOC Number</option>
 									  	<option value="doc_date">DocDate</option>
-									  	<option value="product_number">Product Number</option>
+									  	<option value="product_no">Product Number</option>
 									  	<option value="product_description">Description</option>
 									  	<option value="product_group">Product Group</option>
 									  	<option value="plant">Warehouse</option>

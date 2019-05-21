@@ -10,6 +10,8 @@ public class InventoryWarehouseReport {
 	private Double inStockQty;
 	private Double madurawada;
 	private Double yelamanchili;
+	private Double mainOffice;
+	
 	public Integer getProductId() {
 		return productId;
 	}
@@ -58,5 +60,13 @@ public class InventoryWarehouseReport {
 	public void setYelamanchili(Double yelamanchili) {
 		this.yelamanchili = yelamanchili;
 	}
+	public Double getMainOffice() {
+		return mainOffice;
+	}
+	public void setMainOffice(Double mainOffice) {
+		this.mainOffice = mainOffice;
+	}
+	
+	
 	
 }

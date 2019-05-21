@@ -83,7 +83,7 @@ public class InventoryGoodsReceiptServiceImpl implements InventoryGoodsReceiptSe
 		 List<InventoryGoodsReceiptList> listItems = inventoryGoodsReceipt.getInventoryGoodsReceiptList();
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
-				if (listItems.get(i).getProductNumber() == null  && listItems.get(i).getRequiredQuantity() == null) {
+				if (listItems.get(i).getProductNumber() == null) {
 					listItems.remove(i);
 				}
 			}

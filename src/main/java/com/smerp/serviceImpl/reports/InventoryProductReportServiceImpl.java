@@ -98,6 +98,7 @@ private static final Logger logger = LogManager.getLogger(InventoryProductReport
 			 prolist.setInStockQty((double) (tuple[5] == null ? 0 : (Double.parseDouble(tuple[5].toString()))));
 			 prolist.setMadurawada((double) (tuple[6] == null ? 0 : (Double.parseDouble(tuple[6].toString()))));
 			 prolist.setYelamanchili((double) (tuple[7] == null ? 0 : (Double.parseDouble(tuple[7].toString()))));
+			 prolist.setMainOffice((double) (tuple[8] == null ? 0 : (Double.parseDouble(tuple[8].toString()))));
 			 
 			reportList.add(prolist);
 		}

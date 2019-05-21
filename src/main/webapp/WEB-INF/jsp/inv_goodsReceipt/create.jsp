@@ -1086,7 +1086,7 @@ $(document).ready(function(){
                                                 
 				
 		
-		
+/* 		
 function removeData(index){
 	//alert("ff"+index);
 setCalculationAmt(index);
@@ -1104,7 +1104,7 @@ setCalculationAmt(index);
 			$('table#itemTbl tr.multTot'+index).remove();
 		}
 		$("#form").validator("update");
-}
+} */
 
 
 function removeData1(index){

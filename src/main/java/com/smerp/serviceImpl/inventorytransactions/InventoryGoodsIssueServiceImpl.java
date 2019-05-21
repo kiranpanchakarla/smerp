@@ -22,6 +22,7 @@ import com.smerp.model.inventory.GoodsReturn;
 import com.smerp.model.inventory.GoodsReturnLineItems;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
 import com.smerp.model.inventorytransactions.InventoryGoodsIssueList;
+import com.smerp.model.inventorytransactions.InventoryGoodsReceiptList;
 import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.inventorytransactions.InventoryGoodsIssueRepository;

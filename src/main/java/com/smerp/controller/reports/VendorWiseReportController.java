@@ -82,7 +82,10 @@ public class VendorWiseReportController {
 			 if(searchFilter.getFromDate() != null) {
 				 List<String> months = monthsBetweenDates.getMonthsBetweenDates(searchFilter.getFromDate(), searchFilter.getToDate());
 					model.addAttribute("searchListMonths", months);
+					 logger.info("months --->" + months);
 			 }
+			 
+			
 			 
 			model.addAttribute("searchFilter", searchFilter);
 			return "reports/vendorWise/po/list";

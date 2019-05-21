@@ -2005,13 +2005,13 @@ $(document).ready(function(){
 
                                                 
 				
-		
-		
+/* 		
+	//for product/item	
 function removeData(index){
 	//alert("ff"+index);
-	setCalculationAmt(index);
 	
 	var rowCount = $('#itemTbl tr').length-2;
+	setCalculationAmt(rowCount);
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		//alert($('.warehouse').val());
@@ -2025,9 +2025,9 @@ function removeData(index){
 			$('table#itemTbl tr.multTot'+index).remove();
 		}
 		$("#form").validator("update");
-}
+} */
 
-
+//for service - not using
 function removeData1(index){
 	//alert("ff"+index);
 	setCalculationAmt(index);
@@ -2039,7 +2039,7 @@ function removeData1(index){
 	$("#form").validator("update");
 }
 
-
+//for service - not using
 function removeData2(index){
 	//alert("ff"+index);
 	setCalculationAmt(index);

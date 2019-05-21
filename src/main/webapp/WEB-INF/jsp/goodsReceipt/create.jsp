@@ -2314,11 +2314,11 @@ $(document).ready(function(){
 				
 		
 		
-function removeData(index){
+/* function removeData(index){
 	//alert("ff"+index);
-setCalculationAmt(index);
 	
 	var rowCount = $('#itemTbl tr').length-2;
+	setCalculationAmt(rowCount);
 	if(rowCount==0){
 		$('#itemTbl input[type="text"]').val('');
 		$('.warehouse').prop('selectedIndex',0);
@@ -2331,7 +2331,7 @@ setCalculationAmt(index);
 			$('table#itemTbl tr.multTot'+index).remove();
 		}
 		$("#form").validator("update");
-}
+} */
 
 
 function removeData1(index){

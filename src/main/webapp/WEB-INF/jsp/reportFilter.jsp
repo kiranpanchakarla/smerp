@@ -127,9 +127,9 @@
 								  <label for="sortBy">Sort By:</label> 
 								    <select id="sortBy" class="form-control sort-report" name="sortBy">
 								    <option value="select">select</option>
-									<option value="Madurawada">Madurawada</option>
+									<option value="Madhurawada">Madhurawada</option>
 									<option value="Yelamanchili">Yelamanchili</option>
-									
+									<option value="Main Office">Main Office</option>
 								</select>
 								 </c:if>
 							</div>

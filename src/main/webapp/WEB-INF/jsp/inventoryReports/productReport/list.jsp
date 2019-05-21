@@ -80,6 +80,7 @@
 																<th>Description</th>
 																<th>Product Group</th>
 																<th>UOM</th>
+																<th>Warehouse</th>
 																<th>InStock Quantity</th>
 																<th>Product Cost</th>
 																<th>Stock Value</th>
@@ -96,6 +97,7 @@
 																	<td>${product.description}</td> 
 																	<td>${product.productGroup}</td>
 																	<td>${product.uomName}</td> 
+																	<td>${product.plantName}</td>
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.inStockQty}" /></td> 
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.productCost}" /></td>
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.stockValue}" /></td>

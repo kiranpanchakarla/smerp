@@ -56,7 +56,7 @@ public class MonthlyReportsXLS {
 	public static final String FEB = "FEB";
 	public static final String MAR = "MAR";
 	public static final String APR = "APR";
-	public static final String MAY = "May";
+	public static final String MAY = "MAY";
 	public static final String JUN = "JUN";
 	public static final String JUL = "JUL";
 	public static final String AUG = "AUG";

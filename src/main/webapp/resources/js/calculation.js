@@ -278,7 +278,24 @@ $('#freight').keyup(function() {
 	
 	} 
 	
-
+	function removeData(index){
+		//alert("ff"+index);
+		
+		var rowCount = $('#itemTbl tr').length-2;
+		setCalculationAmt(rowCount);
+		if(rowCount==0){
+			$('#itemTbl input[type="text"]').val('');
+			$('.warehouse').prop('selectedIndex',0);
+			$('.taxCode').prop('selectedIndex',0);
+			return false;
+		}
+			if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+				$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+			}else{
+				$('table#itemTbl tr.multTot'+index).remove();
+			}
+			$("#form").validator("update");
+	}
 	
 	$(document).on("keypress", ".validatePrice", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){

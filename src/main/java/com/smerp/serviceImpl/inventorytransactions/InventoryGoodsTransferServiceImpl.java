@@ -86,7 +86,7 @@ public class InventoryGoodsTransferServiceImpl implements InventoryGoodsTransfer
 		 List<InventoryGoodsTransferList> listItems = inventoryGoodsTransfer.getInventoryGoodsTransferList();
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
-				if (listItems.get(i).getProductNumber() == null  && listItems.get(i).getRequiredQuantity() == null) {
+				if (listItems.get(i).getProductNumber() == null) {
 					listItems.remove(i);
 				}
 			}

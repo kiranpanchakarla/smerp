@@ -88,7 +88,7 @@
 
 						<li>
 							<div class="form-group">
-							    <label>FY Year:</label>
+							    <label>Duration:</label>
 								<!-- <label style="margin-right: 30px;">From:</label>  -->
 								 <input type="text" id="fromDate1" name="fromDate"
 									class="form-control report-select-box1 annualReport" placeholder="From Date" autocomplete="off"/>  

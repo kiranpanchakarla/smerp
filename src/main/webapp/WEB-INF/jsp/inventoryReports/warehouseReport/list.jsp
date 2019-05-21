@@ -83,6 +83,7 @@
 																<th>InStock Quantity</th>
 																<th>madurawada</th>
 																<th>Yelamanchili</th>
+																<th>Main Office</th>
 															</tr>
 														</thead>
 														
@@ -99,6 +100,7 @@
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.inStockQty}" /></td> 
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.madurawada}" /></td>
 																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.yelamanchili}" /></td>
+																	<td><fmt:formatNumber type="number" pattern="###0.00" value="${product.mainOffice}" /></td>
 																</tr>
 															</c:forEach>
 														</tbody>

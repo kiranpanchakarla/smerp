@@ -178,7 +178,7 @@ function downloadExcelFile(){
 	var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 	//alert(stringQuery);
 	
-	a.href = "<c:url value='/annualWarehouseReport/exportPOExcel?id=vw_plant_wise_inv_report?'/>"+stringQuery;
+	a.href = "<c:url value='/annualWarehouseReport/exportPOExcel?id=vw_plant_wise_po_report?'/>"+stringQuery;
 } 
 </script>
 <script src=<c:url value="/resources/js/scripts/dataTables/buttons.html5.min.js"/> type="text/javascript"></script> 

@@ -1,5 +1,6 @@
 package com.smerp.controller.inventorytransactions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -47,6 +48,7 @@ import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -78,6 +80,9 @@ public class InventoryGoodsTransferController {
 	
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
+	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -250,6 +255,7 @@ public class InventoryGoodsTransferController {
 		return "inv_goodsTransfer/list";
 	}
 		
+		
 	@GetMapping("/exportINVGTExcel")
 	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
 			String fieldName, String sortBy, String dateSelect, String fromDateString, String toDateString)
@@ -277,15 +283,14 @@ public class InventoryGoodsTransferController {
 		String invGTFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		List<InventoryGoodsTransfer> list = inventoryGoodsTransferService.searchFilterBySelection(searchFilter);
 
-		//ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		ByteArrayOutputStream stream = downloadReportsXLS.INVGTReport(list);
 		response.setContentType("text/html");
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
 		response.setHeader("Content-Disposition", "attachment; filename=\"INVGT_Report_" + invGTFileNameDate + ".xlsx\"");
-		//stream.writeTo(outstream);
+		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
 	}
-	
 	
 }

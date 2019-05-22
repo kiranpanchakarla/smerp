@@ -535,9 +535,9 @@ $(document).ready(function(){
             
             $("#uomCategoryId").change(function(){
          	    var id=$('#uomCategoryId').val();
-         		 $("#purchasingUomId").html('<option>Select</option>');
-         		 $("#packingUomId").html('<option>Select</option>');
-         		 $("#inventoryUomId").html('<option>Select</option>');
+         		 $("#purchasingUomId").html('<option value="">--Select--</option>');
+         		 $("#packingUomId").html('<option  value="">--Select--</option>');
+         		 $("#inventoryUomId").html('<option  value="">--Select--</option>');
          	   $.ajax({
                     type : "GET",
                     url : "<c:url value="/product/getUOMList/"/>?id="+$('#uomCategoryId').val(),
@@ -563,7 +563,14 @@ $(document).ready(function(){
          	   
             });
             
-            
+           $("#purchasingUomId").change(function(){
+        	   var id=$('#purchasingUomId').val();
+        	  
+        	   if(id == "--Select--"){
+        		   alert(id);
+        		   $("#purchasingUomId").prop('required',true);
+        	   }
+           });
             
     			  function uomSubCategoryLoadForUpdate(){
     				 $("#purchasingUomId").html('');

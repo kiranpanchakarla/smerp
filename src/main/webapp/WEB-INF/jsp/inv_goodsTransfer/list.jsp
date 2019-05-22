@@ -218,7 +218,7 @@
 		var stringQuery = downloadExcelFileQuery();   /* This function from loadJs.jsp */
 		//alert(stringQuery);
 		
-		a.href = "<c:url value='/invgt/exportINVGTExcel?'/>'/>"+stringQuery;
+		a.href = "<c:url value='/invgt/exportINVGTExcel?'/>"+stringQuery;
 	}
  	
 		$(document).ready(function() {

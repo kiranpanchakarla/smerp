@@ -132,24 +132,11 @@
 				<input type="hidden" id="isConvertedDoc" name="isConvertedDoc" value=""/>
 				</form>
 				
-				<c:choose>
-					<c:when test="${searchFilter.typeOf != 'InventoryGoodsReceipt' && searchFilter.typeOf != 'InventoryGoodsIssue' && searchFilter.typeOf != 'InventoryGoodsTransfer'}">	
-						
-					<c:choose>
-						<c:when test="${searchFilter.isConvertedDoc == 'true'}">
-							
-						</c:when>
-						<c:otherwise>
+				 
 							
 							<div class="col-md-3 col-sm-12"><a href="#"  id="exceldownload" onclick="downloadExcelFile()" class="excel-download exceldownload float-sm-right" title="Excel Report Download">Excel Download</a>
 								</div>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-					<c:otherwise>
-									  <!--  <option value="field">Field Name</option> -->
-					</c:otherwise>
-			</c:choose>
+				 
 			</div>
 
 </div>

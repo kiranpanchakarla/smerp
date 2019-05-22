@@ -14,9 +14,11 @@ import javax.persistence.Query;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.krysalis.barcode4j.impl.postnet.POSTNET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.smerp.model.admin.Department;
 import com.smerp.model.admin.Plant;
 import com.smerp.model.inventory.CreditMemo;
 import com.smerp.model.inventory.GoodsReceipt;
@@ -27,8 +29,15 @@ import com.smerp.model.inventory.LineItemsBean;
 import com.smerp.model.inventory.ProductType;
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
+import com.smerp.model.inventorytransactions.InventoryGoodsIssue;
+import com.smerp.model.inventorytransactions.InventoryGoodsReceipt;
+import com.smerp.model.inventorytransactions.InventoryGoodsTransfer;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.service.admin.DepartmentService;
 import com.smerp.service.inventory.ProductTypeService;
+import com.smerp.service.inventorytransactions.InventoryGoodsIssueService;
+import com.smerp.service.inventorytransactions.InventoryGoodsReceiptService;
+import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
 import com.smerp.service.purchase.CreditMemoService;
 import com.smerp.service.purchase.GoodsReceiptService;
@@ -65,6 +74,18 @@ public class DownloadReportsXLS {
 	
 	@Autowired
 	private ProductTypeService productTypeService;
+	
+	@Autowired
+	private DepartmentService departmentService;
+	
+	@Autowired
+	InventoryGoodsReceiptService inventoryGoodsReceiptService;
+	
+	@Autowired
+	InventoryGoodsIssueService inventoryGoodsIssueService;
+	
+	@Autowired
+	InventoryGoodsTransferService inventoryGoodsTransferService;
 	
 	@PersistenceContext    
 	private EntityManager entityManager;
@@ -112,6 +133,11 @@ public class DownloadReportsXLS {
 	public static final String DOCDATE = "Document Date";
 	public static final String DEPARTMENT = "Department";
 	public static final String PO = "Purchase Order";
+
+	private static final String DOCNUMBER = "Doc#";
+
+	private static final String FROM = "From";
+	private static final String TO = "To";
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -610,5 +636,156 @@ public class DownloadReportsXLS {
 	private String getPGDescription(String group) {
 		String plant = (String) productGroupMap().get(group);
 		return plant;
+	}
+	
+	public Map<Integer, Object> departmentMap() {
+		return departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
+	}
+	
+	private String getDepartment(int id) {
+		String departmentName = (String) departmentMap().get(id);
+		return departmentName;
+	}
+	
+	public ByteArrayOutputStream INVGRReport(List<InventoryGoodsReceipt> invgrList) throws Exception {
+		String excelReport = "";
+		String excelData = "";
+		String concat = "";
+		
+		String heading = SNO + SEMICOLUMN + DOCNUMBER + SEMICOLUMN + DOCDATE+ SEMICOLUMN  + PRODUCTNUMBER + SEMICOLUMN  + PRODUCTDESCRIPTION + SEMICOLUMN + PRODUCTGROUP
+				        + SEMICOLUMN  + UOM + SEMICOLUMN + WAREHOUSE +  SEMICOLUMN + QUANTITY  +  SEMICOLUMN + UNITPRICE +  SEMICOLUMN + TAXDESCRIPTION + SEMICOLUMN +
+				       TAXAMOUNT + SEMICOLUMN + TOTALPAYMENT + SEMICOLUMN + DISCOUNT + SEMICOLUMN + FREIGHT + SEMICOLUMN +  REMARKS + SEMICOLUMN + STATUS  +NEWLINE;
+
+		
+		int index = 1;
+		if (!invgrList.isEmpty() && invgrList != null) {
+			
+			for (InventoryGoodsReceipt list : invgrList) {
+				for(int i=0; i< list.getInventoryGoodsReceiptList().size(); i++) {
+					list = inventoryGoodsReceiptService.getListAmount(list);
+				excelData = index + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getDocNumber())? BLANK : list.getDocNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(sdf.format(list.getDocumentDate()))? BLANK : sdf.format(list.getDocumentDate())) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsReceiptList().get(i).getProductNumber())? BLANK : list.getInventoryGoodsReceiptList().get(i).getProductNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsReceiptList().get(i).getDescription())? BLANK : list.getInventoryGoodsReceiptList().get(i).getDescription()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(getPGDescription(list.getInventoryGoodsReceiptList().get(i).getProductGroup()))? BLANK : getPGDescription(list.getInventoryGoodsReceiptList().get(i).getProductGroup())) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsReceiptList().get(i).getUom())? BLANK : list.getInventoryGoodsReceiptList().get(i).getUom()) + SEMICOLUMN +
+						(getWarehouseName(list.getInventoryGoodsReceiptList().get(i).getWarehouse())==null? BLANK : getWarehouseName(list.getInventoryGoodsReceiptList().get(i).getWarehouse())) + SEMICOLUMN +
+						(list.getInventoryGoodsReceiptList().get(i).getRequiredQuantity()==null? BLANK : list.getInventoryGoodsReceiptList().get(i).getRequiredQuantity()) + SEMICOLUMN + 
+						(list.getInventoryGoodsReceiptList().get(i).getUnitPrice()==null? BLANK : list.getInventoryGoodsReceiptList().get(i).getUnitPrice()) + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsReceiptList().get(i).getTaxDescription())? BLANK : list.getInventoryGoodsReceiptList().get(i).getTaxDescription()) + SEMICOLUMN +
+						(list.getInventoryGoodsReceiptList().get(i).getTaxTotal()==null? ZERO : list.getInventoryGoodsReceiptList().get(i).getTaxTotal()) + SEMICOLUMN + 
+						(list.getInventoryGoodsReceiptList().get(i).getTotal()==null? ZERO : list.getInventoryGoodsReceiptList().get(i).getTotal()) + SEMICOLUMN + 
+						(list.getTotalDiscount()==null? "0" : list.getTotalDiscount()) + SEMICOLUMN +
+						(list.getFreight()==null? ZERO : list.getFreight()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getRemarks().toString())? BLANK : list.getRemarks()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getStatus())? BLANK : list.getStatus()) + SEMICOLUMN +
+						NEWLINE ;
+						
+				concat = concat + excelData;
+				index = index + 1;
+				}
+			}
+				
+		}
+		 
+		excelReport =  heading + concat;
+		ByteArrayOutputStream byteArrayOutputStream =xLSXDownload.preparedDownloadXLS(excelReport);
+		return byteArrayOutputStream;
+	}
+	
+	public ByteArrayOutputStream INVGIReport(List<InventoryGoodsIssue> invgrList) throws Exception {
+		String excelReport = "";
+		String excelData = "";
+		String concat = "";
+		
+		String heading = SNO + SEMICOLUMN + DOCNUMBER + SEMICOLUMN + DOCDATE+ SEMICOLUMN  + PRODUCTNUMBER + SEMICOLUMN  + PRODUCTDESCRIPTION + SEMICOLUMN + PRODUCTGROUP
+				        + SEMICOLUMN  + UOM + SEMICOLUMN + WAREHOUSE + SEMICOLUMN + DEPARTMENT +  SEMICOLUMN + QUANTITY  +  SEMICOLUMN + UNITPRICE +  SEMICOLUMN + TAXDESCRIPTION + SEMICOLUMN +
+				       TAXAMOUNT + SEMICOLUMN + TOTALPAYMENT + SEMICOLUMN + DISCOUNT + SEMICOLUMN + FREIGHT + SEMICOLUMN +  REMARKS + SEMICOLUMN + STATUS  +NEWLINE;
+
+		
+		int index = 1;
+		if (!invgrList.isEmpty() && invgrList != null) {
+			
+			for (InventoryGoodsIssue list : invgrList) {
+				for(int i=0; i< list.getInventoryGoodsIssueList().size(); i++) {
+					list = inventoryGoodsIssueService.getListAmount(list);
+				excelData = index + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getDocNumber())? BLANK : list.getDocNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(sdf.format(list.getDocumentDate()))? BLANK : sdf.format(list.getDocumentDate())) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsIssueList().get(i).getProductNumber())? BLANK : list.getInventoryGoodsIssueList().get(i).getProductNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsIssueList().get(i).getDescription())? BLANK : list.getInventoryGoodsIssueList().get(i).getDescription()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(getPGDescription(list.getInventoryGoodsIssueList().get(i).getProductGroup()))? BLANK : getPGDescription(list.getInventoryGoodsIssueList().get(i).getProductGroup())) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsIssueList().get(i).getUom())? BLANK : list.getInventoryGoodsIssueList().get(i).getUom()) + SEMICOLUMN +
+						(getWarehouseName(list.getInventoryGoodsIssueList().get(i).getWarehouse())==null? BLANK : getWarehouseName(list.getInventoryGoodsIssueList().get(i).getWarehouse())) + SEMICOLUMN +
+						(getDepartment(list.getInventoryGoodsIssueList().get(i).getDepartment())==null? BLANK : getDepartment(list.getInventoryGoodsIssueList().get(i).getDepartment())) + SEMICOLUMN +
+						(list.getInventoryGoodsIssueList().get(i).getRequiredQuantity()==null? BLANK : list.getInventoryGoodsIssueList().get(i).getRequiredQuantity()) + SEMICOLUMN + 
+						(list.getInventoryGoodsIssueList().get(i).getUnitPrice()==null? BLANK : list.getInventoryGoodsIssueList().get(i).getUnitPrice()) + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsIssueList().get(i).getTaxDescription())? BLANK : list.getInventoryGoodsIssueList().get(i).getTaxDescription()) + SEMICOLUMN +
+						(list.getInventoryGoodsIssueList().get(i).getTaxTotal()==null? ZERO : list.getInventoryGoodsIssueList().get(i).getTaxTotal()) + SEMICOLUMN + 
+						(list.getInventoryGoodsIssueList().get(i).getTotal()==null? ZERO : list.getInventoryGoodsIssueList().get(i).getTotal()) + SEMICOLUMN + 
+						(list.getTotalDiscount()==null? "0" : list.getTotalDiscount()) + SEMICOLUMN +
+						(list.getFreight()==null? ZERO : list.getFreight()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getRemarks().toString())? BLANK : list.getRemarks()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getStatus())? BLANK : list.getStatus()) + SEMICOLUMN +
+						NEWLINE ;
+						
+				concat = concat + excelData;
+				index = index + 1;
+				}
+			}
+				
+		}
+		 
+		excelReport =  heading + concat;
+		ByteArrayOutputStream byteArrayOutputStream =xLSXDownload.preparedDownloadXLS(excelReport);
+		return byteArrayOutputStream;
+	}
+	
+	public ByteArrayOutputStream INVGTReport(List<InventoryGoodsTransfer> invgrList) throws Exception {
+		String excelReport = "";
+		String excelData = "";
+		String concat = "";
+		
+		String heading = SNO + SEMICOLUMN + DOCNUMBER + SEMICOLUMN + DOCDATE+ SEMICOLUMN  + PRODUCTNUMBER + SEMICOLUMN  + PRODUCTDESCRIPTION + SEMICOLUMN + 
+				         UOM + SEMICOLUMN + FROM +WAREHOUSE + SEMICOLUMN + TO + WAREHOUSE +  SEMICOLUMN + QUANTITY  +  SEMICOLUMN + UNITPRICE +  SEMICOLUMN + TAXDESCRIPTION + SEMICOLUMN +
+				       TAXAMOUNT + SEMICOLUMN + TOTALPAYMENT + SEMICOLUMN + DISCOUNT + SEMICOLUMN + FREIGHT + SEMICOLUMN +  REMARKS + SEMICOLUMN + STATUS  +NEWLINE;
+
+		
+		int index = 1;
+		if (!invgrList.isEmpty() && invgrList != null) {
+			
+			for (InventoryGoodsTransfer list : invgrList) {
+				for(int i=0; i< list.getInventoryGoodsTransferList().size(); i++) {
+					list = inventoryGoodsTransferService.getListAmount(list);
+				excelData = index + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getDocNumber())? BLANK : list.getDocNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(sdf.format(list.getDocumentDate()))? BLANK : sdf.format(list.getDocumentDate())) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsTransferList().get(i).getProductNumber())? BLANK : list.getInventoryGoodsTransferList().get(i).getProductNumber()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsTransferList().get(i).getDescription())? BLANK : list.getInventoryGoodsTransferList().get(i).getDescription()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsTransferList().get(i).getUom())? BLANK : list.getInventoryGoodsTransferList().get(i).getUom()) + SEMICOLUMN +
+						(getWarehouseName(list.getInventoryGoodsTransferList().get(i).getFromWarehouse())==null? BLANK : getWarehouseName(list.getInventoryGoodsTransferList().get(i).getFromWarehouse())) + SEMICOLUMN +
+						(getWarehouseName(list.getInventoryGoodsTransferList().get(i).getToWarehouse())==null? BLANK : getWarehouseName(list.getInventoryGoodsTransferList().get(i).getToWarehouse())) + SEMICOLUMN +
+						(list.getInventoryGoodsTransferList().get(i).getRequiredQuantity()==null? BLANK : list.getInventoryGoodsTransferList().get(i).getRequiredQuantity()) + SEMICOLUMN + 
+						(list.getInventoryGoodsTransferList().get(i).getUnitPrice()==null? BLANK : list.getInventoryGoodsTransferList().get(i).getUnitPrice()) + SEMICOLUMN + 
+						(StringUtil.isEmptyTrim(list.getInventoryGoodsTransferList().get(i).getTaxDescription())? BLANK : list.getInventoryGoodsTransferList().get(i).getTaxDescription()) + SEMICOLUMN +
+						(list.getInventoryGoodsTransferList().get(i).getTaxTotal()==null? ZERO : list.getInventoryGoodsTransferList().get(i).getTaxTotal()) + SEMICOLUMN + 
+						(list.getInventoryGoodsTransferList().get(i).getTotal()==null? ZERO : list.getInventoryGoodsTransferList().get(i).getTotal()) + SEMICOLUMN + 
+						(list.getTotalDiscount()==null? "0" : list.getTotalDiscount()) + SEMICOLUMN +
+						(list.getFreight()==null? ZERO : list.getFreight()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getRemarks().toString())? BLANK : list.getRemarks()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getStatus())? BLANK : list.getStatus()) + SEMICOLUMN +
+						NEWLINE ;
+						
+				concat = concat + excelData;
+				index = index + 1;
+				}
+			}
+				
+		}
+		 
+		excelReport =  heading + concat;
+		ByteArrayOutputStream byteArrayOutputStream =xLSXDownload.preparedDownloadXLS(excelReport);
+		return byteArrayOutputStream;
 	}
 }

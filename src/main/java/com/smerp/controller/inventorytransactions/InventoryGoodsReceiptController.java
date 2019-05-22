@@ -265,12 +265,12 @@ public class InventoryGoodsReceiptController {
 		String invGRFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.searchFilterBySelection(searchFilter);
 
-		//ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		ByteArrayOutputStream stream = downloadReportsXLS.INVGRReport(list);
 		response.setContentType("text/html");
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
 		response.setHeader("Content-Disposition", "attachment; filename=\"INVGR_Report_" + invGRFileNameDate + ".xlsx\"");
-		//stream.writeTo(outstream);
+		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
 	}

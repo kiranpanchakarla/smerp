@@ -2027,10 +2027,9 @@ function removeData(index){
 		$("#form").validator("update");
 } */
 
-//for service - not using
-function removeData1(index){
+/* function removeData1(index){
 	//alert("ff"+index);
-	setCalculationAmt(index);
+	//setCalculationAmt(index);
 	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
 		$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	}else{
@@ -2039,24 +2038,21 @@ function removeData1(index){
 	$("#form").validator("update");
 }
 
-//for service - not using
 function removeData2(index){
 	//alert("ff"+index);
-	setCalculationAmt(index);
+	//setCalculationAmt(index);
 	var rowCount = $('#edit_item_serviceTbl tr').length-2;
 	if(rowCount==0){
 		$('#edit_item_serviceTbl input[type="text"]').val('');
-		//alert($('.warehouse').val());
 		$('.warehouse').prop('selectedIndex',0);
 		alert($('.taxCode').val());
-		//$('.taxCode').prop('selectedIndex',0);
 		return false;
 	}
 	
 	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
 	$("#form").validator("update");
 }
-
+ */
 
 </script>
 

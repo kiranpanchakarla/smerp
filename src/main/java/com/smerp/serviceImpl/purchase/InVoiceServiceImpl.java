@@ -156,7 +156,7 @@ public class InVoiceServiceImpl  implements InVoiceService {
 			List<InVoiceLineItems> listItems = inVoice.getInVoiceLineItems();
 			if (listItems != null) {
 				for (int i = 0; i < listItems.size(); i++) {
-					if (listItems.get(i).getProdouctNumber() == null && listItems.get(i).getSacCode() == null) {
+					if (listItems.get(i).getProdouctNumber() == null) {
 						listItems.remove(i);
 						i--;
 					}

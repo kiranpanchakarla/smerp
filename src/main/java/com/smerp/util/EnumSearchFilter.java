@@ -26,6 +26,7 @@ public enum EnumSearchFilter {
 	REQUESTERLNAME("requesterLName"),
 	SECONDLEVELENABLE("secondLevelEnable"),
 	TRUE("true"),
+	SELECT("select"),
 	POREPORTVENDOR("vw_vendor_wise_po_report"),
 	INVREPORTVENDOR("vw_vendor_wise_inv_report"),
 	POREPORTPRODUCT("vw_product_wise_po_report"),

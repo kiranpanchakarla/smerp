@@ -13,12 +13,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smerp.model.admin.Plant;
 import com.smerp.model.reports.InventoryGoodsIssueReport;
 import com.smerp.model.reports.InventoryProductReport;
 import com.smerp.model.reports.InventoryWarehouseReport;
 import com.smerp.model.reports.ProductWiseReport;
 import com.smerp.model.search.SearchFilter;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.reports.InventoryProductReportService;
+import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.GetReportFilterResult;
 @Service
 public class InventoryProductReportServiceImpl implements InventoryProductReportService {
@@ -30,6 +33,9 @@ private static final Logger logger = LogManager.getLogger(InventoryProductReport
 	
 	@Autowired
 	private GetReportFilterResult getSearchFilterResult;
+	
+	@Autowired
+	PlantService plantService;
 
 	@Override
 	public ArrayList<Object[]> getProductList() {
@@ -50,9 +56,16 @@ private static final Logger logger = LogManager.getLogger(InventoryProductReport
 		if (searchFilter.getToDate() == null) {
 			searchFilter.setToDate(new Date());
 		}
+		
 
 		searchFilter.setTypeOf(typeOf);
 		ArrayList<Object[]> arrayList = new ArrayList<>();
+		
+		if(!searchFilter.getSortBy().equals(EnumSearchFilter.SELECT.getStatus())) {
+			Plant getPlant = plantService.findById(Integer.parseInt(searchFilter.getSortBy()));
+			searchFilter.setSortBy(getPlant.getPlantName());
+		} 
+		
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForInvProductReports(searchFilter);
 

@@ -278,11 +278,82 @@ $('#freight').keyup(function() {
 	
 	} 
 	
+	function removeAmt(){
+		 var sum_total = 0;
+		 var sum_tax_total = 0;
+		 var rowCount = $('#itemTbl tr').length-2;
+		 //alert("rowCount1 "+rowCount);
+		 
+		 var rowCount = $('#edit_item_serviceTbl tr').length-2;
+		// alert("rowCount2 "+rowCount);
+		 
+	  	 $(".total").each(function(row) {
+	  		//alert("ttt-->" +isNaN($(this).val()));
+	  		 sum_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+			    });
+	  	 
+	  	 $(".taxTotal").each(function(row) {
+	  		 sum_tax_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+	 		    });
+	  	// alert(sum_total);
+	  	// alert(sum_tax_total);
+	  	 
+	  	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+	  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+	  	 
+	var discount_val = $("#totalDiscount").val();
+	var discount = Number(discount_val) / 100;
+	var totalPayment = parseFloat(sum_total) - parseFloat(sum_total * discount);
+	totalPayment += sum_tax_total;
+	if( $("#freight").val()!="") {
+		totalPayment += parseFloat(Math.round($("#freight").val()));
+	}
+	if(sum_total!="") {
+	 $("#totalPayment").val(Math.round(totalPayment));
+	 $("#amtRounding").val( totalPayment);
+	 $("#roundedOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
+	}
+
+} 
+
+	function removeAmt2(){
+		 var sum_total = 0;
+		 var sum_tax_total = 0;
+		 var rowCount = $('#edit_item_serviceTbl tr').length-2;
+		// alert("rowCount2 "+rowCount);
+	  	 $(".total").each(function(row) {
+	  		///alert("ttt-->" +isNaN($(this).val()));
+	  		 sum_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+			    });
+	  	 
+	  	 $(".taxTotal").each(function(row) {
+	  		 sum_tax_total += parseFloat((isNaN($(this).val())) ? 0 : $(this).val());
+	 		    });
+	  	// alert(sum_total);
+	  	// alert(sum_tax_total);
+	  	 
+	  	 $("#taxAmt").val(parseFloat(sum_tax_total).toFixed(2));
+	  	 $("#totalBeforeDisAmt").val(parseFloat(sum_total).toFixed(2));
+	  	 
+	var discount_val = $("#totalDiscount").val();
+	var discount = Number(discount_val) / 100;
+	var totalPayment = parseFloat(sum_total) - parseFloat(sum_total * discount);
+  
+	if( $("#freight").val()!="") {
+		totalPayment += parseFloat(Math.round($("#freight").val()));
+	}
+	if(sum_total!="") {
+	 $("#totalPayment").val(Math.round(totalPayment));
+	 $("#amtRounding").val( totalPayment);
+	 $("#rounderOff").val(parseFloat(Math.round(totalPayment) - totalPayment).toFixed(2));
+	}
+
+} 
 	function removeData(index){
 		//alert("ff"+index);
 		
 		var rowCount = $('#itemTbl tr').length-2;
-		setCalculationAmt(rowCount);
+		//setCalculationAmt(rowCount);
 		if(rowCount==0){
 			$('#itemTbl input[type="text"]').val('');
 			$('.warehouse').prop('selectedIndex',0);
@@ -290,12 +361,45 @@ $('#freight').keyup(function() {
 			return false;
 		}
 			if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
-				$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+				$('#edit_item_serviceTbl tr.multTot'+index).remove();
+				removeAmt();
 			}else{
 				$('table#itemTbl tr.multTot'+index).remove();
+				removeAmt();
 			}
 			$("#form").validator("update");
 	}
+	
+	function removeData1(index){
+		//alert("ff"+index);
+		//setCalculationAmt(index);
+		if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
+			$('table#edit_item_serviceTbl tr.multTot'+index).remove();
+			removeAmt();
+		}else{
+			$('table#serviceTbl tr.multTot'+index).remove();
+			removeAmt2();
+		}
+		$("#form").validator("update");
+	}
+
+	function removeData2(index){
+		//alert("ff"+index);
+		//setCalculationAmt(index);
+		var rowCount = $('#edit_item_serviceTbl tr').length-2;
+		//alert("rowCount"+rowCount);
+		if(rowCount==0){
+			$('#edit_item_serviceTbl input[type="text"]').val('');
+			$('.warehouse').prop('selectedIndex',0);
+			alert($('.taxCode').val());
+			return false;
+		}
+		
+		$('#edit_item_serviceTbl tr.multTot'+index).remove();
+		removeAmt();
+		$("#form").validator("update");
+	}
+
 	
 	$(document).on("keypress", ".validatePrice", function(e) {	
 		if (this.value.length == 0 && e.which == 48 ){

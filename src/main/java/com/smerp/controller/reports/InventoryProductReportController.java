@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.smerp.model.admin.Plant;
 import com.smerp.model.reports.InventoryProductReport;
 import com.smerp.model.reports.VendorWiseReport;
 import com.smerp.model.search.SearchFilter;
+import com.smerp.service.master.PlantService;
 import com.smerp.service.reports.InventoryProductReportService;
 import com.smerp.util.DownloadProductXLS;
 import com.smerp.util.EnumSearchFilter;
@@ -40,6 +44,9 @@ public class InventoryProductReportController {
 	@Autowired
 	private DownloadProductXLS downloadProductXLS;
 	
+	@Autowired
+	PlantService plantService;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,7 +58,7 @@ public class InventoryProductReportController {
 		 
 		searchFilter.setTypeOf(EnumSearchFilter.INVPRODUCTREPORT.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
-		
+		model.addAttribute("plantMap", plantMap());
 		return "inventoryReports/productReport/list";
 	}
 	
@@ -62,7 +69,7 @@ public class InventoryProductReportController {
 			
 			List<InventoryProductReport> productList = inventoryProductReportService.productReportList(fullList);
 			model.addAttribute("productList", productList);
-			
+			model.addAttribute("plantMap", plantMap());
 			  
 			model.addAttribute("searchFilter", searchFilter);
 			return "inventoryReports/productReport/list";
@@ -115,5 +122,9 @@ public class InventoryProductReportController {
 		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
+	}
+	
+	public Map<Integer, Object> plantMap() {
+		return plantService.findAll().stream().collect(Collectors.toMap(Plant::getId, Plant::getPlantName));
 	}
 }

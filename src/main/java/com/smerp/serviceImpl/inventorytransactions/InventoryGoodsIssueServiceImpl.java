@@ -87,8 +87,9 @@ public class InventoryGoodsIssueServiceImpl implements InventoryGoodsIssueServic
 		 List<InventoryGoodsIssueList> listItems = inventoryGoodsIssue.getInventoryGoodsIssueList();
 		if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
-				if (listItems.get(i).getProductNumber() == null  && listItems.get(i).getRequiredQuantity() == null) {
+				if (listItems.get(i).getProductNumber() == null) {
 					listItems.remove(i);
+					i--;
 				}
 			}
 			inventoryGoodsIssue.setInventoryGoodsIssueList(listItems);

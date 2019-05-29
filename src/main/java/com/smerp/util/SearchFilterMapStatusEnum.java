@@ -31,7 +31,7 @@ public enum SearchFilterMapStatusEnum {
 	MAINOFFICE("Main Office","Main Office"),
 	INVDOCNUMBER("doc_number","doc_number"),
 	INVDOCDATE("doc_date","document_date"),
-	INVPLANT("plant","plant_name"),
+	INVPLANT("plant_name","plant_name"),
 	INVDEPARTMENT("department","department_name");
 	
 	private String status;

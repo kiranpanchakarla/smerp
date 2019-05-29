@@ -37,6 +37,8 @@ public class DownloadProductXLS {
 	public static final String REMARKS = "Remarks";
 	public static final String YELAMANCHILI ="Yelamanchili";
 	public static final String MADURAWADA ="Madurawada";
+
+	private static final String WAREHOUSE   = "Warehouse";
 	
 	public ByteArrayOutputStream InventoryProductsReport(List<InventoryProductsList> productList) throws Exception {
 		String excelReport = "";
@@ -101,7 +103,7 @@ public class DownloadProductXLS {
 		String excelData = "";
 		String concat = "";
 		String heading = SNO + SEMICOLUMN + PRODUCTNUMBER + SEMICOLUMN  + PRODUCTDESCRIPTION + SEMICOLUMN + PRODUCTGROUP
-				+ SEMICOLUMN  + UOM + SEMICOLUMN  + INSTOCK + SEMICOLUMN + PRODUCTCOST + SEMICOLUMN + STOCKVALUE +  NEWLINE;
+				+ SEMICOLUMN  + UOM + SEMICOLUMN  +WAREHOUSE + SEMICOLUMN  + INSTOCK + SEMICOLUMN + PRODUCTCOST + SEMICOLUMN + STOCKVALUE +  NEWLINE;
 
 		int index = 1;
 		if (!productList.isEmpty() && productList != null) {
@@ -111,6 +113,7 @@ public class DownloadProductXLS {
 						(StringUtil.isEmptyTrim(list.getDescription())? BLANK : list.getDescription()) + SEMICOLUMN +
 						(StringUtil.isEmptyTrim(list.getProductGroup())? BLANK : list.getProductGroup()) + SEMICOLUMN +
 						(StringUtil.isEmptyTrim(list.getUomName())? BLANK : list.getUomName()) + SEMICOLUMN +
+						(StringUtil.isEmptyTrim(list.getPlantName())? BLANK : list.getPlantName()) + SEMICOLUMN +
 						(list.getInStockQty()==null? BLANK : list.getInStockQty()) + SEMICOLUMN +
 						(list.getProductCost()==null? BLANK : list.getProductCost()) + SEMICOLUMN +
 						(list.getStockValue()==null? BLANK : list.getStockValue()) + 

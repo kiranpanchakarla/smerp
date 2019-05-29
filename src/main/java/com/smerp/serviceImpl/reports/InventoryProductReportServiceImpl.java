@@ -57,22 +57,25 @@ private static final Logger logger = LogManager.getLogger(InventoryProductReport
 			searchFilter.setToDate(new Date());
 		}
 		
-
+        String id = searchFilter.getSortBy();
 		searchFilter.setTypeOf(typeOf);
+		
+		if(searchFilter.getTypeOf().equals(EnumSearchFilter.INVPRODUCTREPORT.getStatus())) {
+			if(!searchFilter.getSortBy().equals(EnumSearchFilter.SELECT.getStatus())) {
+				Plant getPlant = plantService.findById(Integer.parseInt(searchFilter.getSortBy()));
+				searchFilter.setSortBy(getPlant.getPlantName());
+			} 
+		}
+		
+		
 		ArrayList<Object[]> arrayList = new ArrayList<>();
-		
-		if(!searchFilter.getSortBy().equals(EnumSearchFilter.SELECT.getStatus())) {
-			Plant getPlant = plantService.findById(Integer.parseInt(searchFilter.getSortBy()));
-			searchFilter.setSortBy(getPlant.getPlantName());
-		} 
-		
 
 		String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelectionForInvProductReports(searchFilter);
 
 		Query query = entityManager.createNativeQuery(resultQuery);
 		arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());
-
+		searchFilter.setSortBy(id);
 	  return arrayList;
 	}
 

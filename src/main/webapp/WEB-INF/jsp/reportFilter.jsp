@@ -75,7 +75,7 @@
 											<option value="product_no">Product Number</option>
 											<option value="product_description">Description</option>
 											<option value="product_group">Product Group</option>
-											<option value="plant">Warehouse</option>
+											<option value="plant_name">Warehouse</option>
 											<option value="department">Department</option>
 										</c:when>
 										<c:otherwise>

@@ -10,7 +10,7 @@ CREATE OR REPLACE VIEW vw_inv_stock_qty_report AS
     vw.product_description,
     vw.product_group_description,
     vw.uom_name,
-    vw.instock_quantity,
+    vw.instock_quantity::double precision AS instock_quantity,
     prod.product_cost,
     COALESCE(prod.product_cost * vw.instock_quantity::double precision, 0::double precision) AS stock_value
    FROM vw_inventory_status_report vw

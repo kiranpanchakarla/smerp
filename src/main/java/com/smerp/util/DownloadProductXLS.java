@@ -37,8 +37,8 @@ public class DownloadProductXLS {
 	public static final String REMARKS = "Remarks";
 	public static final String YELAMANCHILI ="Yelamanchili";
 	public static final String MADURAWADA ="Madurawada";
-
 	private static final String WAREHOUSE   = "Warehouse";
+	private static final String MAINOFFICE = "Main Office";
 	
 	public ByteArrayOutputStream InventoryProductsReport(List<InventoryProductsList> productList) throws Exception {
 		String excelReport = "";
@@ -133,7 +133,8 @@ public class DownloadProductXLS {
 		String excelData = "";
 		String concat = "";
 		String heading = SNO + SEMICOLUMN + PRODUCTNUMBER + SEMICOLUMN  + PRODUCTDESCRIPTION + SEMICOLUMN + PRODUCTGROUP
-				+ SEMICOLUMN  + UOM + SEMICOLUMN  + INSTOCK + SEMICOLUMN + MADURAWADA + SEMICOLUMN + YELAMANCHILI +  NEWLINE;
+				+ SEMICOLUMN  + UOM + SEMICOLUMN  + INSTOCK + SEMICOLUMN + MADURAWADA + SEMICOLUMN + YELAMANCHILI +  
+				SEMICOLUMN + MAINOFFICE + NEWLINE;
 
 		int index = 1;
 		if (!productList.isEmpty() && productList != null) {
@@ -145,7 +146,8 @@ public class DownloadProductXLS {
 						(StringUtil.isEmptyTrim(list.getUomName())? BLANK : list.getUomName()) + SEMICOLUMN +
 						(list.getInStockQty()==null? BLANK : list.getInStockQty()) + SEMICOLUMN +
 						(list.getMadurawada()==null? BLANK : list.getMadurawada()) + SEMICOLUMN +
-						(list.getYelamanchili()==null? BLANK : list.getYelamanchili()) + 
+						(list.getYelamanchili()==null? BLANK : list.getYelamanchili()) + SEMICOLUMN +
+						(list.getMainOffice()==null? BLANK : list.getMainOffice()) + 
 						NEWLINE ;
 						
 				concat = concat + excelData;

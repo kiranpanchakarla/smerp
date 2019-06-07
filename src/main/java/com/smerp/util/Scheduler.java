@@ -95,51 +95,9 @@ public class Scheduler {
 
 	}
 
-	//@Scheduled(cron = "0 54 18 * * *")
-	public void sendTestEmail3() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		Date now = new Date();
-		String strDate = sdf.format(now);
-		logger.info("sendTestEmail : " + strDate);
+	
 
-		try {
-			RequestContext.initialize();
-			emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendTestEmail();// Email
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 
-	}
 
-	//@Scheduled(cron = "0 9 19 * * *")
-	public void sendTestEmail1() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		Date now = new Date();
-		String strDate = sdf.format(now);
-		logger.info("sendTestEmail : " + strDate);
-
-		try {
-			RequestContext.initialize();
-			emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendTestEmail();// Email
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	//@Scheduled(cron = "0 24 19 * * *")
-	public void sendTestEmail2() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		Date now = new Date();
-		String strDate = sdf.format(now);
-		logger.info("sendTestEmail : " + strDate);
-
-		try {
-			RequestContext.initialize();
-			emailGenerator.sendEmailToUser(EmailGenerator.Sending_Email).sendTestEmail();// Email
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 }

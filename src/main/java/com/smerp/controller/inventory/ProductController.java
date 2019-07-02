@@ -184,6 +184,10 @@ public class ProductController {
 	public String  setProductNo(String productGroup) {
 		logger.info("productGroup" + productGroup);
 		Product product = productService.findLastCodeNumber(productGroup);
+		if(product == null) {
+			ProductType type = productTypeService.findByName(productGroup);
+			productGroup =  type.getProductName();
+		}
 		return GenerateDocNumber.autoGenereater(""+EnumStatusUpdate.PGP, product == null ? productGroup :  product.getProductNo());
 	}
 	

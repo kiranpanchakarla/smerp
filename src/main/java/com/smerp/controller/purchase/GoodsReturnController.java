@@ -93,12 +93,8 @@ public class GoodsReturnController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		GoodsReturn gre = goodsReturnService.getGoodsReturnById(Integer.parseInt(id));
-		logger.info("11111 gre-->");
-		logger.info("New gre-->" + gre);
 		gre = goodsReturnService.getListAmount(gre);  // set Amt Calculation  
-		logger.info("gre-->" + gre);
 		ObjectMapper mapper = poloadData(model, gre);
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
@@ -124,9 +120,6 @@ public class GoodsReturnController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-	
 		
 		model.addAttribute("goodsReturnLineItems", gre.getGoodsReturnLineItems());
 		return mapper;
@@ -134,10 +127,8 @@ public class GoodsReturnController {
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		GoodsReturn gre = goodsReturnService.findById(Integer.parseInt(id));
 		gre = goodsReturnService.getListAmount(gre);
-		logger.info("gre-->" + gre);
 		poloadData(model, gre);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("gre", gre);
@@ -148,7 +139,6 @@ public class GoodsReturnController {
 
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
-		logger.info("Delete msg");
 		goodsReturnService.delete(id);
 		return "redirect:list";
 	}
@@ -156,32 +146,27 @@ public class GoodsReturnController {
 	
 	@PostMapping("/save")
 	public String name(GoodsReturn goodsReturn) {
-		logger.info("Inside save method" + goodsReturn);
-		logger.info("gre details" + goodsReturnService.save(goodsReturn));
+		goodsReturnService.save(goodsReturn);
 		return "redirect:list";
 	}
 	
 	@PostMapping("/saveGRtoGRE")
 	public String savePRtoRFQ(HttpServletRequest request,GoodsReceipt goodsReceipt) {
 		String greId = request.getParameter("greId");
-		logger.info("goodsReceipt" + goodsReceipt);
-		logger.info("greId view-->" + greId);
 		GoodsReturn gre = goodsReturnService.saveGRE(greId);
 		return "redirect:edit?id="+gre.getId();
 	}
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		
-		logger.info("gre details" + goodsReturnService.saveCancelStage(id));
+		goodsReturnService.saveCancelStage(id);
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model,SearchFilter searchFilter) {
 		List<GoodsReturn> list = goodsReturnService.findByIsActive();
-		logger.info("list"+list);
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "goodsReturn/list";
@@ -206,9 +191,7 @@ public Map<Object,Double> taxCode() {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		logger.info("id -->" + id);
 		GoodsReturn gre = goodsReturnService.findById(Integer.parseInt(id));
-		logger.info("goodsReturn -->" + gre);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -216,7 +199,6 @@ public Map<Object,Double> taxCode() {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForGoodsReturn(pdfUploadedPath,gre);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -234,7 +216,6 @@ public Map<Object,Double> taxCode() {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<GoodsReturn> list = goodsReturnService.searchFilterBySelection(searchFilter);
-		logger.info("list" + list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		return "goodsReturn/list";

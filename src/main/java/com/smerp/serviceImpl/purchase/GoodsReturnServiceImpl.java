@@ -59,7 +59,7 @@ import com.smerp.util.UnitPriceListItems;
 @Transactional
 public class GoodsReturnServiceImpl  implements GoodsReturnService {
 
-	private static final Logger logger = LogManager.getLogger(RequestForQuotationServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(GoodsReturnServiceImpl.class);
 
 	@Autowired
 	private GoodsReturnRepository goodsReturnRepository;
@@ -167,7 +167,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			goodsReturn.setPlant(goodsReturn.getGrId().getPlant());
 			}
 		}
-         logger.info("goodsReturn -->" +goodsReturn);
 		/*Vendor vendor = vendorService.findById(goodsReturn.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(goodsReturn.getVendorShippingAddress().getId());
 		VendorAddress vendorPayAddress = vendorAddressService.findById(goodsReturn.getVendorPayTypeAddress().getId());
@@ -200,7 +199,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		 if(goodsReturn.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 			 
 		 if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus()) ) {  
@@ -255,8 +253,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			
 			goodsReceipt = goodsReceiptService.setStatusOfGoodsReceipt(goodsReceipt);
 			
-			logger.info("purchaseOrder -->" +purchaseOrder);
-			logger.info("goodsReceipt -->" +goodsReceipt);
 			}
 			
 		}
@@ -360,7 +356,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		 if(gre.getPlant().getId()==2) {   //FOR Yelamanchili
 			 
 			 boolean checkMultiApp = checkUserPermissionUtil.checkMultiAppPermission();
-			 logger.info("checkMultiApp-->" +checkMultiApp);
 			 
 			 
 		/* if(gre.getStatus().equals(EnumStatusUpdate.OPEN.getStatus()) ) {  
@@ -392,7 +387,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		 }
 		 
 		 /*  Multi Level Approved .. End*/
-		logger.info("gre" + gre);
 		gre.setCategory("Item");
 		gre = goodsReturnRepository.save(gre);
 		
@@ -407,7 +401,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	
 	public String  setStatusOfPurchaseOrder(GoodsReturn goodsReturn) {
-		logger.info("set Status-->");
 		String status="";
 		//PurchaseOrder purchaseOrder = purchaseOrderService.findById(goodsReturn.getPoId());
 		PurchaseOrder purchaseOrder =null;
@@ -444,7 +437,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		}else {  // No gre list
         	status = EnumStatusUpdate.APPROVEED.getStatus();
         }
-    	logger.info("status-->" + status);
 		return status;
 	}
 
@@ -467,7 +459,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			}
 		}
 		
-		logger.info("poListData-->" + poListData);
 		return poListData;
 	}
 	
@@ -478,7 +469,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 																											// Multiple
 		greMapListData = getGoodsReturnRealQunatityList(goodReceipt, greMapListData, listGoodsReturn);
 		
-		logger.info("greMapListData-->" + greMapListData);
 
 		return greMapListData;
 	}
@@ -491,7 +481,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 																											// Quantity
 		greMapListData = getGoodsReturnRealQunatityList(goodReceipt, greMapListData, listGoodsReturn);
 		
-		logger.info("greMapListData-->" + greMapListData);
 
 		return greMapListData;
 	}
@@ -503,7 +492,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			List<GoodsReturnLineItems> goodsReturnLineItems = goodsReturnObj.getGoodsReturnLineItems();
 			for (int j = 0; j < goodsReturnLineItems.size(); j++) {
 				GoodsReturnLineItems grelist = goodsReturnLineItems.get(j);
-				logger.info("grelist===>" + grelist);
 				String key = "";
 				
 				if( grelist.getProdouctNumber()!=null) {
@@ -584,11 +572,9 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	     
 	 	String sqlList= " select product_number,current_quantity,creditmemo_quantity,product_tax,product_cost_tax from vw_goods_received_lineitems_amount where id= " +goodsReturn.getGrId().getId();
 	 	String productNumber ="";
-	    logger.info("sqlList ----> " + sqlList);
 	    Query queryList = entityManager.createNativeQuery(sqlList);
 	      List<Object[]>    invoiceList = queryList.getResultList();
 	        
-	    logger.info("invoiceList Size -----> " + invoiceList.size());
 	    
 	     Map<String, Integer> grListData = new LinkedHashMap<>();
 	     for(Object[] tuple : invoiceList) {
@@ -601,7 +587,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	    	 GoodsReturnLineItems invlist = listItems.get(i);
 	        
 	        for(Map.Entry m:grListData.entrySet()){
-	               logger.info("Keys & Values" +m.getKey()+" "+m.getValue());
 	               if(invlist.getProdouctNumber().equals(m.getKey())) {
 	                   invlist.setTempRequiredQuantity((Integer)m.getValue());    
 	                 }
@@ -613,7 +598,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	@Override
 	public GoodsReturn getListAmount(GoodsReturn goodsReturn) {
-		logger.info("getListAmount-->");
 		List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
 		
 		List<GoodsReturnLineItems> addListItems = new ArrayList<GoodsReturnLineItems>();
@@ -648,8 +632,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 					 greQunatity = getListGoodsProductCount(listGoodsReturn,  grItms.get(i).getSacCode());
 				} }
 				
-				logger.info("GRItms.get(i).getRequiredQuantity()-->" + grItms.get(i).getRequiredQuantity());
-				logger.info("greQunatity-->" + greQunatity);
 				/*if(goodsReturn.getStatus().equals(EnumStatusUpdate.APPROVEED.getStatus())) {
 					grelist.setTempRequiredQuantity(grItms.get(i).getRequiredQuantity() - greQunatity);
 					}else 
@@ -669,9 +651,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		}
 		goodsReturn.setTotalBeforeDisAmt(addAmt);
 		goodsReturn.setTaxAmt(""+addTaxAmt);
-		logger.info("addAmt-->" + addAmt); 
-		logger.info("goodsReturn.getTotalDiscount()-->" + goodsReturn.getTotalDiscount());
-		logger.info("goodsReturn.getFreight()-->" + goodsReturn.getFreight());
 		Double total_amt=0.0;
 		Double total_payment = 0.0;
 		if(goodsReturn.getTotalDiscount()==null) goodsReturn.setTotalDiscount(0.0);
@@ -735,7 +714,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	public Boolean checkQuantityGr(GoodsReceipt goodsReceipt) {
 		List<GoodsReturn> listGoodsReturn = goodsReturnRepository
 				.findByListgrId(goodsReceipt,EnumStatusUpdate.REJECTED.getStatus());
-		logger.info("listGoodsReturn-->" +listGoodsReturn);
 		
 	/*	String status = setStatusOfPurchaseOrder(listGoodsReturn.get(0));
 		logger.info("status-->" +status); //Test the Status if you want  */
@@ -755,7 +733,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 		if (listGoodsReturn != null) {
 			for (int i = 0; i < listGoodsReturn.size(); i++) {
 				GoodsReturn  goodsReturn = listGoodsReturn.get(i);
-				logger.info("goodsReturn-->" +goodsReturn);
 				List<GoodsReturnLineItems> listItems = goodsReturn.getGoodsReturnLineItems();
 			for (int j = 0; j < listItems.size(); j++) {
 				GoodsReturnLineItems grelist = listItems.get(j);
@@ -765,7 +742,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			}
 		  }
 		}
-		logger.info("greQunatity===>" +greQunatity);
 		return greQunatity;
 	}
 
@@ -774,18 +750,15 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 	
 	private Integer getListGoodsProductCount(List<GoodsReturn> listGoodsReturn, String category) {
 		Integer qunatity = 0;
-		logger.info("category===>" +category);
 	
 		for (int i = 0; i < listGoodsReturn.size(); i++) {
 			GoodsReturn goodsReturnObj = listGoodsReturn.get(i);
 			List<GoodsReturnLineItems> goodsReturnLineItems = goodsReturnObj.getGoodsReturnLineItems();
 			for (int j = 0; j < goodsReturnLineItems.size(); j++) {
 				GoodsReturnLineItems grelist = goodsReturnLineItems.get(j);
-				logger.info("grelist===>" +grelist);
 				if (grelist.getRequiredQuantity() != null) {
 					if (category.equals(grelist.getProdouctNumber()) || category.equals(grelist.getSacCode()))
 						qunatity += grelist.getRequiredQuantity();
-					    logger.info("greQunatity===>" +qunatity);
 				}
 			}
 		}
@@ -811,7 +784,6 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 			}
 		}
 		
-		logger.info("grQunatity===>" +grQunatity);
 		return grQunatity;
 	}
 	
@@ -842,9 +814,9 @@ public class GoodsReturnServiceImpl  implements GoodsReturnService {
 				greListData.put("PO2019010747$p123", 10);
 				
 			  
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
 		        
-		        System.out.println("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
+				logger.info("is Vaild-->" +poListData.keySet().equals( greListData.keySet()));
 		        
 		       /* if(key1.containsAll(key2)) {
 		        	    List<Integer> values1 = new ArrayList<Integer>(poListData.values());
@@ -906,11 +878,9 @@ public GoodsReceipt updateGoodsReceiptQunatity(Integer grId,GoodsReturn goodsRet
 			if((!searchFilter.getSearchBy().equals("select") && !searchFilter.getFieldName().isEmpty()) || (searchFilter.getFromDate()!=null && searchFilter.getToDate()!=null )) {
 				
 				String resultQuery = getSearchFilterResult.getQueryBysearchFilterSelection(searchFilter);
-				logger.info(resultQuery);
 				
 				Query query = entityManager.createQuery(resultQuery);
 				List<GoodsReturn> list = query.getResultList();
-				logger.info(list);
 				return list;
 			}else {
 			List<GoodsReturn> list = findByIsActive();

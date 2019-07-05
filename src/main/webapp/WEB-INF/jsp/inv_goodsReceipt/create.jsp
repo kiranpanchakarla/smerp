@@ -1086,7 +1086,7 @@ $(document).ready(function(){
                                                 
 				
 		
-		
+/* 		
 function removeData(index){
 	//alert("ff"+index);
 setCalculationAmt(index);
@@ -1104,10 +1104,10 @@ setCalculationAmt(index);
 			$('table#itemTbl tr.multTot'+index).remove();
 		}
 		$("#form").validator("update");
-}
+} */
 
 
-function removeData1(index){
+/* function removeData1(index){
 	//alert("ff"+index);
 	setCalculationAmt(index);
 	if (edit_addressCount != undefined && $('#edit_item_serviceTbl').css('display') != 'none' ) {
@@ -1135,7 +1135,7 @@ function removeData2(index){
 	
 	
 }
-
+ */
 
 </script>
 

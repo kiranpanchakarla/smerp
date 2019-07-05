@@ -90,9 +90,6 @@ public class InventoryGoodsReceiptController {
 	@GetMapping(value = "/create")
 	public String create(Model model, InventoryGoodsReceipt invGoodsReceipt) throws JsonProcessingException {
 		logger.info("Inside InventoryGoodsReceiptController Create Method");
-		logger.info("gr-->" + invGoodsReceipt);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
@@ -100,7 +97,6 @@ public class InventoryGoodsReceiptController {
 		model.addAttribute("taxCodeMap", taxCode());
 		
 		Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGR.getStatus());
-		logger.info("PO count-->" + count);
 		
 		InventoryGoodsReceipt invgr = inventoryGoodsReceiptService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
@@ -110,7 +106,6 @@ public class InventoryGoodsReceiptController {
 	    LocalDateTime now = LocalDateTime.now();
 	    invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGR"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("IGR Details-->" + invGoodsReceipt);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
@@ -121,7 +116,6 @@ public class InventoryGoodsReceiptController {
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.findByIsActive();
-		logger.info("list" + list);
 		searchFilter.setTypeOf(EnumSearchFilter.INVGR.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
@@ -130,24 +124,23 @@ public class InventoryGoodsReceiptController {
 	
 	@PostMapping("/save")
 	public String saveInvGR(InventoryGoodsReceipt invGoodsReceipt) {
-		logger.info("Inside save method" + invGoodsReceipt);
+		logger.info("Inside save method");
 		
 		if(invGoodsReceipt.getId() == null) {
 			boolean status = inventoryGoodsReceiptService.findByDocNumber(invGoodsReceipt.getDocNumber());
 			if(!status) {
-				logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));
+				inventoryGoodsReceiptService.save(invGoodsReceipt);
 			}else {
 				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGR.getStatus());
-				logger.info("count-->" + count);
 				
 				InventoryGoodsReceipt grdetails = inventoryGoodsReceiptService.findLastDocumentNumber();
 				if (grdetails != null && grdetails.getDocNumber() != null) {
 					invGoodsReceipt.setDocNumber(GenerateDocNumber.documentNumberGeneration(grdetails.getDocNumber(),count));
 				}
-				logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));
+				inventoryGoodsReceiptService.save(invGoodsReceipt);
 			}
 		}else {
-			logger.info("gr details" + inventoryGoodsReceiptService.save(invGoodsReceipt));	
+			inventoryGoodsReceiptService.save(invGoodsReceipt);	
 		}
 		return "redirect:list";
 	}
@@ -155,14 +148,12 @@ public class InventoryGoodsReceiptController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		inventoryGoodsReceiptService.delete(id);
 		return "redirect:list";
 	}
 	
 	 @GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		InventoryGoodsReceipt invGR = inventoryGoodsReceiptService.findById(Integer.parseInt(id));
 		invGR = inventoryGoodsReceiptService.getListAmount(invGR);
 		ObjectMapper mapper = poloadData(model, invGR);
@@ -180,7 +171,6 @@ public class InventoryGoodsReceiptController {
 	 
 	 @GetMapping("/view")
 		public String view(String id, Model model) throws JsonProcessingException {
-			logger.info("id-->" + id);
 			InventoryGoodsReceipt invGR = inventoryGoodsReceiptService.findById(Integer.parseInt(id));
 			invGR = inventoryGoodsReceiptService.getListAmount(invGR);
 			poloadData(model, invGR);
@@ -226,7 +216,6 @@ public class InventoryGoodsReceiptController {
 		 path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForInvGoodsReceipt(pdfUploadedPath,invGR); 
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -244,7 +233,6 @@ public class InventoryGoodsReceiptController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.searchFilterBySelection(searchFilter);
-		logger.info("list" + list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		return "inv_goodsReceipt/list";
@@ -277,12 +265,12 @@ public class InventoryGoodsReceiptController {
 		String invGRFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		List<InventoryGoodsReceipt> list = inventoryGoodsReceiptService.searchFilterBySelection(searchFilter);
 
-		//ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		ByteArrayOutputStream stream = downloadReportsXLS.INVGRReport(list);
 		response.setContentType("text/html");
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
 		response.setHeader("Content-Disposition", "attachment; filename=\"INVGR_Report_" + invGRFileNameDate + ".xlsx\"");
-		//stream.writeTo(outstream);
+		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
 	}

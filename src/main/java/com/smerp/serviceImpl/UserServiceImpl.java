@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
-		System.out.println(bcryptEncoder.matches("Welcome", "$2a$10$DLmkngFSI/w95Bv1TLtn1e7FXwXu1COXCjqS9ocago5EZCPuEdzaC")); // true
+		logger.info(bcryptEncoder.matches("Welcome", "$2a$10$DLmkngFSI/w95Bv1TLtn1e7FXwXu1COXCjqS9ocago5EZCPuEdzaC")); // true
 	}
 
 

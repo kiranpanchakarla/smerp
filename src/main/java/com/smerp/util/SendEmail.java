@@ -218,7 +218,6 @@ public class SendEmail extends EmailerGenerator{
 					getToEmails(EnumStatusUpdate.PR.getStatus(),EnumStatusUpdate.APPROVAL.getStatus(),id);
 					
 				}
-				logger.info("Before Send To ---> "  +  toEmail);
 				//logger.info("Before Send To ---> "  +  purchaseRequest.getCreatedBy()!=null? purchaseRequest.getCreatedBy().getUserEmail():"");
 				/*+ getUser().getUserEmail() + ","*/
 				
@@ -229,19 +228,17 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =  getUser().getUserEmail();
 				}
 				String createUser =  purchaseRequest.getCreatedBy()!=null? purchaseRequest.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
 				
 				
-				logger.info("Email Send To ---> "  +  toEmail);
+				
 				String[] recipientList = toEmail.split(",");
 				logger.info("Sending purchaseRequest Email Log ---> ");
 				logger.info("purchaseRequest ID ---> "+ purchaseRequest.getId());
 				logger.info("purchaseRequest Doc Number ---> "+ purchaseRequest.getDocNumber() );
 				logger.info("purchaseRequest Status ---> " + purchaseRequest.getStatus());
-				
 				logger.info("Email Send To ---> "  +  recipientList.toString());
 				//logger.info("purchaseRequest Created By  ---> "+ purchaseRequest.getCreatedBy().getUsername());
 			//	logger.info("purchaseRequest Last Updated By  ---> "+ purchaseRequest.getLastModifiedBy().getUsername());
@@ -413,7 +410,6 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  requestForQuotation.getCreatedBy()!=null? requestForQuotation.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail + "," + createUser ;
 				}
@@ -423,7 +419,7 @@ public class SendEmail extends EmailerGenerator{
 				logger.info("requestForQuotation ID ---> "+ requestForQuotation.getId());
 				logger.info("requestForQuotation Doc Number ---> "+ requestForQuotation.getDocNumber() );
 				logger.info("requestForQuotation Status ---> " + requestForQuotation.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("requestForQuotation Created By  ---> "+ requestForQuotation.getCreatedBy().getUsername());
 				//logger.info("requestForQuotation Last Updated By  ---> "+ requestForQuotation.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
@@ -475,7 +471,6 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  purchaseOrder.getCreatedBy()!=null? purchaseOrder.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
@@ -485,7 +480,7 @@ public class SendEmail extends EmailerGenerator{
 				logger.info("purchaseOrder ID ---> "+ purchaseOrder.getId());
 				logger.info("purchaseOrder Doc Number ---> "+ purchaseOrder.getDocNumber() );
 				logger.info("purchaseOrder Status ---> " + purchaseOrder.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("purchaseOrder Created By  ---> "+ purchaseOrder.getCreatedBy().getUsername());
 				//logger.info("purchaseOrder Last Updated By  ---> "+ purchaseOrder.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);
@@ -539,7 +534,6 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  goodsReceipt.getCreatedBy()!=null? goodsReceipt.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
@@ -550,7 +544,7 @@ public class SendEmail extends EmailerGenerator{
 				logger.info("goodsReceipt ID ---> "+ goodsReceipt.getId());
 				logger.info("goodsReceipt Doc Number ---> "+ goodsReceipt.getDocNumber() );
 				logger.info("goodsReceipt Status ---> " + goodsReceipt.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("goodsReceipt Created By  ---> "+ goodsReceipt.getCreatedBy().getUsername());
 				//logger.info("goodsReceipt Last Updated By  ---> "+ goodsReceipt.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -566,7 +560,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendGoodsReturnEmail(GoodsReturn goodsReturn) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createGoodsReturnMessage(goodsReturn));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -612,7 +605,7 @@ public class SendEmail extends EmailerGenerator{
 				logger.info("goodsReturn ID ---> "+ goodsReturn.getId());
 				logger.info("goodsReturn Doc Number ---> "+ goodsReturn.getDocNumber() );
 				logger.info("goodsReturn Status ---> " + goodsReturn.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("goodsReturn Created By  ---> "+ goodsReturn.getCreatedBy().getUsername());
 				//logger.info("goodsReturn Last Updated By  ---> "+ goodsReturn.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -679,17 +672,16 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  invoice.getCreatedBy()!=null? invoice.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
 				
 				String[] recipientList = toEmail.split(",");
-				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("Sending Email Log ---> ");
 				logger.info("invoice ID ---> "+ invoice.getId());
 				logger.info("invoice Doc Number ---> "+ invoice.getDocNumber() );
 				logger.info("invoice Status ---> " + invoice.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("invoice Created By  ---> "+ invoice.getCreatedBy().getUsername());
 				//logger.info("invoice Last Updated By  ---> "+ invoice.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -748,10 +740,11 @@ public class SendEmail extends EmailerGenerator{
 				}
 				if(!toEmail.isEmpty()) {
 				
-					toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
-					MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				toEmail = emailIdService.getToEmailIds(EnumStatusUpdate.PRODUCTQTY.getStatus(), EnumStatusUpdate.PRODUCTQTY.getStatus());
+			    MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				String[] recipientList = toEmail.split(",");
 				message.setFrom(getDefaultEmailFromAddress());
-				message.setTo(toEmail);
+				message.setTo(recipientList);
 				message.setSubject(getEnvironment() +  " - " + "Products With Minimum Quantity" + " - " + getPlantName(id));
 				 if(productList != null) {
 					 message.setText(getsendMinQtyProductsEmailBody(productList), true);
@@ -795,8 +788,6 @@ public class SendEmail extends EmailerGenerator{
 				message.setTo(recipientList);
 				
 				 List<InventoryProductsList> productList = dashboardCountService.inventoryQtyList(warehouseId);
-				 logger.info("Product List For Email " + productList);
-				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
@@ -872,9 +863,7 @@ public class SendEmail extends EmailerGenerator{
 				/* Get Email's From DB */
 				
 				List<InventoryGoodsIssueList> productList = dashboardCountService.inventoryGoodsIssueList(warehouseId);
-				logger.info("Product List For Email " + productList);
 	             
-				logger.info("Email Send To ---> "  +  toEmail);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date now = new Date();
 				String strDate = sdf.format(now);
@@ -949,7 +938,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendCreditMemoEmail(CreditMemo creditMemo) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createCreditMemoMessage(creditMemo));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -991,11 +979,11 @@ public class SendEmail extends EmailerGenerator{
 					toEmail =toEmail+ "," + createUser ;
 				}*/
 				String[] recipientList = toEmail.split(",");
-				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("Sending Email Log ---> ");
 				logger.info("creditMemo ID ---> "+ creditMemo.getId());
 				logger.info("creditMemo Doc Number ---> "+ creditMemo.getDocNumber() );
 				logger.info("creditMemo Status ---> " + creditMemo.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("creditMemo Created By  ---> "+ creditMemo.getCreatedBy().getUsername());
 				//logger.info("creditMemo Last Updated By  ---> "+ creditMemo.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -1011,7 +999,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendInvGoodsReceiptEmail(InventoryGoodsReceipt inventoryGoodsReceipt) throws Exception {
 		 if (shouldNotify()) {
-	            //logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createInvGoodsReceiptMessage(inventoryGoodsReceipt));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -1048,16 +1035,15 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  inventoryGoodsReceipt.getCreatedBy()!=null? inventoryGoodsReceipt.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
-				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("Sending Email Log ---> ");
 				logger.info("creditMemo ID ---> "+ inventoryGoodsReceipt.getId());
 				logger.info("creditMemo Doc Number ---> "+ inventoryGoodsReceipt.getDocNumber() );
 				logger.info("creditMemo Status ---> " + inventoryGoodsReceipt.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("creditMemo Created By  ---> "+ inventoryGoodsReceipt.getCreatedBy().getUsername());
 				//logger.info("creditMemo Last Updated By  ---> "+ inventoryGoodsReceipt.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -1073,7 +1059,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendInvGoodsIssueEmail(InventoryGoodsIssue inventoryGoodsIssue) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createInvGoodsIssueMessage(inventoryGoodsIssue));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -1110,16 +1095,15 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  inventoryGoodsIssue.getCreatedBy()!=null? inventoryGoodsIssue.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
-				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("Sending Email Log ---> ");
 				logger.info("inventoryGoodsIssue ID ---> "+ inventoryGoodsIssue.getId());
 				logger.info("inventoryGoodsIssue Doc Number ---> "+ inventoryGoodsIssue.getDocNumber() );
 				logger.info("inventoryGoodsIssue Status ---> " + inventoryGoodsIssue.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("inventoryGoodsIssue Created By  ---> "+ inventoryGoodsIssue.getCreatedBy().getUsername());
 				//logger.info("inventoryGoodsIssue Last Updated By  ---> "+ inventoryGoodsIssue.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -1135,7 +1119,6 @@ public class SendEmail extends EmailerGenerator{
 	
 	public void sendInvGoodsTransferEmail(InventoryGoodsTransfer inventoryGoodsTransfer) throws Exception {
 		 if (shouldNotify()) {
-	            logger.info("Sending notification for " + "k.panchakarla@manuhindia.com" + " ...");
 	            try {
 	                mailSender.send(createInvGoodsTransferMessage(inventoryGoodsTransfer));
 	               // logger.info("Email notification successfully sent for " + mailTo);
@@ -1172,16 +1155,15 @@ public class SendEmail extends EmailerGenerator{
 				}
 				
 				String createUser =  inventoryGoodsTransfer.getCreatedBy()!=null? inventoryGoodsTransfer.getCreatedBy().getUserEmail():"";
-				logger.info("createUser ---> "  +  createUser);
 				if(!createUser.isEmpty()) {
 					toEmail =toEmail+ "," + createUser ;
 				}
 				String[] recipientList = toEmail.split(",");
-				logger.info("Sending purchaseRequest Email Log ---> ");
+				logger.info("Sending Email Log ---> ");
 				logger.info("inventoryGoodsTransfer ID ---> "+ inventoryGoodsTransfer.getId());
 				logger.info("inventoryGoodsTransfer Doc Number ---> "+ inventoryGoodsTransfer.getDocNumber() );
 				logger.info("inventoryGoodsTransfer Status ---> " + inventoryGoodsTransfer.getStatus());
-				logger.info("Email Send To ---> "  +  toEmail);
+				logger.info("Email Send To ---> "  +  recipientList);
 				//logger.info("inventoryGoodsTransfer Created By  ---> "+ inventoryGoodsTransfer.getCreatedBy().getUsername());
 				//logger.info("inventoryGoodsTransfer Last Updated By  ---> "+ inventoryGoodsTransfer.getLastModifiedBy().getUsername());
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");

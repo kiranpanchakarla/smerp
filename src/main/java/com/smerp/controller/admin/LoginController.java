@@ -101,12 +101,8 @@ public class LoginController {
 		try {
 			User user = (User) auth.getPrincipal();
 			Map<String, List<String>> map = usermodulepermissionsbyuserId(user, model);
-			logger.info(" permissions details map" + map.size());
 			session.setAttribute("umpmap", map);
 			 
-			logger.info("company details----------" + user.getCompany());
-			logger.info("userService" + userService.findAll().size());
-			logger.info("productService" + productService.findByIsActive().size());
 			model.addAttribute("userListCount", userService.findByIsActive().size());
 			model.addAttribute("productsCount", productService.findByIsActive().size());
 			model.addAttribute("vendorListCount", vendorService.findByIsActive().size());

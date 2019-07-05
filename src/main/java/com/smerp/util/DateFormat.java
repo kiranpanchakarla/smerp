@@ -117,7 +117,6 @@ public class DateFormat {
 			Date date;
 			try {
 				date = format1.parse(dateString);
-				System.out.println("formatDate.date : " + date);
 				return date;
 			} catch (Exception e) {
 				e.printStackTrace();

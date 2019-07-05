@@ -36,11 +36,9 @@ public class UserModulePermissionServiceImpl implements UserModulePermissionServ
 	public List<UserModulePermission> saveAll(User user) {
 		
 		List<UserModulePermission> listDt=user.getUserModulePermission();
-		logger.info("UserModulePermission size"+listDt.size());
 		// saving user mosule info in database
 		List<UserModulePermission> usermodulepermissionslist = new ArrayList<UserModulePermission>();
 		for (UserModulePermission userModulePermission : listDt) {
-			System.out.println(userModulePermission);
 			List<Permission> listpermissions = userModulePermission.getPermissions();
 			if(listpermissions!=null) {
 				for (Permission permission : listpermissions) {

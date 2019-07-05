@@ -200,13 +200,11 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		
 		Query query1 = entityManager.createNativeQuery(qtysql);
 		 
-		logger.info("Product ordered ----> " + query1);
-		logger.info("Product ordered SQL ----> " + qtysql);
+		logger.info("method ---> minProductQtyList");
 		
 		//List<Object[]>	list1 = query1.getResultList();
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 		
 		List<MinimumQuantityList> productList = new ArrayList<>();
 		
@@ -232,13 +230,11 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		String qtysql= "select * from vw_inventory_status_report where plant_id=" + id ;
 		Query query1 = entityManager.createNativeQuery(qtysql);
 		 
-		logger.info("InventoryProductsList Query ----> " + query1);
-		logger.info("InventoryProductsList SQL ----> " + qtysql);
+		logger.info("method --->  inventoryQtyList");
 		
 		//List<Object[]>	list1 = query1.getResultList();
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 		
 		List<InventoryProductsList> inventoryList = new ArrayList<>();
 		 for(Object[] tuple : arrayList) {
@@ -262,11 +258,9 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 		String qtysql= "select * from vw_inventory_goods_issue_daily where is_active = 't' and ware_house=" + id ;
 		Query query1 = entityManager.createNativeQuery(qtysql);
 		 
-		logger.info("Inventory GI SQL ----> " + qtysql);
 		
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query1.getResultList());
-		logger.info("Product List Size ----> " + arrayList.size());
 		
 		List<InventoryGoodsIssueList> inventoryGIList = new ArrayList<>();
 		 for(Object[] tuple : arrayList) {
@@ -301,7 +295,7 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 			plantId += "," +i;
 		}
 		plantId = plantId.substring(1,plantId.length());
-		logger.info("Plant ----> " + plantId);
+		logger.info("method --->  getCount");
 		String sql = "\r\n" + 
 				"select status\r\n" + 
 				",sum(pr_count) as prCount \r\n" + 
@@ -316,14 +310,12 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 				",sum(invgt_count) as invgtCount \r\n" + 
 				"from vw_dashboard_plant where plant_id in " + " ( " + plantId  + ") "
 				+ " group by status order by status ";
-		logger.info("Sql ----> " + sql);
 		Query query = entityManager.createNativeQuery(sql);
 		
-		logger.info("sql ----> " + sql);
+		 
 		ArrayList<Object[]> arrayList = new ArrayList<>();
 		arrayList.addAll(query.getResultList());
 		
-		logger.info("List Size -----> " + arrayList.size());
 		
 		
 		List<DashboardCount> list = new ArrayList<>();
@@ -345,7 +337,7 @@ public class DashboardCountServiceImpl implements DashboardCountService {
 	    	 list.add(dashboardCount);
 	     }
 	     
-	     logger.info("PR Count--------->"+arrayList); 
+	      
 		return list;
 	}
 

@@ -93,7 +93,6 @@ public class VendorController {
 	
 	@PostMapping(value = "/save")
 	public String save(@Valid @ModelAttribute("vendor") Vendor vendor, BindingResult bindingResult, Model model,BindingResult result ) {
-		logger.info("vendor" +vendor);
 		vendorService.save(vendor);
 		return "redirect:list";
 	}

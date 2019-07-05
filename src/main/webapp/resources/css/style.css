@@ -1356,3 +1356,22 @@ h2, .h2 {font-size: 1.6rem;}
 /* .list-group-flush li:nth-child(odd) span {
     background: #e8971b !important;
 } */
+.report-select-box{
+	margin-left: 20px;
+}
+.report-select-box1{
+	width: 127px !important;
+}
+.report-select-box2 {
+    width: 108px !important;
+}
+.report-textbox{
+	width: 79% !important;
+}
+.annualReport{
+	    margin-left: 26px;
+}
+.sort-report{
+	    margin-left: 36px;
+        width: 128px !important;
+}

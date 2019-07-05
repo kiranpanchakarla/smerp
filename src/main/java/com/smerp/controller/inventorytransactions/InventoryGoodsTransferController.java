@@ -1,5 +1,6 @@
 package com.smerp.controller.inventorytransactions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -47,6 +48,7 @@ import com.smerp.service.inventorytransactions.InventoryGoodsTransferService;
 import com.smerp.service.master.PlantService;
 import com.smerp.util.ContextUtil;
 import com.smerp.util.DocNumberGenerator;
+import com.smerp.util.DownloadReportsXLS;
 import com.smerp.util.EnumSearchFilter;
 import com.smerp.util.EnumStatusUpdate;
 import com.smerp.util.GenerateDocNumber;
@@ -79,6 +81,9 @@ public class InventoryGoodsTransferController {
 	@Autowired
 	private DocNumberGenerator docNumberGenerator;
 	
+	@Autowired
+	private DownloadReportsXLS downloadReportsXLS;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -88,9 +93,6 @@ public class InventoryGoodsTransferController {
 	@GetMapping(value = "/create")
 	public String create(Model model, InventoryGoodsTransfer invGoodsTransfer) throws JsonProcessingException {
 		logger.info("Inside InventoryGoodsTransferController Create Method");
-		logger.info("gr-->" + invGoodsTransfer);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		 mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("user", getUser());
@@ -102,7 +104,6 @@ public class InventoryGoodsTransferController {
 		model.addAttribute("taxCodeMap", taxCode());
 		
 		Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGT.getStatus());
-		logger.info("IGT count-->" + count);
 		
 		InventoryGoodsTransfer invgr = inventoryGoodsTransferService.findLastDocumentNumber();
 		if (invgr != null && invgr.getDocNumber() != null) {
@@ -112,7 +113,7 @@ public class InventoryGoodsTransferController {
 	    LocalDateTime now = LocalDateTime.now();
 	    invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration("IGT"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("IGR Details-->" + invGoodsTransfer);
+		
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
@@ -123,7 +124,6 @@ public class InventoryGoodsTransferController {
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsTransfer> list = inventoryGoodsTransferService.findByIsActive();
-		logger.info("list" + list);
 		searchFilter.setTypeOf(EnumSearchFilter.INVGT.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
@@ -132,24 +132,23 @@ public class InventoryGoodsTransferController {
 	
 	@PostMapping("/save")
 	public String saveInvGR(InventoryGoodsTransfer invGoodsTransfer) {
-		logger.info("Inside save method" + invGoodsTransfer);
+		logger.info("Inside save method");
 		
 		if(invGoodsTransfer.getId() == null) {
 			boolean status = inventoryGoodsTransferService.findByDocNumber(invGoodsTransfer.getDocNumber());
 			if(!status) {
-				logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));
+				inventoryGoodsTransferService.save(invGoodsTransfer);
 			}else {
 				Integer count = docNumberGenerator.getDocNoCountByDocType(EnumStatusUpdate.IGT.getStatus());
-				logger.info("count-->" + count);
 				
 				InventoryGoodsTransfer igtdetails = inventoryGoodsTransferService.findLastDocumentNumber();
 				if (igtdetails != null && igtdetails.getDocNumber() != null) {
 					invGoodsTransfer.setDocNumber(GenerateDocNumber.documentNumberGeneration(igtdetails.getDocNumber(),count));
 				}
-				logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));
+				inventoryGoodsTransferService.save(invGoodsTransfer);
 			}
 		}else {
-			logger.info("igt details" + inventoryGoodsTransferService.save(invGoodsTransfer));	
+			inventoryGoodsTransferService.save(invGoodsTransfer);	
 		}
 				
 		return "redirect:list";
@@ -158,14 +157,12 @@ public class InventoryGoodsTransferController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		inventoryGoodsTransferService.delete(id);
 		return "redirect:list";
 	}
 	
 	 @GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		InventoryGoodsTransfer invGR = inventoryGoodsTransferService.getInventoryGoodsTransferId(Integer.parseInt(id));
 		invGR = inventoryGoodsTransferService.getListAmount(invGR);
 		ObjectMapper mapper = poloadData(model, invGR);
@@ -184,7 +181,6 @@ public class InventoryGoodsTransferController {
 	 
 	 @GetMapping("/view")
 		public String view(String id, Model model) throws JsonProcessingException {
-			logger.info("id-->" + id);
 			InventoryGoodsTransfer invGR = inventoryGoodsTransferService.findById(Integer.parseInt(id));
 			invGR = inventoryGoodsTransferService.getListAmount(invGR);
 			poloadData(model, invGR);
@@ -229,9 +225,7 @@ public class InventoryGoodsTransferController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		logger.info("id -->" + id);
 		InventoryGoodsTransfer invGR = inventoryGoodsTransferService.findById(Integer.parseInt(id));
-		logger.info("Inventory goods Transfer -->" + invGR);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -239,7 +233,6 @@ public class InventoryGoodsTransferController {
 		 path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForInvGoodsTransfer(pdfUploadedPath,invGR);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -257,11 +250,11 @@ public class InventoryGoodsTransferController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<InventoryGoodsTransfer> list = inventoryGoodsTransferService.searchFilterBySelection(searchFilter);
-		logger.info("list" + list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		return "inv_goodsTransfer/list";
 	}
+		
 		
 	@GetMapping("/exportINVGTExcel")
 	public void download(HttpServletResponse response, Model model, HttpServletRequest request, String searchBy,
@@ -290,15 +283,14 @@ public class InventoryGoodsTransferController {
 		String invGTFileNameDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		List<InventoryGoodsTransfer> list = inventoryGoodsTransferService.searchFilterBySelection(searchFilter);
 
-		//ByteArrayOutputStream stream = downloadReportsXLS.POReport(list);
+		ByteArrayOutputStream stream = downloadReportsXLS.INVGTReport(list);
 		response.setContentType("text/html");
 		OutputStream outstream = response.getOutputStream();
 		response.setContentType("APPLICATION/OCTET-STREAM");
 		response.setHeader("Content-Disposition", "attachment; filename=\"INVGT_Report_" + invGTFileNameDate + ".xlsx\"");
-		//stream.writeTo(outstream);
+		stream.writeTo(outstream);
 		outstream.flush();
 		outstream.close();
 	}
-	
 	
 }

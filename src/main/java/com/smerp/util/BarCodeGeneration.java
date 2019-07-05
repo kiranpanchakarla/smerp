@@ -62,7 +62,6 @@ public class BarCodeGeneration {
 			canvasProvider.finish();
 		
 		}catch(Exception e) {
-			System.out.println("Exe.."+e);
 			logger.info("Error in BarCodeGeneration"+e);
 		}
 		finally {
@@ -102,7 +101,6 @@ public class BarCodeGeneration {
 				canvasProvider.finish();
 			
 			}catch(Exception e) {
-				System.out.println("Exe.."+e);
 				logger.info("Error in BarCodeGeneration"+e);
 			}
 			finally {

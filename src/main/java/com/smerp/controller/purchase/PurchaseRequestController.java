@@ -118,7 +118,6 @@ public class PurchaseRequestController {
 
 	@GetMapping(value = "/create")
 	public String purchaseRequestCreate(Model model, PurchaseRequest purchaseRequest) throws JsonProcessingException {
-		logger.info("purchaseRequest create-->" + purchaseRequest);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("user", user);
 		purchaseRequest.setReferenceUser(user);
@@ -134,7 +133,6 @@ public class PurchaseRequestController {
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
 		
 		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
-		logger.info("PO count-->" + count);
 		
 		PurchaseRequest purchaseRequests = purchaseRequestService.findLastDocumentNumber();
 		if (purchaseRequests != null && purchaseRequests.getDocNumber() != null) {
@@ -160,21 +158,17 @@ public class PurchaseRequestController {
 			boolean status = purchaseRequestService.findByDocNumber(purchaseRequest.getDocNumber());
 			if(!status) {
 				purchaseRequest = purchaseRequestService.save(purchaseRequest);
-				logger.info("purchaseRequest save-->" + purchaseRequest);
 			}else {
 				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PR.getStatus());
-				logger.info("count-->" + count);
 				
 				PurchaseRequest prdetails = purchaseRequestService.findLastDocumentNumber();
 				if (prdetails != null && prdetails.getDocNumber() != null) {
 					purchaseRequest.setDocNumber(GenerateDocNumber.documentNumberGeneration(prdetails.getDocNumber(),count));
 				}
 				purchaseRequest = purchaseRequestService.save(purchaseRequest);
-				logger.info("purchaseRequest save-->" + purchaseRequest);
 			}
 		}else {
 			purchaseRequestService.save(purchaseRequest);
-			logger.info("purchaseRequest save-->" + purchaseRequest);
 		}
 		
 		return "redirect:list";
@@ -182,7 +176,6 @@ public class PurchaseRequestController {
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		logger.info("rfq details" + purchaseRequestService.saveCancelStage(id));
 		return "redirect:list";
 	}
@@ -191,7 +184,6 @@ public class PurchaseRequestController {
 	@GetMapping(value = "/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.findByIsActive();
-		logger.info("purchaseRequest list-->" + purchaseRequestsList);
 		searchFilter.setTypeOf(EnumSearchFilter.PRTABLE.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
@@ -201,7 +193,6 @@ public class PurchaseRequestController {
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.prApprovedList();
-		logger.info("purchaseRequest list-->" + purchaseRequestsList);
 		searchFilter.setIsConvertedDoc("true");
 		searchFilter.setTypeOf(EnumSearchFilter.PRTABLE.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
@@ -213,7 +204,6 @@ public class PurchaseRequestController {
 	public String view(Model model, String purchaseReqId) {
 		
 		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
-		logger.info("purchaseRequest view-->" + purchaseRequest);
 		model.addAttribute("purchaseRequest", purchaseRequest);
 		model.addAttribute("plantMap", plantMap());
 		return "purchaseReq/view";
@@ -223,7 +213,6 @@ public class PurchaseRequestController {
 
 	@GetMapping(value = "/getInfo")
 	public String getInfo(String purchaseReqId, Model model, PurchaseRequest purchaseRequest) throws JsonProcessingException {
-		logger.info("purchaseRequest edit-->" + purchaseRequest);
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("user", user);
@@ -248,7 +237,6 @@ public class PurchaseRequestController {
 			HttpSession session, String regType, Model model,String orgId,String purchaseReqId) throws Exception {
 		
 		PurchaseRequest purchaseRequest = purchaseRequestService.getInfo(Integer.parseInt(purchaseReqId));
-		logger.info("purchaseRequest view-->" + purchaseRequest);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -256,7 +244,6 @@ public class PurchaseRequestController {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
 				.OfflineHtmlStringToPdfForPurchaseReq(pdfUploadedPath,purchaseRequest);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -277,7 +264,6 @@ public class PurchaseRequestController {
 	@PostMapping(value = "/delete")
 	public String deletePurchaseReq(@RequestParam("id") int id) {
         
-		logger.info("Delete msg");
 		purchaseRequestService.delete(id);
 		return "redirect:list";
 	}
@@ -314,7 +300,6 @@ public class PurchaseRequestController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<PurchaseRequest> purchaseRequestsList = purchaseRequestService.searchFilterBySelection(searchFilter);
-		logger.info("purchaseRequestsList" + purchaseRequestsList);
 		model.addAttribute("purchaseRequestsList", purchaseRequestsList);
 		model.addAttribute("searchFilter", searchFilter);
 		if(searchFilter.getIsConvertedDoc().equals("true"))

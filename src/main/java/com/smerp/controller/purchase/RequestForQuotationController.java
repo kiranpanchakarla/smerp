@@ -95,7 +95,6 @@ public class RequestForQuotationController {
 	@GetMapping("/create")
 	public String createPage(Model model, RequestForQuotation rfq) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("rfq-->" + rfq);
 		ObjectMapper mapper = new ObjectMapper();
 	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("planMap", plantMap());
@@ -103,7 +102,6 @@ public class RequestForQuotationController {
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
 		Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
-		logger.info("PO count-->" + count);
 		
 		RequestForQuotation rfqdetails = requestForQuotationService.findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
@@ -113,11 +111,9 @@ public class RequestForQuotationController {
 			    LocalDateTime now = LocalDateTime.now();
 			    rfq.setDocNumber(GenerateDocNumber.documentNumberGeneration("RFQ"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("rfqdetails-->" + rfqdetails);
 		model.addAttribute("productList", mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", new ObjectMapper().writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
-		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("rfq", rfq);
 		return "rfq/create";
@@ -127,9 +123,7 @@ public class RequestForQuotationController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
-		logger.info("rfq-->" + rfq);
 		ObjectMapper mapper = rfqloadData(model, rfq);
 	        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
@@ -153,8 +147,6 @@ public class RequestForQuotationController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
 	
 		
 		model.addAttribute("lineItems", rfq.getLineItems());
@@ -163,9 +155,7 @@ public class RequestForQuotationController {
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
-		logger.info("rfq-->" + rfq);
 		rfqloadData(model, rfq);
 		// model.addAttribute("categoryMap", categoryMap());
 		model.addAttribute("rfq", rfq);
@@ -179,23 +169,19 @@ public class RequestForQuotationController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		requestForQuotationService.delete(id);
 		return "redirect:list";
 	}
 
 	@PostMapping("/save")
 	public String name(RequestForQuotation requestForQuotation) {
-		logger.info("Inside save method" + requestForQuotation);
 		
 		if(requestForQuotation.getId()==null) {
 			boolean status = requestForQuotationService.findByDocNumber(requestForQuotation.getDocNumber());
 			if(!status) {
 				requestForQuotation = requestForQuotationService.save(requestForQuotation);
-				logger.info("rfq details" +requestForQuotation);
 			}else {
 				Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
-				logger.info("count-->" + count);
 				
 				RequestForQuotation rfq = requestForQuotationService.findLastDocumentNumber();
 				if (rfq != null && rfq.getDocNumber() != null) {
@@ -205,7 +191,8 @@ public class RequestForQuotationController {
 				requestForQuotation = requestForQuotationService.save(requestForQuotation);
 			}
 		}else {
-			logger.info("rfq details" + requestForQuotationService.save(requestForQuotation));
+			logger.info("rfq details");
+		requestForQuotationService.save(requestForQuotation);
 		}
 		
 		return "redirect:list";
@@ -213,8 +200,6 @@ public class RequestForQuotationController {
 	
 	@PostMapping("/savePRtoRFQ")
 	public String savePRtoRFQ(@RequestParam String purchaseId) {
-		logger.info("purchaseId" + purchaseId);
-		logger.info("purchaseRequest view-->" + purchaseId);
 		RequestForQuotation rfq = requestForQuotationService.saveRFQ(purchaseId);
 		return "redirect:edit?id="+rfq.getId();
 	}
@@ -223,7 +208,6 @@ public class RequestForQuotationController {
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<RequestForQuotation> requestForQuotationList = requestForQuotationService.rfqApprovedList();
-		logger.info("requestForQuotation list-->" + requestForQuotationList);
 		searchFilter.setIsConvertedDoc("true");
 		searchFilter.setTypeOf(EnumSearchFilter.RFQTABLE.getStatus());
 		model.addAttribute("searchFilter", searchFilter);
@@ -234,7 +218,6 @@ public class RequestForQuotationController {
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		
 		logger.info("rfq details" + requestForQuotationService.saveCancelStage(id));
 		return "redirect:list";
@@ -243,7 +226,6 @@ public class RequestForQuotationController {
 	@GetMapping("/list")
 	public String list(Model model, SearchFilter searchFilter) {
 		List<RequestForQuotation> list = requestForQuotationService.findByIsActive();
-		logger.info("list"+list);
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "rfq/list";
@@ -258,7 +240,6 @@ public class RequestForQuotationController {
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
 		RequestForQuotation rfq = requestForQuotationService.findById(Integer.parseInt(id));
-		logger.info("RequestForQuotation view-->" + rfq);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -266,7 +247,6 @@ public class RequestForQuotationController {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
 				.OfflineHtmlStringToPdfForRFQ(pdfUploadedPath,rfq);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -284,7 +264,6 @@ public class RequestForQuotationController {
 	@GetMapping(value = "/isVendorNameExistWithDocNum")
 	@ResponseBody
 	public boolean isVendorNameExistWithDocNum(String vendorName,String refDocNum) {
-		logger.info("Vendor Name" + vendorName);
 		boolean isExist = requestForQuotationService.isVendorNameExistWithDocNum(vendorName,refDocNum);
 		return isExist;
 	}
@@ -298,7 +277,6 @@ public class RequestForQuotationController {
 			return "rfq/approvedList";
 		}else {
 			List<RequestForQuotation> list = requestForQuotationService.searchFilterBySelection(searchFilter);
-			logger.info("list"+list);
 			model.addAttribute("list", list);
 			model.addAttribute("searchFilter", searchFilter);
 			return "rfq/list";

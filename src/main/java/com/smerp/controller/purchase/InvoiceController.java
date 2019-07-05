@@ -61,7 +61,7 @@ import com.smerp.util.RequestContext;
 @RequestMapping("/inv")
 public class InvoiceController {
 
-	private static final Logger logger = LogManager.getLogger(GoodsReceiptController.class);
+	private static final Logger logger = LogManager.getLogger(InvoiceController.class);
 
 	private static String pdfUploadedPath;
 	
@@ -108,9 +108,6 @@ public class InvoiceController {
 	@GetMapping("/create")
 	public String create(Model model, InVoice inv) throws JsonProcessingException {
 		// model.addAttribute("categoryMap", categoryMap());
-		logger.info("inv-->" + inv);
-		logger.info("taxCode()-->" + taxCode());
-		logger.info("plantMap()-->" + plantMap());
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("plantMap", plantMap());
@@ -119,7 +116,6 @@ public class InvoiceController {
 		model.addAttribute("sacList", mapper.writeValueAsString(sacService.findAllSacCodes()));
        
 		Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
-		logger.info("Inv count-->" + count);
 		
 		InVoice invDetails = inVoiceService.findLastDocumentNumber();
 		if (invDetails != null && invDetails.getDocNumber() != null) {
@@ -129,13 +125,11 @@ public class InvoiceController {
 	    LocalDateTime now = LocalDateTime.now();
 	    inv.setDocNumber(GenerateDocNumber.documentNumberGeneration("INV"+(String)dtf.format(now) +"0",count));
 		}
-		logger.info("invDetails-->" + invDetails);
 		model.addAttribute("productList",
 				mapper.writeValueAsString(productService.findAllProductNamesByProduct("product")));
 		model.addAttribute("descriptionList", mapper.writeValueAsString(productService.findAllProductDescription("product")));
 		model.addAttribute("vendorNamesList", mapper.writeValueAsString(vendorService.findAllVendorNames()));
 		model.addAttribute("uomList", mapper.writeValueAsString(uomService.getUOM()));
-		logger.info("mapper-->" + mapper);
 
 		model.addAttribute("inv", inv);
 		return "inv/create";
@@ -143,12 +137,8 @@ public class InvoiceController {
 
 	@GetMapping("/edit")
 	public String edit(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		logger.info("11111 inv-->");
-		logger.info("New inv-->" + inv);
 		inv = inVoiceService.getListAmount(inv);  // set Amt Calculation  
-		logger.info("inv-->" + inv);
 		ObjectMapper mapper = poloadData(model, inv);
 		mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		model.addAttribute("productList",
@@ -174,25 +164,16 @@ public class InvoiceController {
 		 model.addAttribute("vendorPayTypeAddressId", vendorPayTypeAddress.getId());
 		 model.addAttribute("vendorShippingAddressId", vendorShippingAddress.getId());
 		}
-		logger.info("vendorPayTypeAddress-->" + vendorPayTypeAddress);
-		logger.info("vendorShippingAddress-->" + vendorShippingAddress);
-	
-		
 		model.addAttribute("inVoiceLineItems", inv.getInVoiceLineItems());
 		return mapper;
 	}
 
 	@GetMapping("/view")
 	public String view(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
 		InVoice inv = inVoiceService.getInVoiceById(Integer.parseInt(id));
-		logger.info("inv-->" + inv);
-		
 		
 		List<LineItemsBean> lineItemsBean = inVoiceService.getLineItemsBean(Integer.parseInt(id));
-		logger.info("lineItemsBean-->" + lineItemsBean);
 		//inv = inVoiceService.getListAmount(inv);
-		logger.info("inv-->" + inv);
 		poloadData(model, inv);
 		// model.addAttribute("categoryMap", categoryMap());
 		//model.addAttribute("checkStatusInv", creditMemoService.checkQuantityInv(inv));
@@ -206,7 +187,6 @@ public class InvoiceController {
 	@PostMapping(value = "/delete")
 	public String delete(@RequestParam("id") int id) {
 
-		logger.info("Delete msg");
 		inVoiceService.delete(id);
 		return "redirect:list";
 	}
@@ -214,22 +194,22 @@ public class InvoiceController {
 	
 	@PostMapping("/save")
 	public String name(InVoice invoice) {
-		logger.info("Inside save method" + invoice);
+		logger.info("Inside save method");
 		
 		if(invoice.getId() == null) {
 			boolean status = inVoiceService.findByDocNumber(invoice.getDocNumber());
 			if(!status) {
-				logger.info("inv details" + inVoiceService.save(invoice));
+				inVoiceService.save(invoice);
 			}else {
 				Integer count = docNumberGenerator.getDocCountByDocType(EnumStatusUpdate.INV.getStatus());
 				InVoice invdetails = inVoiceService.findLastDocumentNumber();
 				if (invdetails != null && invdetails.getDocNumber() != null) {
 					invoice.setDocNumber(GenerateDocNumber.documentNumberGeneration(invdetails.getDocNumber(),count));
 				}
-				logger.info("inv details" + inVoiceService.save(invoice));
+				inVoiceService.save(invoice);
 			}
 		}else {
-			logger.info("inv details" + inVoiceService.save(invoice));
+			inVoiceService.save(invoice);
 		}
 		
 		return "redirect:list";
@@ -238,24 +218,19 @@ public class InvoiceController {
 	@PostMapping("/saveGRtoInv")
 	public String saveGRtoInv(HttpServletRequest request) {
 		String greId = request.getParameter("greId");
-		logger.info("greId" + greId);
-		logger.info("greId view-->" + greId);
 		InVoice inv = inVoiceService.saveInv(greId);
 		return "redirect:edit?id="+inv.getId();
 	}
 
 	@GetMapping("/cancelStage")
 	public String cancelStage(String id, Model model) throws JsonProcessingException {
-		logger.info("id-->" + id);
-		
-		logger.info("inv details" + inVoiceService.saveCancelStage(id));
+		inVoiceService.saveCancelStage(id);
 		return "redirect:list";
 	}
 
 	@GetMapping("/list")
 	public String list(Model model,SearchFilter searchFilter) {
 		List<InVoice> list = inVoiceService.findByIsActive();
-		logger.info("list"+list);
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
 		return "inv/list";
@@ -265,7 +240,6 @@ public class InvoiceController {
 	@GetMapping(value = "/approvedList")
 	public String approvedList(Model model, SearchFilter searchFilter) {
 		List<InVoice> list = inVoiceService.invApprovedList();
-		logger.info("InVoice list-->" + list);
 		searchFilter.setIsConvertedDoc("true");
 		model.addAttribute("searchFilter", searchFilter);
 		model.addAttribute("list", list);
@@ -291,9 +265,7 @@ public class InvoiceController {
 	public void downloadHtmlPDF(HttpServletResponse response, String htmlData, HttpServletRequest request,
 			HttpSession session, String regType, Model model,String orgId,String id) throws Exception {
 		
-		logger.info("id -->" + id);
 		InVoice inv = inVoiceService.findById(Integer.parseInt(id));
-		logger.info("InVoice -->" + inv);
 		
 		RequestContext.set(ContextUtil.populateContexturl(request));
 		String path = "";
@@ -301,7 +273,6 @@ public class InvoiceController {
 		path = hTMLToPDFGenerator.getOfflineSummaryToPDF(HTMLToPDFGenerator.HTML_PDF_Offline)
                 .OfflineHtmlStringToPdfForInvoice(pdfUploadedPath,inv);
 				
-		logger.info("path " +path);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		File file = new File(path);
@@ -319,7 +290,6 @@ public class InvoiceController {
 	@GetMapping("/getSearchFilterList")
 	public String getSearchFilterList(Model model, SearchFilter searchFilter) {
 		List<InVoice> list = inVoiceService.searchFilterBySelection(searchFilter);
-		logger.info("list"+list);
 		model.addAttribute("list", list);
 		model.addAttribute("searchFilter", searchFilter);
 		if(searchFilter.getIsConvertedDoc().equals("true"))

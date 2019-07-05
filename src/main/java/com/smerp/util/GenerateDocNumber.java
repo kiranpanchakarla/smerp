@@ -101,7 +101,7 @@ public class GenerateDocNumber {
   }
 	
 	public static void main(String[] args) {
-		System.out.println(autoGenereater("PGP","PG0001P0001"));
+		logger.info(autoGenereater("PGP","PG0001P0001"));
 	}
 	
 }

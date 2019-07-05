@@ -1,5 +1,4 @@
-
--- View: vw_invoice_amount
+﻿-- View: vw_invoice_amount
 
 -- DROP VIEW vw_invoice_amount;
 
@@ -18,4 +17,3 @@ CREATE OR REPLACE VIEW vw_invoice_amount AS
 
 ALTER TABLE vw_invoice_amount
   OWNER TO smerp_dev;
-

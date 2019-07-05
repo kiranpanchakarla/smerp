@@ -18,7 +18,6 @@ public class ContextUtil {
 	            url.append(req.getServerPort());
 	        }
 	        url.append(urlPath);
-	        System.out.println(url.toString());
 	        
 	      return url.toString();
 	        

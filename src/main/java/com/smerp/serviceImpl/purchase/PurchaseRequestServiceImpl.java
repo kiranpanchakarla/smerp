@@ -93,6 +93,10 @@ public class PurchaseRequestServiceImpl implements PurchaseRequestService {
 					i--;
 				}
 			}
+			for (int i = 0; i < ltms.size(); i++) {
+				ltms.get(i).setActiveStatus(EnumStatusUpdate.DEALLOCATE.getStatus());
+				ltms.get(i).setPurchaseRequestId(purchaseRequest);
+			}
 			purchaseRequest.setPurchaseRequestLists(ltms);
 		}
 		

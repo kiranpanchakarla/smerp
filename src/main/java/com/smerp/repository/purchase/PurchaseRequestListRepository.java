@@ -17,6 +17,8 @@ public interface PurchaseRequestListRepository extends JpaRepository<PurchaseReq
     @Query("delete from PurchaseRequestList p where p.id=:id")
     void deleteByPeqId(@Param("id") Integer id);
 
-
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE PurchaseRequestList pl SET pl.activeStatus = :status WHERE pl.id=:ids")
+	int updatePurchaseRequestList(@Param("ids") Integer ids,@Param("status") String status);
 
 }

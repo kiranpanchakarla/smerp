@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.smerp.model.inventory.LineItems;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 
@@ -26,4 +28,7 @@ public interface RequestForQuotationRepository extends JpaRepository<RequestForQ
 	
 	@Query("SELECT r FROM RequestForQuotation r WHERE purchaseReqId=:prId")
 	List<RequestForQuotation> getRFQListById(PurchaseRequest prId);
+	
+	@Query("SELECT l FROM LineItems l, RequestForQuotation r WHERE l.id = r.id and r.purchaseReqId=:prId")
+	List<LineItems> getRFQLineItemsListById(PurchaseRequest prId);
 }

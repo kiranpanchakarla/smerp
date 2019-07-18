@@ -314,7 +314,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 		rfq.setCategory("Item");
 		rfq.setStatus(EnumStatusUpdate.CONVERTRFQTOPO.getStatus());
 		requestForQuotationRepository.save(rfq);
-		
+		/*
 		PurchaseRequest pr = new PurchaseRequest();
 		pr = po.getRfqId().getPurchaseReqId();
 		if(pr!=null) {
@@ -332,7 +332,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 				}
 			}
 			
-		}
+		}   */
 		
 		return po;
         }else {

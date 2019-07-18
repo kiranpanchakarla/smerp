@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,11 +23,13 @@ import com.smerp.model.admin.Vendor;
 import com.smerp.model.admin.VendorAddress;
 import com.smerp.model.admin.VendorsContactDetails;
 import com.smerp.model.inventory.LineItems;
+import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
 import com.smerp.model.purchase.PurchaseRequest;
 import com.smerp.model.purchase.PurchaseRequestList;
 import com.smerp.model.search.SearchFilter;
 import com.smerp.repository.purchase.LineitemsRepositoryRepository;
+import com.smerp.repository.purchase.PurchaseRequestListRepository;
 import com.smerp.repository.purchase.PurchaseRequestRepository;
 import com.smerp.repository.purchase.RequestForQuotationRepository;
 import com.smerp.service.admin.VendorService;
@@ -70,6 +75,9 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 	private PurchaseRequestRepository purchaseRequestRepository;
 	
 	@Autowired
+	private PurchaseRequestListRepository purchaseRequestListRepository;
+	
+	@Autowired
 	private EmailGenerator emailGenerator;
 	
 	@Autowired
@@ -111,7 +119,7 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			logger.info("Type Not Matched:" + requestForQuotation.getStatusType());
 			break;
 		}
-
+		
 		 List<LineItems> listItems = requestForQuotation.getLineItems();
 		    if (listItems != null) {
 			for (int i = 0; i < listItems.size(); i++) {
@@ -120,9 +128,69 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 					i--;
 				}
 			}
+			
+			for (int i = 0; i < listItems.size(); i++) {
+				listItems.get(i).setRequestForQuotationId(requestForQuotation);
+			}
+			
+			requestForQuotation.setLineItems(listItems);
+			
+			if(requestForQuotation.getId() != null) {
+				RequestForQuotation rfqPrevObj = findById(requestForQuotation.getId());
+				List<LineItems> prevListItems = rfqPrevObj.getLineItems();
+				
+				List<Integer> prevListIds = new ArrayList<Integer>();
+				for(int i=0;i<prevListItems.size();i++) {
+					prevListIds.add(prevListItems.get(i).getProductId());
+				}
+				
+				List<Integer> latestListIds = new ArrayList<Integer>();
+				for(int i=0;i<listItems.size();i++) {
+					latestListIds.add(listItems.get(i).getProductId());
+				}
+			
+			
+			PurchaseRequest prList = requestForQuotation.getPurchaseReqId();
+			if(prList != null) {
+				
+				Map<Integer,PurchaseRequest> prevMap = new HashMap<Integer, PurchaseRequest>();
+				for(int i=0;i<prevListItems.size();i++) {
+					prevMap.put(prevListItems.get(i).getProductId(), prevListItems.get(i).getRequestForQuotationId().getPurchaseReqId());
+				}
+				
+				Map<Integer,PurchaseRequest> latestMap = new HashMap<Integer, PurchaseRequest>();
+				for(int i=0;i<listItems.size();i++) {
+					latestMap.put(listItems.get(i).getProductId(), listItems.get(i).getRequestForQuotationId().getPurchaseReqId());
+				}
+				
+				if(prevListItems != null) {
+					if(prevListItems.size() != listItems.size()) {
+						
+						prevListIds.removeAll(latestListIds);
+						
+						if(!requestForQuotation.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+							updateStatusAtPRList(prevListIds,prevMap,EnumStatusUpdate.DEALLOCATE.getStatus());
+							updateStatusAtPRList(latestListIds,latestMap,EnumStatusUpdate.ALLOCATE.getStatus());
+						
+						}else {
+							updateStatusAtPRList(prevListIds,prevMap,EnumStatusUpdate.DEALLOCATE.getStatus());
+							updateStatusAtPRList(latestListIds,latestMap,EnumStatusUpdate.DEALLOCATE.getStatus());
+						}
+						
+					}else {
+						if(!requestForQuotation.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
+							updateStatusAtPRList(latestListIds,latestMap,EnumStatusUpdate.ALLOCATE.getStatus());
+						}else {
+							updateStatusAtPRList(latestListIds,latestMap,EnumStatusUpdate.DEALLOCATE.getStatus());
+						}
+					}
+				}
+		    }
+		}
+			
 			requestForQuotation.setLineItems(listItems);
 		}
-		
+		    
 		if (requestForQuotation.getId() != null) { // delete List Of Items.
 			RequestForQuotation requestForListOfItems = requestForQuotationRepository
 					.findById(requestForQuotation.getId()).get();
@@ -130,17 +198,26 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			
 			if(requestForQuotation.getPurchaseReqId()==null) {  // if PurchaseReqId null delete list items 
 				lineitemsRepository.deleteAll(requestLists);
-			   
-			
 			}else {
-				requestForQuotation.setLineItems(requestLists);
+				lineitemsRepository.deleteAll(requestLists);
+				requestForQuotation.setLineItems(listItems);
 				requestForQuotation.setPlant(requestForQuotation.getPurchaseReqId().getPlant());
 			}
-			
-			
 		}
-
 		
+		PurchaseRequest pr = requestForQuotation.getPurchaseReqId();
+		if(pr != null) {
+			PurchaseRequest prq = requestForQuotation.getPurchaseReqId();
+			if(prq != null) {
+				List<PurchaseRequestList> prAllcoatedlist =  purchaseRequestRepository.getPurchaseRequestListById(requestForQuotation.getPurchaseReqId(),EnumStatusUpdate.ALLOCATE.getStatus());
+				if(pr.getPurchaseRequestLists().size() == prAllcoatedlist.size()) {
+					prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+				}else {
+					prq.setStatus(EnumStatusUpdate.APPROVEED.getStatus());
+				}
+				purchaseRequestRepository.save(prq);
+			}
+		}
 
 		Vendor vendor = vendorService.findById(requestForQuotation.getVendor().getId());
 		VendorAddress vendorShippingAddress = vendorAddressService.findById(requestForQuotation.getVendorShippingAddress().getId());
@@ -166,9 +243,26 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-	} 
+	}   
 
 		return requestForQuotationRepository.save(requestForQuotation);
+	}
+	
+	private void updateStatusAtPRList(List<Integer> listObj, Map<Integer,PurchaseRequest> mapObj,String status) {
+		for(int i=0;i<listObj.size();i++) {
+			if(mapObj.containsKey(listObj.get(i))) {
+				PurchaseRequest li = mapObj.get(listObj.get(i));
+				List<PurchaseRequestList> prList = li.getPurchaseRequestLists();
+				for(int k=0;k<prList.size();k++) {
+					if(prList.get(k).getProductId() == listObj.get(i)) {
+						PurchaseRequestList prl = purchaseRequestListRepository.getOne(prList.get(k).getId());
+						prl.setActiveStatus(status);
+						purchaseRequestListRepository.save(prl);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -203,32 +297,51 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 			rfq.setIsActive(true);
 			
 			List<PurchaseRequestList> prItms = prq.getPurchaseRequestLists();
+			
+			List<PurchaseRequestList> prlist =  purchaseRequestRepository.getPurchaseRequestListById(prq,EnumStatusUpdate.DEALLOCATE.getStatus());
+			
 			List<LineItems> lineItems =new ArrayList<LineItems>();
 			if (prItms != null) {
 				for (int i = 0; i < prItms.size(); i++) {
-					LineItems line = new LineItems();
-					line.setProdouctNumber(prItms.get(i).getProdouctNumber());
-					line.setProductGroup(prItms.get(i).getProductGroup());
-					line.setDescription(prItms.get(i).getDescription());
-					line.setHsn(prItms.get(i).getHsn());
-					line.setSku(prItms.get(i).getSku());
-					line.setRequiredQuantity(prItms.get(i).getRequiredQuantity());
-					line.setSacCode(prItms.get(i).getSacCode());
-					line.setUom(prItms.get(i).getUom());
-					line.setWarehouse(prItms.get(i).getWarehouse());
-					line.setProductId(prItms.get(i).getProductId());
-					line.setUnitPrice(prItms.get(i).getUnitPrice());
-					lineItems.add(line);
+					if(prlist != null) {
+						for(int j=0; j < prlist.size(); j++) {
+							if(prItms.get(i).getActiveStatus().equals(prlist.get(j).getActiveStatus()) && 
+									prItms.get(i).getProductId() == prlist.get(j).getProductId()) {
+								LineItems line = new LineItems();
+								line.setProdouctNumber(prItms.get(i).getProdouctNumber());
+								line.setProductGroup(prItms.get(i).getProductGroup());
+								line.setDescription(prItms.get(i).getDescription());
+								line.setHsn(prItms.get(i).getHsn());
+								line.setSku(prItms.get(i).getSku());
+								line.setRequiredQuantity(prItms.get(i).getRequiredQuantity());
+								line.setSacCode(prItms.get(i).getSacCode());
+								line.setUom(prItms.get(i).getUom());
+								line.setWarehouse(prItms.get(i).getWarehouse());
+								line.setProductId(prItms.get(i).getProductId());
+								line.setUnitPrice(prItms.get(i).getUnitPrice());
+								lineItems.add(line);
+								prq.getPurchaseRequestLists().get(i).setActiveStatus(EnumStatusUpdate.ALLOCATE.getStatus());
+								break;
+							}
+						}
+					}
+					
+					
 				}
+				
 			}
-			
+			purchaseRequestRepository.save(prq);
 			rfq.setLineItems(lineItems);
+			
 		}
 		
 		rfq.setCategory("Item");
 		rfq = requestForQuotationRepository.save(rfq);
 		
-		//prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+		List<PurchaseRequestList> allocatedlist =  purchaseRequestRepository.getPurchaseRequestListById(prq,EnumStatusUpdate.ALLOCATE.getStatus());
+		if(allocatedlist.size() == rfq.getPurchaseReqId().getPurchaseRequestLists().size()) {
+			prq.setStatus(EnumStatusUpdate.CONVERTPRTORFQ.getStatus());
+		}
 		prq.setType("Item");
 		purchaseRequestRepository.save(prq);
 		

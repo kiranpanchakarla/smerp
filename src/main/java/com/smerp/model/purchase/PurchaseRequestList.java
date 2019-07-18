@@ -2,11 +2,15 @@ package com.smerp.model.purchase;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.smerp.model.admin.Vendor;
 import com.smerp.model.master.AuditModel;
 
 
@@ -59,6 +63,30 @@ public class PurchaseRequestList extends AuditModel {
 	@Column(name = "unit_price")
     private Double unitPrice;
 	
+	@Column(name="active_status")
+	private String activeStatus;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "purchase_req_id")
+	private PurchaseRequest purchaseRequestId;
+
+	
+	public PurchaseRequest getPurchaseRequestId() {
+		return purchaseRequestId;
+	}
+
+	public void setPurchaseRequestId(PurchaseRequest purchaseRequestId) {
+		this.purchaseRequestId = purchaseRequestId;
+	}
+
+	public String getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(String activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+
 	public String getSku() {
 		return sku;
 	}

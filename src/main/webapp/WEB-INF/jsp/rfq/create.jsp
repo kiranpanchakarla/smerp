@@ -354,6 +354,7 @@
 																									<!-- <th>S.No</th> -->
 																									<th style="display: none;">Product Id</th>
 																									<c:if test="${rfq.category=='Item'}">
+																									
 																									<th>Product#</th>
 																									<th>Description</th>
 																									<th>UOM</th>
@@ -362,6 +363,9 @@
 																									<th>HSN Code</th>
 																									<th>Warehouse</th>
 																									<th>Quantity</th>
+																									<c:if test="${rfq.purchaseReqId!=null}">
+																									<th></th>
+																									</c:if>
 																									</c:if>
 																									
 																									<c:if test="${rfq.category!='Item'}">
@@ -392,28 +396,73 @@
 																															</td>
 																															
 																													<c:if test="${rfq.category=='Item'}">
-																													<td>${listLineItems.prodouctNumber}</td>
 																													
-																													<td>${listLineItems.description}</td>
+																													<td ><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].prodouctNumber" required="true" readonly="true"
+																															value="${listLineItems.prodouctNumber}"  
+																															class="form-control "></form:input></div></td>
+																												   
+																												   <td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].description" required="true" readonly="true"
+																															value="${listLineItems.description}"
+																															class="form-control" ></form:input></div></td>
 																													
-																													<td>${listLineItems.uom}</td>
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].uom"
+																															value="${listLineItems.uom}"
+																															class="form-control uom" readonly="true"></form:input>
+																													    <form:input type="hidden"
+                                                                                                                            path="lineItems[${count}].unitPrice"  readonly="true"
+                                                                                                                            value="${listLineItems.unitPrice}"
+                                                                                                                            class="form-control unitPrice " required="true" ></form:input>
+																															</div></td>
 																													
-																													<td>${listLineItems.sku}</td>
-																															
-																													<td>${listLineItems.productGroup}</td>
-
-																												    <td>${listLineItems.hsn}</td>
-																												
-																													<td><c:forEach var="entry"
-																																items="${planMap}">
-																																<c:if
-																																	test="${entry.key ==listLineItems.warehouse}">
-																													 ${entry.value} 																													 </c:if>
-																															</c:forEach></td>
-
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].sku"
+																															value="${listLineItems.sku}"
+																															class="form-control sku" readonly="true"></form:input></div></td>
 																													
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].productGroup"
+																															value="${listLineItems.productGroup}"
+																															class="form-control productGroup"
+																															readonly="true"></form:input></div></td>
 																														
-																													<td>${listLineItems.requiredQuantity}</td>
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].hsn"
+																															value="${listLineItems.hsn}"
+																															class="form-control hsnVal"
+																															readonly="true"></form:input></div></td>
+																													
+																													<td><%-- <div class="form-group"><form:select class="form-control"
+																															style="width:160px !important;" required="true"
+																															path="lineItems[${count}].warehouse">
+																															<form:option value="" label="Select" />
+																															<form:options items="${planMap}" />
+																														</form:select></div> --%>
+																														
+																														 <div class="form-group"><select class="form-control warehouse"  readonly="true"
+																															name="lineItems[${count}].warehouse" id="toWarehouse${count}">
+																														<c:forEach var="plantMap" items="${planMap}">
+																														
+																													  	<c:choose>
+																															<c:when test="${plantMap.key == listLineItems.warehouse}">
+																															<option  value="${plantMap.key}" selected>${plantMap.value}</option>
+																															</c:when>
+																														</c:choose>
+																														</c:forEach>
+																														</select>
+																														
+																														</div>
+																														
+																														</td>
+																															
+																															
+																													<td><div class="form-group"><form:input type="text"
+																															path="lineItems[${count}].requiredQuantity"
+																															value="${listLineItems.requiredQuantity}" onkeypress="return isNumericKey(event)" readonly="true"
+																															class="form-control requiredQuantity validateQuantity validatePrice"  required="true"></form:input></div></td>
+																													<td class="text-center"><a  onclick="removeData2(${count})" class="tdicon remove confirm-delete" data-toggle="modal"><i class="icon-bin left"></i></a> </td>
 																														
 																													</c:if>
 																													
@@ -1578,7 +1627,7 @@ function removeData2(index){
     	}
     	
     	$('table#edit_item_serviceTbl tr.multTot'+index).remove();
-    	$("#form").validator("update");
+    	
 }
 
 
@@ -1754,6 +1803,26 @@ $(document).on("keypress", ".validatePrice", function(e) {
 function goBack() {
     window.history.back();
 }
+
+$(function(){
+
+	// add multiple select / deselect functionality
+	$("#selectall").click(function () {
+		  $('.case').attr('checked', this.checked);
+	});
+
+	// if all checkbox are selected, check the selectall checkbox
+	// and viceversa
+	$(".case").click(function(){
+
+		if($(".case").length == $(".case:checked").length) {
+			$("#selectall").attr("checked", "checked");
+		} else {
+			$("#selectall").removeAttr("checked");
+		}
+
+	});
+});
 	
 	</script>
 

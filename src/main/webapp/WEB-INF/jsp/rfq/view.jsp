@@ -380,7 +380,7 @@
 					event.preventDefault();
 					
 					if(noOfRFQ>1){
-						alertify.confirm('Are you Sure, Want to Convert RFQ to PO ? <br> Other RFQs will be Cancelled',
+						alertify.confirm('Are you Sure, Want to Convert RFQ to PO ?', // <br> Other RFQs will be Cancelled',
 								function() {
 									$.blockUI({ css: {
 						                 border: 'none', 
@@ -400,7 +400,7 @@
 									alertify.error('Cancelled')
 								});
 					}else{
-					alertify.confirm('Are you Sure, Want to Convert RFQ to PO',
+					alertify.confirm('Are you Sure, Want to Convert RFQ to PO ?',
 							function() {
 								$.blockUI({ css: {
 					                 border: 'none', 

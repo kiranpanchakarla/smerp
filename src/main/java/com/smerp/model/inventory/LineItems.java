@@ -2,12 +2,16 @@ package com.smerp.model.inventory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.smerp.model.master.UserAuditModel;
+import com.smerp.model.purchase.PurchaseRequest;
 
 @Entity
 @Table(name = "tbl_admin_rfq_lineitems")
@@ -53,6 +57,18 @@ public class LineItems extends UserAuditModel {
 	@Column(name = "unit_price")
 	private Double unitPrice;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "rfq_id")
+	private RequestForQuotation requestForQuotationId;
+	
+	public RequestForQuotation getRequestForQuotationId() {
+		return requestForQuotationId;
+	}
+
+	public void setRequestForQuotationId(RequestForQuotation requestForQuotationId) {
+		this.requestForQuotationId = requestForQuotationId;
+	}
+
 	public String getSku() {
 		return sku;
 	}

@@ -50,7 +50,9 @@ public enum EnumStatusUpdate {
 	PG("PG"),
 	PGP("PGP"),
 	INVREPORT("InventoryReport"),
-	INVGIREPORT("InventoryGIReport");
+	INVGIREPORT("InventoryGIReport"),
+	ALLOCATE("Allocate"),
+	DEALLOCATE("Deallocate");
 
 	
 	

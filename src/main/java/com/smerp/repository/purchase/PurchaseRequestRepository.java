@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.smerp.model.purchase.PurchaseRequest;
+import com.smerp.model.purchase.PurchaseRequestList;
 
 public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest, Integer> {
     String plantN= "1";
@@ -17,5 +18,8 @@ public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest
 	PurchaseRequest findTopByOrderByIdDesc();
 	
 	List<PurchaseRequest> findByDocNumber(String docNumber);
-
+	
+	@Query("SELECT l from PurchaseRequestList l where l.purchaseRequestId=:pId and l.activeStatus=:activeStatus")
+    List<PurchaseRequestList> getPurchaseRequestListById(PurchaseRequest pId,String activeStatus);
+	
 }

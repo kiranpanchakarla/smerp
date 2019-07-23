@@ -16,7 +16,7 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
 	Plant findById(int id);
 	
 	@Query("SELECT p FROM Plant p WHERE id = :id")
-	List<Plant> findOneList(int id);
+	List<Plant> findOneList(@Param("id") int id);
 	
 	@Query("SELECT c FROM Plant c WHERE LOWER(c.plantName) = LOWER(:name)")
 	Plant findByName(@Param("name") String name);

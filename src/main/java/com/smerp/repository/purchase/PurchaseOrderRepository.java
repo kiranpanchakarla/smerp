@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.smerp.model.inventory.PurchaseOrder;
 import com.smerp.model.inventory.RequestForQuotation;
@@ -15,10 +16,10 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, I
 	
 	PurchaseOrder findTopByOrderByIdDesc();
 	
-	
 	PurchaseOrder findByRfqId(RequestForQuotation rfq);
 	
-	//PurchaseOrder findByrfqId(Integer rfqId);
+	@Query("SELECT r FROM PurchaseOrder r WHERE id=:rfqId and status NOT IN ('Rejected')")
+	PurchaseOrder findByPONotRejected(@Param("rfqId")Integer rfqId);
 	
 	
 	@Query("SELECT r FROM PurchaseOrder r WHERE status in (:status ,'Partially_Received') and plant.id in (:plantIds) order by createdAt desc")

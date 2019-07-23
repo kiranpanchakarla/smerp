@@ -3,39 +3,24 @@ package com.smerp.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -44,6 +29,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
 import com.smerp.controller.purchase.GoodsReceiptController;
 import com.smerp.controller.purchase.GoodsReturnController;
 import com.smerp.controller.purchase.PurchaseOrderController;
@@ -403,11 +389,8 @@ public class SendEmail extends EmailerGenerator{
 				//mimeMessage.addRecipients(Message.RecipientType.TO, toEmail);
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccEmail);
 				//mimeMessage.addRecipients(Message.RecipientType.BCC, bccEmail);
-				if(toEmail != null) {
-					toEmail += "," + getUser().getUserEmail();
-				}else {
-					toEmail = getUser().getUserEmail();
-				}
+				
+				toEmail = getUser().getUserEmail();
 				
 				String createUser =  requestForQuotation.getCreatedBy()!=null? requestForQuotation.getCreatedBy().getUserEmail():"";
 				if(!createUser.isEmpty()) {
@@ -419,7 +402,7 @@ public class SendEmail extends EmailerGenerator{
 				logger.info("requestForQuotation ID ---> "+ requestForQuotation.getId());
 				logger.info("requestForQuotation Doc Number ---> "+ requestForQuotation.getDocNumber() );
 				logger.info("requestForQuotation Status ---> " + requestForQuotation.getStatus());
-				logger.info("Email Send To ---> "  +  recipientList);
+				logger.info("Email Send To ---> "  +  Arrays.toString(recipientList));
 				//logger.info("requestForQuotation Created By  ---> "+ requestForQuotation.getCreatedBy().getUsername());
 				//logger.info("requestForQuotation Last Updated By  ---> "+ requestForQuotation.getLastModifiedBy().getUsername());
 				//mimeMessage.addRecipients(Message.RecipientType.CC, ccmailIds);

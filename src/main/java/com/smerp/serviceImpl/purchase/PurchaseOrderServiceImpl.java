@@ -228,7 +228,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 	private void setAllRFQRejectedStatus(PurchaseOrder purchaseOrder) {
 		if( purchaseOrder.getRfqId()!=null &&  purchaseOrder.getStatus().equals(EnumStatusUpdate.REJECTED.getStatus())) {
 			
-			PurchaseRequest pr = new PurchaseRequest();
+			/*PurchaseRequest pr = new PurchaseRequest();
 			 	pr = purchaseOrder.getRfqId().getPurchaseReqId();
 			 
 			 logger.info("rfq-->" + pr);
@@ -242,7 +242,12 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 								rfqItem.setIsActive(true);
 						}
 				 }
-			 }
+			 }*/
+			 
+			RequestForQuotation rfq = purchaseOrder.getRfqId();
+			rfq.setStatus(EnumStatusUpdate.OPEN.getStatus());
+			requestForQuotationRepository.save(rfq);
+							
 		 }
 	}
 
@@ -251,7 +256,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 		PurchaseOrder po = new PurchaseOrder();
 		RequestForQuotation rfq = requestForQuotationService.findById((Integer.parseInt(rfqId)));
-		PurchaseOrder dup_po =purchaseOrderRepository.findByRfqId(rfq);  // check RFQ exist in PO
+		PurchaseOrder dup_po = purchaseOrderRepository.findByPONotRejected(rfq.getId());  // check RFQ exist in PO
         if(dup_po==null) {
 	        Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
 			PurchaseOrder podetails = findLastDocumentNumber();

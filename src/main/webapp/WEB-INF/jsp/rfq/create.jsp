@@ -1037,9 +1037,9 @@ $(document).ready(function(){
 		            scroll: true, 
 		            select: function(event, ui) {
 			        	var vendorname = ui.item.value;
-			        	var docNum = $('#referenceDocNumber').val();
+			        	/* var docNum = $('#referenceDocNumber').val();
 			        	if(docNum!="")
-			        		isValidVendorWithRefDoc(vendorname,docNum);
+			        		isValidVendorWithRefDoc(vendorname,docNum); */
 			            autocompletevendorDetails(vendorname);
 			       		 },
 				}).focus(function() {

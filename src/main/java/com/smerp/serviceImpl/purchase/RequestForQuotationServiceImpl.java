@@ -271,8 +271,8 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		RequestForQuotation rfq = new RequestForQuotation();
 		PurchaseRequest prq = purchaseRequestService.getInfo(Integer.parseInt(purchaseId));
 		
-		RequestForQuotation dup_rfq = null; //requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
-        if(dup_rfq==null) {
+		//RequestForQuotation dup_rfq = null; //requestForQuotationRepository.findByPurchaseReqId(prq);  // check PR exist in RFQ
+      //  if(dup_rfq==null) {
         	Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.RFQ.getStatus());
         	RequestForQuotation rfqdetails = findLastDocumentNumber();
 		if (rfqdetails != null && rfqdetails.getDocNumber() != null) {
@@ -346,9 +346,9 @@ public class RequestForQuotationServiceImpl implements RequestForQuotationServic
 		purchaseRequestRepository.save(prq);
 		
 		return rfq;
-        }else {
+       /* }else {
         	return dup_rfq;
-        }
+        }*/
 	}
 	
 	

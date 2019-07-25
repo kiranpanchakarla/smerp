@@ -18,8 +18,8 @@ public interface PurchaseOrderRepository  extends JpaRepository<PurchaseOrder, I
 	
 	PurchaseOrder findByRfqId(RequestForQuotation rfq);
 	
-	@Query("SELECT r FROM PurchaseOrder r WHERE id=:rfqId and status NOT IN ('Rejected')")
-	PurchaseOrder findByPONotRejected(@Param("rfqId")Integer rfqId);
+	@Query("SELECT r FROM PurchaseOrder r WHERE rfqId=:rfqId and status NOT IN ('Rejected')")
+	PurchaseOrder findByPONotRejected(@Param("rfqId") RequestForQuotation rfqId);
 	
 	
 	@Query("SELECT r FROM PurchaseOrder r WHERE status in (:status ,'Partially_Received') and plant.id in (:plantIds) order by createdAt desc")

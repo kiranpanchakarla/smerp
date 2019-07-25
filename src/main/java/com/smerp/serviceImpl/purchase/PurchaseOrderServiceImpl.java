@@ -256,7 +256,7 @@ public class PurchaseOrderServiceImpl  implements PurchaseOrderService {
 
 		PurchaseOrder po = new PurchaseOrder();
 		RequestForQuotation rfq = requestForQuotationService.findById((Integer.parseInt(rfqId)));
-		PurchaseOrder dup_po = purchaseOrderRepository.findByPONotRejected(rfq.getId());  // check RFQ exist in PO
+		PurchaseOrder dup_po = purchaseOrderRepository.findByPONotRejected(rfq);  // check RFQ exist in PO
         if(dup_po==null) {
 	        Integer count = docNumberGenerator.getCountByDocType(EnumStatusUpdate.PO.getStatus());
 			PurchaseOrder podetails = findLastDocumentNumber();

@@ -181,10 +181,10 @@ text-align: left;
 																</div>
 															</div>
 															
-															  <div class="row">
+															<!--  <div class="row">
 															 <a class="btn po-hist-btn" data-toggle="modal" data-target="#myModal"> History </a>
 																			
-															</div>  
+															</div>  -->
 																		
 															
 															<ul class="nav nav-tabs" id="containerContainingTabs" role="tablist">

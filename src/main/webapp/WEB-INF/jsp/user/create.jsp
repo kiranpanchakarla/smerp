@@ -107,7 +107,7 @@
 																<div class="row">
 																<div class="col-sm-4 form-group-user">
 																		<label>Username</label>
-																		<form:input type="text" cssClass="form-control" required="true"  onchange="isValidUserName('username','/user/isValidUserName','1_userName','Username already exist. Please choose a different one.')" placeholder='Username' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	
+																		<form:input type="text" cssClass="form-control" required="true" onchange="isValidUserName('username','/user/isValidUserName','1_userName','Username already exist. Please choose a different one.')" placeholder='Username' path="username" oninvalid="this.setCustomValidity('Please Enter User Name')" oninput="setCustomValidity('')" />	
 																		<!-- <div class="help-block with-errors"></div> -->
 																	</div>
 																	<div class="col-sm-4 form-group">

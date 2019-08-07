@@ -166,7 +166,7 @@ $(document).ready(function(){
 																			<div class="col-md-4 form-group">
 																				<label>Email</label>
 																				<form:input path="emailId" type="text"
-																					class="form-control" required="true"
+																					class="form-control" 
 																					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
 																					placeholder='Email Id'
 																					oninvalid="this.setCustomValidity('Please Enter Valid Email')"
@@ -235,7 +235,7 @@ $(document).ready(function(){
 																						<label>Name</label><input type="text"
 																							class="form-control camelCase" placeholder='Contact Name'
 																							name="vendorContactDetails[0].contactName"
-																							required="true"
+																							
 																							oninvalid="this.setCustomValidity('Please Enter Contact Name')"
 																							oninput="setCustomValidity('')" />
 																						<!-- <div   class="help-block with-errors"></div>  -->

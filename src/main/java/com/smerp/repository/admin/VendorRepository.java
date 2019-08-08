@@ -22,10 +22,10 @@ public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 	List<String> findAllVendorNames();
 
 	@Query("SELECT v FROM Vendor v WHERE LOWER(v.name) = LOWER(:name)")
-	Vendor findByName(String name);
+	Vendor findByName(@Param("name") String name);
 	
 	@Query("SELECT v FROM Vendor v WHERE LOWER(v.vendorCode) = LOWER(:vendorCode)")
-	Vendor findByCode(String vendorCode);
+	Vendor findByCode(@Param("vendorCode") String vendorCode);
 	
 	
 	Vendor findTopByOrderByIdDesc();
